@@ -1,0 +1,8 @@
+profile: full
+n_qubits: 5
+T: 3000
+washout: 100
+hp_grids: {}
+seed_grid: []
+shot_tiers: []
+gamma_grid: []

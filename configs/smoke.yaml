@@ -1,0 +1,8 @@
+profile: smoke
+n_qubits: 4
+T: 400
+washout: 100
+hp_grids: {}
+seed_grid: []
+shot_tiers: []
+gamma_grid: []
