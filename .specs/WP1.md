@@ -11,6 +11,26 @@ Port the mature Lindblad QRC core from `qrc_dissipation_engineering/src/qrc/` in
 BOTH models of the study: the recurrent QRC directly, and (in WP2) a static QELM
 channel built from the same Hamiltonians and dissipators.
 
+## Part 0 — WP0 review fixes (do these first; from dual review of commit 6a06646)
+
+a. `tests/test_scaffold.py` — resolve config paths relative to the test file
+   (`Path(__file__).resolve().parent.parent / "configs"`), not the CWD; also assert
+   the four placeholder keys (`hp_grids`, `seed_grid`, `shot_tiers`, `gamma_grid`)
+   are EMPTY (`{}`/`[]`/null) so premature population is caught.
+b. Disentangle the two governance skeletons (currently near-duplicates):
+   - `PROTOCOL.md` owns METHODS sections only: task construction, resource-matching
+     protocol, shot-noise semantics, hyperparameter grids, split pipeline.
+   - `PREREGISTRATION.md` owns FROZEN-COMMITMENT sections only: gates (keep the
+     `<!-- GATES:BEGIN/END -->` markers), seed grids, row caps, shrink rules,
+     amendment log. Each file cross-references the other instead of mirroring it.
+c. `AGENTS.md` — replace the vague "comparable" budget wording with: budgets are
+   IDENTICAL (same n_qubits, same observable set, same readout dimension, same shot
+   formula, same alpha grid, same split rows) and will be enforced at runtime by
+   `qrc_vs_qelm.matching.assert_matched` (lands in WP3).
+d. `CLAUDE.md` — clarify: WP specs may be pre-staged in `.specs/`; the one-at-a-time
+   rule applies to EXECUTION, not spec authoring.
+e. `README.md` — WP index rows link to their `.specs/WP*.md` file.
+
 ## Deliverables
 
 1. Port these modules from `/Users/superposition/Coding/qrc_dissipation_engineering/src/qrc/`

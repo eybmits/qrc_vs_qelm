@@ -28,11 +28,11 @@ python3 -m venv .venv
 
 | WP | Scope | Status |
 | --- | --- | --- |
-| WP0 | Scaffold and governance | Complete |
-| WP1 | Lindblad core port | Pending |
-| WP2 | Task construction | Pending |
-| WP3 | QRC/QELM feature pipelines | Pending |
-| WP4 | Resource matching and readouts | Pending |
-| WP5 | Experiment runners | Pending |
-| WP6 | Analysis and reporting | Pending |
-| WP7 | Protocol and preregistration content | Pending |
+| [WP0](.specs/WP0.md) | Scaffold and governance | Complete |
+| [WP1](.specs/WP1.md) | Lindblad core port | Pending |
+| [WP2](.specs/WP2.md) | Task construction | Pending |
+| [WP3](.specs/WP3.md) | QRC/QELM feature pipelines | Pending |
+| [WP4](.specs/WP4.md) | Resource matching and readouts | Pending |
+| [WP5](.specs/WP5.md) | Experiment runners | Pending |
+| [WP6](.specs/WP6.md) | Analysis and reporting | Pending |
+| [WP7](.specs/WP7.md) | Protocol and preregistration content | Pending |

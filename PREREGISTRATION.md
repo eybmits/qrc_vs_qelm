@@ -1,27 +1,11 @@
 # Preregistration Skeleton
 
 Full preregistration content lands in WP7. Until then, this file records the
-required section structure only.
+required frozen-commitment section structure only.
 
-## Task Construction
-
-TODO(WP7).
-
-## Resource-Matching Protocol
-
-TODO(WP7).
-
-## Shot-Noise Semantics
-
-TODO(WP7).
-
-## Hyperparameter Grids
-
-TODO(WP7).
-
-## Split Pipeline
-
-TODO(WP7).
+This file owns the frozen commitments for the comparison. Method details for
+task construction, resource matching, shot-noise semantics, hyperparameter
+grids, and splits live in [PROTOCOL.md](PROTOCOL.md).
 
 <!-- GATES:BEGIN -->
 ## Gates

@@ -13,10 +13,11 @@ win conditions unless the orchestrator explicitly assigns an amendment work pack
 - **No leakage:** fit all standardization, scaling, basis construction, and model
   selection state on train data only. Apply the fitted objects to validation and
   test data. Tests must guard train-only standardization.
-- **Matched budget:** QRC and QELM comparisons must use matched resource budgets:
-  comparable feature counts, readout protocol, train/validation/test rows, shot
-  budgets, hyperparameter-search budget, and reporting rows. Do not give one model
-  extra features, extra tuning, or extra data.
+- **Matched budget:** QRC and QELM comparisons must use IDENTICAL resource
+  budgets: same `n_qubits`, same observable set, same readout dimension, same
+  shot formula, same alpha grid, and same split rows. This will be enforced at
+  runtime by `qrc_vs_qelm.matching.assert_matched` (lands in WP3). Do not give
+  one model extra features, extra tuning, or extra data.
 - **Results hygiene:** never commit `results_*/`, `data/`, `.npz` artifacts, or
   generated experiment outputs.
 - **Tests:** add or extend `tests/` for each module you implement. Run `pytest -q`

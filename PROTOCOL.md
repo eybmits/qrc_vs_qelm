@@ -1,7 +1,11 @@
 # Protocol Skeleton
 
 Full protocol content lands in WP7. Until then, this file records the required
-section structure only.
+methods section structure only.
+
+This file owns the method definitions for constructing and running the
+comparison. Frozen commitments such as gates, seed grids, row caps, shrink rules,
+and amendments live in [PREREGISTRATION.md](PREREGISTRATION.md).
 
 ## Task Construction
 
@@ -20,25 +24,5 @@ TODO(WP7).
 TODO(WP7).
 
 ## Split Pipeline
-
-TODO(WP7).
-
-## Gates
-
-TODO(WP7).
-
-## Seed Grids
-
-TODO(WP7).
-
-## Row Caps
-
-TODO(WP7).
-
-## Shrink Rules
-
-TODO(WP7).
-
-## Amendment Log
 
 TODO(WP7).
