@@ -17,6 +17,25 @@ from `core.dissipators`) → weight-1/2 Pauli expectations at V snapshot times
 the channel is input-independent, the V snapshot propagators are precomputed ONCE
 per configuration.
 
+## Part 0 — WP1 review fixes (do these first; from dual review of the WP1 commit)
+
+a. **Provenance**: `src/qrc_vs_qelm/core/__init__.py` cites source commit 7ac8c57,
+   but `sparse_evolve.py` and `test_sparse_evolve.py` are UNCOMMITTED in the source
+   repo. Amend the docstring: state those two files came from the uncommitted
+   working tree and record `hashlib.sha256` hex digests of the two SOURCE files
+   (read them from /Users/superposition/Coding/qrc_dissipation_engineering/).
+b. **tasks module**: port the source repo's `tests/test_tasks.py` (imports adjusted);
+   add a `from .tasks import ...` re-export block in `core/__init__.py` matching the
+   pattern used for the other modules.
+c. **`__all__` regression test**: add a test asserting `qrc_vs_qelm.core.__all__` is
+   a superset of every public (non-underscore) name defined in each ported submodule.
+d. **Positivity test** (physics gap): add a test that evolves a valid density matrix
+   with `apply_propagator(propagator(lindbladian(H, jumps), t), rho)` at N=3 with
+   local_loss jumps and asserts `min(np.linalg.eigvalsh(rho_out)) >= -1e-10` and
+   trace ≈ 1, at a few t values.
+e. **README**: WP index — mark WP1 complete, fix the WP2 row description to match
+   this spec's title.
+
 ## Deliverables
 
 1. `src/qrc_vs_qelm/models/__init__.py` and `src/qrc_vs_qelm/models/qelm.py`:

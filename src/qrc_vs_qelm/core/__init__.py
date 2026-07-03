@@ -2,6 +2,13 @@
 
 Source repo path: /Users/superposition/Coding/qrc_dissipation_engineering/src/qrc
 Source git commit: 7ac8c57106b90149edc19274dd4dc6ef65161458
+
+Provenance note: sparse_evolve.py and test_sparse_evolve.py were ported from
+uncommitted working-tree files in /Users/superposition/Coding/qrc_dissipation_engineering.
+hashlib.sha256(src/qrc/sparse_evolve.py) =
+dc16975777dd72ec88a8a5c2fc0e3fafe44393f680628a7235151523fe154751
+hashlib.sha256(tests/test_sparse_evolve.py) =
+bd11ba16f98f3f565bbe53ab8ac32a8f220822011e8c605bef049f5fd8913645
 """
 
 from . import diagnostics, dissipators, liouvillian, operators, readout, reservoirs, sparse_evolve, tasks
@@ -94,6 +101,17 @@ from .reservoirs import (
     transverse_drive,
 )
 from .sparse_evolve import SparseLindbladReservoir, run_sparse_lindblad_trajectory
+from .tasks import (
+    TaskData,
+    delayed_target,
+    mackey_glass_series,
+    narma_inputs,
+    narma_target,
+    parity_inputs,
+    parity_target,
+    rescale_unit,
+    stm_inputs,
+)
 
 __version__ = "0.1.0"
 
@@ -174,6 +192,15 @@ __all__ = [
     "fit_and_score",
     "SparseLindbladReservoir",
     "run_sparse_lindblad_trajectory",
+    "stm_inputs",
+    "delayed_target",
+    "narma_inputs",
+    "narma_target",
+    "parity_inputs",
+    "parity_target",
+    "mackey_glass_series",
+    "rescale_unit",
+    "TaskData",
     "liouvillian_spectrum",
     "spectral_gap",
     "mixing_time",

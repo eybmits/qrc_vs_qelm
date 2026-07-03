@@ -2,6 +2,8 @@ import numpy as np
 
 from qrc_vs_qelm.core import operators as op
 from qrc_vs_qelm.core import liouvillian as lio
+from qrc_vs_qelm.core import dissipators as dsp
+from qrc_vs_qelm.core import reservoirs as res
 
 
 def random_dm(d, rng):
@@ -57,3 +59,20 @@ def test_amplitude_damping_steady_state():
     target = np.zeros((2 ** N, 2 ** N), dtype=complex)
     target[0, 0] = 1.0
     assert np.allclose(ss, target, atol=1e-6)
+
+
+def test_local_loss_evolution_preserves_positivity_n3():
+    N = 3
+    rng = np.random.default_rng(4)
+    J = res.random_couplings(N, J_s=0.7, rng=rng)
+    H = res.ising_xx_hamiltonian(J, h=0.3, n_qubits=N)
+    jumps = dsp.local_loss(N, gamma=0.4)
+    Ls = lio.lindbladian(H, jumps)
+    rho0 = random_dm(2 ** N, rng)
+
+    for t in (0.0, 0.25, 1.0):
+        P = lio.propagator(Ls, t)
+        rho_out = lio.apply_propagator(P, rho0)
+        rho_herm = 0.5 * (rho_out + rho_out.conj().T)
+        assert np.min(np.linalg.eigvalsh(rho_herm)) >= -1e-10
+        assert np.isclose(np.trace(rho_out), 1.0, atol=1e-9)
