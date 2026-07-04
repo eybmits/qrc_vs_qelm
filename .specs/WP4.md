@@ -58,10 +58,13 @@ Work ONLY inside `/Users/superposition/Coding/qrc_vs_qelm/`. Depends on WP1–WP
    - Legendre: empirical orthogonality on u~U[0,1] (large T): E[P_i(x)P_j(x)] ≈ 0
      for i≠j; `leg_tau_p1` equals shifted linear rescale exactly.
    - NARMA-2 against a hand-rolled 10-step reference; parity target correctness.
-   - **Fairness test**: build QRC features, QELM features (matched configs, WP3),
-     and both controls on one input stream; run `evaluate_feature_matrix` on all
-     four with the same targets dict → assert the target vectors and index sets
-     used are BIT-IDENTICAL across models (expose them from the pipeline for this).
+   - **Fairness test**: build QRC + QELM feature bundles at a **V=1** matched config
+     pair (the pre-registered primary; do NOT use n_virtual/n_snapshots > 1) and both
+     controls sized to the same D, on one input stream; assert
+     `matching.assert_bundles_matched(qrc_bundle, qelm_bundle)` passes (the real D-gate)
+     and `matching.assert_features_live` passes on both; run `evaluate_feature_matrix`
+     on all four with the same targets dict → assert the target vectors and index sets
+     used are BIT-IDENTICAL across all four (expose them from the pipeline for this).
    - **Leakage guard**: standardization stats computed on train slice only (assert
      changing test rows doesn't change transformed train rows); splits contiguous,
      ordered, disjoint, covering the valid set.

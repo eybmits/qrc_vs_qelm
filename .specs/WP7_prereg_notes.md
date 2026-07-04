@@ -18,6 +18,15 @@ commitment + which review raised it.
    delay embedding" (QELM), under matched qubits / observables / readout dim / shot
    budget / ridge pipeline."
 
+## WP7 freeze checklist (verify before tagging stage1-frozen)
+
+- **poly_delay control not starved** (WP4 adversarial 4/5): at every frozen operating
+  point verify the readout width `D` is ≥ the full degree-≤2 count `2d + C(d,2)`, so the
+  `poly_delay` classical control never truncates cross terms (which would weaken the
+  G1c kill-rule baseline). Holds automatically under `d ≤ n_qubits` + default weight-≤2
+  3-axis observables, but re-verify if the observable set is ever reduced.
+- **T_evolve frozen grid inside `[t_lo, t_hi]` for both models** (see rule 4 below).
+
 ## Frozen methodological rules (operationalize at WP7, informed by the design pilot)
 
 2. **`T_evolve` live-regime rule** (WP2 adversarial + WP3 guard). QELM's frozen

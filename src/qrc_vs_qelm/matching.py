@@ -114,7 +114,7 @@ def physical_shot_budget(
     return int(shots_per_expectation) * int(n_timesteps) * int(readout_dim)
 
 
-def _participation_eff_rank(features: np.ndarray) -> float:
+def participation_effective_rank(features: np.ndarray) -> float:
     X = np.asarray(features, dtype=np.float64)
     Xc = X - X.mean(axis=0, keepdims=True)
     singular_values = np.linalg.svd(Xc, compute_uv=False)
@@ -122,6 +122,9 @@ def _participation_eff_rank(features: np.ndarray) -> float:
     if denom <= 0.0:
         return 0.0
     return float(np.sum(singular_values) ** 2 / denom)
+
+
+_participation_eff_rank = participation_effective_rank
 
 
 def effective_dimension(features: np.ndarray, *, min_col_var: float = 1e-8) -> dict:
@@ -137,7 +140,7 @@ def effective_dimension(features: np.ndarray, *, min_col_var: float = 1e-8) -> d
         raise ValueError("features must have at least one row and one column")
 
     col_var = np.var(X, axis=0)
-    eff_rank = _participation_eff_rank(X)
+    eff_rank = participation_effective_rank(X)
     dim = int(X.shape[1])
     return {
         "col_var": col_var,
@@ -180,9 +183,9 @@ def multiplex_efficacy(
             f"got {X.shape[1]}"
         )
 
-    r_full = _participation_eff_rank(X)
+    r_full = participation_effective_rank(X)
     single_ranks = [
-        _participation_eff_rank(X[:, k * n_obs : (k + 1) * n_obs])
+        participation_effective_rank(X[:, k * n_obs : (k + 1) * n_obs])
         for k in range(n_snapshots)
     ]
     r_single_mean = float(np.mean(single_ranks))
