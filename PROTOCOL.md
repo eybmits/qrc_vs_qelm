@@ -71,6 +71,11 @@ is sampled with the same shots-per-expectation value for QRC and QELM. The physi
 shot budget is reported as `S * T * D`, with identical `S`, `T`, and `D` for both
 models at a matched cell.
 
+Shot noise applies only to the quantum feature matrices, QRC and QELM. The
+`linear_delay` and `poly_delay` controls are analytic feature maps, so they are scored
+at their exact values at every shot tier. QRC and QELM use independent deterministic
+shot-noise RNG streams derived from `(shot_seed, shot_tier_index, model_name)`.
+
 Shot noise does not change target construction, split rows, alpha grids, or model
 selection rules. The shot seed comes from `SEED_GRIDS["stage2_shots"]`, and the same
 shot tier grid is retained under any runtime shrink.
@@ -91,6 +96,21 @@ returned window is `[0.5 * timescale, 2.0 * timescale]`, both grid points are in
 The alpha grid is shared:
 `{0, 1e-10, 1e-8, 1e-6, 1e-4, 1e-2, 1, 100}`. Gamma is not tuned in RQ1 or RQ2; it is
 the RQ3 axis.
+
+## RQ3 Dissipation Sweep
+
+Stage 3 fixes QRC at `dt = 0.5` and `h_in = 0.5` for every gamma and dissipator point.
+QELM fixes `d = min(5, n_qubits)` and fixes `T_evolve` at the
+`recommend_T_evolve(..., gamma = 0.3)["t_recommended"]` operating-point value for each
+coupling seed and dissipator. This keeps the per-window QELM horizon constant across
+the gamma grid, matching QRC's fixed per-symbol horizon: gamma changes only the
+dissipator strength, not a co-varying evolution time.
+
+Stage 3 still hard-errors on `assert_bundles_matched`, because bundle mismatch is a
+configuration error. If `assert_features_live` fails for either model at a gamma,
+dissipator, and seed point, that physical collapse is recorded with
+`features_dead = True`, zero per-target capacity, and `MC = NC = 0` for that model
+instead of aborting the sweep.
 
 ## Split Pipeline
 

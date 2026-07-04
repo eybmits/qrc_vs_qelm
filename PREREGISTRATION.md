@@ -118,3 +118,9 @@ applied only the first shrink step to stage 1.
   at `family_cell = (tau, p)` granularity using each model's mean test capacity
   over seed replicates, and Stage 1 reports G1b/G1c fractions with and without
   the exclusion.
+- WP8b amendment: RQ3 QELM `T_evolve` corrected PRE-EXECUTION; no Stage-3 data
+  existed. Stage 3 now fixes QELM `T_evolve` at the gamma=0.3 operating-point
+  `recommend_T_evolve` value across the gamma sweep. The prior per-gamma
+  recommendation was unmatched to QRC's fixed `dt` and could make QELM
+  gamma-insensitive. Stage-3 dead-feature points are recorded with
+  `features_dead = True`, zero per-target capacity, and `MC = NC = 0`.
