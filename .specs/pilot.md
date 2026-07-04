@@ -34,6 +34,16 @@ Procedure:
 ## Go/no-go report (printed + in pilot.json)
 
 - `frac_qrc`, `frac_qelm`, `frac_tie` over the 24 cells.
+- **Per-cell noise/power statistics** (REQUIRED — WP5 adversarial concern 5): for each
+  cell report the paired bootstrap CI WIDTH on the delta and the BH q-value, and
+  summarize the distribution (median CI width, # cells with q≤0.10). This is what tells
+  us whether n=30 seed cells is adequately POWERED — if most cells have CI width ≫
+  tie_band (0.02), real two-regime physics will collapse into "tie" and G1b can't pass
+  even when the effect is real. The freeze decision needs these numbers, not just the
+  headline fractions. If underpowered, the fix is more input seeds (cheap) before freeze.
+- **tie_band sensitivity**: report frac_qrc/frac_qelm/frac_tie at tie_band ∈
+  {0.01, 0.02, 0.04} so the freeze can see whether the GO/NO-GO flips with a reasonable
+  tie_band change (if it does, that is a red flag to resolve before freezing 0.02).
 - **GO** iff `frac_qrc ≥ 0.20` AND `frac_qelm ≥ 0.20` (mirrors gate G1b: both regimes
   materially present). Print the (τ,p) coordinates of each region so the boundary shape
   is visible.

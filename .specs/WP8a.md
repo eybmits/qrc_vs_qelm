@@ -60,6 +60,13 @@ Port their tests too (adjust imports). These must pass before the runner is trus
 4. Runtime-budget guard: at startup, project runtime (reuse WP6 `project_runtime` if
    importable) and abort with the pre-registered shrink message if over the stage
    budget — cut input seeds first, then the secondary product family; never gates/cells.
+5. FDR family-integrity guard (WP5 adversarial concern 2): the BH-FDR correction in
+   `gates.evaluate_stage1_gates` is applied ONCE across all phase-diagram cells, which
+   is correct ONLY if the scores frame passed to it contains the full confirmatory cell
+   set. Before evaluating gates, ASSERT `df["family_cell"].nunique()` equals the
+   expected frozen grid size (from config) — so the FDR family can never silently split
+   by calling gates per target-family. Score linear_delay + poly_delay controls per seed
+   cell (G1c needs per-(cell,seed) `capacity_linear_delay`).
 
 ## Tests (`tests/test_run_stage1.py`)
 

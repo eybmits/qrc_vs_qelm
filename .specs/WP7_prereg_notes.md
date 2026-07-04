@@ -20,6 +20,19 @@ commitment + which review raised it.
 
 ## WP7 freeze checklist (verify before tagging stage1-frozen)
 
+- **Amendment-log discipline for gate thresholds** (WP5 adversarial 1,3). The pilot uses
+  the SAME 20%/20% bar as confirmatory G1b and exercises tie_band=0.02 on real pilot
+  data — so there is a threshold-shopping risk. The PREREGISTRATION amendment log MUST
+  record, with the git commit/tag that freezes them: (a) the values 20% (G1b),
+  25% (G1c), tie_band=0.02, FDR q=0.10 and a one-line rationale for each; (b) EVERY τ/p
+  range change made during the pilot and what pilot number triggered it (do not fold
+  range changes silently into "the frozen grid"). Freeze the thresholds BEFORE running
+  confirmatory seeds; the pilot may inform ranges, not the confirmatory bar's value.
+- **G1c requires SIGNIFICANT QELM-over-linear_delay wins** (post WP5-fix) — confirm the
+  frozen G1c counts only cells where the paired CI excludes 0, not bare mean>mean.
+- **Statistical power check**: the pilot's per-cell CI-width report must show median CI
+  width comfortably below tie_band, else increase input-seed count before freezing.
+
 - **poly_delay control not starved** (WP4 adversarial 4/5): at every frozen operating
   point verify the readout width `D` is ≥ the full degree-≤2 count `2d + C(d,2)`, so the
   `poly_delay` classical control never truncates cross terms (which would weaken the
