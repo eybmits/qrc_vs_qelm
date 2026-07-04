@@ -11,14 +11,18 @@ The primary RQ1 phase diagram uses Legendre-delay targets
 `P_p(2 u[t - tau] - 1)` on the frozen grid:
 
 - `tau = {0, 1, 2, 3, 5, 8, 10, 12, 16}`
-- `p = {1, 2, 3}` for gated fractions, giving 27 gated cells
+- `p = {1, 2, 3}` for the primary gated family, giving the frozen 27
+  family cells used by G1a/G1b/G1c
 - `p = {1, 2, 3, 5}` is still run and reported as a robustness appendix
 
-The pre-registered uninformative-cell rule is applied before gate fractions are
-formed: a target cell is excluded from the G1b/G1c denominators if both models'
-test capacities are below `0.05`. The row remains in score files and robustness
-tables. This rule is objective and is the reason the primary gated degree axis is
-`{1, 2, 3}` while degree 5 remains a reported appendix band.
+The primary gated set is the frozen degree-{1,2,3} family from the pilot. The
+capacity-based uninformative-cell rule is a secondary safeguard applied before
+G1b/G1c fractions are formed: a confirmatory `family_cell = (tau, p)` is excluded
+from those denominators iff both models' mean test capacities across that
+family_cell's seed replicates are below `0.05`. This is a family-cell
+mean-over-seeds rule, not a per-seed row rule. All rows remain in score files and
+robustness tables, and Stage 1 reports G1b/G1c fractions both with and without
+this exclusion.
 
 The secondary product family is not the headline gate family. It uses products of
 delayed Legendre targets with `(p1, p2) in {(1, 1), (1, 2), (2, 2)}` and

@@ -13,8 +13,13 @@ user applies the tag after this work package lands. Methods are defined in
 - Primary RQ1 grid: Legendre delay with
   `tau = {0, 1, 2, 3, 5, 8, 10, 12, 16}` and `p = {1, 2, 3}`.
 - Robustness appendix: the full `p = {1, 2, 3, 5}` grid is run and reported.
-- Uninformative-cell rule: exclude a cell from gate fractions if both models'
-  test capacities are below `0.05`; still score and report the row.
+- Primary gated set: the frozen degree-{1,2,3} family gives 27 `family_cell =
+  (tau, p)` units for G1a/G1b/G1c.
+- Uninformative-cell rule: as a secondary safeguard, exclude a confirmatory
+  `family_cell` from G1b/G1c fractions iff both models' mean test capacities
+  across that cell's seed replicates are below `0.05`. This is a family-cell
+  mean-over-seeds rule, not a per-seed row rule; still score and report all rows,
+  and report gate fractions with and without the exclusion.
 - Secondary product family: `(p1, p2) in {(1,1), (1,2), (2,2)}` and
   `tau = {1, 2, 4, 8}`.
 - Anchors are not gated: STM, NARMA-2/5/10, Mackey-Glass, parity, Santa Fe if cached.
@@ -108,3 +113,8 @@ applied only the first shrink step to stage 1.
 - WP7 freeze checklist items from `WP7_prereg_notes` verified and checked off:
   poly_delay D floor, T_evolve grid inside `[t_lo,t_hi]`, G1c significance, and
   threshold rationale.
+- WP8a clarification: the primary gated family remains the frozen 27
+  degree-{1,2,3} cells. The capacity<0.05 uninformative-cell safeguard is defined
+  at `family_cell = (tau, p)` granularity using each model's mean test capacity
+  over seed replicates, and Stage 1 reports G1b/G1c fractions with and without
+  the exclusion.
