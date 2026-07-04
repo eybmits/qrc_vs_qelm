@@ -206,7 +206,11 @@ def _run(stage1_out: Path, out: Path) -> pd.DataFrame:
         ]
     )
     assert rc == 0
-    return pd.read_csv(out / "stage2_scores.csv", float_precision="round_trip")
+    return pd.read_csv(
+        out / "stage2_scores.csv",
+        dtype={"shots": "string"},
+        float_precision="round_trip",
+    )
 
 
 def test_stage2_smoke_main_writes_scores_and_manifest(stage1_fixture, tmp_path: Path) -> None:
@@ -218,7 +222,7 @@ def test_stage2_smoke_main_writes_scores_and_manifest(stage1_fixture, tmp_path: 
 
     assert not scores.empty
     assert {"shots", "shot_seed"} <= set(scores.columns)
-    assert set(scores["shots"].astype(str)) == {"1000", "∞"}
+    assert set(scores["shots"].astype(str)) == {"1000", "infinity"}
     assert {"qrc", "qelm", "linear_delay", "poly_delay"} <= set(scores["model"])
     assert payload["stage"] == 2
     assert payload["profile"] == "smoke"

@@ -321,8 +321,9 @@ def _shot_tiers(config: Mapping[str, Any]) -> list[dict[str, Any]]:
 
 
 def _parse_shot_tier(value: Any) -> dict[str, Any]:
-    if isinstance(value, str) and value.lower() in {"infinity", "inf", "∞"}:
-        return {"label": "∞", "shots": np.inf}
+    infinity_tokens = {"infinity", "+infinity", "inf", "+inf", "∞", "+∞"}
+    if isinstance(value, str) and value.strip().lower() in infinity_tokens:
+        return {"label": "infinity", "shots": np.inf}
     shots_value = int(value)
     if shots_value < 1:
         raise ValueError(f"shot tier must be positive or infinity, got {value!r}")

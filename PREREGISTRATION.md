@@ -124,3 +124,14 @@ applied only the first shrink step to stage 1.
   recommendation was unmatched to QRC's fixed `dt` and could make QELM
   gamma-insensitive. Stage-3 dead-feature points are recorded with
   `features_dead = True`, zero per-target capacity, and `MC = NC = 0`.
+- POST-RUN G2a evaluation bug fix (verdict-neutral disclosure): the frozen code's
+  `gates._is_infinite_shots` did not recognize the `∞` (U+221E) token that
+  `run_stage2` wrote for the S=∞ tier, so G2a never saw the infinity rows and
+  returned `SHOT_INSENSITIVE` via the missing-rows path. Fixed the matcher (and
+  normalized future output to `infinity`) and RE-EVALUATED G2a on the SAME saved
+  Stage-2 scores — no re-simulation. This is a fix to gate *evaluation*, not the
+  gate *definition/threshold* (unchanged: compare S=∞ vs S=1e4 QRC-favored count,
+  bootstrap CI must exclude 0). Corrected verdict is STILL `SHOT_INSENSITIVE`, now
+  legitimately: the QRC-favored count shifts 9.0(∞)→7.0(1e4)→5.0(1e3) but the
+  bootstrap CI on the ∞-vs-1e4 shift is [0.0, 3.78], which does not exclude 0 at
+  the 24-seed budget (suggestive but underpowered).

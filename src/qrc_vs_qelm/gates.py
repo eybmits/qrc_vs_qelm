@@ -566,8 +566,22 @@ def _first_existing_column(df: pd.DataFrame, names: Iterable[str]) -> str | None
 
 def _is_infinite_shots(values: pd.Series) -> pd.Series:
     numeric = pd.to_numeric(values, errors="coerce")
-    text = values.astype(str).str.lower()
-    return numeric.eq(np.inf) | text.isin({"inf", "infinity", "s=inf", "s=infinity"})
+    text = values.astype(str).str.strip().str.lower()
+    infinity_tokens = {
+        "inf",
+        "+inf",
+        "infinity",
+        "+infinity",
+        "∞",
+        "+∞",
+        "s=inf",
+        "s=+inf",
+        "s=infinity",
+        "s=+infinity",
+        "s=∞",
+        "s=+∞",
+    }
+    return numeric.eq(np.inf) | text.isin(infinity_tokens)
 
 
 def _is_shot_1e4(values: pd.Series) -> pd.Series:

@@ -1127,7 +1127,20 @@ def _set_axis_limits(
 
 def _shot_numeric(value: Any) -> float:
     text = str(value).strip().lower()
-    if text in {"inf", "infinity", "s=inf", "s=infinity"}:
+    if text in {
+        "inf",
+        "+inf",
+        "infinity",
+        "+infinity",
+        "∞",
+        "+∞",
+        "s=inf",
+        "s=+inf",
+        "s=infinity",
+        "s=+infinity",
+        "s=∞",
+        "s=+∞",
+    }:
         return float("inf")
     numeric = pd.to_numeric(pd.Series([value]), errors="coerce").iloc[0]
     return float(numeric)

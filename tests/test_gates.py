@@ -271,6 +271,35 @@ def test_stage2_g2a_passes_when_qrc_favored_count_shifts_by_shot_tier(shot_value
     assert g2a.ci_low > 0.0
 
 
+def test_infinite_shot_detection_keeps_finite_large_tiers_finite():
+    values = pd.Series(["∞", "inf", "infinity", np.inf, "1e5", "100000", 100000])
+
+    mask = gates_module._is_infinite_shots(values)
+
+    assert mask.tolist() == [True, True, True, True, False, False, False]
+
+
+@pytest.mark.parametrize(
+    ("shift", "expected_verdict", "expected_value"),
+    [(True, "PASS", 2.0), (False, "SHOT_INSENSITIVE", 0.0)],
+)
+def test_stage2_g2a_accepts_unicode_infinity_shot_tier(
+    shift,
+    expected_verdict,
+    expected_value,
+):
+    records = evaluate_stage2_gates(
+        _stage2_frame(("∞", 10000), shift=shift),
+        n_boot=128,
+    )
+
+    g2a = _record(records, "G2a")
+
+    assert g2a.verdict == expected_verdict
+    assert g2a.value == expected_value
+    assert "requires both S=infinity and S=1e4 rows" not in g2a.notes
+
+
 def test_stage2_g2a_shot_insensitive_when_counts_do_not_move():
     records = evaluate_stage2_gates(
         _stage2_frame((np.inf, 10000.0), shift=False),
