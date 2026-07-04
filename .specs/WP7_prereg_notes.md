@@ -30,7 +30,29 @@ commitment + which review raised it.
    (`min_col_var`, `min_rank_frac`) and the recommended-window rule.
 
 3. **Effective-dimension reporting** (WP2 adversarial). Every run manifest records
-   `eff_rank` and `eff_rank_frac` for BOTH models per cell, so any residual difference
-   in *effective* (not just declared) readout dimension is transparent in the results,
-   not hidden. Declared-D parity is asserted; effective-D difference is reported and
-   discussed.
+   `eff_rank`, the multiplex `gain`, and (as a diagnostic only) `eff_rank_frac` for
+   BOTH models per cell. Declared-D parity is asserted via `assert_bundles_matched`;
+   effective-D difference is reported and discussed. NOTE (WP3 review): `eff_rank_frac`
+   is compressed to ~0.1-0.2 for both models at realistic D and is NOT a fairness
+   discriminator — lean the discussion on multiplex `gain` and per-cell capacity.
+
+5. **SCOPE DECISION: V=1 is the primary AND ONLY matched-D comparison; drop matched
+   V>1** (WP3-fix dual evidence: Codex calibration + code-review 60-config sweep +
+   physics). QRC virtual-node multiplexing (substep states within one `dt`) is strongly
+   correlated → low multiplex gain → declared D=V·n_obs overstates QRC's effective
+   dimension. QELM trajectory snapshots add more real rank (gain ~1.4 at N=5). So a
+   matched-D comparison at V>1 pits hollow-QRC-D against live-QELM-D — the exact
+   unfairness `assert_features_live` exists to catch. Resolution: run the phase diagram
+   at V=1 (clean, unambiguous). The multiplexing asymmetry (multiplexing helps QELM more
+   than QRC at these scales) becomes a REPORTED discussion point, not a matched axis. If
+   QRC memory still wins regions at V=1, that conclusion is strengthened, not weakened,
+   by QELM having had multiplexing available. Pre-register V=1 as the comparison; any
+   V>1 result is exploratory and explicitly caveated (not matched-D).
+
+4. **`T_evolve` frozen grid must sit in the recommended window** (WP3 adversarial
+   concern 3). `recommend_T_evolve` is advisory; nothing in code forces the frozen grid
+   into `[t_lo, t_hi]`. WP7 FREEZE CHECKLIST: verify the frozen `T_evolve` grid sits
+   inside `[t_lo, t_hi]` for BOTH QRC and QELM at every operating point — not merely
+   that it clears `assert_features_live`. A grid point that clears the guard but sits at
+   the noisy low edge for one model and mid-window for the other is an unfair operating
+   point.

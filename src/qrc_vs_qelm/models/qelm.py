@@ -66,14 +66,44 @@ def encode_window(
     return operators.kron_list(factors)
 
 
-@dataclass(frozen=True)
+@dataclass(frozen=True, init=False)
 class QELMChannel:
     """Input-independent Lindblad channel with precomputed snapshot propagators."""
 
     n_qubits: int
     n_snapshots: int
-    L_base: np.ndarray
-    propagators: tuple[np.ndarray, ...]
+    _L_base: np.ndarray
+    _propagators: tuple[np.ndarray, ...]
+
+    def __init__(
+        self,
+        n_qubits: int,
+        n_snapshots: int,
+        L_base: np.ndarray,
+        propagators: Sequence[np.ndarray],
+    ) -> None:
+        object.__setattr__(self, "n_qubits", int(n_qubits))
+        object.__setattr__(self, "n_snapshots", int(n_snapshots))
+        object.__setattr__(
+            self,
+            "_L_base",
+            np.array(L_base, dtype=complex, copy=True),
+        )
+        object.__setattr__(
+            self,
+            "_propagators",
+            tuple(np.array(P, dtype=complex, copy=True) for P in propagators),
+        )
+
+    @property
+    def L_base(self) -> np.ndarray:
+        """Copy of the precomputed base Liouvillian."""
+        return self._L_base.copy()
+
+    @property
+    def propagators(self) -> tuple[np.ndarray, ...]:
+        """Copies of the precomputed snapshot propagators."""
+        return tuple(P.copy() for P in self._propagators)
 
     @classmethod
     def from_terms(
@@ -92,7 +122,24 @@ class QELMChannel:
         if T_evolve < 0:
             raise ValueError("T_evolve must be non-negative")
 
-        L_base = liouvillian.lindbladian(np.asarray(H_static, dtype=complex), jumps)
+        dim = 2 ** n_qubits
+        H = np.asarray(H_static, dtype=complex)
+        if H.shape != (dim, dim):
+            raise ValueError(
+                f"H_static shape must be {(dim, dim)} for n_qubits={n_qubits}; "
+                f"got {H.shape}"
+            )
+        checked_jumps: list[tuple[np.ndarray, float]] = []
+        for idx, (jump, rate) in enumerate(jumps):
+            L = np.asarray(jump, dtype=complex)
+            if L.shape != (dim, dim):
+                raise ValueError(
+                    f"jump operator {idx} shape must be {(dim, dim)} "
+                    f"for n_qubits={n_qubits}; got {L.shape}"
+                )
+            checked_jumps.append((L, float(rate)))
+
+        L_base = liouvillian.lindbladian(H, checked_jumps)
         propagators = tuple(
             liouvillian.propagator(L_base, k * float(T_evolve) / n_snapshots)
             for k in range(1, n_snapshots + 1)
@@ -121,7 +168,7 @@ class QELMChannel:
             rho0 = encode_window(window, self.n_qubits)
             states = [
                 liouvillian.apply_propagator(P, rho0)
-                for P in self.propagators
+                for P in self._propagators
             ]
             X[row_idx] = readout.features_from_states(states, obs).reshape(-1)
         return X

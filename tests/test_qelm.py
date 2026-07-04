@@ -1,7 +1,9 @@
 import numpy as np
+import pytest
 from scipy.sparse.linalg import expm_multiply
 
 from qrc_vs_qelm.core import dissipators, liouvillian, operators, readout, reservoirs
+from qrc_vs_qelm.models.api import QELMConfig
 from qrc_vs_qelm.models import qelm
 
 
@@ -129,6 +131,93 @@ def test_qelm_gamma_zero_preserves_purity_and_real_bounded_features():
     assert np.isrealobj(X)
     assert np.all(X >= -1.0 - 1e-12)
     assert np.all(X <= 1.0 + 1e-12)
+
+
+def test_build_qelm_features_gamma_zero_matches_manual_unitary_channel():
+    n_qubits = 3
+    d = 2
+    T_evolve = 0.6
+    n_snapshots = 2
+    J_s = 0.7
+    h = 0.4
+    coupling_seed = 19
+    inputs = np.linspace(0.05, 0.95, 10)
+    obs = readout.pauli_observables(n_qubits, max_weight=2)
+
+    public = qelm.build_qelm_features(
+        inputs,
+        n_qubits=n_qubits,
+        d=d,
+        T_evolve=T_evolve,
+        n_snapshots=n_snapshots,
+        gamma=0.0,
+        dissipator="local_loss",
+        J_s=J_s,
+        h=h,
+        coupling_seed=coupling_seed,
+        observables=obs,
+    )
+
+    rng = np.random.default_rng(coupling_seed)
+    J = reservoirs.random_couplings(n_qubits, J_s, rng)
+    H = reservoirs.ising_xx_hamiltonian(J, h, n_qubits)
+    channel = qelm.QELMChannel.from_terms(
+        n_qubits=n_qubits,
+        H_static=H,
+        jumps=[],
+        T_evolve=T_evolve,
+        n_snapshots=n_snapshots,
+    )
+    manual = channel.features(qelm.delay_embed(inputs, d), obs)
+    assert np.array_equal(public, manual)
+
+
+def test_qelm_channel_validates_operator_shapes():
+    with pytest.raises(ValueError, match="H_static shape"):
+        qelm.QELMChannel.from_terms(
+            n_qubits=2,
+            H_static=np.eye(3),
+            jumps=[],
+            T_evolve=0.2,
+            n_snapshots=1,
+        )
+
+    with pytest.raises(ValueError, match="jump operator 0 shape"):
+        qelm.QELMChannel.from_terms(
+            n_qubits=2,
+            H_static=np.eye(4),
+            jumps=[(np.eye(3), 0.1)],
+            T_evolve=0.2,
+            n_snapshots=1,
+        )
+
+
+def test_qelm_channel_defensive_copy_properties_do_not_mutate_channel():
+    channel = _channel(n_qubits=2, T_evolve=0.4, n_snapshots=2, gamma=0.1)
+    original_L = channel.L_base
+    original_P = channel.propagators[0]
+
+    mutated_L = channel.L_base
+    mutated_P = channel.propagators[0]
+    mutated_L[:] = 123.0
+    mutated_P[:] = 456.0
+
+    assert np.array_equal(channel.L_base, original_L)
+    assert np.array_equal(channel.propagators[0], original_P)
+
+
+def test_qelm_config_rejects_delay_longer_than_qubit_register():
+    with pytest.raises(ValueError, match="1 <= d <= n_qubits"):
+        QELMConfig(
+            d=4,
+            T_evolve=0.5,
+            n_snapshots=2,
+            n_qubits=3,
+            J_s=0.7,
+            h=0.4,
+            gamma=0.0,
+            dissipator="local_loss",
+        )
 
 
 def test_qelm_cyclic_encoding_repeats_window_across_qubits():
