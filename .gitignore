@@ -30,5 +30,7 @@ htmlcov/
 
 # Project data and outputs
 results_*/
-data/
+data/*
+!data/frozen/
+!data/frozen/frozen_v1_config.json
 *.npz

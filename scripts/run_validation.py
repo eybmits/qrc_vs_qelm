@@ -5,11 +5,17 @@ from __future__ import annotations
 
 import argparse
 import json
+import sys
 from dataclasses import replace
 from pathlib import Path
 from typing import Any
 
 import numpy as np
+
+ROOT = Path(__file__).resolve().parents[1]
+SRC = ROOT / "src"
+if str(SRC) not in sys.path:
+    sys.path.insert(0, str(SRC))
 
 from qrc_vs_qelm import pipeline, task_families
 from qrc_vs_qelm.core import operators, readout, reservoirs, sparse_evolve
@@ -26,7 +32,6 @@ from qrc_vs_qelm.models.api import QELMConfig, QRCConfig, build_features
 from qrc_vs_qelm.seeds import SEED_GRIDS
 
 
-ROOT = Path(__file__).resolve().parents[1]
 RESULTS_DIR = ROOT / "results_validation"
 SOURCE_RESULTS_DIR = Path("/Users/superposition/Coding/qrc_dissipation_engineering/results")
 BEST_VS_BEST_PATH = SOURCE_RESULTS_DIR / "best_vs_best.json"

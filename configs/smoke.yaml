@@ -2,7 +2,111 @@ profile: smoke
 n_qubits: 4
 T: 400
 washout: 100
-hp_grids: {}
-seed_grid: []
-shot_tiers: []
-gamma_grid: []
+
+primary:
+  n_qubits: 4
+  gamma: 0.3
+  dt: 0.5
+  h: 0.5
+  J_s: 1.0
+  dissipator: local_loss
+  n_virtual: 1
+  n_snapshots: 1
+  multiplexing: 1
+  quantize_levels: 33
+  observables:
+    family: pauli
+    axes: [x, y, z]
+    max_weight: 2
+    dimension: 30
+
+phase_diagram:
+  family: legendre_delay
+  taus: [0, 1, 2, 3, 5]
+  degrees: [1, 2]
+  gated_cells: 10
+  robustness_degrees: [1, 2, 3]
+  robustness_cells: 15
+  uninformative_exclusion:
+    both_models_test_capacity_lt: 0.05
+    applies_to: gate_fractions
+    report_excluded_cells: true
+
+secondary_product_family:
+  enabled: true
+  taus: [1, 2]
+  degree_pairs:
+    - [1, 1]
+    - [1, 2]
+  cells: 4
+
+anchors:
+  gated: false
+  families:
+    - stm
+    - narma2
+    - parity
+
+hp_grids:
+  alpha: [0.0, 1.0e-8, 1.0e-4, 1.0e-2, 1.0]
+  qrc:
+    dt: [0.25, 0.5, 1.0]
+    h_in: [0.5, 1.0]
+    cardinality: 6
+  qelm:
+    d: [1, 2, 4]
+    T_evolve:
+      mode: recommend_T_evolve_window_multipliers
+      multipliers_of_timescale: [0.75, 1.25]
+      constraint: t_lo <= T_evolve <= t_hi
+    cardinality: 6
+  selection_split: validation
+  gamma_tuned: false
+
+seed_grid: stage1_smoke
+seed_grids:
+  stage1: stage1_smoke
+  stage2: stage2_shots
+  stage3: stage3_gamma
+
+shot_tiers:
+  - infinity
+  - 10000
+
+gamma_grid: [0.02, 0.3, 0.5]
+dissipator_grid: [local_loss, collective_loss]
+
+robustness:
+  n4:
+    enabled: false
+    profile: smoke_is_already_n4
+  n6:
+    enabled: false
+    profile: omitted_in_smoke
+
+runtime_budget:
+  stage_budget_hours: 10.0
+  timing_source: results_freeze/timing_pilot.json
+  quantize_levels: 33
+  projection_method: scripts.bench_configs.project_runtime
+  shrink_order:
+    - cut_input_seeds_to_min_6
+    - cut_secondary_product_family
+  forbidden_cuts:
+    - gates
+    - shot_tiers
+    - gamma_grid
+    - tau_degree_axes
+  active_shrink:
+    stage1:
+      applied: false
+    stage2:
+      applied: false
+    stage3:
+      applied: false
+
+gates:
+  G1b_min_regime_fraction_each: 0.20
+  G1c_min_significant_qelm_over_linear_delay_fraction: 0.25
+  tie_band: 0.02
+  fdr_q: 0.10

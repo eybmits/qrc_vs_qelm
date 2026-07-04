@@ -40,10 +40,21 @@ Port their tests too (adjust imports). These must pass before the runner is trus
    observable set, Legendre τ/degree grids, primary V=1).
 2. Procedure per seed cell (checkpointed via `run_chunked`, keyed by cell id):
    - Draw the i.i.d. input stream from `input_seed` (frozen). Build QRC + QELM V=1
-     bundles at the frozen matched config (couplings from `coupling_seed`).
-   - GATE: `assert_bundles_matched` + `assert_features_live` on both — a cell that
-     fails is a hard error (do not silently score collapsed features), recorded in the
-     manifest.
+     bundles at the frozen matched config (couplings from `coupling_seed`), γ=0.3,
+     quantize_levels=33 (frozen).
+   - HP SELECTION (frozen protocol): sweep the equal-cardinality HP grids from config
+     (QRC dt×h_in = 6; QELM d×T_evolve = 6, T_evolve values inside the recommended live
+     window), select each model's HP on VALIDATION capacity (mean over the phase-diagram
+     targets), refit, score test. Same alpha grid, same splits, same val criterion for
+     both — this is the fair per-model tuning. γ is NOT tuned.
+   - GATE: `assert_bundles_matched` + `assert_features_live` on both selected bundles — a
+     cell that fails is a hard error (do not silently score collapsed features), recorded
+     in the manifest.
+   - Apply the frozen UNINFORMATIVE-CELL EXCLUSION when forming gate inputs: a cell where
+     BOTH models' test capacity < 0.05 is flagged `uninformative` and excluded from the
+     G1b/G1c fractions (but still recorded in the scores CSV). This is what realizes the
+     degree-{1,2,3} informative axis; the full {1,2,3,5} grid is still scored + saved for
+     the robustness appendix.
    - Cache each bundle's feature matrix to `<out>/features/<model>_<cell>.npz` and
      record its `sha256_file` in the manifest (resumable: skip rebuild if the npz +
      hash already present).

@@ -18,7 +18,8 @@ class SeedCell:
 
 _STAGE1_COUPLINGS = (314159, 271828, 161803)
 _STAGE3_COUPLINGS = (314159, 271828)
-_PILOT_COUPLINGS = (987654, 123456)
+_PILOT_INPUTS = (900, 901, 902, 903, 904)
+_PILOT_COUPLINGS = (987654, 123456, 555553)
 
 
 _SEED_GRIDS: dict[str, tuple[SeedCell, ...]] = {
@@ -40,7 +41,7 @@ _SEED_GRIDS: dict[str, tuple[SeedCell, ...]] = {
     ),
     "pilot": tuple(
         SeedCell(input_seed=input_seed, coupling_seed=coupling_seed)
-        for input_seed in (900, 901, 902)
+        for input_seed in _PILOT_INPUTS
         for coupling_seed in _PILOT_COUPLINGS
     ),
 }
