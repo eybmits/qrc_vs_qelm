@@ -5,9 +5,28 @@ build-backend = "setuptools.build_meta"
 [project]
 name = "qrc-vs-qelm"
 version = "0.1.0"
-description = "Pre-registered, resource-matched QRC versus QELM comparison."
+description = "Pre-registered, resource-matched comparison of Quantum Reservoir Computing and Quantum Extreme Learning Machines."
 readme = "README.md"
 requires-python = ">=3.11"
+license = { text = "MIT" }
+authors = [
+    { name = "Markus Baumann", email = "markus.baumann@campus.lmu.de" },
+]
+keywords = [
+    "quantum reservoir computing",
+    "quantum extreme learning machine",
+    "quantum machine learning",
+    "Lindblad dynamics",
+    "open quantum systems",
+]
+classifiers = [
+    "Development Status :: 4 - Beta",
+    "Intended Audience :: Science/Research",
+    "License :: OSI Approved :: MIT License",
+    "Programming Language :: Python :: 3.11",
+    "Programming Language :: Python :: 3.12",
+    "Topic :: Scientific/Engineering :: Physics",
+]
 dependencies = [
     "numpy",
     "scipy",
@@ -21,6 +40,10 @@ dependencies = [
 dev = [
     "pytest",
 ]
+
+[project.urls]
+Repository = "https://github.com/eybmits/qrc_vs_qelm"
+Issues = "https://github.com/eybmits/qrc_vs_qelm/issues"
 
 [tool.setuptools.packages.find]
 where = ["src"]

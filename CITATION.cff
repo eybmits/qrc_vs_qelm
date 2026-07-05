@@ -1,0 +1,27 @@
+cff-version: 1.2.0
+message: "If you use this software or its results, please cite it as below."
+title: >-
+  qrc_vs_qelm: A pre-registered, resource-matched comparison of Quantum
+  Reservoir Computing and Quantum Extreme Learning Machines
+abstract: >-
+  A pre-registered, resource-matched study comparing Quantum Reservoir
+  Computing (a recurrent dissipative Lindblad spin reservoir with intrinsic
+  quantum memory) against Quantum Extreme Learning Machines (a static,
+  memoryless quantum channel applied to a classical delay-embedding). It
+  characterises the memory x nonlinearity phase diagram, the effect of finite
+  shot budgets, and the role of engineered dissipation.
+authors:
+  - family-names: Baumann
+    given-names: Markus
+    affiliation: "Ludwig-Maximilians-Universität München"
+version: "0.1.0"
+date-released: "2026-07-05"
+license: MIT
+repository-code: "https://github.com/eybmits/qrc_vs_qelm"
+keywords:
+  - quantum reservoir computing
+  - quantum extreme learning machine
+  - quantum machine learning
+  - Lindblad dynamics
+  - open quantum systems
+  - temporal information processing

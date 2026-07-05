@@ -1,5 +1,10 @@
 # qrc_vs_qelm
 
+[![CI](https://github.com/eybmits/qrc_vs_qelm/actions/workflows/ci.yml/badge.svg)](https://github.com/eybmits/qrc_vs_qelm/actions/workflows/ci.yml)
+[![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](LICENSE)
+[![Python 3.11+](https://img.shields.io/badge/python-3.11%2B-blue.svg)](pyproject.toml)
+![tests](https://img.shields.io/badge/tests-153%20passing-brightgreen.svg)
+
 A **pre-registered, resource-matched comparison** of Quantum Reservoir Computing
 (QRC) — a recurrent dissipative Lindblad spin reservoir with intrinsic quantum
 memory — against Quantum Extreme Learning Machines (QELM) — a static, memoryless
@@ -18,6 +23,11 @@ independent reference (reproduces the source reservoir's short-term memory capac
 in-band and the continuous-dissipation-beats-Fuji-Nakajima ordering).
 
 ## Findings (N=5, confirmatory run)
+
+![Memory×nonlinearity phase diagram: QRC vs QELM advantage regions](paper/figures/phase_diagram.png)
+
+*RQ1 headline: the memory×nonlinearity phase diagram. Red = QRC-favored (long-delay
+memory band), blue = QELM-favored (short-delay nonlinear), with anchor tasks overlaid.*
 
 - **RQ1 — memory×nonlinearity phase diagram (GO).** QRC and QELM occupy distinct,
   individually significant regions: QRC wins the intermediate/long-delay **memory
@@ -89,3 +99,23 @@ design-pilot trail (on disjoint seeds) and every pre-execution correction. The
 
 `AGENTS.md` / `CLAUDE.md` document the AI-assisted development workflow (planner +
 implementer + reviewers) used to build the package.
+
+## Citation
+
+If you use this software or its results, please cite it (see `CITATION.cff`):
+
+```bibtex
+@software{baumann_qrc_vs_qelm_2026,
+  author  = {Baumann, Markus},
+  title   = {qrc\_vs\_qelm: A pre-registered, resource-matched comparison of
+             Quantum Reservoir Computing and Quantum Extreme Learning Machines},
+  year    = {2026},
+  version = {0.1.0},
+  url     = {https://github.com/eybmits/qrc_vs_qelm}
+}
+```
+
+## License
+
+Released under the [MIT License](LICENSE).
+
