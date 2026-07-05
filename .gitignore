@@ -33,4 +33,6 @@ results_*/
 data/*
 !data/frozen/
 !data/frozen/frozen_v1_config.json
+!data/reference/
+!data/reference/**
 *.npz
