@@ -83,6 +83,15 @@ shot_tiers:
 gamma_grid: [0.005, 0.02, 0.05, 0.1, 0.2, 0.3, 0.5]
 dissipator_grid: [local_loss, collective_loss]
 
+ipc:
+  window_grid: [1, 2, 3, 4, 5, 6, 8, 10, 12]
+  basis:
+    max_delay: 20
+    max_degree: 4
+    max_total_degree: 4
+    max_functions: 600
+  n_surrogates: 32
+
 robustness:
   n4:
     enabled: true

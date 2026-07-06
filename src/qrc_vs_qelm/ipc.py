@@ -15,6 +15,7 @@ from qrc_vs_qelm import pipeline, task_families
 LOGGER = logging.getLogger(__name__)
 DEFAULT_N_SURROGATES = 32
 DEFAULT_CUMULATIVE_SURROGATE_EPSILON = 1e-12
+DEFAULT_THRESHOLD_PERCENTILE = 99.0
 DEFAULT_BASIS_EDGE_WARNING_FRACTION = 0.05
 
 
@@ -229,38 +230,6 @@ def _retained_surrogate_total(
     return float(retained)
 
 
-def _raise_thresholds_for_cumulative_noise(
-    surrogate_capacities: Sequence[Mapping[str, float]],
-    basis: Sequence[BasisSpec],
-    thresholds_by_degree: dict[int, float],
-    epsilon: float,
-) -> dict[int, float]:
-    """Raise per-degree thresholds until every surrogate's retained total is tiny."""
-
-    if not surrogate_capacities:
-        return dict(thresholds_by_degree)
-
-    thresholds = dict(thresholds_by_degree)
-    epsilon = float(epsilon)
-    if epsilon < 0.0 or not np.isfinite(epsilon):
-        raise ValueError("cumulative_surrogate_epsilon must be finite and non-negative")
-
-    for capacities in surrogate_capacities:
-        while _retained_surrogate_total(capacities, basis, thresholds) > epsilon:
-            retained = [
-                (float(capacities.get(spec.key, 0.0)), spec.total_degree)
-                for spec in basis
-                if float(capacities.get(spec.key, 0.0))
-                > float(thresholds.get(spec.total_degree, np.inf))
-            ]
-            if not retained:
-                break
-            capacity, degree = max(retained, key=lambda item: item[0])
-            thresholds[degree] = max(float(thresholds.get(degree, 0.0)), capacity)
-
-    return thresholds
-
-
 def _surrogate_threshold_diagnostics(
     surrogate_capacities: Sequence[Mapping[str, float]],
     basis: Sequence[BasisSpec],
@@ -291,13 +260,14 @@ def significance_thresholds_by_degree(
     n_surrogates: int,
     rng: np.random.Generator | int,
     cumulative_surrogate_epsilon: float = DEFAULT_CUMULATIVE_SURROGATE_EPSILON,
+    threshold_percentile: float = DEFAULT_THRESHOLD_PERCENTILE,
 ) -> tuple[dict[int, float], dict[str, float]]:
-    """Estimate per-degree capacity floors from shuffled-input surrogates.
+    """Estimate per-degree single-function capacity floors from surrogates.
 
-    The floor for each degree is at least the largest same-degree surrogate
-    component and the largest same-degree surrogate cumulative capacity. The
-    latter is deliberately conservative: it prevents many moderate shuffled
-    capacities in one degree class from being retained together.
+    Each degree's floor is a high percentile of individual shuffled-target
+    capacities for basis functions of that degree. The floor is therefore a
+    per-function capacity in ``[0, 1]``; Dambre's total-capacity bound is
+    enforced later by clamping the retained sum to the feature rank.
     """
 
     values = _as_1d_float("u", u)
@@ -305,6 +275,12 @@ def significance_thresholds_by_degree(
     if X.shape[0] != values.shape[0]:
         raise ValueError("features and u must have the same number of rows")
     n_surrogates = _positive_int("n_surrogates", n_surrogates)
+    epsilon = float(cumulative_surrogate_epsilon)
+    if epsilon < 0.0 or not np.isfinite(epsilon):
+        raise ValueError("cumulative_surrogate_epsilon must be finite and non-negative")
+    percentile = float(threshold_percentile)
+    if not np.isfinite(percentile) or percentile < 0.0 or percentile > 100.0:
+        raise ValueError("threshold_percentile must be finite and in [0, 100]")
     if len(basis) == 0:
         return {}, {
             "surrogate_retained_capacity_max": 0.0,
@@ -313,38 +289,22 @@ def significance_thresholds_by_degree(
 
     generator = _rng_from(rng)
     by_degree: dict[int, list[float]] = {degree: [] for degree in _basis_degrees(basis)}
-    totals_by_degree: dict[int, list[float]] = {
-        degree: [] for degree in _basis_degrees(basis)
-    }
     surrogate_capacities: list[dict[str, float]] = []
     for _ in range(n_surrogates):
         shuffled = values[generator.permutation(values.shape[0])]
         targets = _basis_targets(shuffled, basis)
         capacities = _capacities_by_key(X, targets, splits, alphas)
         surrogate_capacities.append(capacities)
-        degree_totals = {degree: 0.0 for degree in totals_by_degree}
         for spec in basis:
             capacity = float(capacities.get(spec.key, 0.0))
             by_degree[spec.total_degree].append(capacity)
-            degree_totals[spec.total_degree] += capacity
-        for degree, total in degree_totals.items():
-            totals_by_degree[degree].append(total)
 
     thresholds = {
-        degree: float(
-            max(
-                max(capacities, default=0.0),
-                max(totals_by_degree.get(degree, ()), default=0.0),
-            )
-        )
+        degree: float(np.clip(np.percentile(capacities, percentile), 0.0, 1.0))
+        if capacities
+        else 0.0
         for degree, capacities in by_degree.items()
     }
-    thresholds = _raise_thresholds_for_cumulative_noise(
-        surrogate_capacities,
-        basis,
-        thresholds,
-        cumulative_surrogate_epsilon,
-    )
     diagnostics = _surrogate_threshold_diagnostics(
         surrogate_capacities,
         basis,
@@ -390,6 +350,16 @@ def _centered_feature_rank(features: np.ndarray, splits: pipeline.Splits) -> int
     return int(np.linalg.matrix_rank(centered))
 
 
+def _features_non_degenerate(features: np.ndarray, splits: pipeline.Splits) -> bool:
+    rows = splits.all
+    if rows.size == 0:
+        return False
+    selected = np.asarray(features[rows], dtype=np.float64)
+    if selected.size == 0:
+        return False
+    return bool(np.any(np.var(selected, axis=0) > 1e-12))
+
+
 def _scale_summary(
     values: Mapping[int, float],
     scale: float,
@@ -412,12 +382,13 @@ def total_ipc(
     """Compute thresholded total IPC and degree/delay IPC summaries.
 
     With ``threshold=None``, shuffled-input surrogates select deterministic
-    per-degree thresholds and verify that the retained shuffled total is no more
-    than ``cumulative_surrogate_epsilon``. For a fair QRC-vs-QELM delta, the
-    caller must pass the same ``basis``, ``alphas``, ``n_surrogates``, and
-    threshold-selection protocol to both models. If QRC and TD-QELM(k) have
-    different warm-up rows, evaluate all models on one shared valid-index set:
-    the intersection implied by the largest ``first_valid`` in the k-sweep.
+    per-degree single-function capacity floors. The retained sum is then
+    clamped to the centered feature rank, which is the bound enforcer. For a
+    fair QRC-vs-QELM delta, the caller must pass the same ``basis``, ``alphas``,
+    ``n_surrogates``, and threshold-selection protocol to both models. If QRC
+    and TD-QELM(k) have different warm-up rows, evaluate all models on one
+    shared valid-index set: the intersection implied by the largest
+    ``first_valid`` in the k-sweep.
     """
 
     values = _as_1d_float("u", u)
@@ -445,6 +416,9 @@ def total_ipc(
         threshold_value = float(threshold)
         if threshold_value < 0.0 or not np.isfinite(threshold_value):
             raise ValueError("threshold must be a finite non-negative value")
+        if threshold_value > 1.0 + 1e-9:
+            raise ValueError("threshold must not exceed 1.0")
+        threshold_value = float(min(threshold_value, 1.0))
         thresholds_by_degree = _thresholds_from_scalar(basis, threshold_value)
 
     targets = _basis_targets(values, basis)
@@ -457,11 +431,18 @@ def total_ipc(
     n_significant = 0
     max_basis_delay = max((_spec_max_delay(spec) for spec in basis), default=0)
     max_basis_degree = max((spec.total_degree for spec in basis), default=0)
-    basis_edge_capacity = 0.0
+    uncut_total = 0.0
+    uncut_basis_edge_capacity = 0.0
     capacities_by_key: dict[str, float] = {}
     retained_capacities_by_key: dict[str, float] = {}
     for spec in basis:
         capacity = float(capacities.get(spec.key, 0.0))
+        uncut_total += capacity
+        if (
+            _spec_max_delay(spec) == max_basis_delay
+            or spec.total_degree == max_basis_degree
+        ):
+            uncut_basis_edge_capacity += capacity
         capacities_by_key[spec.key] = capacity
         degree_threshold = thresholds_by_degree.get(spec.total_degree, threshold_value)
         if capacity <= degree_threshold:
@@ -472,8 +453,6 @@ def total_ipc(
         raw_by_degree[spec.total_degree] = raw_by_degree.get(spec.total_degree, 0.0) + capacity
         delay = _spec_max_delay(spec)
         raw_by_delay[delay] = raw_by_delay.get(delay, 0.0) + capacity
-        if delay == max_basis_delay or spec.total_degree == max_basis_degree:
-            basis_edge_capacity += capacity
 
     raw_by_degree = {degree: raw_by_degree[degree] for degree in sorted(raw_by_degree)}
     raw_by_delay = {delay: raw_by_delay[delay] for delay in sorted(raw_by_delay)}
@@ -495,8 +474,8 @@ def total_ipc(
     by_delay = _scale_summary(raw_by_delay, scale)
     mc = float(by_degree.get(1, 0.0))
     nc = float(sum(value for degree, value in by_degree.items() if degree >= 2))
-    if raw_total > 0.0:
-        basis_edge_capacity = float(basis_edge_capacity / raw_total)
+    if uncut_total > 0.0:
+        basis_edge_capacity = float(uncut_basis_edge_capacity / uncut_total)
     else:
         basis_edge_capacity = 0.0
     if basis_edge_capacity > DEFAULT_BASIS_EDGE_WARNING_FRACTION:
@@ -506,6 +485,18 @@ def total_ipc(
             basis_edge_capacity,
             max_basis_delay,
             max_basis_degree,
+        )
+    threshold_saturated = bool(
+        len(basis) > 0 and n_significant == 0 and _features_non_degenerate(X, splits)
+    )
+    if threshold_saturated:
+        LOGGER.warning(
+            "IPC THRESHOLD SATURATED: non-degenerate features retained zero "
+            "significant basis functions (max_threshold=%.6g, n_basis=%d, "
+            "effective_rank=%d)",
+            threshold_value,
+            len(basis),
+            effective_rank,
         )
 
     return {
@@ -519,6 +510,7 @@ def total_ipc(
         "n_significant": int(n_significant),
         "n_basis": int(len(basis)),
         "threshold": threshold_value,
+        "threshold_saturated": threshold_saturated,
         "thresholds_by_degree": {
             degree: float(thresholds_by_degree[degree])
             for degree in sorted(thresholds_by_degree)
@@ -540,6 +532,7 @@ __all__ = [
     "BasisSpec",
     "DEFAULT_N_SURROGATES",
     "DEFAULT_CUMULATIVE_SURROGATE_EPSILON",
+    "DEFAULT_THRESHOLD_PERCENTILE",
     "basis_target",
     "dambre_basis",
     "significance_threshold",

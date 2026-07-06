@@ -3,7 +3,12 @@ import pytest
 
 from qrc_vs_qelm import controls, ipc, pipeline, task_families
 from qrc_vs_qelm.core import readout
-from qrc_vs_qelm.models.api import QRCConfig, build_qrc_features
+from qrc_vs_qelm.models.api import (
+    QRCConfig,
+    build_features,
+    build_qrc_features,
+    windowed_qelm_from_qrc,
+)
 
 
 def _splits_for(u, basis, max_delay):
@@ -189,12 +194,11 @@ def test_surrogate_significance_cut_removes_noise_feature_capacity():
 
     assert result["threshold"] > 0.0
     assert result["thresholds_by_degree"]
-    assert (
-        result["surrogate_retained_capacity_max"]
-        <= ipc.DEFAULT_CUMULATIVE_SURROGATE_EPSILON + 1e-12
-    )
+    assert max(result["thresholds_by_degree"].values()) <= 1.0 + 1e-9
+    assert result["surrogate_retained_capacity_max"] > 0.0
     assert result["total_ipc"] == pytest.approx(0.0, abs=1e-12)
     assert result["n_significant"] == 0
+    assert result["threshold_saturated"] is True
 
 
 def test_default_surrogate_path_zeroes_bilinear_leak_and_clamps_bound_over_seeds():
@@ -226,9 +230,9 @@ def test_default_surrogate_path_zeroes_bilinear_leak_and_clamps_bound_over_seeds
         rank = np.linalg.matrix_rank(rows - rows.mean(axis=0))
 
         assert result["retained_capacities_by_key"][bilinear_key] == 0.0
-        assert result["raw_by_degree"].get(2, 0.0) == pytest.approx(0.0, abs=1e-12)
         assert result["total_ipc"] <= rank + 1e-9
         assert result["effective_rank"] == rank
+        assert max(result["thresholds_by_degree"].values()) <= 1.0 + 1e-9
 
 
 def test_default_surrogate_path_enforces_bound_on_small_qrc_features():
@@ -309,9 +313,135 @@ def test_production_basis_default_surrogate_path_holds_theorem_bound():
 
         assert result["total_ipc"] <= rank + 1e-9
         assert result["effective_rank"] == rank
-        assert result["bound_excess"] <= 1e-9
-        assert result["raw_sum"] <= rank + 1e-9
+        assert result["bound_excess"] == pytest.approx(
+            max(0.0, result["raw_sum"] - rank),
+            abs=1e-9,
+        )
+        assert result["raw_sum"] >= result["total_ipc"] - 1e-9
+        assert max(result["thresholds_by_degree"].values()) <= 1.0 + 1e-9
         assert set(result["by_delay"]).issubset(set(range(21)))
+
+
+def test_large_basis_thresholds_remain_single_function_capacities():
+    rng = np.random.default_rng(61_001)
+    T = 240
+    u = rng.uniform(0.0, 1.0, size=T)
+    X = rng.normal(size=(T, 8))
+    basis = ipc.dambre_basis(
+        max_delay=20,
+        max_degree=4,
+        max_total_degree=4,
+        max_functions=600,
+    )
+    degree_counts = {
+        degree: sum(spec.total_degree == degree for spec in basis)
+        for degree in {spec.total_degree for spec in basis}
+    }
+    assert degree_counts[2] > 200
+    assert degree_counts[3] > 300
+    splits = _splits_for(u, basis, max_delay=20)
+
+    result = ipc.total_ipc(
+        X,
+        u,
+        basis,
+        splits,
+        alphas=(1e-6, 1e-3),
+        n_surrogates=8,
+        rng=np.random.default_rng(61_101),
+    )
+
+    assert result["thresholds_by_degree"]
+    assert all(
+        threshold <= 1.0 + 1e-9
+        for threshold in result["thresholds_by_degree"].values()
+    )
+    assert result["threshold"] <= 1.0 + 1e-9
+
+
+def test_real_qrc_ipc_ceiling_path_retains_weak_dissipation_memory():
+    rng = np.random.default_rng(62_001)
+    T = 320
+    u = rng.uniform(0.02, 0.98, size=T)
+    basis = ipc.dambre_basis(
+        max_delay=20,
+        max_degree=4,
+        max_total_degree=4,
+        max_functions=600,
+    )
+    assert sum(spec.total_degree == 2 for spec in basis) > 200
+    assert sum(spec.total_degree == 3 for spec in basis) > 300
+    targets = {spec.key: ipc.basis_target(u, spec) for spec in basis}
+    observables = readout.pauli_observables(2, axes=("x", "z"), max_weight=1)
+    alphas = (0.0, 1e-8, 1e-4, 1e-2)
+    window_grid = (1, 3)
+    weak_gamma_qrc_total = None
+
+    for gamma in (0.02, 0.1, 0.3):
+        cfg = QRCConfig(
+            dt=0.5,
+            h_in=1.0,
+            n_virtual=1,
+            n_qubits=2,
+            J_s=1.0,
+            h=0.5,
+            gamma=gamma,
+            dissipator="local_loss",
+            quantize_levels=33,
+        )
+        qrc_bundle = build_features(cfg, u, 314159, observables)
+        qelm_bundles = [
+            build_features(
+                windowed_qelm_from_qrc(cfg, window_k=window_k),
+                u,
+                314159,
+                observables,
+            )
+            for window_k in window_grid
+        ]
+        idx = pipeline.stage_valid_indices(
+            [qrc_bundle, *qelm_bundles],
+            targets,
+            washout=20,
+            max_delay=20,
+        )
+        splits = pipeline.make_splits(idx)
+        threshold_seed = 63_000 + int(round(gamma * 10_000))
+        qrc_result = ipc.total_ipc(
+            qrc_bundle.features,
+            u,
+            basis,
+            splits,
+            alphas=alphas,
+            n_surrogates=4,
+            rng=np.random.default_rng(threshold_seed),
+        )
+        if gamma == 0.02:
+            weak_gamma_qrc_total = qrc_result["total_ipc"]
+
+        for qelm_bundle in qelm_bundles:
+            qelm_result = ipc.total_ipc(
+                qelm_bundle.features,
+                u,
+                basis,
+                splits,
+                alphas=alphas,
+                n_surrogates=4,
+                rng=np.random.default_rng(threshold_seed),
+            )
+            delta = qrc_result["total_ipc"] - qelm_result["total_ipc"]
+            estimation_noise = max(
+                qrc_result["surrogate_retained_capacity_max"],
+                qelm_result["surrogate_retained_capacity_max"],
+            )
+            assert delta >= -estimation_noise - 1e-9
+            assert qrc_result["threshold_saturated"] is False
+            assert qelm_result["threshold_saturated"] is False
+            assert max(qrc_result["thresholds_by_degree"].values()) <= 1.0 + 1e-9
+            assert max(qelm_result["thresholds_by_degree"].values()) <= 1.0 + 1e-9
+
+    assert weak_gamma_qrc_total is not None
+    assert weak_gamma_qrc_total > 0.0
 
 
 def test_total_ipc_is_deterministic_for_same_rng_seed():

@@ -76,6 +76,15 @@ shot_tiers:
 gamma_grid: [0.02, 0.3, 0.5]
 dissipator_grid: [local_loss, collective_loss]
 
+ipc:
+  window_grid: [1, 2, 3]
+  basis:
+    max_delay: 20
+    max_degree: 4
+    max_total_degree: 4
+    max_functions: 600
+  n_surrogates: 4
+
 robustness:
   n4:
     enabled: false
@@ -104,6 +113,12 @@ runtime_budget:
       applied: false
     stage3:
       applied: false
+    stage_ipc:
+      applied: true
+      window_grid_kept: [1, 2, 3]
+      input_seeds_kept: [0]
+      coupling_seeds_kept: [314159]
+      seed_cells_kept: 1
 
 gates:
   G1b_min_regime_fraction_each: 0.20
