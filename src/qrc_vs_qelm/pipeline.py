@@ -108,7 +108,13 @@ def stage_valid_indices(
     washout: int,
     max_delay: int = 0,
 ) -> np.ndarray:
-    """Return shared runner-valid rows including bundle warm-up cutoffs."""
+    """Return shared runner-valid rows including bundle warm-up cutoffs.
+
+    For QRC-vs-TD-QELM(k) sweeps, pass every bundle that participates in the
+    sweep, including the largest-k TD-QELM bundle. The returned rows are the
+    intersection implied by the most restrictive ``first_valid`` so every model
+    and every k is scored on identical train/validation/test indices.
+    """
 
     checked = _as_target_dict(targets)
     lengths = {y.shape[0] for y in checked.values()}

@@ -8,7 +8,7 @@ from qrc_vs_qelm.matching import (
     assert_features_live,
     participation_effective_rank,
 )
-from qrc_vs_qelm.models.api import QELMConfig, QRCConfig, build_features
+from qrc_vs_qelm.models.api import FeatureBundle, QELMConfig, QRCConfig, build_features
 
 
 def _old_bias_penalized_predict(X_train, y_train, X_eval, alpha):
@@ -224,6 +224,58 @@ def test_stage_valid_indices_excludes_qelm_warmup_for_tau_zero_target():
             unsafe_splits,
             first_valid=bundle.first_valid,
         )
+
+
+def test_stage_valid_indices_uses_most_restrictive_first_valid_for_k_sweep():
+    rng = np.random.default_rng(20260706)
+    T = 36
+    u = rng.uniform(0.02, 0.98, size=T)
+    targets = task_families.build_family_targets(u, taus=[0, 2], degrees=[1])
+    features = rng.normal(size=(T, 4))
+
+    def bundle(model, first_valid):
+        return FeatureBundle(
+            features=features.copy(),
+            model=model,
+            config={},
+            couplings=np.zeros((1, 1)),
+            n_obs=4,
+            n_multiplex=1,
+            first_valid=first_valid,
+        )
+
+    qrc_bundle = bundle("qrc", 0)
+    qelm_k2 = bundle("qelm", 1)
+    qelm_k6 = bundle("qelm", 5)
+
+    idx = pipeline.stage_valid_indices(
+        [qrc_bundle, qelm_k2, qelm_k6],
+        targets,
+        washout=0,
+        max_delay=2,
+    )
+    splits = pipeline.make_splits(idx)
+    assert idx[0] == qelm_k6.first_valid
+
+    qrc_frame = pipeline.evaluate_feature_matrix(
+        qrc_bundle.features,
+        targets,
+        splits,
+        first_valid=qrc_bundle.first_valid,
+    )
+    qelm_frame = pipeline.evaluate_feature_matrix(
+        qelm_k2.features,
+        targets,
+        splits,
+        first_valid=qelm_k2.first_valid,
+    )
+    qrc_ctx = qrc_frame.attrs["evaluation_context"]
+    qelm_ctx = qelm_frame.attrs["evaluation_context"]
+
+    assert np.array_equal(qrc_ctx.indices, qelm_ctx.indices)
+    assert np.array_equal(qrc_ctx.train_idx, qelm_ctx.train_idx)
+    assert np.array_equal(qrc_ctx.val_idx, qelm_ctx.val_idx)
+    assert np.array_equal(qrc_ctx.test_idx, qelm_ctx.test_idx)
 
 
 def test_matched_qrc_qelm_controls_share_targets_and_indices():
