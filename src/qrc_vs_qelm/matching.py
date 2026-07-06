@@ -70,6 +70,11 @@ def assert_matched(
         violations.append("quantize_levels")
     if qrc_cfg.n_virtual != qelm_cfg.n_snapshots:
         violations.append("multiplexing")
+    if qelm_cfg.encoding == "time_delayed":
+        if not _same_float(qrc_cfg.h_in, qelm_cfg.h_in):
+            violations.append("h_in")
+        if not _same_float(qrc_cfg.dt, qelm_cfg.T_evolve):
+            violations.append("T_evolve")
 
     n_obs = _shared_n_observables(qrc_cfg, observables)
     qrc_dim = qrc_cfg.n_virtual * n_obs

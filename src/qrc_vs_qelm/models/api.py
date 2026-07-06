@@ -149,7 +149,14 @@ class QRCConfig:
 
 @dataclass(frozen=True)
 class QELMConfig:
-    """Configuration for the static QELM feature builder."""
+    """Configuration for the QELM feature builder.
+
+    ``d`` is the delay-embedding window length ``k``. Spatial encoding maps the
+    window cyclically onto qubits and therefore requires ``k <= n_qubits``.
+    Time-delayed encoding re-uploads the window through the recurrent
+    input-affine dynamics from a reset state, so ``k`` is independent of
+    ``n_qubits``.
+    """
 
     d: int
     T_evolve: float
@@ -160,6 +167,8 @@ class QELMConfig:
     gamma: float
     dissipator: str
     quantize_levels: int | None = None
+    h_in: float = 1.0
+    encoding: str = "spatial"
 
     def __post_init__(self) -> None:
         _validate_common(
@@ -171,7 +180,9 @@ class QELMConfig:
         )
         if int(self.d) < 1:
             raise ValueError("d must be >= 1")
-        if int(self.d) > int(self.n_qubits):
+        if self.encoding not in {"spatial", "time_delayed"}:
+            raise ValueError("encoding must be 'spatial' or 'time_delayed'")
+        if self.encoding == "spatial" and int(self.d) > int(self.n_qubits):
             raise ValueError("d must satisfy 1 <= d <= n_qubits")
         if float(self.T_evolve) < 0:
             raise ValueError("T_evolve must be non-negative")
@@ -183,8 +194,39 @@ class QELMConfig:
         object.__setattr__(self, "n_qubits", int(self.n_qubits))
         object.__setattr__(self, "J_s", float(self.J_s))
         object.__setattr__(self, "h", float(self.h))
+        object.__setattr__(self, "h_in", float(self.h_in))
         object.__setattr__(self, "gamma", float(self.gamma))
         object.__setattr__(self, "quantize_levels", _cache_levels(self.quantize_levels))
+        object.__setattr__(self, "encoding", str(self.encoding))
+
+
+def windowed_qelm_from_qrc(
+    qrc_cfg: QRCConfig,
+    *,
+    window_k: int,
+    n_snapshots: int | None = None,
+) -> QELMConfig:
+    """Build the reset-replay TD-QELM config matching one QRC config.
+
+    Each delayed upload step uses the QRC ``dt`` as its evolution time.  By
+    default the readout multiplexing is also copied, so the resulting feature
+    width is unchanged for the shared observable set.
+    """
+    return QELMConfig(
+        d=int(window_k),
+        T_evolve=qrc_cfg.dt,
+        n_snapshots=(
+            qrc_cfg.n_virtual if n_snapshots is None else int(n_snapshots)
+        ),
+        n_qubits=qrc_cfg.n_qubits,
+        J_s=qrc_cfg.J_s,
+        h=qrc_cfg.h,
+        gamma=qrc_cfg.gamma,
+        dissipator=qrc_cfg.dissipator,
+        quantize_levels=qrc_cfg.quantize_levels,
+        h_in=qrc_cfg.h_in,
+        encoding="time_delayed",
+    )
 
 
 @dataclass
@@ -260,6 +302,9 @@ def _build_qelm_bundle(
         h=cfg.h,
         coupling_seed=int(coupling_seed),
         observables=obs,
+        encoding=cfg.encoding,
+        quantize_levels=cfg.quantize_levels,
+        h_in=cfg.h_in,
     )
     rng = np.random.default_rng(int(coupling_seed))
     J = reservoirs.random_couplings(cfg.n_qubits, cfg.J_s, rng)

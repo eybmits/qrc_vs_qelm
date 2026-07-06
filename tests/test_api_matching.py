@@ -21,6 +21,7 @@ from qrc_vs_qelm.models.api import (
     build_features,
     build_qrc_features,
     quantize_inputs,
+    windowed_qelm_from_qrc,
 )
 
 
@@ -81,6 +82,55 @@ def test_assert_matched_passes_and_names_independent_axis_failures():
     for bad_qelm, axis in cases:
         with pytest.raises(MatchingError, match=axis):
             assert_matched(qrc_cfg, bad_qelm)
+
+
+def test_assert_matched_time_delayed_checks_recurrent_dynamics():
+    qrc_cfg, _ = _matched_configs()
+    td_qelm = windowed_qelm_from_qrc(qrc_cfg, window_k=5)
+    assert_matched(qrc_cfg, td_qelm)
+
+    with pytest.raises(MatchingError, match="h_in"):
+        assert_matched(qrc_cfg, replace(td_qelm, h_in=qrc_cfg.h_in + 0.1))
+
+    with pytest.raises(MatchingError, match="T_evolve"):
+        assert_matched(qrc_cfg, replace(td_qelm, T_evolve=qrc_cfg.dt + 0.1))
+
+
+def test_windowed_qelm_from_qrc_matches_bundles_and_preserves_dimension():
+    inputs = np.linspace(0.05, 0.95, 18)
+    seed = 47
+    qrc_cfg = QRCConfig(
+        dt=0.3,
+        h_in=0.5,
+        n_virtual=2,
+        n_qubits=3,
+        J_s=0.65,
+        h=0.35,
+        gamma=0.15,
+        dissipator="dephasing",
+        quantize_levels=17,
+    )
+    qelm_cfg = windowed_qelm_from_qrc(qrc_cfg, window_k=6)
+
+    assert qelm_cfg.encoding == "time_delayed"
+    assert qelm_cfg.T_evolve == qrc_cfg.dt
+    assert qelm_cfg.n_snapshots == qrc_cfg.n_virtual
+    assert qelm_cfg.h_in == qrc_cfg.h_in
+    assert qelm_cfg.n_qubits == qrc_cfg.n_qubits
+    assert qelm_cfg.J_s == qrc_cfg.J_s
+    assert qelm_cfg.h == qrc_cfg.h
+    assert qelm_cfg.gamma == qrc_cfg.gamma
+    assert qelm_cfg.dissipator == qrc_cfg.dissipator
+    assert qelm_cfg.quantize_levels == qrc_cfg.quantize_levels
+    assert_matched(qrc_cfg, qelm_cfg)
+
+    qrc = build_features(qrc_cfg, inputs, seed)
+    td_qelm = build_features(qelm_cfg, inputs, seed)
+
+    assert qrc.features.shape[1] == td_qelm.features.shape[1]
+    assert qrc.n_obs == td_qelm.n_obs
+    assert qrc.n_multiplex == td_qelm.n_multiplex
+    assert_bundles_matched(qrc, td_qelm)
 
 
 def test_config_readout_dimension_cofires_with_multiplexing():

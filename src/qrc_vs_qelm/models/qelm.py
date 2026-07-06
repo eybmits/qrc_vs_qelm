@@ -1,8 +1,10 @@
-"""Static, memoryless QELM feature map.
+"""Memoryless QELM feature maps.
 
 QELM rows are independent quantum feature-map evaluations on classical
-delay-embedding windows. The Lindblad channel is input-independent, so snapshot
-propagators are precomputed once per channel configuration.
+delay-embedding windows. Spatial QELM maps the window onto a product state and
+then applies an input-independent Lindblad channel. Time-delayed QELM resets the
+same input-affine Lindblad reservoir used by QRC for each row, replays the
+window in temporal order, and measures only the replayed trajectory.
 """
 
 from __future__ import annotations
@@ -13,6 +15,34 @@ from typing import Sequence
 import numpy as np
 
 from qrc_vs_qelm.core import dissipators, liouvillian, operators, readout, reservoirs
+
+
+_VALID_ENCODINGS = {"spatial", "time_delayed"}
+
+
+def _validate_encoding(encoding: str) -> str:
+    if encoding not in _VALID_ENCODINGS:
+        raise ValueError("encoding must be 'spatial' or 'time_delayed'")
+    return str(encoding)
+
+
+def _cache_levels(levels: int | None) -> int | None:
+    if levels is None or int(levels) == 0:
+        return None
+    if int(levels) != levels:
+        raise ValueError("quantize_levels must be an integer, 0, or None")
+    if int(levels) < 2:
+        raise ValueError("quantize_levels must be >= 2, 0, or None")
+    return int(levels)
+
+
+def _quantize_inputs(u: np.ndarray, levels: int | None) -> np.ndarray:
+    values = np.asarray(u, dtype=np.float64)
+    checked = _cache_levels(levels)
+    if checked is None:
+        return values.copy()
+    b = checked - 1
+    return (np.round(values * b) / b).astype(np.float64, copy=False)
 
 
 def first_valid_index(d: int) -> int:
@@ -195,6 +225,54 @@ def _dissipator_jumps(
     return factory(n_qubits, float(gamma))
 
 
+def time_delayed_window_states(
+    reservoir: reservoirs.LindbladReservoir,
+    window: np.ndarray,
+    n_snapshots: int,
+) -> list[np.ndarray]:
+    """Replay one causal window from reset and return readout states.
+
+    ``window`` is ordered oldest to newest. Snapshot handling follows the QRC
+    virtual-node convention: the first ``k - 1`` inputs are full reservoir
+    steps, then ``n_snapshots`` states are sampled inside the newest input step.
+    This keeps the feature width identical to spatial QELM,
+    ``n_snapshots * n_observables``.
+    """
+    values = np.asarray(window, dtype=float)
+    if values.ndim != 1 or len(values) == 0:
+        raise ValueError("window must be a non-empty one-dimensional array")
+    if int(n_snapshots) < 1:
+        raise ValueError("n_snapshots must be >= 1")
+
+    rho = reservoir.initial_state()
+    for s in values[:-1]:
+        rho = reservoir.step(rho, float(s))
+    return reservoir.substep_states(rho, float(values[-1]), int(n_snapshots))
+
+
+def _time_delayed_features(
+    inputs: np.ndarray,
+    *,
+    reservoir: reservoirs.LindbladReservoir,
+    d: int,
+    n_snapshots: int,
+    observables: Sequence[readout.Observable],
+) -> np.ndarray:
+    windows_newest_first = delay_embed(inputs, d)
+    obs = list(observables)
+    n_obs = len(obs)
+    X = np.empty((windows_newest_first.shape[0], int(n_snapshots) * n_obs), dtype=float)
+
+    for row_idx, newest_first in enumerate(windows_newest_first):
+        states = time_delayed_window_states(
+            reservoir,
+            newest_first[::-1],
+            int(n_snapshots),
+        )
+        X[row_idx] = readout.features_from_states(states, obs).reshape(-1)
+    return X
+
+
 def build_qelm_features(
     inputs: np.ndarray,
     *,
@@ -208,8 +286,21 @@ def build_qelm_features(
     h: float,
     coupling_seed: int,
     observables: Sequence[readout.Observable] | None = None,
+    encoding: str = "spatial",
+    quantize_levels: int | None = None,
+    h_in: float = 1.0,
 ) -> np.ndarray:
     """Build deterministic QELM features for a full input sequence."""
+    checked_encoding = _validate_encoding(encoding)
+    if d < 1:
+        raise ValueError("d must be >= 1")
+    if T_evolve < 0:
+        raise ValueError("T_evolve must be non-negative")
+    if n_snapshots < 1:
+        raise ValueError("n_snapshots must be >= 1")
+
+    driven_inputs = _quantize_inputs(inputs, quantize_levels)
+    quantize = _cache_levels(quantize_levels)
     rng = np.random.default_rng(coupling_seed)
     J = reservoirs.random_couplings(n_qubits, J_s, rng)
     H_static = reservoirs.ising_xx_hamiltonian(J, h, n_qubits)
@@ -219,6 +310,24 @@ def build_qelm_features(
         if observables is None
         else list(observables)
     )
+    if checked_encoding == "time_delayed":
+        reservoir = reservoirs.LindbladReservoir.from_terms(
+            n_qubits,
+            H_static,
+            float(h_in) * reservoirs.transverse_drive(n_qubits),
+            jumps,
+            T_evolve,
+            cache_propagators=quantize is not None,
+            quantize=quantize,
+        )
+        return _time_delayed_features(
+            driven_inputs,
+            reservoir=reservoir,
+            d=d,
+            n_snapshots=n_snapshots,
+            observables=obs,
+        )
+
     channel = QELMChannel.from_terms(
         n_qubits=n_qubits,
         H_static=H_static,
@@ -226,4 +335,4 @@ def build_qelm_features(
         T_evolve=T_evolve,
         n_snapshots=n_snapshots,
     )
-    return channel.features(delay_embed(inputs, d), obs)
+    return channel.features(delay_embed(driven_inputs, d), obs)
