@@ -1,0 +1,5173 @@
+{
+  "config": {
+    "base_profile": "full",
+    "dissipator": "local_loss",
+    "n_qubits": 5,
+    "signed_delta": "IPC(QRC) - IPC(QELM,k)",
+    "tuned_gamma": 0.3,
+    "washout_rule": "round(T * config.washout / config.T)"
+  },
+  "confirmatory_seeds_touched": false,
+  "part_a": {
+    "criteria": {
+      "basis_edge_capacity_max_lte": 0.05,
+      "rank_clamp_fraction_max_lt": 0.98,
+      "successive_T_relative_change_lt": 0.05
+    },
+    "selection": {
+      "candidates": [
+        {
+          "T": 500,
+          "basis_edge_ok": false,
+          "eligible": false,
+          "max_successive_relative_change": null,
+          "rank_clamp_ok": false,
+          "reason": "first T has no previous T for stability check"
+        },
+        {
+          "T": 1000,
+          "basis_edge_capacity_max": 0.4998513081910356,
+          "basis_edge_ok": false,
+          "eligible": false,
+          "max_successive_relative_change": 0.18758646838659393,
+          "rank_clamp_fraction_max": "inf",
+          "rank_clamp_ok": false,
+          "reason": "not stable/clamp-free/basis-edge-small"
+        },
+        {
+          "T": 2000,
+          "basis_edge_capacity_max": 0.4948669331340809,
+          "basis_edge_ok": false,
+          "eligible": false,
+          "max_successive_relative_change": 0.10201354583410238,
+          "rank_clamp_fraction_max": "inf",
+          "rank_clamp_ok": false,
+          "reason": "not stable/clamp-free/basis-edge-small"
+        }
+      ],
+      "found": false,
+      "reason": "no T satisfied stability, unclamped rank, and small basis edge",
+      "t_star": null
+    },
+    "series": [
+      {
+        "T": 500,
+        "basis_edge_capacity_max": 0.5803470556428272,
+        "basis_edge_capacity_mean": 0.3647463673850739,
+        "effective_rank_mean": 6.0,
+        "ipc_total_ci_high": 3.7695339093846574,
+        "ipc_total_ci_low": 1.7626206322858433,
+        "ipc_total_mean": 2.7790907028300764,
+        "model": "qelm",
+        "n": 15,
+        "n_significant_mean": 10.4,
+        "rank_clamp_fraction_max": "inf",
+        "rank_clamp_fraction_mean": "inf",
+        "raw_total_mean": 2.7790907028300764,
+        "series_id": "QELM(k=1)",
+        "threshold_saturated_fraction": 0.0,
+        "window_k": 1.0
+      },
+      {
+        "T": 500,
+        "basis_edge_capacity_max": 0.5242123937772705,
+        "basis_edge_capacity_mean": 0.4972545409103895,
+        "effective_rank_mean": 45.0,
+        "ipc_total_ci_high": 27.21326546489945,
+        "ipc_total_ci_low": 26.341659751335143,
+        "ipc_total_mean": 26.78780537519982,
+        "model": "qelm",
+        "n": 15,
+        "n_significant_mean": 38.06666666666667,
+        "rank_clamp_fraction_max": 0.6322170737553502,
+        "rank_clamp_fraction_mean": 0.5952845638933294,
+        "raw_total_mean": 26.78780537519982,
+        "series_id": "QELM(k=4)",
+        "threshold_saturated_fraction": 0.0,
+        "window_k": 4.0
+      },
+      {
+        "T": 500,
+        "basis_edge_capacity_max": 0.22185826790368302,
+        "basis_edge_capacity_mean": 0.1711894994103585,
+        "effective_rank_mean": 45.0,
+        "ipc_total_ci_high": 26.24013602217975,
+        "ipc_total_ci_low": 24.60239321690724,
+        "ipc_total_mean": 25.468065428089698,
+        "model": "qelm",
+        "n": 15,
+        "n_significant_mean": 59.13333333333333,
+        "rank_clamp_fraction_max": 0.6012075326328863,
+        "rank_clamp_fraction_mean": 0.5659570095131043,
+        "raw_total_mean": 25.468065428089698,
+        "series_id": "QELM(k=8)",
+        "threshold_saturated_fraction": 0.0,
+        "window_k": 8.0
+      },
+      {
+        "T": 500,
+        "basis_edge_capacity_max": 0.19645060629237507,
+        "basis_edge_capacity_mean": 0.14822084660684595,
+        "effective_rank_mean": 45.0,
+        "ipc_total_ci_high": 24.202169042978646,
+        "ipc_total_ci_low": 22.526096609703348,
+        "ipc_total_mean": 23.32300021638819,
+        "model": "qrc",
+        "n": 15,
+        "n_significant_mean": 82.93333333333334,
+        "rank_clamp_fraction_max": 0.5928867652332377,
+        "rank_clamp_fraction_mean": 0.5182888936975153,
+        "raw_total_mean": 23.32300021638819,
+        "series_id": "QRC",
+        "threshold_saturated_fraction": 0.0,
+        "window_k": null
+      },
+      {
+        "T": 1000,
+        "basis_edge_capacity_max": 0.49498914791981424,
+        "basis_edge_capacity_mean": 0.32239589538270624,
+        "effective_rank_mean": 6.0,
+        "ipc_total_ci_high": 2.970065624445299,
+        "ipc_total_ci_low": 1.3596075811980597,
+        "ipc_total_mean": 2.257770892560165,
+        "model": "qelm",
+        "n": 15,
+        "n_significant_mean": 7.8,
+        "rank_clamp_fraction_max": "inf",
+        "rank_clamp_fraction_mean": "inf",
+        "raw_total_mean": 2.257770892560165,
+        "series_id": "QELM(k=1)",
+        "threshold_saturated_fraction": 0.0,
+        "window_k": 1.0
+      },
+      {
+        "T": 1000,
+        "basis_edge_capacity_max": 0.4998513081910356,
+        "basis_edge_capacity_mean": 0.4877243272183777,
+        "effective_rank_mean": 45.0,
+        "ipc_total_ci_high": 26.877714230685047,
+        "ipc_total_ci_low": 26.313208907706073,
+        "ipc_total_mean": 26.59705530946595,
+        "model": "qelm",
+        "n": 15,
+        "n_significant_mean": 38.2,
+        "rank_clamp_fraction_max": 0.6099576896480212,
+        "rank_clamp_fraction_mean": 0.5910456735436879,
+        "raw_total_mean": 26.59705530946595,
+        "series_id": "QELM(k=4)",
+        "threshold_saturated_fraction": 0.0,
+        "window_k": 4.0
+      },
+      {
+        "T": 1000,
+        "basis_edge_capacity_max": 0.15218085563084208,
+        "basis_edge_capacity_mean": 0.13039982881802686,
+        "effective_rank_mean": 45.0,
+        "ipc_total_ci_high": 27.664003160708862,
+        "ipc_total_ci_low": 26.192181179028395,
+        "ipc_total_mean": 26.907363491955962,
+        "model": "qelm",
+        "n": 15,
+        "n_significant_mean": 72.93333333333334,
+        "rank_clamp_fraction_max": 0.6590417305205807,
+        "rank_clamp_fraction_mean": 0.5979414109323548,
+        "raw_total_mean": 26.907363491955962,
+        "series_id": "QELM(k=8)",
+        "threshold_saturated_fraction": 0.0,
+        "window_k": 8.0
+      },
+      {
+        "T": 1000,
+        "basis_edge_capacity_max": 0.11218034673315629,
+        "basis_edge_capacity_mean": 0.08738434515973349,
+        "effective_rank_mean": 45.0,
+        "ipc_total_ci_high": 27.317747399255442,
+        "ipc_total_ci_low": 25.431607633358993,
+        "ipc_total_mean": 26.419932925693168,
+        "model": "qrc",
+        "n": 15,
+        "n_significant_mean": 116.13333333333334,
+        "rank_clamp_fraction_max": 0.6437627728856748,
+        "rank_clamp_fraction_mean": 0.5871096205709593,
+        "raw_total_mean": 26.419932925693168,
+        "series_id": "QRC",
+        "threshold_saturated_fraction": 0.0,
+        "window_k": null
+      },
+      {
+        "T": 2000,
+        "basis_edge_capacity_max": 0.4540288313468034,
+        "basis_edge_capacity_mean": 0.298711930368997,
+        "effective_rank_mean": 6.0,
+        "ipc_total_ci_high": 2.8762110972373054,
+        "ipc_total_ci_low": 1.3289508941009862,
+        "ipc_total_mean": 2.205382511018959,
+        "model": "qelm",
+        "n": 15,
+        "n_significant_mean": 10.866666666666667,
+        "rank_clamp_fraction_max": "inf",
+        "rank_clamp_fraction_mean": "inf",
+        "raw_total_mean": 2.205382511018959,
+        "series_id": "QELM(k=1)",
+        "threshold_saturated_fraction": 0.0,
+        "window_k": 1.0
+      },
+      {
+        "T": 2000,
+        "basis_edge_capacity_max": 0.4948669331340809,
+        "basis_edge_capacity_mean": 0.4888237760796598,
+        "effective_rank_mean": 45.0,
+        "ipc_total_ci_high": 27.245992548622716,
+        "ipc_total_ci_low": 26.89057590643724,
+        "ipc_total_mean": 27.0736772815163,
+        "model": "qelm",
+        "n": 15,
+        "n_significant_mean": 42.333333333333336,
+        "rank_clamp_fraction_max": 0.6107535371010913,
+        "rank_clamp_fraction_mean": 0.6016372729225845,
+        "raw_total_mean": 27.0736772815163,
+        "series_id": "QELM(k=4)",
+        "threshold_saturated_fraction": 0.0,
+        "window_k": 4.0
+      },
+      {
+        "T": 2000,
+        "basis_edge_capacity_max": 0.1376168924397051,
+        "basis_edge_capacity_mean": 0.1204904151143457,
+        "effective_rank_mean": 45.0,
+        "ipc_total_ci_high": 29.79664182168331,
+        "ipc_total_ci_low": 28.6714116255931,
+        "ipc_total_mean": 29.230474658646123,
+        "model": "qelm",
+        "n": 15,
+        "n_significant_mean": 96.93333333333334,
+        "rank_clamp_fraction_max": 0.6937127514180523,
+        "rank_clamp_fraction_mean": 0.6495661035254695,
+        "raw_total_mean": 29.230474658646123,
+        "series_id": "QELM(k=8)",
+        "threshold_saturated_fraction": 0.0,
+        "window_k": 8.0
+      },
+      {
+        "T": 2000,
+        "basis_edge_capacity_max": 0.07612005499164363,
+        "basis_edge_capacity_mean": 0.05757691495456641,
+        "effective_rank_mean": 45.0,
+        "ipc_total_ci_high": 30.39678856503836,
+        "ipc_total_ci_low": 28.45489037736953,
+        "ipc_total_mean": 29.421304523166274,
+        "model": "qrc",
+        "n": 15,
+        "n_significant_mean": 153.46666666666667,
+        "rank_clamp_fraction_max": 0.7345699225672945,
+        "rank_clamp_fraction_mean": 0.6538067671814729,
+        "raw_total_mean": 29.421304523166274,
+        "series_id": "QRC",
+        "threshold_saturated_fraction": 0.0,
+        "window_k": null
+      }
+    ],
+    "summary_by_T": [
+      {
+        "T": 500,
+        "qelm_by_k": {
+          "1": {
+            "T": 500,
+            "basis_edge_capacity_max": 0.5803470556428272,
+            "basis_edge_capacity_mean": 0.3647463673850739,
+            "effective_rank_mean": 6.0,
+            "ipc_total_ci_high": 3.7695339093846574,
+            "ipc_total_ci_low": 1.7626206322858433,
+            "ipc_total_mean": 2.7790907028300764,
+            "model": "qelm",
+            "n": 15,
+            "n_significant_mean": 10.4,
+            "rank_clamp_fraction_max": "inf",
+            "rank_clamp_fraction_mean": "inf",
+            "raw_total_mean": 2.7790907028300764,
+            "series_id": "QELM(k=1)",
+            "threshold_saturated_fraction": 0.0,
+            "window_k": 1.0
+          },
+          "4": {
+            "T": 500,
+            "basis_edge_capacity_max": 0.5242123937772705,
+            "basis_edge_capacity_mean": 0.4972545409103895,
+            "effective_rank_mean": 45.0,
+            "ipc_total_ci_high": 27.21326546489945,
+            "ipc_total_ci_low": 26.341659751335143,
+            "ipc_total_mean": 26.78780537519982,
+            "model": "qelm",
+            "n": 15,
+            "n_significant_mean": 38.06666666666667,
+            "rank_clamp_fraction_max": 0.6322170737553502,
+            "rank_clamp_fraction_mean": 0.5952845638933294,
+            "raw_total_mean": 26.78780537519982,
+            "series_id": "QELM(k=4)",
+            "threshold_saturated_fraction": 0.0,
+            "window_k": 4.0
+          },
+          "8": {
+            "T": 500,
+            "basis_edge_capacity_max": 0.22185826790368302,
+            "basis_edge_capacity_mean": 0.1711894994103585,
+            "effective_rank_mean": 45.0,
+            "ipc_total_ci_high": 26.24013602217975,
+            "ipc_total_ci_low": 24.60239321690724,
+            "ipc_total_mean": 25.468065428089698,
+            "model": "qelm",
+            "n": 15,
+            "n_significant_mean": 59.13333333333333,
+            "rank_clamp_fraction_max": 0.6012075326328863,
+            "rank_clamp_fraction_mean": 0.5659570095131043,
+            "raw_total_mean": 25.468065428089698,
+            "series_id": "QELM(k=8)",
+            "threshold_saturated_fraction": 0.0,
+            "window_k": 8.0
+          }
+        },
+        "qrc": {
+          "T": 500,
+          "basis_edge_capacity_max": 0.19645060629237507,
+          "basis_edge_capacity_mean": 0.14822084660684595,
+          "effective_rank_mean": 45.0,
+          "ipc_total_ci_high": 24.202169042978646,
+          "ipc_total_ci_low": 22.526096609703348,
+          "ipc_total_mean": 23.32300021638819,
+          "model": "qrc",
+          "n": 15,
+          "n_significant_mean": 82.93333333333334,
+          "rank_clamp_fraction_max": 0.5928867652332377,
+          "rank_clamp_fraction_mean": 0.5182888936975153,
+          "raw_total_mean": 23.32300021638819,
+          "series_id": "QRC",
+          "threshold_saturated_fraction": 0.0,
+          "window_k": null
+        },
+        "selection_diagnostic": {
+          "T": 500,
+          "basis_edge_ok": false,
+          "eligible": false,
+          "max_successive_relative_change": null,
+          "rank_clamp_ok": false,
+          "reason": "first T has no previous T for stability check"
+        }
+      },
+      {
+        "T": 1000,
+        "qelm_by_k": {
+          "1": {
+            "T": 1000,
+            "basis_edge_capacity_max": 0.49498914791981424,
+            "basis_edge_capacity_mean": 0.32239589538270624,
+            "effective_rank_mean": 6.0,
+            "ipc_total_ci_high": 2.970065624445299,
+            "ipc_total_ci_low": 1.3596075811980597,
+            "ipc_total_mean": 2.257770892560165,
+            "model": "qelm",
+            "n": 15,
+            "n_significant_mean": 7.8,
+            "rank_clamp_fraction_max": "inf",
+            "rank_clamp_fraction_mean": "inf",
+            "raw_total_mean": 2.257770892560165,
+            "series_id": "QELM(k=1)",
+            "threshold_saturated_fraction": 0.0,
+            "window_k": 1.0
+          },
+          "4": {
+            "T": 1000,
+            "basis_edge_capacity_max": 0.4998513081910356,
+            "basis_edge_capacity_mean": 0.4877243272183777,
+            "effective_rank_mean": 45.0,
+            "ipc_total_ci_high": 26.877714230685047,
+            "ipc_total_ci_low": 26.313208907706073,
+            "ipc_total_mean": 26.59705530946595,
+            "model": "qelm",
+            "n": 15,
+            "n_significant_mean": 38.2,
+            "rank_clamp_fraction_max": 0.6099576896480212,
+            "rank_clamp_fraction_mean": 0.5910456735436879,
+            "raw_total_mean": 26.59705530946595,
+            "series_id": "QELM(k=4)",
+            "threshold_saturated_fraction": 0.0,
+            "window_k": 4.0
+          },
+          "8": {
+            "T": 1000,
+            "basis_edge_capacity_max": 0.15218085563084208,
+            "basis_edge_capacity_mean": 0.13039982881802686,
+            "effective_rank_mean": 45.0,
+            "ipc_total_ci_high": 27.664003160708862,
+            "ipc_total_ci_low": 26.192181179028395,
+            "ipc_total_mean": 26.907363491955962,
+            "model": "qelm",
+            "n": 15,
+            "n_significant_mean": 72.93333333333334,
+            "rank_clamp_fraction_max": 0.6590417305205807,
+            "rank_clamp_fraction_mean": 0.5979414109323548,
+            "raw_total_mean": 26.907363491955962,
+            "series_id": "QELM(k=8)",
+            "threshold_saturated_fraction": 0.0,
+            "window_k": 8.0
+          }
+        },
+        "qrc": {
+          "T": 1000,
+          "basis_edge_capacity_max": 0.11218034673315629,
+          "basis_edge_capacity_mean": 0.08738434515973349,
+          "effective_rank_mean": 45.0,
+          "ipc_total_ci_high": 27.317747399255442,
+          "ipc_total_ci_low": 25.431607633358993,
+          "ipc_total_mean": 26.419932925693168,
+          "model": "qrc",
+          "n": 15,
+          "n_significant_mean": 116.13333333333334,
+          "rank_clamp_fraction_max": 0.6437627728856748,
+          "rank_clamp_fraction_mean": 0.5871096205709593,
+          "raw_total_mean": 26.419932925693168,
+          "series_id": "QRC",
+          "threshold_saturated_fraction": 0.0,
+          "window_k": null
+        },
+        "selection_diagnostic": {
+          "T": 1000,
+          "basis_edge_capacity_max": 0.4998513081910356,
+          "basis_edge_ok": false,
+          "eligible": false,
+          "max_successive_relative_change": 0.18758646838659393,
+          "rank_clamp_fraction_max": "inf",
+          "rank_clamp_ok": false,
+          "reason": "not stable/clamp-free/basis-edge-small"
+        }
+      },
+      {
+        "T": 2000,
+        "qelm_by_k": {
+          "1": {
+            "T": 2000,
+            "basis_edge_capacity_max": 0.4540288313468034,
+            "basis_edge_capacity_mean": 0.298711930368997,
+            "effective_rank_mean": 6.0,
+            "ipc_total_ci_high": 2.8762110972373054,
+            "ipc_total_ci_low": 1.3289508941009862,
+            "ipc_total_mean": 2.205382511018959,
+            "model": "qelm",
+            "n": 15,
+            "n_significant_mean": 10.866666666666667,
+            "rank_clamp_fraction_max": "inf",
+            "rank_clamp_fraction_mean": "inf",
+            "raw_total_mean": 2.205382511018959,
+            "series_id": "QELM(k=1)",
+            "threshold_saturated_fraction": 0.0,
+            "window_k": 1.0
+          },
+          "4": {
+            "T": 2000,
+            "basis_edge_capacity_max": 0.4948669331340809,
+            "basis_edge_capacity_mean": 0.4888237760796598,
+            "effective_rank_mean": 45.0,
+            "ipc_total_ci_high": 27.245992548622716,
+            "ipc_total_ci_low": 26.89057590643724,
+            "ipc_total_mean": 27.0736772815163,
+            "model": "qelm",
+            "n": 15,
+            "n_significant_mean": 42.333333333333336,
+            "rank_clamp_fraction_max": 0.6107535371010913,
+            "rank_clamp_fraction_mean": 0.6016372729225845,
+            "raw_total_mean": 27.0736772815163,
+            "series_id": "QELM(k=4)",
+            "threshold_saturated_fraction": 0.0,
+            "window_k": 4.0
+          },
+          "8": {
+            "T": 2000,
+            "basis_edge_capacity_max": 0.1376168924397051,
+            "basis_edge_capacity_mean": 0.1204904151143457,
+            "effective_rank_mean": 45.0,
+            "ipc_total_ci_high": 29.79664182168331,
+            "ipc_total_ci_low": 28.6714116255931,
+            "ipc_total_mean": 29.230474658646123,
+            "model": "qelm",
+            "n": 15,
+            "n_significant_mean": 96.93333333333334,
+            "rank_clamp_fraction_max": 0.6937127514180523,
+            "rank_clamp_fraction_mean": 0.6495661035254695,
+            "raw_total_mean": 29.230474658646123,
+            "series_id": "QELM(k=8)",
+            "threshold_saturated_fraction": 0.0,
+            "window_k": 8.0
+          }
+        },
+        "qrc": {
+          "T": 2000,
+          "basis_edge_capacity_max": 0.07612005499164363,
+          "basis_edge_capacity_mean": 0.05757691495456641,
+          "effective_rank_mean": 45.0,
+          "ipc_total_ci_high": 30.39678856503836,
+          "ipc_total_ci_low": 28.45489037736953,
+          "ipc_total_mean": 29.421304523166274,
+          "model": "qrc",
+          "n": 15,
+          "n_significant_mean": 153.46666666666667,
+          "rank_clamp_fraction_max": 0.7345699225672945,
+          "rank_clamp_fraction_mean": 0.6538067671814729,
+          "raw_total_mean": 29.421304523166274,
+          "series_id": "QRC",
+          "threshold_saturated_fraction": 0.0,
+          "window_k": null
+        },
+        "selection_diagnostic": {
+          "T": 2000,
+          "basis_edge_capacity_max": 0.4948669331340809,
+          "basis_edge_ok": false,
+          "eligible": false,
+          "max_successive_relative_change": 0.10201354583410238,
+          "rank_clamp_fraction_max": "inf",
+          "rank_clamp_ok": false,
+          "reason": "not stable/clamp-free/basis-edge-small"
+        }
+      }
+    ]
+  },
+  "part_b": {
+    "convergence_by_gamma": [
+      {
+        "delta_distance_to_infty_non_increasing": true,
+        "delta_infty": -16.7605773260551,
+        "delta_spearman_k": -0.7714285714285715,
+        "distance_to_delta_infty_by_k": {
+          "1": 22.18470389783638,
+          "12": 0.0,
+          "2": 16.178322414972705,
+          "3": 7.256445688156976,
+          "5": 3.0618139541462916,
+          "8": 1.8595806963202328
+        },
+        "gamma": 0.02,
+        "k_star_within_5pct_or_0p02": 12,
+        "qelm_non_decreasing": false,
+        "qelm_spearman_k": {
+          "ci_high": 0.7714285714285715,
+          "ci_low": 0.7714285714285715,
+          "rho": 0.7714285714285715
+        }
+      },
+      {
+        "delta_distance_to_infty_non_increasing": true,
+        "delta_infty": -4.732920836758156,
+        "delta_spearman_k": -0.7714285714285715,
+        "distance_to_delta_infty_by_k": {
+          "1": 23.150847966394203,
+          "12": 0.0,
+          "2": 17.119935989315987,
+          "3": 8.195305561646617,
+          "5": 2.26420412815442,
+          "8": 1.4158273135035868
+        },
+        "gamma": 0.1,
+        "k_star_within_5pct_or_0p02": 12,
+        "qelm_non_decreasing": false,
+        "qelm_spearman_k": {
+          "ci_high": 0.7714285714285715,
+          "ci_low": 0.7714285714285715,
+          "rho": 0.7714285714285715
+        }
+      },
+      {
+        "delta_distance_to_infty_non_increasing": false,
+        "delta_infty": -0.603806601476459,
+        "delta_spearman_k": -0.942857142857143,
+        "distance_to_delta_infty_by_k": {
+          "1": 27.819728613623774,
+          "12": 0.0,
+          "2": 20.677913925192122,
+          "3": 11.809202777954283,
+          "5": 0.7283670294647384,
+          "8": 0.794636465996607
+        },
+        "gamma": 0.3,
+        "k_star_within_5pct_or_0p02": 12,
+        "qelm_non_decreasing": false,
+        "qelm_spearman_k": {
+          "ci_high": 1.0,
+          "ci_low": 0.8285714285714287,
+          "rho": 0.942857142857143
+        }
+      },
+      {
+        "delta_distance_to_infty_non_increasing": true,
+        "delta_infty": -0.7923776735128502,
+        "delta_spearman_k": -1.0,
+        "distance_to_delta_infty_by_k": {
+          "1": 29.91308854808626,
+          "12": 0.0,
+          "2": 22.793221549037543,
+          "3": 13.907993425104774,
+          "5": 2.25218501508777,
+          "8": 1.6467363270622555
+        },
+        "gamma": 0.5,
+        "k_star_within_5pct_or_0p02": 12,
+        "qelm_non_decreasing": true,
+        "qelm_spearman_k": {
+          "ci_high": 1.0,
+          "ci_low": 1.0,
+          "rho": 1.0
+        }
+      }
+    ],
+    "delta_infty": [
+      {
+        "delta_ci_high": -16.171095505101405,
+        "delta_ci_low": -17.336731284611574,
+        "delta_mean": -16.7605773260551,
+        "delta_se": 0.3148920721067117,
+        "delta_std": 1.2195717511220396,
+        "gamma": 0.02,
+        "ipc_qelm_mean": 25.48401164070752,
+        "ipc_qrc_mean": 8.723434314652422,
+        "label": "QELM",
+        "n_pairs": 15,
+        "p_wilcoxon": 6.103515625e-05,
+        "win_rate_qrc": 0.0,
+        "window_k": 12
+      },
+      {
+        "delta_ci_high": -4.179493631414259,
+        "delta_ci_low": -5.2339244630558905,
+        "delta_mean": -4.732920836758156,
+        "delta_se": 0.29010043064020796,
+        "delta_std": 1.1235541365971253,
+        "gamma": 0.1,
+        "ipc_qelm_mean": 26.449335558822803,
+        "ipc_qrc_mean": 21.716414722064652,
+        "label": "QELM",
+        "n_pairs": 15,
+        "p_wilcoxon": 6.103515625e-05,
+        "win_rate_qrc": 0.0,
+        "window_k": 12
+      },
+      {
+        "delta_ci_high": -0.04850526424178913,
+        "delta_ci_low": -1.1008999878296004,
+        "delta_mean": -0.603806601476459,
+        "delta_se": 0.2697798304528587,
+        "delta_std": 1.0448527904865823,
+        "gamma": 0.3,
+        "ipc_qelm_mean": 30.025111124642738,
+        "ipc_qrc_mean": 29.42130452316628,
+        "label": "QELM",
+        "n_pairs": 15,
+        "p_wilcoxon": 0.04791259765625,
+        "win_rate_qrc": 0.26666666666666666,
+        "window_k": 12
+      },
+      {
+        "delta_ci_high": -0.38300904163752997,
+        "delta_ci_low": -1.1409945453871733,
+        "delta_mean": -0.7923776735128502,
+        "delta_se": 0.20373861798361453,
+        "delta_std": 0.7890762744298541,
+        "gamma": 0.5,
+        "ipc_qelm_mean": 32.10825589217911,
+        "ipc_qrc_mean": 31.31587821866625,
+        "label": "QELM",
+        "n_pairs": 15,
+        "p_wilcoxon": 0.0067138671875,
+        "win_rate_qrc": 0.06666666666666667,
+        "window_k": 12
+      }
+    ],
+    "max_window_for_delta_infty": 12,
+    "per_seed_pairs": [
+      {
+        "cell_id": "input0900_coupling123456_shot0000",
+        "coupling_seed": 123456,
+        "delta": 4.519501037817319,
+        "gamma": 0.02,
+        "input_seed": 900,
+        "ipc_qelm": 3.406014893093428,
+        "ipc_qrc": 7.925515930910747,
+        "window_k": 1
+      },
+      {
+        "cell_id": "input0900_coupling555553_shot0000",
+        "coupling_seed": 555553,
+        "delta": 5.625118183437773,
+        "gamma": 0.02,
+        "input_seed": 900,
+        "ipc_qelm": 3.4367994996356854,
+        "ipc_qrc": 9.061917683073458,
+        "window_k": 1
+      },
+      {
+        "cell_id": "input0900_coupling987654_shot0000",
+        "coupling_seed": 987654,
+        "delta": 4.4435644634222085,
+        "gamma": 0.02,
+        "input_seed": 900,
+        "ipc_qelm": 3.4518924679739307,
+        "ipc_qrc": 7.895456931396139,
+        "window_k": 1
+      },
+      {
+        "cell_id": "input0901_coupling123456_shot0000",
+        "coupling_seed": 123456,
+        "delta": 4.7480642354633495,
+        "gamma": 0.02,
+        "input_seed": 901,
+        "ipc_qelm": 3.203693816946287,
+        "ipc_qrc": 7.9517580524096365,
+        "window_k": 1
+      },
+      {
+        "cell_id": "input0901_coupling555553_shot0000",
+        "coupling_seed": 555553,
+        "delta": 7.715879750386575,
+        "gamma": 0.02,
+        "input_seed": 901,
+        "ipc_qelm": 3.2099538333294446,
+        "ipc_qrc": 10.92583358371602,
+        "window_k": 1
+      },
+      {
+        "cell_id": "input0901_coupling987654_shot0000",
+        "coupling_seed": 987654,
+        "delta": 6.422159224176722,
+        "gamma": 0.02,
+        "input_seed": 901,
+        "ipc_qelm": 3.2076446026079135,
+        "ipc_qrc": 9.629803826784636,
+        "window_k": 1
+      },
+      {
+        "cell_id": "input0902_coupling123456_shot0000",
+        "coupling_seed": 123456,
+        "delta": 4.348960587052149,
+        "gamma": 0.02,
+        "input_seed": 902,
+        "ipc_qelm": 3.2321715170352334,
+        "ipc_qrc": 7.5811321040873825,
+        "window_k": 1
+      },
+      {
+        "cell_id": "input0902_coupling555553_shot0000",
+        "coupling_seed": 555553,
+        "delta": 5.48003776618361,
+        "gamma": 0.02,
+        "input_seed": 902,
+        "ipc_qelm": 3.214778488305306,
+        "ipc_qrc": 8.694816254488916,
+        "window_k": 1
+      },
+      {
+        "cell_id": "input0902_coupling987654_shot0000",
+        "coupling_seed": 987654,
+        "delta": 5.042173812877072,
+        "gamma": 0.02,
+        "input_seed": 902,
+        "ipc_qelm": 3.230926381843476,
+        "ipc_qrc": 8.273100194720548,
+        "window_k": 1
+      },
+      {
+        "cell_id": "input0903_coupling123456_shot0000",
+        "coupling_seed": 123456,
+        "delta": 4.571477429296786,
+        "gamma": 0.02,
+        "input_seed": 903,
+        "ipc_qelm": 3.2998222362043017,
+        "ipc_qrc": 7.8712996655010885,
+        "window_k": 1
+      },
+      {
+        "cell_id": "input0903_coupling555553_shot0000",
+        "coupling_seed": 555553,
+        "delta": 5.804585927830516,
+        "gamma": 0.02,
+        "input_seed": 903,
+        "ipc_qelm": 3.2923301883484264,
+        "ipc_qrc": 9.096916116178942,
+        "window_k": 1
+      },
+      {
+        "cell_id": "input0903_coupling987654_shot0000",
+        "coupling_seed": 987654,
+        "delta": 4.997453943856174,
+        "gamma": 0.02,
+        "input_seed": 903,
+        "ipc_qelm": 3.292665828947315,
+        "ipc_qrc": 8.29011977280349,
+        "window_k": 1
+      },
+      {
+        "cell_id": "input0904_coupling123456_shot0000",
+        "coupling_seed": 123456,
+        "delta": 4.843590992209114,
+        "gamma": 0.02,
+        "input_seed": 904,
+        "ipc_qelm": 3.3400562526385276,
+        "ipc_qrc": 8.183647244847641,
+        "window_k": 1
+      },
+      {
+        "cell_id": "input0904_coupling555553_shot0000",
+        "coupling_seed": 555553,
+        "delta": 7.214855092106607,
+        "gamma": 0.02,
+        "input_seed": 904,
+        "ipc_qelm": 3.3608563591355503,
+        "ipc_qrc": 10.575711451242157,
+        "window_k": 1
+      },
+      {
+        "cell_id": "input0904_coupling987654_shot0000",
+        "coupling_seed": 987654,
+        "delta": 5.5844761306032185,
+        "gamma": 0.02,
+        "input_seed": 904,
+        "ipc_qelm": 3.3100097770223096,
+        "ipc_qrc": 8.894485907625528,
+        "window_k": 1
+      },
+      {
+        "cell_id": "input0900_coupling123456_shot0000",
+        "coupling_seed": 123456,
+        "delta": -1.5210519332318562,
+        "gamma": 0.02,
+        "input_seed": 900,
+        "ipc_qelm": 9.446567864142603,
+        "ipc_qrc": 7.925515930910747,
+        "window_k": 2
+      },
+      {
+        "cell_id": "input0900_coupling555553_shot0000",
+        "coupling_seed": 555553,
+        "delta": -0.36207475589302796,
+        "gamma": 0.02,
+        "input_seed": 900,
+        "ipc_qelm": 9.423992438966486,
+        "ipc_qrc": 9.061917683073458,
+        "window_k": 2
+      },
+      {
+        "cell_id": "input0900_coupling987654_shot0000",
+        "coupling_seed": 987654,
+        "delta": -1.5842048491718907,
+        "gamma": 0.02,
+        "input_seed": 900,
+        "ipc_qelm": 9.47966178056803,
+        "ipc_qrc": 7.895456931396139,
+        "window_k": 2
+      },
+      {
+        "cell_id": "input0901_coupling123456_shot0000",
+        "coupling_seed": 123456,
+        "delta": -1.4333860105084861,
+        "gamma": 0.02,
+        "input_seed": 901,
+        "ipc_qelm": 9.385144062918123,
+        "ipc_qrc": 7.9517580524096365,
+        "window_k": 2
+      },
+      {
+        "cell_id": "input0901_coupling555553_shot0000",
+        "coupling_seed": 555553,
+        "delta": 1.5446906814892358,
+        "gamma": 0.02,
+        "input_seed": 901,
+        "ipc_qelm": 9.381142902226784,
+        "ipc_qrc": 10.92583358371602,
+        "window_k": 2
+      },
+      {
+        "cell_id": "input0901_coupling987654_shot0000",
+        "coupling_seed": 987654,
+        "delta": 0.247708766297972,
+        "gamma": 0.02,
+        "input_seed": 901,
+        "ipc_qelm": 9.382095060486664,
+        "ipc_qrc": 9.629803826784636,
+        "window_k": 2
+      },
+      {
+        "cell_id": "input0902_coupling123456_shot0000",
+        "coupling_seed": 123456,
+        "delta": -1.588019974598966,
+        "gamma": 0.02,
+        "input_seed": 902,
+        "ipc_qelm": 9.169152078686349,
+        "ipc_qrc": 7.5811321040873825,
+        "window_k": 2
+      },
+      {
+        "cell_id": "input0902_coupling555553_shot0000",
+        "coupling_seed": 555553,
+        "delta": -0.5017119888306567,
+        "gamma": 0.02,
+        "input_seed": 902,
+        "ipc_qelm": 9.196528243319573,
+        "ipc_qrc": 8.694816254488916,
+        "window_k": 2
+      },
+      {
+        "cell_id": "input0902_coupling987654_shot0000",
+        "coupling_seed": 987654,
+        "delta": -0.9355142246171386,
+        "gamma": 0.02,
+        "input_seed": 902,
+        "ipc_qelm": 9.208614419337687,
+        "ipc_qrc": 8.273100194720548,
+        "window_k": 2
+      },
+      {
+        "cell_id": "input0903_coupling123456_shot0000",
+        "coupling_seed": 123456,
+        "delta": -1.3498258482481509,
+        "gamma": 0.02,
+        "input_seed": 903,
+        "ipc_qelm": 9.22112551374924,
+        "ipc_qrc": 7.8712996655010885,
+        "window_k": 2
+      },
+      {
+        "cell_id": "input0903_coupling555553_shot0000",
+        "coupling_seed": 555553,
+        "delta": -0.28758596664796876,
+        "gamma": 0.02,
+        "input_seed": 903,
+        "ipc_qelm": 9.384502082826911,
+        "ipc_qrc": 9.096916116178942,
+        "window_k": 2
+      },
+      {
+        "cell_id": "input0903_coupling987654_shot0000",
+        "coupling_seed": 987654,
+        "delta": -1.1129457832735383,
+        "gamma": 0.02,
+        "input_seed": 903,
+        "ipc_qelm": 9.403065556077028,
+        "ipc_qrc": 8.29011977280349,
+        "window_k": 2
+      },
+      {
+        "cell_id": "input0904_coupling123456_shot0000",
+        "coupling_seed": 123456,
+        "delta": -0.9885778763038982,
+        "gamma": 0.02,
+        "input_seed": 904,
+        "ipc_qelm": 9.17222512115154,
+        "ipc_qrc": 8.183647244847641,
+        "window_k": 2
+      },
+      {
+        "cell_id": "input0904_coupling555553_shot0000",
+        "coupling_seed": 555553,
+        "delta": 1.4300288263453709,
+        "gamma": 0.02,
+        "input_seed": 904,
+        "ipc_qelm": 9.145682624896786,
+        "ipc_qrc": 10.575711451242157,
+        "window_k": 2
+      },
+      {
+        "cell_id": "input0904_coupling987654_shot0000",
+        "coupling_seed": 987654,
+        "delta": -0.29135272904293963,
+        "gamma": 0.02,
+        "input_seed": 904,
+        "ipc_qelm": 9.185838636668468,
+        "ipc_qrc": 8.894485907625528,
+        "window_k": 2
+      },
+      {
+        "cell_id": "input0900_coupling123456_shot0000",
+        "coupling_seed": 123456,
+        "delta": -10.337542624220307,
+        "gamma": 0.02,
+        "input_seed": 900,
+        "ipc_qelm": 18.263058555131053,
+        "ipc_qrc": 7.925515930910747,
+        "window_k": 3
+      },
+      {
+        "cell_id": "input0900_coupling555553_shot0000",
+        "coupling_seed": 555553,
+        "delta": -9.318285185351334,
+        "gamma": 0.02,
+        "input_seed": 900,
+        "ipc_qelm": 18.380202868424792,
+        "ipc_qrc": 9.061917683073458,
+        "window_k": 3
+      },
+      {
+        "cell_id": "input0900_coupling987654_shot0000",
+        "coupling_seed": 987654,
+        "delta": -10.332563291258445,
+        "gamma": 0.02,
+        "input_seed": 900,
+        "ipc_qelm": 18.228020222654585,
+        "ipc_qrc": 7.895456931396139,
+        "window_k": 3
+      },
+      {
+        "cell_id": "input0901_coupling123456_shot0000",
+        "coupling_seed": 123456,
+        "delta": -10.29020690321887,
+        "gamma": 0.02,
+        "input_seed": 901,
+        "ipc_qelm": 18.241964955628507,
+        "ipc_qrc": 7.9517580524096365,
+        "window_k": 3
+      },
+      {
+        "cell_id": "input0901_coupling555553_shot0000",
+        "coupling_seed": 555553,
+        "delta": -7.237811362287012,
+        "gamma": 0.02,
+        "input_seed": 901,
+        "ipc_qelm": 18.163644946003032,
+        "ipc_qrc": 10.92583358371602,
+        "window_k": 3
+      },
+      {
+        "cell_id": "input0901_coupling987654_shot0000",
+        "coupling_seed": 987654,
+        "delta": -8.56364157902337,
+        "gamma": 0.02,
+        "input_seed": 901,
+        "ipc_qelm": 18.193445405808006,
+        "ipc_qrc": 9.629803826784636,
+        "window_k": 3
+      },
+      {
+        "cell_id": "input0902_coupling123456_shot0000",
+        "coupling_seed": 123456,
+        "delta": -10.678089261089818,
+        "gamma": 0.02,
+        "input_seed": 902,
+        "ipc_qelm": 18.2592213651772,
+        "ipc_qrc": 7.5811321040873825,
+        "window_k": 3
+      },
+      {
+        "cell_id": "input0902_coupling555553_shot0000",
+        "coupling_seed": 555553,
+        "delta": -9.597202757990072,
+        "gamma": 0.02,
+        "input_seed": 902,
+        "ipc_qelm": 18.29201901247899,
+        "ipc_qrc": 8.694816254488916,
+        "window_k": 3
+      },
+      {
+        "cell_id": "input0902_coupling987654_shot0000",
+        "coupling_seed": 987654,
+        "delta": -10.001506514915057,
+        "gamma": 0.02,
+        "input_seed": 902,
+        "ipc_qelm": 18.274606709635606,
+        "ipc_qrc": 8.273100194720548,
+        "window_k": 3
+      },
+      {
+        "cell_id": "input0903_coupling123456_shot0000",
+        "coupling_seed": 123456,
+        "delta": -10.245814773775368,
+        "gamma": 0.02,
+        "input_seed": 903,
+        "ipc_qelm": 18.117114439276456,
+        "ipc_qrc": 7.8712996655010885,
+        "window_k": 3
+      },
+      {
+        "cell_id": "input0903_coupling555553_shot0000",
+        "coupling_seed": 555553,
+        "delta": -9.042272715090672,
+        "gamma": 0.02,
+        "input_seed": 903,
+        "ipc_qelm": 18.139188831269614,
+        "ipc_qrc": 9.096916116178942,
+        "window_k": 3
+      },
+      {
+        "cell_id": "input0903_coupling987654_shot0000",
+        "coupling_seed": 987654,
+        "delta": -9.914793028042865,
+        "gamma": 0.02,
+        "input_seed": 903,
+        "ipc_qelm": 18.204912800846355,
+        "ipc_qrc": 8.29011977280349,
+        "window_k": 3
+      },
+      {
+        "cell_id": "input0904_coupling123456_shot0000",
+        "coupling_seed": 123456,
+        "delta": -10.010259969532083,
+        "gamma": 0.02,
+        "input_seed": 904,
+        "ipc_qelm": 18.193907214379724,
+        "ipc_qrc": 8.183647244847641,
+        "window_k": 3
+      },
+      {
+        "cell_id": "input0904_coupling555553_shot0000",
+        "coupling_seed": 555553,
+        "delta": -7.588560253199709,
+        "gamma": 0.02,
+        "input_seed": 904,
+        "ipc_qelm": 18.164271704441866,
+        "ipc_qrc": 10.575711451242157,
+        "window_k": 3
+      },
+      {
+        "cell_id": "input0904_coupling987654_shot0000",
+        "coupling_seed": 987654,
+        "delta": -9.40342434947686,
+        "gamma": 0.02,
+        "input_seed": 904,
+        "ipc_qelm": 18.297910257102387,
+        "ipc_qrc": 8.894485907625528,
+        "window_k": 3
+      },
+      {
+        "cell_id": "input0900_coupling123456_shot0000",
+        "coupling_seed": 123456,
+        "delta": -20.093078240002747,
+        "gamma": 0.02,
+        "input_seed": 900,
+        "ipc_qelm": 28.018594170913495,
+        "ipc_qrc": 7.925515930910747,
+        "window_k": 5
+      },
+      {
+        "cell_id": "input0900_coupling555553_shot0000",
+        "coupling_seed": 555553,
+        "delta": -20.097864873553853,
+        "gamma": 0.02,
+        "input_seed": 900,
+        "ipc_qelm": 29.15978255662731,
+        "ipc_qrc": 9.061917683073458,
+        "window_k": 5
+      },
+      {
+        "cell_id": "input0900_coupling987654_shot0000",
+        "coupling_seed": 987654,
+        "delta": -21.476892825378165,
+        "gamma": 0.02,
+        "input_seed": 900,
+        "ipc_qelm": 29.372349756774305,
+        "ipc_qrc": 7.895456931396139,
+        "window_k": 5
+      },
+      {
+        "cell_id": "input0901_coupling123456_shot0000",
+        "coupling_seed": 123456,
+        "delta": -20.002648614941087,
+        "gamma": 0.02,
+        "input_seed": 901,
+        "ipc_qelm": 27.954406667350725,
+        "ipc_qrc": 7.9517580524096365,
+        "window_k": 5
+      },
+      {
+        "cell_id": "input0901_coupling555553_shot0000",
+        "coupling_seed": 555553,
+        "delta": -17.921366468491264,
+        "gamma": 0.02,
+        "input_seed": 901,
+        "ipc_qelm": 28.847200052207285,
+        "ipc_qrc": 10.92583358371602,
+        "window_k": 5
+      },
+      {
+        "cell_id": "input0901_coupling987654_shot0000",
+        "coupling_seed": 987654,
+        "delta": -19.655114437499563,
+        "gamma": 0.02,
+        "input_seed": 901,
+        "ipc_qelm": 29.284918264284197,
+        "ipc_qrc": 9.629803826784636,
+        "window_k": 5
+      },
+      {
+        "cell_id": "input0902_coupling123456_shot0000",
+        "coupling_seed": 123456,
+        "delta": -19.58384494250889,
+        "gamma": 0.02,
+        "input_seed": 902,
+        "ipc_qelm": 27.16497704659627,
+        "ipc_qrc": 7.5811321040873825,
+        "window_k": 5
+      },
+      {
+        "cell_id": "input0902_coupling555553_shot0000",
+        "coupling_seed": 555553,
+        "delta": -19.516491760123532,
+        "gamma": 0.02,
+        "input_seed": 902,
+        "ipc_qelm": 28.21130801461245,
+        "ipc_qrc": 8.694816254488916,
+        "window_k": 5
+      },
+      {
+        "cell_id": "input0902_coupling987654_shot0000",
+        "coupling_seed": 987654,
+        "delta": -19.925720298608223,
+        "gamma": 0.02,
+        "input_seed": 902,
+        "ipc_qelm": 28.19882049332877,
+        "ipc_qrc": 8.273100194720548,
+        "window_k": 5
+      },
+      {
+        "cell_id": "input0903_coupling123456_shot0000",
+        "coupling_seed": 123456,
+        "delta": -19.433389523332774,
+        "gamma": 0.02,
+        "input_seed": 903,
+        "ipc_qelm": 27.304689188833862,
+        "ipc_qrc": 7.8712996655010885,
+        "window_k": 5
+      },
+      {
+        "cell_id": "input0903_coupling555553_shot0000",
+        "coupling_seed": 555553,
+        "delta": -19.079026364942674,
+        "gamma": 0.02,
+        "input_seed": 903,
+        "ipc_qelm": 28.175942481121616,
+        "ipc_qrc": 9.096916116178942,
+        "window_k": 5
+      },
+      {
+        "cell_id": "input0903_coupling987654_shot0000",
+        "coupling_seed": 987654,
+        "delta": -20.058528992106474,
+        "gamma": 0.02,
+        "input_seed": 903,
+        "ipc_qelm": 28.348648764909964,
+        "ipc_qrc": 8.29011977280349,
+        "window_k": 5
+      },
+      {
+        "cell_id": "input0904_coupling123456_shot0000",
+        "coupling_seed": 123456,
+        "delta": -20.762518616390665,
+        "gamma": 0.02,
+        "input_seed": 904,
+        "ipc_qelm": 28.946165861238306,
+        "ipc_qrc": 8.183647244847641,
+        "window_k": 5
+      },
+      {
+        "cell_id": "input0904_coupling555553_shot0000",
+        "coupling_seed": 555553,
+        "delta": -18.80300705811192,
+        "gamma": 0.02,
+        "input_seed": 904,
+        "ipc_qelm": 29.378718509354076,
+        "ipc_qrc": 10.575711451242157,
+        "window_k": 5
+      },
+      {
+        "cell_id": "input0904_coupling987654_shot0000",
+        "coupling_seed": 987654,
+        "delta": -20.926376187029078,
+        "gamma": 0.02,
+        "input_seed": 904,
+        "ipc_qelm": 29.820862094654608,
+        "ipc_qrc": 8.894485907625528,
+        "window_k": 5
+      },
+      {
+        "cell_id": "input0900_coupling123456_shot0000",
+        "coupling_seed": 123456,
+        "delta": -18.514284733353435,
+        "gamma": 0.02,
+        "input_seed": 900,
+        "ipc_qelm": 26.43980066426418,
+        "ipc_qrc": 7.925515930910747,
+        "window_k": 8
+      },
+      {
+        "cell_id": "input0900_coupling555553_shot0000",
+        "coupling_seed": 555553,
+        "delta": -17.977893089337407,
+        "gamma": 0.02,
+        "input_seed": 900,
+        "ipc_qelm": 27.039810772410863,
+        "ipc_qrc": 9.061917683073458,
+        "window_k": 8
+      },
+      {
+        "cell_id": "input0900_coupling987654_shot0000",
+        "coupling_seed": 987654,
+        "delta": -19.492026489651266,
+        "gamma": 0.02,
+        "input_seed": 900,
+        "ipc_qelm": 27.387483421047406,
+        "ipc_qrc": 7.895456931396139,
+        "window_k": 8
+      },
+      {
+        "cell_id": "input0901_coupling123456_shot0000",
+        "coupling_seed": 123456,
+        "delta": -18.966121358011694,
+        "gamma": 0.02,
+        "input_seed": 901,
+        "ipc_qelm": 26.91787941042133,
+        "ipc_qrc": 7.9517580524096365,
+        "window_k": 8
+      },
+      {
+        "cell_id": "input0901_coupling555553_shot0000",
+        "coupling_seed": 555553,
+        "delta": -16.44541389015295,
+        "gamma": 0.02,
+        "input_seed": 901,
+        "ipc_qelm": 27.37124747386897,
+        "ipc_qrc": 10.92583358371602,
+        "window_k": 8
+      },
+      {
+        "cell_id": "input0901_coupling987654_shot0000",
+        "coupling_seed": 987654,
+        "delta": -18.394807400168958,
+        "gamma": 0.02,
+        "input_seed": 901,
+        "ipc_qelm": 28.024611226953596,
+        "ipc_qrc": 9.629803826784636,
+        "window_k": 8
+      },
+      {
+        "cell_id": "input0902_coupling123456_shot0000",
+        "coupling_seed": 123456,
+        "delta": -18.562206499473085,
+        "gamma": 0.02,
+        "input_seed": 902,
+        "ipc_qelm": 26.143338603560466,
+        "ipc_qrc": 7.5811321040873825,
+        "window_k": 8
+      },
+      {
+        "cell_id": "input0902_coupling555553_shot0000",
+        "coupling_seed": 555553,
+        "delta": -17.644505084925242,
+        "gamma": 0.02,
+        "input_seed": 902,
+        "ipc_qelm": 26.33932133941416,
+        "ipc_qrc": 8.694816254488916,
+        "window_k": 8
+      },
+      {
+        "cell_id": "input0902_coupling987654_shot0000",
+        "coupling_seed": 987654,
+        "delta": -18.340202884051074,
+        "gamma": 0.02,
+        "input_seed": 902,
+        "ipc_qelm": 26.613303078771622,
+        "ipc_qrc": 8.273100194720548,
+        "window_k": 8
+      },
+      {
+        "cell_id": "input0903_coupling123456_shot0000",
+        "coupling_seed": 123456,
+        "delta": -18.809866686768277,
+        "gamma": 0.02,
+        "input_seed": 903,
+        "ipc_qelm": 26.681166352269365,
+        "ipc_qrc": 7.8712996655010885,
+        "window_k": 8
+      },
+      {
+        "cell_id": "input0903_coupling555553_shot0000",
+        "coupling_seed": 555553,
+        "delta": -18.12044112545272,
+        "gamma": 0.02,
+        "input_seed": 903,
+        "ipc_qelm": 27.217357241631664,
+        "ipc_qrc": 9.096916116178942,
+        "window_k": 8
+      },
+      {
+        "cell_id": "input0903_coupling987654_shot0000",
+        "coupling_seed": 987654,
+        "delta": -19.246063869395744,
+        "gamma": 0.02,
+        "input_seed": 903,
+        "ipc_qelm": 27.536183642199234,
+        "ipc_qrc": 8.29011977280349,
+        "window_k": 8
+      },
+      {
+        "cell_id": "input0904_coupling123456_shot0000",
+        "coupling_seed": 123456,
+        "delta": -19.78413754213712,
+        "gamma": 0.02,
+        "input_seed": 904,
+        "ipc_qelm": 27.967784786984762,
+        "ipc_qrc": 8.183647244847641,
+        "window_k": 8
+      },
+      {
+        "cell_id": "input0904_coupling555553_shot0000",
+        "coupling_seed": 555553,
+        "delta": -18.504323339596276,
+        "gamma": 0.02,
+        "input_seed": 904,
+        "ipc_qelm": 29.080034790838432,
+        "ipc_qrc": 10.575711451242157,
+        "window_k": 8
+      },
+      {
+        "cell_id": "input0904_coupling987654_shot0000",
+        "coupling_seed": 987654,
+        "delta": -20.500076343154703,
+        "gamma": 0.02,
+        "input_seed": 904,
+        "ipc_qelm": 29.39456225078023,
+        "ipc_qrc": 8.894485907625528,
+        "window_k": 8
+      },
+      {
+        "cell_id": "input0900_coupling123456_shot0000",
+        "coupling_seed": 123456,
+        "delta": -15.906863386822133,
+        "gamma": 0.02,
+        "input_seed": 900,
+        "ipc_qelm": 23.83237931773288,
+        "ipc_qrc": 7.925515930910747,
+        "window_k": 12
+      },
+      {
+        "cell_id": "input0900_coupling555553_shot0000",
+        "coupling_seed": 555553,
+        "delta": -16.89686933862454,
+        "gamma": 0.02,
+        "input_seed": 900,
+        "ipc_qelm": 25.958787021698,
+        "ipc_qrc": 9.061917683073458,
+        "window_k": 12
+      },
+      {
+        "cell_id": "input0900_coupling987654_shot0000",
+        "coupling_seed": 987654,
+        "delta": -17.336821964858828,
+        "gamma": 0.02,
+        "input_seed": 900,
+        "ipc_qelm": 25.232278896254968,
+        "ipc_qrc": 7.895456931396139,
+        "window_k": 12
+      },
+      {
+        "cell_id": "input0901_coupling123456_shot0000",
+        "coupling_seed": 123456,
+        "delta": -15.28890163685369,
+        "gamma": 0.02,
+        "input_seed": 901,
+        "ipc_qelm": 23.240659689263328,
+        "ipc_qrc": 7.9517580524096365,
+        "window_k": 12
+      },
+      {
+        "cell_id": "input0901_coupling555553_shot0000",
+        "coupling_seed": 555553,
+        "delta": -15.21013721198987,
+        "gamma": 0.02,
+        "input_seed": 901,
+        "ipc_qelm": 26.13597079570589,
+        "ipc_qrc": 10.92583358371602,
+        "window_k": 12
+      },
+      {
+        "cell_id": "input0901_coupling987654_shot0000",
+        "coupling_seed": 987654,
+        "delta": -16.671503961445133,
+        "gamma": 0.02,
+        "input_seed": 901,
+        "ipc_qelm": 26.30130778822977,
+        "ipc_qrc": 9.629803826784636,
+        "window_k": 12
+      },
+      {
+        "cell_id": "input0902_coupling123456_shot0000",
+        "coupling_seed": 123456,
+        "delta": -15.323071293576843,
+        "gamma": 0.02,
+        "input_seed": 902,
+        "ipc_qelm": 22.904203397664226,
+        "ipc_qrc": 7.5811321040873825,
+        "window_k": 12
+      },
+      {
+        "cell_id": "input0902_coupling555553_shot0000",
+        "coupling_seed": 555553,
+        "delta": -16.568163148735263,
+        "gamma": 0.02,
+        "input_seed": 902,
+        "ipc_qelm": 25.26297940322418,
+        "ipc_qrc": 8.694816254488916,
+        "window_k": 12
+      },
+      {
+        "cell_id": "input0902_coupling987654_shot0000",
+        "coupling_seed": 987654,
+        "delta": -17.421453136042267,
+        "gamma": 0.02,
+        "input_seed": 902,
+        "ipc_qelm": 25.694553330762815,
+        "ipc_qrc": 8.273100194720548,
+        "window_k": 12
+      },
+      {
+        "cell_id": "input0903_coupling123456_shot0000",
+        "coupling_seed": 123456,
+        "delta": -15.706213880039087,
+        "gamma": 0.02,
+        "input_seed": 903,
+        "ipc_qelm": 23.577513545540175,
+        "ipc_qrc": 7.8712996655010885,
+        "window_k": 12
+      },
+      {
+        "cell_id": "input0903_coupling555553_shot0000",
+        "coupling_seed": 555553,
+        "delta": -16.798305835625843,
+        "gamma": 0.02,
+        "input_seed": 903,
+        "ipc_qelm": 25.895221951804785,
+        "ipc_qrc": 9.096916116178942,
+        "window_k": 12
+      },
+      {
+        "cell_id": "input0903_coupling987654_shot0000",
+        "coupling_seed": 987654,
+        "delta": -17.9251885207889,
+        "gamma": 0.02,
+        "input_seed": 903,
+        "ipc_qelm": 26.21530829359239,
+        "ipc_qrc": 8.29011977280349,
+        "window_k": 12
+      },
+      {
+        "cell_id": "input0904_coupling123456_shot0000",
+        "coupling_seed": 123456,
+        "delta": -16.9201664823142,
+        "gamma": 0.02,
+        "input_seed": 904,
+        "ipc_qelm": 25.103813727161842,
+        "ipc_qrc": 8.183647244847641,
+        "window_k": 12
+      },
+      {
+        "cell_id": "input0904_coupling555553_shot0000",
+        "coupling_seed": 555553,
+        "delta": -17.60581340232392,
+        "gamma": 0.02,
+        "input_seed": 904,
+        "ipc_qelm": 28.181524853566078,
+        "ipc_qrc": 10.575711451242157,
+        "window_k": 12
+      },
+      {
+        "cell_id": "input0904_coupling987654_shot0000",
+        "coupling_seed": 987654,
+        "delta": -19.829186690785946,
+        "gamma": 0.02,
+        "input_seed": 904,
+        "ipc_qelm": 28.723672598411472,
+        "ipc_qrc": 8.894485907625528,
+        "window_k": 12
+      },
+      {
+        "cell_id": "input0900_coupling123456_shot0000",
+        "coupling_seed": 123456,
+        "delta": 15.935438389423156,
+        "gamma": 0.1,
+        "input_seed": 900,
+        "ipc_qelm": 3.4085795859470718,
+        "ipc_qrc": 19.344017975370228,
+        "window_k": 1
+      },
+      {
+        "cell_id": "input0900_coupling555553_shot0000",
+        "coupling_seed": 555553,
+        "delta": 18.232639070336067,
+        "gamma": 0.1,
+        "input_seed": 900,
+        "ipc_qelm": 3.4207301668828727,
+        "ipc_qrc": 21.65336923721894,
+        "window_k": 1
+      },
+      {
+        "cell_id": "input0900_coupling987654_shot0000",
+        "coupling_seed": 987654,
+        "delta": 17.88091019220813,
+        "gamma": 0.1,
+        "input_seed": 900,
+        "ipc_qelm": 3.4182411542963025,
+        "ipc_qrc": 21.299151346504434,
+        "window_k": 1
+      },
+      {
+        "cell_id": "input0901_coupling123456_shot0000",
+        "coupling_seed": 123456,
+        "delta": 17.082389840311635,
+        "gamma": 0.1,
+        "input_seed": 901,
+        "ipc_qelm": 3.1830546855061908,
+        "ipc_qrc": 20.265444525817824,
+        "window_k": 1
+      },
+      {
+        "cell_id": "input0901_coupling555553_shot0000",
+        "coupling_seed": 555553,
+        "delta": 21.419239445244017,
+        "gamma": 0.1,
+        "input_seed": 901,
+        "ipc_qelm": 3.2444415868432035,
+        "ipc_qrc": 24.663681032087222,
+        "window_k": 1
+      },
+      {
+        "cell_id": "input0901_coupling987654_shot0000",
+        "coupling_seed": 987654,
+        "delta": 21.498015334491033,
+        "gamma": 0.1,
+        "input_seed": 901,
+        "ipc_qelm": 3.207909753937932,
+        "ipc_qrc": 24.705925088428966,
+        "window_k": 1
+      },
+      {
+        "cell_id": "input0902_coupling123456_shot0000",
+        "coupling_seed": 123456,
+        "delta": 15.452012041703918,
+        "gamma": 0.1,
+        "input_seed": 902,
+        "ipc_qelm": 3.2593820985413076,
+        "ipc_qrc": 18.711394140245226,
+        "window_k": 1
+      },
+      {
+        "cell_id": "input0902_coupling555553_shot0000",
+        "coupling_seed": 555553,
+        "delta": 17.979896597369,
+        "gamma": 0.1,
+        "input_seed": 902,
+        "ipc_qelm": 3.2321000780808347,
+        "ipc_qrc": 21.211996675449832,
+        "window_k": 1
+      },
+      {
+        "cell_id": "input0902_coupling987654_shot0000",
+        "coupling_seed": 987654,
+        "delta": 18.277610450639532,
+        "gamma": 0.1,
+        "input_seed": 902,
+        "ipc_qelm": 3.248968392790335,
+        "ipc_qrc": 21.526578843429867,
+        "window_k": 1
+      },
+      {
+        "cell_id": "input0903_coupling123456_shot0000",
+        "coupling_seed": 123456,
+        "delta": 15.904541956153512,
+        "gamma": 0.1,
+        "input_seed": 903,
+        "ipc_qelm": 3.3222493787058878,
+        "ipc_qrc": 19.2267913348594,
+        "window_k": 1
+      },
+      {
+        "cell_id": "input0903_coupling555553_shot0000",
+        "coupling_seed": 555553,
+        "delta": 18.81553070042359,
+        "gamma": 0.1,
+        "input_seed": 903,
+        "ipc_qelm": 3.310081100787642,
+        "ipc_qrc": 22.12561180121123,
+        "window_k": 1
+      },
+      {
+        "cell_id": "input0903_coupling987654_shot0000",
+        "coupling_seed": 987654,
+        "delta": 18.568954180500768,
+        "gamma": 0.1,
+        "input_seed": 903,
+        "ipc_qelm": 3.2924357049084296,
+        "ipc_qrc": 21.861389885409196,
+        "window_k": 1
+      },
+      {
+        "cell_id": "input0904_coupling123456_shot0000",
+        "coupling_seed": 123456,
+        "delta": 16.94172931365889,
+        "gamma": 0.1,
+        "input_seed": 904,
+        "ipc_qelm": 3.2935717971510168,
+        "ipc_qrc": 20.235301110809907,
+        "window_k": 1
+      },
+      {
+        "cell_id": "input0904_coupling555553_shot0000",
+        "coupling_seed": 555553,
+        "delta": 21.7427040814954,
+        "gamma": 0.1,
+        "input_seed": 904,
+        "ipc_qelm": 3.3259719354717854,
+        "ipc_qrc": 25.068676016967185,
+        "window_k": 1
+      },
+      {
+        "cell_id": "input0904_coupling987654_shot0000",
+        "coupling_seed": 987654,
+        "delta": 20.537295350582085,
+        "gamma": 0.1,
+        "input_seed": 904,
+        "ipc_qelm": 3.309596466578217,
+        "ipc_qrc": 23.8468918171603,
+        "window_k": 1
+      },
+      {
+        "cell_id": "input0900_coupling123456_shot0000",
+        "coupling_seed": 123456,
+        "delta": 9.842258244324954,
+        "gamma": 0.1,
+        "input_seed": 900,
+        "ipc_qelm": 9.501759731045274,
+        "ipc_qrc": 19.344017975370228,
+        "window_k": 2
+      },
+      {
+        "cell_id": "input0900_coupling555553_shot0000",
+        "coupling_seed": 555553,
+        "delta": 12.148890750149638,
+        "gamma": 0.1,
+        "input_seed": 900,
+        "ipc_qelm": 9.504478487069301,
+        "ipc_qrc": 21.65336923721894,
+        "window_k": 2
+      },
+      {
+        "cell_id": "input0900_coupling987654_shot0000",
+        "coupling_seed": 987654,
+        "delta": 11.851331459746389,
+        "gamma": 0.1,
+        "input_seed": 900,
+        "ipc_qelm": 9.447819886758046,
+        "ipc_qrc": 21.299151346504434,
+        "window_k": 2
+      },
+      {
+        "cell_id": "input0901_coupling123456_shot0000",
+        "coupling_seed": 123456,
+        "delta": 10.734379695481385,
+        "gamma": 0.1,
+        "input_seed": 901,
+        "ipc_qelm": 9.531064830336438,
+        "ipc_qrc": 20.265444525817824,
+        "window_k": 2
+      },
+      {
+        "cell_id": "input0901_coupling555553_shot0000",
+        "coupling_seed": 555553,
+        "delta": 15.264912847945627,
+        "gamma": 0.1,
+        "input_seed": 901,
+        "ipc_qelm": 9.398768184141595,
+        "ipc_qrc": 24.663681032087222,
+        "window_k": 2
+      },
+      {
+        "cell_id": "input0901_coupling987654_shot0000",
+        "coupling_seed": 987654,
+        "delta": 15.318440162706544,
+        "gamma": 0.1,
+        "input_seed": 901,
+        "ipc_qelm": 9.387484925722422,
+        "ipc_qrc": 24.705925088428966,
+        "window_k": 2
+      },
+      {
+        "cell_id": "input0902_coupling123456_shot0000",
+        "coupling_seed": 123456,
+        "delta": 9.53819794884878,
+        "gamma": 0.1,
+        "input_seed": 902,
+        "ipc_qelm": 9.173196191396446,
+        "ipc_qrc": 18.711394140245226,
+        "window_k": 2
+      },
+      {
+        "cell_id": "input0902_coupling555553_shot0000",
+        "coupling_seed": 555553,
+        "delta": 12.012773693127967,
+        "gamma": 0.1,
+        "input_seed": 902,
+        "ipc_qelm": 9.199222982321865,
+        "ipc_qrc": 21.211996675449832,
+        "window_k": 2
+      },
+      {
+        "cell_id": "input0902_coupling987654_shot0000",
+        "coupling_seed": 987654,
+        "delta": 12.330272876513167,
+        "gamma": 0.1,
+        "input_seed": 902,
+        "ipc_qelm": 9.1963059669167,
+        "ipc_qrc": 21.526578843429867,
+        "window_k": 2
+      },
+      {
+        "cell_id": "input0903_coupling123456_shot0000",
+        "coupling_seed": 123456,
+        "delta": 9.960654221881162,
+        "gamma": 0.1,
+        "input_seed": 903,
+        "ipc_qelm": 9.266137112978237,
+        "ipc_qrc": 19.2267913348594,
+        "window_k": 2
+      },
+      {
+        "cell_id": "input0903_coupling555553_shot0000",
+        "coupling_seed": 555553,
+        "delta": 12.75945746069932,
+        "gamma": 0.1,
+        "input_seed": 903,
+        "ipc_qelm": 9.366154340511912,
+        "ipc_qrc": 22.12561180121123,
+        "window_k": 2
+      },
+      {
+        "cell_id": "input0903_coupling987654_shot0000",
+        "coupling_seed": 987654,
+        "delta": 12.410443347945213,
+        "gamma": 0.1,
+        "input_seed": 903,
+        "ipc_qelm": 9.450946537463983,
+        "ipc_qrc": 21.861389885409196,
+        "window_k": 2
+      },
+      {
+        "cell_id": "input0904_coupling123456_shot0000",
+        "coupling_seed": 123456,
+        "delta": 11.053887822107654,
+        "gamma": 0.1,
+        "input_seed": 904,
+        "ipc_qelm": 9.181413288702252,
+        "ipc_qrc": 20.235301110809907,
+        "window_k": 2
+      },
+      {
+        "cell_id": "input0904_coupling555553_shot0000",
+        "coupling_seed": 555553,
+        "delta": 15.900559759628804,
+        "gamma": 0.1,
+        "input_seed": 904,
+        "ipc_qelm": 9.168116257338381,
+        "ipc_qrc": 25.068676016967185,
+        "window_k": 2
+      },
+      {
+        "cell_id": "input0904_coupling987654_shot0000",
+        "coupling_seed": 987654,
+        "delta": 14.678766997260864,
+        "gamma": 0.1,
+        "input_seed": 904,
+        "ipc_qelm": 9.168124819899438,
+        "ipc_qrc": 23.8468918171603,
+        "window_k": 2
+      },
+      {
+        "cell_id": "input0900_coupling123456_shot0000",
+        "coupling_seed": 123456,
+        "delta": 0.9377773073738673,
+        "gamma": 0.1,
+        "input_seed": 900,
+        "ipc_qelm": 18.40624066799636,
+        "ipc_qrc": 19.344017975370228,
+        "window_k": 3
+      },
+      {
+        "cell_id": "input0900_coupling555553_shot0000",
+        "coupling_seed": 555553,
+        "delta": 3.1817335430032543,
+        "gamma": 0.1,
+        "input_seed": 900,
+        "ipc_qelm": 18.471635694215685,
+        "ipc_qrc": 21.65336923721894,
+        "window_k": 3
+      },
+      {
+        "cell_id": "input0900_coupling987654_shot0000",
+        "coupling_seed": 987654,
+        "delta": 3.045027483328056,
+        "gamma": 0.1,
+        "input_seed": 900,
+        "ipc_qelm": 18.25412386317638,
+        "ipc_qrc": 21.299151346504434,
+        "window_k": 3
+      },
+      {
+        "cell_id": "input0901_coupling123456_shot0000",
+        "coupling_seed": 123456,
+        "delta": 2.0527456290802846,
+        "gamma": 0.1,
+        "input_seed": 901,
+        "ipc_qelm": 18.21269889673754,
+        "ipc_qrc": 20.265444525817824,
+        "window_k": 3
+      },
+      {
+        "cell_id": "input0901_coupling555553_shot0000",
+        "coupling_seed": 555553,
+        "delta": 6.40780190870311,
+        "gamma": 0.1,
+        "input_seed": 901,
+        "ipc_qelm": 18.255879123384112,
+        "ipc_qrc": 24.663681032087222,
+        "window_k": 3
+      },
+      {
+        "cell_id": "input0901_coupling987654_shot0000",
+        "coupling_seed": 987654,
+        "delta": 6.519059861174064,
+        "gamma": 0.1,
+        "input_seed": 901,
+        "ipc_qelm": 18.186865227254902,
+        "ipc_qrc": 24.705925088428966,
+        "window_k": 3
+      },
+      {
+        "cell_id": "input0902_coupling123456_shot0000",
+        "coupling_seed": 123456,
+        "delta": 0.41081035577699865,
+        "gamma": 0.1,
+        "input_seed": 902,
+        "ipc_qelm": 18.300583784468227,
+        "ipc_qrc": 18.711394140245226,
+        "window_k": 3
+      },
+      {
+        "cell_id": "input0902_coupling555553_shot0000",
+        "coupling_seed": 555553,
+        "delta": 2.9166874399209526,
+        "gamma": 0.1,
+        "input_seed": 902,
+        "ipc_qelm": 18.29530923552888,
+        "ipc_qrc": 21.211996675449832,
+        "window_k": 3
+      },
+      {
+        "cell_id": "input0902_coupling987654_shot0000",
+        "coupling_seed": 987654,
+        "delta": 3.2688069826547057,
+        "gamma": 0.1,
+        "input_seed": 902,
+        "ipc_qelm": 18.25777186077516,
+        "ipc_qrc": 21.526578843429867,
+        "window_k": 3
+      },
+      {
+        "cell_id": "input0903_coupling123456_shot0000",
+        "coupling_seed": 123456,
+        "delta": 1.0979033217843792,
+        "gamma": 0.1,
+        "input_seed": 903,
+        "ipc_qelm": 18.12888801307502,
+        "ipc_qrc": 19.2267913348594,
+        "window_k": 3
+      },
+      {
+        "cell_id": "input0903_coupling555553_shot0000",
+        "coupling_seed": 555553,
+        "delta": 3.9685927316703804,
+        "gamma": 0.1,
+        "input_seed": 903,
+        "ipc_qelm": 18.15701906954085,
+        "ipc_qrc": 22.12561180121123,
+        "window_k": 3
+      },
+      {
+        "cell_id": "input0903_coupling987654_shot0000",
+        "coupling_seed": 987654,
+        "delta": 3.67417572096371,
+        "gamma": 0.1,
+        "input_seed": 903,
+        "ipc_qelm": 18.187214164445486,
+        "ipc_qrc": 21.861389885409196,
+        "window_k": 3
+      },
+      {
+        "cell_id": "input0904_coupling123456_shot0000",
+        "coupling_seed": 123456,
+        "delta": 2.0506978942875342,
+        "gamma": 0.1,
+        "input_seed": 904,
+        "ipc_qelm": 18.184603216522373,
+        "ipc_qrc": 20.235301110809907,
+        "window_k": 3
+      },
+      {
+        "cell_id": "input0904_coupling555553_shot0000",
+        "coupling_seed": 555553,
+        "delta": 6.853274063164324,
+        "gamma": 0.1,
+        "input_seed": 904,
+        "ipc_qelm": 18.21540195380286,
+        "ipc_qrc": 25.068676016967185,
+        "window_k": 3
+      },
+      {
+        "cell_id": "input0904_coupling987654_shot0000",
+        "coupling_seed": 987654,
+        "delta": 5.550676630441295,
+        "gamma": 0.1,
+        "input_seed": 904,
+        "ipc_qelm": 18.296215186719007,
+        "ipc_qrc": 23.8468918171603,
+        "window_k": 3
+      },
+      {
+        "cell_id": "input0900_coupling123456_shot0000",
+        "coupling_seed": 123456,
+        "delta": -8.882636068256271,
+        "gamma": 0.1,
+        "input_seed": 900,
+        "ipc_qelm": 28.2266540436265,
+        "ipc_qrc": 19.344017975370228,
+        "window_k": 5
+      },
+      {
+        "cell_id": "input0900_coupling555553_shot0000",
+        "coupling_seed": 555553,
+        "delta": -7.435009388135164,
+        "gamma": 0.1,
+        "input_seed": 900,
+        "ipc_qelm": 29.088378625354103,
+        "ipc_qrc": 21.65336923721894,
+        "window_k": 5
+      },
+      {
+        "cell_id": "input0900_coupling987654_shot0000",
+        "coupling_seed": 987654,
+        "delta": -8.093221702213494,
+        "gamma": 0.1,
+        "input_seed": 900,
+        "ipc_qelm": 29.39237304871793,
+        "ipc_qrc": 21.299151346504434,
+        "window_k": 5
+      },
+      {
+        "cell_id": "input0901_coupling123456_shot0000",
+        "coupling_seed": 123456,
+        "delta": -8.104319158627888,
+        "gamma": 0.1,
+        "input_seed": 901,
+        "ipc_qelm": 28.36976368444571,
+        "ipc_qrc": 20.265444525817824,
+        "window_k": 5
+      },
+      {
+        "cell_id": "input0901_coupling555553_shot0000",
+        "coupling_seed": 555553,
+        "delta": -4.2627728221840755,
+        "gamma": 0.1,
+        "input_seed": 901,
+        "ipc_qelm": 28.926453854271298,
+        "ipc_qrc": 24.663681032087222,
+        "window_k": 5
+      },
+      {
+        "cell_id": "input0901_coupling987654_shot0000",
+        "coupling_seed": 987654,
+        "delta": -4.875690866076663,
+        "gamma": 0.1,
+        "input_seed": 901,
+        "ipc_qelm": 29.58161595450563,
+        "ipc_qrc": 24.705925088428966,
+        "window_k": 5
+      },
+      {
+        "cell_id": "input0902_coupling123456_shot0000",
+        "coupling_seed": 123456,
+        "delta": -8.682177583442478,
+        "gamma": 0.1,
+        "input_seed": 902,
+        "ipc_qelm": 27.393571723687703,
+        "ipc_qrc": 18.711394140245226,
+        "window_k": 5
+      },
+      {
+        "cell_id": "input0902_coupling555553_shot0000",
+        "coupling_seed": 555553,
+        "delta": -7.114812453991249,
+        "gamma": 0.1,
+        "input_seed": 902,
+        "ipc_qelm": 28.32680912944108,
+        "ipc_qrc": 21.211996675449832,
+        "window_k": 5
+      },
+      {
+        "cell_id": "input0902_coupling987654_shot0000",
+        "coupling_seed": 987654,
+        "delta": -6.768746497976522,
+        "gamma": 0.1,
+        "input_seed": 902,
+        "ipc_qelm": 28.29532534140639,
+        "ipc_qrc": 21.526578843429867,
+        "window_k": 5
+      },
+      {
+        "cell_id": "input0903_coupling123456_shot0000",
+        "coupling_seed": 123456,
+        "delta": -8.361853470937724,
+        "gamma": 0.1,
+        "input_seed": 903,
+        "ipc_qelm": 27.588644805797124,
+        "ipc_qrc": 19.2267913348594,
+        "window_k": 5
+      },
+      {
+        "cell_id": "input0903_coupling555553_shot0000",
+        "coupling_seed": 555553,
+        "delta": -6.125755280364615,
+        "gamma": 0.1,
+        "input_seed": 903,
+        "ipc_qelm": 28.251367081575847,
+        "ipc_qrc": 22.12561180121123,
+        "window_k": 5
+      },
+      {
+        "cell_id": "input0903_coupling987654_shot0000",
+        "coupling_seed": 987654,
+        "delta": -6.705030282890895,
+        "gamma": 0.1,
+        "input_seed": 903,
+        "ipc_qelm": 28.56642016830009,
+        "ipc_qrc": 21.861389885409196,
+        "window_k": 5
+      },
+      {
+        "cell_id": "input0904_coupling123456_shot0000",
+        "coupling_seed": 123456,
+        "delta": -9.050974995936976,
+        "gamma": 0.1,
+        "input_seed": 904,
+        "ipc_qelm": 29.286276106746882,
+        "ipc_qrc": 20.235301110809907,
+        "window_k": 5
+      },
+      {
+        "cell_id": "input0904_coupling555553_shot0000",
+        "coupling_seed": 555553,
+        "delta": -4.442394012174592,
+        "gamma": 0.1,
+        "input_seed": 904,
+        "ipc_qelm": 29.511070029141777,
+        "ipc_qrc": 25.068676016967185,
+        "window_k": 5
+      },
+      {
+        "cell_id": "input0904_coupling987654_shot0000",
+        "coupling_seed": 987654,
+        "delta": -6.051479890480049,
+        "gamma": 0.1,
+        "input_seed": 904,
+        "ipc_qelm": 29.89837170764035,
+        "ipc_qrc": 23.8468918171603,
+        "window_k": 5
+      },
+      {
+        "cell_id": "input0900_coupling123456_shot0000",
+        "coupling_seed": 123456,
+        "delta": -7.514464413648028,
+        "gamma": 0.1,
+        "input_seed": 900,
+        "ipc_qelm": 26.858482389018256,
+        "ipc_qrc": 19.344017975370228,
+        "window_k": 8
+      },
+      {
+        "cell_id": "input0900_coupling555553_shot0000",
+        "coupling_seed": 555553,
+        "delta": -6.142969857376201,
+        "gamma": 0.1,
+        "input_seed": 900,
+        "ipc_qelm": 27.79633909459514,
+        "ipc_qrc": 21.65336923721894,
+        "window_k": 8
+      },
+      {
+        "cell_id": "input0900_coupling987654_shot0000",
+        "coupling_seed": 987654,
+        "delta": -6.555893368020335,
+        "gamma": 0.1,
+        "input_seed": 900,
+        "ipc_qelm": 27.85504471452477,
+        "ipc_qrc": 21.299151346504434,
+        "window_k": 8
+      },
+      {
+        "cell_id": "input0901_coupling123456_shot0000",
+        "coupling_seed": 123456,
+        "delta": -6.988553911084178,
+        "gamma": 0.1,
+        "input_seed": 901,
+        "ipc_qelm": 27.253998436902002,
+        "ipc_qrc": 20.265444525817824,
+        "window_k": 8
+      },
+      {
+        "cell_id": "input0901_coupling555553_shot0000",
+        "coupling_seed": 555553,
+        "delta": -3.362194362536737,
+        "gamma": 0.1,
+        "input_seed": 901,
+        "ipc_qelm": 28.02587539462396,
+        "ipc_qrc": 24.663681032087222,
+        "window_k": 8
+      },
+      {
+        "cell_id": "input0901_coupling987654_shot0000",
+        "coupling_seed": 987654,
+        "delta": -3.6945324937608817,
+        "gamma": 0.1,
+        "input_seed": 901,
+        "ipc_qelm": 28.400457582189848,
+        "ipc_qrc": 24.705925088428966,
+        "window_k": 8
+      },
+      {
+        "cell_id": "input0902_coupling123456_shot0000",
+        "coupling_seed": 123456,
+        "delta": -7.553407343116504,
+        "gamma": 0.1,
+        "input_seed": 902,
+        "ipc_qelm": 26.26480148336173,
+        "ipc_qrc": 18.711394140245226,
+        "window_k": 8
+      },
+      {
+        "cell_id": "input0902_coupling555553_shot0000",
+        "coupling_seed": 555553,
+        "delta": -5.991397617896659,
+        "gamma": 0.1,
+        "input_seed": 902,
+        "ipc_qelm": 27.20339429334649,
+        "ipc_qrc": 21.211996675449832,
+        "window_k": 8
+      },
+      {
+        "cell_id": "input0902_coupling987654_shot0000",
+        "coupling_seed": 987654,
+        "delta": -5.821464286598474,
+        "gamma": 0.1,
+        "input_seed": 902,
+        "ipc_qelm": 27.34804313002834,
+        "ipc_qrc": 21.526578843429867,
+        "window_k": 8
+      },
+      {
+        "cell_id": "input0903_coupling123456_shot0000",
+        "coupling_seed": 123456,
+        "delta": -7.601197658011099,
+        "gamma": 0.1,
+        "input_seed": 903,
+        "ipc_qelm": 26.827988992870498,
+        "ipc_qrc": 19.2267913348594,
+        "window_k": 8
+      },
+      {
+        "cell_id": "input0903_coupling555553_shot0000",
+        "coupling_seed": 555553,
+        "delta": -5.858095237474036,
+        "gamma": 0.1,
+        "input_seed": 903,
+        "ipc_qelm": 27.983707038685267,
+        "ipc_qrc": 22.12561180121123,
+        "window_k": 8
+      },
+      {
+        "cell_id": "input0903_coupling987654_shot0000",
+        "coupling_seed": 987654,
+        "delta": -6.4428144010451796,
+        "gamma": 0.1,
+        "input_seed": 903,
+        "ipc_qelm": 28.304204286454375,
+        "ipc_qrc": 21.861389885409196,
+        "window_k": 8
+      },
+      {
+        "cell_id": "input0904_coupling123456_shot0000",
+        "coupling_seed": 123456,
+        "delta": -8.053805032560874,
+        "gamma": 0.1,
+        "input_seed": 904,
+        "ipc_qelm": 28.28910614337078,
+        "ipc_qrc": 20.235301110809907,
+        "window_k": 8
+      },
+      {
+        "cell_id": "input0904_coupling555553_shot0000",
+        "coupling_seed": 555553,
+        "delta": -4.677089890518552,
+        "gamma": 0.1,
+        "input_seed": 904,
+        "ipc_qelm": 29.745765907485737,
+        "ipc_qrc": 25.068676016967185,
+        "window_k": 8
+      },
+      {
+        "cell_id": "input0904_coupling987654_shot0000",
+        "coupling_seed": 987654,
+        "delta": -5.97334238027841,
+        "gamma": 0.1,
+        "input_seed": 904,
+        "ipc_qelm": 29.82023419743871,
+        "ipc_qrc": 23.8468918171603,
+        "window_k": 8
+      },
+      {
+        "cell_id": "input0900_coupling123456_shot0000",
+        "coupling_seed": 123456,
+        "delta": -5.14071324613359,
+        "gamma": 0.1,
+        "input_seed": 900,
+        "ipc_qelm": 24.484731221503818,
+        "ipc_qrc": 19.344017975370228,
+        "window_k": 12
+      },
+      {
+        "cell_id": "input0900_coupling555553_shot0000",
+        "coupling_seed": 555553,
+        "delta": -5.1449628025376235,
+        "gamma": 0.1,
+        "input_seed": 900,
+        "ipc_qelm": 26.798332039756563,
+        "ipc_qrc": 21.65336923721894,
+        "window_k": 12
+      },
+      {
+        "cell_id": "input0900_coupling987654_shot0000",
+        "coupling_seed": 987654,
+        "delta": -5.695681418173386,
+        "gamma": 0.1,
+        "input_seed": 900,
+        "ipc_qelm": 26.99483276467782,
+        "ipc_qrc": 21.299151346504434,
+        "window_k": 12
+      },
+      {
+        "cell_id": "input0901_coupling123456_shot0000",
+        "coupling_seed": 123456,
+        "delta": -3.1551854126535765,
+        "gamma": 0.1,
+        "input_seed": 901,
+        "ipc_qelm": 23.4206299384714,
+        "ipc_qrc": 20.265444525817824,
+        "window_k": 12
+      },
+      {
+        "cell_id": "input0901_coupling555553_shot0000",
+        "coupling_seed": 555553,
+        "delta": -2.240232538434242,
+        "gamma": 0.1,
+        "input_seed": 901,
+        "ipc_qelm": 26.903913570521464,
+        "ipc_qrc": 24.663681032087222,
+        "window_k": 12
+      },
+      {
+        "cell_id": "input0901_coupling987654_shot0000",
+        "coupling_seed": 987654,
+        "delta": -3.5921801534831275,
+        "gamma": 0.1,
+        "input_seed": 901,
+        "ipc_qelm": 28.298105241912094,
+        "ipc_qrc": 24.705925088428966,
+        "window_k": 12
+      },
+      {
+        "cell_id": "input0902_coupling123456_shot0000",
+        "coupling_seed": 123456,
+        "delta": -5.0450813130116074,
+        "gamma": 0.1,
+        "input_seed": 902,
+        "ipc_qelm": 23.756475453256833,
+        "ipc_qrc": 18.711394140245226,
+        "window_k": 12
+      },
+      {
+        "cell_id": "input0902_coupling555553_shot0000",
+        "coupling_seed": 555553,
+        "delta": -4.671994553900163,
+        "gamma": 0.1,
+        "input_seed": 902,
+        "ipc_qelm": 25.883991229349995,
+        "ipc_qrc": 21.211996675449832,
+        "window_k": 12
+      },
+      {
+        "cell_id": "input0902_coupling987654_shot0000",
+        "coupling_seed": 987654,
+        "delta": -5.572387624026376,
+        "gamma": 0.1,
+        "input_seed": 902,
+        "ipc_qelm": 27.098966467456243,
+        "ipc_qrc": 21.526578843429867,
+        "window_k": 12
+      },
+      {
+        "cell_id": "input0903_coupling123456_shot0000",
+        "coupling_seed": 123456,
+        "delta": -4.893944156368775,
+        "gamma": 0.1,
+        "input_seed": 903,
+        "ipc_qelm": 24.120735491228174,
+        "ipc_qrc": 19.2267913348594,
+        "window_k": 12
+      },
+      {
+        "cell_id": "input0903_coupling555553_shot0000",
+        "coupling_seed": 555553,
+        "delta": -4.159690886378375,
+        "gamma": 0.1,
+        "input_seed": 903,
+        "ipc_qelm": 26.285302687589606,
+        "ipc_qrc": 22.12561180121123,
+        "window_k": 12
+      },
+      {
+        "cell_id": "input0903_coupling987654_shot0000",
+        "coupling_seed": 987654,
+        "delta": -5.674641553524779,
+        "gamma": 0.1,
+        "input_seed": 903,
+        "ipc_qelm": 27.536031438933975,
+        "ipc_qrc": 21.861389885409196,
+        "window_k": 12
+      },
+      {
+        "cell_id": "input0904_coupling123456_shot0000",
+        "coupling_seed": 123456,
+        "delta": -5.554143365194637,
+        "gamma": 0.1,
+        "input_seed": 904,
+        "ipc_qelm": 25.789444476004544,
+        "ipc_qrc": 20.235301110809907,
+        "window_k": 12
+      },
+      {
+        "cell_id": "input0904_coupling555553_shot0000",
+        "coupling_seed": 555553,
+        "delta": -3.9620937613408174,
+        "gamma": 0.1,
+        "input_seed": 904,
+        "ipc_qelm": 29.030769778308002,
+        "ipc_qrc": 25.068676016967185,
+        "window_k": 12
+      },
+      {
+        "cell_id": "input0904_coupling987654_shot0000",
+        "coupling_seed": 987654,
+        "delta": -6.490879766211261,
+        "gamma": 0.1,
+        "input_seed": 904,
+        "ipc_qelm": 30.337771583371563,
+        "ipc_qrc": 23.8468918171603,
+        "window_k": 12
+      },
+      {
+        "cell_id": "input0900_coupling123456_shot0000",
+        "coupling_seed": 123456,
+        "delta": 26.780635894309142,
+        "gamma": 0.3,
+        "input_seed": 900,
+        "ipc_qelm": 0.0,
+        "ipc_qrc": 26.780635894309142,
+        "window_k": 1
+      },
+      {
+        "cell_id": "input0900_coupling555553_shot0000",
+        "coupling_seed": 555553,
+        "delta": 24.909495001783178,
+        "gamma": 0.3,
+        "input_seed": 900,
+        "ipc_qelm": 3.440788383647588,
+        "ipc_qrc": 28.350283385430764,
+        "window_k": 1
+      },
+      {
+        "cell_id": "input0900_coupling987654_shot0000",
+        "coupling_seed": 987654,
+        "delta": 25.50646455565181,
+        "gamma": 0.3,
+        "input_seed": 900,
+        "ipc_qelm": 3.4067817811459307,
+        "ipc_qrc": 28.91324633679774,
+        "window_k": 1
+      },
+      {
+        "cell_id": "input0901_coupling123456_shot0000",
+        "coupling_seed": 123456,
+        "delta": 29.335252274923064,
+        "gamma": 0.3,
+        "input_seed": 901,
+        "ipc_qelm": 0.0,
+        "ipc_qrc": 29.335252274923064,
+        "window_k": 1
+      },
+      {
+        "cell_id": "input0901_coupling555553_shot0000",
+        "coupling_seed": 555553,
+        "delta": 28.715290577780863,
+        "gamma": 0.3,
+        "input_seed": 901,
+        "ipc_qelm": 3.21090856682553,
+        "ipc_qrc": 31.926199144606393,
+        "window_k": 1
+      },
+      {
+        "cell_id": "input0901_coupling987654_shot0000",
+        "coupling_seed": 987654,
+        "delta": 29.813525238679468,
+        "gamma": 0.3,
+        "input_seed": 901,
+        "ipc_qelm": 3.242121276848784,
+        "ipc_qrc": 33.05564651552825,
+        "window_k": 1
+      },
+      {
+        "cell_id": "input0902_coupling123456_shot0000",
+        "coupling_seed": 123456,
+        "delta": 26.627776817453977,
+        "gamma": 0.3,
+        "input_seed": 902,
+        "ipc_qelm": 0.0,
+        "ipc_qrc": 26.627776817453977,
+        "window_k": 1
+      },
+      {
+        "cell_id": "input0902_coupling555553_shot0000",
+        "coupling_seed": 555553,
+        "delta": 25.167589128103536,
+        "gamma": 0.3,
+        "input_seed": 902,
+        "ipc_qelm": 3.2504697074559283,
+        "ipc_qrc": 28.418058835559464,
+        "window_k": 1
+      },
+      {
+        "cell_id": "input0902_coupling987654_shot0000",
+        "coupling_seed": 987654,
+        "delta": 26.224228549780936,
+        "gamma": 0.3,
+        "input_seed": 902,
+        "ipc_qelm": 3.2493388580388136,
+        "ipc_qrc": 29.47356740781975,
+        "window_k": 1
+      },
+      {
+        "cell_id": "input0903_coupling123456_shot0000",
+        "coupling_seed": 123456,
+        "delta": 27.418207708895725,
+        "gamma": 0.3,
+        "input_seed": 903,
+        "ipc_qelm": 0.0,
+        "ipc_qrc": 27.418207708895725,
+        "window_k": 1
+      },
+      {
+        "cell_id": "input0903_coupling555553_shot0000",
+        "coupling_seed": 555553,
+        "delta": 26.204018602426416,
+        "gamma": 0.3,
+        "input_seed": 903,
+        "ipc_qelm": 3.30989697858499,
+        "ipc_qrc": 29.513915581011407,
+        "window_k": 1
+      },
+      {
+        "cell_id": "input0903_coupling987654_shot0000",
+        "coupling_seed": 987654,
+        "delta": 26.68789481081551,
+        "gamma": 0.3,
+        "input_seed": 903,
+        "ipc_qelm": 3.2514407950214554,
+        "ipc_qrc": 29.939335605836966,
+        "window_k": 1
+      },
+      {
+        "cell_id": "input0904_coupling123456_shot0000",
+        "coupling_seed": 123456,
+        "delta": 28.10217816791511,
+        "gamma": 0.3,
+        "input_seed": 904,
+        "ipc_qelm": 0.0,
+        "ipc_qrc": 28.10217816791511,
+        "window_k": 1
+      },
+      {
+        "cell_id": "input0904_coupling555553_shot0000",
+        "coupling_seed": 555553,
+        "delta": 29.096819315975864,
+        "gamma": 0.3,
+        "input_seed": 904,
+        "ipc_qelm": 3.341163162435466,
+        "ipc_qrc": 32.43798247841133,
+        "window_k": 1
+      },
+      {
+        "cell_id": "input0904_coupling987654_shot0000",
+        "coupling_seed": 987654,
+        "delta": 27.649453537715157,
+        "gamma": 0.3,
+        "input_seed": 904,
+        "ipc_qelm": 3.3778281552798997,
+        "ipc_qrc": 31.027281692995057,
+        "window_k": 1
+      },
+      {
+        "cell_id": "input0900_coupling123456_shot0000",
+        "coupling_seed": 123456,
+        "delta": 17.230252769155026,
+        "gamma": 0.3,
+        "input_seed": 900,
+        "ipc_qelm": 9.550383125154116,
+        "ipc_qrc": 26.780635894309142,
+        "window_k": 2
+      },
+      {
+        "cell_id": "input0900_coupling555553_shot0000",
+        "coupling_seed": 555553,
+        "delta": 18.883768633559185,
+        "gamma": 0.3,
+        "input_seed": 900,
+        "ipc_qelm": 9.466514751871578,
+        "ipc_qrc": 28.350283385430764,
+        "window_k": 2
+      },
+      {
+        "cell_id": "input0900_coupling987654_shot0000",
+        "coupling_seed": 987654,
+        "delta": 19.41079864391828,
+        "gamma": 0.3,
+        "input_seed": 900,
+        "ipc_qelm": 9.50244769287946,
+        "ipc_qrc": 28.91324633679774,
+        "window_k": 2
+      },
+      {
+        "cell_id": "input0901_coupling123456_shot0000",
+        "coupling_seed": 123456,
+        "delta": 19.886072854372728,
+        "gamma": 0.3,
+        "input_seed": 901,
+        "ipc_qelm": 9.449179420550337,
+        "ipc_qrc": 29.335252274923064,
+        "window_k": 2
+      },
+      {
+        "cell_id": "input0901_coupling555553_shot0000",
+        "coupling_seed": 555553,
+        "delta": 22.427607365767283,
+        "gamma": 0.3,
+        "input_seed": 901,
+        "ipc_qelm": 9.49859177883911,
+        "ipc_qrc": 31.926199144606393,
+        "window_k": 2
+      },
+      {
+        "cell_id": "input0901_coupling987654_shot0000",
+        "coupling_seed": 987654,
+        "delta": 23.636684755889497,
+        "gamma": 0.3,
+        "input_seed": 901,
+        "ipc_qelm": 9.418961759638757,
+        "ipc_qrc": 33.05564651552825,
+        "window_k": 2
+      },
+      {
+        "cell_id": "input0902_coupling123456_shot0000",
+        "coupling_seed": 123456,
+        "delta": 17.421523421453838,
+        "gamma": 0.3,
+        "input_seed": 902,
+        "ipc_qelm": 9.20625339600014,
+        "ipc_qrc": 26.627776817453977,
+        "window_k": 2
+      },
+      {
+        "cell_id": "input0902_coupling555553_shot0000",
+        "coupling_seed": 555553,
+        "delta": 19.15026269625256,
+        "gamma": 0.3,
+        "input_seed": 902,
+        "ipc_qelm": 9.267796139306903,
+        "ipc_qrc": 28.418058835559464,
+        "window_k": 2
+      },
+      {
+        "cell_id": "input0902_coupling987654_shot0000",
+        "coupling_seed": 987654,
+        "delta": 20.31568625067173,
+        "gamma": 0.3,
+        "input_seed": 902,
+        "ipc_qelm": 9.157881157148019,
+        "ipc_qrc": 29.47356740781975,
+        "window_k": 2
+      },
+      {
+        "cell_id": "input0903_coupling123456_shot0000",
+        "coupling_seed": 123456,
+        "delta": 18.115573778395554,
+        "gamma": 0.3,
+        "input_seed": 903,
+        "ipc_qelm": 9.302633930500171,
+        "ipc_qrc": 27.418207708895725,
+        "window_k": 2
+      },
+      {
+        "cell_id": "input0903_coupling555553_shot0000",
+        "coupling_seed": 555553,
+        "delta": 20.09962451512908,
+        "gamma": 0.3,
+        "input_seed": 903,
+        "ipc_qelm": 9.414291065882328,
+        "ipc_qrc": 29.513915581011407,
+        "window_k": 2
+      },
+      {
+        "cell_id": "input0903_coupling987654_shot0000",
+        "coupling_seed": 987654,
+        "delta": 20.52237368228667,
+        "gamma": 0.3,
+        "input_seed": 903,
+        "ipc_qelm": 9.416961923550298,
+        "ipc_qrc": 29.939335605836966,
+        "window_k": 2
+      },
+      {
+        "cell_id": "input0904_coupling123456_shot0000",
+        "coupling_seed": 123456,
+        "delta": 18.965553172888697,
+        "gamma": 0.3,
+        "input_seed": 904,
+        "ipc_qelm": 9.136624995026411,
+        "ipc_qrc": 28.10217816791511,
+        "window_k": 2
+      },
+      {
+        "cell_id": "input0904_coupling555553_shot0000",
+        "coupling_seed": 555553,
+        "delta": 23.237995551978415,
+        "gamma": 0.3,
+        "input_seed": 904,
+        "ipc_qelm": 9.199986926432915,
+        "ipc_qrc": 32.43798247841133,
+        "window_k": 2
+      },
+      {
+        "cell_id": "input0904_coupling987654_shot0000",
+        "coupling_seed": 987654,
+        "delta": 21.80783176401637,
+        "gamma": 0.3,
+        "input_seed": 904,
+        "ipc_qelm": 9.219449928978687,
+        "ipc_qrc": 31.027281692995057,
+        "window_k": 2
+      },
+      {
+        "cell_id": "input0900_coupling123456_shot0000",
+        "coupling_seed": 123456,
+        "delta": 8.488022260466003,
+        "gamma": 0.3,
+        "input_seed": 900,
+        "ipc_qelm": 18.29261363384314,
+        "ipc_qrc": 26.780635894309142,
+        "window_k": 3
+      },
+      {
+        "cell_id": "input0900_coupling555553_shot0000",
+        "coupling_seed": 555553,
+        "delta": 10.025256101687297,
+        "gamma": 0.3,
+        "input_seed": 900,
+        "ipc_qelm": 18.325027283743466,
+        "ipc_qrc": 28.350283385430764,
+        "window_k": 3
+      },
+      {
+        "cell_id": "input0900_coupling987654_shot0000",
+        "coupling_seed": 987654,
+        "delta": 10.751286563400736,
+        "gamma": 0.3,
+        "input_seed": 900,
+        "ipc_qelm": 18.161959773397005,
+        "ipc_qrc": 28.91324633679774,
+        "window_k": 3
+      },
+      {
+        "cell_id": "input0901_coupling123456_shot0000",
+        "coupling_seed": 123456,
+        "delta": 11.187695443192169,
+        "gamma": 0.3,
+        "input_seed": 901,
+        "ipc_qelm": 18.147556831730896,
+        "ipc_qrc": 29.335252274923064,
+        "window_k": 3
+      },
+      {
+        "cell_id": "input0901_coupling555553_shot0000",
+        "coupling_seed": 555553,
+        "delta": 13.688954133030705,
+        "gamma": 0.3,
+        "input_seed": 901,
+        "ipc_qelm": 18.237245011575688,
+        "ipc_qrc": 31.926199144606393,
+        "window_k": 3
+      },
+      {
+        "cell_id": "input0901_coupling987654_shot0000",
+        "coupling_seed": 987654,
+        "delta": 14.904206781466588,
+        "gamma": 0.3,
+        "input_seed": 901,
+        "ipc_qelm": 18.151439734061665,
+        "ipc_qrc": 33.05564651552825,
+        "window_k": 3
+      },
+      {
+        "cell_id": "input0902_coupling123456_shot0000",
+        "coupling_seed": 123456,
+        "delta": 8.39610455535664,
+        "gamma": 0.3,
+        "input_seed": 902,
+        "ipc_qelm": 18.231672262097337,
+        "ipc_qrc": 26.627776817453977,
+        "window_k": 3
+      },
+      {
+        "cell_id": "input0902_coupling555553_shot0000",
+        "coupling_seed": 555553,
+        "delta": 10.090759328921731,
+        "gamma": 0.3,
+        "input_seed": 902,
+        "ipc_qelm": 18.327299506637733,
+        "ipc_qrc": 28.418058835559464,
+        "window_k": 3
+      },
+      {
+        "cell_id": "input0902_coupling987654_shot0000",
+        "coupling_seed": 987654,
+        "delta": 11.170147700286876,
+        "gamma": 0.3,
+        "input_seed": 902,
+        "ipc_qelm": 18.303419707532875,
+        "ipc_qrc": 29.47356740781975,
+        "window_k": 3
+      },
+      {
+        "cell_id": "input0903_coupling123456_shot0000",
+        "coupling_seed": 123456,
+        "delta": 9.229016969270543,
+        "gamma": 0.3,
+        "input_seed": 903,
+        "ipc_qelm": 18.189190739625182,
+        "ipc_qrc": 27.418207708895725,
+        "window_k": 3
+      },
+      {
+        "cell_id": "input0903_coupling555553_shot0000",
+        "coupling_seed": 555553,
+        "delta": 11.401540369649954,
+        "gamma": 0.3,
+        "input_seed": 903,
+        "ipc_qelm": 18.112375211361453,
+        "ipc_qrc": 29.513915581011407,
+        "window_k": 3
+      },
+      {
+        "cell_id": "input0903_coupling987654_shot0000",
+        "coupling_seed": 987654,
+        "delta": 11.788769563663834,
+        "gamma": 0.3,
+        "input_seed": 903,
+        "ipc_qelm": 18.150566042173132,
+        "ipc_qrc": 29.939335605836966,
+        "window_k": 3
+      },
+      {
+        "cell_id": "input0904_coupling123456_shot0000",
+        "coupling_seed": 123456,
+        "delta": 9.879750441183063,
+        "gamma": 0.3,
+        "input_seed": 904,
+        "ipc_qelm": 18.222427726732047,
+        "ipc_qrc": 28.10217816791511,
+        "window_k": 3
+      },
+      {
+        "cell_id": "input0904_coupling555553_shot0000",
+        "coupling_seed": 555553,
+        "delta": 14.248200718431931,
+        "gamma": 0.3,
+        "input_seed": 904,
+        "ipc_qelm": 18.189781759979397,
+        "ipc_qrc": 32.43798247841133,
+        "window_k": 3
+      },
+      {
+        "cell_id": "input0904_coupling987654_shot0000",
+        "coupling_seed": 987654,
+        "delta": 12.83123171715932,
+        "gamma": 0.3,
+        "input_seed": 904,
+        "ipc_qelm": 18.196049975835738,
+        "ipc_qrc": 31.027281692995057,
+        "window_k": 3
+      },
+      {
+        "cell_id": "input0900_coupling123456_shot0000",
+        "coupling_seed": 123456,
+        "delta": -2.3054717841292103,
+        "gamma": 0.3,
+        "input_seed": 900,
+        "ipc_qelm": 29.086107678438353,
+        "ipc_qrc": 26.780635894309142,
+        "window_k": 5
+      },
+      {
+        "cell_id": "input0900_coupling555553_shot0000",
+        "coupling_seed": 555553,
+        "delta": -1.1612525085635355,
+        "gamma": 0.3,
+        "input_seed": 900,
+        "ipc_qelm": 29.5115358939943,
+        "ipc_qrc": 28.350283385430764,
+        "window_k": 5
+      },
+      {
+        "cell_id": "input0900_coupling987654_shot0000",
+        "coupling_seed": 987654,
+        "delta": -0.971860031231234,
+        "gamma": 0.3,
+        "input_seed": 900,
+        "ipc_qelm": 29.885106368028975,
+        "ipc_qrc": 28.91324633679774,
+        "window_k": 5
+      },
+      {
+        "cell_id": "input0901_coupling123456_shot0000",
+        "coupling_seed": 123456,
+        "delta": 0.2596109912366913,
+        "gamma": 0.3,
+        "input_seed": 901,
+        "ipc_qelm": 29.075641283686373,
+        "ipc_qrc": 29.335252274923064,
+        "window_k": 5
+      },
+      {
+        "cell_id": "input0901_coupling555553_shot0000",
+        "coupling_seed": 555553,
+        "delta": 2.357344988103428,
+        "gamma": 0.3,
+        "input_seed": 901,
+        "ipc_qelm": 29.568854156502965,
+        "ipc_qrc": 31.926199144606393,
+        "window_k": 5
+      },
+      {
+        "cell_id": "input0901_coupling987654_shot0000",
+        "coupling_seed": 987654,
+        "delta": 2.8703377324517305,
+        "gamma": 0.3,
+        "input_seed": 901,
+        "ipc_qelm": 30.185308783076522,
+        "ipc_qrc": 33.05564651552825,
+        "window_k": 5
+      },
+      {
+        "cell_id": "input0902_coupling123456_shot0000",
+        "coupling_seed": 123456,
+        "delta": -1.393959023494098,
+        "gamma": 0.3,
+        "input_seed": 902,
+        "ipc_qelm": 28.021735840948075,
+        "ipc_qrc": 26.627776817453977,
+        "window_k": 5
+      },
+      {
+        "cell_id": "input0902_coupling555553_shot0000",
+        "coupling_seed": 555553,
+        "delta": -0.21913853805752126,
+        "gamma": 0.3,
+        "input_seed": 902,
+        "ipc_qelm": 28.637197373616985,
+        "ipc_qrc": 28.418058835559464,
+        "window_k": 5
+      },
+      {
+        "cell_id": "input0902_coupling987654_shot0000",
+        "coupling_seed": 987654,
+        "delta": 0.49738781950748745,
+        "gamma": 0.3,
+        "input_seed": 902,
+        "ipc_qelm": 28.976179588312263,
+        "ipc_qrc": 29.47356740781975,
+        "window_k": 5
+      },
+      {
+        "cell_id": "input0903_coupling123456_shot0000",
+        "coupling_seed": 123456,
+        "delta": -0.8451857441170922,
+        "gamma": 0.3,
+        "input_seed": 903,
+        "ipc_qelm": 28.263393453012817,
+        "ipc_qrc": 27.418207708895725,
+        "window_k": 5
+      },
+      {
+        "cell_id": "input0903_coupling555553_shot0000",
+        "coupling_seed": 555553,
+        "delta": 1.033245875140576,
+        "gamma": 0.3,
+        "input_seed": 903,
+        "ipc_qelm": 28.48066970587083,
+        "ipc_qrc": 29.513915581011407,
+        "window_k": 5
+      },
+      {
+        "cell_id": "input0903_coupling987654_shot0000",
+        "coupling_seed": 987654,
+        "delta": 0.49113532697391804,
+        "gamma": 0.3,
+        "input_seed": 903,
+        "ipc_qelm": 29.448200278863048,
+        "ipc_qrc": 29.939335605836966,
+        "window_k": 5
+      },
+      {
+        "cell_id": "input0904_coupling123456_shot0000",
+        "coupling_seed": 123456,
+        "delta": -1.8246822291287792,
+        "gamma": 0.3,
+        "input_seed": 904,
+        "ipc_qelm": 29.92686039704389,
+        "ipc_qrc": 28.10217816791511,
+        "window_k": 5
+      },
+      {
+        "cell_id": "input0904_coupling555553_shot0000",
+        "coupling_seed": 555553,
+        "delta": 2.491234834216982,
+        "gamma": 0.3,
+        "input_seed": 904,
+        "ipc_qelm": 29.946747644194346,
+        "ipc_qrc": 32.43798247841133,
+        "window_k": 5
+      },
+      {
+        "cell_id": "input0904_coupling987654_shot0000",
+        "coupling_seed": 987654,
+        "delta": 0.589658710914847,
+        "gamma": 0.3,
+        "input_seed": 904,
+        "ipc_qelm": 30.43762298208021,
+        "ipc_qrc": 31.027281692995057,
+        "window_k": 5
+      },
+      {
+        "cell_id": "input0900_coupling123456_shot0000",
+        "coupling_seed": 123456,
+        "delta": -1.1161812946424732,
+        "gamma": 0.3,
+        "input_seed": 900,
+        "ipc_qelm": 27.896817188951616,
+        "ipc_qrc": 26.780635894309142,
+        "window_k": 8
+      },
+      {
+        "cell_id": "input0900_coupling555553_shot0000",
+        "coupling_seed": 555553,
+        "delta": -1.0956915918296488,
+        "gamma": 0.3,
+        "input_seed": 900,
+        "ipc_qelm": 29.445974977260413,
+        "ipc_qrc": 28.350283385430764,
+        "window_k": 8
+      },
+      {
+        "cell_id": "input0900_coupling987654_shot0000",
+        "coupling_seed": 987654,
+        "delta": -0.3662840357086168,
+        "gamma": 0.3,
+        "input_seed": 900,
+        "ipc_qelm": 29.279530372506358,
+        "ipc_qrc": 28.91324633679774,
+        "window_k": 8
+      },
+      {
+        "cell_id": "input0901_coupling123456_shot0000",
+        "coupling_seed": 123456,
+        "delta": 1.1228487356474552,
+        "gamma": 0.3,
+        "input_seed": 901,
+        "ipc_qelm": 28.21240353927561,
+        "ipc_qrc": 29.335252274923064,
+        "window_k": 8
+      },
+      {
+        "cell_id": "input0901_coupling555553_shot0000",
+        "coupling_seed": 555553,
+        "delta": 1.6300841723126638,
+        "gamma": 0.3,
+        "input_seed": 901,
+        "ipc_qelm": 30.29611497229373,
+        "ipc_qrc": 31.926199144606393,
+        "window_k": 8
+      },
+      {
+        "cell_id": "input0901_coupling987654_shot0000",
+        "coupling_seed": 987654,
+        "delta": 3.2470468789640243,
+        "gamma": 0.3,
+        "input_seed": 901,
+        "ipc_qelm": 29.808599636564228,
+        "ipc_qrc": 33.05564651552825,
+        "window_k": 8
+      },
+      {
+        "cell_id": "input0902_coupling123456_shot0000",
+        "coupling_seed": 123456,
+        "delta": -0.5411024906856206,
+        "gamma": 0.3,
+        "input_seed": 902,
+        "ipc_qelm": 27.168879308139598,
+        "ipc_qrc": 26.627776817453977,
+        "window_k": 8
+      },
+      {
+        "cell_id": "input0902_coupling555553_shot0000",
+        "coupling_seed": 555553,
+        "delta": -0.31314861153855134,
+        "gamma": 0.3,
+        "input_seed": 902,
+        "ipc_qelm": 28.731207447098015,
+        "ipc_qrc": 28.418058835559464,
+        "window_k": 8
+      },
+      {
+        "cell_id": "input0902_coupling987654_shot0000",
+        "coupling_seed": 987654,
+        "delta": 0.8869212780069162,
+        "gamma": 0.3,
+        "input_seed": 902,
+        "ipc_qelm": 28.586646129812834,
+        "ipc_qrc": 29.47356740781975,
+        "window_k": 8
+      },
+      {
+        "cell_id": "input0903_coupling123456_shot0000",
+        "coupling_seed": 123456,
+        "delta": -0.45349999095189375,
+        "gamma": 0.3,
+        "input_seed": 903,
+        "ipc_qelm": 27.87170769984762,
+        "ipc_qrc": 27.418207708895725,
+        "window_k": 8
+      },
+      {
+        "cell_id": "input0903_coupling555553_shot0000",
+        "coupling_seed": 555553,
+        "delta": -0.29317169536700405,
+        "gamma": 0.3,
+        "input_seed": 903,
+        "ipc_qelm": 29.80708727637841,
+        "ipc_qrc": 29.513915581011407,
+        "window_k": 8
+      },
+      {
+        "cell_id": "input0903_coupling987654_shot0000",
+        "coupling_seed": 987654,
+        "delta": 0.29342282116879304,
+        "gamma": 0.3,
+        "input_seed": 903,
+        "ipc_qelm": 29.645912784668173,
+        "ipc_qrc": 29.939335605836966,
+        "window_k": 8
+      },
+      {
+        "cell_id": "input0904_coupling123456_shot0000",
+        "coupling_seed": 123456,
+        "delta": -1.3615733184502865,
+        "gamma": 0.3,
+        "input_seed": 904,
+        "ipc_qelm": 29.463751486365396,
+        "ipc_qrc": 28.10217816791511,
+        "window_k": 8
+      },
+      {
+        "cell_id": "input0904_coupling555553_shot0000",
+        "coupling_seed": 555553,
+        "delta": 1.2209086645989728,
+        "gamma": 0.3,
+        "input_seed": 904,
+        "ipc_qelm": 31.217073813812355,
+        "ipc_qrc": 32.43798247841133,
+        "window_k": 8
+      },
+      {
+        "cell_id": "input0904_coupling987654_shot0000",
+        "coupling_seed": 987654,
+        "delta": 0.001868446277487834,
+        "gamma": 0.3,
+        "input_seed": 904,
+        "ipc_qelm": 31.02541324671757,
+        "ipc_qrc": 31.027281692995057,
+        "window_k": 8
+      },
+      {
+        "cell_id": "input0900_coupling123456_shot0000",
+        "coupling_seed": 123456,
+        "delta": -0.8222598215230796,
+        "gamma": 0.3,
+        "input_seed": 900,
+        "ipc_qelm": 27.602895715832222,
+        "ipc_qrc": 26.780635894309142,
+        "window_k": 12
+      },
+      {
+        "cell_id": "input0900_coupling555553_shot0000",
+        "coupling_seed": 555553,
+        "delta": -1.790821210119553,
+        "gamma": 0.3,
+        "input_seed": 900,
+        "ipc_qelm": 30.141104595550317,
+        "ipc_qrc": 28.350283385430764,
+        "window_k": 12
+      },
+      {
+        "cell_id": "input0900_coupling987654_shot0000",
+        "coupling_seed": 987654,
+        "delta": -1.7898883258337754,
+        "gamma": 0.3,
+        "input_seed": 900,
+        "ipc_qelm": 30.703134662631516,
+        "ipc_qrc": 28.91324633679774,
+        "window_k": 12
+      },
+      {
+        "cell_id": "input0901_coupling123456_shot0000",
+        "coupling_seed": 123456,
+        "delta": 1.8095067046362558,
+        "gamma": 0.3,
+        "input_seed": 901,
+        "ipc_qelm": 27.52574557028681,
+        "ipc_qrc": 29.335252274923064,
+        "window_k": 12
+      },
+      {
+        "cell_id": "input0901_coupling555553_shot0000",
+        "coupling_seed": 555553,
+        "delta": 0.3140489960537707,
+        "gamma": 0.3,
+        "input_seed": 901,
+        "ipc_qelm": 31.612150148552622,
+        "ipc_qrc": 31.926199144606393,
+        "window_k": 12
+      },
+      {
+        "cell_id": "input0901_coupling987654_shot0000",
+        "coupling_seed": 987654,
+        "delta": 0.5178073296724648,
+        "gamma": 0.3,
+        "input_seed": 901,
+        "ipc_qelm": 32.53783918585579,
+        "ipc_qrc": 33.05564651552825,
+        "window_k": 12
+      },
+      {
+        "cell_id": "input0902_coupling123456_shot0000",
+        "coupling_seed": 123456,
+        "delta": -0.028804925781518165,
+        "gamma": 0.3,
+        "input_seed": 902,
+        "ipc_qelm": 26.656581743235495,
+        "ipc_qrc": 26.627776817453977,
+        "window_k": 12
+      },
+      {
+        "cell_id": "input0902_coupling555553_shot0000",
+        "coupling_seed": 555553,
+        "delta": -0.6464649910499425,
+        "gamma": 0.3,
+        "input_seed": 902,
+        "ipc_qelm": 29.064523826609406,
+        "ipc_qrc": 28.418058835559464,
+        "window_k": 12
+      },
+      {
+        "cell_id": "input0902_coupling987654_shot0000",
+        "coupling_seed": 987654,
+        "delta": -1.2946235196370246,
+        "gamma": 0.3,
+        "input_seed": 902,
+        "ipc_qelm": 30.768190927456775,
+        "ipc_qrc": 29.47356740781975,
+        "window_k": 12
+      },
+      {
+        "cell_id": "input0903_coupling123456_shot0000",
+        "coupling_seed": 123456,
+        "delta": 0.1795947365928079,
+        "gamma": 0.3,
+        "input_seed": 903,
+        "ipc_qelm": 27.238612972302917,
+        "ipc_qrc": 27.418207708895725,
+        "window_k": 12
+      },
+      {
+        "cell_id": "input0903_coupling555553_shot0000",
+        "coupling_seed": 555553,
+        "delta": -0.8991870633104746,
+        "gamma": 0.3,
+        "input_seed": 903,
+        "ipc_qelm": 30.41310264432188,
+        "ipc_qrc": 29.513915581011407,
+        "window_k": 12
+      },
+      {
+        "cell_id": "input0903_coupling987654_shot0000",
+        "coupling_seed": 987654,
+        "delta": -0.9908508221137744,
+        "gamma": 0.3,
+        "input_seed": 903,
+        "ipc_qelm": 30.93018642795074,
+        "ipc_qrc": 29.939335605836966,
+        "window_k": 12
+      },
+      {
+        "cell_id": "input0904_coupling123456_shot0000",
+        "coupling_seed": 123456,
+        "delta": -1.1419278885735444,
+        "gamma": 0.3,
+        "input_seed": 904,
+        "ipc_qelm": 29.244106056488654,
+        "ipc_qrc": 28.10217816791511,
+        "window_k": 12
+      },
+      {
+        "cell_id": "input0904_coupling555553_shot0000",
+        "coupling_seed": 555553,
+        "delta": -0.3025211294309642,
+        "gamma": 0.3,
+        "input_seed": 904,
+        "ipc_qelm": 32.74050360784229,
+        "ipc_qrc": 32.43798247841133,
+        "window_k": 12
+      },
+      {
+        "cell_id": "input0904_coupling987654_shot0000",
+        "coupling_seed": 987654,
+        "delta": -2.1707070917285343,
+        "gamma": 0.3,
+        "input_seed": 904,
+        "ipc_qelm": 33.19798878472359,
+        "ipc_qrc": 31.027281692995057,
+        "window_k": 12
+      },
+      {
+        "cell_id": "input0900_coupling123456_shot0000",
+        "coupling_seed": 123456,
+        "delta": 28.694308508967723,
+        "gamma": 0.5,
+        "input_seed": 900,
+        "ipc_qelm": 0.0,
+        "ipc_qrc": 28.694308508967723,
+        "window_k": 1
+      },
+      {
+        "cell_id": "input0900_coupling555553_shot0000",
+        "coupling_seed": 555553,
+        "delta": 26.72558647953295,
+        "gamma": 0.5,
+        "input_seed": 900,
+        "ipc_qelm": 3.4148543283376243,
+        "ipc_qrc": 30.140440807870576,
+        "window_k": 1
+      },
+      {
+        "cell_id": "input0900_coupling987654_shot0000",
+        "coupling_seed": 987654,
+        "delta": 26.997506929706724,
+        "gamma": 0.5,
+        "input_seed": 900,
+        "ipc_qelm": 3.407860780752581,
+        "ipc_qrc": 30.405367710459306,
+        "window_k": 1
+      },
+      {
+        "cell_id": "input0901_coupling123456_shot0000",
+        "coupling_seed": 123456,
+        "delta": 32.257304096400084,
+        "gamma": 0.5,
+        "input_seed": 901,
+        "ipc_qelm": 0.0,
+        "ipc_qrc": 32.257304096400084,
+        "window_k": 1
+      },
+      {
+        "cell_id": "input0901_coupling555553_shot0000",
+        "coupling_seed": 555553,
+        "delta": 30.85351079083006,
+        "gamma": 0.5,
+        "input_seed": 901,
+        "ipc_qelm": 3.2406125544898114,
+        "ipc_qrc": 34.09412334531987,
+        "window_k": 1
+      },
+      {
+        "cell_id": "input0901_coupling987654_shot0000",
+        "coupling_seed": 987654,
+        "delta": 31.470324033727586,
+        "gamma": 0.5,
+        "input_seed": 901,
+        "ipc_qelm": 3.19146951924239,
+        "ipc_qrc": 34.661793552969975,
+        "window_k": 1
+      },
+      {
+        "cell_id": "input0902_coupling123456_shot0000",
+        "coupling_seed": 123456,
+        "delta": 29.31750639060785,
+        "gamma": 0.5,
+        "input_seed": 902,
+        "ipc_qelm": 0.0,
+        "ipc_qrc": 29.31750639060785,
+        "window_k": 1
+      },
+      {
+        "cell_id": "input0902_coupling555553_shot0000",
+        "coupling_seed": 555553,
+        "delta": 26.748907636983507,
+        "gamma": 0.5,
+        "input_seed": 902,
+        "ipc_qelm": 3.2305397096566297,
+        "ipc_qrc": 29.979447346640136,
+        "window_k": 1
+      },
+      {
+        "cell_id": "input0902_coupling987654_shot0000",
+        "coupling_seed": 987654,
+        "delta": 27.845994107598898,
+        "gamma": 0.5,
+        "input_seed": 902,
+        "ipc_qelm": 3.2315749069317694,
+        "ipc_qrc": 31.077569014530667,
+        "window_k": 1
+      },
+      {
+        "cell_id": "input0903_coupling123456_shot0000",
+        "coupling_seed": 123456,
+        "delta": 29.753890011469494,
+        "gamma": 0.5,
+        "input_seed": 903,
+        "ipc_qelm": 0.0,
+        "ipc_qrc": 29.753890011469494,
+        "window_k": 1
+      },
+      {
+        "cell_id": "input0903_coupling555553_shot0000",
+        "coupling_seed": 555553,
+        "delta": 27.931347997415944,
+        "gamma": 0.5,
+        "input_seed": 903,
+        "ipc_qelm": 3.2927181713748355,
+        "ipc_qrc": 31.22406616879078,
+        "window_k": 1
+      },
+      {
+        "cell_id": "input0903_coupling987654_shot0000",
+        "coupling_seed": 987654,
+        "delta": 28.072940424047992,
+        "gamma": 0.5,
+        "input_seed": 903,
+        "ipc_qelm": 3.2695512291909634,
+        "ipc_qrc": 31.342491653238955,
+        "window_k": 1
+      },
+      {
+        "cell_id": "input0904_coupling123456_shot0000",
+        "coupling_seed": 123456,
+        "delta": 30.39852002020759,
+        "gamma": 0.5,
+        "input_seed": 904,
+        "ipc_qelm": 0.0,
+        "ipc_qrc": 30.39852002020759,
+        "window_k": 1
+      },
+      {
+        "cell_id": "input0904_coupling555553_shot0000",
+        "coupling_seed": 555553,
+        "delta": 30.447207334777367,
+        "gamma": 0.5,
+        "input_seed": 904,
+        "ipc_qelm": 3.3215978719478594,
+        "ipc_qrc": 33.768805206725226,
+        "window_k": 1
+      },
+      {
+        "cell_id": "input0904_coupling987654_shot0000",
+        "coupling_seed": 987654,
+        "delta": 29.295808356327367,
+        "gamma": 0.5,
+        "input_seed": 904,
+        "ipc_qelm": 3.3267310894681996,
+        "ipc_qrc": 32.62253944579557,
+        "window_k": 1
+      },
+      {
+        "cell_id": "input0900_coupling123456_shot0000",
+        "coupling_seed": 123456,
+        "delta": 19.279939291945873,
+        "gamma": 0.5,
+        "input_seed": 900,
+        "ipc_qelm": 9.414369217021848,
+        "ipc_qrc": 28.694308508967723,
+        "window_k": 2
+      },
+      {
+        "cell_id": "input0900_coupling555553_shot0000",
+        "coupling_seed": 555553,
+        "delta": 20.786569217034472,
+        "gamma": 0.5,
+        "input_seed": 900,
+        "ipc_qelm": 9.353871590836103,
+        "ipc_qrc": 30.140440807870576,
+        "window_k": 2
+      },
+      {
+        "cell_id": "input0900_coupling987654_shot0000",
+        "coupling_seed": 987654,
+        "delta": 20.897386366046277,
+        "gamma": 0.5,
+        "input_seed": 900,
+        "ipc_qelm": 9.507981344413029,
+        "ipc_qrc": 30.405367710459306,
+        "window_k": 2
+      },
+      {
+        "cell_id": "input0901_coupling123456_shot0000",
+        "coupling_seed": 123456,
+        "delta": 22.823797010910667,
+        "gamma": 0.5,
+        "input_seed": 901,
+        "ipc_qelm": 9.433507085489417,
+        "ipc_qrc": 32.257304096400084,
+        "window_k": 2
+      },
+      {
+        "cell_id": "input0901_coupling555553_shot0000",
+        "coupling_seed": 555553,
+        "delta": 24.740796352509278,
+        "gamma": 0.5,
+        "input_seed": 901,
+        "ipc_qelm": 9.353326992810594,
+        "ipc_qrc": 34.09412334531987,
+        "window_k": 2
+      },
+      {
+        "cell_id": "input0901_coupling987654_shot0000",
+        "coupling_seed": 987654,
+        "delta": 25.30268848606226,
+        "gamma": 0.5,
+        "input_seed": 901,
+        "ipc_qelm": 9.359105066907716,
+        "ipc_qrc": 34.661793552969975,
+        "window_k": 2
+      },
+      {
+        "cell_id": "input0902_coupling123456_shot0000",
+        "coupling_seed": 123456,
+        "delta": 20.111538589299375,
+        "gamma": 0.5,
+        "input_seed": 902,
+        "ipc_qelm": 9.205967801308475,
+        "ipc_qrc": 29.31750639060785,
+        "window_k": 2
+      },
+      {
+        "cell_id": "input0902_coupling555553_shot0000",
+        "coupling_seed": 555553,
+        "delta": 20.82964032705924,
+        "gamma": 0.5,
+        "input_seed": 902,
+        "ipc_qelm": 9.149807019580894,
+        "ipc_qrc": 29.979447346640136,
+        "window_k": 2
+      },
+      {
+        "cell_id": "input0902_coupling987654_shot0000",
+        "coupling_seed": 987654,
+        "delta": 21.86365696145869,
+        "gamma": 0.5,
+        "input_seed": 902,
+        "ipc_qelm": 9.213912053071976,
+        "ipc_qrc": 31.077569014530667,
+        "window_k": 2
+      },
+      {
+        "cell_id": "input0903_coupling123456_shot0000",
+        "coupling_seed": 123456,
+        "delta": 20.383472289985075,
+        "gamma": 0.5,
+        "input_seed": 903,
+        "ipc_qelm": 9.370417721484419,
+        "ipc_qrc": 29.753890011469494,
+        "window_k": 2
+      },
+      {
+        "cell_id": "input0903_coupling555553_shot0000",
+        "coupling_seed": 555553,
+        "delta": 21.844721974667028,
+        "gamma": 0.5,
+        "input_seed": 903,
+        "ipc_qelm": 9.379344194123753,
+        "ipc_qrc": 31.22406616879078,
+        "window_k": 2
+      },
+      {
+        "cell_id": "input0903_coupling987654_shot0000",
+        "coupling_seed": 987654,
+        "delta": 21.898297868828337,
+        "gamma": 0.5,
+        "input_seed": 903,
+        "ipc_qelm": 9.444193784410619,
+        "ipc_qrc": 31.342491653238955,
+        "window_k": 2
+      },
+      {
+        "cell_id": "input0904_coupling123456_shot0000",
+        "coupling_seed": 123456,
+        "delta": 21.276003177793037,
+        "gamma": 0.5,
+        "input_seed": 904,
+        "ipc_qelm": 9.122516842414555,
+        "ipc_qrc": 30.39852002020759,
+        "window_k": 2
+      },
+      {
+        "cell_id": "input0904_coupling555553_shot0000",
+        "coupling_seed": 555553,
+        "delta": 24.575742716848534,
+        "gamma": 0.5,
+        "input_seed": 904,
+        "ipc_qelm": 9.193062489876692,
+        "ipc_qrc": 33.768805206725226,
+        "window_k": 2
+      },
+      {
+        "cell_id": "input0904_coupling987654_shot0000",
+        "coupling_seed": 987654,
+        "delta": 23.398407502422234,
+        "gamma": 0.5,
+        "input_seed": 904,
+        "ipc_qelm": 9.224131943373333,
+        "ipc_qrc": 32.62253944579557,
+        "window_k": 2
+      },
+      {
+        "cell_id": "input0900_coupling123456_shot0000",
+        "coupling_seed": 123456,
+        "delta": 10.432649813495857,
+        "gamma": 0.5,
+        "input_seed": 900,
+        "ipc_qelm": 18.261658695471866,
+        "ipc_qrc": 28.694308508967723,
+        "window_k": 3
+      },
+      {
+        "cell_id": "input0900_coupling555553_shot0000",
+        "coupling_seed": 555553,
+        "delta": 11.893254650315747,
+        "gamma": 0.5,
+        "input_seed": 900,
+        "ipc_qelm": 18.24718615755483,
+        "ipc_qrc": 30.140440807870576,
+        "window_k": 3
+      },
+      {
+        "cell_id": "input0900_coupling987654_shot0000",
+        "coupling_seed": 987654,
+        "delta": 12.25007271561486,
+        "gamma": 0.5,
+        "input_seed": 900,
+        "ipc_qelm": 18.155294994844446,
+        "ipc_qrc": 30.405367710459306,
+        "window_k": 3
+      },
+      {
+        "cell_id": "input0901_coupling123456_shot0000",
+        "coupling_seed": 123456,
+        "delta": 14.129742756534402,
+        "gamma": 0.5,
+        "input_seed": 901,
+        "ipc_qelm": 18.127561339865682,
+        "ipc_qrc": 32.257304096400084,
+        "window_k": 3
+      },
+      {
+        "cell_id": "input0901_coupling555553_shot0000",
+        "coupling_seed": 555553,
+        "delta": 15.926684711046196,
+        "gamma": 0.5,
+        "input_seed": 901,
+        "ipc_qelm": 18.167438634273676,
+        "ipc_qrc": 34.09412334531987,
+        "window_k": 3
+      },
+      {
+        "cell_id": "input0901_coupling987654_shot0000",
+        "coupling_seed": 987654,
+        "delta": 16.532699069676458,
+        "gamma": 0.5,
+        "input_seed": 901,
+        "ipc_qelm": 18.129094483293517,
+        "ipc_qrc": 34.661793552969975,
+        "window_k": 3
+      },
+      {
+        "cell_id": "input0902_coupling123456_shot0000",
+        "coupling_seed": 123456,
+        "delta": 11.089721208922217,
+        "gamma": 0.5,
+        "input_seed": 902,
+        "ipc_qelm": 18.227785181685633,
+        "ipc_qrc": 29.31750639060785,
+        "window_k": 3
+      },
+      {
+        "cell_id": "input0902_coupling555553_shot0000",
+        "coupling_seed": 555553,
+        "delta": 11.689572154791314,
+        "gamma": 0.5,
+        "input_seed": 902,
+        "ipc_qelm": 18.28987519184882,
+        "ipc_qrc": 29.979447346640136,
+        "window_k": 3
+      },
+      {
+        "cell_id": "input0902_coupling987654_shot0000",
+        "coupling_seed": 987654,
+        "delta": 12.80973600888992,
+        "gamma": 0.5,
+        "input_seed": 902,
+        "ipc_qelm": 18.267833005640746,
+        "ipc_qrc": 31.077569014530667,
+        "window_k": 3
+      },
+      {
+        "cell_id": "input0903_coupling123456_shot0000",
+        "coupling_seed": 123456,
+        "delta": 11.60319743929163,
+        "gamma": 0.5,
+        "input_seed": 903,
+        "ipc_qelm": 18.150692572177864,
+        "ipc_qrc": 29.753890011469494,
+        "window_k": 3
+      },
+      {
+        "cell_id": "input0903_coupling555553_shot0000",
+        "coupling_seed": 555553,
+        "delta": 13.050489995515509,
+        "gamma": 0.5,
+        "input_seed": 903,
+        "ipc_qelm": 18.173576173275272,
+        "ipc_qrc": 31.22406616879078,
+        "window_k": 3
+      },
+      {
+        "cell_id": "input0903_coupling987654_shot0000",
+        "coupling_seed": 987654,
+        "delta": 13.19505424084658,
+        "gamma": 0.5,
+        "input_seed": 903,
+        "ipc_qelm": 18.147437412392375,
+        "ipc_qrc": 31.342491653238955,
+        "window_k": 3
+      },
+      {
+        "cell_id": "input0904_coupling123456_shot0000",
+        "coupling_seed": 123456,
+        "delta": 12.158204841956746,
+        "gamma": 0.5,
+        "input_seed": 904,
+        "ipc_qelm": 18.240315178250846,
+        "ipc_qrc": 30.39852002020759,
+        "window_k": 3
+      },
+      {
+        "cell_id": "input0904_coupling555553_shot0000",
+        "coupling_seed": 555553,
+        "delta": 15.559198707028973,
+        "gamma": 0.5,
+        "input_seed": 904,
+        "ipc_qelm": 18.209606499696253,
+        "ipc_qrc": 33.768805206725226,
+        "window_k": 3
+      },
+      {
+        "cell_id": "input0904_coupling987654_shot0000",
+        "coupling_seed": 987654,
+        "delta": 14.413957959952462,
+        "gamma": 0.5,
+        "input_seed": 904,
+        "ipc_qelm": 18.208581485843105,
+        "ipc_qrc": 32.62253944579557,
+        "window_k": 3
+      },
+      {
+        "cell_id": "input0900_coupling123456_shot0000",
+        "coupling_seed": 123456,
+        "delta": -1.2330722594274768,
+        "gamma": 0.5,
+        "input_seed": 900,
+        "ipc_qelm": 29.9273807683952,
+        "ipc_qrc": 28.694308508967723,
+        "window_k": 5
+      },
+      {
+        "cell_id": "input0900_coupling555553_shot0000",
+        "coupling_seed": 555553,
+        "delta": 0.45451738813836684,
+        "gamma": 0.5,
+        "input_seed": 900,
+        "ipc_qelm": 29.68592341973221,
+        "ipc_qrc": 30.140440807870576,
+        "window_k": 5
+      },
+      {
+        "cell_id": "input0900_coupling987654_shot0000",
+        "coupling_seed": 987654,
+        "delta": -0.42098741717578747,
+        "gamma": 0.5,
+        "input_seed": 900,
+        "ipc_qelm": 30.826355127635093,
+        "ipc_qrc": 30.405367710459306,
+        "window_k": 5
+      },
+      {
+        "cell_id": "input0901_coupling123456_shot0000",
+        "coupling_seed": 123456,
+        "delta": 2.374841889949341,
+        "gamma": 0.5,
+        "input_seed": 901,
+        "ipc_qelm": 29.882462206450743,
+        "ipc_qrc": 32.257304096400084,
+        "window_k": 5
+      },
+      {
+        "cell_id": "input0901_coupling555553_shot0000",
+        "coupling_seed": 555553,
+        "delta": 4.05911745707856,
+        "gamma": 0.5,
+        "input_seed": 901,
+        "ipc_qelm": 30.03500588824131,
+        "ipc_qrc": 34.09412334531987,
+        "window_k": 5
+      },
+      {
+        "cell_id": "input0901_coupling987654_shot0000",
+        "coupling_seed": 987654,
+        "delta": 4.034631776748572,
+        "gamma": 0.5,
+        "input_seed": 901,
+        "ipc_qelm": 30.627161776221403,
+        "ipc_qrc": 34.661793552969975,
+        "window_k": 5
+      },
+      {
+        "cell_id": "input0902_coupling123456_shot0000",
+        "coupling_seed": 123456,
+        "delta": 0.8774609052876094,
+        "gamma": 0.5,
+        "input_seed": 902,
+        "ipc_qelm": 28.44004548532024,
+        "ipc_qrc": 29.31750639060785,
+        "window_k": 5
+      },
+      {
+        "cell_id": "input0902_coupling555553_shot0000",
+        "coupling_seed": 555553,
+        "delta": 0.9781453129635871,
+        "gamma": 0.5,
+        "input_seed": 902,
+        "ipc_qelm": 29.00130203367655,
+        "ipc_qrc": 29.979447346640136,
+        "window_k": 5
+      },
+      {
+        "cell_id": "input0902_coupling987654_shot0000",
+        "coupling_seed": 987654,
+        "delta": 1.536814499703354,
+        "gamma": 0.5,
+        "input_seed": 902,
+        "ipc_qelm": 29.540754514827313,
+        "ipc_qrc": 31.077569014530667,
+        "window_k": 5
+      },
+      {
+        "cell_id": "input0903_coupling123456_shot0000",
+        "coupling_seed": 123456,
+        "delta": 0.8423106424351445,
+        "gamma": 0.5,
+        "input_seed": 903,
+        "ipc_qelm": 28.91157936903435,
+        "ipc_qrc": 29.753890011469494,
+        "window_k": 5
+      },
+      {
+        "cell_id": "input0903_coupling555553_shot0000",
+        "coupling_seed": 555553,
+        "delta": 2.36623505474137,
+        "gamma": 0.5,
+        "input_seed": 903,
+        "ipc_qelm": 28.85783111404941,
+        "ipc_qrc": 31.22406616879078,
+        "window_k": 5
+      },
+      {
+        "cell_id": "input0903_coupling987654_shot0000",
+        "coupling_seed": 987654,
+        "delta": 1.3817139862891885,
+        "gamma": 0.5,
+        "input_seed": 903,
+        "ipc_qelm": 29.960777666949767,
+        "ipc_qrc": 31.342491653238955,
+        "window_k": 5
+      },
+      {
+        "cell_id": "input0904_coupling123456_shot0000",
+        "coupling_seed": 123456,
+        "delta": -0.2590918507014415,
+        "gamma": 0.5,
+        "input_seed": 904,
+        "ipc_qelm": 30.657611870909033,
+        "ipc_qrc": 30.39852002020759,
+        "window_k": 5
+      },
+      {
+        "cell_id": "input0904_coupling555553_shot0000",
+        "coupling_seed": 555553,
+        "delta": 3.4575124718153702,
+        "gamma": 0.5,
+        "input_seed": 904,
+        "ipc_qelm": 30.311292734909856,
+        "ipc_qrc": 33.768805206725226,
+        "window_k": 5
+      },
+      {
+        "cell_id": "input0904_coupling987654_shot0000",
+        "coupling_seed": 987654,
+        "delta": 1.446960265778042,
+        "gamma": 0.5,
+        "input_seed": 904,
+        "ipc_qelm": 31.175579180017525,
+        "ipc_qrc": 32.62253944579557,
+        "window_k": 5
+      },
+      {
+        "cell_id": "input0900_coupling123456_shot0000",
+        "coupling_seed": 123456,
+        "delta": -0.07180388999267606,
+        "gamma": 0.5,
+        "input_seed": 900,
+        "ipc_qelm": 28.7661123989604,
+        "ipc_qrc": 28.694308508967723,
+        "window_k": 8
+      },
+      {
+        "cell_id": "input0900_coupling555553_shot0000",
+        "coupling_seed": 555553,
+        "delta": -0.46974515401900874,
+        "gamma": 0.5,
+        "input_seed": 900,
+        "ipc_qelm": 30.610185961889584,
+        "ipc_qrc": 30.140440807870576,
+        "window_k": 8
+      },
+      {
+        "cell_id": "input0900_coupling987654_shot0000",
+        "coupling_seed": 987654,
+        "delta": -0.02149225178968095,
+        "gamma": 0.5,
+        "input_seed": 900,
+        "ipc_qelm": 30.426859962248987,
+        "ipc_qrc": 30.405367710459306,
+        "window_k": 8
+      },
+      {
+        "cell_id": "input0901_coupling123456_shot0000",
+        "coupling_seed": 123456,
+        "delta": 2.7933133092572504,
+        "gamma": 0.5,
+        "input_seed": 901,
+        "ipc_qelm": 29.463990787142833,
+        "ipc_qrc": 32.257304096400084,
+        "window_k": 8
+      },
+      {
+        "cell_id": "input0901_coupling555553_shot0000",
+        "coupling_seed": 555553,
+        "delta": 2.3647133927322592,
+        "gamma": 0.5,
+        "input_seed": 901,
+        "ipc_qelm": 31.729409952587613,
+        "ipc_qrc": 34.09412334531987,
+        "window_k": 8
+      },
+      {
+        "cell_id": "input0901_coupling987654_shot0000",
+        "coupling_seed": 987654,
+        "delta": 3.2727734132184167,
+        "gamma": 0.5,
+        "input_seed": 901,
+        "ipc_qelm": 31.38902013975156,
+        "ipc_qrc": 34.661793552969975,
+        "window_k": 8
+      },
+      {
+        "cell_id": "input0902_coupling123456_shot0000",
+        "coupling_seed": 123456,
+        "delta": 0.6708921238063361,
+        "gamma": 0.5,
+        "input_seed": 902,
+        "ipc_qelm": 28.646614266801514,
+        "ipc_qrc": 29.31750639060785,
+        "window_k": 8
+      },
+      {
+        "cell_id": "input0902_coupling555553_shot0000",
+        "coupling_seed": 555553,
+        "delta": -0.06691675264349684,
+        "gamma": 0.5,
+        "input_seed": 902,
+        "ipc_qelm": 30.046364099283632,
+        "ipc_qrc": 29.979447346640136,
+        "window_k": 8
+      },
+      {
+        "cell_id": "input0902_coupling987654_shot0000",
+        "coupling_seed": 987654,
+        "delta": 1.4386631226108904,
+        "gamma": 0.5,
+        "input_seed": 902,
+        "ipc_qelm": 29.638905891919777,
+        "ipc_qrc": 31.077569014530667,
+        "window_k": 8
+      },
+      {
+        "cell_id": "input0903_coupling123456_shot0000",
+        "coupling_seed": 123456,
+        "delta": 0.5388635517475997,
+        "gamma": 0.5,
+        "input_seed": 903,
+        "ipc_qelm": 29.215026459721894,
+        "ipc_qrc": 29.753890011469494,
+        "window_k": 8
+      },
+      {
+        "cell_id": "input0903_coupling555553_shot0000",
+        "coupling_seed": 555553,
+        "delta": 0.15675671195909402,
+        "gamma": 0.5,
+        "input_seed": 903,
+        "ipc_qelm": 31.067309456831687,
+        "ipc_qrc": 31.22406616879078,
+        "window_k": 8
+      },
+      {
+        "cell_id": "input0903_coupling987654_shot0000",
+        "coupling_seed": 987654,
+        "delta": 0.4941025810116777,
+        "gamma": 0.5,
+        "input_seed": 903,
+        "ipc_qelm": 30.848389072227278,
+        "ipc_qrc": 31.342491653238955,
+        "window_k": 8
+      },
+      {
+        "cell_id": "input0904_coupling123456_shot0000",
+        "coupling_seed": 123456,
+        "delta": 0.04074545498238891,
+        "gamma": 0.5,
+        "input_seed": 904,
+        "ipc_qelm": 30.357774565225203,
+        "ipc_qrc": 30.39852002020759,
+        "window_k": 8
+      },
+      {
+        "cell_id": "input0904_coupling555553_shot0000",
+        "coupling_seed": 555553,
+        "delta": 1.4694267841887196,
+        "gamma": 0.5,
+        "input_seed": 904,
+        "ipc_qelm": 32.299378422536506,
+        "ipc_qrc": 33.768805206725226,
+        "window_k": 8
+      },
+      {
+        "cell_id": "input0904_coupling987654_shot0000",
+        "coupling_seed": 987654,
+        "delta": 0.20508740617130883,
+        "gamma": 0.5,
+        "input_seed": 904,
+        "ipc_qelm": 32.41745203962426,
+        "ipc_qrc": 32.62253944579557,
+        "window_k": 8
+      },
+      {
+        "cell_id": "input0900_coupling123456_shot0000",
+        "coupling_seed": 123456,
+        "delta": -1.3927894937611391,
+        "gamma": 0.5,
+        "input_seed": 900,
+        "ipc_qelm": 30.08709800272886,
+        "ipc_qrc": 28.694308508967723,
+        "window_k": 12
+      },
+      {
+        "cell_id": "input0900_coupling555553_shot0000",
+        "coupling_seed": 555553,
+        "delta": -1.7004205043600962,
+        "gamma": 0.5,
+        "input_seed": 900,
+        "ipc_qelm": 31.840861312230672,
+        "ipc_qrc": 30.140440807870576,
+        "window_k": 12
+      },
+      {
+        "cell_id": "input0900_coupling987654_shot0000",
+        "coupling_seed": 987654,
+        "delta": -1.0078720777694556,
+        "gamma": 0.5,
+        "input_seed": 900,
+        "ipc_qelm": 31.41323978822876,
+        "ipc_qrc": 30.405367710459306,
+        "window_k": 12
+      },
+      {
+        "cell_id": "input0901_coupling123456_shot0000",
+        "coupling_seed": 123456,
+        "delta": 1.4720476811179175,
+        "gamma": 0.5,
+        "input_seed": 901,
+        "ipc_qelm": 30.785256415282166,
+        "ipc_qrc": 32.257304096400084,
+        "window_k": 12
+      },
+      {
+        "cell_id": "input0901_coupling555553_shot0000",
+        "coupling_seed": 555553,
+        "delta": -0.38216102198140334,
+        "gamma": 0.5,
+        "input_seed": 901,
+        "ipc_qelm": 34.476284367301275,
+        "ipc_qrc": 34.09412334531987,
+        "window_k": 12
+      },
+      {
+        "cell_id": "input0901_coupling987654_shot0000",
+        "coupling_seed": 987654,
+        "delta": -0.01877646223238827,
+        "gamma": 0.5,
+        "input_seed": 901,
+        "ipc_qelm": 34.68057001520236,
+        "ipc_qrc": 34.661793552969975,
+        "window_k": 12
+      },
+      {
+        "cell_id": "input0902_coupling123456_shot0000",
+        "coupling_seed": 123456,
+        "delta": -0.3606153265317964,
+        "gamma": 0.5,
+        "input_seed": 902,
+        "ipc_qelm": 29.678121717139646,
+        "ipc_qrc": 29.31750639060785,
+        "window_k": 12
+      },
+      {
+        "cell_id": "input0902_coupling555553_shot0000",
+        "coupling_seed": 555553,
+        "delta": -1.360095873704033,
+        "gamma": 0.5,
+        "input_seed": 902,
+        "ipc_qelm": 31.33954322034417,
+        "ipc_qrc": 29.979447346640136,
+        "window_k": 12
+      },
+      {
+        "cell_id": "input0902_coupling987654_shot0000",
+        "coupling_seed": 987654,
+        "delta": -0.8752871342868325,
+        "gamma": 0.5,
+        "input_seed": 902,
+        "ipc_qelm": 31.9528561488175,
+        "ipc_qrc": 31.077569014530667,
+        "window_k": 12
+      },
+      {
+        "cell_id": "input0903_coupling123456_shot0000",
+        "coupling_seed": 123456,
+        "delta": -0.5210089456502303,
+        "gamma": 0.5,
+        "input_seed": 903,
+        "ipc_qelm": 30.274898957119724,
+        "ipc_qrc": 29.753890011469494,
+        "window_k": 12
+      },
+      {
+        "cell_id": "input0903_coupling555553_shot0000",
+        "coupling_seed": 555553,
+        "delta": -1.412480049614981,
+        "gamma": 0.5,
+        "input_seed": 903,
+        "ipc_qelm": 32.63654621840576,
+        "ipc_qrc": 31.22406616879078,
+        "window_k": 12
+      },
+      {
+        "cell_id": "input0903_coupling987654_shot0000",
+        "coupling_seed": 987654,
+        "delta": -0.7025853034274014,
+        "gamma": 0.5,
+        "input_seed": 903,
+        "ipc_qelm": 32.04507695666636,
+        "ipc_qrc": 31.342491653238955,
+        "window_k": 12
+      },
+      {
+        "cell_id": "input0904_coupling123456_shot0000",
+        "coupling_seed": 123456,
+        "delta": -1.2909205071502932,
+        "gamma": 0.5,
+        "input_seed": 904,
+        "ipc_qelm": 31.689440527357885,
+        "ipc_qrc": 30.39852002020759,
+        "window_k": 12
+      },
+      {
+        "cell_id": "input0904_coupling555553_shot0000",
+        "coupling_seed": 555553,
+        "delta": -0.9650249969340123,
+        "gamma": 0.5,
+        "input_seed": 904,
+        "ipc_qelm": 34.73383020365924,
+        "ipc_qrc": 33.768805206725226,
+        "window_k": 12
+      },
+      {
+        "cell_id": "input0904_coupling987654_shot0000",
+        "coupling_seed": 987654,
+        "delta": -1.3676750864066065,
+        "gamma": 0.5,
+        "input_seed": 904,
+        "ipc_qelm": 33.990214532202174,
+        "ipc_qrc": 32.62253944579557,
+        "window_k": 12
+      }
+    ],
+    "sign_structure": {
+      "both_signs_present": false,
+      "crossings": [],
+      "delta_infty_by_gamma": [
+        {
+          "delta_ci_high": -16.171095505101405,
+          "delta_ci_low": -17.336731284611574,
+          "delta_mean": -16.7605773260551,
+          "delta_se": 0.3148920721067117,
+          "delta_std": 1.2195717511220396,
+          "gamma": 0.02,
+          "ipc_qelm_mean": 25.48401164070752,
+          "ipc_qrc_mean": 8.723434314652422,
+          "label": "QELM",
+          "n_pairs": 15,
+          "p_wilcoxon": 6.103515625e-05,
+          "win_rate_qrc": 0.0,
+          "window_k": 12
+        },
+        {
+          "delta_ci_high": -4.179493631414259,
+          "delta_ci_low": -5.2339244630558905,
+          "delta_mean": -4.732920836758156,
+          "delta_se": 0.29010043064020796,
+          "delta_std": 1.1235541365971253,
+          "gamma": 0.1,
+          "ipc_qelm_mean": 26.449335558822803,
+          "ipc_qrc_mean": 21.716414722064652,
+          "label": "QELM",
+          "n_pairs": 15,
+          "p_wilcoxon": 6.103515625e-05,
+          "win_rate_qrc": 0.0,
+          "window_k": 12
+        },
+        {
+          "delta_ci_high": -0.04850526424178913,
+          "delta_ci_low": -1.1008999878296004,
+          "delta_mean": -0.603806601476459,
+          "delta_se": 0.2697798304528587,
+          "delta_std": 1.0448527904865823,
+          "gamma": 0.3,
+          "ipc_qelm_mean": 30.025111124642738,
+          "ipc_qrc_mean": 29.42130452316628,
+          "label": "QELM",
+          "n_pairs": 15,
+          "p_wilcoxon": 0.04791259765625,
+          "win_rate_qrc": 0.26666666666666666,
+          "window_k": 12
+        },
+        {
+          "delta_ci_high": -0.38300904163752997,
+          "delta_ci_low": -1.1409945453871733,
+          "delta_mean": -0.7923776735128502,
+          "delta_se": 0.20373861798361453,
+          "delta_std": 0.7890762744298541,
+          "gamma": 0.5,
+          "ipc_qelm_mean": 32.10825589217911,
+          "ipc_qrc_mean": 31.31587821866625,
+          "label": "QELM",
+          "n_pairs": 15,
+          "p_wilcoxon": 0.0067138671875,
+          "win_rate_qrc": 0.06666666666666667,
+          "window_k": 12
+        }
+      ],
+      "gamma_star": null,
+      "gamma_star_ci_high": 0.2997273389096545,
+      "gamma_star_ci_low": 0.28711271550170114,
+      "n_boot_with_crossing": 28,
+      "trend_spearman": 0.7999999999999999,
+      "trend_spearman_ci_high": 1.0,
+      "trend_spearman_ci_low": 0.7999999999999999
+    },
+    "signed_delta_table": [
+      {
+        "delta_ci_high": 5.972739893459747,
+        "delta_ci_low": 4.954838703805211,
+        "delta_mean": 5.4241265717812785,
+        "delta_se": 0.26234978990958063,
+        "delta_std": 1.0160763672008204,
+        "gamma": 0.02,
+        "ipc_qelm_mean": 3.299307742871142,
+        "ipc_qrc_mean": 8.723434314652422,
+        "label": "QRC",
+        "n_pairs": 15,
+        "p_wilcoxon": 6.103515625e-05,
+        "win_rate_qrc": 1.0,
+        "window_k": 1
+      },
+      {
+        "delta_ci_high": -0.04452975303620247,
+        "delta_ci_low": -1.0404998253293982,
+        "delta_mean": -0.5822549110823959,
+        "delta_se": 0.2606800895418907,
+        "delta_std": 1.009609645483601,
+        "gamma": 0.02,
+        "ipc_qelm_mean": 9.30568922573482,
+        "ipc_qrc_mean": 8.723434314652422,
+        "label": "QELM",
+        "n_pairs": 15,
+        "p_wilcoxon": 0.041259765625,
+        "win_rate_qrc": 0.2,
+        "window_k": 2
+      },
+      {
+        "delta_ci_high": -8.987038971771492,
+        "delta_ci_low": -9.953505467663874,
+        "delta_mean": -9.504131637898123,
+        "delta_se": 0.26327649453055446,
+        "delta_std": 1.0196654787647055,
+        "gamma": 0.02,
+        "ipc_qelm_mean": 18.227565952550545,
+        "ipc_qrc_mean": 8.723434314652422,
+        "label": "QELM",
+        "n_pairs": 15,
+        "p_wilcoxon": 6.103515625e-05,
+        "win_rate_qrc": 0.0,
+        "window_k": 3
+      },
+      {
+        "delta_ci_high": -19.379704145331093,
+        "delta_ci_low": -20.214806150147833,
+        "delta_mean": -19.82239128020139,
+        "delta_se": 0.22491796274922302,
+        "delta_std": 0.871103523990641,
+        "gamma": 0.02,
+        "ipc_qelm_mean": 28.545825594853813,
+        "ipc_qrc_mean": 8.723434314652422,
+        "label": "QELM",
+        "n_pairs": 15,
+        "p_wilcoxon": 6.103515625e-05,
+        "win_rate_qrc": 0.0,
+        "window_k": 5
+      },
+      {
+        "delta_ci_high": -18.151705040809233,
+        "delta_ci_low": -19.0905339867627,
+        "delta_mean": -18.620158022375332,
+        "delta_se": 0.2458930166177091,
+        "delta_std": 0.952339558309091,
+        "gamma": 0.02,
+        "ipc_qelm_mean": 27.34359233702775,
+        "ipc_qrc_mean": 8.723434314652422,
+        "label": "QELM",
+        "n_pairs": 15,
+        "p_wilcoxon": 6.103515625e-05,
+        "win_rate_qrc": 0.0,
+        "window_k": 8
+      },
+      {
+        "delta_ci_high": -16.171095505101405,
+        "delta_ci_low": -17.336731284611574,
+        "delta_mean": -16.7605773260551,
+        "delta_se": 0.3148920721067117,
+        "delta_std": 1.2195717511220396,
+        "gamma": 0.02,
+        "ipc_qelm_mean": 25.48401164070752,
+        "ipc_qrc_mean": 8.723434314652422,
+        "label": "QELM",
+        "n_pairs": 15,
+        "p_wilcoxon": 6.103515625e-05,
+        "win_rate_qrc": 0.0,
+        "window_k": 12
+      },
+      {
+        "delta_ci_high": 19.449604861205337,
+        "delta_ci_low": 17.408516426561597,
+        "delta_mean": 18.41792712963605,
+        "delta_se": 0.534501040453979,
+        "delta_std": 2.0701136282087975,
+        "gamma": 0.1,
+        "ipc_qelm_mean": 3.298487592428602,
+        "ipc_qrc_mean": 21.716414722064652,
+        "label": "QRC",
+        "n_pairs": 15,
+        "p_wilcoxon": 6.103515625e-05,
+        "win_rate_qrc": 1.0,
+        "window_k": 1
+      },
+      {
+        "delta_ci_high": 13.423047515371184,
+        "delta_ci_low": 11.373972765392017,
+        "delta_mean": 12.387015152557831,
+        "delta_se": 0.5349057580497728,
+        "delta_std": 2.071681092717224,
+        "gamma": 0.1,
+        "ipc_qelm_mean": 9.329399569506819,
+        "ipc_qrc_mean": 21.716414722064652,
+        "label": "QRC",
+        "n_pairs": 15,
+        "p_wilcoxon": 6.103515625e-05,
+        "win_rate_qrc": 1.0,
+        "window_k": 2
+      },
+      {
+        "delta_ci_high": 4.474912871129885,
+        "delta_ci_low": 2.4707337768224615,
+        "delta_mean": 3.4623847248884605,
+        "delta_se": 0.5346276585646971,
+        "delta_std": 2.070604018042937,
+        "gamma": 0.1,
+        "ipc_qelm_mean": 18.254029997176193,
+        "ipc_qrc_mean": 21.716414722064652,
+        "label": "QRC",
+        "n_pairs": 15,
+        "p_wilcoxon": 6.103515625e-05,
+        "win_rate_qrc": 1.0,
+        "window_k": 3
+      },
+      {
+        "delta_ci_high": -6.180922864596555,
+        "delta_ci_low": -7.74892667196793,
+        "delta_mean": -6.997124964912576,
+        "delta_se": 0.4105922477688086,
+        "delta_std": 1.5902169376904651,
+        "gamma": 0.1,
+        "ipc_qelm_mean": 28.713539686977228,
+        "ipc_qrc_mean": 21.716414722064652,
+        "label": "QELM",
+        "n_pairs": 15,
+        "p_wilcoxon": 6.103515625e-05,
+        "win_rate_qrc": 0.0,
+        "window_k": 5
+      },
+      {
+        "delta_ci_high": -5.4761426445427555,
+        "delta_ci_low": -6.790124276014979,
+        "delta_mean": -6.148748150261743,
+        "delta_se": 0.3568086301910631,
+        "delta_std": 1.3819138825130686,
+        "gamma": 0.1,
+        "ipc_qelm_mean": 27.86516287232639,
+        "ipc_qrc_mean": 21.716414722064652,
+        "label": "QELM",
+        "n_pairs": 15,
+        "p_wilcoxon": 6.103515625e-05,
+        "win_rate_qrc": 0.0,
+        "window_k": 8
+      },
+      {
+        "delta_ci_high": -4.179493631414259,
+        "delta_ci_low": -5.2339244630558905,
+        "delta_mean": -4.732920836758156,
+        "delta_se": 0.29010043064020796,
+        "delta_std": 1.1235541365971253,
+        "gamma": 0.1,
+        "ipc_qelm_mean": 26.449335558822803,
+        "ipc_qrc_mean": 21.716414722064652,
+        "label": "QELM",
+        "n_pairs": 15,
+        "p_wilcoxon": 6.103515625e-05,
+        "win_rate_qrc": 0.0,
+        "window_k": 12
+      },
+      {
+        "delta_ci_high": 27.944508229855693,
+        "delta_ci_low": 26.50773896018713,
+        "delta_mean": 27.215922012147313,
+        "delta_se": 0.3982008765387532,
+        "delta_std": 1.5422253632797869,
+        "gamma": 0.3,
+        "ipc_qelm_mean": 2.2053825110189593,
+        "ipc_qrc_mean": 29.42130452316628,
+        "label": "QRC",
+        "n_pairs": 15,
+        "p_wilcoxon": 6.103515625e-05,
+        "win_rate_qrc": 1.0,
+        "window_k": 1
+      },
+      {
+        "delta_ci_high": 21.011795874075865,
+        "delta_ci_low": 19.11949073769812,
+        "delta_mean": 20.074107323715662,
+        "delta_se": 0.5091592056006952,
+        "delta_std": 1.9719651238596905,
+        "gamma": 0.3,
+        "ipc_qelm_mean": 9.347197199450616,
+        "ipc_qrc_mean": 29.42130452316628,
+        "label": "QRC",
+        "n_pairs": 15,
+        "p_wilcoxon": 6.103515625e-05,
+        "win_rate_qrc": 1.0,
+        "window_k": 2
+      },
+      {
+        "delta_ci_high": 12.256301898057472,
+        "delta_ci_low": 10.292886347696083,
+        "delta_mean": 11.205396176477825,
+        "delta_se": 0.5159947709327781,
+        "delta_std": 1.9984391545527607,
+        "gamma": 0.3,
+        "ipc_qelm_mean": 18.215908346688455,
+        "ipc_qrc_mean": 29.42130452316628,
+        "label": "QRC",
+        "n_pairs": 15,
+        "p_wilcoxon": 6.103515625e-05,
+        "win_rate_qrc": 1.0,
+        "window_k": 3
+      },
+      {
+        "delta_ci_high": 0.898274098448309,
+        "delta_ci_low": -0.6104884741706686,
+        "delta_mean": 0.12456042798827932,
+        "delta_se": 0.410481155149862,
+        "delta_std": 1.5897866778273984,
+        "gamma": 0.3,
+        "ipc_qelm_mean": 29.296744095177992,
+        "ipc_qrc_mean": 29.42130452316628,
+        "label": "QRC_point",
+        "n_pairs": 15,
+        "p_wilcoxon": 0.846923828125,
+        "win_rate_qrc": 0.5333333333333333,
+        "window_k": 5
+      },
+      {
+        "delta_ci_high": 0.8436751559674656,
+        "delta_ci_low": -0.3880749527833197,
+        "delta_mean": 0.19082986452014788,
+        "delta_se": 0.31919017184382636,
+        "delta_std": 1.236218219824223,
+        "gamma": 0.3,
+        "ipc_qelm_mean": 29.230474658646123,
+        "ipc_qrc_mean": 29.42130452316628,
+        "label": "QRC_point",
+        "n_pairs": 15,
+        "p_wilcoxon": 0.846923828125,
+        "win_rate_qrc": 0.4666666666666667,
+        "window_k": 8
+      },
+      {
+        "delta_ci_high": -0.04850526424178913,
+        "delta_ci_low": -1.1008999878296004,
+        "delta_mean": -0.603806601476459,
+        "delta_se": 0.2697798304528587,
+        "delta_std": 1.0448527904865823,
+        "gamma": 0.3,
+        "ipc_qelm_mean": 30.025111124642738,
+        "ipc_qrc_mean": 29.42130452316628,
+        "label": "QELM",
+        "n_pairs": 15,
+        "p_wilcoxon": 0.04791259765625,
+        "win_rate_qrc": 0.26666666666666666,
+        "window_k": 12
+      },
+      {
+        "delta_ci_high": 30.02173555867844,
+        "delta_ci_low": 28.336040275027372,
+        "delta_mean": 29.120710874573412,
+        "delta_se": 0.44940904224017597,
+        "delta_std": 1.740553736231227,
+        "gamma": 0.5,
+        "ipc_qelm_mean": 2.1951673440928445,
+        "ipc_qrc_mean": 31.31587821866625,
+        "label": "QRC",
+        "n_pairs": 15,
+        "p_wilcoxon": 6.103515625e-05,
+        "win_rate_qrc": 1.0,
+        "window_k": 1
+      },
+      {
+        "delta_ci_high": 22.914131396518645,
+        "delta_ci_low": 21.133047739421368,
+        "delta_mean": 22.000843875524694,
+        "delta_se": 0.4675246245621175,
+        "delta_std": 1.8107150848709563,
+        "gamma": 0.5,
+        "ipc_qelm_mean": 9.31503434314156,
+        "ipc_qrc_mean": 31.31587821866625,
+        "label": "QRC",
+        "n_pairs": 15,
+        "p_wilcoxon": 6.103515625e-05,
+        "win_rate_qrc": 1.0,
+        "window_k": 2
+      },
+      {
+        "delta_ci_high": 14.040604200301214,
+        "delta_ci_low": 12.264797904522647,
+        "delta_mean": 13.115615751591923,
+        "delta_se": 0.4738467531947353,
+        "delta_std": 1.835200583777666,
+        "gamma": 0.5,
+        "ipc_qelm_mean": 18.200262467074328,
+        "ipc_qrc_mean": 31.31587821866625,
+        "label": "QRC",
+        "n_pairs": 15,
+        "p_wilcoxon": 6.103515625e-05,
+        "win_rate_qrc": 1.0,
+        "window_k": 3
+      },
+      {
+        "delta_ci_high": 2.2216098380148193,
+        "delta_ci_low": 0.6945696437851473,
+        "delta_mean": 1.45980734157492,
+        "delta_se": 0.4068151126247058,
+        "delta_std": 1.5755881561809804,
+        "gamma": 0.5,
+        "ipc_qelm_mean": 29.856070877091334,
+        "ipc_qrc_mean": 31.31587821866625,
+        "label": "QRC",
+        "n_pairs": 15,
+        "p_wilcoxon": 0.00262451171875,
+        "win_rate_qrc": 0.8,
+        "window_k": 5
+      },
+      {
+        "delta_ci_high": 1.4393952336312168,
+        "delta_ci_low": 0.3315234753158504,
+        "delta_mean": 0.8543586535494053,
+        "delta_se": 0.29816268983895644,
+        "delta_std": 1.1547791322066858,
+        "gamma": 0.5,
+        "ipc_qelm_mean": 30.461519565116852,
+        "ipc_qrc_mean": 31.31587821866625,
+        "label": "QRC",
+        "n_pairs": 15,
+        "p_wilcoxon": 0.00836181640625,
+        "win_rate_qrc": 0.7333333333333333,
+        "window_k": 8
+      },
+      {
+        "delta_ci_high": -0.38300904163752997,
+        "delta_ci_low": -1.1409945453871733,
+        "delta_mean": -0.7923776735128502,
+        "delta_se": 0.20373861798361453,
+        "delta_std": 0.7890762744298541,
+        "gamma": 0.5,
+        "ipc_qelm_mean": 32.10825589217911,
+        "ipc_qrc_mean": 31.31587821866625,
+        "label": "QELM",
+        "n_pairs": 15,
+        "p_wilcoxon": 0.0067138671875,
+        "win_rate_qrc": 0.06666666666666667,
+        "window_k": 12
+      }
+    ],
+    "spectral_gap": [
+      {
+        "coupling_seeds": [
+          987654
+        ],
+        "errors": [],
+        "gamma": 0.02,
+        "n_couplings": 1,
+        "s_value": 0.5,
+        "spectral_gap_mean": 0.017185742419168752,
+        "spectral_gap_median": 0.017185742419168752,
+        "spectral_gap_values": [
+          0.017185742419168752
+        ]
+      },
+      {
+        "coupling_seeds": [
+          987654
+        ],
+        "errors": [],
+        "gamma": 0.1,
+        "n_couplings": 1,
+        "s_value": 0.5,
+        "spectral_gap_mean": 0.08367314125391834,
+        "spectral_gap_median": 0.08367314125391834,
+        "spectral_gap_values": [
+          0.08367314125391834
+        ]
+      },
+      {
+        "coupling_seeds": [
+          987654
+        ],
+        "errors": [],
+        "gamma": 0.3,
+        "n_couplings": 1,
+        "s_value": 0.5,
+        "spectral_gap_mean": 0.1950622074227544,
+        "spectral_gap_median": 0.1950622074227544,
+        "spectral_gap_values": [
+          0.1950622074227544
+        ]
+      },
+      {
+        "coupling_seeds": [
+          987654
+        ],
+        "errors": [],
+        "gamma": 0.5,
+        "n_couplings": 1,
+        "s_value": 0.5,
+        "spectral_gap_mean": 0.2369320383972623,
+        "spectral_gap_median": 0.2369320383972623,
+        "spectral_gap_values": [
+          0.2369320383972623
+        ]
+      }
+    ],
+    "spectral_gap_relation": {
+      "interpretation": "larger spectral gap should correspond to shorter required QELM window if the window length is tracking reservoir memory",
+      "paired_gamma_gap_k_star": [
+        {
+          "gamma": 0.02,
+          "k_star": 12,
+          "spectral_gap_mean": 0.017185742419168752
+        },
+        {
+          "gamma": 0.1,
+          "k_star": 12,
+          "spectral_gap_mean": 0.08367314125391834
+        },
+        {
+          "gamma": 0.3,
+          "k_star": 12,
+          "spectral_gap_mean": 0.1950622074227544
+        },
+        {
+          "gamma": 0.5,
+          "k_star": 12,
+          "spectral_gap_mean": 0.2369320383972623
+        }
+      ],
+      "spearman_gap_vs_k_star": null
+    }
+  },
+  "part_c": {
+    "go_no_go": {
+      "criteria": {
+        "T_star_found": false,
+        "signed_surface_non_degenerate_both_signs": false,
+        "tuned_gamma_persistent_gap_measurable": false
+      },
+      "diagnostics": [
+        "T* not found: inspect rank clamp fractions, basis edge capacity, and extend T or IPC basis before confirmatory freeze",
+        "GI2 tuned-gamma persistent gap not established: WINDOW_WINS_AT_TUNED_GAMMA",
+        "signed surface is degenerate across gamma: Delta_infty does not show both signs"
+      ],
+      "go": false,
+      "status": "NO-GO"
+    },
+    "proposed_confirmatory_grid": {
+      "T_star": null,
+      "analysis_T_used_in_part_B": 2000,
+      "dissipator": "local_loss",
+      "gamma_grid": [
+        0.02,
+        0.1,
+        0.3,
+        0.5
+      ],
+      "ipc_basis": {
+        "max_degree": 4,
+        "max_delay": 20,
+        "max_functions": 600,
+        "max_total_degree": 4
+      },
+      "n_qubits": 5,
+      "seed_note": "pilot grid only; confirmatory seeds untouched by this script",
+      "window_grid": [
+        1,
+        2,
+        3,
+        5,
+        8,
+        12
+      ]
+    },
+    "proposed_gates": {
+      "GI1": {
+        "by_gamma": [
+          {
+            "gamma": 0.02,
+            "k_star_within_5pct_or_0p02": 12,
+            "proposed_pass": false,
+            "qelm_non_decreasing": false,
+            "qelm_spearman_k": {
+              "ci_high": 0.7714285714285715,
+              "ci_low": 0.7714285714285715,
+              "rho": 0.7714285714285715
+            }
+          },
+          {
+            "gamma": 0.1,
+            "k_star_within_5pct_or_0p02": 12,
+            "proposed_pass": false,
+            "qelm_non_decreasing": false,
+            "qelm_spearman_k": {
+              "ci_high": 0.7714285714285715,
+              "ci_low": 0.7714285714285715,
+              "rho": 0.7714285714285715
+            }
+          },
+          {
+            "gamma": 0.3,
+            "k_star_within_5pct_or_0p02": 12,
+            "proposed_pass": false,
+            "qelm_non_decreasing": false,
+            "qelm_spearman_k": {
+              "ci_high": 1.0,
+              "ci_low": 0.8285714285714287,
+              "rho": 0.942857142857143
+            }
+          },
+          {
+            "gamma": 0.5,
+            "k_star_within_5pct_or_0p02": 12,
+            "proposed_pass": true,
+            "qelm_non_decreasing": true,
+            "qelm_spearman_k": {
+              "ci_high": 1.0,
+              "ci_low": 1.0,
+              "rho": 1.0
+            }
+          }
+        ],
+        "description": "per-gamma IPC(QELM,k) is significantly non-decreasing in k toward Delta_infty",
+        "method": "Spearman over k with bootstrap CI over pilot seed cells"
+      },
+      "GI2": {
+        "description": "at tuned gamma approx 0.3, Delta_infty > 0 with bootstrap CI excluding 0 implies PERSISTENT_GAP; CI including 0 implies QELM_CONVERGES",
+        "resolvable": true,
+        "tuned_gamma_row": {
+          "delta_ci_high": -0.04850526424178913,
+          "delta_ci_low": -1.1008999878296004,
+          "delta_mean": -0.603806601476459,
+          "delta_se": 0.2697798304528587,
+          "delta_std": 1.0448527904865823,
+          "gamma": 0.3,
+          "ipc_qelm_mean": 30.025111124642738,
+          "ipc_qrc_mean": 29.42130452316628,
+          "label": "QELM",
+          "n_pairs": 15,
+          "nearest_to_gamma": 0.3,
+          "p_wilcoxon": 0.04791259765625,
+          "win_rate_qrc": 0.26666666666666666,
+          "window_k": 12
+        },
+        "verdict": "WINDOW_WINS_AT_TUNED_GAMMA"
+      },
+      "GI3": {
+        "both_signs_present": false,
+        "description": "Delta_infty(gamma) changes sign at gamma* and gamma* relates to the spectral gap",
+        "gamma_star": null,
+        "gamma_star_ci": [
+          0.28711271550170114,
+          0.2997273389096545
+        ],
+        "spectral_gap_relation": {
+          "interpretation": "larger spectral gap should correspond to shorter required QELM window if the window length is tracking reservoir memory",
+          "paired_gamma_gap_k_star": [
+            {
+              "gamma": 0.02,
+              "k_star": 12,
+              "spectral_gap_mean": 0.017185742419168752
+            },
+            {
+              "gamma": 0.1,
+              "k_star": 12,
+              "spectral_gap_mean": 0.08367314125391834
+            },
+            {
+              "gamma": 0.3,
+              "k_star": 12,
+              "spectral_gap_mean": 0.1950622074227544
+            },
+            {
+              "gamma": 0.5,
+              "k_star": 12,
+              "spectral_gap_mean": 0.2369320383972623
+            }
+          ],
+          "spearman_gap_vs_k_star": null
+        },
+        "trend_spearman": 0.7999999999999999,
+        "trend_spearman_ci": [
+          0.7999999999999999,
+          1.0
+        ]
+      }
+    }
+  },
+  "pilot_only": true,
+  "profile": "full",
+  "profile_settings": {
+    "basis_caps": null,
+    "basis_edge_max": 0.05,
+    "gamma_grid": [
+      0.02,
+      0.1,
+      0.3,
+      0.5
+    ],
+    "max_seed_cells": null,
+    "n_boot": 2000,
+    "n_gap_couplings": 1,
+    "n_surrogates": null,
+    "rank_clamp_fraction_max": 0.98,
+    "reliability_windows": [
+      1,
+      4,
+      8
+    ],
+    "stabilization_tol": 0.05,
+    "surface_windows": [
+      1,
+      2,
+      3,
+      5,
+      8,
+      12
+    ],
+    "t_values": [
+      500,
+      1000,
+      2000
+    ]
+  },
+  "runtime": {
+    "elapsed_s": 29234.879960749997
+  },
+  "seed_cells_used": [
+    {
+      "cell_id": "input0900_coupling987654_shot0000",
+      "coupling_seed": 987654,
+      "input_seed": 900,
+      "shot_seed": 0
+    },
+    {
+      "cell_id": "input0900_coupling123456_shot0000",
+      "coupling_seed": 123456,
+      "input_seed": 900,
+      "shot_seed": 0
+    },
+    {
+      "cell_id": "input0900_coupling555553_shot0000",
+      "coupling_seed": 555553,
+      "input_seed": 900,
+      "shot_seed": 0
+    },
+    {
+      "cell_id": "input0901_coupling987654_shot0000",
+      "coupling_seed": 987654,
+      "input_seed": 901,
+      "shot_seed": 0
+    },
+    {
+      "cell_id": "input0901_coupling123456_shot0000",
+      "coupling_seed": 123456,
+      "input_seed": 901,
+      "shot_seed": 0
+    },
+    {
+      "cell_id": "input0901_coupling555553_shot0000",
+      "coupling_seed": 555553,
+      "input_seed": 901,
+      "shot_seed": 0
+    },
+    {
+      "cell_id": "input0902_coupling987654_shot0000",
+      "coupling_seed": 987654,
+      "input_seed": 902,
+      "shot_seed": 0
+    },
+    {
+      "cell_id": "input0902_coupling123456_shot0000",
+      "coupling_seed": 123456,
+      "input_seed": 902,
+      "shot_seed": 0
+    },
+    {
+      "cell_id": "input0902_coupling555553_shot0000",
+      "coupling_seed": 555553,
+      "input_seed": 902,
+      "shot_seed": 0
+    },
+    {
+      "cell_id": "input0903_coupling987654_shot0000",
+      "coupling_seed": 987654,
+      "input_seed": 903,
+      "shot_seed": 0
+    },
+    {
+      "cell_id": "input0903_coupling123456_shot0000",
+      "coupling_seed": 123456,
+      "input_seed": 903,
+      "shot_seed": 0
+    },
+    {
+      "cell_id": "input0903_coupling555553_shot0000",
+      "coupling_seed": 555553,
+      "input_seed": 903,
+      "shot_seed": 0
+    },
+    {
+      "cell_id": "input0904_coupling987654_shot0000",
+      "coupling_seed": 987654,
+      "input_seed": 904,
+      "shot_seed": 0
+    },
+    {
+      "cell_id": "input0904_coupling123456_shot0000",
+      "coupling_seed": 123456,
+      "input_seed": 904,
+      "shot_seed": 0
+    },
+    {
+      "cell_id": "input0904_coupling555553_shot0000",
+      "coupling_seed": 555553,
+      "input_seed": 904,
+      "shot_seed": 0
+    }
+  ],
+  "seed_grid": {
+    "cell_count": 15,
+    "cells": [
+      {
+        "coupling_seed": 987654,
+        "input_seed": 900,
+        "shot_seed": 0
+      },
+      {
+        "coupling_seed": 123456,
+        "input_seed": 900,
+        "shot_seed": 0
+      },
+      {
+        "coupling_seed": 555553,
+        "input_seed": 900,
+        "shot_seed": 0
+      },
+      {
+        "coupling_seed": 987654,
+        "input_seed": 901,
+        "shot_seed": 0
+      },
+      {
+        "coupling_seed": 123456,
+        "input_seed": 901,
+        "shot_seed": 0
+      },
+      {
+        "coupling_seed": 555553,
+        "input_seed": 901,
+        "shot_seed": 0
+      },
+      {
+        "coupling_seed": 987654,
+        "input_seed": 902,
+        "shot_seed": 0
+      },
+      {
+        "coupling_seed": 123456,
+        "input_seed": 902,
+        "shot_seed": 0
+      },
+      {
+        "coupling_seed": 555553,
+        "input_seed": 902,
+        "shot_seed": 0
+      },
+      {
+        "coupling_seed": 987654,
+        "input_seed": 903,
+        "shot_seed": 0
+      },
+      {
+        "coupling_seed": 123456,
+        "input_seed": 903,
+        "shot_seed": 0
+      },
+      {
+        "coupling_seed": 555553,
+        "input_seed": 903,
+        "shot_seed": 0
+      },
+      {
+        "coupling_seed": 987654,
+        "input_seed": 904,
+        "shot_seed": 0
+      },
+      {
+        "coupling_seed": 123456,
+        "input_seed": 904,
+        "shot_seed": 0
+      },
+      {
+        "coupling_seed": 555553,
+        "input_seed": 904,
+        "shot_seed": 0
+      }
+    ],
+    "n_cells": 15,
+    "name": "pilot"
+  }
+}
