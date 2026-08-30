@@ -1,210 +1,81 @@
 \appendix
-\section{Technical derivations}
-\label{app:technical-derivations}
+\section{Short derivations}
 
-\subsection{Common-suffix bounds for deterministic and randomized learners}
+\subsection{The window law}
 
-Let two histories have the same learner-visible suffix and recurrent outputs
-$y_0,y_1$.  A deterministic suffix-only learner returns the same number on both
-histories.  A randomized learner may return a random variable $A$, but its
-conditional law is again the same on both branches because its randomness is
-not branch correlated.  The triangle inequality gives
-\begin{equation}
- |y_1-y_0|\leq
- \mathbb E|y_1-A|+\mathbb E|y_0-A|,
-\end{equation}
-which yields the absolute-error statement in
-Eq.~\eqref{eq:common-suffix-bound}.  With
-$m_y=(y_0+y_1)/2$, direct expansion gives the exact identity
+For a fixed suffix $s$, write $y_-(s)$ and $y_+(s)$ for the infimum and
+supremum of its compatible outputs.  Any suffix predictor returns one number
+on this set, so values arbitrarily close to the two endpoints force an error
+of at least
+$[y_+(s)-y_-(s)]/2$.  The midpoint
+$[y_+(s)+y_-(s)]/2$ reaches this bound.  Taking the supremum over suffixes proves
+Eq.~\eqref{eq:window-law}.  The same lower bound holds for a randomized output
+$A$, because
+$|y_+-y_-|\leq\mathbb E|y_+-A|+\mathbb E|y_--A|$.  For a balanced pair,
 \begin{equation}
  \frac12\sum_{b=0}^1\mathbb E(y_b-A)^2
- =\frac{(y_1-y_0)^2}{4}+\mathbb E(A-m_y)^2.
- \label{eq:appendix-midpoint}
+ =\frac{(y_1-y_0)^2}{4}
+  +\mathbb E\!\left[A-\frac{y_0+y_1}{2}\right]^2 .
 \end{equation}
-The nonnegative second term proves the balanced squared-error bound and shows
-that the midpoint is optimal when unrestricted constant predictions are
-allowed.
 
-For the full history class, fix an attainable suffix $s$ and let
-$y_-(s)$ and $y_+(s)$ be the infimum and supremum of all compatible scalar
-outputs.  Every suffix function incurs error at least
-$[y_+(s)-y_-(s)]/2$ on that fiber.  Conversely,
-$g_d(s)=[y_+(s)+y_-(s)]/2$ has error at most the same quantity.  Taking the
-supremum over $s$ proves Eq.~\eqref{eq:minimax-diameter}.  In particular,
-$E_d\to0$ if and only if $D_d\to0$.  No continuity or model assumption is
-needed for this information-interface identity; continuity enters when a
-specific feature family must represent the midpoint function.
+\subsection{The protected singlet}
 
-\subsection{Protected, excitable, and visible modes}
-
-For a suffix $s=(a_1,\ldots,a_d)\in\mathcal A_{\rm sym}^d$, write
-$\Phi_s=\Phi_{a_d}\circ\cdots\circ\Phi_{a_1}$.  The protected condition in
-Eq.~\eqref{eq:pev-conditions} composes:
-$\Phi_s^\dagger(P)=P$ for every finite allowed suffix.  Hence, for the two
-post-excitation branch states,
+If every allowed suffix channel satisfies $\Phi_a^\dagger(P_-)=P_-$, then any
+composition of those channels does too.  The singlet population difference is
+therefore unchanged by every finite allowed suffix.  The old pulse loads it
+because
 \begin{equation}
- \operatorname{Tr}\!\left[P\Phi_s
- (\rho_0^{(1)}-\rho_0^{(0)})\right]
- =\operatorname{Tr}\!\left[P
- (\rho_0^{(1)}-\rho_0^{(0)})\right].
- \label{eq:appendix-composition}
-\end{equation}
-This proves suffix-independent preservation for the full class
-$\bigcup_{d\geq1}\mathcal A_{\rm sym}^d$, not only for the one fixed suffix
-stream used to state Eq.~\eqref{eq:class-separation}.
-
-For the two-qubit recurrent process,
-\begin{equation}
+ \begin{aligned}
  R_x^{(1)}(\theta)|00\rangle
- =\cos(\theta/2)|00\rangle-i\sin(\theta/2)|10\rangle.
+ &=\cos(\theta/2)|00\rangle-i\sin(\theta/2)|10\rangle,\\
+ |\langle\psi^-|10\rangle|^2&=\frac12 .
+ \end{aligned}
 \end{equation}
-Since $|\langle\psi^-|10\rangle|^2=1/2$, the flagged branch loads singlet
-population $\tfrac12\sin^2(\theta/2)$, while the unflagged symmetric branch has
-zero singlet population.  Finally,
-$P_-=(II-XX-YY-ZZ)/4$ places the protected population in the affine span of the
-measured two-body Pauli correlators.  These observations establish
-excitability and visibility.
+This gives $\Delta p_-=\tfrac12\sin^2(\theta/2)$, while
+$P_-=(II-XX-YY-ZZ)/4$ makes the population measurable from the stated Pauli
+outputs.
 
-\subsection{Imperfect-protection bound}
-
-Let
-$\delta\rho_k=\rho_k^{(1)}-\rho_k^{(0)}$ and
-$\Delta p_k=\operatorname{Tr}(P\delta\rho_k)$.  For the next allowed suffix
-symbol $a_{k+1}$,
-\begin{align}
- \Delta p_{k+1}-\Delta p_k
- &=\operatorname{Tr}\!\left[
- (\Phi_{a_{k+1}}^\dagger(P)-P)\delta\rho_k\right],\\
- |\Delta p_{k+1}|&\geq |\Delta p_k|
- -\varepsilon_{\rm prot}\|\delta\rho_k\|_1.
-\end{align}
-CPTP contraction gives
-$\|\delta\rho_k\|_1\leq\|\delta\rho_0\|_1\leq2$.
-Iteration proves Eq.~\eqref{eq:robust-protection}.  For
-$\Phi_a=\exp(dt\mathcal L_a)$,
+For imperfect protection, let
+$\varepsilon_{\rm prot}=\sup_a\|\Phi_a^\dagger(P_-)-P_-\|_\infty$.  Each
+allowed step can reduce the branch gap by at most
+$2\varepsilon_{\rm prot}$, because the trace norm of the difference between
+two states is at most two.  Summing over $d$ steps gives the readable
+finite-horizon bound
 \begin{equation}
- \Phi_a^\dagger(P)-P
- =\int_0^{dt}e^{s\mathcal L_a^\dagger}
- \mathcal L_a^\dagger(P)\,ds.
+ |\Delta p_d|\geq
+ \max\{0,|\Delta p_0|-2d\varepsilon_{\rm prot}\}.
 \end{equation}
-The adjoint semigroup is unital and completely positive, hence contractive in
-operator norm.  Taking the supremum over the allowed suffix alphabet gives
-$\varepsilon_{\rm prot}\leq
-dt\sup_a\|\mathcal L_a^\dagger(P)\|_\infty$.
 
-\subsection{Contraction and the Bernstein-QELM bound}
+\subsection{The reset-QELM bound}
 
-Let
-$\Psi_{t,d}=\Phi_{a_t}\circ\cdots\circ\Phi_{a_{t-d+1}}$.
-The recurrent and reset-replay states enter the same final $d$ channels from
-$\rho_{t-d}$ and $\sigma$, respectively.  Setting $u=v$ in
-Eq.~\eqref{eq:incremental-channel} and iterating gives
-\begin{align}
- D_{\rm tr}(\rho_t,\widetilde\rho_t^{(d)})
- &=D_{\rm tr}(\Psi_{t,d}(\rho_{t-d}),
-              \Psi_{t,d}(\sigma))\nonumber\\
- &\leq\eta^dD_{\rm tr}(\rho_{t-d},\sigma)\nonumber\\
- &\leq\eta^d.
- \label{eq:appendix-contractive-state}
-\end{align}
-The same argument applied to any two prefix states followed by one common
-suffix gives $D_d\leq2\|O\|_\infty\eta^d$.  Trace-norm duality gives
-$|\operatorname{Tr}[O(\rho-\rho')]|\leq
-2\|O\|_\infty D_{\rm tr}(\rho,\rho')$.  More generally, for the fixed affine
-score $f_w(z)=b+\sum_jw_jz_j$, set
-$A=\sum_j|w_j|\|O_j\|_\infty$.  Then
+Let $\widetilde\rho_t^{(d)}$ be the state obtained by replaying the final $d$
+channels from one fixed reset state.  Repeated contraction gives
 \begin{equation}
- |f_w(z_t)-f_w(\widetilde z_t^{(d)})|\leq2A\eta^d.
- \label{eq:contractive-replay}
+ D_{\rm tr}(\rho_t,\widetilde\rho_t^{(d)})\leq\eta^d,
+ \qquad
+ |Y_t-\operatorname{Tr}(O\widetilde\rho_t^{(d)})|\leq2M\eta^d .
 \end{equation}
-Thus same-channel replay preserves an already trained readout with a uniform
-certificate; it supplies the history term in the QELM theorem.
 
-For the representation term, define
-\begin{equation}
- g_d(\boldsymbol x)=\operatorname{Tr}\!\left[
- O\,\Phi_{x_d}\circ\cdots\circ\Phi_{x_1}(\sigma)\right].
-\end{equation}
-Compare two suffixes by changing one coordinate at a time.  Equation
-\eqref{eq:incremental-channel} bounds the immediate change at coordinate $i$
-by $L_u|x_i-y_i|$ in trace distance, and the $d-i$ later channels contract it.
-Trace-norm duality and the triangle inequality therefore give
+For each window coordinate $x_i$, prepare $r$ qubits in
+$\sqrt{1-x_i}|0\rangle+\sqrt{x_i}|1\rangle$ and record the Hamming weight
+$K_i$.  Then $K_i\sim\operatorname{Binomial}(r,x_i)$.  If $g_d$ is the replay
+output, a linear readout with coefficients $g_d(\boldsymbol k/r)$ returns the
+Bernstein polynomial $\mathbb E[g_d(\boldsymbol K/r)]$.  Input Lipschitzness
+and contraction give
 \begin{equation}
  |g_d(\boldsymbol x)-g_d(\boldsymbol y)|
  \leq2ML_u\sum_{i=1}^d\eta^{d-i}|x_i-y_i|.
- \label{eq:appendix-weighted-lipschitz}
-\end{equation}
-
-The blockwise Hamming-weight projectors form a single product PVM.  On the
-encoded product state, their probabilities are exactly
-Eq.~\eqref{eq:bernstein-feature}.  If independent random variables
-$K_i\sim\operatorname{Binomial}(r,x_i)$ denote the observed block weights, the
-linear QELM output with coefficient $g_d(\boldsymbol k/r)$ is
-\begin{equation}
- Q_{d,r}(\boldsymbol x)
- =\sum_{\boldsymbol k}g_d(\boldsymbol k/r)
- p_{\boldsymbol k}(\boldsymbol x)
- =\mathbb E\,g_d(\boldsymbol K/r).
 \end{equation}
 Since
-$\mathbb E|K_i/r-x_i|\leq
-\sqrt{x_i(1-x_i)/r}\leq1/(2\sqrt r)$,
-Eq.~\eqref{eq:appendix-weighted-lipschitz} yields
-\begin{align}
- |Q_{d,r}(\boldsymbol x)-g_d(\boldsymbol x)|
- &\leq\frac{ML_u}{\sqrt r}\sum_{i=1}^d\eta^{d-i}\nonumber\\
- &=\frac{ML_u(1-\eta^d)}{(1-\eta)\sqrt r}.
-\end{align}
-Adding Eq.~\eqref{eq:appendix-contractive-state} proves
-Eq.~\eqref{eq:qrc-qelm-bound}; solving the two terms at tolerance
-$\varepsilon/2$ proves Eq.~\eqref{eq:qrc-qelm-resources}.
+$\mathbb E|K_i/r-x_i|\leq1/(2\sqrt r)$, the Bernstein error is at most
+$ML_u(1-\eta^d)/[(1-\eta)\sqrt r]$.  Finally, each circuit shot produces a
+score in $[-M,M]$.  Hoeffding's inequality bounds the error of the mean of $Q$
+scores by
+$M\sqrt{2\log(2/\alpha)/Q}$ with probability at least $1-\alpha$.  Adding the
+three errors proves Eq.~\eqref{eq:qrc-qelm-bound}.
 
-For finite shots, the random score $g_d(\boldsymbol K/r)$ lies in $[-M,M]$.
-Hoeffding's inequality gives
-\begin{equation}
- \Pr\!\left(
- |\widehat Q_{d,r,Q}-Q_{d,r}|>
- M\sqrt{2\log(2/\alpha)/Q}\right)\leq\alpha,
-\end{equation}
-which proves Eq.~\eqref{eq:qrc-qelm-shot-bound}.  This estimator scores each
-joint outcome directly; it does not reconstruct all $(r+1)^d$ probabilities.
-The theorem nevertheless requires a target-dependent coefficient table and
-does not supply a sample-efficient procedure for learning that table.
-
-For a fixed affine vector readout, replace $M$ by
-$A=\max_\ell\sum_j|W_{\ell j}|\|O_j\|_\infty$ to obtain the same bounds in the
-output $\ell_\infty$ norm.  For vector inputs in $[0,1]^q$, use $q$ coordinate
-blocks per time step.  Finally, a continuous fading-memory filter first admits
-a uniformly accurate continuous finite-window restriction; the parallel
-Bernstein quantum feature family then approximates that finite-dimensional map
-uniformly.  This proves the general corollary in the main text without an
-explicit rate.  The incremental condition supplies the stated rate.
-
-\subsection{Conditional risk and finite-shot features}
-
-For an exact suffix feature $F=\phi(S)$ and a deterministic readout, expand
-$Y-g(F)=[Y-\mu_d(S)]+[\mu_d(S)-g(F)]$.  The cross term vanishes because
-$\mathbb E[Y-\mu_d(S)\mid S]=0$, proving Eq.~\eqref{eq:risk-law}.
-
-The shot term is exact for a fixed affine readout evaluated with independent
-test-shot noise.  Let $Y\in\mathbb R^m$,
-$\widetilde F=F+\epsilon$, and
-$\widehat Y=W\widetilde F+b$, where $W\in\mathbb R^{m\times B}$ is fixed.
-Assume
-$\mathbb E(\epsilon\mid S,Y)=0$ and
-$\operatorname{Cov}(\epsilon\mid S)=\Sigma_\epsilon(S)$.  Then
-\begin{align}
- \mathbb E\|Y-\widehat Y\|_m^2
- &=H_d+R_{\rm rep}(W,b)+R_{\rm shot}(W),
- \label{eq:fixed-readout-shot-risk}\\
- R_{\rm rep}(W,b)
- &=\frac1m\mathbb E\|\mu_d(S)-WF-b\|_2^2,\nonumber\\
- R_{\rm shot}(W)
- &=\frac1m\mathbb E\operatorname{tr}
- \!\left[W\Sigma_\epsilon(S)W^{\mathsf T}\right].\nonumber
-\end{align}
-For a readout fitted on independently sampled training and validation
-features, this identity holds conditionally on the fitted $W,b$ when the test
-shots are drawn independently; an outer expectation then averages over the
-training randomness.  Model-selection and estimation variability remain part
-of the empirical held-out risk rather than the fixed-readout shot term.
+For a general continuous fading-memory filter, choose a finite window whose
+truncation error is below half the target tolerance.  The remaining map is a
+continuous function on a compact finite-dimensional domain, so Bernstein
+approximation supplies a finite reset QELM for the other half.  This proves the
+stated general corollary without assuming exponential contraction.

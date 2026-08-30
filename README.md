@@ -3,7 +3,7 @@
 [![CI](https://github.com/eybmits/qrc_vs_qelm/actions/workflows/ci.yml/badge.svg)](https://github.com/eybmits/qrc_vs_qelm/actions/workflows/ci.yml)
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](LICENSE)
 [![Python 3.11+](https://img.shields.io/badge/python-3.11%2B-blue.svg)](pyproject.toml)
-![tests](https://img.shields.io/badge/tests-414%20passing-brightgreen.svg)
+![tests](https://img.shields.io/badge/tests-417%20passing-brightgreen.svg)
 
 A study of when a reset-window quantum extreme learning machine can reproduce a
 recurrent quantum reservoir.  If `D_d` is the largest output gap between
@@ -74,7 +74,7 @@ approximation.
   the manuscript does not conflate the two estimands.
 - The frozen confirmatory run contains 12 independent root blocks, 144 live
   two- and three-qubit teacher conditions nested within them, and 5,760 fitted stream cells. All primary
-  gates G0--G6 pass and the complete suite passes 414/414 tests.
+  gates G0--G6 pass and the complete suite passes 417/417 tests.
 - Increasing the registered window from 1 to 6 reduces QELM NRMSE by a median
   78.5% on transition cells; after history is feasible, increasing the nested
   feature budget from 18 to 72 reduces representation NRMSE by 67.3%. Both
@@ -86,9 +86,8 @@ approximation.
 
 The publication artifact is the single manuscript
 `paper/canonical_emulation/main.tex`, compiled as
-`paper/canonical_emulation/main.pdf`.  The paper is titled *Reset-Window
-Emulation of Quantum Reservoirs: Constructive Approximation and
-Protected-Memory Limits*.  It is 12 pages, uses 50
+`paper/canonical_emulation/main.pdf`.  The paper is titled *When Can a
+Reset-Window QELM Reproduce a Quantum Reservoir?*.  It is 9 pages, uses 48
 cited references, contains exactly three main figures, and includes proofs,
 calibration, numerical controls, Methods, and the technical appendix in the
 same PDF.  The frozen

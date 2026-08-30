@@ -1,51 +1,41 @@
 \par Recurrent quantum reservoirs use persistent dynamics as a temporal
-resource, with realizations in spin networks, engineered-memory and noisy
-processors, nonlinear oscillators, Rydberg arrays, Gaussian systems, and
-quantum-state inputs
+resource in spin networks, noisy processors, oscillators, Rydberg arrays,
+Gaussian systems, and quantum-state inputs
 \cite{nakajima2019spatial,kutvonen2020optimizing,chen2020temporal,
 govia2021oscillator,kalfus2022hilbert,bravo2022rydberg,
-nokkala2021gaussian}.  Fading-memory theory explains when
-old-state dependence contracts enough for finite-window approximation
+nokkala2021gaussian}.  Fading-memory and echo-state results explain when old
+state dependence becomes negligible
 \cite{boyd1985fading,grigoryeva2018sas,grigoryeva2018esn,
 grigoryeva2019differentiable,gonon2021fading,
 martinezpena2023finite,martinezpena2025input,kobayashi2024esp,
-kobayashi2026coherence}.  Dissipation, feedback, monitored evolution, and
-non-Markovian environments move that horizon
+kobayashi2026coherence}.  Dissipation, feedback, monitored dynamics, and
+non-Markovian environments change that memory horizon
 \cite{sannia2024dissipation,kobayashi2024feedback,
 morguisancho2026monitored,sannia2026nonmarkovian,paparelle2026memory,
-ricci2026damping}.  Retained memory still leaves an interface question: whether
-its output-visible component is determined by the learner's supplied suffix.
+ricci2026damping}.
 
-Reset-window and delayed-input learners encode recent history explicitly.
-Parallel time-delayed QELMs upload a finite delay vector, memory-enhanced QELMs
-add explicit delays, and rewinding or artificial memory restriction resets a
-recurrent QRC before replaying a suffix
+Reset-window models encode recent history explicitly.  Parallel time-delayed
+QELMs upload a delay vector, while rewinding and artificial memory restriction
+replay a finite suffix from a reset state
 \cite{kawanabe2026tdqelm,assil2026memory,mujal2023measurement,
-cindrak2024restriction}.  Quantum feature maps already have universal
-approximation constructions for continuous finite-dimensional functions; the
-parallel repeated-encoding construction includes the multivariate Bernstein
-basis used here and admits quantitative circuit bounds
-\cite{goto2021universal,yu2024nonasymptotic}.  The present bound combines that
-known representation certificate with QRC history truncation and finite-shot
-estimation in one observable-level resource law.  Pauli-transfer,
-Krylov, task-coverage, conditional-information, and Fisher-mode analyses
-describe which functions of that suffix become accessible
+cindrak2024restriction}.  Quantum feature maps can approximate continuous
+finite-dimensional functions, including through the repeated-encoding
+Bernstein construction used below \cite{goto2021universal,yu2024nonasymptotic}.
+Pauli-transfer, Krylov, task-coverage, conditional-information, and Fisher-mode
+analyses determine which functions of the supplied window are accessible
 \cite{gross2026ptm,cindrak2025krylov,domingo2026diagnosing,keenan2026storage,
-wang2026fisher}.  Finite sampling and measurement choice then determine which
-directions are resolved
-\cite{hu2023sampling,kora2026noise,ahmed2025finite,mujal2023measurement,
-morguisancho2026monitored,huang2020shadows}.  A quadratic
-nonlinear-vector-autoregression model supplies the strongest classical delay
-control in the numerical study \cite{gauthier2021next}.  These methods process
-the supplied suffix; they cannot distinguish two admissible histories with the
-same supplied suffix.
+wang2026fisher}.  Measurements and finite sampling determine which of those
+directions can be resolved
+\cite{hu2023sampling,kora2026noise,ahmed2025finite,
+mujal2023measurement,morguisancho2026monitored,huang2020shadows}.  We use a
+quadratic nonlinear-vector-autoregression model as the strongest classical
+delay control \cite{gauthier2021next}.
 
-Protected quantum modes provide the physical mechanism.
-Decoherence-free subspaces and symmetry-protected steady sectors retain
-state components that symmetric dynamics cannot erase
-\cite{zanardi1997noiseless,lidar1998dfs,albert2014symmetries}.  The two-qubit
-construction connects such a protected component to an addressable input and a
-declared Pauli output, making it protected, excitable, and visible.  Previous
-work studies memory capacity and finite-delay architectures; this work asks
-whether the visible delay window is sufficient for the declared target in the
-first place.
+Decoherence-free subspaces and symmetry-protected steady sectors retain state
+components that symmetric dynamics cannot erase
+\cite{zanardi1997noiseless,lidar1998dfs,albert2014symmetries}.  Existing results
+therefore describe recurrent memory, finite-window representation, and
+protected modes separately.  The connection made here is operational: a fixed
+window is exact when it contains all information still visible in the declared
+QRC output, and growing windows become arbitrarily accurate when the remaining
+output gap tends to zero.

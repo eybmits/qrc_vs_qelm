@@ -3,8 +3,10 @@ from __future__ import annotations
 import hashlib
 import json
 from pathlib import Path
+import re
 import sys
 
+import matplotlib
 import pandas as pd
 import pytest
 
@@ -17,6 +19,10 @@ if str(CODE_ROOT) not in sys.path:
 from render_information_interface_figures import (  # noqa: E402
     DEFAULT_DARK_SUMMARY,
     DEFAULT_PHASE_SOURCE,
+    FIGURE_SIZES,
+    PALETTE,
+    STYLE,
+    _base_style,
     render_all,
     simplified_phase_table,
 )
@@ -33,6 +39,116 @@ EXPECTED_ARTIFACTS = {
     "fig03_resource_diagnosis.png",
     "fig03_resource_diagnosis_source.csv",
 }
+
+
+EXPECTED_STYLE = {
+    "font_family": ["Helvetica Neue", "Helvetica", "Arial", "sans-serif"],
+    "font_size": 8.0,
+    "axes_labelsize": 8.0,
+    "axes_titlesize": 8.2,
+    "tick_labelsize": 6.8,
+    "legend_fontsize": 6.7,
+    "axes_linewidth": 0.52,
+    "primary_linewidth": 0.64,
+    "grid_linewidth": 0.40,
+}
+
+EXPECTED_FIGURE_SIZES = {
+    "fig1": (7.055, 4.05),
+    "fig2": (7.055, 2.62),
+    "fig3": (7.055, 2.55),
+}
+
+EXPECTED_PALETTE = {
+    "ink": "#000000",
+    "annotation": "#7F7F7F",
+    "grid": "#B0B0B0",
+    "neutral": "#F1F2F2",
+    "history_missing": "#A7A9AC",
+    "frozen": "#3B86FF",
+    "frozen_light": "#EBF2FF",
+    "onset": "#00A14B",
+    "onset_light": "#E6F5EC",
+    "scrambled": "#FC4D30",
+    "scrambled_light": "#FEECE9",
+    "yellow": "#FFC943",
+    "pale_yellow": "#FFDD92",
+    "orange": "#FF8431",
+    "purple": "#A93BFF",
+    "viridis_18": "#7AD151",
+    "viridis_36": "#2A788E",
+    "viridis_72": "#482475",
+    "family_2": "#253494",
+    "family_3": "#E8590C",
+    "white": "#FFFFFF",
+}
+
+
+def _pdf_media_box(path: Path) -> tuple[float, float]:
+    """Return the first PDF page width and height in PostScript points."""
+
+    number = rb"[-+]?(?:\d+(?:\.\d*)?|\.\d+)"
+    match = re.search(
+        rb"/MediaBox\s*\[\s*(" + number + rb")\s+(" + number + rb")\s+"
+        rb"(" + number + rb")\s+(" + number + rb")\s*\]",
+        path.read_bytes(),
+    )
+    if match is None:
+        raise AssertionError(f"{path.name} has no directly encoded MediaBox")
+    left, bottom, right, top = (float(value) for value in match.groups())
+    return right - left, top - bottom
+
+
+def test_reference_figure_style_contract_is_frozen() -> None:
+    assert STYLE == EXPECTED_STYLE
+    assert PALETTE == EXPECTED_PALETTE
+    assert FIGURE_SIZES == EXPECTED_FIGURE_SIZES
+    assert {width for width, _ in FIGURE_SIZES.values()} == {7.055}
+    _base_style()
+    assert list(matplotlib.rcParams["font.family"]) == STYLE["font_family"]
+    assert matplotlib.rcParams["font.size"] == STYLE["font_size"]
+    assert matplotlib.rcParams["axes.labelsize"] == STYLE["axes_labelsize"]
+    assert matplotlib.rcParams["axes.titlesize"] == STYLE["axes_titlesize"]
+    assert matplotlib.rcParams["xtick.labelsize"] == STYLE["tick_labelsize"]
+    assert matplotlib.rcParams["ytick.labelsize"] == STYLE["tick_labelsize"]
+    assert matplotlib.rcParams["legend.fontsize"] == STYLE["legend_fontsize"]
+    assert matplotlib.rcParams["axes.linewidth"] == STYLE["axes_linewidth"]
+
+
+def test_panel_labels_are_plain_helvetica_text_not_math_glyphs() -> None:
+    renderer_source = (
+        CODE_ROOT / "render_information_interface_figures.py"
+    ).read_text(encoding="utf-8")
+    assert r"\mathbf" not in renderer_source
+    assert ".set_title(" not in renderer_source
+    # Eight call sites plus the helper; the Fig. 2 call runs once for each panel.
+    assert renderer_source.count("_panel_heading(") == 9
+    assert set(
+        re.findall(
+            r"figsize\s*=\s*FIGURE_SIZES\[['\"](fig[123])['\"]\]",
+            renderer_source,
+        )
+    ) == set(FIGURE_SIZES)
+
+
+def test_committed_figure_pdfs_preserve_width_aspect_and_font_contract() -> None:
+    figure_dir = REPO_ROOT / "paper" / "figures" / "information_interface"
+    pdfs = {
+        "fig1": figure_dir / "fig01_information_interface.pdf",
+        "fig2": figure_dir / "fig02_information_frontier.pdf",
+        "fig3": figure_dir / "fig03_resource_diagnosis.pdf",
+    }
+    for key, path in pdfs.items():
+        payload = path.read_bytes()
+        assert b"dejavu" not in payload.lower(), path.name
+        width_points, height_points = _pdf_media_box(path)
+        target_width, target_height = FIGURE_SIZES[key]
+        assert width_points / 72 == pytest.approx(target_width, abs=0.005)
+        assert height_points / 72 == pytest.approx(target_height, abs=0.005)
+        assert width_points / height_points == pytest.approx(
+            target_width / target_height,
+            rel=0.005,
+        )
 
 
 def test_information_interface_figures_are_complete_traceable_and_deterministic(
@@ -95,6 +211,9 @@ def test_information_interface_figures_are_complete_traceable_and_deterministic(
         "history": 336,
         "shots": 192,
         "features": 72,
+    }
+    assert set(resources.loc[resources["panel"].eq("features"), "metric"]) == {
+        "total_nrmse"
     }
 
 

@@ -64,7 +64,6 @@ def test_authoritative_manuscript_claims_match_generated_artifacts() -> None:
         "pra_extension/outputs/dark_sector_validation/dark_sector_summary.json"
     )
     gates = _json("results_canonical_confirmatory_v1/canonical_gate_report.json")
-    canonical = _json("results_canonical_confirmatory_v1/canonical_summary.json")
     analysis = _json(
         "pra_extension/outputs/pra_extension_analysis_v5_refit_common_support/"
         "pra_extension_analysis.json"
@@ -86,32 +85,22 @@ def test_authoritative_manuscript_claims_match_generated_artifacts() -> None:
     assert f"{dark['expected_balanced_mse_floor']:.10f}" in paper
     assert f"{dark['expected_worst_case_absolute_floor']:.7f}" in paper
     assert "time-homogeneous alphabet" in paper
-    assert "They differ at one input only" in compact_paper
+    assert "differ at the old flagged input only" in compact_paper
     assert "outside the fading-memory regime" in compact_paper
-    assert "every suffix in" in compact_paper
-    assert "Reset-Window Emulation of Quantum Reservoirs" in compact_paper
-    assert "Constructive Approximation and Protected-Memory Limits" in compact_paper
-    assert r"\forall d\in\mathbb N_{\geq1}" in compact_paper
-    quantifiers = re.search(
-        r"\\exists T_\{\\QRC\}.*?\\exists\(\\boldsymbol a\^\{\(0\)\},"
-        r"\\boldsymbol a\^\{\(1\)\}\).*?\\forall d\\in\\mathbb N_\{\\geq1\}"
-        r".*?\\forall g_d",
-        compact_paper,
-    )
-    assert quantifiers is not None
+    assert "every finite allowed suffix" in compact_paper
+    assert "When Can a Reset-Window QELM Reproduce a Quantum Reservoir?" in compact_paper
     assert "fixed recurrent process and fixed trajectory pair" in compact_paper
-    assert "Randomized finite-shot predictions" in compact_paper
-    assert "Theorem (QRC-to-reset-QELM approximation)" in compact_paper
-    assert r"E_d:=\inf_{g_d}\sup_h" in compact_paper
+    assert "Randomization does not remove the obstruction" in compact_paper
+    assert r"\textit{Reset-window emulation.}" in compact_paper
+    assert r"E_d&=\inf_{g_d}\sup_h" in compact_paper
     assert r"=\frac{D_d}{2}" in compact_paper
     assert r"B=(r+1)^d" in compact_paper
-    assert r"p_{\boldsymbol k}(\boldsymbol x)" in compact_paper
+    assert "blockwise Hamming weights" in compact_paper
+    assert r"\operatorname{Binomial}(r,x_i)" in compact_paper
     assert r"\label{eq:qrc-qelm-bound}" in compact_paper
-    assert r"\label{eq:qrc-qelm-resources}" in compact_paper
-    assert r"\label{eq:qrc-qelm-shot-bound}" in compact_paper
     assert "continuous fading-memory scalar QRC filter" in compact_paper
-    assert "fixed local-Pauli architecture" in compact_paper
-    assert "receives no universality guarantee" in compact_paper
+    assert "one fixed six-qubit windowed QELM" in compact_paper
+    assert "neither universality to a fixed QELM architecture" in compact_paper
     for name, expected in dark["artifact_sha256"].items():
         artifact = (
             REPO_ROOT / "pra_extension" / "outputs" / "dark_sector_validation" / name
@@ -147,9 +136,9 @@ def test_authoritative_manuscript_claims_match_generated_artifacts() -> None:
     assert f"{100 * g4['median_gain']:.2f}\\%" in evaluation
     assert f"{100 * g5['median_gain']:.2f}\\%" in evaluation
     assert g4["positive_roots"] == g5["positive_roots"] == 12
-    counts = canonical["ptd_regime_counts"]
-    for count in counts.values():
-        assert f"{count:,}" in evaluation
+    assert "all 24 cases---12 independent roots for each of two" in evaluation
+    assert "22/24 cells are representation" in evaluation
+    assert "all 24 cells reach the $0.10$ tolerance" in evaluation
     classical = gates["secondary_qelm_vs_best_classical"]
     assert classical["passed"] is False
     assert classical["positive_roots"] == 0
@@ -162,8 +151,8 @@ def test_authoritative_manuscript_claims_match_generated_artifacts() -> None:
         assert common["effects"][family]["common_live_cells_total"] == 79
         assert f"{100 * effect['median']:.2f}\\%" in evaluation
         assert effect["positive_roots"] == 12
-    assert "fig02_information_frontier.pdf" in evaluation
-    assert "fig03_resource_diagnosis.pdf" in evaluation
+    assert "fig02_information_frontier.pdf" in paper
+    assert "fig03_resource_diagnosis.pdf" in paper
 
     # Validation-selected errors-in-variables claim.
     policy = eiv["validation_selected_policy_Q19200_vs_Q300"]

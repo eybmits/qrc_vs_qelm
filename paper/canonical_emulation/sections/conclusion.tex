@@ -1,32 +1,36 @@
 \section*{Conclusions}
 \label{sec:discussion}
 
-First, the common-suffix diameter gives a complete scalar-output criterion for
-the information supplied to a reset-window learner: the optimal uniform error
-is exactly $D_d/2$.  Uniform finite-window approximation is possible if and
-only if $D_d\to0$.  This statement applies to classical and quantum suffix
-models; for the binary witness, one bit of classical recurrent memory is
-sufficient.
+For a bounded scalar observable output, a fixed input window is exact when its
+common-suffix diameter is zero.  Growing windows approximate the output to
+arbitrary accuracy when this diameter tends to zero.  Half of the diameter is
+the smallest possible worst-case error of any stateless window predictor, so no
+larger feature map can remove that floor.
 
-Second, a protected two-qubit mode gives an exact physical realization and a
-quantitative certificate.  An earlier control excites the singlet population,
-allowed symmetry-preserving dynamics protect it, and Pauli correlations reveal
-it.  Imperfect protection gives a finite certified persistence horizon, while
-mixing dynamics make the omitted-history floor decay with window length.
+Contractive QRC dynamics make the diameter decay exponentially, after which a
+growing reset QELM can approximate the remaining continuous window function.
+The two-qubit singlet construction gives the opposite case: an old input
+changes a protected quantity that later symmetric dynamics preserve and Pauli
+measurements reveal.  Its nonzero output gap survives every finite window.
 
-Third, contraction supplies the constructive regime.  Reset replay bounds the
-discarded history, while a standard parallel Bernstein quantum feature map
-bounds representation of the retained suffix.  Equations
-\eqref{eq:qrc-qelm-bound} and \eqref{eq:qrc-qelm-shot-bound} give a finite
-reset-QELM for every requested accuracy and separate window, degree, and shot
-resources.  The result is one-way functional approximation by a growing family,
-not architectural equivalence or efficient learnability.  Persistent
-recurrence may still reduce resets, channel calls, latency, lag storage, and
-the exponentially large coefficient table.
-
-Finally, the held-out phase map shows the same sequence for a fixed practical
-architecture: once visible history is sufficient, feature representation and
-measurement resolution determine the remaining error.  The quadratic
-classical delay control outperforms the tested QELM.  The theorem and
-experiments establish an approximation--obstruction framework, not quantum
+The simulations turn the criterion into a practical diagnosis.  Increase the
+window until the history floor is small, then increase the feature budget, and
+finally supply enough shots to resolve those features.  The strongest classical
+delay control outperforms the tested six-qubit QELM, so the result concerns
+functional emulation and observable quantum memory rather than quantum
 computational advantage.
+
+\begin{figure*}[t]
+ \includegraphics[width=\textwidth]{fig03_resource_diagnosis.pdf}
+ \caption{\textbf{Three resources target three different limits.}
+ \textbf{a} Longer windows reduce history NRMSE; curves are teacher-family
+ medians and bands span the 10th--90th percentiles across roots.  \textbf{b}
+ On the $\gamma_T=4,d=6$ slice, more measured features reduce total QELM
+ NRMSE; faint curves are individual roots and heavy curves are teacher-family
+ medians.  \textbf{c} More shots reduce total test NRMSE under finite
+ measurement; curves are medians across 12 roots and the shaded selected-policy
+ band spans their 10th--90th percentiles.  Dashed lines mark the NRMSE tolerance
+ $0.10$.  \textbf{c} is a post-confirmatory four-qubit study with 16
+ complete fit-and-selection replicates per root.}
+ \label{fig:resource-diagnosis}
+\end{figure*}

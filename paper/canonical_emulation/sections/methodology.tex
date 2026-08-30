@@ -3,15 +3,18 @@
 
 \subsection*{Teacher and student models}
 
-The exact memory construction uses a two-qubit teacher initialized in
-$|00\rangle$.  An addressable pulse $I$ or $R_x^{(1)}(1)$ appears in the old
-prefix, followed by 80 symmetric input channels with $dt=0.2$ and collective
-loss rate $\gamma=0.8$.  Twelve independent coupling and suffix roots sample
-$J\in[-1,1]$.  The numerical checks compare the singlet population before and
-after the suffix, verify the analytic pulse population, and confirm that
-symmetric preparation does not populate the singlet sector.  Matched local
-loss and asymmetric collective jumps remove the protection while leaving the
-target observable unchanged.
+The protected-memory teacher has two qubits, initial state $|00\rangle$, and
+Hamiltonian
+$H(u)=JXX+0.37(Z_1+Z_2)+0.64u(X_1+X_2)$.
+The collective jump is
+$L_c=\sqrt{0.8}(\sigma_1^-+\sigma_2^-)$ and each step lasts $dt=0.2$.
+An old flag applies either $I$ or $R_x^{(1)}(1)$ before the symmetric channel;
+the next 80 inputs have arbitrary $u\in[0,1]$ and no local pulse.  Twelve
+independent roots sample $J\in[-1,1]$ and the suffix stream.  The checks compare
+singlet population before and after the suffix, verify the analytic pulse
+population, and confirm that symmetric preparation does not populate the
+singlet sector.  Matched local loss and asymmetric collective jumps remove the
+protection while leaving the target observable unchanged.
 
 The confirmatory finite-resource teachers have $N_T\in\{2,3\}$ qubits and obey
 \begin{align}
@@ -61,6 +64,13 @@ grid and $r\in\{1,2,4,8,16,32\}$.  History truncation is evaluated on one
 fixed 257-input continuous stream for $d=1,\ldots,8$.  The runner writes
 deterministic CSV and JSON artifacts with a SHA-256 ledger.
 
+Quantum circuit probabilities agree with the Bernstein features to
+$8.33\times10^{-17}$.  On the two-input replay map, increasing $r=1\to32$
+reduces the maximum representation error from $0.043774$ to $0.0014373$.
+On the fixed stream, increasing $d=1\to8$ reduces the maximum
+recurrent-versus-replay error from $0.099479$ to $3.83\times10^{-5}$.  Every
+observed error lies below its analytic bound.
+
 \subsection*{Common-suffix measurement}
 
 Each of the 12 root blocks fixes teacher couplings, student couplings, input
@@ -99,42 +109,22 @@ independent statistical units.  Intervals use 20,000 root-block bootstrap
 replicates.
 
 Quadratic delay, linear delay, dimension-matched random-tanh, intercept-only,
-and reset--replay controls receive the same windows and data splits.  The
-reset--replay state starts from one fixed state $\sigma$ and applies exactly
-the teacher's last $d$ input channels,
-$\widetilde\rho_t^{(d)}=\Phi_{a_t}\circ\cdots\circ
-\Phi_{a_{t-d+1}}(\sigma)$.  It therefore isolates older-history removal while
-preserving the channel and observables.  For a downstream affine readout
-$f_w(z)=b+\sum_jw_jz_j$, \emph{compiled replay} keeps the stateful model's
-trained $b,w$ unchanged; under uniform contraction it has the prediction
-certificate in Eq.~\eqref{eq:contractive-replay}.  The direct vector
-reset--replay control reported here is its identity-readout special case.  A
-\emph{retrained replay} instead fits and validation-selects new weights on
-replay features.  It can test task adaptation, but it mixes truncation with
-refitting and does not test identical-readout reuse.  Neither replay variant
-is the canonical parallel QELM, which encodes the whole suffix at once and uses
-a different fixed feature map.  The quantum-specific comparison uses the best
-of quadratic delay, linear delay, and random-tanh in each cell; random-tanh
-alone is a feature-count sensitivity check.
+and reset--replay controls receive the same windows and data splits.  Replay
+starts from one fixed state $\sigma$ and applies the teacher's last $d$
+channels.  It therefore removes the old prefix while preserving the dynamics
+and observables.  Retrained replay refits its output weights, whereas compiled
+replay keeps a previously trained affine readout.  The parallel QELM is a
+different model: it encodes the entire window at once.  The classical
+comparison selects the best of quadratic delay, linear delay, and random-tanh
+in each cell.
 
-Seven confirmatory checks define the finite-resource result.  G0 requires
-complete row coverage, passing tests, strict machine-readable artifacts,
-recorded hashes, disjoint seeds, and deterministic duplicate smoke runs.  G1
-requires the panel identity error to be at most $10^{-12}$, agreement of
-separately evaluated common-suffix predictions, and all sampled lower bounds.
-G2 requires a median within-system Spearman association of at least $0.8$
-between suffix history NRMSE and independent-stream reset--replay NRMSE in at
-least 10/12 roots, with at least five eligible loss systems per teacher-size
-family.  G3 requires both a live history-feasible cell and a live
-history-impossible cell in each teacher-size family in at least 10/12 roots.
-G4 requires at least a $20\%$ median $d=1\to6$ QELM gain, positive in at least
-10/12 roots, on the fixed $N_T\in\{2,3\}$, $\gamma_T\in\{2,4\}$, $B=72$
-transition cells.  G5 requires at least a $20\%$ median $B=18\to72$
-representation gain, positive in at least 10/12 roots, after verifying history
-feasibility at $\gamma_T=4,d=6$.  G6 requires the G2 and G5 directions
-separately for $N_T=2$ and 3.  All seven checks pass.  The separate
-quantum-specific check requires at least a $10\%$ median gain over the best
-classical control and a positive gain in at least 10/12 roots; it fails.
+Seven registered checks cover artifact integrity, the exact panel
+decomposition, agreement with independent reset replay, observation of both
+history-feasible and history-limited regimes, at least $20\%$ window and
+feature gains in at least 10/12 roots, and replication across both teacher
+sizes.  All seven pass.  A separate quantum-specific check requires at least a
+$10\%$ median gain over the best classical control and a positive gain in at
+least 10/12 roots; it fails.
 
 The dissipation--window analysis fits
 $\log h(d)=a-c\gamma_Tdt\,d$ to the 20 positive-loss cells for each root and
@@ -152,7 +142,7 @@ Hilbert--Schmidt jump strength of local loss at the same nominal $\gamma$;
 this matching does not imply equal Liouvillian gaps.  A paired variant draws
 continuous inputs from $\mathcal U[0,1]$.
 
-The finite-shot study in Fig.~\ref{fig:resource-diagnosis}(c) uses 12 roots of four-qubit local-loss
+The finite-shot study in Fig.~\ref{fig:resource-diagnosis}\,c uses 12 roots of four-qubit local-loss
 teachers at $\gamma_T=4$, $d=6$, and total per-input budgets
 $Q\in\{300,1200,4800,19200\}$.  Each snapshot/global-Pauli setting receives an
 equal integer share of $Q$; one joint bit-string multinomial outcome supplies
@@ -160,11 +150,10 @@ all compatible single-site expectations.  Training, validation, and test
 features are sampled independently in each of 16 replicates.  Within each
 replicate, validation data select $\alpha$ separately for every $B$ and then
 select $B$; test targets enter neither choice.  Teacher labels remain exact.
-The fixed-readout identity in Eq.~\eqref{eq:fixed-readout-shot-risk} assumes
-conditionally unbiased independent test noise.  Because feature noise in the
-training and validation splits randomizes both the fitted readout and the
-selected budget, the reported errors re-run fitting and selection in every
-replicate.
+Because feature noise in the training and validation splits changes both the
+fitted readout and the selected budget, every replicate repeats the complete
+fit-and-selection procedure before evaluation on its independently sampled
+test features.
 
 \subsection*{Finite-panel calibration}
 
@@ -189,8 +178,8 @@ outputs under its stated continuity assumptions; it does not grant universality
 to the tested six-qubit local-Pauli feature map or provide a sample-efficient
 training algorithm.  All numerical results are simulations; they do not
 include hardware, gate or state-preparation-and-measurement errors,
-measurement backaction, or drift.  They establish neither approximation of
-arbitrary full QRC states nor quantum computational advantage.
+measurement backaction, or drift.  The target is the declared bounded
+observable output rather than the complete QRC state.
 
 Source code, configurations, raw result tables, figure sources, and the
 content-addressed release manifest are available at

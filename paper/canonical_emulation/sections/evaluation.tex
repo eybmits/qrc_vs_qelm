@@ -1,127 +1,78 @@
-\section*{Numerical diagnosis of information, representation, and measurement limits}
+\section*{Numerical phase diagram}
 
-The theorem guarantees approximation by a growing Bernstein family; it does
-not predict the performance of a fixed QELM.  The numerical study therefore
-asks four separate questions: whether the supplied window contains the
-information needed to predict the recurrent output; whether additional
-features help once that history is sufficient; how finite measurement accuracy
-changes the useful feature budget; and whether the observed transition is
-specific to the tested quantum learner.  The analysis follows the resulting
-order---information, representation, then measurement accuracy.
+The simulations probe the corresponding history, representation, and
+measurement bottlenecks in their natural order.  First ask whether the window
+contains the relevant history.
+Then ask whether the fixed QELM has enough features.  Finally ask whether the
+measurements are accurate enough.  Common-suffix panels measure the first limit
+without fitting a learner; independent train, validation, and test streams
+measure the remaining prediction error.
 
-\subsection{Does the window contain sufficient information?}
+\subsection{Include enough history}
 \label{sec:results}
 
-Independently generated common-suffix panels first measure whether old
-prefixes still change the teacher output.  Held-out prediction then measures
-whether the QELM represents the remaining suffix map.
+Figure~\ref{fig:information-frontier} shows the basic transition.  At weak
+loss, old prefixes still change the QRC output for every tested window, so no
+tested feature budget can solve the task.  Faster loss makes old inputs fade and moves
+the boundary to shorter windows.  Across the transition cells fixed in
+advance, increasing $d=1\to6$ reduces held-out QELM NRMSE by a median across
+the 12 independent roots of
+$78.45\%$ (95\% CI $[76.64,80.80]\%$), with the same improvement direction in
+12/12 roots.
 
-\begin{figure*}[t]
- \includegraphics[width=\textwidth]{fig02_information_frontier.pdf}
- \caption{\textbf{When finite-window prediction becomes feasible.}  For each
- teacher size, a tile combines the registered budgets $B=18,36,72$: gray means
- that history is missing at every budget, blue gives the smallest budget whose
- 12-root modal class is emulated, and teal is unresolved.  Hatching means that
- at least one tested budget has nonunanimous root labels.
- Faster loss and longer windows make more cells information-feasible; features
- matter only beyond that boundary.  This empirical map covers the frozen
- panels of suffixes drawn from the 33-symbol input alphabet with independent
- old prefixes.  This empirical map samples a finite suffix panel; unlike
- Fig.~\ref{fig:information-interface}, it does not quantify over every allowed
- symmetry-preserving suffix.}
- \label{fig:information-frontier}
-\end{figure*}
+The fast-forgetting slice gives a concrete path through the diagram.  At
+$\gamma_T=4,d=1,B=72$, all 24 cases---12 independent roots for each of two
+teacher sizes---are history limited.
+At $d=6,B=18$, history is sufficient but 22/24 cells are representation
+limited.  At $d=6,B=36$, all 24 cells reach the $0.10$ tolerance.  The median
+total NRMSE for $N_T=2$ and 3 falls from $0.287$ and $0.263$ at the short
+window to $0.0710$ and $0.0629$ after supplying a sufficient window and feature
+budget.
 
-At weak loss, old-prefix variation remains above the NRMSE tolerance $0.10$
-for every tested feature budget, so increasing $B$ cannot remove the history
-limit.  Faster loss moves the information boundary to shorter windows.  On the
-48 transition cells fixed in advance, increasing $d=1\to6$ reduces held-out
-QELM NRMSE by a root median $78.45\%$ (95\% CI $[76.64,80.80]\%$), with a
-positive change in 12/12 roots.  Across all 1,728 QELM root-level cells, 1,335
-are history impossible, 188 emulated, 72 representation limited, and 133
-unresolved.
+Local-loss results collapse across teacher size and window when plotted against
+$\gamma_Tdt\,d$.  The fitted log-history slope is negative in all 12 roots,
+with medians $-0.5479$ for $N_T=2$ and $-0.5042$ for $N_T=3$ and rootwise
+$R^2\geq0.9158$.  This is the empirical counterpart of exponential forgetting
+in Eq.~\eqref{eq:incremental-channel}; it does not estimate a uniform channel
+contraction constant.
 
-For local loss, the history floor collapses across teacher size and window
-length when plotted against $x=\gamma_Tdt\,d$.  The rootwise fit
-$\log h(d)=a-c\gamma_Tdt\,d$ has a negative slope in all 12 roots.  For
-$N_T=2$, the median slope is $-0.5479$ (95\% root-bootstrap CI
-$[-0.5590,-0.5079]$) and the rootwise $R^2$ range is
-$[0.9158,0.9968]$.  For $N_T=3$, the median slope is $-0.5042$ (CI
-$[-0.5360,-0.4715]$) and the $R^2$ range is $[0.9310,0.9950]$.  In each
-family, the one-sided probability of 12 negative signs under a fair-sign null
-is $2.44\times10^{-4}$.
+The boundary also depends on the dissipator and measured output.  On 79 cells
+shared by all channel families, $d=1\to8$ reduces history NRMSE by $48.73\%$
+for local loss, $54.97\%$ for collective loss, and $9.00\%$ for dephasing.
+Unsnapped continuous inputs preserve this ordering.  The relevant memory is
+therefore the part of the recurrent state that both survives the dynamics and
+remains visible in the output.
 
-The same information test depends on the dissipative channel and the declared
-output.  On the 79 live endpoint cells shared by all channel families,
-$d=1\to8$ reduces history NRMSE by $48.73\%$ for local loss, $54.97\%$ for
-collective loss, and $9.00\%$ for dephasing.  Dephasing often removes target
-variance without making the suffix sufficient.  Collective loss retains
-output-visible history that becomes more prominent with teacher size.
-Unsnapped continuous inputs preserve this ordering.
+\subsection{Add enough features}
 
-Thus the window boundary is set by the part of the recurrent state that both
-survives the dynamics and remains visible in the measured output.  Stronger
-loss and a longer window move this boundary from opposite directions; neither
-the unobserved state nor a vanishing target contributes usable memory.
+On the history-feasible slice $\gamma_T=4,d=6$, increasing the QELM budget from
+$B=18$ to 72 reduces common-suffix representation NRMSE by a median across the
+12 independent roots of
+$67.26\%$ (95\% CI $[55.33,75.63]\%$), again with the same direction in 12/12
+roots and both teacher sizes.  At $B=72$, all 24 cells remain emulated, with
+median total NRMSE $0.0586$ for $N_T=2$ and $0.0556$ for $N_T=3$.  More
+features help after the suffix is informative; they do not change a
+history-limited cell.
 
-\subsection{Do more features help after history is sufficient?}
+\subsection{Use enough shots}
 
-Yes.  On the fixed fast-forgetting slice $\gamma_T=4,d=6$, all 24
-root--teacher-family cells are live and history feasible.  Increasing the QELM
-budget from $B=18$ to 72 reduces the common-suffix representation NRMSE by a
-root median $67.26\%$ (95\% CI $[55.33,75.63]\%$), with a positive change in
-12/12 roots and the same direction for both teacher sizes.  Figures
-\ref{fig:information-frontier} and \ref{fig:resource-diagnosis}(b) show why
-this effect is conditional: feature count changes the representation-limited
-and emulated regions, but cannot change a history-impossible cell.  This is the empirical ordering in
-Eq.~\eqref{eq:risk-law}: first reduce $H_d$, then reduce
-$R_{\rm rep}$.
+The finite-shot study repeats training, validation, and testing with
+independently sampled features.  The validation-selected test NRMSE falls from
+$0.231$ at 300 shots per input to $0.0800$ at 19,200 shots, a $65.20\%$
+reduction (95\% CI $[64.04,66.47]\%$), positive in 12/12 roots.  None of the
+12 root-level medians reaches NRMSE $0.10$ at 300 shots; 11/12 do so at 19,200
+shots.  Each root-level score summarizes 16 independent complete refits.
+Validation selects $B=36$ most often at low shot counts and $B=72$ at high shot
+counts.  Thus a larger feature set becomes useful only when the measurement
+budget can resolve it \cite{hu2023sampling,ahmed2025finite}.
 
-\subsection{How does measurement accuracy change the useful feature budget?}
+\subsection{Classical controls}
 
-At exact expectations on the four-qubit errors-in-variables slice, $B=72$
-improves over $B=18$.  When training, validation, and test features are sampled
-independently, the validation-selected policy's test NRMSE falls from $0.231$
-at 300 shots per input to $0.0800$ at 19,200 shots, a $65.20\%$ reduction
-(95\% CI $[64.04,66.47]\%$), positive in 12/12 roots.  Validation selects
-$B=36$ most often at low shot counts and $B=72$ at high shot counts.
-
-\begin{figure*}[t]
- \includegraphics[width=\textwidth]{fig03_resource_diagnosis.pdf}
- \caption{\textbf{Different interventions target different limits.}
- (a) Root-median history NRMSE falls with the loss--window product; bands span
- the 10th--90th root percentiles and the dashed line is the registered $0.10$
- tolerance.  (b) On the history-feasible slice $\gamma_T=4,d=6$, normalized
- map MSE falls as measured features increase; faint lines are roots and heavy
- lines are family medians.  (c) In a separate 12-root four-qubit local-loss
- study at $\gamma_T=4,d=6$, held-out NRMSE falls with total circuit shots per
- input for fixed and validation-selected budgets.  Each root uses 16
- independently sampled replicates; the shaded band is the 10th--90th root range
- of the selected policy.  Panels (a,b) use the frozen
- common-suffix panels drawn from the 33-symbol alphabet; panel (c) uses
- independently sampled train, validation, and test features for the same raw
- window $d=6$.}
- \label{fig:resource-diagnosis}
-\end{figure*}
-
-The additive decomposition in Eq.~\eqref{eq:fixed-readout-shot-risk} applies
-after the readout is fixed, for conditionally unbiased test-shot noise sampled
-independently of the exact test residual.  Noisy training and validation
-instead randomize the fitted readout and the selected budget.
-Figure~\ref{fig:resource-diagnosis}(c) therefore re-estimates the complete fit-and-selection
-procedure in each sampling replicate rather than inferring its error from the
-fixed-readout term.  At fixed total shots, additional observables can add more
-estimation variance than representation gain
-\cite{hu2023sampling,ahmed2025finite}.
-
-\subsection{Is the transition quantum specific?}
-
-No quantum-specific improvement is found in this comparison.  The
-comparison uses the best result in each fast-forgetting cell among linear
-delay, quadratic delay, and dimension-matched random-tanh features, with the
-same windows and data splits as the QELM.  Quadratic delay is the best
-classical control in all 24 root--teacher-family cells.  The QELM relative gain
-is negative in every root, with median $-1.335$.  The transition therefore
-separates recurrent information from reset-window information for the tested
-models; it does not establish a performance advantage for the quantum feature
-map.
+The information transition is not specific to the tested quantum feature map.
+Linear delay, quadratic delay, and dimension-matched random-tanh controls use
+the same windows and data splits as the QELM.  Quadratic delay is the best
+classical control in all 24 fast-forgetting cases---12 independent roots for
+each of two teacher sizes.  The
+QELM relative gain is negative in every root, with median $-1.335$.  The
+experiment therefore isolates recurrent information from finite-window
+information while retaining a strong classical baseline.
