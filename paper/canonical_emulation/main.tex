@@ -1,0 +1,53 @@
+\documentclass[aps,pra,reprint,superscriptaddress,nofootinbib,longbibliography,floatfix]{revtex4-2}
+
+% Keep otherwise identical pdfTeX builds byte reproducible.
+\ifdefined\pdfinfoomitdate\pdfinfoomitdate=1\fi
+\ifdefined\pdftrailerid\pdftrailerid{}\fi
+\ifdefined\pdfsuppressptexinfo\pdfsuppressptexinfo=-1\fi
+
+\usepackage{amsmath,amssymb,graphicx,microtype,placeins}
+\usepackage{xcolor}
+\definecolor{linkblue}{HTML}{1F4E79}
+\usepackage[
+  colorlinks=true,
+  linkcolor=linkblue,
+  citecolor=linkblue,
+  urlcolor=linkblue
+]{hyperref}
+\hypersetup{
+  pdftitle={Reset-Window Emulation of Quantum Reservoirs: Constructive Approximation and Protected-Memory Limits},
+  pdfauthor={Anonymous Authors}
+}
+
+\graphicspath{{../figures/information_interface/}{../figures/compact_pra/}{../figures/canonical_emulation/}{../../pra_extension/figures_pra_final_v6/}}
+\newcommand{\QRC}{\mathrm{QRC}}
+\newcommand{\QELM}{\mathrm{QELM}}
+\newcommand{\nrmse}{\mathrm{NRMSE}}
+\newcommand{\risk}{\mathcal R}
+\newcommand{\hist}{H_d}
+
+\begin{document}
+
+\title{Reset-Window Emulation of Quantum Reservoirs: Constructive Approximation and Protected-Memory Limits}
+\author{Anonymous Authors}
+\noaffiliation
+\date{30 August 2026}
+
+\begin{abstract}
+\input{sections/abstract}
+\end{abstract}
+
+\maketitle
+
+\input{sections/introduction}
+\input{sections/related-work}
+\input{sections/background}
+\input{sections/evaluation}
+\FloatBarrier
+\input{sections/conclusion}
+\input{sections/methodology}
+\input{sections/appendix}
+
+\bibliography{references}
+
+\end{document}

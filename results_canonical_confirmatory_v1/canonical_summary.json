@@ -1,0 +1,22 @@
+{
+  "confirmatory": true,
+  "counts": {
+    "roots": 12,
+    "stream_rows": 5760,
+    "suffix_rows": 5760,
+    "systems": 144,
+    "target_live_systems": 144
+  },
+  "decision": "PENDING_GATES",
+  "max_decomposition_identity_error": 1.1102230246251565e-16,
+  "profile": "confirmatory",
+  "ptd_regime_counts": {
+    "EMULATED": 188,
+    "HISTORY_IMPOSSIBLE": 1335,
+    "REPRESENTATION_LIMITED": 72,
+    "UNRESOLVED": 133
+  },
+  "schema_version": 1,
+  "status": "FROZEN_CONFIRMATORY",
+  "study": "canonical_qrc_to_parallel_qelm_emulation"
+}

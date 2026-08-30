@@ -1,0 +1,1115 @@
+{
+  "block_contrasts": {
+    "path": "canonical_block_contrasts.csv",
+    "rows": 120,
+    "sha256": "636aaf19c634c12057a57b197cd191b3b892a3ebd7fb240ddd76da0deafef49f"
+  },
+  "confirmatory": true,
+  "decision": "CONFIRMS_FINITE_RESOURCE_FRONTIER",
+  "descriptive_qelm_vs_tanh": {
+    "decision_bearing": false,
+    "defined_roots": 12,
+    "fixed_teacher_gamma": 4.0,
+    "fixed_window": 6,
+    "median_gain": 0.3781879386953905,
+    "median_gain_bootstrap_95_ci": [
+      0.32239340784969095,
+      0.42950876468384025
+    ],
+    "minimum_defined_roots": 10,
+    "minimum_median_gain": 0.1,
+    "minimum_positive_roots": 10,
+    "passed": true,
+    "positive_root_exact_sign_p_one_sided": 0.000244140625,
+    "positive_roots": 12,
+    "root_gains": {
+      "confirm01": 0.041095967541926515,
+      "confirm02": 0.34926390147012965,
+      "confirm03": 0.30858880529828636,
+      "confirm04": 0.44865795435350386,
+      "confirm05": 0.4187079679787334,
+      "confirm06": 0.4403095613889471,
+      "confirm07": 0.3361980104010955,
+      "confirm08": 0.45965664193392325,
+      "confirm09": 0.008178724302108697,
+      "confirm10": 0.40860694159863553,
+      "confirm11": 0.3574717997293262,
+      "confirm12": 0.39890407766145486
+    },
+    "snapshot_budget": 4
+  },
+  "evaluation_provenance": {
+    "config_sha256": "78e293aed9e14aa9fc38233c0efc29d712445f90648abf2ab8977375c4fc4c38",
+    "evaluator_module_sha256": "da6f8ce014e1d44e14d1bc7c852b35817a5440116e661875978859828e1e8f88",
+    "input_artifact_sha256": {
+      "canonical_manifest.json": "8871c769d5d5e84ec93dc76f5bf498f753ad59534de7c121d7c21d7fe427d91a",
+      "canonical_summary.json": "c15ac8c669e31643920568ab558074b2142bfb5803ad0f117be1e068eed950eb",
+      "computational_resources.json": "8edef8fb670c1e7765e5aab1aacad7240b0fe6838b502f51dc2b7fb3908d31d8",
+      "stream_metrics.csv": "a8427c7d2068198760b82bd05545b79476b9f107ed461f82b6cbfbc16dd45376",
+      "suffix_decomposition.csv": "94ec3e840ac1866e675dbb796aa7b72010600c2408ba7064455c686dac9d88b1",
+      "system_diagnostics.csv": "ce996ff07f2848513d60084444e3e3bc0b053d9ac95b0f4dc32b61024b2371c5"
+    }
+  },
+  "expected_roots": 12,
+  "frozen_decision_config": {
+    "g4_gammas": [
+      2.0,
+      4.0
+    ],
+    "g5_gamma": 4.0,
+    "min_best_classical_gain": 0.1,
+    "min_feature_gain": 0.2,
+    "min_g2_live_systems_per_family": 5,
+    "min_root_successes": 10,
+    "min_scaling_r_squared": 0.85,
+    "min_spearman": 0.8,
+    "min_target_variance": 1e-08,
+    "min_window_gain": 0.2,
+    "roots_total": 12,
+    "tolerance_nrmse": 0.1
+  },
+  "g0_audit": {
+    "duplicate_smoke": {
+      "artifact_hashes_match": {
+        "canonical_summary.json": true,
+        "stream_metrics.csv": true,
+        "suffix_decomposition.csv": true,
+        "system_diagnostics.csv": true
+      },
+      "distinct_directories": true,
+      "expected_material_identity_sha256": "a65b069e206bf881bef03726325c0117454018e2737f75655f08692e1e565ea2",
+      "first_manifest_valid": true,
+      "manifest_sha256": {
+        "first": "76bdd22f7396f38134ddcb6e2299d0412263bebad2ac629b6ed2f268a9d49b33",
+        "second": "7cba1f24718212551e169f74a4ff262543185e70377fd2b6c54510b1119a0e72"
+      },
+      "matches_expected_material": true,
+      "material_identity_sha256": "a65b069e206bf881bef03726325c0117454018e2737f75655f08692e1e565ea2",
+      "passed": true,
+      "resource_sha256": {
+        "first": "60f42925b9ad4d99d8c5bfe6565b912be94478916dfb55ff432c7b811efdff47",
+        "second": "7eb88528bf78a0807b64d64f0aab02511737e1b63835e0a10fdb2611fdacbc68"
+      },
+      "same_material": true,
+      "second_manifest_valid": true
+    },
+    "freeze_record": {
+      "checks": {
+        "config_sha256": true,
+        "confirmatory_roots_previously_opened": true,
+        "frozen_at_utc": true,
+        "material_identity_sha256": true,
+        "profile": true,
+        "schema_version": true,
+        "status": true,
+        "study": true
+      },
+      "passed": true,
+      "path": "/Users/superposition/Documents/Codex/2026-08-26/let/work/qrc_vs_qelm/configs/canonical_emulation_freeze.json",
+      "record": {
+        "config_sha256": "78e293aed9e14aa9fc38233c0efc29d712445f90648abf2ab8977375c4fc4c38",
+        "confirmatory_roots_previously_opened": false,
+        "frozen_at_utc": "2026-08-28T14:13:28Z",
+        "material_identity_sha256": "a65b069e206bf881bef03726325c0117454018e2737f75655f08692e1e565ea2",
+        "profile": "confirmatory",
+        "schema_version": 1,
+        "status": "FROZEN_CONFIRMATORY",
+        "study": "canonical_qrc_to_parallel_qelm_emulation"
+      },
+      "run_record_matches_current": true,
+      "sha256": "efe9006df7f66de0f49cd96bab3b6160f53fda7c9dc937a3a28cc3a12e6fa897"
+    },
+    "manifest": {
+      "artifacts": {
+        "canonical_summary.json": {
+          "matches": true,
+          "recorded_sha256": "c15ac8c669e31643920568ab558074b2142bfb5803ad0f117be1e068eed950eb"
+        },
+        "computational_resources.json": {
+          "matches": true,
+          "recorded_sha256": "8edef8fb670c1e7765e5aab1aacad7240b0fe6838b502f51dc2b7fb3908d31d8"
+        },
+        "stream_metrics.csv": {
+          "matches": true,
+          "recorded_sha256": "a8427c7d2068198760b82bd05545b79476b9f107ed461f82b6cbfbc16dd45376"
+        },
+        "suffix_decomposition.csv": {
+          "matches": true,
+          "recorded_sha256": "94ec3e840ac1866e675dbb796aa7b72010600c2408ba7064455c686dac9d88b1"
+        },
+        "system_diagnostics.csv": {
+          "matches": true,
+          "recorded_sha256": "ce996ff07f2848513d60084444e3e3bc0b053d9ac95b0f4dc32b61024b2371c5"
+        }
+      },
+      "checks": {
+        "artifact_hashes": true,
+        "artifact_inventory": true,
+        "current_material_matches": true,
+        "manifest_schema": true,
+        "material_count": true,
+        "material_entries": true,
+        "material_identity": true,
+        "reproducibility_identity": true,
+        "reproducibility_schema": true,
+        "selected_config_matches": true,
+        "top_level_hash_links": true
+      },
+      "current_material_matches": {
+        "configuration": true,
+        "project_metadata": true,
+        "protocol:CANONICAL_EMULATION_LITERATURE_POSITIONING.md": true,
+        "protocol:CANONICAL_EMULATION_PREREGISTRATION.md": true,
+        "protocol:CANONICAL_EMULATION_THEORY.md": true,
+        "protocol:EMULATION_MATCHED_PROTOCOL.md": true,
+        "protocol:PREREGISTRATION.md": true,
+        "protocol:PROTOCOL.md": true,
+        "runner": true,
+        "script:scripts/evaluate_canonical_gates.py": true,
+        "script:scripts/render_canonical_emulation_figures.py": true,
+        "source:src/qrc_vs_qelm/__init__.py": true,
+        "source:src/qrc_vs_qelm/canonical_emulation.py": true,
+        "source:src/qrc_vs_qelm/canonical_gates.py": true,
+        "source:src/qrc_vs_qelm/canonical_resources.py": true,
+        "source:src/qrc_vs_qelm/canonical_study.py": true,
+        "source:src/qrc_vs_qelm/checkpointing.py": true,
+        "source:src/qrc_vs_qelm/controls.py": true,
+        "source:src/qrc_vs_qelm/core/__init__.py": true,
+        "source:src/qrc_vs_qelm/core/diagnostics.py": true,
+        "source:src/qrc_vs_qelm/core/dissipators.py": true,
+        "source:src/qrc_vs_qelm/core/liouvillian.py": true,
+        "source:src/qrc_vs_qelm/core/operators.py": true,
+        "source:src/qrc_vs_qelm/core/readout.py": true,
+        "source:src/qrc_vs_qelm/core/reservoirs.py": true,
+        "source:src/qrc_vs_qelm/core/sparse_evolve.py": true,
+        "source:src/qrc_vs_qelm/core/tasks.py": true,
+        "source:src/qrc_vs_qelm/emulation.py": true,
+        "source:src/qrc_vs_qelm/gates.py": true,
+        "source:src/qrc_vs_qelm/ipc.py": true,
+        "source:src/qrc_vs_qelm/manifests.py": true,
+        "source:src/qrc_vs_qelm/matching.py": true,
+        "source:src/qrc_vs_qelm/models/__init__.py": true,
+        "source:src/qrc_vs_qelm/models/api.py": true,
+        "source:src/qrc_vs_qelm/models/qelm.py": true,
+        "source:src/qrc_vs_qelm/pipeline.py": true,
+        "source:src/qrc_vs_qelm/provenance.py": true,
+        "source:src/qrc_vs_qelm/recurrence_fingerprint.py": true,
+        "source:src/qrc_vs_qelm/run_report.py": true,
+        "source:src/qrc_vs_qelm/run_stage1.py": true,
+        "source:src/qrc_vs_qelm/run_stage2.py": true,
+        "source:src/qrc_vs_qelm/run_stage3.py": true,
+        "source:src/qrc_vs_qelm/run_stage_ipc.py": true,
+        "source:src/qrc_vs_qelm/seeds.py": true,
+        "source:src/qrc_vs_qelm/shots.py": true,
+        "source:src/qrc_vs_qelm/stats.py": true,
+        "source:src/qrc_vs_qelm/task_families.py": true,
+        "test:tests/conftest.py": true,
+        "test:tests/test_api_matching.py": true,
+        "test:tests/test_canonical_emulation.py": true,
+        "test:tests/test_canonical_gates.py": true,
+        "test:tests/test_canonical_provenance.py": true,
+        "test:tests/test_canonical_resources.py": true,
+        "test:tests/test_canonical_study.py": true,
+        "test:tests/test_checkpointing.py": true,
+        "test:tests/test_controls.py": true,
+        "test:tests/test_core_exports.py": true,
+        "test:tests/test_design_pilot.py": true,
+        "test:tests/test_dissipators.py": true,
+        "test:tests/test_emulation.py": true,
+        "test:tests/test_emulation_pilot.py": true,
+        "test:tests/test_gates.py": true,
+        "test:tests/test_ipc.py": true,
+        "test:tests/test_ipc_pilot.py": true,
+        "test:tests/test_liouvillian.py": true,
+        "test:tests/test_manifests.py": true,
+        "test:tests/test_operators.py": true,
+        "test:tests/test_pipeline.py": true,
+        "test:tests/test_qelm.py": true,
+        "test:tests/test_readout.py": true,
+        "test:tests/test_recurrence_fingerprint.py": true,
+        "test:tests/test_recurrence_fingerprint_poc.py": true,
+        "test:tests/test_recurrence_fingerprint_study.py": true,
+        "test:tests/test_render_canonical_emulation_figures.py": true,
+        "test:tests/test_render_paper_figures.py": true,
+        "test:tests/test_render_prereg.py": true,
+        "test:tests/test_render_recurrence_paper_figures.py": true,
+        "test:tests/test_reservoirs.py": true,
+        "test:tests/test_run_report.py": true,
+        "test:tests/test_run_stage1.py": true,
+        "test:tests/test_run_stage2.py": true,
+        "test:tests/test_run_stage3.py": true,
+        "test:tests/test_run_stage_ipc.py": true,
+        "test:tests/test_scaffold.py": true,
+        "test:tests/test_seeds.py": true,
+        "test:tests/test_shots.py": true,
+        "test:tests/test_smoke_determinism.py": true,
+        "test:tests/test_sparse_evolve.py": true,
+        "test:tests/test_stats.py": true,
+        "test:tests/test_task_families.py": true,
+        "test:tests/test_tasks.py": true,
+        "test:tests/test_validation.py": true
+      },
+      "material_identity_sha256": "a65b069e206bf881bef03726325c0117454018e2737f75655f08692e1e565ea2",
+      "passed": true
+    },
+    "pytest_junit": {
+      "binding_matches": true,
+      "complete_suite_count_matches": true,
+      "duplicate_property_names": [],
+      "errors": 0,
+      "expected_config_sha256": "78e293aed9e14aa9fc38233c0efc29d712445f90648abf2ab8977375c4fc4c38",
+      "expected_full_suite_testcases": 316,
+      "expected_material_identity_sha256": "a65b069e206bf881bef03726325c0117454018e2737f75655f08692e1e565ea2",
+      "failures": 0,
+      "passed": true,
+      "recorded_config_sha256": "78e293aed9e14aa9fc38233c0efc29d712445f90648abf2ab8977375c4fc4c38",
+      "recorded_material_identity_sha256": "a65b069e206bf881bef03726325c0117454018e2737f75655f08692e1e565ea2",
+      "sha256": "ade20d27e1f5fab0d337487d70c0f8ecde43c4ae3e7e6d72035663e6f5c2b964",
+      "testcases": 316
+    },
+    "seed_validation": {
+      "passed": true,
+      "scope": "all configured smoke, calibration, and confirmatory roots"
+    },
+    "strict_json": {
+      "files": [
+        "canonical_summary.json",
+        "computational_resources.json",
+        "canonical_manifest.json"
+      ],
+      "passed": true
+    }
+  },
+  "minimum_successful_roots": 10,
+  "primary_gates": {
+    "G0": {
+      "coverage": {
+        "checks": {
+          "observable_contracts": true,
+          "root_ids": true,
+          "scientific_schema": true,
+          "stream_cells_complete": true,
+          "stream_row_count": true,
+          "suffix_cells_complete": true,
+          "suffix_row_count": true,
+          "system_count": true,
+          "system_ids_unique": true,
+          "system_keys": true,
+          "target_live_consistent": true,
+          "target_variance_finite": true
+        },
+        "expected": {
+          "roots": 12,
+          "stream_rows": 5760,
+          "suffix_rows": 5760,
+          "systems": 144
+        },
+        "observed": {
+          "roots": 12,
+          "stream_rows": 5760,
+          "suffix_rows": 5760,
+          "systems": 144
+        },
+        "passed": true,
+        "scientific_schema": {
+          "checks": {
+            "stream_core_metrics_finite_nonnegative": true,
+            "stream_direct_diagnostics_null": true,
+            "stream_gamma_domain": true,
+            "stream_hashes_valid": true,
+            "stream_identifiers_nonempty": true,
+            "stream_integer_domains": true,
+            "stream_learned_alignment_domain": true,
+            "stream_learned_alpha_domain": true,
+            "stream_learned_condition_domain": true,
+            "stream_learned_intercept_flag_consistent": true,
+            "stream_learned_rank_domain": true,
+            "stream_learned_rows_present": true,
+            "stream_learned_validation_finite_nonnegative": true,
+            "stream_models_known": true,
+            "stream_nrmse_matches_system_variance": true,
+            "stream_rmse_matches_mse": true,
+            "stream_row_rms_ordered": true,
+            "suffix_boolean_domain": true,
+            "suffix_boolean_semantics": true,
+            "suffix_gamma_domain": true,
+            "suffix_hashes_valid": true,
+            "suffix_history_fraction_domain": true,
+            "suffix_history_fraction_identity": true,
+            "suffix_identifiers_nonempty": true,
+            "suffix_integer_domains": true,
+            "suffix_models_known": true,
+            "suffix_normalized_metric_identities": true,
+            "suffix_regime_domain": true,
+            "suffix_regime_matches_frozen_classification": true,
+            "suffix_risk_metrics_finite_nonnegative": true,
+            "suffix_signed_metrics_finite": true,
+            "suffix_student_independent_invariance": true,
+            "suffix_witness_geometry_consistent": true,
+            "suffix_witness_metrics_finite_nonnegative": true,
+            "systems_gamma_domain": true,
+            "systems_hashes_valid": true,
+            "systems_identifiers_nonempty": true,
+            "systems_integer_domains": true,
+            "systems_target_live_boolean": true,
+            "systems_target_variance_finite_nonnegative": true
+          },
+          "passed": true
+        }
+      },
+      "evidence": {
+        "duplicate_smoke_deterministic": true,
+        "freeze_identity_matches": true,
+        "manifest_hashes_valid": true,
+        "seed_namespaces_disjoint": true,
+        "strict_json": true,
+        "tests_passed": true
+      },
+      "expected_roots": 12,
+      "observed_roots": 12,
+      "passed": true
+    },
+    "G1": {
+      "identity_tolerance": 1e-12,
+      "max_half_diameter_identity_error": 2.220446049250313e-16,
+      "max_identity_error": 1.1102230246251563e-16,
+      "max_prediction_disagreement": 8.322716057013859e-13,
+      "max_recomputed_identity_error": 2.220446049250313e-16,
+      "max_recorded_identity_disagreement": 1.6653345369377348e-16,
+      "min_diameter_bound_slack": 6.611888655348212e-05,
+      "min_rms_bound_slack": 3.801128026427169e-05,
+      "passed": true
+    },
+    "G2": {
+      "comparison": "suffix_history_nrmse_vs_independent_stream_rr_nrmse",
+      "defined_roots": 12,
+      "eligible_system_counts_by_root_family": {
+        "confirm01": {
+          "2": 6,
+          "3": 6
+        },
+        "confirm02": {
+          "2": 6,
+          "3": 6
+        },
+        "confirm03": {
+          "2": 6,
+          "3": 6
+        },
+        "confirm04": {
+          "2": 6,
+          "3": 6
+        },
+        "confirm05": {
+          "2": 6,
+          "3": 6
+        },
+        "confirm06": {
+          "2": 6,
+          "3": 6
+        },
+        "confirm07": {
+          "2": 6,
+          "3": 6
+        },
+        "confirm08": {
+          "2": 6,
+          "3": 6
+        },
+        "confirm09": {
+          "2": 6,
+          "3": 6
+        },
+        "confirm10": {
+          "2": 6,
+          "3": 6
+        },
+        "confirm11": {
+          "2": 6,
+          "3": 6
+        },
+        "confirm12": {
+          "2": 6,
+          "3": 6
+        }
+      },
+      "median_root_median_spearman": 1.0,
+      "median_root_median_spearman_bootstrap_95_ci": [
+        1.0,
+        1.0
+      ],
+      "minimum_defined_roots": 10,
+      "minimum_live_systems_per_family": 5,
+      "minimum_spearman": 0.8,
+      "minimum_successful_roots": 10,
+      "passed": true,
+      "root_median_spearman": {
+        "confirm01": 1.0,
+        "confirm02": 1.0,
+        "confirm03": 1.0,
+        "confirm04": 1.0,
+        "confirm05": 1.0,
+        "confirm06": 1.0,
+        "confirm07": 1.0,
+        "confirm08": 1.0,
+        "confirm09": 1.0,
+        "confirm10": 1.0,
+        "confirm11": 1.0,
+        "confirm12": 1.0
+      },
+      "successful_roots": 12
+    },
+    "G3": {
+      "families": {
+        "2": {
+          "minimum_successful_roots": 10,
+          "passed": true,
+          "root_success": {
+            "confirm01": true,
+            "confirm02": true,
+            "confirm03": true,
+            "confirm04": true,
+            "confirm05": true,
+            "confirm06": true,
+            "confirm07": true,
+            "confirm08": true,
+            "confirm09": true,
+            "confirm10": true,
+            "confirm11": true,
+            "confirm12": true
+          },
+          "successful_roots": 12
+        },
+        "3": {
+          "minimum_successful_roots": 10,
+          "passed": true,
+          "root_success": {
+            "confirm01": true,
+            "confirm02": true,
+            "confirm03": true,
+            "confirm04": true,
+            "confirm05": true,
+            "confirm06": true,
+            "confirm07": true,
+            "confirm08": true,
+            "confirm09": true,
+            "confirm10": true,
+            "confirm11": true,
+            "confirm12": true
+          },
+          "successful_roots": 12
+        }
+      },
+      "history_tolerance_nrmse": 0.1,
+      "minimum_target_variance": 1e-08,
+      "passed": true
+    },
+    "G4": {
+      "defined_roots": 12,
+      "fixed_teacher_gammas": [
+        2.0,
+        4.0
+      ],
+      "history_transition_cells": {
+        "confirm01|N=2|gamma=2": true,
+        "confirm01|N=2|gamma=4": true,
+        "confirm01|N=3|gamma=2": true,
+        "confirm01|N=3|gamma=4": true,
+        "confirm02|N=2|gamma=2": true,
+        "confirm02|N=2|gamma=4": true,
+        "confirm02|N=3|gamma=2": true,
+        "confirm02|N=3|gamma=4": true,
+        "confirm03|N=2|gamma=2": true,
+        "confirm03|N=2|gamma=4": true,
+        "confirm03|N=3|gamma=2": true,
+        "confirm03|N=3|gamma=4": true,
+        "confirm04|N=2|gamma=2": true,
+        "confirm04|N=2|gamma=4": true,
+        "confirm04|N=3|gamma=2": true,
+        "confirm04|N=3|gamma=4": true,
+        "confirm05|N=2|gamma=2": true,
+        "confirm05|N=2|gamma=4": true,
+        "confirm05|N=3|gamma=2": true,
+        "confirm05|N=3|gamma=4": true,
+        "confirm06|N=2|gamma=2": true,
+        "confirm06|N=2|gamma=4": true,
+        "confirm06|N=3|gamma=2": true,
+        "confirm06|N=3|gamma=4": true,
+        "confirm07|N=2|gamma=2": true,
+        "confirm07|N=2|gamma=4": true,
+        "confirm07|N=3|gamma=2": true,
+        "confirm07|N=3|gamma=4": true,
+        "confirm08|N=2|gamma=2": true,
+        "confirm08|N=2|gamma=4": true,
+        "confirm08|N=3|gamma=2": true,
+        "confirm08|N=3|gamma=4": true,
+        "confirm09|N=2|gamma=2": true,
+        "confirm09|N=2|gamma=4": true,
+        "confirm09|N=3|gamma=2": true,
+        "confirm09|N=3|gamma=4": true,
+        "confirm10|N=2|gamma=2": true,
+        "confirm10|N=2|gamma=4": true,
+        "confirm10|N=3|gamma=2": true,
+        "confirm10|N=3|gamma=4": true,
+        "confirm11|N=2|gamma=2": true,
+        "confirm11|N=2|gamma=4": true,
+        "confirm11|N=3|gamma=2": true,
+        "confirm11|N=3|gamma=4": true,
+        "confirm12|N=2|gamma=2": true,
+        "confirm12|N=2|gamma=4": true,
+        "confirm12|N=3|gamma=2": true,
+        "confirm12|N=3|gamma=4": true
+      },
+      "history_transition_root_success": {
+        "confirm01": true,
+        "confirm02": true,
+        "confirm03": true,
+        "confirm04": true,
+        "confirm05": true,
+        "confirm06": true,
+        "confirm07": true,
+        "confirm08": true,
+        "confirm09": true,
+        "confirm10": true,
+        "confirm11": true,
+        "confirm12": true
+      },
+      "median_gain": 0.784512834334567,
+      "median_gain_bootstrap_95_ci": [
+        0.7664429425541706,
+        0.8080010559090116
+      ],
+      "minimum_defined_roots": 10,
+      "minimum_median_gain": 0.2,
+      "minimum_positive_roots": 10,
+      "passed": true,
+      "positive_root_exact_sign_p_one_sided": 0.000244140625,
+      "positive_roots": 12,
+      "root_gains": {
+        "confirm01": 0.7826163985581868,
+        "confirm02": 0.7207020350135895,
+        "confirm03": 0.7425486835632944,
+        "confirm04": 0.8125978247283401,
+        "confirm05": 0.7811479337317302,
+        "confirm06": 0.8101171187457521,
+        "confirm07": 0.8082309283842739,
+        "confirm08": 0.7864092701109472,
+        "confirm09": 0.7570575023876538,
+        "confirm10": 0.7952084041672709,
+        "confirm11": 0.8077711834337494,
+        "confirm12": 0.7758283827206873
+      },
+      "snapshot_budget": 4,
+      "window_contrast": [
+        1,
+        6
+      ]
+    },
+    "G5": {
+      "defined_roots": 12,
+      "expected_root_family_cells": 24,
+      "fixed_teacher_gamma": 4.0,
+      "fixed_window": 6,
+      "history_feasibility_by_root_family": {
+        "confirm01|N=2": true,
+        "confirm01|N=3": true,
+        "confirm02|N=2": true,
+        "confirm02|N=3": true,
+        "confirm03|N=2": true,
+        "confirm03|N=3": true,
+        "confirm04|N=2": true,
+        "confirm04|N=3": true,
+        "confirm05|N=2": true,
+        "confirm05|N=3": true,
+        "confirm06|N=2": true,
+        "confirm06|N=3": true,
+        "confirm07|N=2": true,
+        "confirm07|N=3": true,
+        "confirm08|N=2": true,
+        "confirm08|N=3": true,
+        "confirm09|N=2": true,
+        "confirm09|N=3": true,
+        "confirm10|N=2": true,
+        "confirm10|N=3": true,
+        "confirm11|N=2": true,
+        "confirm11|N=3": true,
+        "confirm12|N=2": true,
+        "confirm12|N=3": true
+      },
+      "history_feasible_root_family_cells": 24,
+      "median_gain": 0.6726414464648288,
+      "median_gain_bootstrap_95_ci": [
+        0.553277373520366,
+        0.7562889500662151
+      ],
+      "minimum_defined_roots": 10,
+      "minimum_median_gain": 0.2,
+      "minimum_positive_roots": 10,
+      "passed": true,
+      "positive_root_exact_sign_p_one_sided": 0.000244140625,
+      "positive_roots": 12,
+      "root_gains": {
+        "confirm01": 0.7611860800167781,
+        "confirm02": 0.5143854685047013,
+        "confirm03": 0.5556607574944366,
+        "confirm04": 0.7302289290663924,
+        "confirm05": 0.5508939895462954,
+        "confirm06": 0.7907712049611482,
+        "confirm07": 0.6994383375634303,
+        "confirm08": 0.6455973869805297,
+        "confirm09": 0.285909044687007,
+        "confirm10": 0.6458445553662273,
+        "confirm11": 0.8064354402430012,
+        "confirm12": 0.751391820115652
+      },
+      "snapshot_budget_contrast": [
+        1,
+        4
+      ]
+    },
+    "G6": {
+      "families": {
+        "2": {
+          "g2_defined_roots": 12,
+          "g2_eligible_system_counts_by_root_family": {
+            "confirm01": {
+              "2": 6
+            },
+            "confirm02": {
+              "2": 6
+            },
+            "confirm03": {
+              "2": 6
+            },
+            "confirm04": {
+              "2": 6
+            },
+            "confirm05": {
+              "2": 6
+            },
+            "confirm06": {
+              "2": 6
+            },
+            "confirm07": {
+              "2": 6
+            },
+            "confirm08": {
+              "2": 6
+            },
+            "confirm09": {
+              "2": 6
+            },
+            "confirm10": {
+              "2": 6
+            },
+            "confirm11": {
+              "2": 6
+            },
+            "confirm12": {
+              "2": 6
+            }
+          },
+          "g2_median_root_median_spearman": 1.0,
+          "g2_median_root_median_spearman_bootstrap_95_ci": [
+            1.0,
+            1.0
+          ],
+          "g2_minimum_defined_roots": 10,
+          "g2_minimum_spearman": 0.8,
+          "g2_minimum_successful_roots": 10,
+          "g2_root_median_spearman": {
+            "confirm01": 1.0,
+            "confirm02": 1.0,
+            "confirm03": 1.0,
+            "confirm04": 1.0,
+            "confirm05": 1.0,
+            "confirm06": 1.0,
+            "confirm07": 1.0,
+            "confirm08": 1.0,
+            "confirm09": 1.0,
+            "confirm10": 1.0,
+            "confirm11": 1.0,
+            "confirm12": 1.0
+          },
+          "g2_successful_roots": 12,
+          "g5": {
+            "defined_roots": 12,
+            "median_gain": 0.661282098534065,
+            "median_gain_bootstrap_95_ci": [
+              0.5642114841757087,
+              0.7504343321218485
+            ],
+            "minimum_defined_roots": 10,
+            "minimum_median_gain": 0.2,
+            "minimum_positive_roots": 10,
+            "passed": true,
+            "positive_root_exact_sign_p_one_sided": 0.000244140625,
+            "positive_roots": 12,
+            "root_gains": {
+              "confirm01": 0.7641618060028843,
+              "confirm02": 0.5023295715067457,
+              "confirm03": 0.5480290888489521,
+              "confirm04": 0.7367068582408127,
+              "confirm05": 0.5803938795024652,
+              "confirm06": 0.7883648996583755,
+              "confirm07": 0.6807101613419514,
+              "confirm08": 0.6418540357261788,
+              "confirm09": 0.2378696313367885,
+              "confirm10": 0.6328909251787564,
+              "confirm11": 0.8016909837891857,
+              "confirm12": 0.6938335257300332
+            }
+          },
+          "passed": true
+        },
+        "3": {
+          "g2_defined_roots": 12,
+          "g2_eligible_system_counts_by_root_family": {
+            "confirm01": {
+              "3": 6
+            },
+            "confirm02": {
+              "3": 6
+            },
+            "confirm03": {
+              "3": 6
+            },
+            "confirm04": {
+              "3": 6
+            },
+            "confirm05": {
+              "3": 6
+            },
+            "confirm06": {
+              "3": 6
+            },
+            "confirm07": {
+              "3": 6
+            },
+            "confirm08": {
+              "3": 6
+            },
+            "confirm09": {
+              "3": 6
+            },
+            "confirm10": {
+              "3": 6
+            },
+            "confirm11": {
+              "3": 6
+            },
+            "confirm12": {
+              "3": 6
+            }
+          },
+          "g2_median_root_median_spearman": 1.0,
+          "g2_median_root_median_spearman_bootstrap_95_ci": [
+            1.0,
+            1.0
+          ],
+          "g2_minimum_defined_roots": 10,
+          "g2_minimum_spearman": 0.8,
+          "g2_minimum_successful_roots": 10,
+          "g2_root_median_spearman": {
+            "confirm01": 1.0,
+            "confirm02": 1.0,
+            "confirm03": 1.0,
+            "confirm04": 1.0,
+            "confirm05": 1.0,
+            "confirm06": 1.0,
+            "confirm07": 1.0,
+            "confirm08": 1.0,
+            "confirm09": 0.8999999999999999,
+            "confirm10": 1.0,
+            "confirm11": 1.0,
+            "confirm12": 1.0
+          },
+          "g2_successful_roots": 12,
+          "g5": {
+            "defined_roots": 12,
+            "median_gain": 0.6884823496693037,
+            "median_gain_bootstrap_95_ci": [
+              0.544866895821289,
+              0.7756939321472964
+            ],
+            "minimum_defined_roots": 10,
+            "minimum_median_gain": 0.2,
+            "minimum_positive_roots": 10,
+            "passed": true,
+            "positive_root_exact_sign_p_one_sided": 0.000244140625,
+            "positive_roots": 12,
+            "root_gains": {
+              "confirm01": 0.7582103540306719,
+              "confirm02": 0.526441365502657,
+              "confirm03": 0.563292426139921,
+              "confirm04": 0.723750999891972,
+              "confirm05": 0.5213940995901256,
+              "confirm06": 0.7931775102639209,
+              "confirm07": 0.7181665137849091,
+              "confirm08": 0.6493407382348806,
+              "confirm09": 0.3339484580372255,
+              "confirm10": 0.6587981855536982,
+              "confirm11": 0.8111798966968167,
+              "confirm12": 0.8089501145012707
+            }
+          },
+          "passed": true
+        }
+      },
+      "passed": true
+    }
+  },
+  "profile": "confirmatory",
+  "schema_version": 1,
+  "secondary_p6_forgetting_scaling": {
+    "decision_bearing": false,
+    "families": {
+      "2": {
+        "defined_roots": 12,
+        "median_slope": -0.5479210768783316,
+        "median_slope_bootstrap_95_ci": [
+          -0.5590027007900997,
+          -0.5078831383903462
+        ],
+        "minimum_defined_roots": 10,
+        "minimum_successful_roots": 10,
+        "negative_slope_exact_sign_p_one_sided": 0.000244140625,
+        "negative_slope_roots": 12,
+        "passed": true,
+        "root_fits": {
+          "confirm01": {
+            "intercept": -0.18919718415127057,
+            "n_cells": 20,
+            "passed": true,
+            "r_squared": 0.9968379070085055,
+            "slope": -0.5591960925078635
+          },
+          "confirm02": {
+            "intercept": -0.4800123691088785,
+            "n_cells": 20,
+            "passed": true,
+            "r_squared": 0.9614436892043969,
+            "slope": -0.5422335833291103
+          },
+          "confirm03": {
+            "intercept": -0.5977504836753669,
+            "n_cells": 20,
+            "passed": true,
+            "r_squared": 0.9298121226422635,
+            "slope": -0.5052107716330408
+          },
+          "confirm04": {
+            "intercept": -0.6045125701850074,
+            "n_cells": 20,
+            "passed": true,
+            "r_squared": 0.9193777795848936,
+            "slope": -0.47612850016890623
+          },
+          "confirm05": {
+            "intercept": -0.1989151098407005,
+            "n_cells": 20,
+            "passed": true,
+            "r_squared": 0.9946740314238598,
+            "slope": -0.6273366859572426
+          },
+          "confirm06": {
+            "intercept": -0.4266831144080928,
+            "n_cells": 20,
+            "passed": true,
+            "r_squared": 0.9753312986136045,
+            "slope": -0.5554914563698496
+          },
+          "confirm07": {
+            "intercept": -0.1882141223208766,
+            "n_cells": 20,
+            "passed": true,
+            "r_squared": 0.9957086004785699,
+            "slope": -0.5674417090302715
+          },
+          "confirm08": {
+            "intercept": -0.5867212444465647,
+            "n_cells": 20,
+            "passed": true,
+            "r_squared": 0.915803618719804,
+            "slope": -0.5105555051476514
+          },
+          "confirm09": {
+            "intercept": -0.48281432384761985,
+            "n_cells": 20,
+            "passed": true,
+            "r_squared": 0.9556752296333719,
+            "slope": -0.4948091273661717
+          },
+          "confirm10": {
+            "intercept": -0.48755773858315415,
+            "n_cells": 20,
+            "passed": true,
+            "r_squared": 0.944544937624044,
+            "slope": -0.5250229400683569
+          },
+          "confirm11": {
+            "intercept": -0.2571500749417419,
+            "n_cells": 20,
+            "passed": true,
+            "r_squared": 0.9967729350325342,
+            "slope": -0.5536085704275528
+          },
+          "confirm12": {
+            "intercept": -0.25310773454595037,
+            "n_cells": 20,
+            "passed": true,
+            "r_squared": 0.995858479727076,
+            "slope": -0.5588093090723361
+          }
+        },
+        "successful_roots": 12
+      },
+      "3": {
+        "defined_roots": 12,
+        "median_slope": -0.5042454712358557,
+        "median_slope_bootstrap_95_ci": [
+          -0.5360165883064912,
+          -0.47150089067555223
+        ],
+        "minimum_defined_roots": 10,
+        "minimum_successful_roots": 10,
+        "negative_slope_exact_sign_p_one_sided": 0.000244140625,
+        "negative_slope_roots": 12,
+        "passed": true,
+        "root_fits": {
+          "confirm01": {
+            "intercept": -0.23969750000880008,
+            "n_cells": 20,
+            "passed": true,
+            "r_squared": 0.9950116111107509,
+            "slope": -0.570966298336597
+          },
+          "confirm02": {
+            "intercept": -0.390707263212578,
+            "n_cells": 20,
+            "passed": true,
+            "r_squared": 0.9785414306894272,
+            "slope": -0.5499239904681449
+          },
+          "confirm03": {
+            "intercept": -0.5135210358137741,
+            "n_cells": 20,
+            "passed": true,
+            "r_squared": 0.9817572137045655,
+            "slope": -0.49586640537066173
+          },
+          "confirm04": {
+            "intercept": -0.327055684871999,
+            "n_cells": 20,
+            "passed": true,
+            "r_squared": 0.987764390968953,
+            "slope": -0.5546392936301253
+          },
+          "confirm05": {
+            "intercept": -0.6533840434176937,
+            "n_cells": 20,
+            "passed": true,
+            "r_squared": 0.9310243860580866,
+            "slope": -0.5038423432375356
+          },
+          "confirm06": {
+            "intercept": -0.5960217921669804,
+            "n_cells": 20,
+            "passed": true,
+            "r_squared": 0.9487306776967223,
+            "slope": -0.5221091861448376
+          },
+          "confirm07": {
+            "intercept": -0.4795992025211248,
+            "n_cells": 20,
+            "passed": true,
+            "r_squared": 0.972253816557908,
+            "slope": -0.5046485992341757
+          },
+          "confirm08": {
+            "intercept": -0.5336434437592567,
+            "n_cells": 20,
+            "passed": true,
+            "r_squared": 0.9746055721665884,
+            "slope": -0.4494928087800196
+          },
+          "confirm09": {
+            "intercept": -0.5187200902699457,
+            "n_cells": 20,
+            "passed": true,
+            "r_squared": 0.9698941155500505,
+            "slope": -0.4019252636541051
+          },
+          "confirm10": {
+            "intercept": -0.4578057534396263,
+            "n_cells": 20,
+            "passed": true,
+            "r_squared": 0.9861940413390101,
+            "slope": -0.5177122368534325
+          },
+          "confirm11": {
+            "intercept": -0.4901441356817404,
+            "n_cells": 20,
+            "passed": true,
+            "r_squared": 0.9746850620385432,
+            "slope": -0.3627715654264833
+          },
+          "confirm12": {
+            "intercept": -0.5111089066217338,
+            "n_cells": 20,
+            "passed": true,
+            "r_squared": 0.9819794938800069,
+            "slope": -0.4935089725710849
+          }
+        },
+        "successful_roots": 12
+      }
+    },
+    "gamma_filter": "teacher_gamma > 0",
+    "minimum_r_squared": 0.85,
+    "passed": true,
+    "predictor": "teacher_gamma * teacher_dt * window",
+    "replicated_in_both_teacher_families": true,
+    "slope_direction": "negative",
+    "teacher_dt": 0.5
+  },
+  "secondary_qelm_vs_best_classical": {
+    "decision_bearing": true,
+    "defined_roots": 12,
+    "fixed_teacher_gamma": 4.0,
+    "fixed_window": 6,
+    "median_gain": -1.3353303147001059,
+    "median_gain_bootstrap_95_ci": [
+      -1.4169102904215338,
+      -1.0733772570148365
+    ],
+    "minimum_defined_roots": 10,
+    "minimum_median_gain": 0.1,
+    "minimum_positive_roots": 10,
+    "passed": false,
+    "positive_root_exact_sign_p_one_sided": 1.0,
+    "positive_roots": 0,
+    "registered_classical_controls": [
+      "linear_delay",
+      "poly2_delay",
+      "classical_tanh"
+    ],
+    "root_gains": {
+      "confirm01": -1.2055518591680585,
+      "confirm02": -1.4592652971850866,
+      "confirm03": -1.3443232813418888,
+      "confirm04": -0.5336834967016015,
+      "confirm05": -1.3831490596726976,
+      "confirm06": -0.6999303677361924,
+      "confirm07": -0.9468269407000174,
+      "confirm08": -1.3263373480583232,
+      "confirm09": -1.45067152117037,
+      "confirm10": -1.3444595701684998,
+      "confirm11": -1.1999275733296557,
+      "confirm12": -2.0017453458118597
+    },
+    "snapshot_budget": 4
+  },
+  "statistical_unit": "root_block",
+  "study": "canonical_qrc_to_parallel_qelm_emulation"
+}

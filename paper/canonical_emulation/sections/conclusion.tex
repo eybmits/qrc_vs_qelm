@@ -1,0 +1,32 @@
+\section*{Conclusions}
+\label{sec:discussion}
+
+First, the common-suffix diameter gives a complete scalar-output criterion for
+the information supplied to a reset-window learner: the optimal uniform error
+is exactly $D_d/2$.  Uniform finite-window approximation is possible if and
+only if $D_d\to0$.  This statement applies to classical and quantum suffix
+models; for the binary witness, one bit of classical recurrent memory is
+sufficient.
+
+Second, a protected two-qubit mode gives an exact physical realization and a
+quantitative certificate.  An earlier control excites the singlet population,
+allowed symmetry-preserving dynamics protect it, and Pauli correlations reveal
+it.  Imperfect protection gives a finite certified persistence horizon, while
+mixing dynamics make the omitted-history floor decay with window length.
+
+Third, contraction supplies the constructive regime.  Reset replay bounds the
+discarded history, while a standard parallel Bernstein quantum feature map
+bounds representation of the retained suffix.  Equations
+\eqref{eq:qrc-qelm-bound} and \eqref{eq:qrc-qelm-shot-bound} give a finite
+reset-QELM for every requested accuracy and separate window, degree, and shot
+resources.  The result is one-way functional approximation by a growing family,
+not architectural equivalence or efficient learnability.  Persistent
+recurrence may still reduce resets, channel calls, latency, lag storage, and
+the exponentially large coefficient table.
+
+Finally, the held-out phase map shows the same sequence for a fixed practical
+architecture: once visible history is sufficient, feature representation and
+measurement resolution determine the remaining error.  The quadratic
+classical delay control outperforms the tested QELM.  The theorem and
+experiments establish an approximation--obstruction framework, not quantum
+computational advantage.

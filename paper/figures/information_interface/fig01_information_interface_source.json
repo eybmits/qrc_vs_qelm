@@ -1,0 +1,9 @@
+{
+  "balanced_mse_floor": 0.003301905781096084,
+  "fixed_pair_construction": "two time-homogeneous input trajectories differ once in the addressable flag and share all later symmetry-preserving inputs",
+  "output_gap": 0.11492442353296507,
+  "positive_approximation_statement": "continuous fading observable memory is uniformly approximable by a growing reset Bernstein QELM; contraction supplies explicit resources",
+  "suffix_scope": "all allowed symmetry-preserving suffixes",
+  "suffix_steps_numerically_checked": 80,
+  "worst_case_absolute_error_floor": 0.057462211766482536
+}

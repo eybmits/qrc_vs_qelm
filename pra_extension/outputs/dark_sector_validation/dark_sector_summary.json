@@ -1,0 +1,43 @@
+{
+  "all_primary_passed": true,
+  "artifact_sha256": {
+    "dark_sector_audits.csv": "0bbf67723db42fa635bc1ca1e8fb0eb02b28891c961af5989d2896426d70af86",
+    "dark_sector_leakage.csv": "d6d96e3a8d5b45e0580226a4ebf66e3134745bedcaae562b32b7672954989fa4",
+    "dark_sector_trajectories.csv": "ced46a962f32ab810205ff5f079588c9065383d7c73f365a73e5d893daa7f3d3"
+  },
+  "claim_scope": "An existential two-qubit QRC construction in which every fixed reset-on-window suffix model has a nonzero uniform error floor; not universal QELM failure and not quantum advantage.",
+  "config_sha256": "34571af25c78e42ed4d214789db1974552a79cbdd7ae345e05d9bd6377be6546",
+  "endpoint_median_absolute_gap": {
+    "asymmetric_collective_loss": 0.11437319750074483,
+    "collective_loss": 0.11492442353296548,
+    "local_loss": 1.569468158047968e-05
+  },
+  "expected_balanced_mse_floor": 0.003301905781096084,
+  "expected_prefix_gap": 0.11492442353296507,
+  "expected_worst_case_absolute_floor": 0.057462211766482536,
+  "maximum_singlet_projector_negativity": 0.5,
+  "n_roots": 12,
+  "primary_checks": {
+    "analytic_prefix_gap_error_max": 2.7755575615628914e-17,
+    "collective_adjoint_invariance_max": 5.007093532585075e-17,
+    "collective_population_drift_max": 7.632783294297951e-16,
+    "common_suffix_floor_error_max": 0.0,
+    "symmetric_unexcited_population_max": 1.249000902703301e-16
+  },
+  "primary_passed": {
+    "analytic_prefix_gap_error_max": true,
+    "collective_adjoint_invariance_max": true,
+    "collective_population_drift_max": true,
+    "common_suffix_floor_error_max": true,
+    "symmetric_unexcited_population_max": true
+  },
+  "primary_thresholds": {
+    "analytic_prefix_gap_error_max": 1e-10,
+    "collective_adjoint_invariance_max": 1e-10,
+    "collective_population_drift_max": 1e-10,
+    "common_suffix_floor_error_max": 1e-10,
+    "symmetric_unexcited_population_max": 1e-10
+  },
+  "study": "protected_excited_visible_dark_sector",
+  "suffix_steps": 80
+}

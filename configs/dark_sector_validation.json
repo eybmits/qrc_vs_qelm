@@ -1,0 +1,52 @@
+{
+  "study": "protected_excited_visible_dark_sector",
+  "status": "prospectively_specified_before_output_generation",
+  "frozen_utc_date": "2026-08-28",
+  "claim_scope": "An existential two-qubit QRC construction in which every fixed reset-on-window suffix model has a nonzero uniform error floor; not universal QELM failure and not quantum advantage.",
+  "architecture": {
+    "n_qubits": 2,
+    "hamiltonian": "J X_0 X_1 + h (Z_0+Z_1) + u h_in (X_0+X_1)",
+    "protected_observable": "P_minus=(II-XX-YY-ZZ)/4",
+    "prefix_branches": [
+      "identity on |00>",
+      "exp(-i theta X_0/2) on |00>"
+    ],
+    "common_suffix_input_distribution": "iid Uniform[0,1]",
+    "suffix_steps": 80,
+    "dt": 0.2,
+    "field": 0.37,
+    "drive": 0.64,
+    "gamma": 0.8,
+    "pulse_angle": 1.0
+  },
+  "roots": [
+    {"root_id": "D00", "coupling_seed": 28082800, "suffix_seed": 28082900},
+    {"root_id": "D01", "coupling_seed": 28082801, "suffix_seed": 28082901},
+    {"root_id": "D02", "coupling_seed": 28082802, "suffix_seed": 28082902},
+    {"root_id": "D03", "coupling_seed": 28082803, "suffix_seed": 28082903},
+    {"root_id": "D04", "coupling_seed": 28082804, "suffix_seed": 28082904},
+    {"root_id": "D05", "coupling_seed": 28082805, "suffix_seed": 28082905},
+    {"root_id": "D06", "coupling_seed": 28082806, "suffix_seed": 28082906},
+    {"root_id": "D07", "coupling_seed": 28082807, "suffix_seed": 28082907},
+    {"root_id": "D08", "coupling_seed": 28082808, "suffix_seed": 28082908},
+    {"root_id": "D09", "coupling_seed": 28082809, "suffix_seed": 28082909},
+    {"root_id": "D10", "coupling_seed": 28082810, "suffix_seed": 28082910},
+    {"root_id": "D11", "coupling_seed": 28082811, "suffix_seed": 28082911}
+  ],
+  "coupling_distribution": "Uniform[-1,1]",
+  "perturbations": {
+    "matched_local_loss": true,
+    "collective_jump_asymmetries": [0.02, 0.05, 0.1, 0.2]
+  },
+  "frozen_primary_checks": {
+    "collective_adjoint_invariance_max": 1e-10,
+    "collective_population_drift_max": 1e-10,
+    "analytic_prefix_gap_error_max": 1e-10,
+    "common_suffix_floor_error_max": 1e-10,
+    "symmetric_unexcited_population_max": 1e-10
+  },
+  "secondary_checks": [
+    "local loss removes exact singlet invariance",
+    "jump asymmetry gives the predicted quadratic initial leakage"
+  ]
+}

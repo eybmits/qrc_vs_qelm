@@ -1,0 +1,10 @@
+{
+  "confirmatory_roots_previously_opened": false,
+  "config_sha256": "78e293aed9e14aa9fc38233c0efc29d712445f90648abf2ab8977375c4fc4c38",
+  "frozen_at_utc": "2026-08-28T14:13:28Z",
+  "material_identity_sha256": "a65b069e206bf881bef03726325c0117454018e2737f75655f08692e1e565ea2",
+  "profile": "confirmatory",
+  "schema_version": 1,
+  "status": "FROZEN_CONFIRMATORY",
+  "study": "canonical_qrc_to_parallel_qelm_emulation"
+}

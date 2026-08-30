@@ -1,0 +1,318 @@
+{
+  "artifacts": {
+    "channel_spectrum.csv": "053bccf6931b5c667c933aa904881efcebc8c8082f44d8abeae6276726302f50"
+  },
+  "claim_boundary": "one input-conditioned channel at the declared representative input; not a joint-spectral-radius or arbitrary-input contraction theorem",
+  "condition_summaries": [
+    {
+      "dissipator_family": "collective_loss",
+      "maximum_spectral_radius_traceless": 1.0000000000000004,
+      "median_slow_mode_count_ge_0p99": 1.0,
+      "median_spectral_radius_traceless": 1.0,
+      "minimum_spectral_radius_traceless": 0.9999999999999996,
+      "n_roots": 12,
+      "reference_local_loss_gamma": 0.25,
+      "roots_with_peripheral_mode": 12,
+      "teacher_n_qubits": 2
+    },
+    {
+      "dissipator_family": "collective_loss",
+      "maximum_spectral_radius_traceless": 1.0000000000000004,
+      "median_slow_mode_count_ge_0p99": 1.0,
+      "median_spectral_radius_traceless": 1.0,
+      "minimum_spectral_radius_traceless": 0.9999999999999994,
+      "n_roots": 12,
+      "reference_local_loss_gamma": 1.0,
+      "roots_with_peripheral_mode": 12,
+      "teacher_n_qubits": 2
+    },
+    {
+      "dissipator_family": "collective_loss",
+      "maximum_spectral_radius_traceless": 1.0000000000000002,
+      "median_slow_mode_count_ge_0p99": 1.0,
+      "median_spectral_radius_traceless": 1.0,
+      "minimum_spectral_radius_traceless": 0.9999999999999991,
+      "n_roots": 12,
+      "reference_local_loss_gamma": 4.0,
+      "roots_with_peripheral_mode": 12,
+      "teacher_n_qubits": 2
+    },
+    {
+      "dissipator_family": "collective_loss",
+      "maximum_spectral_radius_traceless": 0.9987427068549142,
+      "median_slow_mode_count_ge_0p99": 0.0,
+      "median_spectral_radius_traceless": 0.9886201611608834,
+      "minimum_spectral_radius_traceless": 0.9410224638245658,
+      "n_roots": 12,
+      "reference_local_loss_gamma": 0.25,
+      "roots_with_peripheral_mode": 0,
+      "teacher_n_qubits": 3
+    },
+    {
+      "dissipator_family": "collective_loss",
+      "maximum_spectral_radius_traceless": 0.9986362244401096,
+      "median_slow_mode_count_ge_0p99": 0.0,
+      "median_spectral_radius_traceless": 0.9794882641637013,
+      "minimum_spectral_radius_traceless": 0.9110001727241801,
+      "n_roots": 12,
+      "reference_local_loss_gamma": 1.0,
+      "roots_with_peripheral_mode": 0,
+      "teacher_n_qubits": 3
+    },
+    {
+      "dissipator_family": "collective_loss",
+      "maximum_spectral_radius_traceless": 0.9989434826880181,
+      "median_slow_mode_count_ge_0p99": 0.0,
+      "median_spectral_radius_traceless": 0.9800474855484309,
+      "minimum_spectral_radius_traceless": 0.8713818272784151,
+      "n_roots": 12,
+      "reference_local_loss_gamma": 4.0,
+      "roots_with_peripheral_mode": 0,
+      "teacher_n_qubits": 3
+    },
+    {
+      "dissipator_family": "collective_loss",
+      "maximum_spectral_radius_traceless": 0.9987564547082622,
+      "median_slow_mode_count_ge_0p99": 0.0,
+      "median_spectral_radius_traceless": 0.9848932015178753,
+      "minimum_spectral_radius_traceless": 0.9706273355712993,
+      "n_roots": 12,
+      "reference_local_loss_gamma": 0.25,
+      "roots_with_peripheral_mode": 0,
+      "teacher_n_qubits": 4
+    },
+    {
+      "dissipator_family": "collective_loss",
+      "maximum_spectral_radius_traceless": 0.9995501110824253,
+      "median_slow_mode_count_ge_0p99": 0.0,
+      "median_spectral_radius_traceless": 0.9856151516384443,
+      "minimum_spectral_radius_traceless": 0.9243555271560454,
+      "n_roots": 12,
+      "reference_local_loss_gamma": 1.0,
+      "roots_with_peripheral_mode": 0,
+      "teacher_n_qubits": 4
+    },
+    {
+      "dissipator_family": "collective_loss",
+      "maximum_spectral_radius_traceless": 0.9998573382162224,
+      "median_slow_mode_count_ge_0p99": 1.0,
+      "median_spectral_radius_traceless": 0.9917138141839212,
+      "minimum_spectral_radius_traceless": 0.9237466816752538,
+      "n_roots": 12,
+      "reference_local_loss_gamma": 4.0,
+      "roots_with_peripheral_mode": 0,
+      "teacher_n_qubits": 4
+    },
+    {
+      "dissipator_family": "dephasing",
+      "maximum_spectral_radius_traceless": 0.9625528305152309,
+      "median_slow_mode_count_ge_0p99": 0.0,
+      "median_spectral_radius_traceless": 0.9505374352305602,
+      "minimum_spectral_radius_traceless": 0.9403518360045494,
+      "n_roots": 12,
+      "reference_local_loss_gamma": 0.25,
+      "roots_with_peripheral_mode": 0,
+      "teacher_n_qubits": 2
+    },
+    {
+      "dissipator_family": "dephasing",
+      "maximum_spectral_radius_traceless": 0.8699701222519602,
+      "median_slow_mode_count_ge_0p99": 0.0,
+      "median_spectral_radius_traceless": 0.8395721893224707,
+      "minimum_spectral_radius_traceless": 0.8081888196019291,
+      "n_roots": 12,
+      "reference_local_loss_gamma": 1.0,
+      "roots_with_peripheral_mode": 0,
+      "teacher_n_qubits": 2
+    },
+    {
+      "dissipator_family": "dephasing",
+      "maximum_spectral_radius_traceless": 0.8826096138092856,
+      "median_slow_mode_count_ge_0p99": 0.0,
+      "median_spectral_radius_traceless": 0.8476695599070982,
+      "minimum_spectral_radius_traceless": 0.7975895519950297,
+      "n_roots": 12,
+      "reference_local_loss_gamma": 4.0,
+      "roots_with_peripheral_mode": 0,
+      "teacher_n_qubits": 2
+    },
+    {
+      "dissipator_family": "dephasing",
+      "maximum_spectral_radius_traceless": 0.9424879410077397,
+      "median_slow_mode_count_ge_0p99": 0.0,
+      "median_spectral_radius_traceless": 0.9127790608805991,
+      "minimum_spectral_radius_traceless": 0.8918227875880106,
+      "n_roots": 12,
+      "reference_local_loss_gamma": 0.25,
+      "roots_with_peripheral_mode": 0,
+      "teacher_n_qubits": 3
+    },
+    {
+      "dissipator_family": "dephasing",
+      "maximum_spectral_radius_traceless": 0.8382022522275685,
+      "median_slow_mode_count_ge_0p99": 0.0,
+      "median_spectral_radius_traceless": 0.7871424588868949,
+      "minimum_spectral_radius_traceless": 0.6959634021043383,
+      "n_roots": 12,
+      "reference_local_loss_gamma": 1.0,
+      "roots_with_peripheral_mode": 0,
+      "teacher_n_qubits": 3
+    },
+    {
+      "dissipator_family": "dephasing",
+      "maximum_spectral_radius_traceless": 0.8826689099337972,
+      "median_slow_mode_count_ge_0p99": 0.0,
+      "median_spectral_radius_traceless": 0.8204582137699867,
+      "minimum_spectral_radius_traceless": 0.7571721769725798,
+      "n_roots": 12,
+      "reference_local_loss_gamma": 4.0,
+      "roots_with_peripheral_mode": 0,
+      "teacher_n_qubits": 3
+    },
+    {
+      "dissipator_family": "dephasing",
+      "maximum_spectral_radius_traceless": 0.918975367544008,
+      "median_slow_mode_count_ge_0p99": 0.0,
+      "median_spectral_radius_traceless": 0.8896005892268438,
+      "minimum_spectral_radius_traceless": 0.8683470644155447,
+      "n_roots": 12,
+      "reference_local_loss_gamma": 0.25,
+      "roots_with_peripheral_mode": 0,
+      "teacher_n_qubits": 4
+    },
+    {
+      "dissipator_family": "dephasing",
+      "maximum_spectral_radius_traceless": 0.7993129908555131,
+      "median_slow_mode_count_ge_0p99": 0.0,
+      "median_spectral_radius_traceless": 0.7509681757824838,
+      "minimum_spectral_radius_traceless": 0.6591487282279649,
+      "n_roots": 12,
+      "reference_local_loss_gamma": 1.0,
+      "roots_with_peripheral_mode": 0,
+      "teacher_n_qubits": 4
+    },
+    {
+      "dissipator_family": "dephasing",
+      "maximum_spectral_radius_traceless": 0.8396515198052114,
+      "median_slow_mode_count_ge_0p99": 0.0,
+      "median_spectral_radius_traceless": 0.8051471608235099,
+      "minimum_spectral_radius_traceless": 0.7502334240711427,
+      "n_roots": 12,
+      "reference_local_loss_gamma": 4.0,
+      "roots_with_peripheral_mode": 0,
+      "teacher_n_qubits": 4
+    },
+    {
+      "dissipator_family": "local_loss",
+      "maximum_spectral_radius_traceless": 0.951123152475145,
+      "median_slow_mode_count_ge_0p99": 0.0,
+      "median_spectral_radius_traceless": 0.9294512746015009,
+      "minimum_spectral_radius_traceless": 0.9239155465735507,
+      "n_roots": 12,
+      "reference_local_loss_gamma": 0.25,
+      "roots_with_peripheral_mode": 0,
+      "teacher_n_qubits": 2
+    },
+    {
+      "dissipator_family": "local_loss",
+      "maximum_spectral_radius_traceless": 0.8178402654705599,
+      "median_slow_mode_count_ge_0p99": 0.0,
+      "median_spectral_radius_traceless": 0.7456565770155226,
+      "minimum_spectral_radius_traceless": 0.7305100300148232,
+      "n_roots": 12,
+      "reference_local_loss_gamma": 1.0,
+      "roots_with_peripheral_mode": 0,
+      "teacher_n_qubits": 2
+    },
+    {
+      "dissipator_family": "local_loss",
+      "maximum_spectral_radius_traceless": 0.44271275388012055,
+      "median_slow_mode_count_ge_0p99": 0.0,
+      "median_spectral_radius_traceless": 0.33453277084835364,
+      "minimum_spectral_radius_traceless": 0.3000608881023009,
+      "n_roots": 12,
+      "reference_local_loss_gamma": 4.0,
+      "roots_with_peripheral_mode": 0,
+      "teacher_n_qubits": 2
+    },
+    {
+      "dissipator_family": "local_loss",
+      "maximum_spectral_radius_traceless": 0.9475786687113025,
+      "median_slow_mode_count_ge_0p99": 0.0,
+      "median_spectral_radius_traceless": 0.9211185417777585,
+      "minimum_spectral_radius_traceless": 0.9071051114513197,
+      "n_roots": 12,
+      "reference_local_loss_gamma": 0.25,
+      "roots_with_peripheral_mode": 0,
+      "teacher_n_qubits": 3
+    },
+    {
+      "dissipator_family": "local_loss",
+      "maximum_spectral_radius_traceless": 0.8318906809595654,
+      "median_slow_mode_count_ge_0p99": 0.0,
+      "median_spectral_radius_traceless": 0.7428689238571493,
+      "minimum_spectral_radius_traceless": 0.686142756895149,
+      "n_roots": 12,
+      "reference_local_loss_gamma": 1.0,
+      "roots_with_peripheral_mode": 0,
+      "teacher_n_qubits": 3
+    },
+    {
+      "dissipator_family": "local_loss",
+      "maximum_spectral_radius_traceless": 0.5098822257644774,
+      "median_slow_mode_count_ge_0p99": 0.0,
+      "median_spectral_radius_traceless": 0.4443235621321448,
+      "minimum_spectral_radius_traceless": 0.3308308105173553,
+      "n_roots": 12,
+      "reference_local_loss_gamma": 4.0,
+      "roots_with_peripheral_mode": 0,
+      "teacher_n_qubits": 3
+    },
+    {
+      "dissipator_family": "local_loss",
+      "maximum_spectral_radius_traceless": 0.9396074615495869,
+      "median_slow_mode_count_ge_0p99": 0.0,
+      "median_spectral_radius_traceless": 0.9185554209407643,
+      "minimum_spectral_radius_traceless": 0.9016613961634674,
+      "n_roots": 12,
+      "reference_local_loss_gamma": 0.25,
+      "roots_with_peripheral_mode": 0,
+      "teacher_n_qubits": 4
+    },
+    {
+      "dissipator_family": "local_loss",
+      "maximum_spectral_radius_traceless": 0.8594323906391238,
+      "median_slow_mode_count_ge_0p99": 0.0,
+      "median_spectral_radius_traceless": 0.7656410221419737,
+      "minimum_spectral_radius_traceless": 0.6930413066173536,
+      "n_roots": 12,
+      "reference_local_loss_gamma": 1.0,
+      "roots_with_peripheral_mode": 0,
+      "teacher_n_qubits": 4
+    },
+    {
+      "dissipator_family": "local_loss",
+      "maximum_spectral_radius_traceless": 0.5385353947887365,
+      "median_slow_mode_count_ge_0p99": 0.0,
+      "median_spectral_radius_traceless": 0.47716150016819,
+      "minimum_spectral_radius_traceless": 0.40648343816629773,
+      "n_roots": 12,
+      "reference_local_loss_gamma": 4.0,
+      "roots_with_peripheral_mode": 0,
+      "teacher_n_qubits": 4
+    }
+  ],
+  "counts": {
+    "roots": 12,
+    "rows": 324
+  },
+  "numerical_audit": {
+    "maximum_imaginary_pauli_entry": 6.570265165262157e-16,
+    "maximum_spectral_radius_excess": 4.440892098500626e-16,
+    "maximum_trace_preservation_error": 6.666418368787991e-15
+  },
+  "representative_input": 0.5,
+  "schema_version": 1,
+  "status": "EXPLORATORY_MECHANISM_DIAGNOSTIC",
+  "study": "representative_input_channel_spectrum"
+}

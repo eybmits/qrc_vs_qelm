@@ -1,10 +1,12 @@
-"""Memoryless QELM feature maps.
+"""Windowed quantum feature maps.
 
-QELM rows are independent quantum feature-map evaluations on classical
-delay-embedding windows. Spatial QELM maps the window onto a product state and
-then applies an input-independent Lindblad channel. Time-delayed QELM resets the
-same input-affine Lindblad reservoir used by QRC for each row, replays the
-window in temporal order, and measures only the replayed trajectory.
+Rows from ``spatial`` and ``parallel`` encodings are independent standard-QELM
+evaluations: the complete delay vector is encoded before one fixed,
+input-independent channel is applied. ``parallel`` assigns one lag to each
+qubit and is the canonical TD-QELM used in the confirmatory emulation study.
+The legacy ``time_delayed`` path instead resets and sequentially replays the
+suffix through input-dependent QRC dynamics; scientifically it is a
+memory-restricted reset-replay control rather than a standard QELM.
 """
 
 from __future__ import annotations
@@ -13,16 +15,19 @@ from dataclasses import dataclass
 from typing import Sequence
 
 import numpy as np
+from scipy.linalg import expm
 
 from qrc_vs_qelm.core import dissipators, liouvillian, operators, readout, reservoirs
 
 
-_VALID_ENCODINGS = {"spatial", "time_delayed"}
+_VALID_ENCODINGS = {"spatial", "parallel", "time_delayed"}
 
 
 def _validate_encoding(encoding: str) -> str:
     if encoding not in _VALID_ENCODINGS:
-        raise ValueError("encoding must be 'spatial' or 'time_delayed'")
+        raise ValueError(
+            "encoding must be 'spatial', 'parallel', or 'time_delayed'"
+        )
     return str(encoding)
 
 
@@ -80,18 +85,57 @@ def encode_window(
     n_qubits: int,
     scheme: str = "cyclic",
 ) -> np.ndarray:
-    """Encode one delay window as a cyclic product-state density matrix."""
+    """Encode one delay window as a product-state density matrix.
+
+    ``cyclic`` preserves the repository's original spatial feature map by
+    repeating window coordinates across the register. ``one_to_one`` is the
+    canonical parallel delay encoding: coordinate ``j`` is uploaded to qubit
+    ``j`` exactly once and any unused qubits remain in ``|0>``.  The latter is
+    the architecture used by the canonical QRC-to-QELM emulation study.
+    """
     if n_qubits < 1:
         raise ValueError("n_qubits must be >= 1")
-    if scheme != "cyclic":
+    if scheme not in {"cyclic", "one_to_one"}:
         raise ValueError(f"unknown QELM encoding scheme: {scheme!r}")
     values = np.asarray(window, dtype=float)
     if values.ndim != 1 or len(values) == 0:
         raise ValueError("window must be a non-empty one-dimensional array")
+    if scheme == "one_to_one" and len(values) > n_qubits:
+        raise ValueError(
+            "one_to_one encoding requires window length <= n_qubits"
+        )
 
+    if scheme == "one_to_one":
+        factors = [
+            operators.input_state(float(values[q]) if q < len(values) else 0.0)
+            for q in range(n_qubits)
+        ]
+    else:
+        factors = [
+            operators.input_state(float(values[q % len(values)]))
+            for q in range(n_qubits)
+        ]
+    return operators.kron_list(factors)
+
+
+def encode_window_statevector(
+    window: np.ndarray,
+    n_qubits: int,
+    scheme: str = "one_to_one",
+) -> np.ndarray:
+    """Pure-state counterpart of :func:`encode_window` for unitary QELMs."""
+
+    values = np.asarray(window, dtype=float)
+    # Reuse all shape, range, and scheme validation from the density encoder.
+    encode_window(values, n_qubits, scheme=scheme)
+    clipped = np.clip(values, 0.0, 1.0)
+    if scheme == "one_to_one":
+        encoded = [float(clipped[q]) if q < len(clipped) else 0.0 for q in range(n_qubits)]
+    else:
+        encoded = [float(clipped[q % len(clipped)]) for q in range(n_qubits)]
     factors = [
-        operators.input_state(float(values[q % len(values)]))
-        for q in range(n_qubits)
+        np.array([np.sqrt(1.0 - s), np.sqrt(s)], dtype=complex)
+        for s in encoded
     ]
     return operators.kron_list(factors)
 
@@ -185,6 +229,8 @@ class QELMChannel:
         self,
         windows: np.ndarray,
         observables: Sequence[readout.Observable],
+        *,
+        encoding_scheme: str = "cyclic",
     ) -> np.ndarray:
         """Evaluate snapshot Pauli features for each independent delay window."""
         values = np.asarray(windows, dtype=float)
@@ -195,12 +241,129 @@ class QELMChannel:
         X = np.empty((values.shape[0], self.n_snapshots * n_obs), dtype=float)
 
         for row_idx, window in enumerate(values):
-            rho0 = encode_window(window, self.n_qubits)
+            rho0 = encode_window(
+                window,
+                self.n_qubits,
+                scheme=encoding_scheme,
+            )
             states = [
                 liouvillian.apply_propagator(P, rho0)
                 for P in self._propagators
             ]
             X[row_idx] = readout.features_from_states(states, obs).reshape(-1)
+        return X
+
+
+@dataclass(frozen=True, init=False)
+class UnitaryQELMChannel:
+    """Statevector implementation of a fixed unitary standard-QELM channel.
+
+    This avoids constructing a ``4**n`` Liouvillian and makes the canonical
+    parallel student feasible at larger widths.  It is exactly a unitary
+    special case of :class:`QELMChannel` up to floating-point roundoff.
+    """
+
+    n_qubits: int
+    n_snapshots: int
+    _hamiltonian: np.ndarray
+    _unitaries: tuple[np.ndarray, ...]
+
+    def __init__(
+        self,
+        n_qubits: int,
+        n_snapshots: int,
+        hamiltonian: np.ndarray,
+        unitaries: Sequence[np.ndarray],
+    ) -> None:
+        object.__setattr__(self, "n_qubits", int(n_qubits))
+        object.__setattr__(self, "n_snapshots", int(n_snapshots))
+        object.__setattr__(
+            self,
+            "_hamiltonian",
+            np.array(hamiltonian, dtype=complex, copy=True),
+        )
+        object.__setattr__(
+            self,
+            "_unitaries",
+            tuple(np.array(U, dtype=complex, copy=True) for U in unitaries),
+        )
+
+    @property
+    def hamiltonian(self) -> np.ndarray:
+        return self._hamiltonian.copy()
+
+    @property
+    def unitaries(self) -> tuple[np.ndarray, ...]:
+        return tuple(U.copy() for U in self._unitaries)
+
+    @classmethod
+    def from_hamiltonian(
+        cls,
+        *,
+        n_qubits: int,
+        H_static: np.ndarray,
+        T_evolve: float,
+        n_snapshots: int,
+    ) -> "UnitaryQELMChannel":
+        if int(n_qubits) < 1:
+            raise ValueError("n_qubits must be >= 1")
+        if int(n_snapshots) < 1:
+            raise ValueError("n_snapshots must be >= 1")
+        if float(T_evolve) < 0.0:
+            raise ValueError("T_evolve must be non-negative")
+        dim = 2 ** int(n_qubits)
+        H = np.asarray(H_static, dtype=complex)
+        if H.shape != (dim, dim):
+            raise ValueError(
+                f"H_static shape must be {(dim, dim)} for n_qubits={n_qubits}; "
+                f"got {H.shape}"
+            )
+        if not np.allclose(H, H.conj().T, atol=1e-12, rtol=0.0):
+            raise ValueError("H_static must be Hermitian")
+        unitaries = tuple(
+            expm(-1j * H * (k * float(T_evolve) / int(n_snapshots)))
+            for k in range(1, int(n_snapshots) + 1)
+        )
+        return cls(
+            n_qubits=int(n_qubits),
+            n_snapshots=int(n_snapshots),
+            hamiltonian=H,
+            unitaries=unitaries,
+        )
+
+    def features(
+        self,
+        windows: np.ndarray,
+        observables: Sequence[readout.Observable],
+        *,
+        encoding_scheme: str = "one_to_one",
+    ) -> np.ndarray:
+        values = np.asarray(windows, dtype=float)
+        if values.ndim != 2:
+            raise ValueError("windows must be a two-dimensional array")
+        obs = list(observables)
+        if not obs:
+            raise ValueError("observables must be non-empty")
+        matrices = np.stack([np.asarray(item.matrix, dtype=complex) for item in obs])
+        dim = 2 ** self.n_qubits
+        if matrices.shape[1:] != (dim, dim):
+            raise ValueError("observable shapes do not match n_qubits")
+        X = np.empty(
+            (values.shape[0], self.n_snapshots * len(obs)),
+            dtype=float,
+        )
+        for row_idx, window in enumerate(values):
+            psi0 = encode_window_statevector(
+                window,
+                self.n_qubits,
+                scheme=encoding_scheme,
+            )
+            for snapshot_idx, U in enumerate(self._unitaries):
+                psi = U @ psi0
+                start = snapshot_idx * len(obs)
+                X[row_idx, start : start + len(obs)] = np.real(
+                    np.einsum("i,kij,j->k", psi.conj(), matrices, psi)
+                )
         return X
 
 
@@ -335,4 +498,10 @@ def build_qelm_features(
         T_evolve=T_evolve,
         n_snapshots=n_snapshots,
     )
-    return channel.features(delay_embed(driven_inputs, d), obs)
+    return channel.features(
+        delay_embed(driven_inputs, d),
+        obs,
+        encoding_scheme=(
+            "one_to_one" if checked_encoding == "parallel" else "cyclic"
+        ),
+    )

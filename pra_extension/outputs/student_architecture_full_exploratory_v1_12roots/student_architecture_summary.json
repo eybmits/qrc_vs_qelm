@@ -1,0 +1,387 @@
+{
+  "cells": [
+    {
+      "median_test_nrmse": 0.08481941661330791,
+      "median_validation_nrmse": 0.07830701140718996,
+      "n_roots": 12,
+      "snapshot_budget": 1,
+      "student_architecture": "chain",
+      "teacher_n_qubits": 2
+    },
+    {
+      "median_test_nrmse": 0.047841608680503245,
+      "median_validation_nrmse": 0.042419336909365585,
+      "n_roots": 12,
+      "snapshot_budget": 2,
+      "student_architecture": "chain",
+      "teacher_n_qubits": 2
+    },
+    {
+      "median_test_nrmse": 0.049271736245923195,
+      "median_validation_nrmse": 0.042715938785190734,
+      "n_roots": 12,
+      "snapshot_budget": 4,
+      "student_architecture": "chain",
+      "teacher_n_qubits": 2
+    },
+    {
+      "median_test_nrmse": 0.08799130371774352,
+      "median_validation_nrmse": 0.08171294908538783,
+      "n_roots": 12,
+      "snapshot_budget": 1,
+      "student_architecture": "chain",
+      "teacher_n_qubits": 3
+    },
+    {
+      "median_test_nrmse": 0.04956850095833866,
+      "median_validation_nrmse": 0.04774778726657059,
+      "n_roots": 12,
+      "snapshot_budget": 2,
+      "student_architecture": "chain",
+      "teacher_n_qubits": 3
+    },
+    {
+      "median_test_nrmse": 0.04832298571551506,
+      "median_validation_nrmse": 0.04766065182232505,
+      "n_roots": 12,
+      "snapshot_budget": 4,
+      "student_architecture": "chain",
+      "teacher_n_qubits": 3
+    },
+    {
+      "median_test_nrmse": 0.09102315830836824,
+      "median_validation_nrmse": 0.08248209397476262,
+      "n_roots": 12,
+      "snapshot_budget": 1,
+      "student_architecture": "chain",
+      "teacher_n_qubits": 4
+    },
+    {
+      "median_test_nrmse": 0.049553383930804155,
+      "median_validation_nrmse": 0.046372632393993835,
+      "n_roots": 12,
+      "snapshot_budget": 2,
+      "student_architecture": "chain",
+      "teacher_n_qubits": 4
+    },
+    {
+      "median_test_nrmse": 0.04923447148011219,
+      "median_validation_nrmse": 0.04695561281506869,
+      "n_roots": 12,
+      "snapshot_budget": 4,
+      "student_architecture": "chain",
+      "teacher_n_qubits": 4
+    },
+    {
+      "median_test_nrmse": 0.1796337488727917,
+      "median_validation_nrmse": 0.1978317935294648,
+      "n_roots": 12,
+      "snapshot_budget": 1,
+      "student_architecture": "dense",
+      "teacher_n_qubits": 2
+    },
+    {
+      "median_test_nrmse": 0.07178782035264966,
+      "median_validation_nrmse": 0.06891328431263863,
+      "n_roots": 12,
+      "snapshot_budget": 2,
+      "student_architecture": "dense",
+      "teacher_n_qubits": 2
+    },
+    {
+      "median_test_nrmse": 0.07189347429171328,
+      "median_validation_nrmse": 0.06002107709303406,
+      "n_roots": 12,
+      "snapshot_budget": 4,
+      "student_architecture": "dense",
+      "teacher_n_qubits": 2
+    },
+    {
+      "median_test_nrmse": 0.18240797806681708,
+      "median_validation_nrmse": 0.19207999960197886,
+      "n_roots": 12,
+      "snapshot_budget": 1,
+      "student_architecture": "dense",
+      "teacher_n_qubits": 3
+    },
+    {
+      "median_test_nrmse": 0.0731032525980031,
+      "median_validation_nrmse": 0.06521493327930583,
+      "n_roots": 12,
+      "snapshot_budget": 2,
+      "student_architecture": "dense",
+      "teacher_n_qubits": 3
+    },
+    {
+      "median_test_nrmse": 0.07465782799047202,
+      "median_validation_nrmse": 0.06366937071998639,
+      "n_roots": 12,
+      "snapshot_budget": 4,
+      "student_architecture": "dense",
+      "teacher_n_qubits": 3
+    },
+    {
+      "median_test_nrmse": 0.18012500807138124,
+      "median_validation_nrmse": 0.18532250624200378,
+      "n_roots": 12,
+      "snapshot_budget": 1,
+      "student_architecture": "dense",
+      "teacher_n_qubits": 4
+    },
+    {
+      "median_test_nrmse": 0.0695856592699832,
+      "median_validation_nrmse": 0.06942079574738322,
+      "n_roots": 12,
+      "snapshot_budget": 2,
+      "student_architecture": "dense",
+      "teacher_n_qubits": 4
+    },
+    {
+      "median_test_nrmse": 0.07487697569434096,
+      "median_validation_nrmse": 0.05935929446972448,
+      "n_roots": 12,
+      "snapshot_budget": 4,
+      "student_architecture": "dense",
+      "teacher_n_qubits": 4
+    },
+    {
+      "median_test_nrmse": 0.02886638235844564,
+      "median_validation_nrmse": 0.029669933668497066,
+      "n_roots": 12,
+      "snapshot_budget": 1,
+      "student_architecture": "quadratic_delay",
+      "teacher_n_qubits": 2
+    },
+    {
+      "median_test_nrmse": 0.0268993112450056,
+      "median_validation_nrmse": 0.029453303714963998,
+      "n_roots": 12,
+      "snapshot_budget": 2,
+      "student_architecture": "quadratic_delay",
+      "teacher_n_qubits": 2
+    },
+    {
+      "median_test_nrmse": 0.02689931124500563,
+      "median_validation_nrmse": 0.02945330371496379,
+      "n_roots": 12,
+      "snapshot_budget": 4,
+      "student_architecture": "quadratic_delay",
+      "teacher_n_qubits": 2
+    },
+    {
+      "median_test_nrmse": 0.029571695521037195,
+      "median_validation_nrmse": 0.029711219820062598,
+      "n_roots": 12,
+      "snapshot_budget": 1,
+      "student_architecture": "quadratic_delay",
+      "teacher_n_qubits": 3
+    },
+    {
+      "median_test_nrmse": 0.02838282874052582,
+      "median_validation_nrmse": 0.028443512687189303,
+      "n_roots": 12,
+      "snapshot_budget": 2,
+      "student_architecture": "quadratic_delay",
+      "teacher_n_qubits": 3
+    },
+    {
+      "median_test_nrmse": 0.028382828740525806,
+      "median_validation_nrmse": 0.02844351268718935,
+      "n_roots": 12,
+      "snapshot_budget": 4,
+      "student_architecture": "quadratic_delay",
+      "teacher_n_qubits": 3
+    },
+    {
+      "median_test_nrmse": 0.025853868639936675,
+      "median_validation_nrmse": 0.03127616132692851,
+      "n_roots": 12,
+      "snapshot_budget": 1,
+      "student_architecture": "quadratic_delay",
+      "teacher_n_qubits": 4
+    },
+    {
+      "median_test_nrmse": 0.02600205862714654,
+      "median_validation_nrmse": 0.031688484231476285,
+      "n_roots": 12,
+      "snapshot_budget": 2,
+      "student_architecture": "quadratic_delay",
+      "teacher_n_qubits": 4
+    },
+    {
+      "median_test_nrmse": 0.026002058627146503,
+      "median_validation_nrmse": 0.031688484231476334,
+      "n_roots": 12,
+      "snapshot_budget": 4,
+      "student_architecture": "quadratic_delay",
+      "teacher_n_qubits": 4
+    },
+    {
+      "median_test_nrmse": 0.17700181030498768,
+      "median_validation_nrmse": 0.1559880947230871,
+      "n_roots": 12,
+      "snapshot_budget": 1,
+      "student_architecture": "ring",
+      "teacher_n_qubits": 2
+    },
+    {
+      "median_test_nrmse": 0.0507390669108594,
+      "median_validation_nrmse": 0.051051420322811396,
+      "n_roots": 12,
+      "snapshot_budget": 2,
+      "student_architecture": "ring",
+      "teacher_n_qubits": 2
+    },
+    {
+      "median_test_nrmse": 0.04886571834896607,
+      "median_validation_nrmse": 0.05078885489504045,
+      "n_roots": 12,
+      "snapshot_budget": 4,
+      "student_architecture": "ring",
+      "teacher_n_qubits": 2
+    },
+    {
+      "median_test_nrmse": 0.17763878635587876,
+      "median_validation_nrmse": 0.1511068604837832,
+      "n_roots": 12,
+      "snapshot_budget": 1,
+      "student_architecture": "ring",
+      "teacher_n_qubits": 3
+    },
+    {
+      "median_test_nrmse": 0.04956446100700166,
+      "median_validation_nrmse": 0.05021739645735239,
+      "n_roots": 12,
+      "snapshot_budget": 2,
+      "student_architecture": "ring",
+      "teacher_n_qubits": 3
+    },
+    {
+      "median_test_nrmse": 0.05029302044043443,
+      "median_validation_nrmse": 0.04930983605605061,
+      "n_roots": 12,
+      "snapshot_budget": 4,
+      "student_architecture": "ring",
+      "teacher_n_qubits": 3
+    },
+    {
+      "median_test_nrmse": 0.18024140635875957,
+      "median_validation_nrmse": 0.15526911030345333,
+      "n_roots": 12,
+      "snapshot_budget": 1,
+      "student_architecture": "ring",
+      "teacher_n_qubits": 4
+    },
+    {
+      "median_test_nrmse": 0.05165554273444641,
+      "median_validation_nrmse": 0.05311217606415046,
+      "n_roots": 12,
+      "snapshot_budget": 2,
+      "student_architecture": "ring",
+      "teacher_n_qubits": 4
+    },
+    {
+      "median_test_nrmse": 0.05111622675110056,
+      "median_validation_nrmse": 0.052735986393385295,
+      "n_roots": 12,
+      "snapshot_budget": 4,
+      "student_architecture": "ring",
+      "teacher_n_qubits": 4
+    },
+    {
+      "median_test_nrmse": 0.4238012185411748,
+      "median_validation_nrmse": 0.356846508751393,
+      "n_roots": 12,
+      "snapshot_budget": 1,
+      "student_architecture": "star",
+      "teacher_n_qubits": 2
+    },
+    {
+      "median_test_nrmse": 0.06900782507974382,
+      "median_validation_nrmse": 0.06543695987214324,
+      "n_roots": 12,
+      "snapshot_budget": 2,
+      "student_architecture": "star",
+      "teacher_n_qubits": 2
+    },
+    {
+      "median_test_nrmse": 0.049742225291059664,
+      "median_validation_nrmse": 0.04383101366455944,
+      "n_roots": 12,
+      "snapshot_budget": 4,
+      "student_architecture": "star",
+      "teacher_n_qubits": 2
+    },
+    {
+      "median_test_nrmse": 0.4282862438449481,
+      "median_validation_nrmse": 0.35700051136262523,
+      "n_roots": 12,
+      "snapshot_budget": 1,
+      "student_architecture": "star",
+      "teacher_n_qubits": 3
+    },
+    {
+      "median_test_nrmse": 0.06821086569562976,
+      "median_validation_nrmse": 0.06149919249568866,
+      "n_roots": 12,
+      "snapshot_budget": 2,
+      "student_architecture": "star",
+      "teacher_n_qubits": 3
+    },
+    {
+      "median_test_nrmse": 0.05202090580798165,
+      "median_validation_nrmse": 0.05182229710670887,
+      "n_roots": 12,
+      "snapshot_budget": 4,
+      "student_architecture": "star",
+      "teacher_n_qubits": 3
+    },
+    {
+      "median_test_nrmse": 0.4227720726603713,
+      "median_validation_nrmse": 0.35838140381571515,
+      "n_roots": 12,
+      "snapshot_budget": 1,
+      "student_architecture": "star",
+      "teacher_n_qubits": 4
+    },
+    {
+      "median_test_nrmse": 0.06395625185591852,
+      "median_validation_nrmse": 0.06292714652579388,
+      "n_roots": 12,
+      "snapshot_budget": 2,
+      "student_architecture": "star",
+      "teacher_n_qubits": 4
+    },
+    {
+      "median_test_nrmse": 0.05074559767934972,
+      "median_validation_nrmse": 0.05174277896229429,
+      "n_roots": 12,
+      "snapshot_budget": 4,
+      "student_architecture": "star",
+      "teacher_n_qubits": 4
+    }
+  ],
+  "claim_boundary": "Norm-matched graph-topology robustness for one six-qubit unitary QELM family; not architecture universality or quantum advantage.",
+  "counts": {
+    "architectures": [
+      "chain",
+      "dense",
+      "quadratic_delay",
+      "ring",
+      "star"
+    ],
+    "roots": 12,
+    "rows": 540,
+    "teacher_sizes": [
+      2,
+      3,
+      4
+    ]
+  },
+  "profile": "full",
+  "raw_results_sha256": "c7b52b3d144c234c2b4da52bd72265178cf08bebd811346c71cc7b0cfffc9742",
+  "runtime_seconds": 9.756477707996964,
+  "schema_version": 1,
+  "status": "EXPLORATORY_STRESS_TEST",
+  "study": "pra_qelm_student_architecture_family"
+}

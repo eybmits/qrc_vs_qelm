@@ -33,7 +33,42 @@ results_*/
 data/*
 !data/frozen/
 !data/frozen/frozen_v1_config.json
+!data/frozen/recurrence_fingerprint_v1.json
 !data/reference/
 !data/reference/**
 *.npz
 *.log
+
+# Local system and manuscript build state
+.DS_Store
+paper/canonical_emulation/main.aux
+paper/canonical_emulation/main.bbl
+paper/canonical_emulation/main.blg
+paper/canonical_emulation/main.fdb_latexmk
+paper/canonical_emulation/main.fls
+paper/canonical_emulation/main.out
+paper/canonical_emulation/mainNotes.bib
+paper/context/*
+
+# Superseded exploratory runs and figure candidates.  The content-addressed
+# release manifest force-adds only its authoritative snapshot files.
+pra_extension/outputs/
+pra_extension/figures/
+pra_extension/figures_final/
+pra_extension/figures_v2/
+pra_extension/figures_pra_final/
+pra_extension/figures_pra_final_v2/
+pra_extension/figures_pra_final_v3/
+pra_extension/figures_pra_final_v4/
+pra_extension/figures_pra_final_v5/
+pra_extension/figures_spectral_candidate/
+pra_extension/figures_spectral_candidate_v2/
+
+# Earlier manuscript and top-level diagnostic renders superseded by
+# paper/canonical_emulation and its three information-interface figures.
+paper/main.tex
+paper/references.bib
+paper/sections/
+paper/figures/*.pdf
+paper/figures/*.png
+paper/figures/*.csv

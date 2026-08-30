@@ -1,0 +1,82 @@
+Before asking whether a learner has enough features, one must ask whether its
+input contains enough information.  Temporal prediction often compares
+recurrent processors, which keep a state from the past, with reset processors,
+which start fresh at each example.  Reservoir computing turns fixed nonlinear
+dynamics into such a temporal processor and trains only the readout
+\cite{maass2002realtime,jaeger2004harnessing,dambre2012information}.  A recurrent
+model carries earlier inputs in its evolving state; a reset-window model sees
+only the latest $d$ inputs.  If an older event changes the target without
+changing that visible suffix, no function of the suffix can recover the missing
+information.  This is an information-theoretic limitation shared by classical
+and quantum learners.
+
+A quantum reservoir computer (QRC) propagates a quantum state from one input to
+the next \cite{fujii2017harnessing,mujal2021opportunities}.  A quantum extreme
+learning machine (QELM) fixes a quantum feature map and trains its output
+weights \cite{huang2006elm,innocenti2023potential}.  In the reset-window
+architecture, each prediction begins from the same state and encodes only a
+finite suffix \cite{kawanabe2026tdqelm}.  More qubits, observables, training
+examples, or readout parameters can enrich functions of that suffix, but cannot
+supply an earlier input.  The same boundary applies to a classical
+reset-window model, whereas recurrent state, an external memory, or an explicit
+prefix summary can restore the missing information.  We call the resulting
+irreducible error the omitted-history floor.
+
+The converse question is constructive.  When old inputs fade, a finite suffix
+contains the needed information, but a particular QELM may still fail to
+represent the resulting suffix map.  We separate these two requirements.  The
+common-suffix diameter $D_d$ gives the exact best uniform error $D_d/2$ for an
+unrestricted window predictor.  Under uniform contraction and input
+Lipschitzness, combining reset replay with a standard parallel Bernstein
+quantum feature map gives an explicit QRC-to-QELM error bound in window length,
+qubit count, feature count, and shots.  This proves approximation by a growing
+reset-QELM family; it does not identify fixed QRC and QELM architectures.
+
+The quantum contribution is a protected memory mechanism in a two-qubit open
+system.  An addressable control changes the singlet population; every later
+allowed symmetric drive preserves it under collective dissipation; and
+two-body Pauli correlations reveal it.  The stored quantity is therefore
+protected, excitable, and visible.  Its persistence follows from the symmetry
+of the Hamiltonian and dissipator, as in decoherence-free and noiseless sectors
+\cite{zanardi1997noiseless,lidar1998dfs,albert2014symmetries}.  Entanglement
+alone does not produce the learning obstruction.  The entangled singlet sector
+realizes measurable memory whose cause lies outside the learner's window.
+
+\begin{figure*}[t]
+ \includegraphics[width=\textwidth]{fig01_information_interface.pdf}
+ \caption{\textbf{Protected memory creates an information-interface limit.}
+ (a) One fixed pair of trajectories differs once in the addressable-control
+ flag and then receives identical inputs.  For any finite window $d$, evaluate
+ after $d$ later inputs: the visible suffixes agree while the
+ recurrent outputs retain the displayed gap and error floors.  Exact
+ persistence covers all allowed symmetry-preserving suffixes, not later
+ symmetry-breaking controls.  (b) The stored singlet population is protected,
+ excitable, and visible through two-body Pauli outputs.  (c) Missing history,
+ imperfect map representation, and finite measurement resolution are distinct
+ limitations.  (d) The common-suffix diameter separates persistent obstruction
+ from fading memory; a growing reset QELM approximates the latter with distinct
+ history, map, and shot terms.}
+ \label{fig:information-interface}
+\end{figure*}
+
+For one fixed recurrent two-qubit process and one declared input language, one
+fixed pair of infinite trajectories witnesses every finite window: its visible
+suffixes agree while its measured outputs retain a nonzero gap.  Every
+stateless suffix-only predictor therefore has strictly positive worst-case
+absolute- and mean-squared-error floors.  This covers predictors that receive
+only the finite raw-input suffix and carry no test-time state, not learners
+supplied with recurrent state, an initial quantum state, a prefix summary, a
+branch label, or external memory.
+
+The paper establishes three results.  First, $D_d/2$ is the exact minimax
+uniform error of suffix-only prediction.  A constructive theorem then shows
+that every uniformly contractive, input-Lipschitz QRC observable is
+approximated by a finite reset Bernstein QELM, with separate bounds for
+discarded history, suffix representation, and finite shots.  Second, the
+protected two-qubit mode realizes a persistent floor and quantifies how
+imperfect protection gives a finite certified horizon.  Third, a held-out phase
+map tests the same ordering on one fixed six-qubit time-delayed QELM.  On the
+fast-forgetting slice, a quadratic classical delay model is the best control in
+all 24 root--teacher-family cells and the tested QELM loses to it in every root.
+The comparison establishes an approximation boundary and a resource diagnosis,
+not quantum computational advantage.

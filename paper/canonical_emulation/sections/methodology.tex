@@ -1,0 +1,197 @@
+\section*{Methods}
+\label{sec:methods}
+
+\subsection*{Teacher and student models}
+
+The exact memory construction uses a two-qubit teacher initialized in
+$|00\rangle$.  An addressable pulse $I$ or $R_x^{(1)}(1)$ appears in the old
+prefix, followed by 80 symmetric input channels with $dt=0.2$ and collective
+loss rate $\gamma=0.8$.  Twelve independent coupling and suffix roots sample
+$J\in[-1,1]$.  The numerical checks compare the singlet population before and
+after the suffix, verify the analytic pulse population, and confirm that
+symmetric preparation does not populate the singlet sector.  Matched local
+loss and asymmetric collective jumps remove the protection while leaving the
+target observable unchanged.
+
+The confirmatory finite-resource teachers have $N_T\in\{2,3\}$ qubits and obey
+\begin{align}
+ H_T(u)&=\sum_{i<j}J_{ij}X_iX_j+0.5\sum_i Z_i+u\sum_iX_i,\nonumber\\
+ \dot\rho&=-i[H_T(u),\rho]+\gamma_T\sum_i\mathcal D[\sigma_i^-]\rho,
+ \label{eq:teacher-model}
+\end{align}
+Here
+$\mathcal D[L]\rho=L\rho L^\dagger-\tfrac12\{L^\dagger L,\rho\}$,
+$J_{ij}\sim\mathcal U[-1,1]$, $dt=0.5$, and
+$\gamma_T\in\{0,0.2,0.5,1,2,4\}$.  Inputs are uniform on 33 equally spaced
+values in $[0,1]$.  The output contains every single-site Pauli expectation
+and every same-axis two-site product, giving 9 components for $N_T=2$ and 18
+for $N_T=3$.
+
+The constructive theorem uses a growing Bernstein QELM.  Each of the $d$
+scalar lag coordinates is encoded into $r$ freshly prepared qubits, all qubits
+are measured once in the computational basis, and outcomes are coarse-grained
+to the tuple of blockwise Hamming weights.  A coefficient lookup followed by
+averaging is the linear readout.  This family is used for the existence and
+resource bound; its full coefficient table is not fitted in the numerical
+phase map.
+
+The numerical student is instead one fixed six-qubit parallel time-delayed
+QELM.  It is reset before each example and receives the newest
+$d\in\{1,2,4,6\}$ inputs, one per qubit.
+Input $u$ is encoded as
+$\sqrt{1-u}|0\rangle+\sqrt{u}|1\rangle$ on its assigned qubit; unused qubits
+remain in $|0\rangle$.  An independent random $XX$ Hamiltonian with
+$J_{ij}\sim\mathcal U[-1,1]$ and transverse field $0.5$ evolves the product
+state for $T=0.5$ without dissipation.  Single-site $X,Y,Z$ expectations are
+recorded at $T/4,T/2,3T/4,T$.  The nested feature sets use $\{T\}$,
+$\{T/2,T\}$, or all four checkpoints, giving $B\in\{18,36,72\}$.
+
+Features are standardized from training rows only.  The affine ridge penalty
+is selected from
+$\{0,10^{-10},10^{-8},10^{-6},10^{-4},10^{-2},1,10^2,10^4,10^6,\infty\}$
+on validation data and refitted on the combined training and validation rows.
+Finite penalties use an economy SVD with relative resolved-subspace cutoff
+$10^{-6}$; $\alpha=\infty$ is the intercept-only model.
+
+The constructive audit uses the existing one-qubit
+\texttt{LindbladReservoir} with $H(u)=0.5Z+uX$, local loss $\gamma=4$, and
+$dt=0.5$.  Block-Hamming probabilities are checked directly on a six-qubit
+statevector at $d=2,r=3$.  Bernstein errors use a $41\times41$ closed input
+grid and $r\in\{1,2,4,8,16,32\}$.  History truncation is evaluated on one
+fixed 257-input continuous stream for $d=1,\ldots,8$.  The runner writes
+deterministic CSV and JSON artifacts with a SHA-256 ledger.
+
+\subsection*{Common-suffix measurement}
+
+Each of the 12 root blocks fixes teacher couplings, student couplings, input
+streams, and random-feature seeds; seed namespaces are disjoint across roots.
+Train, validation, test, and suffix streams are independent.  Each streaming
+split begins in $|0\cdots0\rangle$ and has a 128-step washout followed by 480
+training, 160 validation, and 320 test rows.  A separate panel contains 32
+length-six suffixes.  Four independent old prefixes, each after a 128-step
+burn-in, lead into every suffix; shorter windows are nested tails of the same
+sequence.  The newest suffix symbols are sampled without replacement from the
+33-symbol alphabet, and older coordinates are sampled independently.
+
+For suffix $s$, prefix branch $k$, teacher output $y_{sk}$, branch mean
+$\bar y_s$, and QELM prediction $p_s$, the panel separates
+\begin{align}
+ R_{\rm hist}&=m^{-1}\mathbb E_{s,k}\|y_{sk}-\bar y_s\|^2,\nonumber\\
+ R_{\rm rep}&=m^{-1}\mathbb E_s\|\bar y_s-p_s\|^2,\nonumber\\
+ R_{\rm total}&=R_{\rm hist}+R_{\rm rep}.
+ \label{eq:panel-decomposition}
+\end{align}
+The first term is output variation among histories that the student cannot
+distinguish.  The second is the residual once the suffix is known.  The
+identity is exact on every realized panel.
+
+\subsection*{Evaluation, controls, and decision rules}
+
+Errors are normalized by the target variance before taking the square root.
+The feasibility threshold is NRMSE $0.10$.  A target with variance below
+$10^{-8}$ is a degenerate target (D).  The remaining cells are classified in
+order as history impossible (H) when the common-suffix floor exceeds the
+threshold, emulated (E) when total QELM error is below it, representation
+limited (R) when the suffix is sufficient but the QELM remains above the
+threshold, and unresolved (U) otherwise.  A tie among root-modal categories is
+shown as mix.  Root blocks, not rows, observables, or shot replicates, are the
+independent statistical units.  Intervals use 20,000 root-block bootstrap
+replicates.
+
+Quadratic delay, linear delay, dimension-matched random-tanh, intercept-only,
+and reset--replay controls receive the same windows and data splits.  The
+reset--replay state starts from one fixed state $\sigma$ and applies exactly
+the teacher's last $d$ input channels,
+$\widetilde\rho_t^{(d)}=\Phi_{a_t}\circ\cdots\circ
+\Phi_{a_{t-d+1}}(\sigma)$.  It therefore isolates older-history removal while
+preserving the channel and observables.  For a downstream affine readout
+$f_w(z)=b+\sum_jw_jz_j$, \emph{compiled replay} keeps the stateful model's
+trained $b,w$ unchanged; under uniform contraction it has the prediction
+certificate in Eq.~\eqref{eq:contractive-replay}.  The direct vector
+reset--replay control reported here is its identity-readout special case.  A
+\emph{retrained replay} instead fits and validation-selects new weights on
+replay features.  It can test task adaptation, but it mixes truncation with
+refitting and does not test identical-readout reuse.  Neither replay variant
+is the canonical parallel QELM, which encodes the whole suffix at once and uses
+a different fixed feature map.  The quantum-specific comparison uses the best
+of quadratic delay, linear delay, and random-tanh in each cell; random-tanh
+alone is a feature-count sensitivity check.
+
+Seven confirmatory checks define the finite-resource result.  G0 requires
+complete row coverage, passing tests, strict machine-readable artifacts,
+recorded hashes, disjoint seeds, and deterministic duplicate smoke runs.  G1
+requires the panel identity error to be at most $10^{-12}$, agreement of
+separately evaluated common-suffix predictions, and all sampled lower bounds.
+G2 requires a median within-system Spearman association of at least $0.8$
+between suffix history NRMSE and independent-stream reset--replay NRMSE in at
+least 10/12 roots, with at least five eligible loss systems per teacher-size
+family.  G3 requires both a live history-feasible cell and a live
+history-impossible cell in each teacher-size family in at least 10/12 roots.
+G4 requires at least a $20\%$ median $d=1\to6$ QELM gain, positive in at least
+10/12 roots, on the fixed $N_T\in\{2,3\}$, $\gamma_T\in\{2,4\}$, $B=72$
+transition cells.  G5 requires at least a $20\%$ median $B=18\to72$
+representation gain, positive in at least 10/12 roots, after verifying history
+feasibility at $\gamma_T=4,d=6$.  G6 requires the G2 and G5 directions
+separately for $N_T=2$ and 3.  All seven checks pass.  The separate
+quantum-specific check requires at least a $10\%$ median gain over the best
+classical control and a positive gain in at least 10/12 roots; it fails.
+
+The dissipation--window analysis fits
+$\log h(d)=a-c\gamma_Tdt\,d$ to the 20 positive-loss cells for each root and
+teacher size, where $h(d)$ is the common-suffix history NRMSE.
+
+\subsection*{Dissipator, observable, and finite-shot studies}
+
+The observable-memory study uses 12 independent roots,
+$N_T\in\{2,3,4\}$, $d\in\{1,2,4,8\}$, nominal strengths
+$\gamma\in\{0.25,1,4\}$, four prefix branches, a 48-step prefix burn-in, and a
+13-symbol input alphabet with 12 suffix groups.  It compares local loss, collective loss, and
+dephasing on three output panels: single- and two-site same-axis $XYZ$,
+single-site $XY$, and single-site $Z$.  Jump families are normalized to the
+Hilbert--Schmidt jump strength of local loss at the same nominal $\gamma$;
+this matching does not imply equal Liouvillian gaps.  A paired variant draws
+continuous inputs from $\mathcal U[0,1]$.
+
+The finite-shot study in Fig.~\ref{fig:resource-diagnosis}(c) uses 12 roots of four-qubit local-loss
+teachers at $\gamma_T=4$, $d=6$, and total per-input budgets
+$Q\in\{300,1200,4800,19200\}$.  Each snapshot/global-Pauli setting receives an
+equal integer share of $Q$; one joint bit-string multinomial outcome supplies
+all compatible single-site expectations.  Training, validation, and test
+features are sampled independently in each of 16 replicates.  Within each
+replicate, validation data select $\alpha$ separately for every $B$ and then
+select $B$; test targets enter neither choice.  Teacher labels remain exact.
+The fixed-readout identity in Eq.~\eqref{eq:fixed-readout-shot-risk} assumes
+conditionally unbiased independent test noise.  Because feature noise in the
+training and validation splits randomizes both the fitted readout and the
+selected budget, the reported errors re-run fitting and selection in every
+replicate.
+
+\subsection*{Finite-panel calibration}
+
+The four prefix branches make Eq.~\eqref{eq:panel-decomposition} exact for each
+realized suffix panel, and the classifications use this empirical floor.  If
+the branches are conditionally independent samples from a population of old
+histories, the empirical history numerator has expectation $(K-1)/K$ times the
+population conditional variance.  Its unbiased correction is therefore $4/3$
+at $K=4$.  Repeating the classification with this correction changes 39 of
+1,728 root-level labels from unresolved to history impossible and four of 144
+modal map cells; no emulated or representation-limited label changes.  The
+reported window and feature effect sizes remain unchanged.
+
+\subsection*{Scope and reproducibility}
+
+The confirmatory matrix is restricted to two- and three-qubit local-loss
+teachers, a 33-symbol input alphabet, exact expectation values, and one fixed
+six-qubit QELM architecture.  The four-qubit, alternative-dissipator,
+continuous-input, and finite-shot studies are separate 12-root numerical
+extensions.  The growing Bernstein-QELM theorem concerns bounded observable
+outputs under its stated continuity assumptions; it does not grant universality
+to the tested six-qubit local-Pauli feature map or provide a sample-efficient
+training algorithm.  All numerical results are simulations; they do not
+include hardware, gate or state-preparation-and-measurement errors,
+measurement backaction, or drift.  They establish neither approximation of
+arbitrary full QRC states nor quantum computational advantage.
+
+Source code, configurations, raw result tables, figure sources, and the
+content-addressed release manifest are available at
+\href{https://github.com/eybmits/qrc_vs_qelm}{github.com/eybmits/qrc\_vs\_qelm}.

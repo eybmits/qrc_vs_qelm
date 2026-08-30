@@ -312,6 +312,9 @@ def test_run_report_all_stages_writes_figures_summary_and_report(tmp_path: Path)
     report = (out / "REPORT.md").read_text(encoding="utf-8")
     assert "INJECTED_G1B_WITH" in report
     assert "INJECTED_G1B_WITHOUT" in report
+    assert "G1c with uninformative exclusion" in report
+    assert "G1c without uninformative exclusion" in report
+    assert "first loaded stage contains 8 executed seed cells" in report
     assert "features_dead=True" in report
 
 

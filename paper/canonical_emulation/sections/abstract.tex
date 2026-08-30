@@ -1,0 +1,33 @@
+A quantum reservoir computer (QRC) carries a state through time, whereas a
+reset-window quantum extreme learning machine (QELM) receives only the latest
+$d$ inputs.  We characterize when this difference matters for a declared
+scalar output.  If $D_d$ is the largest output gap between histories with the
+same length-$d$ suffix, the best unrestricted suffix predictor has uniform
+error $D_d/2$.  Reset-window approximation is therefore possible precisely
+when the observable memory $D_d$ vanishes with $d$.
+
+For scalar inputs and uniformly contractive, input-Lipschitz QRC channels, we
+combine history truncation with a standard parallel Bernstein quantum feature
+map.  A gate-based reset QELM with $n=rd$ qubits and $(r+1)^d$ grouped outcome
+probabilities achieves
+\[
+ \sup |Y_t-\widehat Y_t|
+ \leq 2M\eta^d+
+ \frac{ML_u(1-\eta^d)}{(1-\eta)\sqrt r},
+ \qquad M=\|O\|_\infty.
+\]
+The first term measures discarded history; the second measures representation
+of the retained suffix; a third Hoeffding term quantifies finite shots.  This
+gives explicit window, qubit, feature, and measurement resources for any
+requested accuracy.  More generally, every continuous
+fading-memory QRC filter on a compact scalar input interval admits uniform
+approximation by this scalable reset-QELM family.
+
+The converse is realized by a two-qubit open system.  An earlier control writes
+singlet population, symmetry-preserving later channels protect it, and
+two-body Pauli measurements reveal it.  Its suffix diameter remains
+$0.114924$ for every finite window, giving error floor $0.057462$.  Held-out
+phase maps separately resolve history, feature, and finite-shot limits; the
+strongest classical delay control outperforms the tested six-qubit QELM.  The
+result is an observable-level approximation boundary, not a computational or
+quantum-advantage statement.

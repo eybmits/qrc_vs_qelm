@@ -1,0 +1,90 @@
+{
+  "artifacts": {
+    "continuous_root_effects.csv": "37fac706ab6d711ec403d37a4e532f5d2dbc855b72a6b5617a570a1b49ec5c3d"
+  },
+  "claim_boundary": "continuous inputs, N=2/3, matched gamma=4, finite sampled suffix panel; not a uniform contraction theorem or hardware test",
+  "counts": {
+    "roots": 12,
+    "rows": 648
+  },
+  "liveness": {
+    "by_dissipator": [
+      {
+        "dissipator_family": "collective_loss",
+        "live_fraction": 1.0,
+        "live_rows": 216,
+        "total_rows": 216
+      },
+      {
+        "dissipator_family": "dephasing",
+        "live_fraction": 0.9675925925925926,
+        "live_rows": 209,
+        "total_rows": 216
+      },
+      {
+        "dissipator_family": "local_loss",
+        "live_fraction": 1.0,
+        "live_rows": 216,
+        "total_rows": 216
+      }
+    ],
+    "target_variance_floor": 1e-08
+  },
+  "numerical_audit": {
+    "maximum_transfer_output_error": 2.191294139821136e-15,
+    "maximum_transfer_risk_error": 9.996344030316351e-17,
+    "minimum_sample_span_bound_slack": 7.680967493691373e-11,
+    "minimum_tracezero_bound_slack": 1.3978198847346388e-10
+  },
+  "root_block_effects": {
+    "collective_loss": {
+      "fractional_reduction": {
+        "ci95_high": 0.918874336145127,
+        "ci95_low": 0.7905158107899993,
+        "maximum": 0.9502458441236785,
+        "median": 0.8805823193330904,
+        "minimum": 0.7134409903468217,
+        "n_roots": 12,
+        "positive_roots": 12
+      },
+      "median_history_nrmse_d1": 0.2221014829231284,
+      "median_history_nrmse_d8": 0.038191717270794276,
+      "paired_live_cells_total": 72
+    },
+    "dephasing": {
+      "fractional_reduction": {
+        "ci95_high": 0.22194463262848507,
+        "ci95_low": 0.02917467510114302,
+        "maximum": 0.3694582995116197,
+        "median": 0.07892896658012208,
+        "minimum": -0.05480173564087576,
+        "n_roots": 12,
+        "positive_roots": 11
+      },
+      "median_history_nrmse_d1": 0.8614730807457498,
+      "median_history_nrmse_d8": 0.7978526239859702,
+      "paired_live_cells_total": 67
+    },
+    "local_loss": {
+      "fractional_reduction": {
+        "ci95_high": 0.999503062507053,
+        "ci95_low": 0.9986800146716195,
+        "maximum": 0.9996478906276842,
+        "median": 0.999399172776542,
+        "minimum": 0.996952062978624,
+        "n_roots": 12,
+        "positive_roots": 12
+      },
+      "median_history_nrmse_d1": 0.2801227445161183,
+      "median_history_nrmse_d8": 0.0001753003804592067,
+      "paired_live_cells_total": 72
+    }
+  },
+  "schema_version": 1,
+  "source_artifacts": {
+    "pra_extension/outputs/observable_memory_continuous_exploratory_v1_12roots/observable_memory_results.csv": "cc539c5b9666f4d1c84edd1b7e596ddca53d4814fe69b609e946445a95b511b6",
+    "pra_extension/outputs/observable_memory_continuous_exploratory_v1_12roots/observable_memory_summary.json": "7fff3dbbf18ccce599a416c6f044e7b89559676315ca600b9aeef592667711d3"
+  },
+  "status": "EXPLORATORY_POST_CONFIRMATORY",
+  "study": "continuous_input_observable_memory_robustness"
+}

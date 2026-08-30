@@ -1,0 +1,104 @@
+{
+  "architecture_feature_effects": {
+    "chain": {
+      "bootstrap_95_ci_percent": [
+        37.4128402644475,
+        51.22717837670942
+      ],
+      "coupling_rescale_factor_range": [
+        1.0708455849598142,
+        3.7607771794631137
+      ],
+      "median_high_budget_test_nrmse": 0.04916482148142935,
+      "median_root_feature_gain_percent": 45.65184173531663,
+      "n_root_teacher_cells": 36,
+      "n_roots": 12,
+      "positive_root_teacher_cells": 36,
+      "positive_roots": 12
+    },
+    "dense": {
+      "bootstrap_95_ci_percent": [
+        48.86810401428711,
+        74.76043674978558
+      ],
+      "coupling_rescale_factor_range": [
+        1.0,
+        1.0
+      ],
+      "median_high_budget_test_nrmse": 0.0747085043884235,
+      "median_root_feature_gain_percent": 59.88469099762648,
+      "n_root_teacher_cells": 36,
+      "n_roots": 12,
+      "positive_root_teacher_cells": 36,
+      "positive_roots": 12
+    },
+    "ring": {
+      "bootstrap_95_ci_percent": [
+        62.31281255694296,
+        78.6550430744474
+      ],
+      "coupling_rescale_factor_range": [
+        0.9210562365828489,
+        3.2456130623692574
+      ],
+      "median_high_budget_test_nrmse": 0.050582289511856504,
+      "median_root_feature_gain_percent": 72.4457351038696,
+      "n_root_teacher_cells": 36,
+      "n_roots": 12,
+      "positive_root_teacher_cells": 36,
+      "positive_roots": 12
+    },
+    "star": {
+      "bootstrap_95_ci_percent": [
+        86.35594839175256,
+        88.88715308162168
+      ],
+      "coupling_rescale_factor_range": [
+        1.1422535890533667,
+        5.264810972783116
+      ],
+      "median_high_budget_test_nrmse": 0.051589864290408044,
+      "median_root_feature_gain_percent": 87.65723367683714,
+      "n_root_teacher_cells": 36,
+      "n_roots": 12,
+      "positive_root_teacher_cells": 36,
+      "positive_roots": 12
+    }
+  },
+  "audit": {
+    "dense_reproduces_canonical_random_couplings": true,
+    "exact_cartesian_profile": true,
+    "globally_unique_explicit_seeds": true,
+    "sparse_interaction_norms_match_paired_dense": true,
+    "test_targets_unused_for_model_selection": true
+  },
+  "claim_boundary": "The result probes four norm-matched graph topologies for one six-qubit unitary QELM family. It is not an architecture-universal statement or evidence of quantum advantage; the quadratic control remains stronger.",
+  "counts": {
+    "root_teacher_cells": 36,
+    "roots": 12,
+    "rows": 540
+  },
+  "schema_version": 1,
+  "selection_guard": "Ridge alpha and the QELM topology are selected on validation rows only; test targets are not used for either selection.",
+  "source_results_sha256": "c7b52b3d144c234c2b4da52bd72265178cf08bebd811346c71cc7b0cfffc9742",
+  "status": "EXPLORATORY_STRESS_TEST",
+  "study": "pra_qelm_student_architecture_family_analysis",
+  "validation_selected_architecture_counts": {
+    "chain": 19,
+    "ring": 8,
+    "star": 9
+  },
+  "validation_selected_qelm_vs_quadratic": {
+    "bootstrap_95_ci_percent": [
+      -101.76541942983683,
+      -47.09538740180634
+    ],
+    "median_root_gain_percent": -74.95298209699644,
+    "n_root_teacher_cells": 36,
+    "n_roots": 12,
+    "positive_root_teacher_cells": 0,
+    "positive_roots": 0,
+    "quadratic_beats_every_fixed_qelm_topology_cells": 36,
+    "total_fixed_topology_comparison_cells": 36
+  }
+}

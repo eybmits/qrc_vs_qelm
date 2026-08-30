@@ -1,0 +1,1113 @@
+{
+  "artifact_sha256": {
+    "observable_memory_decay_fits.csv": "243530593735152705a8a4db8620c2d962e2e2539cafcba58d2915cf33875b67",
+    "observable_memory_findings.csv": "ecd927a090cdc492e0b02c72e53bfb810b00d351410412bedcdfe33bc3ff1486",
+    "observable_memory_results.csv": "cc539c5b9666f4d1c84edd1b7e596ddca53d4814fe69b609e946445a95b511b6"
+  },
+  "canonical_freeze_after": {
+    "checks": {
+      "config_sha256": true,
+      "confirmatory_roots_previously_opened": true,
+      "frozen_at_utc": true,
+      "material_identity_sha256": true,
+      "profile": true,
+      "schema_version": true,
+      "status": true,
+      "study": true
+    },
+    "freeze_record_sha256": "efe9006df7f66de0f49cd96bab3b6160f53fda7c9dc937a3a28cc3a12e6fa897",
+    "material_file_count": 92,
+    "material_identity_sha256": "a65b069e206bf881bef03726325c0117454018e2737f75655f08692e1e565ea2",
+    "passed": true
+  },
+  "canonical_freeze_before": {
+    "checks": {
+      "config_sha256": true,
+      "confirmatory_roots_previously_opened": true,
+      "frozen_at_utc": true,
+      "material_identity_sha256": true,
+      "profile": true,
+      "schema_version": true,
+      "status": true,
+      "study": true
+    },
+    "freeze_record_sha256": "efe9006df7f66de0f49cd96bab3b6160f53fda7c9dc937a3a28cc3a12e6fa897",
+    "material_file_count": 92,
+    "material_identity_sha256": "a65b069e206bf881bef03726325c0117454018e2737f75655f08692e1e565ea2",
+    "passed": true
+  },
+  "claim_boundary": "finite sampled conditional risks and observable-restricted Hilbert-Schmidt transfer bounds; no uniform contraction theorem",
+  "condition_medians": [
+    {
+      "dissipator_family": "collective_loss",
+      "maximum_history_nrmse": 0.22447388048334221,
+      "median_history_nrmse": 0.14108489878992303,
+      "median_observable_memory_gain": 0.1413065715712079,
+      "median_state_hs_memory_gain": 0.15202878166417394,
+      "minimum_history_nrmse": 0.09522603897513367,
+      "n_roots": 12,
+      "observable_panel": "canonical_xyz_w2",
+      "reference_local_loss_gamma": 4.0,
+      "teacher_n_qubits": 2,
+      "window": 1
+    },
+    {
+      "dissipator_family": "collective_loss",
+      "maximum_history_nrmse": 0.001494850206156238,
+      "median_history_nrmse": 0.0007195703017410548,
+      "median_observable_memory_gain": 0.0007073111038938566,
+      "median_state_hs_memory_gain": 0.0006832061154484817,
+      "minimum_history_nrmse": 0.00016005404911774792,
+      "n_roots": 12,
+      "observable_panel": "canonical_xyz_w2",
+      "reference_local_loss_gamma": 4.0,
+      "teacher_n_qubits": 2,
+      "window": 4
+    },
+    {
+      "dissipator_family": "collective_loss",
+      "maximum_history_nrmse": 4.507407568625335e-06,
+      "median_history_nrmse": 3.282255924032112e-07,
+      "median_observable_memory_gain": 3.360913475432847e-07,
+      "median_state_hs_memory_gain": 3.045942921028591e-07,
+      "minimum_history_nrmse": 4.582457394947133e-08,
+      "n_roots": 12,
+      "observable_panel": "canonical_xyz_w2",
+      "reference_local_loss_gamma": 4.0,
+      "teacher_n_qubits": 2,
+      "window": 8
+    },
+    {
+      "dissipator_family": "collective_loss",
+      "maximum_history_nrmse": 0.22851743886961176,
+      "median_history_nrmse": 0.1537538987005076,
+      "median_observable_memory_gain": 0.14359862753232305,
+      "median_state_hs_memory_gain": 0.15202878166417394,
+      "minimum_history_nrmse": 0.10148648498526977,
+      "n_roots": 12,
+      "observable_panel": "coherence_xy_w1",
+      "reference_local_loss_gamma": 4.0,
+      "teacher_n_qubits": 2,
+      "window": 1
+    },
+    {
+      "dissipator_family": "collective_loss",
+      "maximum_history_nrmse": 0.001730610286215985,
+      "median_history_nrmse": 0.0006318101173718,
+      "median_observable_memory_gain": 0.0005776229987738073,
+      "median_state_hs_memory_gain": 0.0006832061154484817,
+      "minimum_history_nrmse": 0.0001592304198826472,
+      "n_roots": 12,
+      "observable_panel": "coherence_xy_w1",
+      "reference_local_loss_gamma": 4.0,
+      "teacher_n_qubits": 2,
+      "window": 4
+    },
+    {
+      "dissipator_family": "collective_loss",
+      "maximum_history_nrmse": 5.227021285060921e-06,
+      "median_history_nrmse": 2.849245118507879e-07,
+      "median_observable_memory_gain": 2.764009068554989e-07,
+      "median_state_hs_memory_gain": 3.045942921028591e-07,
+      "minimum_history_nrmse": 4.67465658265416e-08,
+      "n_roots": 12,
+      "observable_panel": "coherence_xy_w1",
+      "reference_local_loss_gamma": 4.0,
+      "teacher_n_qubits": 2,
+      "window": 8
+    },
+    {
+      "dissipator_family": "collective_loss",
+      "maximum_history_nrmse": 0.2567319958740679,
+      "median_history_nrmse": 0.13624391914076528,
+      "median_observable_memory_gain": 0.14464278184489204,
+      "median_state_hs_memory_gain": 0.15202878166417394,
+      "minimum_history_nrmse": 0.04655625969599239,
+      "n_roots": 12,
+      "observable_panel": "population_z_w1",
+      "reference_local_loss_gamma": 4.0,
+      "teacher_n_qubits": 2,
+      "window": 1
+    },
+    {
+      "dissipator_family": "collective_loss",
+      "maximum_history_nrmse": 0.0009917995327826195,
+      "median_history_nrmse": 0.0003899264260550638,
+      "median_observable_memory_gain": 0.0003560690330865905,
+      "median_state_hs_memory_gain": 0.0006832061154484817,
+      "minimum_history_nrmse": 0.00020886829454668638,
+      "n_roots": 12,
+      "observable_panel": "population_z_w1",
+      "reference_local_loss_gamma": 4.0,
+      "teacher_n_qubits": 2,
+      "window": 4
+    },
+    {
+      "dissipator_family": "collective_loss",
+      "maximum_history_nrmse": 3.144953472007506e-06,
+      "median_history_nrmse": 2.1155005784037935e-07,
+      "median_observable_memory_gain": 2.0355705706101445e-07,
+      "median_state_hs_memory_gain": 3.045942921028591e-07,
+      "minimum_history_nrmse": 6.536016003703797e-08,
+      "n_roots": 12,
+      "observable_panel": "population_z_w1",
+      "reference_local_loss_gamma": 4.0,
+      "teacher_n_qubits": 2,
+      "window": 8
+    },
+    {
+      "dissipator_family": "dephasing",
+      "maximum_history_nrmse": 0.9347442887956227,
+      "median_history_nrmse": 0.8813124563814607,
+      "median_observable_memory_gain": 0.8287450661035982,
+      "median_state_hs_memory_gain": 0.8290271848267858,
+      "minimum_history_nrmse": 0.7987087675788777,
+      "n_roots": 12,
+      "observable_panel": "canonical_xyz_w2",
+      "reference_local_loss_gamma": 4.0,
+      "teacher_n_qubits": 2,
+      "window": 1
+    },
+    {
+      "dissipator_family": "dephasing",
+      "maximum_history_nrmse": 0.90564646436327,
+      "median_history_nrmse": 0.8314995991714058,
+      "median_observable_memory_gain": 0.5353377735532465,
+      "median_state_hs_memory_gain": 0.5307010943123175,
+      "minimum_history_nrmse": 0.6574773740820512,
+      "n_roots": 12,
+      "observable_panel": "canonical_xyz_w2",
+      "reference_local_loss_gamma": 4.0,
+      "teacher_n_qubits": 2,
+      "window": 4
+    },
+    {
+      "dissipator_family": "dephasing",
+      "maximum_history_nrmse": 0.912425849346235,
+      "median_history_nrmse": 0.813414431407774,
+      "median_observable_memory_gain": 0.24225689743835982,
+      "median_state_hs_memory_gain": 0.24114304846569276,
+      "minimum_history_nrmse": 0.6065884667566691,
+      "n_roots": 12,
+      "observable_panel": "canonical_xyz_w2",
+      "reference_local_loss_gamma": 4.0,
+      "teacher_n_qubits": 2,
+      "window": 8
+    },
+    {
+      "dissipator_family": "dephasing",
+      "maximum_history_nrmse": 0.8502418506588085,
+      "median_history_nrmse": 0.7504745894673397,
+      "median_observable_memory_gain": 0.6416673084456755,
+      "median_state_hs_memory_gain": 0.8290271848267858,
+      "minimum_history_nrmse": 0.4188759126070918,
+      "n_roots": 12,
+      "observable_panel": "coherence_xy_w1",
+      "reference_local_loss_gamma": 4.0,
+      "teacher_n_qubits": 2,
+      "window": 1
+    },
+    {
+      "dissipator_family": "dephasing",
+      "maximum_history_nrmse": 0.8500431665990056,
+      "median_history_nrmse": 0.7269469870161307,
+      "median_observable_memory_gain": 0.4113837391300027,
+      "median_state_hs_memory_gain": 0.5307010943123175,
+      "minimum_history_nrmse": 0.3861928109926181,
+      "n_roots": 12,
+      "observable_panel": "coherence_xy_w1",
+      "reference_local_loss_gamma": 4.0,
+      "teacher_n_qubits": 2,
+      "window": 4
+    },
+    {
+      "dissipator_family": "dephasing",
+      "maximum_history_nrmse": 0.8786587820924917,
+      "median_history_nrmse": 0.6914222597294928,
+      "median_observable_memory_gain": 0.1793240735140969,
+      "median_state_hs_memory_gain": 0.24114304846569276,
+      "minimum_history_nrmse": 0.4578252199818019,
+      "n_roots": 12,
+      "observable_panel": "coherence_xy_w1",
+      "reference_local_loss_gamma": 4.0,
+      "teacher_n_qubits": 2,
+      "window": 8
+    },
+    {
+      "dissipator_family": "dephasing",
+      "maximum_history_nrmse": 0.9564882143744344,
+      "median_history_nrmse": 0.8683720134242503,
+      "median_observable_memory_gain": 0.8870770636216937,
+      "median_state_hs_memory_gain": 0.8290271848267858,
+      "minimum_history_nrmse": 0.7845497978696305,
+      "n_roots": 12,
+      "observable_panel": "population_z_w1",
+      "reference_local_loss_gamma": 4.0,
+      "teacher_n_qubits": 2,
+      "window": 1
+    },
+    {
+      "dissipator_family": "dephasing",
+      "maximum_history_nrmse": 0.9254792404238842,
+      "median_history_nrmse": 0.8312930185861287,
+      "median_observable_memory_gain": 0.5446047684234943,
+      "median_state_hs_memory_gain": 0.5307010943123175,
+      "minimum_history_nrmse": 0.6462659857257931,
+      "n_roots": 12,
+      "observable_panel": "population_z_w1",
+      "reference_local_loss_gamma": 4.0,
+      "teacher_n_qubits": 2,
+      "window": 4
+    },
+    {
+      "dissipator_family": "dephasing",
+      "maximum_history_nrmse": 0.9295919713103218,
+      "median_history_nrmse": 0.8223253755881813,
+      "median_observable_memory_gain": 0.25955188740128066,
+      "median_state_hs_memory_gain": 0.24114304846569276,
+      "minimum_history_nrmse": 0.6135488604270428,
+      "n_roots": 12,
+      "observable_panel": "population_z_w1",
+      "reference_local_loss_gamma": 4.0,
+      "teacher_n_qubits": 2,
+      "window": 8
+    },
+    {
+      "dissipator_family": "local_loss",
+      "maximum_history_nrmse": 0.39617723721878095,
+      "median_history_nrmse": 0.29270070641157064,
+      "median_observable_memory_gain": 0.2896705772312421,
+      "median_state_hs_memory_gain": 0.2943929196504902,
+      "minimum_history_nrmse": 0.1848490011863047,
+      "n_roots": 12,
+      "observable_panel": "canonical_xyz_w2",
+      "reference_local_loss_gamma": 4.0,
+      "teacher_n_qubits": 2,
+      "window": 1
+    },
+    {
+      "dissipator_family": "local_loss",
+      "maximum_history_nrmse": 0.021390053512311765,
+      "median_history_nrmse": 0.012846154653824774,
+      "median_observable_memory_gain": 0.011858691406333267,
+      "median_state_hs_memory_gain": 0.013350314275916098,
+      "minimum_history_nrmse": 0.006829746439528118,
+      "n_roots": 12,
+      "observable_panel": "canonical_xyz_w2",
+      "reference_local_loss_gamma": 4.0,
+      "teacher_n_qubits": 2,
+      "window": 4
+    },
+    {
+      "dissipator_family": "local_loss",
+      "maximum_history_nrmse": 0.0004302130703395097,
+      "median_history_nrmse": 0.0001362657496476771,
+      "median_observable_memory_gain": 0.00011083264969483614,
+      "median_state_hs_memory_gain": 0.00011402551423345244,
+      "minimum_history_nrmse": 4.157086691882679e-05,
+      "n_roots": 12,
+      "observable_panel": "canonical_xyz_w2",
+      "reference_local_loss_gamma": 4.0,
+      "teacher_n_qubits": 2,
+      "window": 8
+    },
+    {
+      "dissipator_family": "local_loss",
+      "maximum_history_nrmse": 0.4052677916908571,
+      "median_history_nrmse": 0.29832391884805176,
+      "median_observable_memory_gain": 0.2881736634558013,
+      "median_state_hs_memory_gain": 0.2943929196504902,
+      "minimum_history_nrmse": 0.225657196233996,
+      "n_roots": 12,
+      "observable_panel": "coherence_xy_w1",
+      "reference_local_loss_gamma": 4.0,
+      "teacher_n_qubits": 2,
+      "window": 1
+    },
+    {
+      "dissipator_family": "local_loss",
+      "maximum_history_nrmse": 0.025847944062665825,
+      "median_history_nrmse": 0.01432150761732743,
+      "median_observable_memory_gain": 0.013846029339720983,
+      "median_state_hs_memory_gain": 0.013350314275916098,
+      "minimum_history_nrmse": 0.006413870829791209,
+      "n_roots": 12,
+      "observable_panel": "coherence_xy_w1",
+      "reference_local_loss_gamma": 4.0,
+      "teacher_n_qubits": 2,
+      "window": 4
+    },
+    {
+      "dissipator_family": "local_loss",
+      "maximum_history_nrmse": 0.0006066168235963292,
+      "median_history_nrmse": 0.0001411699605468658,
+      "median_observable_memory_gain": 0.00011275483459964184,
+      "median_state_hs_memory_gain": 0.00011402551423345244,
+      "minimum_history_nrmse": 3.892810953985338e-05,
+      "n_roots": 12,
+      "observable_panel": "coherence_xy_w1",
+      "reference_local_loss_gamma": 4.0,
+      "teacher_n_qubits": 2,
+      "window": 8
+    },
+    {
+      "dissipator_family": "local_loss",
+      "maximum_history_nrmse": 0.4171199941286988,
+      "median_history_nrmse": 0.22513094545682688,
+      "median_observable_memory_gain": 0.3026947594761705,
+      "median_state_hs_memory_gain": 0.2943929196504902,
+      "minimum_history_nrmse": 0.11951286658644757,
+      "n_roots": 12,
+      "observable_panel": "population_z_w1",
+      "reference_local_loss_gamma": 4.0,
+      "teacher_n_qubits": 2,
+      "window": 1
+    },
+    {
+      "dissipator_family": "local_loss",
+      "maximum_history_nrmse": 0.018704051826390445,
+      "median_history_nrmse": 0.006791264912998342,
+      "median_observable_memory_gain": 0.007735712561616233,
+      "median_state_hs_memory_gain": 0.013350314275916098,
+      "minimum_history_nrmse": 0.0024023502358505,
+      "n_roots": 12,
+      "observable_panel": "population_z_w1",
+      "reference_local_loss_gamma": 4.0,
+      "teacher_n_qubits": 2,
+      "window": 4
+    },
+    {
+      "dissipator_family": "local_loss",
+      "maximum_history_nrmse": 0.00018507466184757726,
+      "median_history_nrmse": 0.00011416769871928822,
+      "median_observable_memory_gain": 9.410590909092741e-05,
+      "median_state_hs_memory_gain": 0.00011402551423345244,
+      "minimum_history_nrmse": 3.651572806847239e-05,
+      "n_roots": 12,
+      "observable_panel": "population_z_w1",
+      "reference_local_loss_gamma": 4.0,
+      "teacher_n_qubits": 2,
+      "window": 8
+    },
+    {
+      "dissipator_family": "collective_loss",
+      "maximum_history_nrmse": 0.4483604454178299,
+      "median_history_nrmse": 0.3235728030318802,
+      "median_observable_memory_gain": 0.3073898786452136,
+      "median_state_hs_memory_gain": 0.33901181863984076,
+      "minimum_history_nrmse": 0.19028937373778745,
+      "n_roots": 12,
+      "observable_panel": "canonical_xyz_w2",
+      "reference_local_loss_gamma": 4.0,
+      "teacher_n_qubits": 3,
+      "window": 1
+    },
+    {
+      "dissipator_family": "collective_loss",
+      "maximum_history_nrmse": 0.30501351952522643,
+      "median_history_nrmse": 0.1508733848482321,
+      "median_observable_memory_gain": 0.1648319186003398,
+      "median_state_hs_memory_gain": 0.16961231853746145,
+      "minimum_history_nrmse": 0.10785926453469556,
+      "n_roots": 12,
+      "observable_panel": "canonical_xyz_w2",
+      "reference_local_loss_gamma": 4.0,
+      "teacher_n_qubits": 3,
+      "window": 4
+    },
+    {
+      "dissipator_family": "collective_loss",
+      "maximum_history_nrmse": 0.18996482259289965,
+      "median_history_nrmse": 0.09631297603760354,
+      "median_observable_memory_gain": 0.08786979164608374,
+      "median_state_hs_memory_gain": 0.08354673496098498,
+      "minimum_history_nrmse": 0.04792953221870703,
+      "n_roots": 12,
+      "observable_panel": "canonical_xyz_w2",
+      "reference_local_loss_gamma": 4.0,
+      "teacher_n_qubits": 3,
+      "window": 8
+    },
+    {
+      "dissipator_family": "collective_loss",
+      "maximum_history_nrmse": 0.35289487856749946,
+      "median_history_nrmse": 0.2599836006778351,
+      "median_observable_memory_gain": 0.23294822687028005,
+      "median_state_hs_memory_gain": 0.33901181863984076,
+      "minimum_history_nrmse": 0.1954273019475743,
+      "n_roots": 12,
+      "observable_panel": "coherence_xy_w1",
+      "reference_local_loss_gamma": 4.0,
+      "teacher_n_qubits": 3,
+      "window": 1
+    },
+    {
+      "dissipator_family": "collective_loss",
+      "maximum_history_nrmse": 0.22255533024318766,
+      "median_history_nrmse": 0.1373647638203091,
+      "median_observable_memory_gain": 0.12665207095495637,
+      "median_state_hs_memory_gain": 0.16961231853746145,
+      "minimum_history_nrmse": 0.09196680223148723,
+      "n_roots": 12,
+      "observable_panel": "coherence_xy_w1",
+      "reference_local_loss_gamma": 4.0,
+      "teacher_n_qubits": 3,
+      "window": 4
+    },
+    {
+      "dissipator_family": "collective_loss",
+      "maximum_history_nrmse": 0.16577470151688264,
+      "median_history_nrmse": 0.07638300677972719,
+      "median_observable_memory_gain": 0.055903709701085116,
+      "median_state_hs_memory_gain": 0.08354673496098498,
+      "minimum_history_nrmse": 0.025606843030622092,
+      "n_roots": 12,
+      "observable_panel": "coherence_xy_w1",
+      "reference_local_loss_gamma": 4.0,
+      "teacher_n_qubits": 3,
+      "window": 8
+    },
+    {
+      "dissipator_family": "collective_loss",
+      "maximum_history_nrmse": 0.7742216276793719,
+      "median_history_nrmse": 0.36979401209523505,
+      "median_observable_memory_gain": 0.32940273102978657,
+      "median_state_hs_memory_gain": 0.33901181863984076,
+      "minimum_history_nrmse": 0.2097638158885879,
+      "n_roots": 12,
+      "observable_panel": "population_z_w1",
+      "reference_local_loss_gamma": 4.0,
+      "teacher_n_qubits": 3,
+      "window": 1
+    },
+    {
+      "dissipator_family": "collective_loss",
+      "maximum_history_nrmse": 0.42033125463192106,
+      "median_history_nrmse": 0.21116532572771757,
+      "median_observable_memory_gain": 0.19852064954104015,
+      "median_state_hs_memory_gain": 0.16961231853746145,
+      "minimum_history_nrmse": 0.1132776951331673,
+      "n_roots": 12,
+      "observable_panel": "population_z_w1",
+      "reference_local_loss_gamma": 4.0,
+      "teacher_n_qubits": 3,
+      "window": 4
+    },
+    {
+      "dissipator_family": "collective_loss",
+      "maximum_history_nrmse": 0.2412018272740258,
+      "median_history_nrmse": 0.11893898732204797,
+      "median_observable_memory_gain": 0.11383206949788202,
+      "median_state_hs_memory_gain": 0.08354673496098498,
+      "minimum_history_nrmse": 0.07153038789705751,
+      "n_roots": 12,
+      "observable_panel": "population_z_w1",
+      "reference_local_loss_gamma": 4.0,
+      "teacher_n_qubits": 3,
+      "window": 8
+    },
+    {
+      "dissipator_family": "dephasing",
+      "maximum_history_nrmse": 0.935481685273235,
+      "median_history_nrmse": 0.8461344857091433,
+      "median_observable_memory_gain": 0.7731641718342912,
+      "median_state_hs_memory_gain": 0.7668294963291864,
+      "minimum_history_nrmse": 0.7856075506017582,
+      "n_roots": 12,
+      "observable_panel": "canonical_xyz_w2",
+      "reference_local_loss_gamma": 4.0,
+      "teacher_n_qubits": 3,
+      "window": 1
+    },
+    {
+      "dissipator_family": "dephasing",
+      "maximum_history_nrmse": 0.9110485174684985,
+      "median_history_nrmse": 0.784172055608123,
+      "median_observable_memory_gain": 0.39507950084071847,
+      "median_state_hs_memory_gain": 0.3926726728458693,
+      "minimum_history_nrmse": 0.6433756151889068,
+      "n_roots": 12,
+      "observable_panel": "canonical_xyz_w2",
+      "reference_local_loss_gamma": 4.0,
+      "teacher_n_qubits": 3,
+      "window": 4
+    },
+    {
+      "dissipator_family": "dephasing",
+      "maximum_history_nrmse": 0.9096594224344995,
+      "median_history_nrmse": 0.7857620510656271,
+      "median_observable_memory_gain": 0.1693123347572973,
+      "median_state_hs_memory_gain": 0.16356527009144894,
+      "minimum_history_nrmse": 0.5190885499823193,
+      "n_roots": 12,
+      "observable_panel": "canonical_xyz_w2",
+      "reference_local_loss_gamma": 4.0,
+      "teacher_n_qubits": 3,
+      "window": 8
+    },
+    {
+      "dissipator_family": "dephasing",
+      "maximum_history_nrmse": 0.9037844262344908,
+      "median_history_nrmse": 0.7036038335353509,
+      "median_observable_memory_gain": 0.5627594261880297,
+      "median_state_hs_memory_gain": 0.7668294963291864,
+      "minimum_history_nrmse": 0.41915454047957107,
+      "n_roots": 12,
+      "observable_panel": "coherence_xy_w1",
+      "reference_local_loss_gamma": 4.0,
+      "teacher_n_qubits": 3,
+      "window": 1
+    },
+    {
+      "dissipator_family": "dephasing",
+      "maximum_history_nrmse": 0.8534547465464835,
+      "median_history_nrmse": 0.6564092725320757,
+      "median_observable_memory_gain": 0.26027595055941566,
+      "median_state_hs_memory_gain": 0.3926726728458693,
+      "minimum_history_nrmse": 0.37240621518485517,
+      "n_roots": 12,
+      "observable_panel": "coherence_xy_w1",
+      "reference_local_loss_gamma": 4.0,
+      "teacher_n_qubits": 3,
+      "window": 4
+    },
+    {
+      "dissipator_family": "dephasing",
+      "maximum_history_nrmse": 0.8729078935920661,
+      "median_history_nrmse": 0.6136714629332497,
+      "median_observable_memory_gain": 0.0945228912418178,
+      "median_state_hs_memory_gain": 0.16356527009144894,
+      "minimum_history_nrmse": 0.30846933250099245,
+      "n_roots": 12,
+      "observable_panel": "coherence_xy_w1",
+      "reference_local_loss_gamma": 4.0,
+      "teacher_n_qubits": 3,
+      "window": 8
+    },
+    {
+      "dissipator_family": "dephasing",
+      "maximum_history_nrmse": 0.9539425050551997,
+      "median_history_nrmse": 0.8730056061503764,
+      "median_observable_memory_gain": 0.8183619383196442,
+      "median_state_hs_memory_gain": 0.7668294963291864,
+      "minimum_history_nrmse": 0.791664276493585,
+      "n_roots": 12,
+      "observable_panel": "population_z_w1",
+      "reference_local_loss_gamma": 4.0,
+      "teacher_n_qubits": 3,
+      "window": 1
+    },
+    {
+      "dissipator_family": "dephasing",
+      "maximum_history_nrmse": 0.9193999673434002,
+      "median_history_nrmse": 0.7976736287053313,
+      "median_observable_memory_gain": 0.41989037472657825,
+      "median_state_hs_memory_gain": 0.3926726728458693,
+      "minimum_history_nrmse": 0.6385412660922736,
+      "n_roots": 12,
+      "observable_panel": "population_z_w1",
+      "reference_local_loss_gamma": 4.0,
+      "teacher_n_qubits": 3,
+      "window": 4
+    },
+    {
+      "dissipator_family": "dephasing",
+      "maximum_history_nrmse": 0.9211358578151451,
+      "median_history_nrmse": 0.7876571341670162,
+      "median_observable_memory_gain": 0.18338600255004656,
+      "median_state_hs_memory_gain": 0.16356527009144894,
+      "minimum_history_nrmse": 0.5466532137990863,
+      "n_roots": 12,
+      "observable_panel": "population_z_w1",
+      "reference_local_loss_gamma": 4.0,
+      "teacher_n_qubits": 3,
+      "window": 8
+    },
+    {
+      "dissipator_family": "local_loss",
+      "maximum_history_nrmse": 0.39576654763350594,
+      "median_history_nrmse": 0.27873286488492766,
+      "median_observable_memory_gain": 0.2458255505403783,
+      "median_state_hs_memory_gain": 0.2619857696044481,
+      "minimum_history_nrmse": 0.15077171280022256,
+      "n_roots": 12,
+      "observable_panel": "canonical_xyz_w2",
+      "reference_local_loss_gamma": 4.0,
+      "teacher_n_qubits": 3,
+      "window": 1
+    },
+    {
+      "dissipator_family": "local_loss",
+      "maximum_history_nrmse": 0.02175876489713343,
+      "median_history_nrmse": 0.013228130855621446,
+      "median_observable_memory_gain": 0.013230442985162658,
+      "median_state_hs_memory_gain": 0.01390834046350287,
+      "minimum_history_nrmse": 0.00871000568706489,
+      "n_roots": 12,
+      "observable_panel": "canonical_xyz_w2",
+      "reference_local_loss_gamma": 4.0,
+      "teacher_n_qubits": 3,
+      "window": 4
+    },
+    {
+      "dissipator_family": "local_loss",
+      "maximum_history_nrmse": 0.001263522871842249,
+      "median_history_nrmse": 0.00030480070668416603,
+      "median_observable_memory_gain": 0.0003465884537250835,
+      "median_state_hs_memory_gain": 0.0003866678558674113,
+      "minimum_history_nrmse": 0.00010569028742097591,
+      "n_roots": 12,
+      "observable_panel": "canonical_xyz_w2",
+      "reference_local_loss_gamma": 4.0,
+      "teacher_n_qubits": 3,
+      "window": 8
+    },
+    {
+      "dissipator_family": "local_loss",
+      "maximum_history_nrmse": 0.4707588230590307,
+      "median_history_nrmse": 0.2926598250775649,
+      "median_observable_memory_gain": 0.2685926446443969,
+      "median_state_hs_memory_gain": 0.2619857696044481,
+      "minimum_history_nrmse": 0.174047467195308,
+      "n_roots": 12,
+      "observable_panel": "coherence_xy_w1",
+      "reference_local_loss_gamma": 4.0,
+      "teacher_n_qubits": 3,
+      "window": 1
+    },
+    {
+      "dissipator_family": "local_loss",
+      "maximum_history_nrmse": 0.02847463474186423,
+      "median_history_nrmse": 0.01854809055703557,
+      "median_observable_memory_gain": 0.016504463503337934,
+      "median_state_hs_memory_gain": 0.01390834046350287,
+      "minimum_history_nrmse": 0.008872070737341052,
+      "n_roots": 12,
+      "observable_panel": "coherence_xy_w1",
+      "reference_local_loss_gamma": 4.0,
+      "teacher_n_qubits": 3,
+      "window": 4
+    },
+    {
+      "dissipator_family": "local_loss",
+      "maximum_history_nrmse": 0.001520553182574061,
+      "median_history_nrmse": 0.0004596903517547422,
+      "median_observable_memory_gain": 0.00045844574976120286,
+      "median_state_hs_memory_gain": 0.0003866678558674113,
+      "minimum_history_nrmse": 0.00012114136181547272,
+      "n_roots": 12,
+      "observable_panel": "coherence_xy_w1",
+      "reference_local_loss_gamma": 4.0,
+      "teacher_n_qubits": 3,
+      "window": 8
+    },
+    {
+      "dissipator_family": "local_loss",
+      "maximum_history_nrmse": 0.3804040366333161,
+      "median_history_nrmse": 0.23751461604001634,
+      "median_observable_memory_gain": 0.24919076484186983,
+      "median_state_hs_memory_gain": 0.2619857696044481,
+      "minimum_history_nrmse": 0.11787777360827616,
+      "n_roots": 12,
+      "observable_panel": "population_z_w1",
+      "reference_local_loss_gamma": 4.0,
+      "teacher_n_qubits": 3,
+      "window": 1
+    },
+    {
+      "dissipator_family": "local_loss",
+      "maximum_history_nrmse": 0.019822305428497885,
+      "median_history_nrmse": 0.010599263402489002,
+      "median_observable_memory_gain": 0.010621623625034764,
+      "median_state_hs_memory_gain": 0.01390834046350287,
+      "minimum_history_nrmse": 0.004578493763453595,
+      "n_roots": 12,
+      "observable_panel": "population_z_w1",
+      "reference_local_loss_gamma": 4.0,
+      "teacher_n_qubits": 3,
+      "window": 4
+    },
+    {
+      "dissipator_family": "local_loss",
+      "maximum_history_nrmse": 0.0014365322134761106,
+      "median_history_nrmse": 0.00020986325576851378,
+      "median_observable_memory_gain": 0.00021608674096660528,
+      "median_state_hs_memory_gain": 0.0003866678558674113,
+      "minimum_history_nrmse": 7.39122454086571e-05,
+      "n_roots": 12,
+      "observable_panel": "population_z_w1",
+      "reference_local_loss_gamma": 4.0,
+      "teacher_n_qubits": 3,
+      "window": 8
+    }
+  ],
+  "config": {
+    "coupling_scale": 1.0,
+    "dissipator_families": [
+      "local_loss",
+      "dephasing",
+      "collective_loss"
+    ],
+    "dt": 0.5,
+    "gammas": [
+      4.0
+    ],
+    "h": 0.5,
+    "h_in": 1.0,
+    "n_qubits": [
+      2,
+      3
+    ],
+    "observable_panels": [
+      {
+        "axes": [
+          "x",
+          "y",
+          "z"
+        ],
+        "max_weight": 2,
+        "name": "canonical_xyz_w2"
+      },
+      {
+        "axes": [
+          "x",
+          "y"
+        ],
+        "max_weight": 1,
+        "name": "coherence_xy_w1"
+      },
+      {
+        "axes": [
+          "z"
+        ],
+        "max_weight": 1,
+        "name": "population_z_w1"
+      }
+    ],
+    "prefix_branches": 4,
+    "prefix_burnin": 16,
+    "quantize_levels": null,
+    "roots": [
+      {
+        "coupling_seeds": {
+          "2": 9300102,
+          "3": 9300103
+        },
+        "prefix_seed": 9310101,
+        "root_id": "cont01",
+        "suffix_seed": 9320101
+      },
+      {
+        "coupling_seeds": {
+          "2": 9300202,
+          "3": 9300203
+        },
+        "prefix_seed": 9310201,
+        "root_id": "cont02",
+        "suffix_seed": 9320201
+      },
+      {
+        "coupling_seeds": {
+          "2": 9300302,
+          "3": 9300303
+        },
+        "prefix_seed": 9310301,
+        "root_id": "cont03",
+        "suffix_seed": 9320301
+      },
+      {
+        "coupling_seeds": {
+          "2": 9300402,
+          "3": 9300403
+        },
+        "prefix_seed": 9310401,
+        "root_id": "cont04",
+        "suffix_seed": 9320401
+      },
+      {
+        "coupling_seeds": {
+          "2": 9300502,
+          "3": 9300503
+        },
+        "prefix_seed": 9310501,
+        "root_id": "cont05",
+        "suffix_seed": 9320501
+      },
+      {
+        "coupling_seeds": {
+          "2": 9300602,
+          "3": 9300603
+        },
+        "prefix_seed": 9310601,
+        "root_id": "cont06",
+        "suffix_seed": 9320601
+      },
+      {
+        "coupling_seeds": {
+          "2": 9300702,
+          "3": 9300703
+        },
+        "prefix_seed": 9310701,
+        "root_id": "cont07",
+        "suffix_seed": 9320701
+      },
+      {
+        "coupling_seeds": {
+          "2": 9300802,
+          "3": 9300803
+        },
+        "prefix_seed": 9310801,
+        "root_id": "cont08",
+        "suffix_seed": 9320801
+      },
+      {
+        "coupling_seeds": {
+          "2": 9300902,
+          "3": 9300903
+        },
+        "prefix_seed": 9310901,
+        "root_id": "cont09",
+        "suffix_seed": 9320901
+      },
+      {
+        "coupling_seeds": {
+          "2": 9301002,
+          "3": 9301003
+        },
+        "prefix_seed": 9311001,
+        "root_id": "cont10",
+        "suffix_seed": 9321001
+      },
+      {
+        "coupling_seeds": {
+          "2": 9301102,
+          "3": 9301103
+        },
+        "prefix_seed": 9311101,
+        "root_id": "cont11",
+        "suffix_seed": 9321101
+      },
+      {
+        "coupling_seeds": {
+          "2": 9301202,
+          "3": 9301203
+        },
+        "prefix_seed": 9311201,
+        "root_id": "cont12",
+        "suffix_seed": 9321201
+      }
+    ],
+    "suffix_groups": 6,
+    "windows": [
+      1,
+      4,
+      8
+    ]
+  },
+  "counts": {
+    "decay_fits": 216,
+    "dissipator_families": [
+      "collective_loss",
+      "dephasing",
+      "local_loss"
+    ],
+    "n_qubit_values": [
+      2,
+      3
+    ],
+    "roots": 12,
+    "rows": 648
+  },
+  "decay_fit_medians": [
+    {
+      "defined_roots": 12,
+      "dissipator_family": "collective_loss",
+      "median_log_nrmse_slope_per_input": -1.8443391142109318,
+      "median_r_squared": 0.999623989933927,
+      "negative_slope_roots": 12,
+      "observable_panel": "canonical_xyz_w2",
+      "reference_local_loss_gamma": 4.0,
+      "teacher_n_qubits": 2
+    },
+    {
+      "defined_roots": 12,
+      "dissipator_family": "collective_loss",
+      "median_log_nrmse_slope_per_input": -1.869959466629334,
+      "median_r_squared": 0.9999066736703296,
+      "negative_slope_roots": 12,
+      "observable_panel": "coherence_xy_w1",
+      "reference_local_loss_gamma": 4.0,
+      "teacher_n_qubits": 2
+    },
+    {
+      "defined_roots": 12,
+      "dissipator_family": "collective_loss",
+      "median_log_nrmse_slope_per_input": -1.927727672143851,
+      "median_r_squared": 0.9989933734187091,
+      "negative_slope_roots": 12,
+      "observable_panel": "population_z_w1",
+      "reference_local_loss_gamma": 4.0,
+      "teacher_n_qubits": 2
+    },
+    {
+      "defined_roots": 12,
+      "dissipator_family": "dephasing",
+      "median_log_nrmse_slope_per_input": -0.010315348536824292,
+      "median_r_squared": 0.7837000770001008,
+      "negative_slope_roots": 11,
+      "observable_panel": "canonical_xyz_w2",
+      "reference_local_loss_gamma": 4.0,
+      "teacher_n_qubits": 2
+    },
+    {
+      "defined_roots": 12,
+      "dissipator_family": "dephasing",
+      "median_log_nrmse_slope_per_input": -0.01271675851636338,
+      "median_r_squared": 0.8403833014588662,
+      "negative_slope_roots": 8,
+      "observable_panel": "coherence_xy_w1",
+      "reference_local_loss_gamma": 4.0,
+      "teacher_n_qubits": 2
+    },
+    {
+      "defined_roots": 12,
+      "dissipator_family": "dephasing",
+      "median_log_nrmse_slope_per_input": -0.0065205916283964886,
+      "median_r_squared": 0.7939237993339268,
+      "negative_slope_roots": 9,
+      "observable_panel": "population_z_w1",
+      "reference_local_loss_gamma": 4.0,
+      "teacher_n_qubits": 2
+    },
+    {
+      "defined_roots": 12,
+      "dissipator_family": "local_loss",
+      "median_log_nrmse_slope_per_input": -1.1008409329604483,
+      "median_r_squared": 0.9991212620525238,
+      "negative_slope_roots": 12,
+      "observable_panel": "canonical_xyz_w2",
+      "reference_local_loss_gamma": 4.0,
+      "teacher_n_qubits": 2
+    },
+    {
+      "defined_roots": 12,
+      "dissipator_family": "local_loss",
+      "median_log_nrmse_slope_per_input": -1.0936208510607974,
+      "median_r_squared": 0.9986509445497445,
+      "negative_slope_roots": 12,
+      "observable_panel": "coherence_xy_w1",
+      "reference_local_loss_gamma": 4.0,
+      "teacher_n_qubits": 2
+    },
+    {
+      "defined_roots": 12,
+      "dissipator_family": "local_loss",
+      "median_log_nrmse_slope_per_input": -1.121010261942305,
+      "median_r_squared": 0.9899826689731636,
+      "negative_slope_roots": 12,
+      "observable_panel": "population_z_w1",
+      "reference_local_loss_gamma": 4.0,
+      "teacher_n_qubits": 2
+    },
+    {
+      "defined_roots": 12,
+      "dissipator_family": "collective_loss",
+      "median_log_nrmse_slope_per_input": -0.1770598815754026,
+      "median_r_squared": 0.9812222242931756,
+      "negative_slope_roots": 12,
+      "observable_panel": "canonical_xyz_w2",
+      "reference_local_loss_gamma": 4.0,
+      "teacher_n_qubits": 3
+    },
+    {
+      "defined_roots": 12,
+      "dissipator_family": "collective_loss",
+      "median_log_nrmse_slope_per_input": -0.20053052204959865,
+      "median_r_squared": 0.9736583541771078,
+      "negative_slope_roots": 12,
+      "observable_panel": "coherence_xy_w1",
+      "reference_local_loss_gamma": 4.0,
+      "teacher_n_qubits": 3
+    },
+    {
+      "defined_roots": 12,
+      "dissipator_family": "collective_loss",
+      "median_log_nrmse_slope_per_input": -0.1453687146998656,
+      "median_r_squared": 0.9716300240683697,
+      "negative_slope_roots": 12,
+      "observable_panel": "population_z_w1",
+      "reference_local_loss_gamma": 4.0,
+      "teacher_n_qubits": 3
+    },
+    {
+      "defined_roots": 12,
+      "dissipator_family": "dephasing",
+      "median_log_nrmse_slope_per_input": -0.011519557872443823,
+      "median_r_squared": 0.7109163184814941,
+      "negative_slope_roots": 11,
+      "observable_panel": "canonical_xyz_w2",
+      "reference_local_loss_gamma": 4.0,
+      "teacher_n_qubits": 3
+    },
+    {
+      "defined_roots": 12,
+      "dissipator_family": "dephasing",
+      "median_log_nrmse_slope_per_input": -0.012619636605530123,
+      "median_r_squared": 0.8164300207997126,
+      "negative_slope_roots": 10,
+      "observable_panel": "coherence_xy_w1",
+      "reference_local_loss_gamma": 4.0,
+      "teacher_n_qubits": 3
+    },
+    {
+      "defined_roots": 12,
+      "dissipator_family": "dephasing",
+      "median_log_nrmse_slope_per_input": -0.01097211585339701,
+      "median_r_squared": 0.7116396302730185,
+      "negative_slope_roots": 11,
+      "observable_panel": "population_z_w1",
+      "reference_local_loss_gamma": 4.0,
+      "teacher_n_qubits": 3
+    },
+    {
+      "defined_roots": 12,
+      "dissipator_family": "local_loss",
+      "median_log_nrmse_slope_per_input": -0.9420347131055455,
+      "median_r_squared": 0.9988217752031238,
+      "negative_slope_roots": 12,
+      "observable_panel": "canonical_xyz_w2",
+      "reference_local_loss_gamma": 4.0,
+      "teacher_n_qubits": 3
+    },
+    {
+      "defined_roots": 12,
+      "dissipator_family": "local_loss",
+      "median_log_nrmse_slope_per_input": -0.8996247421229691,
+      "median_r_squared": 0.9988962323593549,
+      "negative_slope_roots": 12,
+      "observable_panel": "coherence_xy_w1",
+      "reference_local_loss_gamma": 4.0,
+      "teacher_n_qubits": 3
+    },
+    {
+      "defined_roots": 12,
+      "dissipator_family": "local_loss",
+      "median_log_nrmse_slope_per_input": -1.0182538556826,
+      "median_r_squared": 0.9970808257730781,
+      "negative_slope_roots": 12,
+      "observable_panel": "population_z_w1",
+      "reference_local_loss_gamma": 4.0,
+      "teacher_n_qubits": 3
+    }
+  ],
+  "numerical_audit": {
+    "jump_strength_max_abs_mismatch": 0.0,
+    "max_transfer_prediction_error": 2.1912941398211355e-15,
+    "min_sample_span_bound_slack": 7.680967493691373e-11,
+    "min_tracezero_bound_slack": 1.397819884734639e-10
+  },
+  "runtime_seconds": 5.706701208007871,
+  "schema_version": 1,
+  "status": "EXPLORATORY_STRESS_TEST",
+  "study": "pra_observable_memory_extension"
+}

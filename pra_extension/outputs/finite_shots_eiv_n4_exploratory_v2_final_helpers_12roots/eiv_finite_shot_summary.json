@@ -1,0 +1,59 @@
+{
+  "artifact_sha256": {
+    "eiv_finite_shot_results.csv": "7a3d174d5b6aeedfc76283f9254c69a4729b4fb0e66c548eb82a6c01cf244e32"
+  },
+  "canonical_freeze_after": {
+    "checks": {
+      "config_sha256": true,
+      "confirmatory_roots_previously_opened": true,
+      "frozen_at_utc": true,
+      "material_identity_sha256": true,
+      "profile": true,
+      "schema_version": true,
+      "status": true,
+      "study": true
+    },
+    "freeze_record_sha256": "efe9006df7f66de0f49cd96bab3b6160f53fda7c9dc937a3a28cc3a12e6fa897",
+    "material_file_count": 92,
+    "material_identity_sha256": "a65b069e206bf881bef03726325c0117454018e2737f75655f08692e1e565ea2",
+    "passed": true
+  },
+  "canonical_freeze_before": {
+    "checks": {
+      "config_sha256": true,
+      "confirmatory_roots_previously_opened": true,
+      "frozen_at_utc": true,
+      "material_identity_sha256": true,
+      "profile": true,
+      "schema_version": true,
+      "status": true,
+      "study": true
+    },
+    "freeze_record_sha256": "efe9006df7f66de0f49cd96bab3b6160f53fda7c9dc937a3a28cc3a12e6fa897",
+    "material_file_count": 92,
+    "material_identity_sha256": "a65b069e206bf881bef03726325c0117454018e2737f75655f08692e1e565ea2",
+    "passed": true
+  },
+  "claim_boundary": "four-qubit local-loss teachers and one fixed six-qubit QELM; exact teacher labels; joint-multinomial shot noise on train, validation, and test QELM features; simulation rather than hardware",
+  "counts": {
+    "candidate_budgets_per_selection": 3,
+    "replicates": 16,
+    "roots": 12,
+    "rows": 2304,
+    "validation_selected_rows": 768
+  },
+  "inference_unit": "root; Monte Carlo replicates are reduced to a median within root before root-block uncertainty summaries",
+  "measurement_model": "one joint multinomial outcome per snapshot/global-Pauli setting; equal integer allocation at fixed total shots per input row",
+  "profile": "full",
+  "runtime_seconds": 48.57216016600432,
+  "sampling_streams": {
+    "entropy_tuples": 6912,
+    "split_streams_are_disjoint": true,
+    "unique_entropy_tuples": 6912,
+    "unique_seedsequence_states": 6912
+  },
+  "schema_version": 1,
+  "selection_rule": "within each replicate, alpha is selected from noisy validation MSE separately for each B; B is then selected by noisy validation MSE; test targets never enter either selection",
+  "status": "EXPLORATORY_POST_CONFIRMATORY",
+  "study": "finite_shots_errors_in_variables_n4"
+}

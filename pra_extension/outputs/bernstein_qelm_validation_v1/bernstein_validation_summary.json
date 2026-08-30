@@ -1,0 +1,271 @@
+{
+  "construction": {
+    "encoding": "r copies of sqrt(1-x_j)|0>+sqrt(x_j)|1> per lag j",
+    "implemented_function": "tensor Bernstein polynomial B_r g_d",
+    "input_domain": "[0,1]^d",
+    "measurement": "joint block Hamming weights",
+    "readout_weights": "g_d(k/r)",
+    "resource_note": "d*r qubits and (r+1)^d joint outcomes",
+    "uniform_error_bound": "sum_i c_i/(2 sqrt(r)); L_g sqrt(d/(4r)) is a generic fallback"
+  },
+  "contraction_audit": {
+    "eta_certificate": 0.36787944117144233,
+    "log_norm_certificate": -2.0,
+    "max_sampled_channel_trace_contraction": 0.36787944117144233,
+    "max_sampled_generator_log_norm": -2.0,
+    "sampled_input_count": 101
+  },
+  "feature_probability_audit": {
+    "max_partition_error": 0.0,
+    "max_quantum_vs_binomial_error": 8.326672684688674e-17,
+    "min_probability": 0.0,
+    "partition_points": 5,
+    "partition_r": 5,
+    "quantum_audit_d": 2,
+    "quantum_audit_qubits": 6,
+    "quantum_audit_r": 3,
+    "quantum_probability_sum_error": 4.440892098500626e-16
+  },
+  "generic_convergence": [
+    {
+      "certified_max_error_bound": 0.7071067811865476,
+      "d": 2,
+      "feature_outcomes": 4,
+      "lipschitz_constant": 1.0,
+      "max_abs_error": 0.5553754395856597,
+      "max_error_to_bound_ratio": 0.7854194788709594,
+      "qelm_qubits": 2,
+      "r": 1,
+      "rmse": 0.2800475537926666,
+      "target": "distance_to_fixed_point"
+    },
+    {
+      "certified_max_error_bound": 0.5,
+      "d": 2,
+      "feature_outcomes": 9,
+      "lipschitz_constant": 1.0,
+      "max_abs_error": 0.397733013063648,
+      "max_error_to_bound_ratio": 0.795466026127296,
+      "qelm_qubits": 4,
+      "r": 2,
+      "rmse": 0.15676194754170233,
+      "target": "distance_to_fixed_point"
+    },
+    {
+      "certified_max_error_bound": 0.3535533905932738,
+      "d": 2,
+      "feature_outcomes": 25,
+      "lipschitz_constant": 1.0,
+      "max_abs_error": 0.2534842041137186,
+      "max_error_to_bound_ratio": 0.7169615986099414,
+      "qelm_qubits": 8,
+      "r": 4,
+      "rmse": 0.07909112123010957,
+      "target": "distance_to_fixed_point"
+    },
+    {
+      "certified_max_error_bound": 0.25,
+      "d": 2,
+      "feature_outcomes": 81,
+      "lipschitz_constant": 1.0,
+      "max_abs_error": 0.17855415175771855,
+      "max_error_to_bound_ratio": 0.7142166070308742,
+      "qelm_qubits": 16,
+      "r": 8,
+      "rmse": 0.04385103826216568,
+      "target": "distance_to_fixed_point"
+    },
+    {
+      "certified_max_error_bound": 0.1767766952966369,
+      "d": 2,
+      "feature_outcomes": 289,
+      "lipschitz_constant": 1.0,
+      "max_abs_error": 0.1231867978018229,
+      "max_error_to_bound_ratio": 0.6968497606266004,
+      "qelm_qubits": 32,
+      "r": 16,
+      "rmse": 0.023691624832401295,
+      "target": "distance_to_fixed_point"
+    },
+    {
+      "certified_max_error_bound": 0.125,
+      "d": 2,
+      "feature_outcomes": 1089,
+      "lipschitz_constant": 1.0,
+      "max_abs_error": 0.08352836651015941,
+      "max_error_to_bound_ratio": 0.6682269320812753,
+      "qelm_qubits": 64,
+      "r": 32,
+      "rmse": 0.01262001420842617,
+      "target": "distance_to_fixed_point"
+    }
+  ],
+  "qrc_bernstein_convergence": [
+    {
+      "certified_max_error_bound": 0.6839397205857212,
+      "d": 2,
+      "feature_outcomes": 4,
+      "lipschitz_constant": 1.0655211322337126,
+      "max_abs_error": 0.043774107686756825,
+      "max_error_to_bound_ratio": 0.06400287389255443,
+      "qelm_qubits": 2,
+      "r": 1,
+      "rmse": 0.02915330004101972,
+      "target": "contractive_qrc_suffix_replay_z"
+    },
+    {
+      "certified_max_error_bound": 0.48361841434899594,
+      "d": 2,
+      "feature_outcomes": 9,
+      "lipschitz_constant": 1.0655211322337126,
+      "max_abs_error": 0.02225310717241691,
+      "max_error_to_bound_ratio": 0.046013771420122744,
+      "qelm_qubits": 4,
+      "r": 2,
+      "rmse": 0.014676657433601715,
+      "target": "contractive_qrc_suffix_replay_z"
+    },
+    {
+      "certified_max_error_bound": 0.3419698602928606,
+      "d": 2,
+      "feature_outcomes": 25,
+      "lipschitz_constant": 1.0655211322337126,
+      "max_abs_error": 0.011301557048378541,
+      "max_error_to_bound_ratio": 0.03304840092837412,
+      "qelm_qubits": 8,
+      "r": 4,
+      "rmse": 0.007391935881581339,
+      "target": "contractive_qrc_suffix_replay_z"
+    },
+    {
+      "certified_max_error_bound": 0.24180920717449797,
+      "d": 2,
+      "feature_outcomes": 81,
+      "lipschitz_constant": 1.0655211322337126,
+      "max_abs_error": 0.005703305279296633,
+      "max_error_to_bound_ratio": 0.023585972370278395,
+      "qelm_qubits": 16,
+      "r": 8,
+      "rmse": 0.0037130715748282853,
+      "target": "contractive_qrc_suffix_replay_z"
+    },
+    {
+      "certified_max_error_bound": 0.1709849301464303,
+      "d": 2,
+      "feature_outcomes": 289,
+      "lipschitz_constant": 1.0655211322337126,
+      "max_abs_error": 0.0028665381506806087,
+      "max_error_to_bound_ratio": 0.016764858448201986,
+      "qelm_qubits": 32,
+      "r": 16,
+      "rmse": 0.0018612900466009085,
+      "target": "contractive_qrc_suffix_replay_z"
+    },
+    {
+      "certified_max_error_bound": 0.12090460358724898,
+      "d": 2,
+      "feature_outcomes": 1089,
+      "lipschitz_constant": 1.0655211322337126,
+      "max_abs_error": 0.0014372954510082359,
+      "max_error_to_bound_ratio": 0.011887847181691748,
+      "qelm_qubits": 64,
+      "r": 32,
+      "rmse": 0.0009318946166827195,
+      "target": "contractive_qrc_suffix_replay_z"
+    }
+  ],
+  "qrc_configuration": {
+    "dissipator": "local_loss",
+    "dt": 0.5,
+    "gamma": 4.0,
+    "h_in_x": 1.0,
+    "h_z": 0.5,
+    "implementation": "qrc_vs_qelm.core.reservoirs.LindbladReservoir",
+    "n_qubits": 1,
+    "observable": "Pauli Z",
+    "replay_window": 2
+  },
+  "qrc_history_convergence": [
+    {
+      "certified_max_history_error_bound": 0.7357588823428847,
+      "d": 1,
+      "eta": 0.36787944117144233,
+      "evaluated_times": 256,
+      "max_abs_error": 0.09947863522325484,
+      "max_error_to_bound_ratio": 0.13520548322363976,
+      "rmse": 0.05033285621389381
+    },
+    {
+      "certified_max_history_error_bound": 0.2706705664732254,
+      "d": 2,
+      "eta": 0.36787944117144233,
+      "evaluated_times": 255,
+      "max_abs_error": 0.01720892598528634,
+      "max_error_to_bound_ratio": 0.06357885975381308,
+      "rmse": 0.008301245157586574
+    },
+    {
+      "certified_max_history_error_bound": 0.0995741367357279,
+      "d": 3,
+      "eta": 0.36787944117144233,
+      "evaluated_times": 254,
+      "max_abs_error": 0.005616236086919302,
+      "max_error_to_bound_ratio": 0.05640255864657832,
+      "rmse": 0.002264958901634745
+    },
+    {
+      "certified_max_history_error_bound": 0.036631277777468364,
+      "d": 4,
+      "eta": 0.36787944117144233,
+      "evaluated_times": 253,
+      "max_abs_error": 0.004269090660454999,
+      "max_error_to_bound_ratio": 0.11654222619230843,
+      "rmse": 0.0019678548629960685
+    },
+    {
+      "certified_max_history_error_bound": 0.013475893998170936,
+      "d": 5,
+      "eta": 0.36787944117144233,
+      "evaluated_times": 252,
+      "max_abs_error": 0.0017668634022767193,
+      "max_error_to_bound_ratio": 0.13111288961730727,
+      "rmse": 0.0008739424914791491
+    },
+    {
+      "certified_max_history_error_bound": 0.004957504353332718,
+      "d": 6,
+      "eta": 0.36787944117144233,
+      "evaluated_times": 251,
+      "max_abs_error": 0.0006110373246704937,
+      "max_error_to_bound_ratio": 0.12325502533542294,
+      "rmse": 0.0002925255754612163
+    },
+    {
+      "certified_max_history_error_bound": 0.001823763931109033,
+      "d": 7,
+      "eta": 0.36787944117144233,
+      "evaluated_times": 250,
+      "max_abs_error": 0.00019246444663834072,
+      "max_error_to_bound_ratio": 0.10553144700109453,
+      "rmse": 7.048767549180216e-05
+    },
+    {
+      "certified_max_history_error_bound": 0.0006709252558050238,
+      "d": 8,
+      "eta": 0.36787944117144233,
+      "evaluated_times": 249,
+      "max_abs_error": 3.830090508794015e-05,
+      "max_error_to_bound_ratio": 0.05708669446641117,
+      "rmse": 1.0151168414266074e-05
+    }
+  ],
+  "qrc_lipschitz_certificate": {
+    "coordinate_constants_oldest_to_newest": [
+      0.36787944117144233,
+      1.0
+    ],
+    "eta": 0.36787944117144233,
+    "euclidean_lipschitz_constant": 1.0655211322337126
+  },
+  "schema_version": "bernstein_qelm_validation_v1"
+}

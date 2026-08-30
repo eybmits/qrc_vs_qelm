@@ -804,7 +804,7 @@ def _write_report(
         if stage in stages:
             loaded = stages[stage]
             lines.append(
-                f"- Stage {stage}: `{loaded.directory}` ({len(loaded.scores)} score rows); "
+                f"- Stage {stage}: `{loaded.directory.name}` ({len(loaded.scores)} score rows); "
                 f"verdict `{loaded.verdict['verdict']}`."
             )
         else:
@@ -842,6 +842,8 @@ def _write_report(
 
 def _stage1_report_lines(stage1: LoadedStage) -> list[str]:
     headline = _stage1_g1b_headline(stage1)
+    g1c_with = _record_by_gate(stage1.records, "G1c")
+    g1c_without = _record_by_gate(stage1.full_records, "G1c")
     cells = _phase_cell_summary(stage1)
     counts = cells["label"].value_counts().to_dict() if not cells.empty else {}
     uninformative = cells[cells["uninformative"]]["family_cell"].tolist() if not cells.empty else []
@@ -854,6 +856,18 @@ def _stage1_report_lines(stage1: LoadedStage) -> list[str]:
         (
             "G1b without uninformative exclusion: "
             f"`{headline['without_verdict']}` ({_fraction_text(headline['without_value'])})."
+        ),
+        (
+            "G1c with uninformative exclusion: "
+            f"`{g1c_with.verdict}` (fraction={float(g1c_with.value):.3f})."
+            if g1c_with is not None
+            else "G1c with uninformative exclusion: unavailable."
+        ),
+        (
+            "G1c without uninformative exclusion: "
+            f"`{g1c_without.verdict}` (fraction={float(g1c_without.value):.3f})."
+            if g1c_without is not None
+            else "G1c without uninformative exclusion: unavailable."
         ),
         (
             "Phase-cell labels from evaluated G1a records: "
@@ -937,7 +951,7 @@ def _limitations_lines(stages: dict[int, LoadedStage]) -> list[str]:
     return [
         f"- Finite scale: loaded manifests report `n_qubits={n_qubits}`; the report should not be extrapolated beyond that scale.",
         f"- Degree grid: loaded phase-diagram degrees are `{degree_text}`; {degree5_text}.",
-        f"- Reproduction budget: loaded manifests report {seed_cells} seed cells where that count is available, so the evidence is moderate rather than exhaustive.",
+        f"- Reproduction budget: the first loaded stage contains {seed_cells} executed seed cells in its score rows, so the evidence is moderate rather than exhaustive.",
         "- Input injection: the comparison keeps the intentional QRC/QELM input-injection asymmetry from the protocol.",
     ]
 
@@ -983,6 +997,16 @@ def _first_config(stages: dict[int, LoadedStage]) -> dict[str, Any]:
 
 
 def _first_seed_cell_count(stages: dict[int, LoadedStage]) -> str:
+    for stage in sorted(stages):
+        scores = stages[stage].scores
+        seed_columns = _available_columns(
+            scores,
+            ["input_seed", "coupling_seed", "shot_seed"],
+        )
+        if seed_columns:
+            return str(len(scores[seed_columns].drop_duplicates()))
+        if "cell_id" in scores.columns:
+            return str(scores["cell_id"].nunique(dropna=True))
     for stage in sorted(stages):
         seed_grid = _manifest_payload(stages[stage].manifest).get("seed_grid", {})
         if isinstance(seed_grid, dict):

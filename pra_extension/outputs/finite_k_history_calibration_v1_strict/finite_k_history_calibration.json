@@ -1,0 +1,400 @@
+{
+  "all_model_row_label_sensitivity": {
+    "changed_rows": 130,
+    "rows": 5760,
+    "scope": "All 5,760 model rows; repeated history panels make these diagnostic rows, not independent statistical units or phase-map cells.",
+    "transition_counts": {
+      "UNRESOLVED->HISTORY_IMPOSSIBLE": 130
+    }
+  },
+  "calibration": {
+    "branches_per_suffix_group": 4,
+    "equivalent_registered_scale_tolerance_nrmse": 0.08660254037844388,
+    "expected_recorded_fraction_of_population_history_mse": 0.75,
+    "finite_K_downward_bias_fraction": 0.25,
+    "history_mse_numerator_factor": 1.3333333333333333,
+    "history_nrmse_factor_holding_registered_target_variance": 1.1547005383792515,
+    "registered_history_tolerance_nrmse": 0.1
+  },
+  "claim_boundary": {
+    "calibrated_estimand": "population-prefix conditional-variance numerator under conditionally iid prefix branches",
+    "conditional_iid_assumption_required": true,
+    "finite_suffix_group_sampling_G_corrected": false,
+    "history_nrmse_ratio_claimed_unbiased": false,
+    "registered_empirical_decomposition_overwritten": false,
+    "registered_estimand": "exact realized-panel suffix risk with divisor K",
+    "registered_gate_report_overwritten": false,
+    "registered_target_variance_held_fixed": true
+  },
+  "decomposition_boundary": {
+    "counterfactual_residual_definition": "registered total_mse - calibrated history_mse; diagnostic only",
+    "fixed_G5_contrast_rows": 48,
+    "maximum_registered_empirical_identity_error": 2.220446049250313e-16,
+    "negative_counterfactual_residual_rows_all_models": 832,
+    "negative_counterfactual_residual_rows_in_fixed_G5_contrast": 0,
+    "numerator_only_calibration_is_an_exact_empirical_decomposition": false,
+    "registered_exact_identity_retained": true,
+    "total_rows_all_models": 5760
+  },
+  "gate_sensitivity": {
+    "G0_G1": {
+      "reason": "The calibrated numerator does not overwrite the exact realized-panel decomposition.",
+      "status": "REGISTERED_EMPIRICAL_AUDIT_RETAINED"
+    },
+    "G2": {
+      "history_rank_vectors_identical_after_numeric_reconstruction": true,
+      "median_root_median_spearman": 1.0,
+      "passed": true,
+      "reason": "Multiplication by one positive constant preserves all ranks and ties.",
+      "status": "EXACTLY_INVARIANT_UNDER_POSITIVE_COMMON_SCALING",
+      "successful_roots": 12,
+      "total_roots": 12
+    },
+    "G3": {
+      "families": {
+        "2": {
+          "minimum_successful_roots": 10,
+          "passed": true,
+          "successful_roots": 12,
+          "total_roots": 12
+        },
+        "3": {
+          "minimum_successful_roots": 10,
+          "passed": true,
+          "successful_roots": 12,
+          "total_roots": 12
+        }
+      },
+      "passed": true
+    },
+    "G4": {
+      "calibrated_transition_cells": 48,
+      "calibrated_transition_roots": 12,
+      "maximum_calibrated_long_window_history_nrmse": 0.09656989428879294,
+      "median_stream_gain": 0.784512834334567,
+      "minimum_calibrated_short_window_history_nrmse": 0.19511564644615187,
+      "passed": true,
+      "positive_stream_gain_roots": 12,
+      "stream_gain_unchanged": true,
+      "total_roots": 12,
+      "total_transition_cells": 48
+    },
+    "G5": {
+      "calibrated_history_feasible_root_family_cells": 24,
+      "counterfactual_total_minus_calibrated_history_gain": {
+        "median_root_gain": 0.6726806257429353,
+        "passed": true,
+        "positive_roots": 12,
+        "total_roots": 12
+      },
+      "maximum_calibrated_history_nrmse": 0.010367797948263173,
+      "passed": true,
+      "registered_empirical_representation_gain": {
+        "median_root_gain": 0.6726414464648288,
+        "passed": true,
+        "positive_roots": 12,
+        "total_roots": 12,
+        "unchanged_by_history_only_calibration": true
+      },
+      "total_root_family_cells": 24
+    },
+    "G6": {
+      "counterfactual_passed": true,
+      "counterfactual_total_minus_calibrated_history_gain_by_family": {
+        "2": {
+          "median_root_gain": 0.6613665916568551,
+          "passed": true,
+          "positive_roots": 12,
+          "total_roots": 12
+        },
+        "3": {
+          "median_root_gain": 0.6885392800542731,
+          "passed": true,
+          "positive_roots": 12,
+          "total_roots": 12
+        }
+      },
+      "passed": true,
+      "registered_empirical_representation_gain_by_family": {
+        "2": {
+          "median_root_gain": 0.661282098534065,
+          "passed": true,
+          "positive_roots": 12,
+          "total_roots": 12
+        },
+        "3": {
+          "median_root_gain": 0.6884823496693037,
+          "passed": true,
+          "positive_roots": 12,
+          "total_roots": 12
+        }
+      },
+      "registered_passed": true
+    },
+    "P6_nondecision_bearing": {
+      "all_fits_pass": true,
+      "expected_log_intercept_shift": 0.1438410362258904,
+      "fits": 24,
+      "maximum_absolute_intercept_shift_error": 6.661338147750939e-16,
+      "maximum_absolute_r_squared_change": 0.0,
+      "maximum_absolute_reported_r_squared_reproduction_error": 9.658940314238862e-15,
+      "maximum_absolute_reported_slope_reproduction_error": 9.103828801926284e-15,
+      "maximum_absolute_slope_change": 2.220446049250313e-16,
+      "status": "EXACTLY_INVARIANT_UP_TO_LOG_INTERCEPT_SHIFT"
+    },
+    "calibrated_sensitivity_decision": "CONFIRMS_FINITE_RESOURCE_FRONTIER",
+    "decision_invariant": true,
+    "primary_gate_status_after_history_calibration": {
+      "G0": true,
+      "G1": true,
+      "G2": true,
+      "G3": true,
+      "G4": true,
+      "G5": true,
+      "G6": true
+    },
+    "registered_decision": "CONFIRMS_FINITE_RESOURCE_FRONTIER"
+  },
+  "input_validation": {
+    "all_frozen_sha256_match": true,
+    "phase_source": {
+      "cells": 144,
+      "exactly_reproduced_from_suffix_rows": true,
+      "gate_hash_link_valid": true,
+      "roots_per_cell": 12,
+      "suffix_hash_link_valid": true
+    },
+    "strict_gate_json": true,
+    "suffix_decomposition": {
+      "branches_per_group": 4,
+      "history_student_invariance": true,
+      "logical_key_duplicates": 0,
+      "max_empirical_decomposition_error": 2.220446049250313e-16,
+      "normalized_metric_identities": true,
+      "ptd_root_rows": 1728,
+      "recorded_regimes_match_frozen_classifier": true,
+      "roots": 12,
+      "rows": 5760,
+      "suffix_groups_per_panel": 32,
+      "systems": 144
+    }
+  },
+  "modal_phase_map": {
+    "calibrated_counts": {
+      "DEGENERATE_TARGET": 0,
+      "EMULATED": 18,
+      "HISTORY_IMPOSSIBLE": 111,
+      "MIXED": 1,
+      "REPRESENTATION_LIMITED": 7,
+      "UNRESOLVED": 7
+    },
+    "cells": 144,
+    "changed_cells": [
+      {
+        "calibrated_agreement_n": 6,
+        "calibrated_modal_regime": "EMULATED",
+        "calibrated_regimes_present": "HISTORY_IMPOSSIBLE:5;EMULATED:6;UNRESOLVED:1",
+        "feature_budget": 18,
+        "modal_label_changed": true,
+        "registered_agreement_n": 6,
+        "registered_modal_regime": "MIXED",
+        "registered_regimes_present": "EMULATED:6;UNRESOLVED:6",
+        "teacher_gamma": 4.0,
+        "teacher_n_qubits": 2,
+        "window": 2
+      },
+      {
+        "calibrated_agreement_n": 7,
+        "calibrated_modal_regime": "EMULATED",
+        "calibrated_regimes_present": "HISTORY_IMPOSSIBLE:5;EMULATED:7",
+        "feature_budget": 36,
+        "modal_label_changed": false,
+        "registered_agreement_n": 7,
+        "registered_modal_regime": "EMULATED",
+        "registered_regimes_present": "EMULATED:7;UNRESOLVED:5",
+        "teacher_gamma": 4.0,
+        "teacher_n_qubits": 2,
+        "window": 2
+      },
+      {
+        "calibrated_agreement_n": 7,
+        "calibrated_modal_regime": "EMULATED",
+        "calibrated_regimes_present": "HISTORY_IMPOSSIBLE:5;EMULATED:7",
+        "feature_budget": 72,
+        "modal_label_changed": false,
+        "registered_agreement_n": 7,
+        "registered_modal_regime": "EMULATED",
+        "registered_regimes_present": "EMULATED:7;UNRESOLVED:5",
+        "teacher_gamma": 4.0,
+        "teacher_n_qubits": 2,
+        "window": 2
+      },
+      {
+        "calibrated_agreement_n": 9,
+        "calibrated_modal_regime": "HISTORY_IMPOSSIBLE",
+        "calibrated_regimes_present": "HISTORY_IMPOSSIBLE:9;UNRESOLVED:3",
+        "feature_budget": 18,
+        "modal_label_changed": true,
+        "registered_agreement_n": 7,
+        "registered_modal_regime": "UNRESOLVED",
+        "registered_regimes_present": "HISTORY_IMPOSSIBLE:5;UNRESOLVED:7",
+        "teacher_gamma": 1.0,
+        "teacher_n_qubits": 3,
+        "window": 6
+      },
+      {
+        "calibrated_agreement_n": 9,
+        "calibrated_modal_regime": "HISTORY_IMPOSSIBLE",
+        "calibrated_regimes_present": "HISTORY_IMPOSSIBLE:9;UNRESOLVED:3",
+        "feature_budget": 36,
+        "modal_label_changed": true,
+        "registered_agreement_n": 7,
+        "registered_modal_regime": "UNRESOLVED",
+        "registered_regimes_present": "HISTORY_IMPOSSIBLE:5;UNRESOLVED:7",
+        "teacher_gamma": 1.0,
+        "teacher_n_qubits": 3,
+        "window": 6
+      },
+      {
+        "calibrated_agreement_n": 9,
+        "calibrated_modal_regime": "HISTORY_IMPOSSIBLE",
+        "calibrated_regimes_present": "HISTORY_IMPOSSIBLE:9;UNRESOLVED:3",
+        "feature_budget": 72,
+        "modal_label_changed": true,
+        "registered_agreement_n": 7,
+        "registered_modal_regime": "UNRESOLVED",
+        "registered_regimes_present": "HISTORY_IMPOSSIBLE:5;UNRESOLVED:7",
+        "teacher_gamma": 1.0,
+        "teacher_n_qubits": 3,
+        "window": 6
+      },
+      {
+        "calibrated_agreement_n": 9,
+        "calibrated_modal_regime": "UNRESOLVED",
+        "calibrated_regimes_present": "HISTORY_IMPOSSIBLE:3;UNRESOLVED:9",
+        "feature_budget": 18,
+        "modal_label_changed": false,
+        "registered_agreement_n": 11,
+        "registered_modal_regime": "UNRESOLVED",
+        "registered_regimes_present": "HISTORY_IMPOSSIBLE:1;UNRESOLVED:11",
+        "teacher_gamma": 2.0,
+        "teacher_n_qubits": 3,
+        "window": 4
+      },
+      {
+        "calibrated_agreement_n": 6,
+        "calibrated_modal_regime": "UNRESOLVED",
+        "calibrated_regimes_present": "HISTORY_IMPOSSIBLE:3;EMULATED:3;UNRESOLVED:6",
+        "feature_budget": 36,
+        "modal_label_changed": false,
+        "registered_agreement_n": 8,
+        "registered_modal_regime": "UNRESOLVED",
+        "registered_regimes_present": "HISTORY_IMPOSSIBLE:1;EMULATED:3;UNRESOLVED:8",
+        "teacher_gamma": 2.0,
+        "teacher_n_qubits": 3,
+        "window": 4
+      },
+      {
+        "calibrated_agreement_n": 8,
+        "calibrated_modal_regime": "EMULATED",
+        "calibrated_regimes_present": "HISTORY_IMPOSSIBLE:3;EMULATED:8;UNRESOLVED:1",
+        "feature_budget": 72,
+        "modal_label_changed": false,
+        "registered_agreement_n": 8,
+        "registered_modal_regime": "EMULATED",
+        "registered_regimes_present": "HISTORY_IMPOSSIBLE:1;EMULATED:8;UNRESOLVED:3",
+        "teacher_gamma": 2.0,
+        "teacher_n_qubits": 3,
+        "window": 4
+      },
+      {
+        "calibrated_agreement_n": 7,
+        "calibrated_modal_regime": "EMULATED",
+        "calibrated_regimes_present": "HISTORY_IMPOSSIBLE:4;EMULATED:7;UNRESOLVED:1",
+        "feature_budget": 18,
+        "modal_label_changed": false,
+        "registered_agreement_n": 7,
+        "registered_modal_regime": "EMULATED",
+        "registered_regimes_present": "HISTORY_IMPOSSIBLE:2;EMULATED:7;UNRESOLVED:3",
+        "teacher_gamma": 4.0,
+        "teacher_n_qubits": 3,
+        "window": 2
+      },
+      {
+        "calibrated_agreement_n": 7,
+        "calibrated_modal_regime": "EMULATED",
+        "calibrated_regimes_present": "HISTORY_IMPOSSIBLE:4;EMULATED:7;UNRESOLVED:1",
+        "feature_budget": 36,
+        "modal_label_changed": false,
+        "registered_agreement_n": 7,
+        "registered_modal_regime": "EMULATED",
+        "registered_regimes_present": "HISTORY_IMPOSSIBLE:2;EMULATED:7;UNRESOLVED:3",
+        "teacher_gamma": 4.0,
+        "teacher_n_qubits": 3,
+        "window": 2
+      },
+      {
+        "calibrated_agreement_n": 7,
+        "calibrated_modal_regime": "EMULATED",
+        "calibrated_regimes_present": "HISTORY_IMPOSSIBLE:4;EMULATED:7;UNRESOLVED:1",
+        "feature_budget": 72,
+        "modal_label_changed": false,
+        "registered_agreement_n": 7,
+        "registered_modal_regime": "EMULATED",
+        "registered_regimes_present": "HISTORY_IMPOSSIBLE:2;EMULATED:7;UNRESOLVED:3",
+        "teacher_gamma": 4.0,
+        "teacher_n_qubits": 3,
+        "window": 2
+      }
+    ],
+    "composition_or_agreement_changed_cells": 12,
+    "modal_label_changed_cells": 4,
+    "registered_counts": {
+      "DEGENERATE_TARGET": 0,
+      "EMULATED": 17,
+      "HISTORY_IMPOSSIBLE": 108,
+      "MIXED": 2,
+      "REPRESENTATION_LIMITED": 7,
+      "UNRESOLVED": 10
+    }
+  },
+  "root_level_phase_labels": {
+    "calibrated_counts": {
+      "DEGENERATE_TARGET": 0,
+      "EMULATED": 188,
+      "HISTORY_IMPOSSIBLE": 1374,
+      "REPRESENTATION_LIMITED": 72,
+      "UNRESOLVED": 94
+    },
+    "changed_rows": 39,
+    "registered_counts": {
+      "DEGENERATE_TARGET": 0,
+      "EMULATED": 188,
+      "HISTORY_IMPOSSIBLE": 1335,
+      "REPRESENTATION_LIMITED": 72,
+      "UNRESOLVED": 133
+    },
+    "rows": 1728,
+    "rows_changed_from_registered_emulated_or_representation_limited": 0,
+    "scope": "PTD root-resource rows used to construct the 144-cell phase map",
+    "transition_counts": {
+      "UNRESOLVED->HISTORY_IMPOSSIBLE": 39
+    }
+  },
+  "schema_version": 1,
+  "source_artifacts": {
+    "canonical_gate_report.json": {
+      "sha256": "69ec32b96492c92d4b193f6b2cc22afc3598fc7e7115ba497e3d0a8726000a06"
+    },
+    "fig04_regime_map_source.csv": {
+      "rows": 144,
+      "sha256": "a33a854e271f3bf38f97acb5d731800afc52239dc7921474b542bb7131d61e9f"
+    },
+    "suffix_decomposition.csv": {
+      "rows": 5760,
+      "sha256": "94ec3e840ac1866e675dbb796aa7b72010600c2408ba7064455c686dac9d88b1"
+    }
+  },
+  "status": "POST_HOC_NON_DECISION_BEARING_SENSITIVITY",
+  "study": "finite_k_history_floor_calibration_companion"
+}

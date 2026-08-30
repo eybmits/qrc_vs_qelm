@@ -1,0 +1,456 @@
+# Prospective PRA Extension: Generalization and Measurement-Resolution Frontiers
+
+**Status:** prospective design, not frozen and not yet run.
+
+This extension is separate from the completed canonical confirmatory study. It
+must use a new runner, new result directory, new material identity, and fresh
+seed namespaces. Nothing in this directory amends or reinterprets the frozen
+canonical result.
+
+## 1. Question and bounded claim
+
+The extension asks whether the two-bottleneck description survives five scope
+changes that a reviewer can reasonably demand:
+
+1. local amplitude loss is replaced by qualitatively different dissipators;
+2. the recurrent teacher is extended to four qubits;
+3. all inputs are genuinely continuous rather than drawn from a 33-symbol grid;
+4. QELM observables are estimated at finite, fixed total circuit-shot budgets;
+5. the history mechanism is evaluated with six windows and root-held-out
+   prediction, rather than making a four-point Spearman coefficient a primary
+   endpoint.
+
+The strongest possible claim remains finite and operational:
+
+> For the tested continuous-input spin-reservoir families, teacher forgetting
+> determines the finite-window history floor, while accessible measured
+> features and their resolution determine the remaining student error.
+
+The extension cannot establish quantum advantage, full-state emulation, a
+universal QELM approximation theorem, or a universal dissipative scaling law.
+Failure of a directional gate is a reportable null result, not permission to
+change the confirmatory roots, endpoints, or threshold.
+
+## 2. Separation from the frozen study
+
+- The frozen files, runner, tests, manuscript, and `results_canonical_*`
+  artifacts are read-only inputs for motivation only.
+- Development uses `pra_feas*` and `pra_design*` roots. Confirmation uses only
+  `pra_confirm*` roots.
+- No `pra_confirm*` simulation, table, diagnostic, or partial log may be opened
+  before the extension code, resolved confirmatory config, tests, smoke hashes,
+  and freeze record are present.
+- Calibration may change the candidate gamma or shot grid once, but only before
+  the confirmatory freeze. It may not change the 12-root denominator, the
+  inclusion of all three teacher sizes and dissipator families, the six-window
+  grid, the fixed-total-shot comparison, or the primary estimands.
+
+## 3. Architectures and matched axes
+
+### 3.1 Recurrent teacher
+
+The teacher retains the canonical driven spin Hamiltonian
+
+`H_T(u) = sum_(i<j) J_ij X_i X_j + 0.5 sum_i Z_i + u sum_i X_i`,
+
+with `dt=0.5`, `J_ij ~ Uniform[-1,1]`, and teacher sizes
+`N_T={2,3,4}`. Couplings are held fixed across dissipators and rates inside a
+root. Targets are all single-site and same-axis two-site X, Y, and Z Pauli
+expectations: 9, 18, and 30 outputs for `N_T=2,3,4`.
+
+The zero-loss teacher is simulated once per root and size. Positive nominal
+rates are `gamma={0.25,0.5,1,2,4}` for three families:
+
+- `local_loss`: independent amplitude damping;
+- `local_dephasing`: independent Z dephasing, which need not erase population
+  information in the same way as loss;
+- `collective_loss`: one collective lowering jump, which can contain dark or
+  weakly contracting sectors.
+
+Rates are not compared by blindly reusing the same coefficient. Each jump list
+is rescaled so
+
+`sum_k rate_k Tr(L_k^dagger L_k) / (N_T 2^(N_T-1)) = gamma_nominal`.
+
+This leaves local and collective loss at their usual nominal coefficient and
+halves the per-jump coefficient of the implemented Z-dephasing convention. The
+normalization, the raw coefficients, and the resulting jump-strength audit are
+written for every system.
+
+### 3.2 Parallel QELM and controls
+
+The primary student remains a reset-on-every-row, fixed six-qubit parallel
+time-delayed QELM. Windows are `d={1,2,3,4,5,6}`. One lag is amplitude encoded
+per qubit, unused qubits remain in `|0>`, one fixed input-independent unitary is
+applied, and single-site XYZ observables are read at nested checkpoints. The
+exact feature budgets remain `B={18,36,72}` from one, two, or four checkpoints.
+
+Controls receive identical continuous delay rows and splits:
+
+- intercept only;
+- linear delay;
+- all linear and degree-two delay monomials;
+- nested random-tanh features of widths 18, 36, and 72;
+- same-physics reset-and-replay, retained as a descriptive truncation oracle.
+
+Teacher and student qubit counts are not presented as a resource-matched
+performance contest: the teacher supplies the target and the fixed six-qubit
+student supplies a finite-window approximation. Quantum-specific language is
+forbidden unless the QELM also beats the registered classical controls, which is
+not a primary endpoint here.
+
+## 4. Continuous-input construction
+
+Train, validation, test, prefixes, and suffixes use independent fresh streams.
+Train/validation/test and prefix inputs are IID `Uniform[0,1]` float64 values
+generated by an explicitly recorded `PCG64DXSM` generator. There is no input
+rounding and no finite-level propagator cache. The exact float bit patterns are
+hashed into the manifest.
+
+For the common-suffix panel, older suffix coordinates are IID uniform. The
+newest coordinate uses a randomized one-dimensional Latin-hypercube draw, one
+stratum per suffix group, to guarantee distinct continuous conditioning rows at
+all six windows without discretizing the input law. No confirmatory suffix may
+be redrawn. Bitwise duplicates, nonfinite values, or values outside `[0,1]`
+fail the run.
+
+Each complete stream starts from `|0...0>` and discards the registered burn-in.
+Each common-suffix prefix also starts from that state and is evolved for the
+registered prefix length before the common suffix is appended.
+
+## 5. Exact and finite-shot arms
+
+### 5.1 Exact arm
+
+The exact arm uses density-matrix teacher expectations and statevector QELM
+expectations. It preserves the sampled identity
+
+`MSE_total = MSE_history + MSE_student`,
+
+where the history term is the within-suffix teacher variance and the student
+term is error to the suffix-conditioned mean. All primary history, N=4, and
+dissipator gates use this arm.
+
+### 5.2 Fixed-total circuit-shot arm
+
+Finite-shot stress tests use total circuit-shot budgets per row
+
+`M={192,1536,12288}`.
+
+The budget is held fixed across `B`, not per observable. Compatible measurements
+are grouped in a global tensor-product basis. With 1, 2, or 4 snapshots, the
+QELM uses 3, 6, or 12 basis-snapshot circuit settings, so the allocations are:
+
+| total M | B=18: 3 settings | B=36: 6 settings | B=72: 12 settings |
+|---:|---:|---:|---:|
+| 192 | 64 shots/setting | 32 | 16 |
+| 1536 | 512 | 256 | 128 |
+| 12288 | 4096 | 2048 | 1024 |
+
+For each setting, one joint bit-string multinomial sample is drawn from the
+Born probabilities and all compatible single-site expectations are estimated
+from that same sample. Independent Gaussian perturbations of already-computed
+expectations are prohibited for decision-bearing results because they discard
+same-setting covariance and do not enforce a fixed circuit-shot budget.
+
+The primary shot arm uses exact teacher targets and shot-estimated QELM features,
+isolating the feature-resolution tradeoff. A secondary end-to-end arm also
+estimates teacher training labels from three global XYZ settings at the same
+total `M`; performance is still scored against the latent exact test target.
+Four shot replicates are generated within every root using disjoint derived
+seeds. Replicates are averaged inside the root and are never independent
+statistical units.
+
+At each `M`, ridge penalty and `B` are selected using validation data only. Ties
+within `1e-12` choose the smaller `B`, then the larger ridge penalty. Test data
+cannot select allocation.
+
+### 5.3 Prospective fixed-total-shot prediction
+
+The predeclared operational prediction is a feature-versus-resolution tradeoff:
+
+- at `M=192`, spreading shots over 12 settings will penalize `B=72`, so the
+  validation-selected optimum should be `B<=36`;
+- at `M=12288`, shot dilution should be weak enough for the exact-arm feature
+  advantage to re-emerge, so the optimum should shift to `B=72`;
+- the selected optimal `B` should be nondecreasing with total shots.
+
+This prediction may fail. In particular, `B=18` could remain optimal because of
+conditioning, or `B=72` could remain optimal even at low shots because its
+additional target-aligned directions dominate sampling noise. Either outcome is
+reported as a measurement-allocation result, not hidden by switching to a
+per-setting budget after confirmation.
+
+## 6. Independent unit and uncertainty
+
+The independent unit is the root block. Teacher sizes, dissipators, rates,
+windows, feature budgets, shot tiers, and shot replicates are paired conditions
+inside a root.
+
+- All contrasts are formed within root before aggregation.
+- Report the median of 12 root contrasts and a 20,000-replicate root-block
+  percentile bootstrap interval.
+- A directional criterion requires at least 10 of 12 roots. With 12 nonzero
+  contrasts, the exact one-sided all-positive probability is reported; the
+  preregistered 10-of-12 threshold has fair-sign tail probability 0.0193.
+- Missing, dead, nonfinite, incomplete, or ineligible roots fail closed against
+  the fixed denominator.
+- Shot replicates and the many condition cells do not increase sample size.
+
+Every explicit root seed in the three YAML files must be globally unique. Child
+streams use `SeedSequence([base_seed, namespace_code, N_code, D_code,
+gamma_index, window, feature_budget, shot_tier_index, replicate])` with a frozen
+integer codebook. Unused coordinates are zero, not omitted. The manifest records
+the complete entropy tuple for every generated stream and rejects duplicates.
+No global RNG or Python string hash may enter seed derivation.
+
+The former four-window within-system Spearman statistic is descriptive only.
+Six-window traces, direct threshold crossings, and root-held-out prediction are
+the decision-bearing mechanism tests.
+
+## 7. Primary estimands and gates
+
+The exact names and thresholds below are copied into the confirmatory config.
+
+### P0 — implementation, provenance, and coverage
+
+All 12 roots, 576 teacher systems, six windows, exact model cells, registered
+shot cells, and diagnostic tables must be present under strict schemas. Seeds
+must be globally disjoint; continuous inputs and observable contracts must be
+hashed; all tests and two same-material smoke runs must pass; current material
+must match the extension freeze record. The shot sampler must pass normalization,
+boundedness, covariance, unbiasedness, exact-limit, and seed-separation tests.
+
+### P1 — exact common-suffix diagnosis
+
+On every exact-arm live cell, absolute decomposition error and deterministic
+same-suffix prediction disagreement must be at most `1e-10`, and all registered
+RMS and diameter lower bounds must hold. History MSE must be invariant across
+student model and budget.
+
+### P2 — continuous-input liveness and phase coverage
+
+Every core anchor cell must be live. At least 90% of all teacher systems must be
+live in every root; dead systems remain visible and count against this gate. In
+each teacher-size family, at least 10/12 roots must contain both a live
+history-impossible cell and a live history-feasible cell somewhere on the
+registered dissipator-rate-window grid. This gate establishes that the design
+can categorize both sides of a frontier; it does not require every dissipator to
+cross within `d<=6`.
+
+### P3 — local-loss window transition including N=4
+
+Separately for `N_T=2,3,4`, the fixed `local_loss, gamma=4` anchor must be
+history-impossible at `d=1` and history-feasible at `d=6` in at least 10/12
+roots. At `B=72`, the root-median held-out stream-NRMSE gain from `d=1` to
+`d=6` must be at least 0.20 and positive in at least 10/12 roots for each size.
+
+### P4 — feature gain after history feasibility including N=4
+
+On the fixed `local_loss, gamma=4, d=6` anchor, each teacher-size cell must be
+live and history feasible. Separately for `N_T=2,3,4`, the representation-NRMSE
+gain from exact `B=18` to exact `B=72` must have median at least 0.20 and be
+positive in at least 10/12 roots.
+
+### P5 — dissipator identity improves root-held-out prediction
+
+This replaces a decision based on a four-point rank statistic. For positive
+rates and all six windows, set `z=log(max(history_NRMSE,1e-12))` and
+`q=log1p(gamma)`. Two fixed ordinary-least-squares models are compared by
+leave-one-root-out prediction:
+
+- common model: `z ~ 1 + C(N_T) + q + d + q:d`;
+- dissipator model: common model plus
+  `C(D) + C(D):q + C(D):d + C(D):q:d`.
+
+For each held-out root, compute equally weighted MSE over its complete balanced
+cell grid and the gain `1-MSE_dissipator/MSE_common`. P5 passes when the median
+gain is at least 0.05 and is positive in at least 10/12 roots. Passing supports
+a dissipator-specific forgetting surface. Failure supports a common surface at
+the resolution tested; neither outcome changes P1.
+
+### P6 — primary fixed-total-shot allocation stress
+
+P6 uses only the fixed live/history-feasible
+`local_loss, gamma=4, d=6` cells and exact teacher targets. Within each root and
+teacher size, shot-replicate validation NRMSE selects `B*(M)`.
+Replicate predictions are scored separately and averaged within the root-size
+cell before any contrast. The low-shot penalty is
+`NRMSE(B=72)/NRMSE(B*)-1`; the high-shot feature gain is
+`1-NRMSE(B=72)/NRMSE(B=18)`; and exact-arm inflation is
+`NRMSE_shot(B=72)/NRMSE_exact(B=72)-1`. Root summaries are medians across the
+three teacher sizes.
+
+P6 passes only if all of the following hold:
+
+1. **Low-shot penalty:** at `M=192`, the test-NRMSE penalty of `B=72` relative
+   to validation-selected `B*` has a root-median of at least 0.05 and is positive
+   in at least 10/12 roots; `B*<=36` in at least 10/12 roots after taking the
+   within-root median across teacher sizes.
+2. **Allocation shift:** the within-root median selected budget is nondecreasing
+   over `M={192,1536,12288}` in at least 10/12 roots.
+3. **High-shot recovery:** at `M=12288`, `B=72` is selected in at least two of
+   the three teacher-size cells in at least 10/12 roots, and its test-NRMSE gain
+   over finite-shot `B=18` has median at least 0.10 and is positive in at least
+   10/12 roots.
+4. **Approach to exact arm:** for `B=72`, the root-median fractional NRMSE
+   inflation at `M=12288` relative to exact features is at most 0.25, and this
+   bound holds in at least 10/12 roots.
+
+The full `B x M` error surface is reported regardless of P6. The end-to-end
+noisy-label arm is secondary and cannot rescue a failed P6.
+
+## 8. Decision labels
+
+- `NO_GO_EXTENSION`: P0, P1, or P2 fails.
+- `CONTINUOUS_N4_NOT_REPLICATED`: P0-P2 pass but P3 or P4 fails.
+- `GENERALIZES_TWO_BOTTLENECK_FRONTIER`: P0-P4 pass.
+- Append `_DISSIPATOR_SPECIFIC` only if P5 passes.
+- Append `_FIXED_TOTAL_SHOT_TRADEOFF` only if P6 passes.
+
+P5 and P6 are deliberately falsifiable suffixes. Their failure is not grounds
+to erase the exact-arm result or claim that finite shots are irrelevant.
+
+## 9. Computational staging and stop/go rules
+
+### Stage E0 — kernel benchmark, no scientific outputs
+
+Run the one-root feasibility config. It may inspect runtime, peak memory,
+trace/Hermiticity/positivity drift, schema completion, and deterministic replay
+only. It may not produce effect estimates used in the paper.
+
+Go to calibration only if:
+
+- every N=4 continuous step and suffix cell is finite;
+- maximum trace error is `<=1e-10`, Hermiticity error is `<=1e-10`, and minimum
+  density-matrix eigenvalue is `>=-1e-9`;
+- peak resident memory is below 8 GiB;
+- projected serial confirmatory runtime is below 4 hours, or below 90 minutes
+  with deterministic root-level parallel execution;
+- exact duplicate runs match at the science-table hash level.
+
+If runtime fails, optimize or parallelize first. Before freeze only, the allowed
+last-resort reduction is to remove the intermediate positive rates 0.5 and 2
+while retaining `{0.25,1,4}`, all three dissipators, all three teacher sizes,
+all six windows, all 12 confirmatory roots, and all shot tiers. Reducing roots,
+removing N=4, quantizing inputs, or replacing joint shot sampling with Gaussian
+noise is prohibited.
+
+### Stage E1 — four-root calibration
+
+Open only `pra_design01` through `pra_design04`. Calibration may verify that the
+fixed gamma and shot grids span live, nontrivial regimes and may exercise the
+prewritten gates. It cannot contribute to confirmatory intervals.
+
+One documented pre-freeze amendment is allowed if:
+
+- fewer than three positive rates per dissipator remain live in at least three
+  of four design roots; or
+- `M=192` is numerically degenerate rather than merely noisy, or `M=12288` is
+  not detectably closer to the exact feature matrix.
+
+Any amended grid must remain common to all sizes and roots and must be frozen
+before confirmation. Thresholds P0-P6 and the qualitative fixed-total-shot
+prediction cannot be tuned to calibration effect sizes.
+
+### Stage E2 — freeze and dry runs
+
+The freeze is a concrete, fail-closed procedure:
+
+1. Finish calibration and write any single allowed amendment as an append-only
+   note. Resolve `config_confirmatory.yaml` to strict JSON-compatible data and
+   reject duplicate YAML keys, aliases, nonfinite numbers, implicit dates, and
+   unrecognized fields.
+2. Audit the workspace for every `pra_confirm*` root identifier and every
+   `results_pra*` directory. The freeze may proceed only when no simulation,
+   table, checkpoint, figure source, or readable root-specific log exists.
+3. Compute SHA-256 for the exact bytes of this protocol, the resolved
+   confirmatory config, the calibration amendment and gate report, project
+   metadata/lock files, the new extension runner, evaluator, joint measurement
+   sampler, resource/provenance code, all extension tests, and all decision
+   figure scripts. Sort entries by repository-relative POSIX path and hash the
+   canonical `path + NUL + sha256 + LF` stream to obtain one material identity.
+   Frozen canonical-study files are dependencies only if imported by the new
+   runner; every imported dependency must then appear in the material list.
+4. Create an immutable freeze record containing `schema_version`, `study`,
+   `profile=confirmatory`, `status=FROZEN_CONFIRMATORY`, UTC timestamp,
+   config SHA-256, material identity, ordered confirmatory root IDs, calibration
+   artifact hashes, `confirmatory_roots_previously_opened=false`, and the
+   operator attestation used for that statement. Hash the freeze record itself.
+5. Run the full test suite and two deterministic smoke directories at separate
+   paths. The JUnit properties and both smoke manifests must contain the exact
+   config and material hashes. Deterministic science tables must match across
+   smokes; wall time and platform timestamps are excluded explicitly.
+6. Recompute every material hash after tests. Any mismatch invalidates the
+   freeze. The confirmatory runner must refuse to start unless the config,
+   material, freeze-record, JUnit, and smoke identities all agree.
+
+Only after all six steps may the root status change from unopened to opened.
+The freeze record is governance evidence, not an independently witnessed public
+preregistration; the paper must state that limitation.
+
+### Stage E3 — confirmation
+
+Open all 12 roots exactly once. Execute exact dynamics first, then finite-shot
+sampling from saved latent probabilities/features. Roots may run in parallel,
+but each root writes to an isolated temporary directory and is merged only
+after schema/hash validation. Evaluate P0-P6 without manual row exclusion.
+
+## 10. Runtime benchmark and projected cost
+
+Read-only microbenchmarks on the current machine (28 August 2026) gave the
+following continuous-input teacher step times over 100 steps:
+
+| N | local loss | dephasing | collective loss |
+|---:|---:|---:|---:|
+| 2 | 0.106 ms | 0.104 ms | 0.105 ms |
+| 3 | 0.194 ms | 0.174 ms | 0.200 ms |
+| 4 | 0.899 ms | 0.840 ms | 0.983 ms |
+
+A six-qubit, four-snapshot, 72-feature QELM benchmark took 0.372 s for
+1,000 six-lag rows (0.372 ms/row); channel construction took 0.0018 s. The
+existing discrete-input canonical confirmatory run took 75.585 s for 144 teacher
+systems, but that number benefits from a 33-level propagator cache and must not
+be extrapolated directly to continuous inputs.
+
+The confirmatory config has 576 teacher systems. With 24 suffix groups, four
+prefixes, 128-prefix burn-in, and six windows, a conservative kernel accounting
+projects roughly 1-2 serial hours and 20-40 minutes with four deterministic
+root workers, before compilation of figures and full tests. Joint multinomial
+shot sampling reuses exact latent states and should be secondary to teacher
+dynamics in runtime. Stage E0 must replace this projection with measured
+end-to-end timing before freeze.
+
+## 11. Required outputs
+
+The extension must write strict, hash-linked tables for:
+
+- system liveness and jump-strength normalization;
+- exact streaming metrics;
+- exact suffix decomposition and regime labels;
+- six-window history traces and observed/censored minimum feasible windows;
+- root-held-out dissipator-model predictions and losses;
+- finite-shot allocations, selected `B`, validation scores, test scores, and
+  shot-replicate summaries;
+- feature rank, effective rank, resolved condition number, and target alignment;
+- runtime, peak memory, package/platform versions, Git state, config/material
+  hashes, and complete seed derivations.
+
+All exact and finite-shot source tables are retained even when a gate fails.
+
+## 12. Explicit compromises
+
+- The student remains six qubits because increasing both teacher and student
+  size would confound the N=4 teacher test with a new feature architecture.
+- The longest window remains six; noncrossing curves are right-censored and
+  reported as such.
+- Only three dissipator families are used. They were chosen to contrast local
+  relaxation, local phase noise, and collective relaxation without an
+  unmanageably large family screen.
+- Continuous inputs are IID rather than temporally correlated. Distribution
+  shift and correlated inputs remain a separate future study.
+- Finite shots are simulator-exact multinomial measurements; device drift,
+  calibration error, gate noise, and queue effects remain outside scope.
+- The confirmatory denominator remains 12 roots to preserve a transparent
+  paired sign criterion. Precision comes from root-block pairing, not treating
+  rows, observables, or shot replicates as independent.

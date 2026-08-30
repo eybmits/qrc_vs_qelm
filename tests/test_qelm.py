@@ -68,6 +68,104 @@ def test_qelm_memoryless_rows_depend_only_on_delay_window():
         assert not np.array_equal(X[row], X_changed[row])
 
 
+def test_parallel_encoder_uploads_each_lag_once_and_pads_unused_qubits():
+    window = np.array([0.2, 0.7])
+    encoded = qelm.encode_window(window, n_qubits=3, scheme="one_to_one")
+    expected = operators.kron_list(
+        [
+            operators.input_state(0.2),
+            operators.input_state(0.7),
+            operators.input_state(0.0),
+        ]
+    )
+
+    assert np.array_equal(encoded, expected)
+    assert not np.array_equal(
+        encoded,
+        qelm.encode_window(window, n_qubits=3, scheme="cyclic"),
+    )
+
+
+def test_parallel_encoder_rejects_more_lags_than_qubits():
+    with pytest.raises(ValueError, match="window length <= n_qubits"):
+        qelm.encode_window(np.array([0.1, 0.2, 0.3]), 2, scheme="one_to_one")
+
+
+def test_parallel_qelm_matches_manual_one_to_one_channel():
+    n_qubits = 3
+    d = 2
+    inputs = np.linspace(0.05, 0.95, 9)
+    obs = readout.pauli_observables(n_qubits, axes=("z",), max_weight=2)
+    kwargs = dict(
+        n_qubits=n_qubits,
+        d=d,
+        T_evolve=0.4,
+        n_snapshots=2,
+        gamma=0.0,
+        dissipator="local_loss",
+        J_s=0.7,
+        h=0.3,
+        coupling_seed=109,
+        observables=obs,
+    )
+
+    public = qelm.build_qelm_features(inputs, encoding="parallel", **kwargs)
+    rng = np.random.default_rng(kwargs["coupling_seed"])
+    J = reservoirs.random_couplings(n_qubits, kwargs["J_s"], rng)
+    H = reservoirs.ising_xx_hamiltonian(J, kwargs["h"], n_qubits)
+    channel = qelm.QELMChannel.from_terms(
+        n_qubits=n_qubits,
+        H_static=H,
+        jumps=[],
+        T_evolve=kwargs["T_evolve"],
+        n_snapshots=kwargs["n_snapshots"],
+    )
+    manual = channel.features(
+        qelm.delay_embed(inputs, d),
+        obs,
+        encoding_scheme="one_to_one",
+    )
+
+    assert np.array_equal(public, manual)
+
+
+def test_unitary_parallel_channel_matches_density_channel():
+    n_qubits = 3
+    rng = np.random.default_rng(811)
+    J = reservoirs.random_couplings(n_qubits, 0.8, rng)
+    H = reservoirs.ising_xx_hamiltonian(J, 0.4, n_qubits)
+    obs = readout.pauli_observables(n_qubits, axes=("x", "y", "z"), max_weight=2)
+    windows = np.array([[0.1, 0.4], [0.8, 0.3], [0.6, 0.9]])
+    density = qelm.QELMChannel.from_terms(
+        n_qubits=n_qubits,
+        H_static=H,
+        jumps=[],
+        T_evolve=0.7,
+        n_snapshots=3,
+    )
+    statevector = qelm.UnitaryQELMChannel.from_hamiltonian(
+        n_qubits=n_qubits,
+        H_static=H,
+        T_evolve=0.7,
+        n_snapshots=3,
+    )
+
+    expected = density.features(
+        windows,
+        obs,
+        encoding_scheme="one_to_one",
+    )
+    actual = statevector.features(
+        windows,
+        obs,
+        encoding_scheme="one_to_one",
+    )
+
+    assert np.allclose(actual, expected, atol=1e-10, rtol=1e-10)
+    assert np.all(actual >= -1.0 - 1e-12)
+    assert np.all(actual <= 1.0 + 1e-12)
+
+
 def test_time_delayed_qelm_memoryless_rows_with_window_longer_than_qubits():
     n_qubits = 3
     k = 6
@@ -359,6 +457,35 @@ def test_qelm_config_rejects_delay_longer_than_qubit_register():
             gamma=0.0,
             dissipator="local_loss",
         )
+
+    with pytest.raises(ValueError, match="1 <= d <= n_qubits"):
+        QELMConfig(
+            d=4,
+            T_evolve=0.5,
+            n_snapshots=2,
+            n_qubits=3,
+            J_s=0.7,
+            h=0.4,
+            gamma=0.0,
+            dissipator="local_loss",
+            encoding="parallel",
+        )
+
+
+def test_qelm_config_accepts_canonical_parallel_encoding():
+    cfg = QELMConfig(
+        d=3,
+        T_evolve=0.5,
+        n_snapshots=2,
+        n_qubits=4,
+        J_s=0.7,
+        h=0.4,
+        gamma=0.0,
+        dissipator="local_loss",
+        encoding="parallel",
+    )
+
+    assert cfg.encoding == "parallel"
 
 
 def test_qelm_config_allows_time_delayed_window_longer_than_qubit_register():

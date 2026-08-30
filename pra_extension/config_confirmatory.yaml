@@ -1,0 +1,340 @@
+schema_version: 1
+study: pra_generalization_measurement_frontier
+profile: confirmatory
+status: DRAFT_PROSPECTIVE_NOT_FROZEN
+protocol: PROTOCOL.md
+freeze_record: null
+confirmatory_roots_previously_opened: false
+
+teacher:
+  n_qubits: [2, 3, 4]
+  dt: 0.5
+  h: 0.5
+  h_in: 1.0
+  J_s: 1.0
+  target_observables:
+    axes: [x, y, z]
+    max_weight: 2
+    same_axis_only: true
+  conditions:
+    unitary_baseline:
+      dissipator: none
+      nominal_gammas: [0.0]
+    local_loss:
+      dissipator: local_loss
+      nominal_gammas: [0.25, 0.5, 1.0, 2.0, 4.0]
+    local_dephasing:
+      dissipator: dephasing
+      nominal_gammas: [0.25, 0.5, 1.0, 2.0, 4.0]
+    collective_loss:
+      dissipator: collective_loss
+      nominal_gammas: [0.25, 0.5, 1.0, 2.0, 4.0]
+  rate_normalization:
+    metric: sum_rate_trace_LdaggerL_divided_by_N_times_2_to_N_minus_1
+    target_equals_nominal_gamma: true
+  continuous_propagation:
+    quantize_levels: null
+    cache_input_propagators: false
+
+student:
+  architecture: ptd_parallel
+  encoding: one_lag_per_qubit
+  n_qubits: 6
+  T_evolve: 0.5
+  h: 0.5
+  J_s: 1.0
+  unitary: true
+  windows: [1, 2, 3, 4, 5, 6]
+  max_snapshots: 4
+  snapshot_budgets: [1, 2, 4]
+  feature_budgets: [18, 36, 72]
+  observables:
+    axes: [x, y, z]
+    max_weight: 1
+
+controls:
+  models: [constant, linear_delay, poly2_delay, classical_tanh, rr_same_identity]
+  tanh_widths: [18, 36, 72]
+  all_models_receive_identical_delay_rows: true
+
+input:
+  train_validation_test_distribution: uniform_continuous_0_1
+  prefix_distribution: uniform_continuous_0_1
+  suffix_older_coordinates: uniform_continuous_0_1
+  suffix_newest_coordinate: randomized_latin_hypercube_1d
+  bit_generator: PCG64DXSM
+  hash_float_bit_patterns: true
+  redraw_on_near_collision: false
+
+rows:
+  burnin_per_stream: 128
+  train: 480
+  validation: 160
+  test: 320
+  suffix_groups: 24
+  prefix_branches: 4
+  prefix_burnin: 128
+
+fit:
+  alpha_grid: [0.0, 1.0e-10, 1.0e-8, 1.0e-6, 1.0e-4, 1.0e-2, 1.0, 1.0e2, 1.0e4, 1.0e6, "+inf"]
+  train_only_feature_standardization: true
+  resolved_svd_relative_cutoff: 1.0e-6
+  select_feature_budget_on_validation_in_shot_arm: true
+  feature_budget_tie_break: smaller_budget
+  alpha_tie_break: larger_alpha
+
+finite_shots:
+  enabled: true
+  primary_arm: noisy_student_features_exact_teacher_targets
+  secondary_arm: noisy_student_features_and_teacher_training_labels
+  total_circuit_shots_per_row: [192, 1536, 12288]
+  compatible_global_axes: [x, y, z]
+  settings_by_feature_budget: {"18": 3, "36": 6, "72": 12}
+  shots_per_setting:
+    "192": {"18": 64, "36": 32, "72": 16}
+    "1536": {"18": 512, "36": 256, "72": 128}
+    "12288": {"18": 4096, "36": 2048, "72": 1024}
+  require_equal_total_shots_across_feature_budgets: true
+  joint_bitstring_multinomial_sampling: true
+  independent_expectation_gaussian_noise_forbidden: true
+  replicates_per_root_cell: 4
+  score_against_latent_exact_test_target: true
+  scope:
+    teacher_dissipator: local_loss
+    teacher_gamma: 4.0
+    window: 6
+    teacher_n_qubits: [2, 3, 4]
+
+classification:
+  tolerance_nrmse: 0.10
+  min_target_variance: 1.0e-8
+  ordered_labels:
+    - DEGENERATE_TARGET
+    - HISTORY_IMPOSSIBLE
+    - EMULATED
+    - REPRESENTATION_LIMITED
+    - UNRESOLVED
+
+inference:
+  statistical_unit: root_block
+  roots_total: 12
+  min_directional_roots: 10
+  root_block_bootstrap_replicates: 20000
+  exact_sign_test: true
+  missing_cells_fail_closed: true
+  shot_replicates_are_not_independent_units: true
+  four_point_spearman_decision_bearing: false
+
+primary_gates:
+  P0:
+    expected_roots: 12
+    expected_teacher_systems: 576
+    expected_exact_stream_rows: 34560
+    expected_exact_suffix_rows: 34560
+    require_strict_schema: true
+    require_disjoint_seeds: true
+    require_input_and_observable_hashes: true
+    require_full_material_bound_tests: true
+    require_two_deterministic_smoke_runs: true
+    require_joint_shot_sampler_tests: true
+  P1:
+    max_identity_error: 1.0e-10
+    max_exact_prediction_disagreement: 1.0e-10
+    require_all_common_suffix_bounds: true
+    require_history_invariance_across_students: true
+  P2:
+    minimum_live_system_fraction_per_root: 0.90
+    require_all_core_anchor_cells_live: true
+    require_both_history_sides_per_teacher_size: true
+    minimum_roots_with_both_history_sides: 10
+  P3:
+    teacher_dissipator: local_loss
+    teacher_gamma: 4.0
+    teacher_n_qubits: [2, 3, 4]
+    short_window: 1
+    long_window: 6
+    snapshot_budget: 4
+    require_short_history_impossible: true
+    require_long_history_feasible: true
+    minimum_transition_roots_per_size: 10
+    minimum_median_stream_nrmse_gain_per_size: 0.20
+    minimum_positive_roots_per_size: 10
+  P4:
+    teacher_dissipator: local_loss
+    teacher_gamma: 4.0
+    teacher_n_qubits: [2, 3, 4]
+    window: 6
+    feature_budget_contrast: [18, 72]
+    require_history_feasible: true
+    minimum_median_representation_nrmse_gain_per_size: 0.20
+    minimum_positive_roots_per_size: 10
+  P5:
+    response: log_max_history_nrmse_1e_minus_12
+    predictor_gamma: log1p_nominal_gamma
+    include_positive_gamma_only: true
+    common_model: "z ~ 1 + C(N_T) + q + d + q:d"
+    dissipator_model: "z ~ 1 + C(N_T) + q + d + q:d + C(D) + C(D):q + C(D):d + C(D):q:d"
+    evaluation: leave_one_root_out_equal_cell_weight_mse
+    minimum_median_predictive_gain: 0.05
+    minimum_positive_roots: 10
+  P6:
+    teacher_dissipator: local_loss
+    teacher_gamma: 4.0
+    teacher_n_qubits: [2, 3, 4]
+    window: 6
+    low_total_shots: 192
+    high_total_shots: 12288
+    minimum_low_shot_B72_penalty: 0.05
+    minimum_roots_with_positive_low_shot_penalty: 10
+    maximum_expected_low_shot_selected_budget: 36
+    minimum_roots_selecting_low_budget: 10
+    require_selected_budget_nondecreasing_with_shots: true
+    minimum_roots_with_nondecreasing_selection: 10
+    high_shot_expected_budget: 72
+    minimum_teacher_sizes_selecting_B72_within_root: 2
+    minimum_roots_selecting_high_budget: 10
+    minimum_high_shot_B72_gain_over_B18: 0.10
+    minimum_positive_high_shot_roots: 10
+    maximum_high_shot_fractional_nrmse_inflation_vs_exact: 0.25
+    minimum_roots_within_exact_inflation_bound: 10
+
+decision_labels:
+  no_go: NO_GO_EXTENSION
+  n4_failure: CONTINUOUS_N4_NOT_REPLICATED
+  base_success: GENERALIZES_TWO_BOTTLENECK_FRONTIER
+  P5_suffix: DISSIPATOR_SPECIFIC
+  P6_suffix: FIXED_TOTAL_SHOT_TRADEOFF
+
+roots:
+  - root_id: pra_confirm01
+    teacher_coupling_seeds: {"2": 930101, "3": 930102, "4": 930103}
+    student_coupling_seed: 931101
+    train_input_seed: 932101
+    validation_input_seed: 933101
+    test_input_seed: 934101
+    suffix_input_seed: 935101
+    prefix_input_seed: 936101
+    classical_feature_seed: 937101
+    student_shot_seed: 938101
+    teacher_shot_seed: 939101
+  - root_id: pra_confirm02
+    teacher_coupling_seeds: {"2": 930201, "3": 930202, "4": 930203}
+    student_coupling_seed: 931201
+    train_input_seed: 932201
+    validation_input_seed: 933201
+    test_input_seed: 934201
+    suffix_input_seed: 935201
+    prefix_input_seed: 936201
+    classical_feature_seed: 937201
+    student_shot_seed: 938201
+    teacher_shot_seed: 939201
+  - root_id: pra_confirm03
+    teacher_coupling_seeds: {"2": 930301, "3": 930302, "4": 930303}
+    student_coupling_seed: 931301
+    train_input_seed: 932301
+    validation_input_seed: 933301
+    test_input_seed: 934301
+    suffix_input_seed: 935301
+    prefix_input_seed: 936301
+    classical_feature_seed: 937301
+    student_shot_seed: 938301
+    teacher_shot_seed: 939301
+  - root_id: pra_confirm04
+    teacher_coupling_seeds: {"2": 930401, "3": 930402, "4": 930403}
+    student_coupling_seed: 931401
+    train_input_seed: 932401
+    validation_input_seed: 933401
+    test_input_seed: 934401
+    suffix_input_seed: 935401
+    prefix_input_seed: 936401
+    classical_feature_seed: 937401
+    student_shot_seed: 938401
+    teacher_shot_seed: 939401
+  - root_id: pra_confirm05
+    teacher_coupling_seeds: {"2": 930501, "3": 930502, "4": 930503}
+    student_coupling_seed: 931501
+    train_input_seed: 932501
+    validation_input_seed: 933501
+    test_input_seed: 934501
+    suffix_input_seed: 935501
+    prefix_input_seed: 936501
+    classical_feature_seed: 937501
+    student_shot_seed: 938501
+    teacher_shot_seed: 939501
+  - root_id: pra_confirm06
+    teacher_coupling_seeds: {"2": 930601, "3": 930602, "4": 930603}
+    student_coupling_seed: 931601
+    train_input_seed: 932601
+    validation_input_seed: 933601
+    test_input_seed: 934601
+    suffix_input_seed: 935601
+    prefix_input_seed: 936601
+    classical_feature_seed: 937601
+    student_shot_seed: 938601
+    teacher_shot_seed: 939601
+  - root_id: pra_confirm07
+    teacher_coupling_seeds: {"2": 930701, "3": 930702, "4": 930703}
+    student_coupling_seed: 931701
+    train_input_seed: 932701
+    validation_input_seed: 933701
+    test_input_seed: 934701
+    suffix_input_seed: 935701
+    prefix_input_seed: 936701
+    classical_feature_seed: 937701
+    student_shot_seed: 938701
+    teacher_shot_seed: 939701
+  - root_id: pra_confirm08
+    teacher_coupling_seeds: {"2": 930801, "3": 930802, "4": 930803}
+    student_coupling_seed: 931801
+    train_input_seed: 932801
+    validation_input_seed: 933801
+    test_input_seed: 934801
+    suffix_input_seed: 935801
+    prefix_input_seed: 936801
+    classical_feature_seed: 937801
+    student_shot_seed: 938801
+    teacher_shot_seed: 939801
+  - root_id: pra_confirm09
+    teacher_coupling_seeds: {"2": 930901, "3": 930902, "4": 930903}
+    student_coupling_seed: 931901
+    train_input_seed: 932901
+    validation_input_seed: 933901
+    test_input_seed: 934901
+    suffix_input_seed: 935901
+    prefix_input_seed: 936901
+    classical_feature_seed: 937901
+    student_shot_seed: 938901
+    teacher_shot_seed: 939901
+  - root_id: pra_confirm10
+    teacher_coupling_seeds: {"2": 945001, "3": 945002, "4": 945003}
+    student_coupling_seed: 946001
+    train_input_seed: 947001
+    validation_input_seed: 948001
+    test_input_seed: 949001
+    suffix_input_seed: 950001
+    prefix_input_seed: 951001
+    classical_feature_seed: 952001
+    student_shot_seed: 953001
+    teacher_shot_seed: 954001
+  - root_id: pra_confirm11
+    teacher_coupling_seeds: {"2": 945101, "3": 945102, "4": 945103}
+    student_coupling_seed: 946101
+    train_input_seed: 947101
+    validation_input_seed: 948101
+    test_input_seed: 949101
+    suffix_input_seed: 950101
+    prefix_input_seed: 951101
+    classical_feature_seed: 952101
+    student_shot_seed: 953101
+    teacher_shot_seed: 954101
+  - root_id: pra_confirm12
+    teacher_coupling_seeds: {"2": 945201, "3": 945202, "4": 945203}
+    student_coupling_seed: 946201
+    train_input_seed: 947201
+    validation_input_seed: 948201
+    test_input_seed: 949201
+    suffix_input_seed: 950201
+    prefix_input_seed: 951201
+    classical_feature_seed: 952201
+    student_shot_seed: 953201
+    teacher_shot_seed: 954201

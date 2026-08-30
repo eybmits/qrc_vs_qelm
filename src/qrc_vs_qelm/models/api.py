@@ -151,11 +151,12 @@ class QRCConfig:
 class QELMConfig:
     """Configuration for the QELM feature builder.
 
-    ``d`` is the delay-embedding window length ``k``. Spatial encoding maps the
-    window cyclically onto qubits and therefore requires ``k <= n_qubits``.
-    Time-delayed encoding re-uploads the window through the recurrent
-    input-affine dynamics from a reset state, so ``k`` is independent of
-    ``n_qubits``.
+    ``d`` is the delay-embedding window length ``k``. ``spatial`` preserves the
+    original cyclic repository map. ``parallel`` uploads each delay coordinate
+    to one distinct qubit and pads unused qubits with ``|0>``; it is the
+    canonical nonrecurrent TD-QELM. ``time_delayed`` is the legacy name for
+    reset-and-replay through input-dependent recurrent dynamics, so ``k`` is
+    independent of ``n_qubits`` only for that control.
     """
 
     d: int
@@ -180,9 +181,13 @@ class QELMConfig:
         )
         if int(self.d) < 1:
             raise ValueError("d must be >= 1")
-        if self.encoding not in {"spatial", "time_delayed"}:
-            raise ValueError("encoding must be 'spatial' or 'time_delayed'")
-        if self.encoding == "spatial" and int(self.d) > int(self.n_qubits):
+        if self.encoding not in {"spatial", "parallel", "time_delayed"}:
+            raise ValueError(
+                "encoding must be 'spatial', 'parallel', or 'time_delayed'"
+            )
+        if self.encoding in {"spatial", "parallel"} and int(self.d) > int(
+            self.n_qubits
+        ):
             raise ValueError("d must satisfy 1 <= d <= n_qubits")
         if float(self.T_evolve) < 0:
             raise ValueError("T_evolve must be non-negative")

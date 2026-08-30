@@ -1,0 +1,151 @@
+schema_version: 1
+study: pra_generalization_measurement_frontier
+profile: calibration
+status: DESIGN_ONLY
+protocol: PROTOCOL.md
+scientific_use: grid_and_runtime_calibration_only
+
+teacher:
+  n_qubits: [2, 3, 4]
+  dt: 0.5
+  h: 0.5
+  h_in: 1.0
+  J_s: 1.0
+  target_observables:
+    axes: [x, y, z]
+    max_weight: 2
+    same_axis_only: true
+  conditions:
+    unitary_baseline:
+      dissipator: none
+      nominal_gammas: [0.0]
+    local_loss:
+      dissipator: local_loss
+      nominal_gammas: [0.25, 0.5, 1.0, 2.0, 4.0]
+    local_dephasing:
+      dissipator: dephasing
+      nominal_gammas: [0.25, 0.5, 1.0, 2.0, 4.0]
+    collective_loss:
+      dissipator: collective_loss
+      nominal_gammas: [0.25, 0.5, 1.0, 2.0, 4.0]
+  rate_normalization:
+    metric: sum_rate_trace_LdaggerL_divided_by_N_times_2_to_N_minus_1
+    target_equals_nominal_gamma: true
+  continuous_propagation:
+    quantize_levels: null
+    cache_input_propagators: false
+
+student:
+  architecture: ptd_parallel
+  encoding: one_lag_per_qubit
+  n_qubits: 6
+  T_evolve: 0.5
+  h: 0.5
+  J_s: 1.0
+  unitary: true
+  windows: [1, 2, 3, 4, 5, 6]
+  max_snapshots: 4
+  snapshot_budgets: [1, 2, 4]
+  feature_budgets: [18, 36, 72]
+  observables:
+    axes: [x, y, z]
+    max_weight: 1
+
+controls:
+  models: [constant, linear_delay, poly2_delay, classical_tanh, rr_same_identity]
+  tanh_widths: [18, 36, 72]
+  all_models_receive_identical_delay_rows: true
+
+input:
+  train_validation_test_distribution: uniform_continuous_0_1
+  prefix_distribution: uniform_continuous_0_1
+  suffix_older_coordinates: uniform_continuous_0_1
+  suffix_newest_coordinate: randomized_latin_hypercube_1d
+  bit_generator: PCG64DXSM
+  hash_float_bit_patterns: true
+
+rows:
+  burnin_per_stream: 96
+  train: 240
+  validation: 80
+  test: 160
+  suffix_groups: 16
+  prefix_branches: 4
+  prefix_burnin: 96
+
+fit:
+  alpha_grid: [0.0, 1.0e-10, 1.0e-8, 1.0e-6, 1.0e-4, 1.0e-2, 1.0, 1.0e2, 1.0e4, 1.0e6, "+inf"]
+  train_only_feature_standardization: true
+  resolved_svd_relative_cutoff: 1.0e-6
+  select_feature_budget_on_validation_in_shot_arm: true
+  feature_budget_tie_break: smaller_budget
+  alpha_tie_break: larger_alpha
+
+finite_shots:
+  enabled: true
+  primary_arm: noisy_student_features_exact_teacher_targets
+  secondary_arm: noisy_student_features_and_teacher_training_labels
+  total_circuit_shots_per_row: [192, 1536, 12288]
+  compatible_global_axes: [x, y, z]
+  settings_by_feature_budget: {"18": 3, "36": 6, "72": 12}
+  require_equal_total_shots_across_feature_budgets: true
+  joint_bitstring_multinomial_sampling: true
+  independent_expectation_gaussian_noise_forbidden: true
+  replicates_per_root_cell: 2
+  scope:
+    teacher_dissipator: local_loss
+    teacher_gamma: 4.0
+    window: 6
+    teacher_n_qubits: [2, 3, 4]
+
+calibration_rules:
+  confirmatory_roots_must_remain_unopened: true
+  thresholds_P0_through_P6_may_not_change: true
+  one_pre_freeze_grid_amendment_allowed: true
+  roots_do_not_enter_confirmatory_intervals: true
+
+roots:
+  - root_id: pra_design01
+    teacher_coupling_seeds: {"2": 920101, "3": 920102, "4": 920103}
+    student_coupling_seed: 921101
+    train_input_seed: 922101
+    validation_input_seed: 923101
+    test_input_seed: 924101
+    suffix_input_seed: 925101
+    prefix_input_seed: 926101
+    classical_feature_seed: 927101
+    student_shot_seed: 928101
+    teacher_shot_seed: 929101
+  - root_id: pra_design02
+    teacher_coupling_seeds: {"2": 920201, "3": 920202, "4": 920203}
+    student_coupling_seed: 921201
+    train_input_seed: 922201
+    validation_input_seed: 923201
+    test_input_seed: 924201
+    suffix_input_seed: 925201
+    prefix_input_seed: 926201
+    classical_feature_seed: 927201
+    student_shot_seed: 928201
+    teacher_shot_seed: 929201
+  - root_id: pra_design03
+    teacher_coupling_seeds: {"2": 920301, "3": 920302, "4": 920303}
+    student_coupling_seed: 921301
+    train_input_seed: 922301
+    validation_input_seed: 923301
+    test_input_seed: 924301
+    suffix_input_seed: 925301
+    prefix_input_seed: 926301
+    classical_feature_seed: 927301
+    student_shot_seed: 928301
+    teacher_shot_seed: 929301
+  - root_id: pra_design04
+    teacher_coupling_seeds: {"2": 920401, "3": 920402, "4": 920403}
+    student_coupling_seed: 921401
+    train_input_seed: 922401
+    validation_input_seed: 923401
+    test_input_seed: 924401
+    suffix_input_seed: 925401
+    prefix_input_seed: 926401
+    classical_feature_seed: 927401
+    student_shot_seed: 928401
+    teacher_shot_seed: 929401

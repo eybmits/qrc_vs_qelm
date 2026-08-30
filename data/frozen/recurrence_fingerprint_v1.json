@@ -1,0 +1,679 @@
+{
+  "schema_version": 1,
+  "freeze_name": "recurrence_fingerprint_v1",
+  "status": "INTERNAL_LOCK",
+  "lock_date": "2026-08-28",
+  "human_protocol": "RECURRENCE_FINGERPRINT_PREREGISTRATION.md",
+  "source_snapshot": {
+    "git_commit": "baa7a8ac22f1e23a11bc07b5883ff164f75bb47e",
+    "git_tree_dirty_at_lock": true,
+    "dirty_tree_recorded": true,
+    "require_runner_and_config_hashes": true,
+    "require_dependency_manifest": true
+  },
+  "relationship_to_original": {
+    "separate_addendum": true,
+    "modifies_or_supersedes_original": false,
+    "protected_files": [
+      "PREREGISTRATION.md",
+      "PROTOCOL.md",
+      "data/frozen/frozen_v1_config.json"
+    ]
+  },
+  "scope": {
+    "simulator_only": true,
+    "max_window": 5,
+    "n_qubits": [
+      2,
+      3,
+      4
+    ],
+    "dissipators": [
+      "local_loss",
+      "collective_loss",
+      "dephasing"
+    ],
+    "gamma_range": [
+      0.05,
+      0.45
+    ],
+    "dt_range": [
+      0.35,
+      0.7
+    ],
+    "fixed_physics": {
+      "J_s": 1.0,
+      "h": 0.5,
+      "h_in": 1.0,
+      "quantize_levels": 33,
+      "n_virtual": 1,
+      "n_snapshots": 1
+    },
+    "observables": {
+      "family": "single_site_and_same_axis_two_site_pauli",
+      "axes": [
+        "x",
+        "y",
+        "z"
+      ],
+      "max_weight": 2,
+      "dimensions_by_n": {
+        "2": 9,
+        "3": 18,
+        "4": 30
+      }
+    }
+  },
+  "probe": {
+    "histories_per_system": 24,
+    "burnin_length": 12,
+    "branch_length": 16,
+    "suffix_lengths": [
+      0,
+      1,
+      2,
+      3,
+      4,
+      5,
+      6,
+      8,
+      12,
+      16
+    ],
+    "conditions": [
+      "carry",
+      "ideal_quantum_reset"
+    ],
+    "history_distribution": "uniform_0_1_then_33_level_quantization",
+    "history_rng": "numpy SeedSequence([history_seed, coupling_seed, history_id]) with sequential burnin, branch_a, branch_b, and max_suffix draws",
+    "suffix_construction": "all evaluated suffixes are nested prefixes of the one max_suffix draw",
+    "complete_trajectory_pairing": true
+  },
+  "measurement": {
+    "include_exact_expectations": true,
+    "shots_per_batch": [
+      10000,
+      1000
+    ],
+    "primary_shots_per_batch": 10000,
+    "stress_shots_per_batch": 1000,
+    "measurement_seeds": [
+      840001,
+      840002,
+      840003,
+      840004,
+      840005,
+      840006,
+      840007,
+      840008
+    ],
+    "independent_batches_per_arm": 2,
+    "arms": 2,
+    "physical_shot_multiplier": 4,
+    "estimator": "mean_j[(z_A_j_batch1-z_B_j_batch1)*(z_A_j_batch2-z_B_j_batch2)]",
+    "retain_signed_cross_batch_estimates": true,
+    "clip_cross_batch_estimates": false
+  },
+  "classifier": {
+    "architecture_blind": true,
+    "baseline_floor": 0.0001,
+    "equivalence_ratio": 0.02,
+    "liveness_ratio": 0.05,
+    "recurrent_tail_ratio": 0.03,
+    "reset_max_ratio": 0.02,
+    "reset_contrast_ratio": 0.03,
+    "tail_suffixes": [
+      5,
+      6,
+      8,
+      12
+    ],
+    "candidate_cutoffs": [
+      1,
+      2,
+      3,
+      4,
+      5
+    ],
+    "confidence": 0.95,
+    "within_system_bootstrap": 1000,
+    "bootstrap_seed": 850001,
+    "bootstrap_domain": "physics_id, shots_per_batch, and measurement_seed; case variants share paired history resamples",
+    "outer_bootstrap": 1000,
+    "outer_bootstrap_seed": 850002,
+    "normalization": "D_condition(L) / D_carry(0)",
+    "baseline_rule": "lower95(D_carry(0)) > baseline_floor",
+    "cutoff_rule": "smallest k with lower95(R_carry(k-1)) > liveness_ratio and upper95(max_{L>=k}|R_carry(L)|) < equivalence_ratio",
+    "recurrent_rule": "lower95(mean_tail R_carry) > recurrent_tail_ratio and upper95(max_tail |R_reset|) < reset_max_ratio and lower95(mean_tail R_carry - mean_tail |R_reset|) > reset_contrast_ratio",
+    "reset_insensitive_rule": "no cutoff, lower95(mean_tail R_carry) > recurrent_tail_ratio, and lower95(mean_tail |R_reset|) > recurrent_tail_ratio",
+    "output_labels": [
+      "FINITE_WINDOW_COMPATIBLE_d{k}",
+      "RECURRENT_RESET_SENSITIVE",
+      "RECURRENT_RESET_INSENSITIVE",
+      "INDETERMINATE_LOW_SIGNAL",
+      "INDETERMINATE"
+    ],
+    "forbidden_inputs": [
+      "source device or implementation id",
+      "architecture or family label",
+      "declared or actual window",
+      "expected behavior"
+    ],
+    "allowed_nonlabel_identifiers": [
+      "deterministic case pseudonym blind_id",
+      "physics_id used only to keep histories and bootstrap units paired"
+    ],
+    "indeterminate_counts_as_error": true
+  },
+  "task_link": {
+    "rows": 1200,
+    "input_distribution": "numpy default_rng(task_input_seed) uniform_0_1",
+    "washout": 100,
+    "target_family": "degree_1_legendre_delay",
+    "taus": [
+      1,
+      3,
+      5,
+      8,
+      12
+    ],
+    "short_taus": [
+      1,
+      3
+    ],
+    "long_taus": [
+      8,
+      12
+    ],
+    "transition_tau_report_only": 5,
+    "feature_tier": "exact",
+    "split_fractions": [
+      0.6,
+      0.2,
+      0.2
+    ],
+    "split_order": "contiguous_train_validation_test_after_washout_and_target_validity",
+    "train_only_preprocessing": true,
+    "drive_inputs_quantized_to_levels": 33,
+    "targets_use_original_unquantized_inputs": true,
+    "alpha_grid": [
+      0.0,
+      1e-10,
+      1e-08,
+      1e-06,
+      0.0001,
+      0.01,
+      1.0,
+      100.0
+    ],
+    "alpha_selection_split": "validation",
+    "alpha_selection_metric": "validation_squared_correlation_capacity",
+    "alpha_tie_break": "retain the first alpha in the ordered grid; therefore choose the smallest tied alpha",
+    "final_readout_fit": "combined_train_and_validation_after_alpha_selection",
+    "metric": "test_squared_correlation_capacity",
+    "primary_comparator": "replay_qelm_d5",
+    "delta": "capacity_test(qrc) - capacity_test(replay_qelm_d5)",
+    "crossover_shift": "mean(delta at tau 8 and 12) - mean(delta at tau 1 and 3)",
+    "bootstrap": 1000,
+    "bootstrap_seed": 850003
+  },
+  "device_panel": {
+    "case_count_per_block": 9,
+    "primary_case_ids": [
+      "qrc",
+      "replay_qelm_d1",
+      "replay_qelm_d3",
+      "replay_qelm_d5",
+      "spatial_qelm_dmin"
+    ],
+    "fault_control_ids": [
+      "forced_reset_qrc_d3",
+      "leaky_qelm_control",
+      "reset_failure_qrc_control",
+      "dead_readout_control"
+    ],
+    "cases": [
+      {
+        "id": "qrc",
+        "expected_behavior": "recurrent_reset_sensitive",
+        "primary_case": true
+      },
+      {
+        "id": "replay_qelm_d1",
+        "effective_window": 1,
+        "expected_behavior": "finite_window",
+        "primary_case": true
+      },
+      {
+        "id": "replay_qelm_d3",
+        "effective_window": 3,
+        "expected_behavior": "finite_window",
+        "primary_case": true
+      },
+      {
+        "id": "replay_qelm_d5",
+        "effective_window": 5,
+        "expected_behavior": "finite_window",
+        "primary_case": true
+      },
+      {
+        "id": "spatial_qelm_dmin",
+        "effective_window_rule": "min(n_qubits, 3)",
+        "expected_behavior": "finite_window",
+        "primary_case": true
+      },
+      {
+        "id": "forced_reset_qrc_d3",
+        "effective_window": 3,
+        "semantics": "Use the QRC carry curve for L<3 and the ideal-reset QRC curve for L>=3.",
+        "expected_behavior": "finite_window",
+        "primary_case": false
+      },
+      {
+        "id": "leaky_qelm_control",
+        "semantics": "Inject a reproducible state-leak fault by copying the matched QRC carry and ideal-reset trajectories into a QELM-labelled control.",
+        "expected_behavior": "recurrent_reset_sensitive",
+        "primary_case": false
+      },
+      {
+        "id": "reset_failure_qrc_control",
+        "semantics": "Make ideal reset a no-op by using the QRC carry trajectory in both conditions.",
+        "expected_behavior": "recurrent_reset_insensitive",
+        "primary_case": false
+      },
+      {
+        "id": "dead_readout_control",
+        "semantics": "Use identical all-zero readout vectors for both arms in both conditions.",
+        "expected_behavior": "low_signal",
+        "primary_case": false
+      }
+    ]
+  },
+  "design_blocks": [
+    {
+      "physics_id": "D01",
+      "coupling_seed": 710001,
+      "history_seed": 730001,
+      "task_input_seed": 720000,
+      "n_qubits": 2,
+      "dissipator": "local_loss",
+      "gamma": 0.08,
+      "dt": 0.35
+    },
+    {
+      "physics_id": "D02",
+      "coupling_seed": 710002,
+      "history_seed": 730002,
+      "task_input_seed": 720001,
+      "n_qubits": 3,
+      "dissipator": "local_loss",
+      "gamma": 0.2,
+      "dt": 0.5
+    },
+    {
+      "physics_id": "D03",
+      "coupling_seed": 710003,
+      "history_seed": 730003,
+      "task_input_seed": 720002,
+      "n_qubits": 4,
+      "dissipator": "local_loss",
+      "gamma": 0.35,
+      "dt": 0.65
+    },
+    {
+      "physics_id": "D04",
+      "coupling_seed": 710004,
+      "history_seed": 730004,
+      "task_input_seed": 720003,
+      "n_qubits": 2,
+      "dissipator": "collective_loss",
+      "gamma": 0.2,
+      "dt": 0.65
+    },
+    {
+      "physics_id": "D05",
+      "coupling_seed": 710005,
+      "history_seed": 730005,
+      "task_input_seed": 720004,
+      "n_qubits": 3,
+      "dissipator": "collective_loss",
+      "gamma": 0.35,
+      "dt": 0.35
+    },
+    {
+      "physics_id": "D06",
+      "coupling_seed": 710006,
+      "history_seed": 730006,
+      "task_input_seed": 720005,
+      "n_qubits": 4,
+      "dissipator": "collective_loss",
+      "gamma": 0.08,
+      "dt": 0.5
+    },
+    {
+      "physics_id": "D07",
+      "coupling_seed": 710007,
+      "history_seed": 730007,
+      "task_input_seed": 720006,
+      "n_qubits": 2,
+      "dissipator": "dephasing",
+      "gamma": 0.35,
+      "dt": 0.5
+    },
+    {
+      "physics_id": "D08",
+      "coupling_seed": 710008,
+      "history_seed": 730008,
+      "task_input_seed": 720007,
+      "n_qubits": 4,
+      "dissipator": "dephasing",
+      "gamma": 0.2,
+      "dt": 0.35
+    }
+  ],
+  "heldout_blocks": [
+    {
+      "physics_id": "H01",
+      "coupling_seed": 810001,
+      "history_seed": 830001,
+      "task_input_seed": 820001,
+      "n_qubits": 2,
+      "dissipator": "local_loss",
+      "gamma": 0.05,
+      "dt": 0.35
+    },
+    {
+      "physics_id": "H02",
+      "coupling_seed": 810002,
+      "history_seed": 830002,
+      "task_input_seed": 820002,
+      "n_qubits": 3,
+      "dissipator": "collective_loss",
+      "gamma": 0.1,
+      "dt": 0.4
+    },
+    {
+      "physics_id": "H03",
+      "coupling_seed": 810003,
+      "history_seed": 830003,
+      "task_input_seed": 820003,
+      "n_qubits": 4,
+      "dissipator": "dephasing",
+      "gamma": 0.15,
+      "dt": 0.45
+    },
+    {
+      "physics_id": "H04",
+      "coupling_seed": 810004,
+      "history_seed": 830004,
+      "task_input_seed": 820004,
+      "n_qubits": 2,
+      "dissipator": "collective_loss",
+      "gamma": 0.2,
+      "dt": 0.5
+    },
+    {
+      "physics_id": "H05",
+      "coupling_seed": 810005,
+      "history_seed": 830005,
+      "task_input_seed": 820005,
+      "n_qubits": 3,
+      "dissipator": "dephasing",
+      "gamma": 0.25,
+      "dt": 0.55
+    },
+    {
+      "physics_id": "H06",
+      "coupling_seed": 810006,
+      "history_seed": 830006,
+      "task_input_seed": 820006,
+      "n_qubits": 4,
+      "dissipator": "local_loss",
+      "gamma": 0.3,
+      "dt": 0.6
+    },
+    {
+      "physics_id": "H07",
+      "coupling_seed": 810007,
+      "history_seed": 830007,
+      "task_input_seed": 820007,
+      "n_qubits": 2,
+      "dissipator": "dephasing",
+      "gamma": 0.35,
+      "dt": 0.65
+    },
+    {
+      "physics_id": "H08",
+      "coupling_seed": 810008,
+      "history_seed": 830008,
+      "task_input_seed": 820008,
+      "n_qubits": 3,
+      "dissipator": "local_loss",
+      "gamma": 0.45,
+      "dt": 0.7
+    },
+    {
+      "physics_id": "H09",
+      "coupling_seed": 810009,
+      "history_seed": 830009,
+      "task_input_seed": 820009,
+      "n_qubits": 4,
+      "dissipator": "collective_loss",
+      "gamma": 0.05,
+      "dt": 0.5
+    },
+    {
+      "physics_id": "H10",
+      "coupling_seed": 810010,
+      "history_seed": 830010,
+      "task_input_seed": 820010,
+      "n_qubits": 2,
+      "dissipator": "local_loss",
+      "gamma": 0.1,
+      "dt": 0.55
+    },
+    {
+      "physics_id": "H11",
+      "coupling_seed": 810011,
+      "history_seed": 830011,
+      "task_input_seed": 820011,
+      "n_qubits": 3,
+      "dissipator": "collective_loss",
+      "gamma": 0.15,
+      "dt": 0.6
+    },
+    {
+      "physics_id": "H12",
+      "coupling_seed": 810012,
+      "history_seed": 830012,
+      "task_input_seed": 820012,
+      "n_qubits": 4,
+      "dissipator": "dephasing",
+      "gamma": 0.2,
+      "dt": 0.65
+    },
+    {
+      "physics_id": "H13",
+      "coupling_seed": 810013,
+      "history_seed": 830013,
+      "task_input_seed": 820013,
+      "n_qubits": 2,
+      "dissipator": "collective_loss",
+      "gamma": 0.25,
+      "dt": 0.7
+    },
+    {
+      "physics_id": "H14",
+      "coupling_seed": 810014,
+      "history_seed": 830014,
+      "task_input_seed": 820014,
+      "n_qubits": 3,
+      "dissipator": "dephasing",
+      "gamma": 0.3,
+      "dt": 0.35
+    },
+    {
+      "physics_id": "H15",
+      "coupling_seed": 810015,
+      "history_seed": 830015,
+      "task_input_seed": 820015,
+      "n_qubits": 4,
+      "dissipator": "local_loss",
+      "gamma": 0.35,
+      "dt": 0.4
+    },
+    {
+      "physics_id": "H16",
+      "coupling_seed": 810016,
+      "history_seed": 830016,
+      "task_input_seed": 820016,
+      "n_qubits": 2,
+      "dissipator": "dephasing",
+      "gamma": 0.45,
+      "dt": 0.45
+    },
+    {
+      "physics_id": "H17",
+      "coupling_seed": 810017,
+      "history_seed": 830017,
+      "task_input_seed": 820017,
+      "n_qubits": 3,
+      "dissipator": "local_loss",
+      "gamma": 0.05,
+      "dt": 0.6
+    },
+    {
+      "physics_id": "H18",
+      "coupling_seed": 810018,
+      "history_seed": 830018,
+      "task_input_seed": 820018,
+      "n_qubits": 4,
+      "dissipator": "collective_loss",
+      "gamma": 0.1,
+      "dt": 0.65
+    },
+    {
+      "physics_id": "H19",
+      "coupling_seed": 810019,
+      "history_seed": 830019,
+      "task_input_seed": 820019,
+      "n_qubits": 2,
+      "dissipator": "local_loss",
+      "gamma": 0.15,
+      "dt": 0.7
+    },
+    {
+      "physics_id": "H20",
+      "coupling_seed": 810020,
+      "history_seed": 830020,
+      "task_input_seed": 820020,
+      "n_qubits": 3,
+      "dissipator": "collective_loss",
+      "gamma": 0.2,
+      "dt": 0.35
+    },
+    {
+      "physics_id": "H21",
+      "coupling_seed": 810021,
+      "history_seed": 830021,
+      "task_input_seed": 820021,
+      "n_qubits": 4,
+      "dissipator": "dephasing",
+      "gamma": 0.25,
+      "dt": 0.4
+    },
+    {
+      "physics_id": "H22",
+      "coupling_seed": 810022,
+      "history_seed": 830022,
+      "task_input_seed": 820022,
+      "n_qubits": 2,
+      "dissipator": "collective_loss",
+      "gamma": 0.3,
+      "dt": 0.45
+    },
+    {
+      "physics_id": "H23",
+      "coupling_seed": 810023,
+      "history_seed": 830023,
+      "task_input_seed": 820023,
+      "n_qubits": 3,
+      "dissipator": "dephasing",
+      "gamma": 0.35,
+      "dt": 0.5
+    },
+    {
+      "physics_id": "H24",
+      "coupling_seed": 810024,
+      "history_seed": 830024,
+      "task_input_seed": 820024,
+      "n_qubits": 4,
+      "dissipator": "local_loss",
+      "gamma": 0.45,
+      "dt": 0.55
+    }
+  ],
+  "scoring": {
+    "primary_recurrent_positive_ids": [
+      "qrc"
+    ],
+    "primary_finite_negative_ids": [
+      "replay_qelm_d1",
+      "replay_qelm_d3",
+      "replay_qelm_d5",
+      "spatial_qelm_dmin"
+    ],
+    "controls_excluded_from_primary_metrics": true,
+    "abstention_counts_as_error": true,
+    "expected_primary_denominators_at_10000_shots": {
+      "recurrent": 192,
+      "finite": 768,
+      "all": 960
+    }
+  },
+  "acceptance_gates": {
+    "bounded_false_recurrent_max": 0.05,
+    "balanced_accuracy": 0.85,
+    "balanced_accuracy_cluster_lower": 0.7,
+    "exact_label_agreement": 0.85,
+    "cutoff_within_one": 0.9,
+    "crossover_shift_cluster_lower_strictly_greater_than": 0.0,
+    "positive_crossover_fraction": 0.75,
+    "stress_tier_is_gated": false,
+    "decision": "GO only if integrity and every hard gate pass; otherwise NO-GO"
+  },
+  "integrity": {
+    "heldout_blocks": 24,
+    "histories_per_block": 24,
+    "suffixes": 10,
+    "cases_per_block": 9,
+    "conditions": 2,
+    "measurement_seeds_per_finite_tier": 8,
+    "no_silent_row_exclusion": true,
+    "heldout_data_opened_at_lock": false
+  },
+  "claim_boundary": {
+    "allowed_if_all_gates_pass": "A bounded simulator result for the registered family, operating range, observables, and shots.",
+    "not_supported": [
+      "hardware performance",
+      "quantum advantage",
+      "non-Markovianity",
+      "architecture identity",
+      "universal QRC superiority",
+      "failure of arbitrary QELMs"
+    ],
+    "definitional_not_novel": [
+      "finite cutoff of honest reset-per-row finite-window cases",
+      "zero history after ideal state erasure"
+    ]
+  },
+  "mandatory_reporting": [
+    "exact correct, error, and abstention metrics",
+    "10000-shot gate numerators, denominators, point estimates, and confidence bounds",
+    "1000-shot stress results",
+    "all four fault-control outcomes",
+    "per-block signed cross-batch curves",
+    "all numerical failures and missing rows",
+    "runner, config, dependency, and source-state hashes"
+  ]
+}

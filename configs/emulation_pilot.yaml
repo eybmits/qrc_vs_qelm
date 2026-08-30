@@ -1,0 +1,398 @@
+schema_version: 1
+study: qrc_to_qelm_observable_emulation
+status: EXPLORATORY_PILOT
+claim_scope: simulator_only_exact_expectations
+
+common:
+  n_qubits: 3
+  dt: 0.5
+  h: 0.5
+  h_in: 1.0
+  J_s: 1.0
+  dissipator: local_loss
+  quantize_levels: 33
+  n_virtual: 1
+  observables:
+    axes: [x, y, z]
+    max_weight: 2
+    dimension: 18
+  alpha_grid: [0.0, 1.0e-10, 1.0e-8, 1.0e-6, 1.0e-4, 1.0e-2, 1.0]
+  input_distribution: uniform_0_1
+  split_policy: independent_reset_streams
+  preprocessing: train_only_feature_standardization
+  target: full_exact_qrc_observable_vector
+  exact_only: true
+
+profiles:
+  smoke:
+    windows: [1, 3, 8]
+    train_rows: 90
+    val_rows: 30
+    test_rows: 60
+    washout: 20
+    random_bank_budgets: [1, 2]
+    student_coupling_seeds: [915001, 915002]
+    paired_histories: 8
+    pair_burnin: 12
+    pair_branch: 16
+    systems:
+      - system_id: smoke_g035
+        gamma: 0.35
+        teacher_coupling_seed: 910001
+        train_input_seed: 911001
+        val_input_seed: 912001
+        test_input_seed: 913001
+        pair_seed: 914001
+
+  pilot:
+    windows: [1, 2, 4, 8, 16, 32, 64, 128]
+    train_rows: 360
+    val_rows: 120
+    test_rows: 240
+    washout: 100
+    random_bank_budgets: [1, 2, 4]
+    student_coupling_seeds: [915001, 915002, 915003, 915004]
+    paired_histories: 24
+    pair_burnin: 32
+    pair_branch: 64
+    systems:
+      - system_id: unitary_g000
+        gamma: 0.0
+        teacher_coupling_seed: 910001
+        train_input_seed: 911001
+        val_input_seed: 912001
+        test_input_seed: 913001
+        pair_seed: 914001
+      - system_id: slow_g005
+        gamma: 0.05
+        teacher_coupling_seed: 910002
+        train_input_seed: 911002
+        val_input_seed: 912002
+        test_input_seed: 913002
+        pair_seed: 914002
+      - system_id: medium_g020
+        gamma: 0.2
+        teacher_coupling_seed: 910003
+        train_input_seed: 911003
+        val_input_seed: 912003
+        test_input_seed: 913003
+        pair_seed: 914003
+      - system_id: fast_g050
+        gamma: 0.5
+        teacher_coupling_seed: 910004
+        train_input_seed: 911004
+        val_input_seed: 912004
+        test_input_seed: 913004
+        pair_seed: 914004
+
+  # Post-audit exploratory extension. Within each replicate block, only gamma
+  # changes; the teacher Hamiltonian, input streams, and paired histories are
+  # held fixed. All seeds are fresh relative to the first pilot.
+  matched_pilot:
+    matched_gamma_design: true
+    matched_gammas: [0.0, 0.05, 0.2, 0.5]
+    windows: [1, 2, 4, 8, 16, 32, 64, 128]
+    train_rows: 480
+    val_rows: 160
+    test_rows: 320
+    washout: 128
+    random_bank_budgets: [1, 2, 4]
+    student_coupling_seeds: [925001, 925002, 925003, 925004]
+    paired_histories: 32
+    pair_burnin: 32
+    pair_branch: 64
+    systems:
+      - system_id: r01_unitary_g000
+        replicate_id: r01
+        gamma: 0.0
+        teacher_coupling_seed: 920101
+        train_input_seed: 921101
+        val_input_seed: 922101
+        test_input_seed: 923101
+        pair_seed: 924101
+      - system_id: r01_slow_g005
+        replicate_id: r01
+        gamma: 0.05
+        teacher_coupling_seed: 920101
+        train_input_seed: 921101
+        val_input_seed: 922101
+        test_input_seed: 923101
+        pair_seed: 924101
+      - system_id: r01_medium_g020
+        replicate_id: r01
+        gamma: 0.2
+        teacher_coupling_seed: 920101
+        train_input_seed: 921101
+        val_input_seed: 922101
+        test_input_seed: 923101
+        pair_seed: 924101
+      - system_id: r01_fast_g050
+        replicate_id: r01
+        gamma: 0.5
+        teacher_coupling_seed: 920101
+        train_input_seed: 921101
+        val_input_seed: 922101
+        test_input_seed: 923101
+        pair_seed: 924101
+      - system_id: r02_unitary_g000
+        replicate_id: r02
+        gamma: 0.0
+        teacher_coupling_seed: 920102
+        train_input_seed: 921102
+        val_input_seed: 922102
+        test_input_seed: 923102
+        pair_seed: 924102
+      - system_id: r02_slow_g005
+        replicate_id: r02
+        gamma: 0.05
+        teacher_coupling_seed: 920102
+        train_input_seed: 921102
+        val_input_seed: 922102
+        test_input_seed: 923102
+        pair_seed: 924102
+      - system_id: r02_medium_g020
+        replicate_id: r02
+        gamma: 0.2
+        teacher_coupling_seed: 920102
+        train_input_seed: 921102
+        val_input_seed: 922102
+        test_input_seed: 923102
+        pair_seed: 924102
+      - system_id: r02_fast_g050
+        replicate_id: r02
+        gamma: 0.5
+        teacher_coupling_seed: 920102
+        train_input_seed: 921102
+        val_input_seed: 922102
+        test_input_seed: 923102
+        pair_seed: 924102
+      - system_id: r03_unitary_g000
+        replicate_id: r03
+        gamma: 0.0
+        teacher_coupling_seed: 920103
+        train_input_seed: 921103
+        val_input_seed: 922103
+        test_input_seed: 923103
+        pair_seed: 924103
+      - system_id: r03_slow_g005
+        replicate_id: r03
+        gamma: 0.05
+        teacher_coupling_seed: 920103
+        train_input_seed: 921103
+        val_input_seed: 922103
+        test_input_seed: 923103
+        pair_seed: 924103
+      - system_id: r03_medium_g020
+        replicate_id: r03
+        gamma: 0.2
+        teacher_coupling_seed: 920103
+        train_input_seed: 921103
+        val_input_seed: 922103
+        test_input_seed: 923103
+        pair_seed: 924103
+      - system_id: r03_fast_g050
+        replicate_id: r03
+        gamma: 0.5
+        teacher_coupling_seed: 920103
+        train_input_seed: 921103
+        val_input_seed: 922103
+        test_input_seed: 923103
+        pair_seed: 924103
+
+  # Fresh held-out seed replication after the matched-pilot discovery run.
+  # Teacher/data/pair seeds and the complete nested student bank are fixed
+  # across gamma within a block and independent between blocks.
+  replicated_pilot: &replicated_pilot
+    matched_gamma_design: true
+    independent_student_banks: true
+    matched_gammas: [0.0, 0.05, 0.2, 0.5]
+    windows: [1, 2, 4, 8, 16, 32, 64, 128]
+    train_rows: 480
+    val_rows: 160
+    test_rows: 320
+    washout: 128
+    random_bank_budgets: [1, 2, 4]
+    paired_histories: 32
+    pair_burnin: 32
+    pair_branch: 64
+    systems:
+      - system_id: r11_unitary_g000
+        replicate_id: r11
+        gamma: 0.0
+        teacher_coupling_seed: 930111
+        student_coupling_seeds: [935111, 935112, 935113, 935114]
+        train_input_seed: 931111
+        val_input_seed: 932111
+        test_input_seed: 933111
+        pair_seed: 934111
+      - system_id: r11_slow_g005
+        replicate_id: r11
+        gamma: 0.05
+        teacher_coupling_seed: 930111
+        student_coupling_seeds: [935111, 935112, 935113, 935114]
+        train_input_seed: 931111
+        val_input_seed: 932111
+        test_input_seed: 933111
+        pair_seed: 934111
+      - system_id: r11_medium_g020
+        replicate_id: r11
+        gamma: 0.2
+        teacher_coupling_seed: 930111
+        student_coupling_seeds: [935111, 935112, 935113, 935114]
+        train_input_seed: 931111
+        val_input_seed: 932111
+        test_input_seed: 933111
+        pair_seed: 934111
+      - system_id: r11_fast_g050
+        replicate_id: r11
+        gamma: 0.5
+        teacher_coupling_seed: 930111
+        student_coupling_seeds: [935111, 935112, 935113, 935114]
+        train_input_seed: 931111
+        val_input_seed: 932111
+        test_input_seed: 933111
+        pair_seed: 934111
+      - system_id: r12_unitary_g000
+        replicate_id: r12
+        gamma: 0.0
+        teacher_coupling_seed: 930112
+        student_coupling_seeds: [935121, 935122, 935123, 935124]
+        train_input_seed: 931112
+        val_input_seed: 932112
+        test_input_seed: 933112
+        pair_seed: 934112
+      - system_id: r12_slow_g005
+        replicate_id: r12
+        gamma: 0.05
+        teacher_coupling_seed: 930112
+        student_coupling_seeds: [935121, 935122, 935123, 935124]
+        train_input_seed: 931112
+        val_input_seed: 932112
+        test_input_seed: 933112
+        pair_seed: 934112
+      - system_id: r12_medium_g020
+        replicate_id: r12
+        gamma: 0.2
+        teacher_coupling_seed: 930112
+        student_coupling_seeds: [935121, 935122, 935123, 935124]
+        train_input_seed: 931112
+        val_input_seed: 932112
+        test_input_seed: 933112
+        pair_seed: 934112
+      - system_id: r12_fast_g050
+        replicate_id: r12
+        gamma: 0.5
+        teacher_coupling_seed: 930112
+        student_coupling_seeds: [935121, 935122, 935123, 935124]
+        train_input_seed: 931112
+        val_input_seed: 932112
+        test_input_seed: 933112
+        pair_seed: 934112
+      - system_id: r13_unitary_g000
+        replicate_id: r13
+        gamma: 0.0
+        teacher_coupling_seed: 930113
+        student_coupling_seeds: [935131, 935132, 935133, 935134]
+        train_input_seed: 931113
+        val_input_seed: 932113
+        test_input_seed: 933113
+        pair_seed: 934113
+      - system_id: r13_slow_g005
+        replicate_id: r13
+        gamma: 0.05
+        teacher_coupling_seed: 930113
+        student_coupling_seeds: [935131, 935132, 935133, 935134]
+        train_input_seed: 931113
+        val_input_seed: 932113
+        test_input_seed: 933113
+        pair_seed: 934113
+      - system_id: r13_medium_g020
+        replicate_id: r13
+        gamma: 0.2
+        teacher_coupling_seed: 930113
+        student_coupling_seeds: [935131, 935132, 935133, 935134]
+        train_input_seed: 931113
+        val_input_seed: 932113
+        test_input_seed: 933113
+        pair_seed: 934113
+      - system_id: r13_fast_g050
+        replicate_id: r13
+        gamma: 0.5
+        teacher_coupling_seed: 930113
+        student_coupling_seeds: [935131, 935132, 935133, 935134]
+        train_input_seed: 931113
+        val_input_seed: 932113
+        test_input_seed: 933113
+        pair_seed: 934113
+      - system_id: r14_unitary_g000
+        replicate_id: r14
+        gamma: 0.0
+        teacher_coupling_seed: 930114
+        student_coupling_seeds: [935141, 935142, 935143, 935144]
+        train_input_seed: 931114
+        val_input_seed: 932114
+        test_input_seed: 933114
+        pair_seed: 934114
+      - system_id: r14_slow_g005
+        replicate_id: r14
+        gamma: 0.05
+        teacher_coupling_seed: 930114
+        student_coupling_seeds: [935141, 935142, 935143, 935144]
+        train_input_seed: 931114
+        val_input_seed: 932114
+        test_input_seed: 933114
+        pair_seed: 934114
+      - system_id: r14_medium_g020
+        replicate_id: r14
+        gamma: 0.2
+        teacher_coupling_seed: 930114
+        student_coupling_seeds: [935141, 935142, 935143, 935144]
+        train_input_seed: 931114
+        val_input_seed: 932114
+        test_input_seed: 933114
+        pair_seed: 934114
+      - system_id: r14_fast_g050
+        replicate_id: r14
+        gamma: 0.5
+        teacher_coupling_seed: 930114
+        student_coupling_seeds: [935141, 935142, 935143, 935144]
+        train_input_seed: 931114
+        val_input_seed: 932114
+        test_input_seed: 933114
+        pair_seed: 934114
+
+  # Validation-only regularization sensitivity requested by independent audit
+  # after replicated_pilot v1 repeatedly selected the alpha=1 grid boundary.
+  replicated_pilot_wide_ridge: &replicated_pilot_wide_ridge
+    <<: *replicated_pilot
+    alpha_grid:
+      [0.0, 1.0e-10, 1.0e-8, 1.0e-6, 1.0e-4, 1.0e-3, 1.0e-2,
+       1.0e-1, 1.0, 10.0, 100.0, 1000.0, 10000.0, 100000.0, 1000000.0]
+
+  # Complete the regularization grid with the exact intercept-only limit.
+  replicated_pilot_intercept_complete:
+    <<: *replicated_pilot_wide_ridge
+    alpha_grid:
+      [0.0, 1.0e-10, 1.0e-8, 1.0e-6, 1.0e-4, 1.0e-3, 1.0e-2,
+       1.0e-1, 1.0, 10.0, 100.0, 1000.0, 10000.0, 100000.0,
+       1000000.0, .inf]
+
+pilot_decision:
+  numeric_tolerance: 1.0e-10
+  liveness_D2_at_d0: 1.0e-3
+  min_live_system_fraction: 0.75
+  min_oracle_error_certificate_spearman: 0.8
+  min_associated_dissipative_system_fraction: 0.6666666666666666
+  min_oracle_max_window_reduction: 0.5
+  min_dissipative_system_fraction_improved: 0.6666666666666666
+  generic_student_budget: 4
+  generic_student_max_window_nrmse: 0.25
+  generic_student_min_reduction: 0.5
+  min_feature_budget_reduction: 0.15
+  min_feature_budget_system_fraction: 0.6666666666666666
+  min_generic_gain_over_linear: 0.1
+  min_generic_over_linear_system_fraction: 0.6666666666666666
+  nonfading_min_remaining_trace_fraction: 0.9
+  min_nonfading_system_fraction: 0.6666666666666666
+  max_matched_gamma_memory_spearman: -0.8
+  min_matched_replicate_fraction_ordered: 0.6666666666666666

@@ -1,0 +1,706 @@
+{
+  "artifact_sha256": {
+    "finite_shot_results.csv": "6554574812348bb0a83efbe67dfba22bb51dce8e6155332ca2ca81a1db1170a2"
+  },
+  "canonical_freeze_after": {
+    "checks": {
+      "config_sha256": true,
+      "confirmatory_roots_previously_opened": true,
+      "frozen_at_utc": true,
+      "material_identity_sha256": true,
+      "profile": true,
+      "schema_version": true,
+      "status": true,
+      "study": true
+    },
+    "freeze_record_sha256": "efe9006df7f66de0f49cd96bab3b6160f53fda7c9dc937a3a28cc3a12e6fa897",
+    "material_file_count": 92,
+    "material_identity_sha256": "a65b069e206bf881bef03726325c0117454018e2737f75655f08692e1e565ea2",
+    "passed": true
+  },
+  "canonical_freeze_before": {
+    "checks": {
+      "config_sha256": true,
+      "confirmatory_roots_previously_opened": true,
+      "frozen_at_utc": true,
+      "material_identity_sha256": true,
+      "profile": true,
+      "schema_version": true,
+      "status": true,
+      "study": true
+    },
+    "freeze_record_sha256": "efe9006df7f66de0f49cd96bab3b6160f53fda7c9dc937a3a28cc3a12e6fa897",
+    "material_file_count": 92,
+    "material_identity_sha256": "a65b069e206bf881bef03726325c0117454018e2737f75655f08692e1e565ea2",
+    "passed": true
+  },
+  "counts": {
+    "roots": 12,
+    "rows": 648,
+    "teacher_sizes": [
+      2,
+      3
+    ]
+  },
+  "finite_shot_cells": [
+    {
+      "allocation_mode": "equal",
+      "intercept_only_roots": 0,
+      "median_expected_shot_penalty_mse": 0.0003751328149882459,
+      "median_expected_test_nrmse": 0.31172387332213913,
+      "median_mc_to_exact_penalty_ratio": 1.0095150924048055,
+      "median_noiseless_test_nrmse_under_selected_alpha": 0.1723318677701783,
+      "n_roots": 12,
+      "snapshot_budget": 1,
+      "teacher_n_qubits": 2,
+      "total_shots": 300
+    },
+    {
+      "allocation_mode": "equal",
+      "intercept_only_roots": 0,
+      "median_expected_shot_penalty_mse": 9.378320374706148e-05,
+      "median_expected_test_nrmse": 0.21578490075855283,
+      "median_mc_to_exact_penalty_ratio": 1.0097079202199921,
+      "median_noiseless_test_nrmse_under_selected_alpha": 0.1723318677701783,
+      "n_roots": 12,
+      "snapshot_budget": 1,
+      "teacher_n_qubits": 2,
+      "total_shots": 1200
+    },
+    {
+      "allocation_mode": "equal",
+      "intercept_only_roots": 0,
+      "median_expected_shot_penalty_mse": 2.4338938317760008e-05,
+      "median_expected_test_nrmse": 0.18236096262605672,
+      "median_mc_to_exact_penalty_ratio": 1.0089442010000105,
+      "median_noiseless_test_nrmse_under_selected_alpha": 0.1723318677701783,
+      "n_roots": 12,
+      "snapshot_budget": 1,
+      "teacher_n_qubits": 2,
+      "total_shots": 4800
+    },
+    {
+      "allocation_mode": "equal",
+      "intercept_only_roots": 0,
+      "median_expected_shot_penalty_mse": 6.084734579440002e-06,
+      "median_expected_test_nrmse": 0.17455496562093684,
+      "median_mc_to_exact_penalty_ratio": 0.9913402718033082,
+      "median_noiseless_test_nrmse_under_selected_alpha": 0.1723318677701783,
+      "n_roots": 12,
+      "snapshot_budget": 1,
+      "teacher_n_qubits": 2,
+      "total_shots": 19200
+    },
+    {
+      "allocation_mode": "optimal",
+      "intercept_only_roots": 0,
+      "median_expected_shot_penalty_mse": 0.0002993337228598546,
+      "median_expected_test_nrmse": 0.2878120998790503,
+      "median_mc_to_exact_penalty_ratio": 1.0139159399008641,
+      "median_noiseless_test_nrmse_under_selected_alpha": 0.1723318677701783,
+      "n_roots": 12,
+      "snapshot_budget": 1,
+      "teacher_n_qubits": 2,
+      "total_shots": 300
+    },
+    {
+      "allocation_mode": "optimal",
+      "intercept_only_roots": 0,
+      "median_expected_shot_penalty_mse": 7.482982278820738e-05,
+      "median_expected_test_nrmse": 0.2054459147234411,
+      "median_mc_to_exact_penalty_ratio": 0.986075651280325,
+      "median_noiseless_test_nrmse_under_selected_alpha": 0.1723318677701783,
+      "n_roots": 12,
+      "snapshot_budget": 1,
+      "teacher_n_qubits": 2,
+      "total_shots": 1200
+    },
+    {
+      "allocation_mode": "optimal",
+      "intercept_only_roots": 0,
+      "median_expected_shot_penalty_mse": 1.8707341287248427e-05,
+      "median_expected_test_nrmse": 0.1796064888876671,
+      "median_mc_to_exact_penalty_ratio": 0.994424833259299,
+      "median_noiseless_test_nrmse_under_selected_alpha": 0.1723318677701783,
+      "n_roots": 12,
+      "snapshot_budget": 1,
+      "teacher_n_qubits": 2,
+      "total_shots": 4800
+    },
+    {
+      "allocation_mode": "optimal",
+      "intercept_only_roots": 0,
+      "median_expected_shot_penalty_mse": 4.67683028989702e-06,
+      "median_expected_test_nrmse": 0.17402717371178317,
+      "median_mc_to_exact_penalty_ratio": 1.0075874764301869,
+      "median_noiseless_test_nrmse_under_selected_alpha": 0.1723318677701783,
+      "n_roots": 12,
+      "snapshot_budget": 1,
+      "teacher_n_qubits": 2,
+      "total_shots": 19200
+    },
+    {
+      "allocation_mode": "equal",
+      "intercept_only_roots": 0,
+      "median_expected_shot_penalty_mse": 0.00038311221659417414,
+      "median_expected_test_nrmse": 0.2758117319802498,
+      "median_mc_to_exact_penalty_ratio": 0.9850811906565824,
+      "median_noiseless_test_nrmse_under_selected_alpha": 0.07797265432742692,
+      "n_roots": 12,
+      "snapshot_budget": 2,
+      "teacher_n_qubits": 2,
+      "total_shots": 300
+    },
+    {
+      "allocation_mode": "equal",
+      "intercept_only_roots": 0,
+      "median_expected_shot_penalty_mse": 0.00011871624116143675,
+      "median_expected_test_nrmse": 0.15261177502093307,
+      "median_mc_to_exact_penalty_ratio": 0.9996959258563828,
+      "median_noiseless_test_nrmse_under_selected_alpha": 0.07797265432742692,
+      "n_roots": 12,
+      "snapshot_budget": 2,
+      "teacher_n_qubits": 2,
+      "total_shots": 1200
+    },
+    {
+      "allocation_mode": "equal",
+      "intercept_only_roots": 0,
+      "median_expected_shot_penalty_mse": 2.9679060290359187e-05,
+      "median_expected_test_nrmse": 0.10015056241213358,
+      "median_mc_to_exact_penalty_ratio": 1.0115588696062732,
+      "median_noiseless_test_nrmse_under_selected_alpha": 0.07797265432742692,
+      "n_roots": 12,
+      "snapshot_budget": 2,
+      "teacher_n_qubits": 2,
+      "total_shots": 4800
+    },
+    {
+      "allocation_mode": "equal",
+      "intercept_only_roots": 0,
+      "median_expected_shot_penalty_mse": 1.3105012649114363e-05,
+      "median_expected_test_nrmse": 0.08565090203769093,
+      "median_mc_to_exact_penalty_ratio": 1.0025153986634587,
+      "median_noiseless_test_nrmse_under_selected_alpha": 0.07465924629380874,
+      "n_roots": 12,
+      "snapshot_budget": 2,
+      "teacher_n_qubits": 2,
+      "total_shots": 19200
+    },
+    {
+      "allocation_mode": "optimal",
+      "intercept_only_roots": 0,
+      "median_expected_shot_penalty_mse": 0.00033327279052239127,
+      "median_expected_test_nrmse": 0.21845382089019189,
+      "median_mc_to_exact_penalty_ratio": 0.9900057183093218,
+      "median_noiseless_test_nrmse_under_selected_alpha": 0.07797265432742692,
+      "n_roots": 12,
+      "snapshot_budget": 2,
+      "teacher_n_qubits": 2,
+      "total_shots": 300
+    },
+    {
+      "allocation_mode": "optimal",
+      "intercept_only_roots": 0,
+      "median_expected_shot_penalty_mse": 8.331525772082584e-05,
+      "median_expected_test_nrmse": 0.13073034384627433,
+      "median_mc_to_exact_penalty_ratio": 1.0032997730613575,
+      "median_noiseless_test_nrmse_under_selected_alpha": 0.07797265432742692,
+      "n_roots": 12,
+      "snapshot_budget": 2,
+      "teacher_n_qubits": 2,
+      "total_shots": 1200
+    },
+    {
+      "allocation_mode": "optimal",
+      "intercept_only_roots": 0,
+      "median_expected_shot_penalty_mse": 2.0828587998326395e-05,
+      "median_expected_test_nrmse": 0.09064432435813363,
+      "median_mc_to_exact_penalty_ratio": 0.99847196763501,
+      "median_noiseless_test_nrmse_under_selected_alpha": 0.07797265432742692,
+      "n_roots": 12,
+      "snapshot_budget": 2,
+      "teacher_n_qubits": 2,
+      "total_shots": 4800
+    },
+    {
+      "allocation_mode": "optimal",
+      "intercept_only_roots": 0,
+      "median_expected_shot_penalty_mse": 7.754139118730667e-06,
+      "median_expected_test_nrmse": 0.08303354482848672,
+      "median_mc_to_exact_penalty_ratio": 1.0185682302692574,
+      "median_noiseless_test_nrmse_under_selected_alpha": 0.07366261169701882,
+      "n_roots": 12,
+      "snapshot_budget": 2,
+      "teacher_n_qubits": 2,
+      "total_shots": 19200
+    },
+    {
+      "allocation_mode": "equal",
+      "intercept_only_roots": 0,
+      "median_expected_shot_penalty_mse": 0.000403477104450319,
+      "median_expected_test_nrmse": 0.2660608996364786,
+      "median_mc_to_exact_penalty_ratio": 1.0025772720917654,
+      "median_noiseless_test_nrmse_under_selected_alpha": 0.11942849469598482,
+      "n_roots": 12,
+      "snapshot_budget": 4,
+      "teacher_n_qubits": 2,
+      "total_shots": 300
+    },
+    {
+      "allocation_mode": "equal",
+      "intercept_only_roots": 0,
+      "median_expected_shot_penalty_mse": 0.0001269093604273303,
+      "median_expected_test_nrmse": 0.17206794011093363,
+      "median_mc_to_exact_penalty_ratio": 1.0101653042355108,
+      "median_noiseless_test_nrmse_under_selected_alpha": 0.07385621827858281,
+      "n_roots": 12,
+      "snapshot_budget": 4,
+      "teacher_n_qubits": 2,
+      "total_shots": 1200
+    },
+    {
+      "allocation_mode": "equal",
+      "intercept_only_roots": 0,
+      "median_expected_shot_penalty_mse": 3.9647766642152364e-05,
+      "median_expected_test_nrmse": 0.10394461503818427,
+      "median_mc_to_exact_penalty_ratio": 1.0004185158182963,
+      "median_noiseless_test_nrmse_under_selected_alpha": 0.07190249268532087,
+      "n_roots": 12,
+      "snapshot_budget": 4,
+      "teacher_n_qubits": 2,
+      "total_shots": 4800
+    },
+    {
+      "allocation_mode": "equal",
+      "intercept_only_roots": 0,
+      "median_expected_shot_penalty_mse": 9.911941660538091e-06,
+      "median_expected_test_nrmse": 0.08153965234171764,
+      "median_mc_to_exact_penalty_ratio": 1.007965053379904,
+      "median_noiseless_test_nrmse_under_selected_alpha": 0.07190249268532087,
+      "n_roots": 12,
+      "snapshot_budget": 4,
+      "teacher_n_qubits": 2,
+      "total_shots": 19200
+    },
+    {
+      "allocation_mode": "optimal",
+      "intercept_only_roots": 0,
+      "median_expected_shot_penalty_mse": 0.00030313714527891746,
+      "median_expected_test_nrmse": 0.23145542163465843,
+      "median_mc_to_exact_penalty_ratio": 1.0093901298610113,
+      "median_noiseless_test_nrmse_under_selected_alpha": 0.0756050479118135,
+      "n_roots": 12,
+      "snapshot_budget": 4,
+      "teacher_n_qubits": 2,
+      "total_shots": 300
+    },
+    {
+      "allocation_mode": "optimal",
+      "intercept_only_roots": 0,
+      "median_expected_shot_penalty_mse": 9.768278543623794e-05,
+      "median_expected_test_nrmse": 0.1404490965602501,
+      "median_mc_to_exact_penalty_ratio": 0.9899107150141782,
+      "median_noiseless_test_nrmse_under_selected_alpha": 0.07190249268532087,
+      "n_roots": 12,
+      "snapshot_budget": 4,
+      "teacher_n_qubits": 2,
+      "total_shots": 1200
+    },
+    {
+      "allocation_mode": "optimal",
+      "intercept_only_roots": 0,
+      "median_expected_shot_penalty_mse": 2.4419582884045058e-05,
+      "median_expected_test_nrmse": 0.09324519298195519,
+      "median_mc_to_exact_penalty_ratio": 0.9914789972321771,
+      "median_noiseless_test_nrmse_under_selected_alpha": 0.07190249268532087,
+      "n_roots": 12,
+      "snapshot_budget": 4,
+      "teacher_n_qubits": 2,
+      "total_shots": 4800
+    },
+    {
+      "allocation_mode": "optimal",
+      "intercept_only_roots": 0,
+      "median_expected_shot_penalty_mse": 6.104923320190853e-06,
+      "median_expected_test_nrmse": 0.0786779620427499,
+      "median_mc_to_exact_penalty_ratio": 1.0075846702853266,
+      "median_noiseless_test_nrmse_under_selected_alpha": 0.07190249268532087,
+      "n_roots": 12,
+      "snapshot_budget": 4,
+      "teacher_n_qubits": 2,
+      "total_shots": 19200
+    },
+    {
+      "allocation_mode": "equal",
+      "intercept_only_roots": 0,
+      "median_expected_shot_penalty_mse": 0.0003231027376244714,
+      "median_expected_test_nrmse": 0.3087784269526894,
+      "median_mc_to_exact_penalty_ratio": 0.9982941968893162,
+      "median_noiseless_test_nrmse_under_selected_alpha": 0.17408536088282273,
+      "n_roots": 12,
+      "snapshot_budget": 1,
+      "teacher_n_qubits": 3,
+      "total_shots": 300
+    },
+    {
+      "allocation_mode": "equal",
+      "intercept_only_roots": 0,
+      "median_expected_shot_penalty_mse": 8.165076586286987e-05,
+      "median_expected_test_nrmse": 0.2141649919194376,
+      "median_mc_to_exact_penalty_ratio": 0.9909947123661811,
+      "median_noiseless_test_nrmse_under_selected_alpha": 0.17408536088282273,
+      "n_roots": 12,
+      "snapshot_budget": 1,
+      "teacher_n_qubits": 3,
+      "total_shots": 1200
+    },
+    {
+      "allocation_mode": "equal",
+      "intercept_only_roots": 0,
+      "median_expected_shot_penalty_mse": 2.041269146571747e-05,
+      "median_expected_test_nrmse": 0.18616313469153006,
+      "median_mc_to_exact_penalty_ratio": 1.0210233876664623,
+      "median_noiseless_test_nrmse_under_selected_alpha": 0.17466420659344792,
+      "n_roots": 12,
+      "snapshot_budget": 1,
+      "teacher_n_qubits": 3,
+      "total_shots": 4800
+    },
+    {
+      "allocation_mode": "equal",
+      "intercept_only_roots": 0,
+      "median_expected_shot_penalty_mse": 5.103172866429367e-06,
+      "median_expected_test_nrmse": 0.1776089948602989,
+      "median_mc_to_exact_penalty_ratio": 0.9918152981623157,
+      "median_noiseless_test_nrmse_under_selected_alpha": 0.17466420659344792,
+      "n_roots": 12,
+      "snapshot_budget": 1,
+      "teacher_n_qubits": 3,
+      "total_shots": 19200
+    },
+    {
+      "allocation_mode": "optimal",
+      "intercept_only_roots": 0,
+      "median_expected_shot_penalty_mse": 0.0002455950909845136,
+      "median_expected_test_nrmse": 0.2849676293758907,
+      "median_mc_to_exact_penalty_ratio": 1.0059645635229906,
+      "median_noiseless_test_nrmse_under_selected_alpha": 0.17408536088282273,
+      "n_roots": 12,
+      "snapshot_budget": 1,
+      "teacher_n_qubits": 3,
+      "total_shots": 300
+    },
+    {
+      "allocation_mode": "optimal",
+      "intercept_only_roots": 0,
+      "median_expected_shot_penalty_mse": 6.254401652350292e-05,
+      "median_expected_test_nrmse": 0.20653284214356363,
+      "median_mc_to_exact_penalty_ratio": 0.9881057792616624,
+      "median_noiseless_test_nrmse_under_selected_alpha": 0.17466420659344792,
+      "n_roots": 12,
+      "snapshot_budget": 1,
+      "teacher_n_qubits": 3,
+      "total_shots": 1200
+    },
+    {
+      "allocation_mode": "optimal",
+      "intercept_only_roots": 0,
+      "median_expected_shot_penalty_mse": 1.563585771061179e-05,
+      "median_expected_test_nrmse": 0.1833449125479531,
+      "median_mc_to_exact_penalty_ratio": 1.0095112742907362,
+      "median_noiseless_test_nrmse_under_selected_alpha": 0.17466420659344792,
+      "n_roots": 12,
+      "snapshot_budget": 1,
+      "teacher_n_qubits": 3,
+      "total_shots": 4800
+    },
+    {
+      "allocation_mode": "optimal",
+      "intercept_only_roots": 0,
+      "median_expected_shot_penalty_mse": 3.908982482989468e-06,
+      "median_expected_test_nrmse": 0.17687443028864697,
+      "median_mc_to_exact_penalty_ratio": 0.9956593266751208,
+      "median_noiseless_test_nrmse_under_selected_alpha": 0.17466420659344792,
+      "n_roots": 12,
+      "snapshot_budget": 1,
+      "teacher_n_qubits": 3,
+      "total_shots": 19200
+    },
+    {
+      "allocation_mode": "equal",
+      "intercept_only_roots": 0,
+      "median_expected_shot_penalty_mse": 0.00034165184028654927,
+      "median_expected_test_nrmse": 0.2777143943408675,
+      "median_mc_to_exact_penalty_ratio": 1.0115537291456929,
+      "median_noiseless_test_nrmse_under_selected_alpha": 0.08110334668060001,
+      "n_roots": 12,
+      "snapshot_budget": 2,
+      "teacher_n_qubits": 3,
+      "total_shots": 300
+    },
+    {
+      "allocation_mode": "equal",
+      "intercept_only_roots": 0,
+      "median_expected_shot_penalty_mse": 9.663486600181953e-05,
+      "median_expected_test_nrmse": 0.15522440979257618,
+      "median_mc_to_exact_penalty_ratio": 0.9981399384018169,
+      "median_noiseless_test_nrmse_under_selected_alpha": 0.08110334668060001,
+      "n_roots": 12,
+      "snapshot_budget": 2,
+      "teacher_n_qubits": 3,
+      "total_shots": 1200
+    },
+    {
+      "allocation_mode": "equal",
+      "intercept_only_roots": 0,
+      "median_expected_shot_penalty_mse": 2.4158716500454882e-05,
+      "median_expected_test_nrmse": 0.10469549118988081,
+      "median_mc_to_exact_penalty_ratio": 1.0225678918683527,
+      "median_noiseless_test_nrmse_under_selected_alpha": 0.08110334668060001,
+      "n_roots": 12,
+      "snapshot_budget": 2,
+      "teacher_n_qubits": 3,
+      "total_shots": 4800
+    },
+    {
+      "allocation_mode": "equal",
+      "intercept_only_roots": 0,
+      "median_expected_shot_penalty_mse": 1.2054433277110818e-05,
+      "median_expected_test_nrmse": 0.09249175526627434,
+      "median_mc_to_exact_penalty_ratio": 0.9940654285764667,
+      "median_noiseless_test_nrmse_under_selected_alpha": 0.07180938225724567,
+      "n_roots": 12,
+      "snapshot_budget": 2,
+      "teacher_n_qubits": 3,
+      "total_shots": 19200
+    },
+    {
+      "allocation_mode": "optimal",
+      "intercept_only_roots": 0,
+      "median_expected_shot_penalty_mse": 0.0002292503157304996,
+      "median_expected_test_nrmse": 0.2152717543681238,
+      "median_mc_to_exact_penalty_ratio": 0.9951479218845406,
+      "median_noiseless_test_nrmse_under_selected_alpha": 0.08110334668060001,
+      "n_roots": 12,
+      "snapshot_budget": 2,
+      "teacher_n_qubits": 3,
+      "total_shots": 300
+    },
+    {
+      "allocation_mode": "optimal",
+      "intercept_only_roots": 0,
+      "median_expected_shot_penalty_mse": 5.730672348019296e-05,
+      "median_expected_test_nrmse": 0.13148017980859888,
+      "median_mc_to_exact_penalty_ratio": 0.9969640459137098,
+      "median_noiseless_test_nrmse_under_selected_alpha": 0.08110334668060001,
+      "n_roots": 12,
+      "snapshot_budget": 2,
+      "teacher_n_qubits": 3,
+      "total_shots": 1200
+    },
+    {
+      "allocation_mode": "optimal",
+      "intercept_only_roots": 0,
+      "median_expected_shot_penalty_mse": 1.4327020227082535e-05,
+      "median_expected_test_nrmse": 0.09522067754550961,
+      "median_mc_to_exact_penalty_ratio": 0.99786541749291,
+      "median_noiseless_test_nrmse_under_selected_alpha": 0.08110334668060001,
+      "n_roots": 12,
+      "snapshot_budget": 2,
+      "teacher_n_qubits": 3,
+      "total_shots": 4800
+    },
+    {
+      "allocation_mode": "optimal",
+      "intercept_only_roots": 0,
+      "median_expected_shot_penalty_mse": 1.2223507260210752e-05,
+      "median_expected_test_nrmse": 0.08531324770200936,
+      "median_mc_to_exact_penalty_ratio": 0.9987943947196405,
+      "median_noiseless_test_nrmse_under_selected_alpha": 0.06888550809202429,
+      "n_roots": 12,
+      "snapshot_budget": 2,
+      "teacher_n_qubits": 3,
+      "total_shots": 19200
+    },
+    {
+      "allocation_mode": "equal",
+      "intercept_only_roots": 0,
+      "median_expected_shot_penalty_mse": 0.0003621146228397424,
+      "median_expected_test_nrmse": 0.27171629659953805,
+      "median_mc_to_exact_penalty_ratio": 0.9952090718691524,
+      "median_noiseless_test_nrmse_under_selected_alpha": 0.1252175729516663,
+      "n_roots": 12,
+      "snapshot_budget": 4,
+      "teacher_n_qubits": 3,
+      "total_shots": 300
+    },
+    {
+      "allocation_mode": "equal",
+      "intercept_only_roots": 0,
+      "median_expected_shot_penalty_mse": 0.0001385850298436013,
+      "median_expected_test_nrmse": 0.17841432828197618,
+      "median_mc_to_exact_penalty_ratio": 0.9947002657217225,
+      "median_noiseless_test_nrmse_under_selected_alpha": 0.07149394963831132,
+      "n_roots": 12,
+      "snapshot_budget": 4,
+      "teacher_n_qubits": 3,
+      "total_shots": 1200
+    },
+    {
+      "allocation_mode": "equal",
+      "intercept_only_roots": 0,
+      "median_expected_shot_penalty_mse": 3.756095612905333e-05,
+      "median_expected_test_nrmse": 0.10865236901602189,
+      "median_mc_to_exact_penalty_ratio": 1.0027736139483951,
+      "median_noiseless_test_nrmse_under_selected_alpha": 0.07149394963831132,
+      "n_roots": 12,
+      "snapshot_budget": 4,
+      "teacher_n_qubits": 3,
+      "total_shots": 4800
+    },
+    {
+      "allocation_mode": "equal",
+      "intercept_only_roots": 0,
+      "median_expected_shot_penalty_mse": 9.390239032263333e-06,
+      "median_expected_test_nrmse": 0.08193977065205404,
+      "median_mc_to_exact_penalty_ratio": 0.9918892776592889,
+      "median_noiseless_test_nrmse_under_selected_alpha": 0.07149394963831132,
+      "n_roots": 12,
+      "snapshot_budget": 4,
+      "teacher_n_qubits": 3,
+      "total_shots": 19200
+    },
+    {
+      "allocation_mode": "optimal",
+      "intercept_only_roots": 0,
+      "median_expected_shot_penalty_mse": 0.00025113496361126665,
+      "median_expected_test_nrmse": 0.22997110151762057,
+      "median_mc_to_exact_penalty_ratio": 0.9924815446150164,
+      "median_noiseless_test_nrmse_under_selected_alpha": 0.0780833068799869,
+      "n_roots": 12,
+      "snapshot_budget": 4,
+      "teacher_n_qubits": 3,
+      "total_shots": 300
+    },
+    {
+      "allocation_mode": "optimal",
+      "intercept_only_roots": 0,
+      "median_expected_shot_penalty_mse": 8.767955364780101e-05,
+      "median_expected_test_nrmse": 0.14626679133277032,
+      "median_mc_to_exact_penalty_ratio": 1.0130515404979479,
+      "median_noiseless_test_nrmse_under_selected_alpha": 0.07149394963831132,
+      "n_roots": 12,
+      "snapshot_budget": 4,
+      "teacher_n_qubits": 3,
+      "total_shots": 1200
+    },
+    {
+      "allocation_mode": "optimal",
+      "intercept_only_roots": 0,
+      "median_expected_shot_penalty_mse": 2.19185177622717e-05,
+      "median_expected_test_nrmse": 0.09532585358983264,
+      "median_mc_to_exact_penalty_ratio": 1.0043726937456035,
+      "median_noiseless_test_nrmse_under_selected_alpha": 0.07149394963831132,
+      "n_roots": 12,
+      "snapshot_budget": 4,
+      "teacher_n_qubits": 3,
+      "total_shots": 4800
+    },
+    {
+      "allocation_mode": "optimal",
+      "intercept_only_roots": 0,
+      "median_expected_shot_penalty_mse": 5.479624823349481e-06,
+      "median_expected_test_nrmse": 0.07774393259699092,
+      "median_mc_to_exact_penalty_ratio": 1.0103592562808772,
+      "median_noiseless_test_nrmse_under_selected_alpha": 0.07149394963831132,
+      "n_roots": 12,
+      "snapshot_budget": 4,
+      "teacher_n_qubits": 3,
+      "total_shots": 19200
+    }
+  ],
+  "measurement_model": "joint multinomial single-site XYZ outcomes grouped by snapshot and axis",
+  "noiseless_cells": [
+    {
+      "median_test_nrmse": 0.1723318677701783,
+      "n_roots": 12,
+      "selected_alpha_counts": {
+        "0": 4,
+        "1": 8
+      },
+      "snapshot_budget": 1,
+      "teacher_n_qubits": 2
+    },
+    {
+      "median_test_nrmse": 0.06727636322337018,
+      "n_roots": 12,
+      "selected_alpha_counts": {
+        "0": 1,
+        "0.0001": 1,
+        "0.01": 5,
+        "1e-06": 4,
+        "1e-08": 1
+      },
+      "snapshot_budget": 2,
+      "teacher_n_qubits": 2
+    },
+    {
+      "median_test_nrmse": 0.06115790528770911,
+      "n_roots": 12,
+      "selected_alpha_counts": {
+        "0.0001": 2,
+        "0.01": 3,
+        "1": 2,
+        "1e-06": 1,
+        "1e-08": 3,
+        "1e-10": 1
+      },
+      "snapshot_budget": 4,
+      "teacher_n_qubits": 2
+    },
+    {
+      "median_test_nrmse": 0.17466420659344792,
+      "n_roots": 12,
+      "selected_alpha_counts": {
+        "0": 3,
+        "0.01": 1,
+        "1": 8
+      },
+      "snapshot_budget": 1,
+      "teacher_n_qubits": 3
+    },
+    {
+      "median_test_nrmse": 0.06858015637051884,
+      "n_roots": 12,
+      "selected_alpha_counts": {
+        "0": 1,
+        "0.0001": 2,
+        "0.01": 5,
+        "1e-06": 3,
+        "1e-08": 1
+      },
+      "snapshot_budget": 2,
+      "teacher_n_qubits": 3
+    },
+    {
+      "median_test_nrmse": 0.06846237731899929,
+      "n_roots": 12,
+      "selected_alpha_counts": {
+        "0.0001": 2,
+        "0.01": 4,
+        "1": 2,
+        "1e-06": 1,
+        "1e-08": 2,
+        "1e-10": 1
+      },
+      "snapshot_budget": 4,
+      "teacher_n_qubits": 3
+    }
+  ],
+  "runtime_seconds": 107.8720055839949,
+  "schema_version": 1,
+  "selection_rule": "alpha minimizes noiseless validation MSE plus exact expected validation shot penalty under the train-fit readout; after alpha selection, the readout is refit on train plus validation and the deployed allocation exactly minimizes its train-plus-validation plug-in integer shot penalty; test inputs and targets remain untouched",
+  "status": "EXPLORATORY_STRESS_TEST",
+  "study": "pra_finite_shot_qelm_extension"
+}
