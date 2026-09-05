@@ -1,0 +1,14 @@
+{
+  "artifacts": {
+    "dense_n4_phase_cells.csv": "1db627e4d9e3a2b1da59962cbbccd17214ed3919cc404622fe6979858d0a6eef",
+    "dense_n4_root_scaling.csv": "082c0dad3ec44fcb0c3cf9c7657df08489a76e1147e01801e117ae65c9f30bfb",
+    "dense_n4_summary.json": "60fb6b64f250440d512c4b4c284abaaca48b1f74e4ebea2e6f46caa7e7b9b613"
+  },
+  "config_sha256": "fd3ad10797efdfb0aea69c01303bbfe4f51a7e87df169548dfa336656d80486e",
+  "freeze_record_sha256": "745a32cc4a19d05833abcee76b86d733c4a1951e8244acb69d8a23295b0f06da",
+  "profile": "dense_n4",
+  "root_set_sha256": "fe8dfffb532ba6bbec8ba439c774a06f466bbbf40b74a45214c45cbbcca5afb3",
+  "run_manifest_sha256": "f25cfed33b50eb1d4a2b95a7bc4ee9d45296f2c888bfb8e2c2a5000689070341",
+  "schema_version": 1,
+  "study": "canonical_qrc_to_parallel_qelm_dense_n4"
+}

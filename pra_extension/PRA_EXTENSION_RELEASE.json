@@ -1,6 +1,6 @@
 {
-  "artifact_count": 174,
-  "artifact_set_sha256": "7414476b1364ac1651e5c328fe3ce005ab6608e2ed1100343738061ca6c4ba08",
+  "artifact_count": 214,
+  "artifact_set_sha256": "608db5d6cf4e9bcc3f067bb30bc664f81c1b3bfae511491fe49ed352dea0bc89",
   "artifacts": {
     "CANONICAL_EMULATION_LITERATURE_POSITIONING.md": {
       "role": "post_confirmatory_literature_positioning",
@@ -17,6 +17,16 @@
       "sha256": "7c52f1a1a504994d5d1952329afb711926ae840b3ba18c14d894d132533e4348",
       "size_bytes": 9119
     },
+    "DENSE_PHASE_N4_PROTOCOL.md": {
+      "role": "frozen_dense_n4_protocol",
+      "sha256": "c6e5f5ed7e20e97be9cb9fde6b35139e5a37cfa22e576ddd6bc94e71156dd9c7",
+      "size_bytes": 4343
+    },
+    "DENSE_PHASE_SECONDARY_PROTOCOL.md": {
+      "role": "frozen_dense_secondary_protocol",
+      "sha256": "c5f623d776fed6ed5339cd8c5ba0ad0dd0f0043b553535f832c7af5efe593fb3",
+      "size_bytes": 3610
+    },
     "EMULATION_MATCHED_PROTOCOL.md": {
       "role": "frozen_matched_emulation_protocol",
       "sha256": "a796fd85d6d542cbbdd013625cb8aa3403bea1a1cb32654e2c65123ae08039f4",
@@ -24,8 +34,8 @@
     },
     "PRA_REVISION_REPORT.md": {
       "role": "referee_response_and_claim_boundary",
-      "sha256": "7901d81e1709f7783871312ef93283f45eca7cb67b258d7bf5f4291d3b18a614",
-      "size_bytes": 10323
+      "sha256": "504126f64fa3682de5a5ecbc3051bf84418b874067f2654bc059f8ee79e910eb",
+      "size_bytes": 14219
     },
     "PREREGISTRATION.md": {
       "role": "frozen_project_preregistration",
@@ -39,13 +49,33 @@
     },
     "README.md": {
       "role": "repository_reproduction_guide",
-      "sha256": "4d4baa487ba94be55dd3c015edbb4ee57f738359bcc93054a0b308e38a4d0c96",
-      "size_bytes": 22698
+      "sha256": "c9bac7a6bf80858ed1379dabd69792f1189c3178e73929d432955629d2d12744",
+      "size_bytes": 27739
     },
     "configs/DARK_SECTOR_VALIDATION_PROTOCOL.md": {
       "role": "frozen_dark_sector_protocol",
       "sha256": "5a9821ff051eb52dbee5a8a703841baa2fc76cf5d7895e7f59d53290286cbb2c",
       "size_bytes": 1459
+    },
+    "configs/canonical_emulation_dense_n4.yaml": {
+      "role": "frozen_dense_n4_configuration",
+      "sha256": "fd3ad10797efdfb0aea69c01303bbfe4f51a7e87df169548dfa336656d80486e",
+      "size_bytes": 5509
+    },
+    "configs/canonical_emulation_dense_n4_freeze.json": {
+      "role": "dense_n4_freeze_record",
+      "sha256": "745a32cc4a19d05833abcee76b86d733c4a1951e8244acb69d8a23295b0f06da",
+      "size_bytes": 8821
+    },
+    "configs/canonical_emulation_dense_secondary.yaml": {
+      "role": "frozen_dense_secondary_configuration",
+      "sha256": "47a7404da97090bfe3290822135d6fa60a40f9bef928b3173d1962299d1099ab",
+      "size_bytes": 5450
+    },
+    "configs/canonical_emulation_dense_secondary_freeze.json": {
+      "role": "dense_secondary_freeze_record",
+      "sha256": "80871ebc133346f63cb94d77bae49bcd91d7515eb5b61434723bc17ea398538c",
+      "size_bytes": 5256
     },
     "configs/dark_sector_validation.json": {
       "role": "frozen_dark_sector_configuration",
@@ -54,58 +84,58 @@
     },
     "paper/canonical_emulation/main.pdf": {
       "role": "compiled_paper_pdf",
-      "sha256": "e8c4e5d74277cc80e80346ddf5ffe8d744c46d6bff283f7e3249fdda4f2fc75c",
-      "size_bytes": 427653
+      "sha256": "5aa11c0e425ae2cd60b1cf3dd71331d6cadb504dcff27a16a861319ae0c22d73",
+      "size_bytes": 451641
     },
     "paper/canonical_emulation/main.tex": {
       "role": "paper_source",
-      "sha256": "f6b498448be27081e3590bced8fd458a4c206c646060753c1db3016a63151d81",
-      "size_bytes": 1441
+      "sha256": "d83912d1f1c12327b092c3c0556ca4fac032d6aa049e12993010833bbcf96beb",
+      "size_bytes": 1465
     },
     "paper/canonical_emulation/references.bib": {
       "role": "paper_source",
-      "sha256": "2577d9d1dfe94b72f3840ad6357d044f8d82c2745031ef69663b3dfb562bf71c",
-      "size_bytes": 18708
+      "sha256": "0269ced8eb4ea82b55fa0b664298639f165fded2c9e4087fb9a0270eac155b58",
+      "size_bytes": 20054
     },
     "paper/canonical_emulation/sections/abstract.tex": {
       "role": "paper_source",
-      "sha256": "4ebabf2cf4d9e23c5716c3eef29fc04bc2d4357372d1785bf2dda0483dca3573",
-      "size_bytes": 1574
+      "sha256": "c8c44ce2f58a66b545aa3e7ba0779daa5e2c9846e16494a30e0b641ff1091e2d",
+      "size_bytes": 1406
     },
     "paper/canonical_emulation/sections/appendix.tex": {
       "role": "paper_source",
-      "sha256": "a7cd07571c3dde33d9aaee2539d6cf116b715e72de4f1d94814d2660cbf9697f",
-      "size_bytes": 3344
+      "sha256": "fabe101eed71f15a029b3a2e73e00440d1f9a0e18c3ca4963f0ecc7ed06c782f",
+      "size_bytes": 10875
     },
     "paper/canonical_emulation/sections/background.tex": {
       "role": "paper_source",
-      "sha256": "919ccea67d2f3d3574a9cedd5f0ae234e80d17509886ce5a7d57414fa013ece5",
-      "size_bytes": 8025
+      "sha256": "cb353599445ff8f94db891bfd1da82e3fa751b75daac97dbd72c509a48736ace",
+      "size_bytes": 8719
     },
     "paper/canonical_emulation/sections/conclusion.tex": {
       "role": "paper_source",
-      "sha256": "8a830aa94a716e23a5d18fecf183cf76e01452bb348cd38c99a0a9ffddf838af",
-      "size_bytes": 2043
+      "sha256": "6a77a784244c0d8145022835ad5b3c0d49303919ec0fca761372f4c386ba183e",
+      "size_bytes": 2070
     },
     "paper/canonical_emulation/sections/evaluation.tex": {
       "role": "paper_source",
-      "sha256": "96d8d98ea21255a2190a452884ec9b53336ca9cc88499aab8678dc2b0c0f810d",
-      "size_bytes": 4183
+      "sha256": "5afe1168b5ed056b84bb85da5759e82a961f49bf923a74b61e0f0df66946f75b",
+      "size_bytes": 6523
     },
     "paper/canonical_emulation/sections/introduction.tex": {
       "role": "paper_source",
-      "sha256": "7bdf3d4892fd6a039bf49c3eb5680d2e1047fd356315140bd71068f4b75ee7ab",
-      "size_bytes": 4199
+      "sha256": "346be1e4d737477b12929f3ea2f909665469d9cd3adce95c67bcd9d5b7b71f68",
+      "size_bytes": 5712
     },
     "paper/canonical_emulation/sections/methodology.tex": {
       "role": "paper_source",
-      "sha256": "bb4ebfd966f87a813efe7ff9ab3656ee8d59628db846454506f40dc73a62300c",
-      "size_bytes": 10430
+      "sha256": "387826fbca1d0040d56d922e619185212fa1c468b65e14622d4aa098725125e0",
+      "size_bytes": 8131
     },
     "paper/canonical_emulation/sections/related-work.tex": {
       "role": "paper_source",
-      "sha256": "1ca62836c0ad7c7742ad95305edef3714043bed217b334e95fec73593551aa2a",
-      "size_bytes": 2462
+      "sha256": "3be42c1dda0bba31b85c8d1ff16e78bac8a5156c53e7c183f5da3c378273bf6c",
+      "size_bytes": 2298
     },
     "paper/figures/canonical_emulation/fig01_history_frontier.pdf": {
       "role": "canonical_paper_figure_artifact",
@@ -274,48 +304,53 @@
     },
     "paper/figures/information_interface/CHART_MAP.md": {
       "role": "main_figure_question_takeaway_map",
-      "sha256": "1cfc269c11adaf5cc1c47cda59625a7884baee1108f56fcfe38ca7332ac394bf",
-      "size_bytes": 2748
+      "sha256": "102419a4b64aa34c070df0b6949545ba5aa25b7e6c3d1d2bcf2854ae183e9b79",
+      "size_bytes": 5750
     },
     "paper/figures/information_interface/fig01_information_interface.pdf": {
       "role": "information_interface_figure_pdf",
-      "sha256": "e506895057c75eeabf5ba5248519c825005973a2d93ea34d7b2234824573f5ff",
-      "size_bytes": 55188
+      "sha256": "326c4920f4c19a1e30084af02b75c1406ff03a141fd6d2cce05ba6b7dba55806",
+      "size_bytes": 80517
     },
     "paper/figures/information_interface/fig01_information_interface.png": {
       "role": "information_interface_figure_png",
-      "sha256": "4d00fa82c676f305747e5033205a7134048d1f9a4ddb3da69ffd55bcd39fdcc2",
-      "size_bytes": 277992
+      "sha256": "1b45f8ee4c7bfab8e8f22b4d72acf2b59882ad584efa8672e4a3dc74f08b53b1",
+      "size_bytes": 252483
+    },
+    "paper/figures/information_interface/fig01_information_interface.tex": {
+      "role": "information_interface_tikz_source",
+      "sha256": "518b7602eff422cd6d1cafa67fd1196b28ab0a93b46930e6278042883efd8c26",
+      "size_bytes": 5657
     },
     "paper/figures/information_interface/fig01_information_interface_source.json": {
       "role": "information_interface_figure_source",
-      "sha256": "2978b4eb96e2df243dfc2f5c608531968d7c46352d8fe0ecfb97cf68a40c3691",
-      "size_bytes": 582
+      "sha256": "65969d59e00c03e807682ae5bc8223ff8df1234037752917e0996c4af928cbee",
+      "size_bytes": 1791
     },
     "paper/figures/information_interface/fig02_information_frontier.pdf": {
       "role": "information_frontier_figure_pdf",
-      "sha256": "f0db7d300e3ec5a503bb94f29b73b24ce47cc1531983529c65ab7a7ee1333c8c",
-      "size_bytes": 27539
+      "sha256": "e675e22e3ed89f33c0178b950e162ed1cf0ce55851b286a37e346bd70a225a61",
+      "size_bytes": 45654
     },
     "paper/figures/information_interface/fig02_information_frontier.png": {
       "role": "information_frontier_figure_png",
-      "sha256": "5b49595d8cb4eb8d70414e88d607d809fb09d8084a4400fa95a83477bebe2b0e",
-      "size_bytes": 92150
+      "sha256": "1f29dd932b07f0f1265488b82f207f496edd6066abb16032bd679663aa08466e",
+      "size_bytes": 347657
     },
     "paper/figures/information_interface/fig02_information_frontier_source.csv": {
       "role": "information_frontier_figure_source",
-      "sha256": "1f250f64e40ebb9d7f3604d666d5d0be4cca36ceddd694a8bef9dffb6116dea4",
-      "size_bytes": 9143
+      "sha256": "fb40ca1f38dc05006190c1b67a1b195b153b5eb9c92f292633471c8cc178896f",
+      "size_bytes": 137721
     },
     "paper/figures/information_interface/fig03_resource_diagnosis.pdf": {
       "role": "resource_diagnosis_figure_pdf",
-      "sha256": "2321c998016133fc3413d9441ceb4dc39758d28a8e3a208c4f53945ead87f4e0",
-      "size_bytes": 38732
+      "sha256": "3cd534e7c112937df7bfebbe024906e4fc0445b196aa84badd2a60e2cb98e2f5",
+      "size_bytes": 38588
     },
     "paper/figures/information_interface/fig03_resource_diagnosis.png": {
       "role": "resource_diagnosis_figure_png",
-      "sha256": "ecbc00233c08cb7549c67b92c03f19b5f308147babf3e6c44ae47161bea9305c",
-      "size_bytes": 346676
+      "sha256": "5c6c3f73f2b8ee47ff9a127e25f97455da1005c1dab547f224b1bb92c330b5d1",
+      "size_bytes": 372739
     },
     "paper/figures/information_interface/fig03_resource_diagnosis_source.csv": {
       "role": "resource_diagnosis_figure_source",
@@ -324,8 +359,13 @@
     },
     "paper/figures/information_interface/figure_sha256.json": {
       "role": "information_interface_figure_hash_ledger",
-      "sha256": "d1c03d7f85a76cb72f16c07f74fc1add2ccdcf75b2ad82949c6bbd88451ef501",
+      "sha256": "46124d9e43c28658cddc50e24f10c5133701cc8952ea1e21b77023a602cd3516",
       "size_bytes": 958
+    },
+    "paper/figures/information_interface/phase_threshold_sensitivity.json": {
+      "role": "post_hoc_phase_threshold_sensitivity",
+      "sha256": "486202623453c8b3e577af645daf3906fd1fd4f3e6be4d638676cfab44490f8a",
+      "size_bytes": 164872
     },
     "pra_extension/PROTOCOL.md": {
       "role": "extension_protocol_record",
@@ -374,8 +414,8 @@
     },
     "pra_extension/code/build_release_manifest.py": {
       "role": "extension_code",
-      "sha256": "93fa0c3c42c738e2e0b4e94802e4dc79940d90382221151bb801a0e97a481a49",
-      "size_bytes": 47155
+      "sha256": "23d7c2e4f047946a2eff86be93c82cf17ab0033fb1828bff5da02a8e94110a9a",
+      "size_bytes": 51653
     },
     "pra_extension/code/dark_sector.py": {
       "role": "extension_code",
@@ -419,8 +459,8 @@
     },
     "pra_extension/code/render_information_interface_figures.py": {
       "role": "extension_code",
-      "sha256": "20518a54f5e26830c9f3fc8064bd4ac12f047613a2806e501474919b097b4418",
-      "size_bytes": 33192
+      "sha256": "00be5d11cc8db0a37225b5fd313d4fe72bba27d06dd502ce2ec92f22958025ad",
+      "size_bytes": 53954
     },
     "pra_extension/code/render_pra_extension_figures.py": {
       "role": "extension_code",
@@ -767,6 +807,16 @@
       "sha256": "732995c92cbeb1b02401892099458929023bdfefb4b9ef6987a444c82d2aa824",
       "size_bytes": 2201
     },
+    "pra_extension/tests/test_dense_phase_n4.py": {
+      "role": "extension_test",
+      "sha256": "6326b5b5cc36a80bde469cf02c680596ba78ffea4af9d01656b19094bd255b92",
+      "size_bytes": 5524
+    },
+    "pra_extension/tests/test_dense_phase_secondary.py": {
+      "role": "extension_test",
+      "sha256": "7c0f9f15a66615a3fb29f271fd6f26a0d0a873bf3ac02ff30d611f26b1a34368",
+      "size_bytes": 2987
+    },
     "pra_extension/tests/test_eiv_analysis.py": {
       "role": "extension_test",
       "sha256": "3b750f812283e45c987cb1e3cb93bc2a56bbba8dc49311a1fa5f32c2894b1876",
@@ -799,13 +849,13 @@
     },
     "pra_extension/tests/test_information_interface_figures.py": {
       "role": "extension_test",
-      "sha256": "9e9cd8772ad4fc660be3a22ecd32465a02e686d04ec3fa9b25c60bf73cf31ab4",
-      "size_bytes": 8533
+      "sha256": "6a5a3954535034a38fdf80a25db62809d6883964d0e9ce2e701f9852590baf99",
+      "size_bytes": 20471
     },
     "pra_extension/tests/test_manuscript_claims.py": {
       "role": "extension_test",
-      "sha256": "3abc41947383a443b102268115935a70e1794950f35b29a9ee1cedc35b6cdce4",
-      "size_bytes": 9324
+      "sha256": "1caad8594239879c0d6068cf9a0ac812e24cb070832bb7213b0910c6d87e67b2",
+      "size_bytes": 10076
     },
     "pra_extension/tests/test_n4_shot_analysis.py": {
       "role": "extension_test",
@@ -817,10 +867,15 @@
       "sha256": "894a6feb4409ea0704b3e1ad003196ecf030102766a6649a78d577987e911c95",
       "size_bytes": 8448
     },
+    "pra_extension/tests/test_phase_threshold_sensitivity.py": {
+      "role": "extension_test",
+      "sha256": "27c3caed993a6404f6ca111ce2a350bec974192381b7af1e4b8345cfaaba7f69",
+      "size_bytes": 3568
+    },
     "pra_extension/tests/test_release_manifest.py": {
       "role": "extension_test",
-      "sha256": "f78eb1d086cb9b417eed0152e02cb4254e900eff344089b0c517e57679413bab",
-      "size_bytes": 11003
+      "sha256": "e9b128d1668e5ea6a7349e146f4d338a3bc28c55c2d78a21cd475d3bab6854af",
+      "size_bytes": 12473
     },
     "pra_extension/tests/test_student_architecture.py": {
       "role": "extension_test",
@@ -871,6 +926,151 @@
       "role": "frozen_canonical_result",
       "sha256": "ce996ff07f2848513d60084444e3e3bc0b053d9ac95b0f4dc32b61024b2371c5",
       "size_bytes": 22932
+    },
+    "results_dense_phase_n4_v1/canonical_manifest.json": {
+      "role": "dense_n4_run_manifest",
+      "sha256": "f25cfed33b50eb1d4a2b95a7bc4ee9d45296f2c888bfb8e2c2a5000689070341",
+      "size_bytes": 25124
+    },
+    "results_dense_phase_n4_v1/canonical_summary.json": {
+      "role": "dense_n4_run_summary",
+      "sha256": "1a10f7bd7e03c57d2faea08d0ab30db7412c56f12cb19b98eaf795aebf15c981",
+      "size_bytes": 548
+    },
+    "results_dense_phase_n4_v1/computational_resources.json": {
+      "role": "dense_n4_resource_record",
+      "sha256": "a6d89e09405dd0897d5c22ce614cf74d1628c929be9824d4050f6236e9b9402d",
+      "size_bytes": 2149
+    },
+    "results_dense_phase_n4_v1/dense_n4_preflight_audit.json": {
+      "role": "dense_n4_preflight_audit",
+      "sha256": "c32635419ff22acf4f192da56df1adac49c391ff3d4f882aafeccdec01af01a6",
+      "size_bytes": 5105
+    },
+    "results_dense_phase_n4_v1/stream_metrics.csv": {
+      "role": "dense_n4_stream_metrics",
+      "sha256": "8a9f6c49a82a69686de61fe953de679837a375c3e6de3ef6889b582279081468",
+      "size_bytes": 3353316
+    },
+    "results_dense_phase_n4_v1/suffix_decomposition.csv": {
+      "role": "dense_n4_suffix_decomposition",
+      "sha256": "6dba07c9f0d53ab94b9de32509ac69408a77c8c7add146b2dbfa49e6239705c0",
+      "size_bytes": 5178907
+    },
+    "results_dense_phase_n4_v1/system_diagnostics.csv": {
+      "role": "dense_n4_system_diagnostics",
+      "sha256": "519cb9b131a608f55bc2a7516d72c4165e2550ebc4e06735ba1ddecdcacc708d",
+      "size_bytes": 21976
+    },
+    "results_dense_phase_n4_v1_analysis/dense_n4_analysis_manifest.json": {
+      "role": "dense_n4_analysis_hash_ledger",
+      "sha256": "2a3ed60afb6b6a8a42cad6acbf51fe46ae47866c660b6036108e61c9557c3036",
+      "size_bytes": 787
+    },
+    "results_dense_phase_n4_v1_analysis/dense_n4_phase_cells.csv": {
+      "role": "dense_n4_figure_source",
+      "sha256": "1db627e4d9e3a2b1da59962cbbccd17214ed3919cc404622fe6979858d0a6eef",
+      "size_bytes": 51216
+    },
+    "results_dense_phase_n4_v1_analysis/dense_n4_root_scaling.csv": {
+      "role": "dense_n4_root_scaling",
+      "sha256": "082c0dad3ec44fcb0c3cf9c7657df08489a76e1147e01801e117ae65c9f30bfb",
+      "size_bytes": 913
+    },
+    "results_dense_phase_n4_v1_analysis/dense_n4_summary.json": {
+      "role": "dense_n4_decision_summary",
+      "sha256": "60fb6b64f250440d512c4b4c284abaaca48b1f74e4ebea2e6f46caa7e7b9b613",
+      "size_bytes": 1869
+    },
+    "results_dense_phase_secondary_v1/canonical_manifest.json": {
+      "role": "dense_secondary_run_manifest",
+      "sha256": "4288ef321f787d1d88b332660b0832f45f2dc1f4b7b85b1bf5109e586f7b8b39",
+      "size_bytes": 25147
+    },
+    "results_dense_phase_secondary_v1/canonical_summary.json": {
+      "role": "dense_secondary_run_summary",
+      "sha256": "53a3ba255f2480529c9f3e40ea35004b5c0278e122f91fd18905fb13ce211add",
+      "size_bytes": 568
+    },
+    "results_dense_phase_secondary_v1/computational_resources.json": {
+      "role": "dense_secondary_resource_record",
+      "sha256": "b1cf9fd3dc09afd7113dca3a8e30097ec4426c3467de4b6d9a22426890dd2f7b",
+      "size_bytes": 2408
+    },
+    "results_dense_phase_secondary_v1/dense_secondary_preflight_audit.json": {
+      "role": "dense_secondary_preflight_audit",
+      "sha256": "3d47f4d1374d042e4f12acb97b02e712b1b2abb0072205e68006dadff31215d5",
+      "size_bytes": 1420
+    },
+    "results_dense_phase_secondary_v1/stream_metrics.csv": {
+      "role": "dense_secondary_stream_metrics",
+      "sha256": "a4cc7bcec76ee23f8942e61696a4e09a457969154d7ff82f5fe2b5d06821c9bc",
+      "size_bytes": 6524499
+    },
+    "results_dense_phase_secondary_v1/suffix_decomposition.csv": {
+      "role": "dense_secondary_suffix_decomposition",
+      "sha256": "54dd6550d36fe43673d771f7ecb3cee1db17522007a0103f8172d35c9254a682",
+      "size_bytes": 10131888
+    },
+    "results_dense_phase_secondary_v1/system_diagnostics.csv": {
+      "role": "dense_secondary_system_diagnostics",
+      "sha256": "b27a30cf463364aaed4771ad16237d9c4c94fa64c0d7008ca87d3daf1d5681a5",
+      "size_bytes": 40912
+    },
+    "results_dense_phase_secondary_v1_analysis/dense_phase_analysis_manifest.json": {
+      "role": "dense_secondary_analysis_hash_ledger",
+      "sha256": "3f65d7e408a2b0eb19893d267b15363b6a6c4581c02e574ee4cfadb656a4dae7",
+      "size_bytes": 348
+    },
+    "results_dense_phase_secondary_v1_analysis/dense_phase_cells.csv": {
+      "role": "dense_secondary_figure_source",
+      "sha256": "0740f94e13bc4c364b93ca62fe5783aecaaf31ab58aba138ccfeb0a019ac389c",
+      "size_bytes": 78872
+    },
+    "results_dense_phase_secondary_v1_analysis/dense_phase_root_scaling.csv": {
+      "role": "dense_secondary_root_scaling",
+      "sha256": "d978aa693e2e3b9f0db76e24ecb536c588f0b3b7c6689e447976ca98ee51eefb",
+      "size_bytes": 1492
+    },
+    "results_dense_phase_secondary_v1_analysis/dense_phase_summary.json": {
+      "role": "dense_secondary_decision_summary",
+      "sha256": "32416a07bdd5558717afd150acea6a3f85d1fa30ceeac04849d6b16b9a7a1d17",
+      "size_bytes": 1529
+    },
+    "scripts/analyze_dense_phase_n4.py": {
+      "role": "dense_n4_analysis_code",
+      "sha256": "ec5fd6e0035fbe06de52b928c8bd47a64ff03e2eed41818bc4f5ae426c953451",
+      "size_bytes": 23998
+    },
+    "scripts/analyze_dense_phase_secondary.py": {
+      "role": "dense_secondary_analysis_code",
+      "sha256": "22c9114e238851d70f22f756cd1cccc9f19250c404253ade2f74d9803eaba720",
+      "size_bytes": 15981
+    },
+    "scripts/analyze_phase_threshold_sensitivity.py": {
+      "role": "post_hoc_phase_threshold_analysis_code",
+      "sha256": "79e0255e14ef893457cad59e21fc0f47b753217a4d084e5bff26bad769911cd4",
+      "size_bytes": 20362
+    },
+    "scripts/dense_phase_n4_common.py": {
+      "role": "dense_n4_audit_code",
+      "sha256": "494005216b921708eeaf4a323c4817673d08d36632ed7fab8e729fd600995584",
+      "size_bytes": 17739
+    },
+    "scripts/dense_phase_secondary_common.py": {
+      "role": "dense_secondary_audit_code",
+      "sha256": "69445b21d33523eb4baef3213aaa265da90e9dc359e941d97019c2ac6ec82da6",
+      "size_bytes": 9183
+    },
+    "scripts/run_dense_phase_n4.py": {
+      "role": "dense_n4_runner",
+      "sha256": "f9b4540361e4ef97926a9b28a19d84c04e76c01e2ba299c0bf4749f8a98adc17",
+      "size_bytes": 2579
+    },
+    "scripts/run_dense_phase_secondary.py": {
+      "role": "dense_secondary_runner",
+      "sha256": "bf7944c2246f2975a7393895f00a9cdcdcc278b3ab39065a4273cab57bd96625",
+      "size_bytes": 1927
     }
   },
   "canonical_frozen_identity": {
@@ -899,14 +1099,16 @@
     "profile": "confirmatory",
     "study": "canonical_qrc_to_parallel_qelm_emulation"
   },
-  "claim_boundary": "A content-addressed handoff for the scalar common-suffix criterion, a constructive contractive-QRC-to-growing-reset-QELM bound, an exact protected-memory obstruction, and the bounded phase-map study; not fixed-architecture equivalence, efficient learning, quantum advantage, or hardware validation.",
+  "claim_boundary": "A content-addressed handoff for the exact scalar common-suffix criterion, the if-and-only-if growing reset-QELM emulation theorem, the reachable-observable joint spectral radius and context law, a constructive contractive-QRC-to-growing-reset-QELM bound, an exact protected-memory obstruction, and the bounded phase-map study; not fixed-architecture equivalence, efficient learning, quantum advantage, or hardware validation.",
   "evidence_layers": {
     "canonical": "FROZEN_CONFIRMATORY",
     "dark_sector": "FROZEN_VALIDATION",
+    "dense_n4": "FROZEN_PROSPECTIVE_N4",
+    "dense_secondary": "FROZEN_PROSPECTIVE_SECONDARY",
     "pra_extension": "EXPLORATORY_POST_CONFIRMATORY"
   },
   "figures_directory": "pra_extension/figures_pra_final_v6",
-  "manifest_identity_sha256": "6f3bec5a61d006280f2054ebcead6453213663781d4fb42cf14de92d2e3db4ed",
+  "manifest_identity_sha256": "106384cf791f09c924c1602fe2d6823cb22a56e348aff252e6730e1fc103943c",
   "paper_pdf": "paper/canonical_emulation/main.pdf",
   "schema_version": 1,
   "source_hash_checks": [
@@ -1116,43 +1318,48 @@
       "source": "paper/figures/compact_pra/fig03_dissipation_window_scaling_compact_source.csv"
     },
     {
+      "analysis": "paper/figures/information_interface/fig01_information_interface_source.json",
+      "sha256": "518b7602eff422cd6d1cafa67fd1196b28ab0a93b46930e6278042883efd8c26",
+      "source": "paper/figures/information_interface/fig01_information_interface.tex"
+    },
+    {
       "analysis": "paper/figures/information_interface/figure_sha256.json",
-      "sha256": "e506895057c75eeabf5ba5248519c825005973a2d93ea34d7b2234824573f5ff",
+      "sha256": "326c4920f4c19a1e30084af02b75c1406ff03a141fd6d2cce05ba6b7dba55806",
       "source": "paper/figures/information_interface/fig01_information_interface.pdf"
     },
     {
       "analysis": "paper/figures/information_interface/figure_sha256.json",
-      "sha256": "4d00fa82c676f305747e5033205a7134048d1f9a4ddb3da69ffd55bcd39fdcc2",
+      "sha256": "1b45f8ee4c7bfab8e8f22b4d72acf2b59882ad584efa8672e4a3dc74f08b53b1",
       "source": "paper/figures/information_interface/fig01_information_interface.png"
     },
     {
       "analysis": "paper/figures/information_interface/figure_sha256.json",
-      "sha256": "2978b4eb96e2df243dfc2f5c608531968d7c46352d8fe0ecfb97cf68a40c3691",
+      "sha256": "65969d59e00c03e807682ae5bc8223ff8df1234037752917e0996c4af928cbee",
       "source": "paper/figures/information_interface/fig01_information_interface_source.json"
     },
     {
       "analysis": "paper/figures/information_interface/figure_sha256.json",
-      "sha256": "f0db7d300e3ec5a503bb94f29b73b24ce47cc1531983529c65ab7a7ee1333c8c",
+      "sha256": "e675e22e3ed89f33c0178b950e162ed1cf0ce55851b286a37e346bd70a225a61",
       "source": "paper/figures/information_interface/fig02_information_frontier.pdf"
     },
     {
       "analysis": "paper/figures/information_interface/figure_sha256.json",
-      "sha256": "5b49595d8cb4eb8d70414e88d607d809fb09d8084a4400fa95a83477bebe2b0e",
+      "sha256": "1f29dd932b07f0f1265488b82f207f496edd6066abb16032bd679663aa08466e",
       "source": "paper/figures/information_interface/fig02_information_frontier.png"
     },
     {
       "analysis": "paper/figures/information_interface/figure_sha256.json",
-      "sha256": "1f250f64e40ebb9d7f3604d666d5d0be4cca36ceddd694a8bef9dffb6116dea4",
+      "sha256": "fb40ca1f38dc05006190c1b67a1b195b153b5eb9c92f292633471c8cc178896f",
       "source": "paper/figures/information_interface/fig02_information_frontier_source.csv"
     },
     {
       "analysis": "paper/figures/information_interface/figure_sha256.json",
-      "sha256": "2321c998016133fc3413d9441ceb4dc39758d28a8e3a208c4f53945ead87f4e0",
+      "sha256": "3cd534e7c112937df7bfebbe024906e4fc0445b196aa84badd2a60e2cb98e2f5",
       "source": "paper/figures/information_interface/fig03_resource_diagnosis.pdf"
     },
     {
       "analysis": "paper/figures/information_interface/figure_sha256.json",
-      "sha256": "ecbc00233c08cb7549c67b92c03f19b5f308147babf3e6c44ae47161bea9305c",
+      "sha256": "5c6c3f73f2b8ee47ff9a127e25f97455da1005c1dab547f224b1bb92c330b5d1",
       "source": "paper/figures/information_interface/fig03_resource_diagnosis.png"
     },
     {

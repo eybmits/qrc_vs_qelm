@@ -1,67 +1,93 @@
-Temporal learning begins with a simple question: does the model receive the
-information needed for the prediction?  A recurrent processor keeps a state
-from the past.  A reset processor starts again for every example and receives
-only an explicit window of recent inputs.  More features can enrich a function
-of that window, but they cannot reveal an input that lies outside it.  This
-distinction is shared by classical and quantum models.
+\section{Introduction}
+\label{sec:introduction}
+
+Temporal prediction begins with a question about information: does the model
+receive what the output still remembers?  A recurrent processor carries a
+state from the past, whereas a reset processor starts anew and receives only a
+recent input window.  Missing history cannot be restored by more features,
+training data, or a nonlinear readout.  We therefore ask when a reset-window
+QELM can emulate the declared observable response of a QRC.
 
 Reservoir computing turns fixed nonlinear dynamics into a temporal processor
-and trains only the readout
-\cite{maass2002realtime,jaeger2004harnessing,dambre2012information}.  A quantum
-reservoir computer (QRC) propagates a quantum state from one input to the next
-\cite{fujii2017harnessing,mujal2021opportunities}.  A quantum extreme learning
-machine (QELM) instead uses a fixed quantum feature map and trains its output
-weights \cite{huang2006elm,innocenti2023potential}.  In the reset-window
-architecture, each prediction begins from the same state and encodes only the
-latest $d$ inputs \cite{kawanabe2026tdqelm}.
+and trains only its readout
+\cite{maass2002realtime,jaeger2004harnessing,dambre2012information}.  A QRC
+propagates a quantum state from one input to the next
+\cite{fujii2017harnessing,mujal2021opportunities}.  A QELM instead evaluates a
+fixed quantum feature map and trains output weights
+\cite{huang2006elm,innocenti2023potential}.  In the reset-window architecture,
+every prediction begins from the same state and encodes only the latest $d$
+inputs \cite{kawanabe2026tdqelm}.
 
-For a bounded scalar observable output, the relation between these
-architectures is governed by one quantity.  For a given window, compare all
-histories that end in the same last $d$ inputs.  If their QRC outputs differ,
-every window-only learner must make the same prediction for different correct
-answers.  The largest such output gap is the common-suffix diameter $D_d$, and
-the best possible worst-case error is $D_d/2$.  The statement is independent of
-the number of qubits, measured observables, training examples, or readout
-parameters.
+Consider two input histories that share those latest inputs but differ earlier.
+The reset model receives identical data for both and must return one answer.
+If the QRC observable still distinguishes the histories, at least one
+prediction must be wrong.  This common-suffix collision is independent of the
+chosen feature map, number of qubits, or readout: it is an information limit
+set by the interface between recurrent state and finite window.
 
-When the recurrent dynamics forget old states, $D_d$ decreases with the window
-length.  Uniform contraction makes the decrease exponential.  If the channels
-also depend continuously on the input, the remaining target is a continuous
-function of finitely many inputs, and a scalable reset QELM based on a standard
-Bernstein quantum feature map can approximate it
-\cite{goto2021universal,yu2024nonasymptotic}.  This gives a direct QRC-to-QELM
-approximation result: continuous fading memory can be exchanged for a
-sufficiently long explicit window.  A fixed QELM can still be limited by its
-features or by finite measurement accuracy.
+\input{sections/related-work}
 
-The opposite case has a physical realization in a two-qubit open system.  An
-addressable control writes population into the singlet sector.  Later symmetric
-drives and collective dissipation preserve that population, while two-body
-Pauli correlations reveal it.  The mode is protected, excitable, and visible,
-as in decoherence-free and noiseless sectors
-\cite{zanardi1997noiseless,lidar1998dfs,albert2014symmetries}.  Two histories can
-therefore share every later input and still produce different measured
-outputs.  No finite raw-input window recovers the missing event.
+We quantify this collision by the common-suffix diameter $D_d$, the supremal
+output separation between histories with the same last $d$ inputs.  For a
+scalar output, $D_d/2$ is exactly the smallest worst-case error of any
+window-only predictor.  For vector outputs, the exact error is the smallest
+enclosing-ball radius of the compatible outputs and lies between $D_d/2$ and
+$D_d$.  Our main result then gives a sharp equivalence.  It assumes a
+finite-dimensional QRC with continuous dynamics and a fixed finite vector of
+observable expectations, a compact input alphabet with freely concatenable
+suffixes, and a growing exact-expectation reset-QELM family that is universal
+on each finite window.  This family emulates the declared
+output uniformly to arbitrary accuracy if and only if $D_d\to0$.  Necessity follows from the
+collision; sufficiency replays the shared suffix from one reachable reset state
+and approximates the resulting continuous finite-window map.  The statement
+does not make one fixed circuit universal or guarantee efficient learning.
+
+The physical criterion retains only state differences that past inputs can
+create and present or future declared measurements can reveal.  On this
+quotient, $D_d$ is equivalent to the supremal norm of length-$d$ channel
+products.
+Uniform observable forgetting holds exactly when the associated
+reachable-observable joint spectral radius is below one.  Uniform
+trace-distance contraction is sufficient, but not necessary.  A two-qubit
+protected-memory construction realizes the opposite case: an addressable control writes
+singlet population, later symmetric drives and collective dissipation protect
+it, and two-body Pauli correlations reveal it.  Histories can then share every
+later input while their outputs remain separated, so no finite raw-input
+window determines the output.
+
+Held-out simulations expose the resulting resource order for two- and
+three-qubit target QRCs, one fixed six-qubit reset-QELM emulator, and an
+independent prospectively specified four-qubit replication.  Longer windows
+first reduce the sampled history floor; additional features become decisive
+once that floor is small; finite shots then determine which features can be
+resolved.  A quadratic nonlinear-vector-autoregression control
+\cite{gauthier2021next} outperforms the tested QELM on the fast-forgetting
+comparison, so this comparison does not show quantum advantage.
+
+Figure~\ref{fig:information-interface} compares recurrent state with explicit
+input context, identifies the memory relevant to the declared output, and
+shows when finite-window emulation is possible.
+The result concerns one declared input--output map, not reconstruction of the
+full recurrent state.  The following sections formalize the criterion, test
+its resource hierarchy, and state the experimental and statistical protocol.
 
 \begin{figure*}[t]
  \includegraphics[width=\textwidth]{fig01_information_interface.pdf}
- \caption{\textbf{The finite-window boundary.}
- \textbf{a} Two trajectories differ in one old input and then receive identical later
- inputs.  A window-only model sees the same data for both, although the QRC
- outputs remain different.  \textbf{b} In the two-qubit example, an old control writes
- singlet population, the later dynamics protect it, and Pauli measurements
- reveal it.  \textbf{c} Missing history, insufficient features, and finite measurement
- accuracy are different error sources.  \textbf{d} If $D_d$ stays positive, every
- finite-window model has a nonzero error floor.  If $D_d\to0$, a growing reset
- QELM can approximate the QRC output.}
+ \caption{\textbf{When can finite context replace recurrent quantum memory?}
+ \textbf{a} The target QRC carries a state between inputs; the reset-window
+ QELM starts from the same state for each prediction and receives the last
+ $d$ inputs.  Emulation concerns their declared outputs, not equality of
+ their internal quantum states.  \textbf{b} Only state differences that past
+ inputs can create and present or future declared outputs can reveal matter.
+ Unreachable and permanently output-invisible directions do not obstruct
+ emulation.  \textbf{c} The largest compatible output gap must vanish uniformly
+ as the window grows.  Then a growing universal reset-QELM family can emulate
+ to arbitrary accuracy; a persistent visible gap instead imposes a nonzero
+ error floor for every finite window.  Curves are schematic.  The exact
+ equivalence assumes a finite-dimensional
+ target QRC with continuous dynamics and a fixed finite vector of observable
+ expectations, a compact input alphabet with freely concatenable suffixes, and a growing exact-expectation
+ reset-QELM family universal on every finite window.  Finite feature and shot
+ budgets impose separate representation and measurement limits.}
  \label{fig:information-interface}
 \end{figure*}
-
-Held-out simulations expose the same ordering for two- and three-qubit QRC
-teachers and one fixed six-qubit windowed QELM.  Increasing the window first
-reduces the missing-history floor.  Additional features help only after that
-floor is small, and finite shots determine which feature budget is useful.
-Classical delay models follow the same information boundary; the quadratic
-delay model outperforms the tested QELM on the fast-forgetting comparison.  The
-result is a general relation between recurrent memory and explicit context,
-realized here with a quantum protected-memory mechanism.

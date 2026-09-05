@@ -99,6 +99,88 @@ CANONICAL_FIGURE_FILES[
     "paper/figures/canonical_emulation/figure_manifest.json"
 ] = "canonical_figure_hash_ledger"
 
+DENSE_SECONDARY_FILES: dict[str, str] = {
+    "DENSE_PHASE_SECONDARY_PROTOCOL.md": "frozen_dense_secondary_protocol",
+    "configs/canonical_emulation_dense_secondary.yaml": (
+        "frozen_dense_secondary_configuration"
+    ),
+    "configs/canonical_emulation_dense_secondary_freeze.json": (
+        "dense_secondary_freeze_record"
+    ),
+    "scripts/dense_phase_secondary_common.py": "dense_secondary_audit_code",
+    "scripts/run_dense_phase_secondary.py": "dense_secondary_runner",
+    "scripts/analyze_dense_phase_secondary.py": "dense_secondary_analysis_code",
+    "results_dense_phase_secondary_v1/canonical_manifest.json": (
+        "dense_secondary_run_manifest"
+    ),
+    "results_dense_phase_secondary_v1/canonical_summary.json": (
+        "dense_secondary_run_summary"
+    ),
+    "results_dense_phase_secondary_v1/computational_resources.json": (
+        "dense_secondary_resource_record"
+    ),
+    "results_dense_phase_secondary_v1/dense_secondary_preflight_audit.json": (
+        "dense_secondary_preflight_audit"
+    ),
+    "results_dense_phase_secondary_v1/stream_metrics.csv": (
+        "dense_secondary_stream_metrics"
+    ),
+    "results_dense_phase_secondary_v1/suffix_decomposition.csv": (
+        "dense_secondary_suffix_decomposition"
+    ),
+    "results_dense_phase_secondary_v1/system_diagnostics.csv": (
+        "dense_secondary_system_diagnostics"
+    ),
+    "results_dense_phase_secondary_v1_analysis/dense_phase_cells.csv": (
+        "dense_secondary_figure_source"
+    ),
+    "results_dense_phase_secondary_v1_analysis/dense_phase_root_scaling.csv": (
+        "dense_secondary_root_scaling"
+    ),
+    "results_dense_phase_secondary_v1_analysis/dense_phase_summary.json": (
+        "dense_secondary_decision_summary"
+    ),
+    "results_dense_phase_secondary_v1_analysis/dense_phase_analysis_manifest.json": (
+        "dense_secondary_analysis_hash_ledger"
+    ),
+}
+
+DENSE_N4_FILES: dict[str, str] = {
+    "DENSE_PHASE_N4_PROTOCOL.md": "frozen_dense_n4_protocol",
+    "configs/canonical_emulation_dense_n4.yaml": "frozen_dense_n4_configuration",
+    "configs/canonical_emulation_dense_n4_freeze.json": "dense_n4_freeze_record",
+    "scripts/dense_phase_n4_common.py": "dense_n4_audit_code",
+    "scripts/run_dense_phase_n4.py": "dense_n4_runner",
+    "scripts/analyze_dense_phase_n4.py": "dense_n4_analysis_code",
+    "results_dense_phase_n4_v1/canonical_manifest.json": "dense_n4_run_manifest",
+    "results_dense_phase_n4_v1/canonical_summary.json": "dense_n4_run_summary",
+    "results_dense_phase_n4_v1/computational_resources.json": (
+        "dense_n4_resource_record"
+    ),
+    "results_dense_phase_n4_v1/dense_n4_preflight_audit.json": (
+        "dense_n4_preflight_audit"
+    ),
+    "results_dense_phase_n4_v1/stream_metrics.csv": "dense_n4_stream_metrics",
+    "results_dense_phase_n4_v1/suffix_decomposition.csv": (
+        "dense_n4_suffix_decomposition"
+    ),
+    "results_dense_phase_n4_v1/system_diagnostics.csv": (
+        "dense_n4_system_diagnostics"
+    ),
+    "results_dense_phase_n4_v1_analysis/dense_n4_phase_cells.csv": (
+        "dense_n4_figure_source"
+    ),
+    "results_dense_phase_n4_v1_analysis/dense_n4_root_scaling.csv": (
+        "dense_n4_root_scaling"
+    ),
+    "results_dense_phase_n4_v1_analysis/dense_n4_summary.json": (
+        "dense_n4_decision_summary"
+    ),
+    "results_dense_phase_n4_v1_analysis/dense_n4_analysis_manifest.json": (
+        "dense_n4_analysis_hash_ledger"
+    ),
+}
+
 # These are the authoritative source tables and machine-readable summaries used
 # by the revised paper.  Earlier pilot, smoke, v1, and v2 directories are
 # intentionally excluded.
@@ -326,6 +408,9 @@ COMPACT_PRA_FIGURE_FILES: dict[str, str] = {
         "paper/figures/compact_pra/dark_sector_figure_sha256.json"
     ): "protected_memory_figure_hash_ledger",
     (
+        "paper/figures/information_interface/fig01_information_interface.tex"
+    ): "information_interface_tikz_source",
+    (
         "paper/figures/information_interface/fig01_information_interface.pdf"
     ): "information_interface_figure_pdf",
     (
@@ -355,6 +440,15 @@ COMPACT_PRA_FIGURE_FILES: dict[str, str] = {
     (
         "paper/figures/information_interface/figure_sha256.json"
     ): "information_interface_figure_hash_ledger",
+    (
+        "paper/figures/information_interface/phase_threshold_sensitivity.json"
+    ): "post_hoc_phase_threshold_sensitivity",
+}
+
+THRESHOLD_SENSITIVITY_FILES: dict[str, str] = {
+    "scripts/analyze_phase_threshold_sensitivity.py": (
+        "post_hoc_phase_threshold_analysis_code"
+    ),
 }
 
 # These audited post-confirmatory artifacts are pinned so superseded shot
@@ -415,6 +509,12 @@ EXPLORATORY_ANALYSES = (
 
 # (JSON file, object key containing recorded hashes, recorded key, source file)
 SOURCE_HASH_LINKS = (
+    (
+        "paper/figures/information_interface/fig01_information_interface_source.json",
+        "",
+        "tikz_source_sha256",
+        "paper/figures/information_interface/fig01_information_interface.tex",
+    ),
     *tuple(
         (
             "pra_extension/outputs/dark_sector_validation/dark_sector_summary.json",
@@ -1118,6 +1218,9 @@ def build_manifest(
     roles.update(COMPACT_PRA_FIGURE_FILES)
     roles.update(CANONICAL_RESULT_FILES)
     roles.update(CANONICAL_FIGURE_FILES)
+    roles.update(DENSE_SECONDARY_FILES)
+    roles.update(DENSE_N4_FILES)
+    roles.update(THRESHOLD_SENSITIVITY_FILES)
     roles.update(REQUIRED_PAPER_ARTIFACTS)
     roles.update(_collect_python_files(root))
     roles.update(_collect_paper_sources(root))
@@ -1143,12 +1246,16 @@ def build_manifest(
         "status": "POST_CONFIRMATORY_REPRODUCIBILITY_SNAPSHOT",
         "evidence_layers": {
             "canonical": "FROZEN_CONFIRMATORY",
+            "dense_secondary": "FROZEN_PROSPECTIVE_SECONDARY",
+            "dense_n4": "FROZEN_PROSPECTIVE_N4",
             "dark_sector": "FROZEN_VALIDATION",
             "pra_extension": "EXPLORATORY_POST_CONFIRMATORY",
         },
         "claim_boundary": (
-            "A content-addressed handoff for the scalar common-suffix criterion, "
-            "a constructive contractive-QRC-to-growing-reset-QELM bound, an exact "
+            "A content-addressed handoff for the exact scalar common-suffix "
+            "criterion, the if-and-only-if growing reset-QELM emulation theorem, "
+            "the reachable-observable joint spectral radius and context law, a "
+            "constructive contractive-QRC-to-growing-reset-QELM bound, an exact "
             "protected-memory obstruction, and the bounded phase-map study; not "
             "fixed-architecture equivalence, efficient learning, quantum advantage, "
             "or hardware validation."

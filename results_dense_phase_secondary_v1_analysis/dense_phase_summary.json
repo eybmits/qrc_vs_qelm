@@ -1,0 +1,48 @@
+{
+  "anchor_emulated_roots_B72_by_teacher": {
+    "2": 12,
+    "3": 12
+  },
+  "cell_state_counts": {
+    "FEASIBLE": 26,
+    "HISTORY_MISSING": 91,
+    "MAP_NOT_REPRESENTED": 1,
+    "UNRESOLVED": 14
+  },
+  "claim_boundary": "tested local-loss QRC families and tested six-qubit reset-QELM only",
+  "config_sha256": "47a7404da97090bfe3290822135d6fa60a40f9bef928b3173d1962299d1099ab",
+  "counts": {
+    "aggregate_cells": 132,
+    "history_root_cells": 1584,
+    "qelm_root_budget_cells": 4752,
+    "scaling_root_fits": 24
+  },
+  "decision": "PASSES_DENSE_SECONDARY",
+  "directional_prediction_passed": true,
+  "freeze_record_sha256": "80871ebc133346f63cb94d77bae49bcd91d7515eb5b61434723bc17ea398538c",
+  "maximum_median_history_nrmse": 0.8741216887347973,
+  "minimum_median_history_nrmse": 0.0011021884945407998,
+  "negative_slopes_by_teacher": {
+    "2": 12,
+    "3": 12
+  },
+  "passed": true,
+  "profile": "dense_secondary",
+  "qelm_anchor_passed": true,
+  "root_set_sha256": "4c8fac57780c9d4964aa1b9562b1f8bb94f503dc97154f3fc8b87e32d238a4f7",
+  "run_manifest_sha256": "4288ef321f787d1d88b332660b0832f45f2dc1f4b7b85b1bf5109e586f7b8b39",
+  "schema_version": 1,
+  "study": "canonical_qrc_to_parallel_qelm_dense_secondary",
+  "suffix_decomposition_sha256": "54dd6550d36fe43673d771f7ecb3cee1db17522007a0103f8172d35c9254a682",
+  "threshold_coverage_cells_by_teacher": {
+    "2": {
+      "above": 47,
+      "at_or_below": 19
+    },
+    "3": {
+      "above": 44,
+      "at_or_below": 22
+    }
+  },
+  "threshold_coverage_passed": true
+}

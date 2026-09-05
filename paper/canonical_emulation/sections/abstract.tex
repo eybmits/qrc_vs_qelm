@@ -1,24 +1,20 @@
-A quantum reservoir computer (QRC) keeps a state from the past.  A reset
-quantum extreme learning machine (QELM) sees only a finite input window.  We
-give a direct criterion for when the window is enough for a bounded scalar
-observable output.  Let $D_d$ be the largest output difference produced by two
-histories with the same last $d$ inputs.  Every window-only model must give
-those histories the same prediction, and its smallest possible worst-case
-error is exactly $D_d/2$.
-
-This observation gives both sides of the QRC--QELM relation.  If the QRC
-forgets old states by a factor $\eta<1$ per step and depends continuously on
-its input, then $D_d\leq2\|O\|_\infty\eta^d$.  A sufficiently long window makes
-the history error arbitrarily small, and a scalable gate-based Bernstein QELM
-approximates the remaining continuous function of that window.  Thus every
-continuous fading-memory QRC observable on a compact scalar input range can be
-approximated by a growing reset-QELM family.  Finite features and finite shots
-produce two further, separate errors.
-
-A two-qubit example realizes the opposite case.  An old input changes singlet
-population, later symmetry-preserving channels protect it, and Pauli
-correlations reveal it.  The output gap remains $0.114924$ for every finite
-window, forcing error at least $0.057462$.  Held-out simulations then locate
-history-, representation-, and measurement-limited regimes.  A quadratic
-classical delay model outperforms the tested six-qubit QELM.  The result
-separates recurrent information from finite-window representation.
+A quantum reservoir computer (QRC) carries a recurrent state, whereas a reset
+quantum extreme learning machine (QELM) receives only a finite window of recent
+inputs.  We ask when a reset-QELM emulator can reproduce the target QRC's
+declared observable output.  We define the common-suffix diameter as the
+supremal output gap between histories with the same recent window; for a
+scalar output, half this diameter is exactly the smallest worst-case error
+of any window-only predictor.  Under compact inputs, continuous
+finite-dimensional QRC dynamics, and freely concatenable suffixes, a growing
+exact-expectation reset-QELM family universal on every finite window achieves
+arbitrarily accurate emulation if and only if this gap vanishes as the window
+grows.  Only state differences that past inputs can
+create and future measurements can reveal matter, and their uniform decay is
+characterized by a reachable-observable joint spectral radius below one;
+uniform contraction is sufficient.  A protected singlet mode in a two-qubit
+QRC retains visible memory beyond every finite window.
+Held-out simulations across two-, three-, and four-qubit target QRCs separate
+history, representation, and measurement limits.  On the registered
+fast-forgetting two- and three-qubit comparison, a quadratic classical delay
+model outperforms the tested fixed QELM, so these experiments do not
+demonstrate quantum advantage.

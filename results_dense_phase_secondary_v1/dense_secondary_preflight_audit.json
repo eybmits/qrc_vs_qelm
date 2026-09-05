@@ -1,0 +1,43 @@
+{
+  "configuration": {
+    "expected_science_rows_per_table": 15840,
+    "history_root_cells": 1584,
+    "passed": true,
+    "ptd_root_budget_cells": 4752,
+    "root_set_sha256": "4c8fac57780c9d4964aa1b9562b1f8bb94f503dc97154f3fc8b87e32d238a4f7"
+  },
+  "freeze": {
+    "checks": {
+      "config_sha256": true,
+      "frozen_at_utc": true,
+      "material_files": true,
+      "material_identity_sha256": true,
+      "profile": true,
+      "root_ids": true,
+      "root_set_sha256": true,
+      "schema_version": true,
+      "secondary_roots_previously_opened": true,
+      "status": true,
+      "study": true
+    },
+    "material_identity_sha256": "3967865a162d18e38fd8e0eb4cdf07000a4766bda03379378a7d454f6cb7712e",
+    "passed": true,
+    "record_sha256": "80871ebc133346f63cb94d77bae49bcd91d7515eb5b61434723bc17ea398538c",
+    "root_set_sha256": "4c8fac57780c9d4964aa1b9562b1f8bb94f503dc97154f3fc8b87e32d238a4f7"
+  },
+  "schema_version": 1,
+  "seed_disjointness": {
+    "dense_seed_count": 108,
+    "passed": true,
+    "reference_files": [
+      "configs/canonical_emulation.yaml",
+      "configs/emulation_pilot.yaml",
+      "configs/full.yaml",
+      "configs/smoke.yaml",
+      "pra_extension/config_calibration.yaml",
+      "pra_extension/config_confirmatory.yaml",
+      "pra_extension/config_feasibility.yaml"
+    ],
+    "root_set_sha256": "4c8fac57780c9d4964aa1b9562b1f8bb94f503dc97154f3fc8b87e32d238a4f7"
+  }
+}

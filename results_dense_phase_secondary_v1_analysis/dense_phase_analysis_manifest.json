@@ -1,0 +1,8 @@
+{
+  "artifacts": {
+    "dense_phase_cells.csv": "0740f94e13bc4c364b93ca62fe5783aecaaf31ab58aba138ccfeb0a019ac389c",
+    "dense_phase_root_scaling.csv": "d978aa693e2e3b9f0db76e24ecb536c588f0b3b7c6689e447976ca98ee51eefb",
+    "dense_phase_summary.json": "32416a07bdd5558717afd150acea6a3f85d1fa30ceeac04849d6b16b9a7a1d17"
+  },
+  "schema_version": 1
+}

@@ -30,6 +30,37 @@ htmlcov/
 
 # Project data and outputs
 results_*/
+# Authoritative dense-study release inputs only; keep scratch outputs ignored.
+!results_dense_phase_secondary_v1/
+results_dense_phase_secondary_v1/*
+!results_dense_phase_secondary_v1/canonical_manifest.json
+!results_dense_phase_secondary_v1/canonical_summary.json
+!results_dense_phase_secondary_v1/computational_resources.json
+!results_dense_phase_secondary_v1/dense_secondary_preflight_audit.json
+!results_dense_phase_secondary_v1/stream_metrics.csv
+!results_dense_phase_secondary_v1/suffix_decomposition.csv
+!results_dense_phase_secondary_v1/system_diagnostics.csv
+!results_dense_phase_secondary_v1_analysis/
+results_dense_phase_secondary_v1_analysis/*
+!results_dense_phase_secondary_v1_analysis/dense_phase_cells.csv
+!results_dense_phase_secondary_v1_analysis/dense_phase_root_scaling.csv
+!results_dense_phase_secondary_v1_analysis/dense_phase_summary.json
+!results_dense_phase_secondary_v1_analysis/dense_phase_analysis_manifest.json
+!results_dense_phase_n4_v1/
+results_dense_phase_n4_v1/*
+!results_dense_phase_n4_v1/canonical_manifest.json
+!results_dense_phase_n4_v1/canonical_summary.json
+!results_dense_phase_n4_v1/computational_resources.json
+!results_dense_phase_n4_v1/dense_n4_preflight_audit.json
+!results_dense_phase_n4_v1/stream_metrics.csv
+!results_dense_phase_n4_v1/suffix_decomposition.csv
+!results_dense_phase_n4_v1/system_diagnostics.csv
+!results_dense_phase_n4_v1_analysis/
+results_dense_phase_n4_v1_analysis/*
+!results_dense_phase_n4_v1_analysis/dense_n4_phase_cells.csv
+!results_dense_phase_n4_v1_analysis/dense_n4_root_scaling.csv
+!results_dense_phase_n4_v1_analysis/dense_n4_summary.json
+!results_dense_phase_n4_v1_analysis/dense_n4_analysis_manifest.json
 data/*
 !data/frozen/
 !data/frozen/frozen_v1_config.json

@@ -1,36 +1,36 @@
-\section*{Conclusions}
-\label{sec:discussion}
+\section{Summary}
+\label{sec:summary}
 
-For a bounded scalar observable output, a fixed input window is exact when its
-common-suffix diameter is zero.  Growing windows approximate the output to
-arbitrary accuracy when this diameter tends to zero.  Half of the diameter is
-the smallest possible worst-case error of any stateless window predictor, so no
-larger feature map can remove that floor.
+Finite explicit context can approximate recurrent quantum input--output
+behavior arbitrarily well precisely when the effect of earlier inputs vanishes
+as the window grows.  A fixed window reproduces the output exactly only when
+$D_d=0$ at some finite $d$.  For scalar output, $D_d/2$ is the exact best
+window-only worst-case error.  Under compactness, continuity, free
+concatenation, and finite-window universality, a growing reset-QELM family
+achieves arbitrary accuracy if and only if $D_d\to0$.  This concerns the
+declared input--output behavior rather than reconstruction of the QRC's full
+internal state.
 
-Contractive QRC dynamics make the diameter decay exponentially, after which a
-growing reset QELM can approximate the remaining continuous window function.
-The two-qubit singlet construction gives the opposite case: an old input
-changes a protected quantity that later symmetric dynamics preserve and Pauli
-measurements reveal.  Its nonzero output gap survives every finite window.
+{\clubpenalty=10000
+The reachable-observable construction turns the information condition into a
+dynamical one.  It retains only state differences that inputs can create and a
+present or future declared output can reveal.  Their joint spectral radius
+$r_{\rm vis}$ sets the uniform decay rate: values below one give observable
+forgetting; when $0<r_{\rm vis}<1$, the required context grows logarithmically
+in inverse target error.  Uniform full-state contraction is a simple sufficient
+case.  A protected visible mode
+gives the opposite regime, illustrated here by singlet population stored under
+symmetric two-qubit dynamics and read through Pauli correlations.
+\par}
 
-The simulations turn the criterion into a practical diagnosis.  Increase the
-window until the history floor is small, then increase the feature budget, and
-finally supply enough shots to resolve those features.  The strongest classical
-delay control outperforms the tested six-qubit QELM, so the result concerns
-functional emulation and observable quantum memory rather than quantum
-computational advantage.
-
-\begin{figure*}[t]
- \includegraphics[width=\textwidth]{fig03_resource_diagnosis.pdf}
- \caption{\textbf{Three resources target three different limits.}
- \textbf{a} Longer windows reduce history NRMSE; curves are teacher-family
- medians and bands span the 10th--90th percentiles across roots.  \textbf{b}
- On the $\gamma_T=4,d=6$ slice, more measured features reduce total QELM
- NRMSE; faint curves are individual roots and heavy curves are teacher-family
- medians.  \textbf{c} More shots reduce total test NRMSE under finite
- measurement; curves are medians across 12 roots and the shaded selected-policy
- band spans their 10th--90th percentiles.  Dashed lines mark the NRMSE tolerance
- $0.10$.  \textbf{c} is a post-confirmatory four-qubit study with 16
- complete fit-and-selection replicates per root.}
- \label{fig:resource-diagnosis}
-\end{figure*}
+The held-out simulations translate this boundary into a finite-resource
+workflow.  Supply enough history first, then enough useful features, and then
+enough shots.  Frozen two- and three-qubit cohorts and a prospective
+four-qubit cohort show the same tested loss--window crossover, while nearby
+threshold choices preserve its monotone ordering.  On the registered
+fast-forgetting confirmatory comparison, the strongest classical delay
+control beats the fixed six-qubit QELM, so the evidence does not imply quantum
+advantage.  Instead, it provides a direct way to decide whether a
+failure comes from absent temporal information, limited representation, or
+measurement noise---and whether replacing recurrence by an explicit window is
+possible at all.

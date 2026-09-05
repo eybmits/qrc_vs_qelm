@@ -1,0 +1,51 @@
+{
+  "anchor_emulated_roots_B72": 12,
+  "cell_state_counts": {
+    "FEASIBLE": 12,
+    "HISTORY_MISSING": 47,
+    "UNRESOLVED": 7
+  },
+  "claim_boundary": "teacher-size stability across tested two-, three-, and four-qubit local-loss ensembles under the fixed tested reset-QELM only",
+  "config_sha256": "fd3ad10797efdfb0aea69c01303bbfe4f51a7e87df169548dfa336656d80486e",
+  "counts": {
+    "aggregate_cells": 66,
+    "history_root_cells": 792,
+    "positive_loss_cells_per_fit": 60,
+    "qelm_root_budget_cells": 2376,
+    "scaling_root_fits": 12
+  },
+  "decision": "PASSES_DENSE_N4_EXTRAPOLATION",
+  "fading_direction_passed": true,
+  "freeze_record_sha256": "745a32cc4a19d05833abcee76b86d733c4a1951e8244acb69d8a23295b0f06da",
+  "frontier_d_star_censored_at_7": {
+    "0": 7,
+    "0.2": 7,
+    "0.5": 7,
+    "0.75": 7,
+    "1": 7,
+    "1.25": 6,
+    "1.5": 5,
+    "2": 4,
+    "2.5": 3,
+    "3": 3,
+    "4": 2
+  },
+  "frontier_finite_loss_rates": 6,
+  "frontier_has_strict_step": true,
+  "frontier_nonincreasing": true,
+  "integrity_passed": true,
+  "joint_negative_slope_and_r_squared_roots": 12,
+  "maximum_median_history_nrmse": 0.8711232795817347,
+  "measured_frontier_passed": true,
+  "minimum_median_history_nrmse": 0.00186083438979175,
+  "passed": true,
+  "profile": "dense_n4",
+  "qelm_anchor_passed": true,
+  "root_set_sha256": "fe8dfffb532ba6bbec8ba439c774a06f466bbbf40b74a45214c45cbbcca5afb3",
+  "run_manifest_sha256": "f25cfed33b50eb1d4a2b95a7bc4ee9d45296f2c888bfb8e2c2a5000689070341",
+  "schema_version": 1,
+  "stream_metrics_sha256": "8a9f6c49a82a69686de61fe953de679837a375c3e6de3ef6889b582279081468",
+  "study": "canonical_qrc_to_parallel_qelm_dense_n4",
+  "suffix_decomposition_sha256": "6dba07c9f0d53ab94b9de32509ac69408a77c8c7add146b2dbfa49e6239705c0",
+  "system_diagnostics_sha256": "519cb9b131a608f55bc2a7516d72c4165e2550ebc4e06735ba1ddecdcacc708d"
+}

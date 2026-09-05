@@ -11,13 +11,17 @@ import argparse
 import hashlib
 import json
 from pathlib import Path
+import shutil
+import subprocess
+import tempfile
 from typing import Any
 
 import matplotlib
 
 matplotlib.use("Agg")
 import matplotlib.pyplot as plt
-from matplotlib.patches import FancyArrowPatch, FancyBboxPatch, Patch, Rectangle
+from matplotlib.lines import Line2D
+from matplotlib.patches import FancyArrowPatch, FancyBboxPatch
 import numpy as np
 import pandas as pd
 
@@ -39,6 +43,33 @@ DEFAULT_PHASE_SOURCE = (
     / "figures"
     / "canonical_emulation"
     / "fig04_regime_map_source.csv"
+)
+DEFAULT_HISTORY_FRONTIER_SOURCE = (
+    REPO_ROOT
+    / "paper"
+    / "figures"
+    / "canonical_emulation"
+    / "fig01_history_frontier_source.csv"
+)
+DEFAULT_DENSE_PHASE_SOURCE = (
+    REPO_ROOT
+    / "results_dense_phase_secondary_v1_analysis"
+    / "dense_phase_cells.csv"
+)
+DEFAULT_DENSE_SUFFIX_SOURCE = (
+    REPO_ROOT
+    / "results_dense_phase_secondary_v1"
+    / "suffix_decomposition.csv"
+)
+DEFAULT_DENSE_N4_PHASE_SOURCE = (
+    REPO_ROOT
+    / "results_dense_phase_n4_v1_analysis"
+    / "dense_n4_phase_cells.csv"
+)
+DEFAULT_DENSE_N4_SUFFIX_SOURCE = (
+    REPO_ROOT
+    / "results_dense_phase_n4_v1"
+    / "suffix_decomposition.csv"
 )
 DEFAULT_SCALING_SOURCE = (
     REPO_ROOT
@@ -63,20 +94,20 @@ DEFAULT_OUTPUT = REPO_ROOT / "paper" / "figures" / "information_interface"
 
 STYLE: dict[str, Any] = {
     "font_family": ["Helvetica Neue", "Helvetica", "Arial", "sans-serif"],
-    "font_size": 8.0,
-    "axes_labelsize": 8.0,
-    "axes_titlesize": 8.2,
-    "tick_labelsize": 6.8,
-    "legend_fontsize": 6.7,
-    "axes_linewidth": 0.52,
-    "primary_linewidth": 0.64,
-    "grid_linewidth": 0.40,
+    "font_size": 9.5,
+    "axes_labelsize": 10.0,
+    "axes_titlesize": 10.5,
+    "tick_labelsize": 9.0,
+    "legend_fontsize": 9.0,
+    "axes_linewidth": 0.65,
+    "primary_linewidth": 1.3,
+    "grid_linewidth": 0.45,
 }
 
 FIGURE_SIZES = {
-    "fig1": (7.055, 4.05),
-    "fig2": (7.055, 2.62),
-    "fig3": (7.055, 2.55),
+    "fig1": (7.055, 4.40),
+    "fig2": (7.055, 6.10),
+    "fig3": (7.055, 3.50),
 }
 
 PALETTE = {
@@ -100,6 +131,15 @@ PALETTE = {
     "viridis_72": "#482475",
     "family_2": "#253494",
     "family_3": "#E8590C",
+    "story_ink": "#20242A",
+    "story_border": "#CBD5E1",
+    "story_neutral": "#F8FAFC",
+    "story_blue": "#3572C6",
+    "story_blue_light": "#EDF3FC",
+    "story_green": "#169B62",
+    "story_green_light": "#EBF7F1",
+    "story_orange": "#D97716",
+    "story_orange_light": "#FFF1DF",
     "white": "#FFFFFF",
 }
 
@@ -142,7 +182,7 @@ def _base_style() -> None:
             "font.size": STYLE["font_size"],
             "mathtext.fontset": "cm",
             "axes.labelsize": STYLE["axes_labelsize"],
-            "axes.labelweight": "bold",
+            "axes.labelweight": "normal",
             "axes.titlesize": STYLE["axes_titlesize"],
             "axes.titleweight": "normal",
             "xtick.labelsize": STYLE["tick_labelsize"],
@@ -170,6 +210,7 @@ def _panel_heading(
     *,
     y: float = 1.015,
     title_x: float = 0.042,
+    verticalalignment: str = "bottom",
 ) -> None:
     """Draw the reference paper's separate bold panel letter and plain title."""
     ax.text(
@@ -178,7 +219,7 @@ def _panel_heading(
         label,
         transform=ax.transAxes,
         ha="left",
-        va="bottom",
+        va=verticalalignment,
         fontsize=STYLE["axes_titlesize"],
         fontweight="bold",
         clip_on=False,
@@ -189,7 +230,7 @@ def _panel_heading(
         title,
         transform=ax.transAxes,
         ha="left",
-        va="bottom",
+        va=verticalalignment,
         fontsize=STYLE["axes_titlesize"],
         fontweight="normal",
         clip_on=False,
@@ -197,24 +238,24 @@ def _panel_heading(
 
 
 def _style_quant_axis(ax: plt.Axes, *, log_minor_y: bool = False) -> None:
-    for spine in ax.spines.values():
-        spine.set_visible(True)
+    for name, spine in ax.spines.items():
+        spine.set_visible(name in {"left", "bottom"})
         spine.set_color(INK)
         spine.set_linewidth(STYLE["axes_linewidth"])
     ax.tick_params(
         which="major",
         direction="out",
-        length=2.2,
+        length=3.0,
         width=STYLE["axes_linewidth"],
-        pad=2.0,
+        pad=3.0,
         colors=INK,
     )
     ax.grid(
-        axis="both",
+        axis="y",
         which="major",
         color=GRID,
         linewidth=STYLE["grid_linewidth"],
-        alpha=0.36,
+        alpha=0.20,
     )
     if log_minor_y:
         ax.grid(
@@ -222,7 +263,7 @@ def _style_quant_axis(ax: plt.Axes, *, log_minor_y: bool = False) -> None:
             which="minor",
             color=GRID,
             linewidth=0.30,
-            alpha=0.18,
+            alpha=0.12,
         )
 
 
@@ -320,260 +361,73 @@ def _load_dark_summary(path: Path) -> dict[str, Any]:
 
 
 def render_figure_1(dark_summary_path: Path, output_dir: Path) -> tuple[Path, ...]:
-    summary = _load_dark_summary(dark_summary_path)
-    _base_style()
-    fig = plt.figure(figsize=FIGURE_SIZES["fig1"], facecolor=WHITE)
-    grid = fig.add_gridspec(2, 2, hspace=0.24, wspace=0.20)
-    axes = [fig.add_subplot(grid[index]) for index in range(4)]
-    for ax in axes:
-        ax.set_xlim(0, 1)
-        ax.set_ylim(0, 1)
-        ax.axis("off")
+    """Compile the native-size TikZ explanatory graphic without rasterizing text."""
 
-    ax = axes[0]
-    _panel_heading(ax, "a", "One fixed trajectory pair")
-    ax.text(0.015, 0.70, "trajectory 0", fontsize=6.7, color=MUTED, va="center")
-    ax.text(0.015, 0.40, "trajectory 1", fontsize=6.7, color=MUTED, va="center")
-    _box(
-        ax,
-        (0.235, 0.61),
-        0.205,
-        0.18,
-        face=GREY_LIGHT,
-        edge=GREY,
-        text="older input\n$(u,q)=(u_0,0)$",
-        fontsize=6.5,
-    )
-    _box(
-        ax,
-        (0.235, 0.31),
-        0.205,
-        0.18,
-        face=AMBER_LIGHT,
-        edge=AMBER,
-        text="older input\n$(u,q)=(u_0,1)$",
-        fontsize=6.5,
-    )
-    _box(
-        ax,
-        (0.50, 0.45),
-        0.29,
-        0.24,
-        face=WHITE,
-        edge=PALETTE["purple"],
-        text="identical later inputs\n$q=0$ in every step",
-        fontsize=6.7,
-    )
-    _box(
-        ax,
-        (0.84, 0.46),
-        0.145,
-        0.22,
-        face=TEAL_LIGHT,
-        edge=TEAL,
-        text="different\noutputs",
-        fontsize=6.7,
-        weight="bold",
-    )
-    for y in (0.70, 0.40):
-        _arrow(ax, (0.44, y), (0.50, 0.57), color=INK)
-    _arrow(ax, (0.79, 0.57), (0.84, 0.57), color=INK)
-    ax.text(
-        0.645,
-        0.855,
-        "All allowed symmetry-preserving\nsuffixes",
-        ha="center",
-        va="center",
-        fontsize=6.4,
-        color=PALETTE["purple"],
-        fontweight="bold",
-        linespacing=1.02,
-    )
-    gap = float(summary["expected_prefix_gap"])
-    floor = float(summary["expected_worst_case_absolute_floor"])
-    mse = float(summary["expected_balanced_mse_floor"])
-    ax.text(
-        0.50,
-        0.145,
-        rf"output gap $={gap:.6f}$"
-        "\n"
-        rf"worst-case absolute error $\geq {floor:.6f}$"
-        "\n"
-        rf"balanced MSE floor $\simeq {mse:.6f}$",
-        ha="center",
-        va="center",
-        fontsize=6.6,
-        color=INK,
-        linespacing=1.03,
-    )
-
-    ax = axes[1]
-    _panel_heading(ax, "b", "Protected quantum memory")
-    specs = (
-        ("PROTECTED", "later allowed\ninputs do not erase\n$P_-$", NAVY_LIGHT, NAVY),
-        ("EXCITABLE", "addressable control\nchanges\n" + r"$\langle P_-\rangle$", AMBER_LIGHT, AMBER),
-        ("VISIBLE", "two-body Pauli\noutputs detect\nthe change", TEAL_LIGHT, TEAL),
-    )
-    xs = (0.01, 0.35, 0.69)
-    for index, ((name, detail, face, edge), x) in enumerate(zip(specs, xs)):
-        _box(ax, (x, 0.42), 0.29, 0.38, face=face, edge=edge, text="")
-        ax.text(
-            x + 0.145,
-            0.685,
-            name,
-            ha="center",
-            va="center",
-            fontsize=6.7,
-            color=INK,
-            fontweight="bold",
-        )
-        ax.text(
-            x + 0.145,
-            0.555,
-            detail,
-            ha="center",
-            va="center",
-            fontsize=6.4,
-            color=INK,
-            linespacing=1.04,
-        )
-        if index < 2:
-            _arrow(ax, (x + 0.29, 0.61), (xs[index + 1], 0.61), color=INK)
-    ax.text(
-        0.50,
-        0.165,
-        r"The singlet population is reconstructed from"
-        "\nPauli correlations $XX$, $YY$, and $ZZ$.",
-        ha="center",
-        va="center",
-        fontsize=6.65,
-        color=INK,
-    )
-
-    ax = axes[2]
-    _panel_heading(ax, "c", "Three separate limits")
-    limits = (
-        ("History missing", "increase window or retain state", GREY_LIGHT, GREY, "1"),
-        ("Features too limited", "add features or improve readout", AMBER_LIGHT, AMBER, "2"),
-        ("Measurements too noisy", "increase circuit shots", TEAL_LIGHT, TEAL, "3"),
-    )
-    ys = (0.68, 0.41, 0.14)
-    for (title, action, face, edge, symbol), y in zip(limits, ys):
-        _box(
-            ax,
-            (0.03, y),
-            0.225,
-            0.17,
-            face=face,
-            edge=edge,
-            text=symbol,
-            fontsize=7.7,
-            weight="bold",
-        )
-        _arrow(ax, (0.27, y + 0.085), (0.36, y + 0.085), color=INK)
-        _box(
-            ax,
-            (0.37, y),
-            0.59,
-            0.17,
-            face=WHITE,
-            edge=edge,
-            text=f"{title}\n{action}",
-            fontsize=6.8,
-        )
-    ax.text(
-        0.50,
-        0.015,
-        "Each intervention targets a different error source.",
-        ha="center",
-        va="bottom",
-        fontsize=6.5,
-        color=MUTED,
-    )
-
-    ax = axes[3]
-    _panel_heading(ax, "d", "Can a window replace recurrence?")
-    _box(
-        ax,
-        (0.17, 0.755),
-        0.66,
-        0.16,
-        face=GREY_LIGHT,
-        edge=INK,
-        text=r"Same-window output gap  $D_d$",
-        fontsize=6.9,
-        weight="bold",
-    )
-    _arrow(ax, (0.37, 0.755), (0.23, 0.61), color=GREY)
-    _arrow(ax, (0.63, 0.755), (0.77, 0.61), color=NAVY)
-    _box(
-        ax,
-        (0.015, 0.40),
-        0.43,
-        0.21,
-        face=GREY_LIGHT,
-        edge=GREY,
-        text=r"protected memory" "\n" r"gap remains: $D_d\geq\Delta$",
-        fontsize=6.8,
-        weight="bold",
-    )
-    _box(
-        ax,
-        (0.555, 0.40),
-        0.43,
-        0.21,
-        face=NAVY_LIGHT,
-        edge=NAVY,
-        text=r"fading memory" "\n" r"gap shrinks: $D_d\rightarrow0$",
-        fontsize=6.8,
-        weight="bold",
-    )
-    _arrow(ax, (0.23, 0.40), (0.23, 0.26), color=GREY)
-    _arrow(ax, (0.77, 0.40), (0.77, 0.26), color=NAVY)
-    _box(
-        ax,
-        (0.015, 0.04),
-        0.43,
-        0.22,
-        face=WHITE,
-        edge=GREY,
-        text=r"No finite window" "\n" r"can remove the floor",
-        fontsize=6.7,
-    )
-    _box(
-        ax,
-        (0.555, 0.04),
-        0.43,
-        0.22,
-        face=TEAL_LIGHT,
-        edge=TEAL,
-        text="A longer window can work\nthen features and\nshots matter",
-        fontsize=6.55,
-    )
-
-    fig.subplots_adjust(left=0.025, right=0.992, top=0.955, bottom=0.040)
+    _load_dark_summary(dark_summary_path)
     pdf = output_dir / "fig01_information_interface.pdf"
     png = output_dir / "fig01_information_interface.png"
     source = output_dir / "fig01_information_interface_source.json"
+    tikz_source = DEFAULT_OUTPUT / "fig01_information_interface.tex"
+    with tempfile.TemporaryDirectory(prefix="qrc-tikz-") as build:
+        subprocess.run(
+            ["pdflatex", "-no-shell-escape", "-interaction=nonstopmode",
+             "-halt-on-error", f"-output-directory={build}", str(tikz_source)],
+            check=True, capture_output=True, text=True,
+        )
+        shutil.copyfile(Path(build) / pdf.name, pdf)
+        subprocess.run(
+            ["pdftoppm", "-singlefile", "-r", "320", "-png", str(pdf),
+             str(png.with_suffix(""))],
+            check=True, capture_output=True, text=True,
+        )
     source_payload = {
-        "balanced_mse_floor": mse,
-        "fixed_pair_construction": (
-            "two time-homogeneous input trajectories differ once in the addressable "
-            "flag and share all later symmetry-preserving inputs"
+        "common_suffix_diameter": (
+            "supremal declared-output distance between histories sharing the last d inputs"
         ),
-        "output_gap": gap,
-        "positive_approximation_statement": (
-            "continuous fading observable memory is uniformly approximable by a "
-            "growing reset Bernstein QELM; contraction supplies explicit resources"
+        "emulation_statement": (
+            "a growing exact-expectation reset-QELM family universal on each finite "
+            "window emulates uniformly to arbitrary accuracy exactly when D_d tends to zero"
         ),
-        "suffix_scope": "all allowed symmetry-preserving suffixes",
-        "suffix_steps_numerically_checked": int(summary["suffix_steps"]),
-        "worst_case_absolute_error_floor": floor,
+        "figure_question": (
+            "when can explicit finite context reproduce recurrent input-output behavior"
+        ),
+        "panels": {
+            "a": "recurrent quantum state versus reset-window input-output emulation",
+            "b": "input-reachable and future-output-visible memory directions",
+            "c": "uniformly fading relevant memory versus persistent visible memory",
+        },
+        "regimes": {
+            "fading": {
+                "condition": "D_d is positive at every finite d and tends to zero; r_vis < 1",
+                "consequence": "arbitrary accuracy as d grows",
+            },
+            "finite": {
+                "condition": "D_d = 0 for some finite d",
+                "consequence": "output exactly determined by finite context",
+            },
+            "persistent": {
+                "condition": "D_d >= Delta > 0 for every d; r_vis = 1",
+                "consequence": "scalar worst-case error is at least Delta/2",
+            },
+        },
+        "schematic_curves": True,
+        "memory_relevance": (
+            "past inputs must create the state difference and present or future "
+            "declared outputs must reveal it; full-state forgetting is not required"
+        ),
+        "scope": (
+            "finite-dimensional QRC with input-continuous channels and fixed finite "
+            "observable output; the iff statement additionally assumes compact inputs "
+            "with freely concatenable suffixes and per-window reset-QELM density"
+        ),
+        "upstream_dark_sector_summary_sha256": _sha256(dark_summary_path),
+        "tikz_source_sha256": _sha256(tikz_source),
+        "typography": "native 9.5-10.5 pt text at 7.055 inch width",
     }
-    source.write_text(json.dumps(source_payload, indent=2, sort_keys=True) + "\n", encoding="utf-8")
-    fig.savefig(pdf, metadata=_metadata("Information interface and protected quantum memory"))
-    fig.savefig(png, dpi=320)
-    plt.close(fig)
+    source.write_text(
+        json.dumps(source_payload, indent=2, sort_keys=True) + "\n",
+        encoding="utf-8",
+    )
     return pdf, png, source
 
 
@@ -620,115 +474,551 @@ def simplified_phase_table(source_path: Path) -> pd.DataFrame:
     return result
 
 
-def render_figure_2(phase_source_path: Path, output_dir: Path) -> tuple[Path, ...]:
-    table = simplified_phase_table(phase_source_path)
-    _base_style()
-    fig, axes = plt.subplots(1, 2, figsize=FIGURE_SIZES["fig2"], sharex=True, sharey=True)
-    gammas = (0.0, 0.2, 0.5, 1.0, 2.0, 4.0)
-    windows = (1, 2, 4, 6)
-    state_colors = {
-        "HISTORY_MISSING": GREY_LIGHT,
-        "MAP_NOT_REPRESENTED": AMBER,
-        "UNRESOLVED": PALETTE["family_3"],
+def _validated_history_frontier(source_path: Path) -> pd.DataFrame:
+    frame = pd.read_csv(source_path)
+    keys = ["teacher_n_qubits", "teacher_gamma", "window"]
+    required = {
+        *keys,
+        "median",
+        "minimum",
+        "maximum",
+        "n_roots",
+        "suffix_live_n",
+        "suffix_dead_n",
+        "provenance_config_sha256",
+        "provenance_decision",
     }
-    feasible_colors = {
-        18: PALETTE["viridis_18"],
-        36: PALETTE["viridis_36"],
-        72: PALETTE["viridis_72"],
+    if missing := required - set(frame):
+        raise ValueError(f"history-frontier source is missing columns: {sorted(missing)}")
+    if len(frame) != 48 or frame.duplicated(keys).any():
+        raise ValueError("history-frontier source must contain 48 unique tested cells")
+    if set(frame["teacher_n_qubits"].astype(int)) != {2, 3}:
+        raise ValueError("history-frontier source has an unexpected teacher grid")
+    if set(frame["teacher_gamma"].astype(float)) != {0.0, 0.2, 0.5, 1.0, 2.0, 4.0}:
+        raise ValueError("history-frontier source has an unexpected loss grid")
+    if set(frame["window"].astype(int)) != {1, 2, 4, 6}:
+        raise ValueError("history-frontier source has an unexpected window grid")
+    values = frame[["minimum", "median", "maximum"]].to_numpy(dtype=float)
+    if not np.all(np.isfinite(values)) or np.any(values <= 0.0):
+        raise ValueError("history-frontier NRMSE values must be finite and positive")
+    if np.any(values[:, 0] > values[:, 1]) or np.any(values[:, 1] > values[:, 2]):
+        raise ValueError("history-frontier minimum/median/maximum ordering is invalid")
+    if not (frame["n_roots"].astype(int) == 12).all():
+        raise ValueError("history-frontier source must use 12 root blocks per cell")
+    if not (frame["suffix_live_n"].astype(int) == 12).all() or not (
+        frame["suffix_dead_n"].astype(int) == 0
+    ).all():
+        raise ValueError("history-frontier source must retain all 12 live roots")
+    return frame.sort_values(keys).reset_index(drop=True)
+
+
+def _validated_dense_phase_source(
+    source_path: Path,
+    dense_suffix_source_path: Path = DEFAULT_DENSE_SUFFIX_SOURCE,
+) -> pd.DataFrame:
+    frame = pd.read_csv(source_path)
+    keys = ["teacher_n_qubits", "teacher_gamma", "window"]
+    required = {
+        *keys,
+        "median_history_nrmse",
+        "minimum_history_nrmse",
+        "maximum_history_nrmse",
+        "history_n_roots",
+        "state",
+        "minimum_feature_budget",
+        "any_root_disagreement",
+        "minimum_agreement_n",
+        "emulated_n_B18",
+        "emulated_n_B36",
+        "emulated_n_B72",
+        "run_manifest_sha256",
+        "root_set_sha256",
+        "config_sha256",
+        "suffix_decomposition_sha256",
+        "freeze_record_sha256",
     }
-    for panel, (ax, n_qubits) in enumerate(zip(axes, (2, 3))):
-        family = table[table["teacher_n_qubits"].eq(n_qubits)]
-        lookup = {
-            (float(row.teacher_gamma), int(row.window)): row
-            for row in family.itertuples(index=False)
-        }
-        for y, gamma in enumerate(gammas):
-            for x, window in enumerate(windows):
-                row = lookup[(gamma, window)]
-                if row.state == "FEASIBLE":
-                    budget = int(row.minimum_feature_budget)
-                    face = feasible_colors[budget]
-                    label = rf"$B={budget}$"
-                    text_color = WHITE if budget >= 36 else INK
-                else:
-                    face = state_colors[str(row.state)]
-                    label = "" if row.state == "HISTORY_MISSING" else ("map" if row.state == "MAP_NOT_REPRESENTED" else "?")
-                    text_color = INK if row.state == "MAP_NOT_REPRESENTED" else WHITE
-                ax.add_patch(
-                    Rectangle(
-                        (x - 0.5, y - 0.5),
-                        1,
-                        1,
-                        facecolor=face,
-                        edgecolor=WHITE,
-                        linewidth=0.65,
-                    )
-                )
-                if bool(row.any_root_disagreement):
-                    ax.add_patch(
-                        Rectangle(
-                            (x - 0.5, y - 0.5),
-                            1,
-                            1,
-                            fill=False,
-                            hatch="//",
-                            edgecolor=(0.14, 0.12, 0.13, 0.45),
-                            linewidth=0.0,
-                        )
-                    )
-                if label:
-                    ax.text(
-                        x,
-                        y,
-                        label,
-                        ha="center",
-                        va="center",
-                        fontsize=6.8,
-                        color=text_color,
-                        fontweight="bold",
-                    )
-        ax.set_xlim(-0.5, 3.5)
-        ax.set_ylim(-0.5, 5.5)
-        ax.set_xticks(range(4), windows)
-        ax.set_yticks(range(6), [f"{value:g}" for value in gammas])
-        ax.set_xlabel("window length $d$")
-        _panel_heading(ax, chr(97 + panel), rf"$N_T={n_qubits}$", y=1.035)
-        ax.tick_params(
-            direction="out",
-            length=2.0,
-            width=STYLE["axes_linewidth"],
-            pad=2.0,
+    if missing := required - set(frame):
+        raise ValueError(f"dense phase source is missing columns: {sorted(missing)}")
+    if len(frame) != 132 or frame.duplicated(keys).any():
+        raise ValueError("dense phase source must contain 132 unique cells")
+    if set(frame["teacher_n_qubits"].astype(int)) != {2, 3}:
+        raise ValueError("dense phase source has an unexpected teacher grid")
+    if set(frame["teacher_gamma"].astype(float)) != {
+        0.0,
+        0.2,
+        0.5,
+        0.75,
+        1.0,
+        1.25,
+        1.5,
+        2.0,
+        2.5,
+        3.0,
+        4.0,
+    }:
+        raise ValueError("dense phase source has an unexpected loss grid")
+    if set(frame["window"].astype(int)) != {1, 2, 3, 4, 5, 6}:
+        raise ValueError("dense phase source has an unexpected window grid")
+    values = frame[
+        ["minimum_history_nrmse", "median_history_nrmse", "maximum_history_nrmse"]
+    ].to_numpy(dtype=float)
+    if not np.all(np.isfinite(values)) or np.any(values <= 0.0):
+        raise ValueError("dense history NRMSE values must be finite and positive")
+    if np.any(values[:, 0] > values[:, 1]) or np.any(values[:, 1] > values[:, 2]):
+        raise ValueError("dense history minimum/median/maximum ordering is invalid")
+    if not frame["history_n_roots"].astype(int).eq(12).all():
+        raise ValueError("dense phase source must use 12 roots in every cell")
+    states = {"HISTORY_MISSING", "FEASIBLE", "MAP_NOT_REPRESENTED", "UNRESOLVED"}
+    if not set(frame["state"].astype(str)).issubset(states):
+        raise ValueError("dense phase source contains an unsupported state")
+    emulated_columns = {18: "emulated_n_B18", 36: "emulated_n_B36", 72: "emulated_n_B72"}
+    for column in emulated_columns.values():
+        counts = frame[column].astype(int)
+        if ((counts < 0) | (counts > 12)).any():
+            raise ValueError(f"dense phase source has invalid {column}")
+    for row in frame.itertuples(index=False):
+        successes = [
+            budget
+            for budget, column in emulated_columns.items()
+            if int(getattr(row, column)) >= 10
+        ]
+        if successes:
+            if row.state != "FEASIBLE" or int(row.minimum_feature_budget) != min(successes):
+                raise ValueError("dense robust feature badge is inconsistent")
+        elif row.state == "FEASIBLE":
+            raise ValueError("dense feasible cell lacks 10-of-12 root support")
+        if row.state == "HISTORY_MISSING" and float(row.median_history_nrmse) <= 0.10:
+            raise ValueError("dense history-missing state is below the frozen tolerance")
+    if not np.equal(
+        frame["any_root_disagreement"].astype(str).str.lower().map({"true": 1, "false": 0}),
+        frame["minimum_agreement_n"].astype(int).lt(12).astype(int),
+    ).all():
+        raise ValueError("dense root-disagreement flag is inconsistent")
+    for column in (
+        "run_manifest_sha256",
+        "root_set_sha256",
+        "config_sha256",
+        "suffix_decomposition_sha256",
+        "freeze_record_sha256",
+    ):
+        values = frame[column].astype(str)
+        if values.nunique(dropna=False) != 1 or not values.str.fullmatch(r"[0-9a-f]{64}").all():
+            raise ValueError(f"dense phase source has invalid {column}")
+
+    expected_suffix_hash = str(frame["suffix_decomposition_sha256"].iloc[0])
+    if _sha256(dense_suffix_source_path) != expected_suffix_hash:
+        raise ValueError("dense suffix source does not match its registered SHA-256")
+    suffix = pd.read_csv(dense_suffix_source_path)
+    suffix_required = {
+        "root_id",
+        *keys,
+        "model",
+        "history_nrmse",
+    }
+    if missing := suffix_required - set(suffix):
+        raise ValueError(f"dense suffix source is missing columns: {sorted(missing)}")
+    history = suffix[suffix["model"].eq("rr_same_identity")].copy()
+    history_keys = ["root_id", *keys]
+    if len(history) != 1_584 or history.duplicated(history_keys).any():
+        raise ValueError(
+            "dense suffix history slice must contain 12 roots x 132 unique cells"
         )
-        for spine in ax.spines.values():
-            spine.set_visible(True)
-            spine.set_color(INK)
-            spine.set_linewidth(STYLE["axes_linewidth"])
-    axes[0].set_ylabel(r"teacher loss rate $\gamma_T$")
-    handles = [
-        Patch(facecolor=GREY_LIGHT, edgecolor=GREY, label="History outside window"),
-        Patch(facecolor=PALETTE["viridis_72"], label="Target reached; smallest $B$"),
-        Patch(facecolor=PALETTE["family_3"], label="Undecided"),
-        Patch(facecolor=WHITE, edgecolor=INK, hatch="//", label="Roots disagree at some $B$"),
-    ]
-    legend = fig.legend(
-        handles=handles,
-        loc="lower center",
-        ncol=4,
-        frameon=True,
-        fontsize=6.7,
-        bbox_to_anchor=(0.5, 0.018),
-        borderpad=0.45,
-        columnspacing=0.8,
-        handlelength=1.15,
-        handletextpad=0.45,
+    if set(history["root_id"].astype(str)) != {
+        f"dense{index:02d}" for index in range(1, 13)
+    }:
+        raise ValueError("dense suffix source has an unexpected root set")
+    if set(history["teacher_n_qubits"].astype(int)) != {2, 3} or set(
+        history["teacher_gamma"].astype(float)
+    ) != set(frame["teacher_gamma"].astype(float)) or set(
+        history["window"].astype(int)
+    ) != {1, 2, 3, 4, 5, 6}:
+        raise ValueError("dense suffix source has an unexpected tested grid")
+    history_values = history["history_nrmse"].to_numpy(dtype=float)
+    if not np.all(np.isfinite(history_values)) or np.any(history_values <= 0.0):
+        raise ValueError("dense suffix history NRMSE values must be finite and positive")
+
+    history_counts = (
+        history.groupby(keys, as_index=False)
+        .agg(
+            history_sufficient_n=(
+                "history_nrmse",
+                lambda values: int((values <= 0.10).sum()),
+            ),
+            history_root_count=("root_id", "nunique"),
+            recomputed_median_history_nrmse=("history_nrmse", "median"),
+        )
+        .sort_values(keys)
+        .reset_index(drop=True)
     )
-    _style_legend(legend)
-    fig.subplots_adjust(left=0.082, right=0.992, top=0.895, bottom=0.285, wspace=0.11)
+    if len(history_counts) != 132 or not history_counts["history_root_count"].eq(12).all():
+        raise ValueError("dense suffix history counts are incomplete")
+    frame = frame.merge(history_counts, on=keys, how="left", validate="one_to_one")
+    if frame[["history_sufficient_n", "history_root_count"]].isna().any().any():
+        raise ValueError("dense suffix history counts do not cover every phase cell")
+    if not np.allclose(
+        frame["median_history_nrmse"].to_numpy(dtype=float),
+        frame["recomputed_median_history_nrmse"].to_numpy(dtype=float),
+        rtol=0.0,
+        atol=5e-13,
+    ):
+        raise ValueError("dense suffix history medians disagree with the phase source")
+    frame = frame.drop(columns="recomputed_median_history_nrmse")
+    frame["history_sufficient_n"] = frame["history_sufficient_n"].astype(int)
+    frame["history_root_count"] = frame["history_root_count"].astype(int)
+
+    def display_outcome(row: pd.Series) -> str:
+        if int(row["history_sufficient_n"]) < 10:
+            return "HISTORY_NOT_ROBUST"
+        if str(row["state"]) == "FEASIBLE":
+            return f"QELM_{int(row['minimum_feature_budget'])}"
+        return "NO_TESTED_QELM_ROBUST"
+
+    frame["display_outcome"] = frame.apply(display_outcome, axis=1)
+    feasible = frame["state"].eq("FEASIBLE")
+    if not frame.loc[feasible, "history_sufficient_n"].ge(10).all():
+        raise ValueError("a robust QELM success lacks robust history sufficiency")
+    allowed_display = {
+        "HISTORY_NOT_ROBUST",
+        "QELM_18",
+        "QELM_36",
+        "QELM_72",
+        "NO_TESTED_QELM_ROBUST",
+    }
+    if not set(frame["display_outcome"]).issubset(allowed_display):
+        raise ValueError("dense phase source produces an unsupported display outcome")
+    return frame.sort_values(keys).reset_index(drop=True)
+
+
+def _validated_dense_n4_phase_source(
+    source_path: Path,
+    suffix_source_path: Path = DEFAULT_DENSE_N4_SUFFIX_SOURCE,
+) -> pd.DataFrame:
+    """Validate the separately frozen prospective four-qubit follow-up."""
+
+    frame = pd.read_csv(source_path)
+    keys = ["teacher_n_qubits", "teacher_gamma", "window"]
+    required = {
+        *keys,
+        "median_history_nrmse",
+        "minimum_history_nrmse",
+        "maximum_history_nrmse",
+        "history_n_roots",
+        "history_sufficient_n",
+        "state",
+        "minimum_feature_budget",
+        "any_root_disagreement",
+        "minimum_agreement_n",
+        "emulated_n_B18",
+        "emulated_n_B36",
+        "emulated_n_B72",
+        "evidence_cohort",
+        "run_manifest_sha256",
+        "root_set_sha256",
+        "config_sha256",
+        "suffix_decomposition_sha256",
+        "freeze_record_sha256",
+    }
+    if missing := required - set(frame):
+        raise ValueError(f"dense N4 phase source is missing columns: {sorted(missing)}")
+    if len(frame) != 66 or frame.duplicated(keys).any():
+        raise ValueError("dense N4 phase source must contain 66 unique cells")
+    if set(frame["teacher_n_qubits"].astype(int)) != {4}:
+        raise ValueError("dense N4 phase source has an unexpected teacher grid")
+    expected_gammas = {
+        0.0,
+        0.2,
+        0.5,
+        0.75,
+        1.0,
+        1.25,
+        1.5,
+        2.0,
+        2.5,
+        3.0,
+        4.0,
+    }
+    if set(frame["teacher_gamma"].astype(float)) != expected_gammas:
+        raise ValueError("dense N4 phase source has an unexpected loss grid")
+    if set(frame["window"].astype(int)) != {1, 2, 3, 4, 5, 6}:
+        raise ValueError("dense N4 phase source has an unexpected window grid")
+    values = frame[
+        ["minimum_history_nrmse", "median_history_nrmse", "maximum_history_nrmse"]
+    ].to_numpy(dtype=float)
+    if not np.all(np.isfinite(values)) or np.any(values < 0.0):
+        raise ValueError("dense N4 history NRMSE values must be finite and nonnegative")
+    if np.any(values[:, 0] > values[:, 1]) or np.any(values[:, 1] > values[:, 2]):
+        raise ValueError("dense N4 history minimum/median/maximum ordering is invalid")
+    if not frame["history_n_roots"].astype(int).eq(12).all():
+        raise ValueError("dense N4 phase source must use 12 roots in every cell")
+    if not frame["history_sufficient_n"].astype(int).between(0, 12).all():
+        raise ValueError("dense N4 phase source has invalid history support counts")
+    if not frame["evidence_cohort"].eq("prospective_dense_n4_followup").all():
+        raise ValueError("dense N4 evidence-cohort label is invalid")
+    states = {"HISTORY_MISSING", "FEASIBLE", "MAP_NOT_REPRESENTED", "UNRESOLVED"}
+    if not set(frame["state"].astype(str)).issubset(states):
+        raise ValueError("dense N4 phase source contains an unsupported state")
+    emulated_columns = {18: "emulated_n_B18", 36: "emulated_n_B36", 72: "emulated_n_B72"}
+    for column in emulated_columns.values():
+        counts = frame[column].astype(int)
+        if ((counts < 0) | (counts > 12)).any():
+            raise ValueError(f"dense N4 phase source has invalid {column}")
+    for row in frame.itertuples(index=False):
+        successes = [
+            budget
+            for budget, column in emulated_columns.items()
+            if int(getattr(row, column)) >= 10
+        ]
+        if successes:
+            if row.state != "FEASIBLE" or int(row.minimum_feature_budget) != min(successes):
+                raise ValueError("dense N4 robust feature badge is inconsistent")
+        elif row.state == "FEASIBLE":
+            raise ValueError("dense N4 feasible cell lacks 10-of-12 root support")
+        if row.state == "HISTORY_MISSING" and int(row.history_sufficient_n) >= 10:
+            raise ValueError("dense N4 history-missing state has robust history support")
+    disagreement = frame["any_root_disagreement"].astype(str).str.lower().map(
+        {"true": 1, "false": 0}
+    )
+    if disagreement.isna().any() or not np.equal(
+        disagreement,
+        frame["minimum_agreement_n"].astype(int).lt(12).astype(int),
+    ).all():
+        raise ValueError("dense N4 root-disagreement flag is inconsistent")
+    hash_columns = (
+        "run_manifest_sha256",
+        "root_set_sha256",
+        "config_sha256",
+        "suffix_decomposition_sha256",
+        "freeze_record_sha256",
+    )
+    for column in hash_columns:
+        hashes = frame[column].astype(str)
+        if hashes.nunique(dropna=False) != 1 or not hashes.str.fullmatch(r"[0-9a-f]{64}").all():
+            raise ValueError(f"dense N4 phase source has invalid {column}")
+
+    expected_suffix_hash = str(frame["suffix_decomposition_sha256"].iloc[0])
+    if _sha256(suffix_source_path) != expected_suffix_hash:
+        raise ValueError("dense N4 suffix source does not match its registered SHA-256")
+    suffix = pd.read_csv(suffix_source_path)
+    suffix_required = {"root_id", *keys, "model", "history_nrmse"}
+    if missing := suffix_required - set(suffix):
+        raise ValueError(f"dense N4 suffix source is missing columns: {sorted(missing)}")
+    history = suffix[suffix["model"].eq("rr_same_identity")].copy()
+    history_keys = ["root_id", *keys]
+    if len(history) != 792 or history.duplicated(history_keys).any():
+        raise ValueError("dense N4 suffix history slice must contain 12 roots x 66 cells")
+    if set(history["root_id"].astype(str)) != {
+        f"dense_n4_{index:02d}" for index in range(1, 13)
+    }:
+        raise ValueError("dense N4 suffix source has an unexpected root set")
+    if set(history["teacher_n_qubits"].astype(int)) != {4} or set(
+        history["teacher_gamma"].astype(float)
+    ) != expected_gammas or set(history["window"].astype(int)) != {1, 2, 3, 4, 5, 6}:
+        raise ValueError("dense N4 suffix source has an unexpected tested grid")
+    history_values = history["history_nrmse"].to_numpy(dtype=float)
+    if not np.all(np.isfinite(history_values)) or np.any(history_values < 0.0):
+        raise ValueError("dense N4 suffix history NRMSE values must be finite and nonnegative")
+    recomputed = (
+        history.groupby(keys, as_index=False)
+        .agg(
+            recomputed_history_sufficient_n=(
+                "history_nrmse",
+                lambda observations: int((observations <= 0.10).sum()),
+            ),
+            history_root_count=("root_id", "nunique"),
+            recomputed_median_history_nrmse=("history_nrmse", "median"),
+        )
+        .sort_values(keys)
+        .reset_index(drop=True)
+    )
+    if len(recomputed) != 66 or not recomputed["history_root_count"].eq(12).all():
+        raise ValueError("dense N4 suffix history counts are incomplete")
+    frame = frame.merge(recomputed, on=keys, how="left", validate="one_to_one")
+    if frame[["recomputed_history_sufficient_n", "history_root_count"]].isna().any().any():
+        raise ValueError("dense N4 suffix history counts do not cover every phase cell")
+    if not frame["history_sufficient_n"].astype(int).eq(
+        frame["recomputed_history_sufficient_n"].astype(int)
+    ).all():
+        raise ValueError("dense N4 history support counts disagree with the raw suffix table")
+    if not np.allclose(
+        frame["median_history_nrmse"].to_numpy(dtype=float),
+        frame["recomputed_median_history_nrmse"].to_numpy(dtype=float),
+        rtol=0.0,
+        atol=5e-13,
+    ):
+        raise ValueError("dense N4 suffix history medians disagree with the phase source")
+    frame = frame.drop(
+        columns=["recomputed_history_sufficient_n", "recomputed_median_history_nrmse"]
+    )
+
+    def display_outcome(row: pd.Series) -> str:
+        if int(row["history_sufficient_n"]) < 10:
+            return "HISTORY_NOT_ROBUST"
+        if str(row["state"]) == "FEASIBLE":
+            return f"QELM_{int(row['minimum_feature_budget'])}"
+        return "NO_TESTED_QELM_ROBUST"
+
+    frame["display_outcome"] = frame.apply(display_outcome, axis=1)
+    return frame.sort_values(keys).reset_index(drop=True)
+
+
+def _validated_dense_merged_source(
+    dense_phase_source_path: Path,
+    dense_suffix_source_path: Path,
+    dense_n4_phase_source_path: Path,
+    dense_n4_suffix_source_path: Path,
+) -> pd.DataFrame:
+    earlier = _validated_dense_phase_source(
+        dense_phase_source_path,
+        dense_suffix_source_path,
+    ).assign(evidence_cohort="frozen_dense_n2_n3")
+    followup = _validated_dense_n4_phase_source(
+        dense_n4_phase_source_path,
+        dense_n4_suffix_source_path,
+    )
+    for column in ("run_manifest_sha256", "root_set_sha256", "config_sha256"):
+        if str(earlier[column].iloc[0]) == str(followup[column].iloc[0]):
+            raise ValueError(f"dense cohorts unexpectedly share {column}")
+    merged = pd.concat([earlier, followup], ignore_index=True, sort=False)
+    keys = ["teacher_n_qubits", "teacher_gamma", "window"]
+    if len(merged) != 198 or merged.duplicated(keys).any():
+        raise ValueError("merged dense display source must contain 198 unique cells")
+    if merged["evidence_cohort"].value_counts().to_dict() != {
+        "frozen_dense_n2_n3": 132,
+        "prospective_dense_n4_followup": 66,
+    }:
+        raise ValueError("merged dense evidence cohorts are incomplete")
+    return merged.sort_values(keys).reset_index(drop=True)
+
+
+def _draw_exact_threshold_boundary(ax: Any, below: np.ndarray) -> None:
+    """Draw cell-edge segments only where tested neighbors straddle tolerance."""
+
+    segments: list[tuple[tuple[float, float], tuple[float, float]]] = []
+    rows, columns = below.shape
+    for y in range(rows):
+        for x in range(columns - 1):
+            if bool(below[y, x]) != bool(below[y, x + 1]):
+                segments.append(((x + 0.5, y - 0.5), (x + 0.5, y + 0.5)))
+    for y in range(rows - 1):
+        for x in range(columns):
+            if bool(below[y, x]) != bool(below[y + 1, x]):
+                segments.append(((x - 0.5, y + 0.5), (x + 0.5, y + 0.5)))
+    for start, end in segments:
+        ax.plot(*zip(start, end), color=INK, linewidth=1.65, solid_capstyle="butt", zorder=3.0)
+        ax.plot(*zip(start, end), color=WHITE, linewidth=0.92, solid_capstyle="butt", zorder=3.1)
+
+
+def render_figure_2(
+    dense_phase_source_path: Path,
+    dense_suffix_source_path: Path,
+    dense_n4_phase_source_path: Path,
+    dense_n4_suffix_source_path: Path,
+    output_dir: Path,
+) -> tuple[Path, ...]:
+    table = _validated_dense_merged_source(
+        dense_phase_source_path,
+        dense_suffix_source_path,
+        dense_n4_phase_source_path,
+        dense_n4_suffix_source_path,
+    )
+    _base_style()
+    fig = plt.figure(figsize=FIGURE_SIZES["fig2"], facecolor=WHITE)
+    windows = (1, 2, 3, 4, 5, 6)
+    transition_gammas = (1.25, 1.5, 2.0, 2.5, 3.0, 4.0)
+    # Window colors are ordered shades; feature counts use distinct shapes.
+    window_colors = ("#A1CBD0", "#65AEBB", "#348EA7", "#226D94", "#244C79", "#172F53")
+    window_markers = ("o", "s", "^", "D", "v", "P")
+    budget_styles = {
+        18: (PALETTE["story_green"], "o"),
+        36: (PALETTE["viridis_36"], "s"),
+        72: (PALETTE["viridis_72"], "D"),
+    }
+    lefts = (0.11, 0.415, 0.72)
+    width = 0.26
+    top_axes = [fig.add_axes([left, 0.585, width, 0.265]) for left in lefts]
+    bottom_axes = [fig.add_axes([left, 0.205, width, 0.205]) for left in lefts]
+    fig.text(0.98, 0.974, "Dashed line: 10% target", fontsize=9, color="#545A61", ha="right", va="top")
+    fig.legend(
+        handles=[
+            Line2D([], [], color=color, marker=marker, markersize=4,
+                   linewidth=1.3, label=f"{window} input" + ("s" if window > 1 else ""))
+            for window, color, marker in zip(windows, window_colors, window_markers)
+        ],
+        loc="upper center", bbox_to_anchor=(0.52, 0.936), ncol=6,
+        frameon=False, handlelength=1.25, handletextpad=0.4, columnspacing=1.0,
+        borderaxespad=0,
+    )
+    fig.text(0.11, 0.443, "Smallest successful feature count; success in at least 10 of 12 roots", fontsize=9, va="bottom")
+    for panel, (ax, cell_ax, n_qubits) in enumerate(zip(top_axes, bottom_axes, (2, 3, 4))):
+        family = table[table["teacher_n_qubits"].eq(n_qubits)]
+        for window, color, marker in zip(windows, window_colors, window_markers):
+            curve = family[family["window"].eq(window)].sort_values("teacher_gamma")
+            ax.plot(curve["teacher_gamma"], curve["median_history_nrmse"],
+                    color=color, marker=marker, markersize=3.5,
+                    markeredgewidth=0.5, linewidth=1.1, zorder=3)
+        ax.set_yscale("log")
+        ax.set_ylim(7e-4, 1.18)
+        ax.set_xlim(-0.08, 4.12)
+        ax.set_xticks((0, 1, 2, 3, 4))
+        ax.set_yticks((0.001, 0.01, 0.10, 1.0), ("0.1%", "1%", "10%", "100%"))
+        ax.axhline(0.10, color="#7A7D82", linestyle=(0, (4, 3)), linewidth=0.85, zorder=2)
+        if panel == 0:
+            ax.set_ylabel("old-history error", labelpad=5)
+        else:
+            ax.tick_params(labelleft=False)
+        ax.set_xlabel(r"loss rate $\gamma_T$", labelpad=3)
+        _panel_heading(ax, chr(97 + panel), f"{n_qubits}-qubit QRC", y=1.055, title_x=0.115)
+        _style_quant_axis(ax)
+
+        lookup = {(float(row.teacher_gamma), int(row.window)): row for row in family.itertuples(index=False)}
+        for y, gamma in enumerate(transition_gammas):
+            for window in windows:
+                outcome = str(lookup[(gamma, window)].display_outcome)
+                if outcome.startswith("QELM_"):
+                    color, marker = budget_styles[int(outcome.removeprefix("QELM_"))]
+                    cell_ax.scatter(window, y, s=49, marker=marker, color=color,
+                                    linewidth=0.6, edgecolor=WHITE, zorder=4)
+                elif outcome == "HISTORY_NOT_ROBUST":
+                    cell_ax.scatter(window, y, s=10, marker="o", color="#CCD2DA", zorder=3)
+                elif outcome == "NO_TESTED_QELM_ROBUST":
+                    cell_ax.scatter(window, y, s=40, marker="x", color=PALETTE["story_orange"],
+                                    linewidth=1.5, zorder=4)
+                else:
+                    raise ValueError(f"unsupported display outcome: {outcome}")
+        cell_ax.set_xlim(0.5, 6.5)
+        cell_ax.set_ylim(-0.5, 5.5)
+        cell_ax.set_xticks(windows)
+        cell_ax.set_yticks(range(6), [f"{gamma:g}" for gamma in transition_gammas])
+        cell_ax.set_xlabel("window length $d$", labelpad=3)
+        if panel == 0:
+            cell_ax.set_ylabel(r"loss rate $\gamma_T$", labelpad=5)
+        else:
+            cell_ax.tick_params(labelleft=False)
+        cell_ax.text(-0.075, 1.015, chr(100 + panel), transform=cell_ax.transAxes,
+                     fontsize=10.5, fontweight="bold", ha="left", va="bottom")
+        _style_quant_axis(cell_ax)
+        cell_ax.grid(axis="x", color=GRID, linewidth=0.4, alpha=0.13)
+    feature_handles = [
+        Line2D([], [], linestyle="none", marker=marker, color=color, markersize=6,
+               label=f"{budget} features")
+        for budget, (color, marker) in budget_styles.items()
+    ]
+    fig.legend(handles=feature_handles, loc="lower left", bbox_to_anchor=(0.10, 0.080),
+               ncol=3, frameon=False, handletextpad=0.25, columnspacing=1.0, borderaxespad=0)
+    fig.legend(handles=[
+        Line2D([], [], linestyle="none", marker="x", color=PALETTE["story_orange"],
+               markersize=6, markeredgewidth=1.5, label="no tested QELM succeeds"),
+        Line2D([], [], linestyle="none", marker="o", color="#CCD2DA", markersize=4,
+               label="history target unmet"),
+    ], loc="lower left", bbox_to_anchor=(0.10, 0.040), ncol=2, frameon=False,
+       handletextpad=0.25, columnspacing=1.5, borderaxespad=0)
+    fig.text(0.11, 0.009, r"Loss $\leq 1$: no tested window meets the history target in at least 10 of 12 roots.",
+             fontsize=9, va="bottom", color="#545A61")
     pdf = output_dir / "fig02_information_frontier.pdf"
     png = output_dir / "fig02_information_frontier.png"
     source = output_dir / "fig02_information_frontier_source.csv"
     table.to_csv(source, index=False)
-    fig.savefig(pdf, metadata=_metadata("Information and feature frontier"))
+    fig.savefig(pdf, metadata=_metadata("Dense information and feature frontier"))
     fig.savefig(png, dpi=320)
     plt.close(fig)
     return pdf, png, source
@@ -786,6 +1076,11 @@ def _validated_shot_effects(path: Path) -> pd.DataFrame:
     return frame.sort_values(["root_id", "total_shots"]).reset_index(drop=True)
 
 
+def _resource_diagnosis_axes(fig):
+    """Keep the three resource interventions aligned in one publication row."""
+    return [fig.add_axes([left, 0.37, 0.21, 0.46]) for left in (0.10, 0.43, 0.76)]
+
+
 def render_figure_3(
     scaling_source_path: Path,
     suffix_source_path: Path,
@@ -796,7 +1091,8 @@ def render_figure_3(
     features = _validated_suffix_features(suffix_source_path)
     shots = _validated_shot_effects(shot_source_path)
     _base_style()
-    fig, axes = plt.subplots(1, 3, figsize=FIGURE_SIZES["fig3"])
+    fig = plt.figure(figsize=FIGURE_SIZES["fig3"], facecolor=WHITE)
+    axes = _resource_diagnosis_axes(fig)
     family_colors = {2: PALETTE["family_2"], 3: PALETTE["family_3"]}
     family_markers = {2: "o", 3: "D"}
 
@@ -812,8 +1108,8 @@ def render_figure_3(
                 root["scaling_x"],
                 root["history_nrmse"],
                 color=family_colors[n_qubits],
-                alpha=0.18,
-                linewidth=0.45,
+                alpha=0.13,
+                linewidth=0.50,
                 zorder=1,
             )
         summary = family.groupby("scaling_x")["history_nrmse"].agg(
@@ -833,37 +1129,30 @@ def render_figure_3(
             summary["median"],
             color=family_colors[n_qubits],
             marker=family_markers[n_qubits],
-            markersize=3.6,
-            markeredgewidth=0.52,
+            markersize=4.2,
+            markeredgewidth=0.6,
             linewidth=STYLE["primary_linewidth"],
-            label=rf"$N_T={n_qubits}$",
+            label=f"{n_qubits}-qubit QRC",
             zorder=3,
         )
-    ax.axhline(0.10, color=MUTED, linestyle=(0, (3, 2)), linewidth=0.60)
+    ax.axhline(0.10, color=MUTED, linestyle=(0, (4, 3)), linewidth=0.85)
     ax.text(
         11.8,
-        0.115,
-        r"tolerance $0.10$",
+        0.070,
+        "10% target",
         ha="right",
-        va="bottom",
-        fontsize=6.4,
+        va="top",
+        fontsize=9.0,
         color=MUTED,
     )
     ax.set_yscale("log")
     ax.set_xlim(-0.30, 12.50)
     ax.set_ylim(5e-4, 1.15)
-    ax.set_xlabel(r"$\gamma_T\,dt\,d$")
-    ax.set_ylabel("history NRMSE")
-    _panel_heading(ax, "a", "Include enough history", y=1.035, title_x=0.070)
-    legend = ax.legend(
-        frameon=True,
-        fontsize=6.7,
-        loc="upper right",
-        handlelength=1.35,
-        borderpad=0.45,
-        labelspacing=0.30,
-    )
-    _style_legend(legend)
+    ax.set_yticks((0.001, 0.01, 0.1, 1), ("0.1%", "1%", "10%", "100%"))
+    ax.set_xticks((0, 3, 6, 9, 12))
+    ax.set_xlabel("loss $\\times$ context\n$\\gamma_T\\,\\Delta t\\,d$")
+    ax.set_ylabel("old-history error")
+    _panel_heading(ax, "a", "Include enough\nhistory", y=1.25, title_x=0.15, verticalalignment="top")
 
     ax = axes[1]
     for n_qubits in (2, 3):
@@ -873,8 +1162,8 @@ def render_figure_3(
                 root["feature_budget"],
                 root["total_nrmse"],
                 color=family_colors[n_qubits],
-                alpha=0.18,
-                linewidth=0.45,
+                alpha=0.15,
+                linewidth=0.55,
             )
         summary = family.groupby("feature_budget", as_index=False)["total_nrmse"].median()
         ax.plot(
@@ -882,42 +1171,34 @@ def render_figure_3(
             summary["total_nrmse"],
             color=family_colors[n_qubits],
             marker=family_markers[n_qubits],
-            markersize=3.8,
-            markeredgewidth=0.52,
+            markersize=4.5,
+            markeredgewidth=0.6,
             linewidth=STYLE["primary_linewidth"],
-            label=rf"$N_T={n_qubits}$",
+            label=f"{n_qubits}-qubit QRC",
         )
-    ax.axhline(0.10, color=MUTED, linestyle=(0, (3, 2)), linewidth=0.60)
+    ax.axhline(0.10, color=MUTED, linestyle=(0, (4, 3)), linewidth=0.85)
     ax.text(
         70.0,
         0.104,
-        r"tolerance $0.10$",
+        "10% target",
         ha="right",
         va="bottom",
-        fontsize=6.4,
+        fontsize=9.0,
         color=MUTED,
     )
     ax.set_ylim(0.035, 0.28)
     ax.set_xticks((18, 36, 72))
+    ax.set_yticks((0.05, 0.10, 0.15, 0.20, 0.25), ("5%", "10%", "15%", "20%", "25%"))
     ax.set_xlabel("measured features $B$")
-    ax.set_ylabel(r"total QELM NRMSE")
-    _panel_heading(ax, "b", "Add enough features", y=1.035, title_x=0.070)
-    legend = ax.legend(
-        frameon=True,
-        fontsize=6.7,
-        loc="upper right",
-        handlelength=1.35,
-        borderpad=0.45,
-        labelspacing=0.30,
-    )
-    _style_legend(legend)
+    ax.set_ylabel("QELM emulation error")
+    _panel_heading(ax, "b", "Add enough\nfeatures", y=1.25, title_x=0.15, verticalalignment="top")
 
     ax = axes[2]
     shot_styles = {
-        "test_nrmse_B18": (PALETTE["viridis_18"], "o", "-", "$B=18$"),
-        "test_nrmse_B36": (PALETTE["viridis_36"], "s", "-", "$B=36$"),
-        "test_nrmse_B72": (PALETTE["viridis_72"], "D", "-", "$B=72$"),
-        "selected_policy_test_nrmse": (INK, "*", "--", "selected policy"),
+        "test_nrmse_B18": (PALETTE["story_green"], "o", "-", "18 features"),
+        "test_nrmse_B36": (PALETTE["viridis_36"], "s", "-", "36 features"),
+        "test_nrmse_B72": (PALETTE["viridis_72"], "D", "-", "72 features"),
+        "selected_policy_test_nrmse": (INK, "*", "--", "validation-selected"),
     }
     for column, (color, marker, linestyle, label) in shot_styles.items():
         summary = shots.groupby("total_shots")[column].agg(
@@ -928,8 +1209,8 @@ def render_figure_3(
             summary["median"],
             color=color,
             marker=marker,
-            markersize=3.7,
-            markeredgewidth=0.52,
+            markersize=5.5 if marker == "*" else 4.7,
+            markeredgewidth=0.6,
             linewidth=STYLE["primary_linewidth"],
             linestyle=linestyle,
             label=label,
@@ -939,31 +1220,66 @@ def render_figure_3(
                 summary["total_shots"],
                 summary["q10"],
                 summary["q90"],
-                color=INK,
-                alpha=0.12,
+                color=PALETTE["story_blue"],
+                alpha=0.10,
                 linewidth=0,
             )
     ax.set_xscale("log", base=4)
     ax.set_xticks((300, 1200, 4800, 19200), ("300", "1.2k", "4.8k", "19.2k"))
-    ax.set_xlabel("circuit shots per input $Q$")
-    ax.set_ylabel("test NRMSE")
-    ax.axhline(0.10, color=MUTED, linestyle=(0, (3, 2)), linewidth=0.60)
-    _panel_heading(ax, "c", "Use enough shots", y=1.035, title_x=0.070)
-    legend = ax.legend(
-        frameon=True,
-        fontsize=6.4,
-        loc="upper right",
-        handlelength=1.30,
-        borderpad=0.50,
-        labelspacing=0.25,
+    ax.set_ylim(0.065, 0.295)
+    ax.set_yticks((0.10, 0.15, 0.20, 0.25), ("10%", "15%", "20%", "25%"))
+    ax.set_xlabel("shots per input $Q$")
+    ax.set_ylabel("QELM test error")
+    ax.axhline(0.10, color=MUTED, linestyle=(0, (4, 3)), linewidth=0.85)
+    ax.text(
+        340,
+        0.102,
+        "10% target",
+        ha="left",
+        va="bottom",
+        fontsize=9.0,
+        color=MUTED,
     )
-    _style_legend(legend)
+    _panel_heading(ax, "c", "Resolve features\nwith enough shots", y=1.25, title_x=0.15, verticalalignment="top")
+    family_handles, family_labels = axes[0].get_legend_handles_labels()
+    fig.legend(
+        family_handles,
+        family_labels,
+        title="Panels a, b",
+        title_fontsize=9.0,
+        frameon=False,
+        fontsize=9.0,
+        loc="upper left",
+        bbox_to_anchor=(0.10, 0.21),
+        handlelength=1.5,
+        handletextpad=0.5,
+        borderaxespad=0,
+        labelspacing=0.35,
+    )
+    shot_handles, shot_labels = ax.get_legend_handles_labels()
+    fig.legend(
+        shot_handles,
+        shot_labels,
+        title="Panel c: 4-qubit QRC, finite-shot follow-up",
+        title_fontsize=9.0,
+        frameon=False,
+        fontsize=9.0,
+        loc="upper left",
+        bbox_to_anchor=(0.43, 0.21),
+        ncol=2,
+        columnspacing=1.2,
+        handlelength=1.5,
+        handletextpad=0.5,
+        borderaxespad=0,
+        labelspacing=0.35,
+    )
+    fig.text(0.10, 0.006, "Error: normalized RMSE. Curves: root medians; pale traces or bands: root variability.",
+             fontsize=9.0, color="#545A61", va="bottom")
 
     for index, ax in enumerate(axes):
-        _style_quant_axis(ax, log_minor_y=index == 0)
-        ax.xaxis.labelpad = 2.5
-        ax.yaxis.labelpad = 2.5
-    fig.subplots_adjust(left=0.078, right=0.985, top=0.90, bottom=0.22, wspace=0.32)
+        _style_quant_axis(ax)
+        ax.xaxis.labelpad = 4.0
+        ax.yaxis.labelpad = 5.0
     pdf = output_dir / "fig03_resource_diagnosis.pdf"
     png = output_dir / "fig03_resource_diagnosis.png"
     source = output_dir / "fig03_resource_diagnosis_source.csv"
@@ -982,7 +1298,10 @@ def render_figure_3(
 def render_all(
     *,
     dark_summary_path: Path = DEFAULT_DARK_SUMMARY,
-    phase_source_path: Path = DEFAULT_PHASE_SOURCE,
+    dense_phase_source_path: Path = DEFAULT_DENSE_PHASE_SOURCE,
+    dense_suffix_source_path: Path = DEFAULT_DENSE_SUFFIX_SOURCE,
+    dense_n4_phase_source_path: Path = DEFAULT_DENSE_N4_PHASE_SOURCE,
+    dense_n4_suffix_source_path: Path = DEFAULT_DENSE_N4_SUFFIX_SOURCE,
     scaling_source_path: Path = DEFAULT_SCALING_SOURCE,
     suffix_source_path: Path = DEFAULT_SUFFIX_SOURCE,
     shot_source_path: Path = DEFAULT_SHOT_SOURCE,
@@ -991,7 +1310,13 @@ def render_all(
     output_dir.mkdir(parents=True, exist_ok=True)
     artifacts = [
         *render_figure_1(dark_summary_path, output_dir),
-        *render_figure_2(phase_source_path, output_dir),
+        *render_figure_2(
+            dense_phase_source_path,
+            dense_suffix_source_path,
+            dense_n4_phase_source_path,
+            dense_n4_suffix_source_path,
+            output_dir,
+        ),
         *render_figure_3(scaling_source_path, suffix_source_path, shot_source_path, output_dir),
     ]
     manifest = {path.name: _sha256(path) for path in artifacts}
@@ -1004,7 +1329,26 @@ def render_all(
 def main() -> int:
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument("--dark-summary", type=Path, default=DEFAULT_DARK_SUMMARY)
-    parser.add_argument("--phase-source", type=Path, default=DEFAULT_PHASE_SOURCE)
+    parser.add_argument(
+        "--dense-phase-source",
+        type=Path,
+        default=DEFAULT_DENSE_PHASE_SOURCE,
+    )
+    parser.add_argument(
+        "--dense-suffix-source",
+        type=Path,
+        default=DEFAULT_DENSE_SUFFIX_SOURCE,
+    )
+    parser.add_argument(
+        "--dense-n4-phase-source",
+        type=Path,
+        default=DEFAULT_DENSE_N4_PHASE_SOURCE,
+    )
+    parser.add_argument(
+        "--dense-n4-suffix-source",
+        type=Path,
+        default=DEFAULT_DENSE_N4_SUFFIX_SOURCE,
+    )
     parser.add_argument("--scaling-source", type=Path, default=DEFAULT_SCALING_SOURCE)
     parser.add_argument("--suffix-source", type=Path, default=DEFAULT_SUFFIX_SOURCE)
     parser.add_argument("--shot-source", type=Path, default=DEFAULT_SHOT_SOURCE)
@@ -1012,7 +1356,10 @@ def main() -> int:
     args = parser.parse_args()
     manifest = render_all(
         dark_summary_path=args.dark_summary.resolve(),
-        phase_source_path=args.phase_source.resolve(),
+        dense_phase_source_path=args.dense_phase_source.resolve(),
+        dense_suffix_source_path=args.dense_suffix_source.resolve(),
+        dense_n4_phase_source_path=args.dense_n4_phase_source.resolve(),
+        dense_n4_suffix_source_path=args.dense_n4_suffix_source.resolve(),
         scaling_source_path=args.scaling_source.resolve(),
         suffix_source_path=args.suffix_source.resolve(),
         shot_source_path=args.shot_source.resolve(),

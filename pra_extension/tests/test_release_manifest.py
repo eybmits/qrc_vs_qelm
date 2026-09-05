@@ -12,7 +12,7 @@ CODE_ROOT = Path(__file__).resolve().parents[1] / "code"
 if str(CODE_ROOT) not in sys.path:
     sys.path.insert(0, str(CODE_ROOT))
 
-import build_release_manifest as release
+import build_release_manifest as release  # noqa: E402
 
 
 def _sha(path: Path) -> str:
@@ -54,6 +54,13 @@ def _fake_repository(root: Path) -> tuple[Path, Path]:
         else:
             _write(path, "value\n1\n")
 
+    for relative in release.DENSE_SECONDARY_FILES:
+        path = root / relative
+        _write(path, "{}\n" if path.suffix == ".json" else "value\n1\n")
+    for relative in release.DENSE_N4_FILES:
+        path = root / relative
+        _write(path, "{}\n" if path.suffix == ".json" else "value\n1\n")
+
     for relative in release.DOCUMENTATION_FILES:
         _write(root / relative, f"documentation for {relative}\n")
     for relative in release.DARK_SECTOR_FILES:
@@ -69,6 +76,8 @@ def _fake_repository(root: Path) -> tuple[Path, Path]:
             _write(path, "{}\n")
         else:
             _write(path, "value\n1\n")
+    for relative in release.THRESHOLD_SENSITIVITY_FILES:
+        _write(root / relative, f"analysis code for {relative}\n")
     for relative in release.REQUIRED_PAPER_SOURCES:
         _write(root / relative, f"paper source for {relative}\n")
     _write(
@@ -257,9 +266,17 @@ def test_release_manifest_is_deterministic_and_fails_closed(
     assert first["canonical_frozen_identity"]["material_file_count"] > 0
     assert first["evidence_layers"] == {
         "canonical": "FROZEN_CONFIRMATORY",
+        "dense_n4": "FROZEN_PROSPECTIVE_N4",
+        "dense_secondary": "FROZEN_PROSPECTIVE_SECONDARY",
         "dark_sector": "FROZEN_VALIDATION",
         "pra_extension": "EXPLORATORY_POST_CONFIRMATORY",
     }
+    assert "if-and-only-if growing reset-QELM emulation theorem" in first[
+        "claim_boundary"
+    ]
+    assert "reachable-observable joint spectral radius and context law" in first[
+        "claim_boundary"
+    ]
     assert len(first["source_hash_checks"]) == len(release.SOURCE_HASH_LINKS)
     assert release.SHA256_RE.fullmatch(first["manifest_identity_sha256"])
     assert any(
@@ -280,11 +297,29 @@ def test_release_manifest_is_deterministic_and_fails_closed(
         for path in first["artifacts"]
     )
     assert "results_canonical_confirmatory_v1/stream_metrics.csv" in first["artifacts"]
+    assert "results_dense_phase_secondary_v1/suffix_decomposition.csv" in first["artifacts"]
+    assert (
+        "results_dense_phase_secondary_v1_analysis/dense_phase_cells.csv"
+        in first["artifacts"]
+    )
+    assert "results_dense_phase_n4_v1/suffix_decomposition.csv" in first["artifacts"]
+    assert (
+        "results_dense_phase_n4_v1_analysis/dense_n4_phase_cells.csv"
+        in first["artifacts"]
+    )
     assert (
         "pra_extension/outputs/dark_sector_validation/dark_sector_summary.json"
         in first["artifacts"]
     )
     assert "paper/canonical_emulation/main.pdf" in first["artifacts"]
+    assert (
+        "paper/figures/information_interface/phase_threshold_sensitivity.json"
+        in first["artifacts"]
+    )
+    assert (
+        first["artifacts"]["scripts/analyze_phase_threshold_sensitivity.py"]["role"]
+        == "post_hoc_phase_threshold_analysis_code"
+    )
     assert not any("supplement_main" in path for path in first["artifacts"])
 
     linked_source = tmp_path / release.SOURCE_HASH_LINKS[0][3]

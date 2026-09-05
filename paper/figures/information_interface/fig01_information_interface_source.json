@@ -1,9 +1,30 @@
 {
-  "balanced_mse_floor": 0.003301905781096084,
-  "fixed_pair_construction": "two time-homogeneous input trajectories differ once in the addressable flag and share all later symmetry-preserving inputs",
-  "output_gap": 0.11492442353296507,
-  "positive_approximation_statement": "continuous fading observable memory is uniformly approximable by a growing reset Bernstein QELM; contraction supplies explicit resources",
-  "suffix_scope": "all allowed symmetry-preserving suffixes",
-  "suffix_steps_numerically_checked": 80,
-  "worst_case_absolute_error_floor": 0.057462211766482536
+  "common_suffix_diameter": "supremal declared-output distance between histories sharing the last d inputs",
+  "emulation_statement": "a growing exact-expectation reset-QELM family universal on each finite window emulates uniformly to arbitrary accuracy exactly when D_d tends to zero",
+  "figure_question": "when can explicit finite context reproduce recurrent input-output behavior",
+  "memory_relevance": "past inputs must create the state difference and present or future declared outputs must reveal it; full-state forgetting is not required",
+  "panels": {
+    "a": "recurrent quantum state versus reset-window input-output emulation",
+    "b": "input-reachable and future-output-visible memory directions",
+    "c": "uniformly fading relevant memory versus persistent visible memory"
+  },
+  "regimes": {
+    "fading": {
+      "condition": "D_d is positive at every finite d and tends to zero; r_vis < 1",
+      "consequence": "arbitrary accuracy as d grows"
+    },
+    "finite": {
+      "condition": "D_d = 0 for some finite d",
+      "consequence": "output exactly determined by finite context"
+    },
+    "persistent": {
+      "condition": "D_d >= Delta > 0 for every d; r_vis = 1",
+      "consequence": "scalar worst-case error is at least Delta/2"
+    }
+  },
+  "schematic_curves": true,
+  "scope": "finite-dimensional QRC with input-continuous channels and fixed finite observable output; the iff statement additionally assumes compact inputs with freely concatenable suffixes and per-window reset-QELM density",
+  "tikz_source_sha256": "518b7602eff422cd6d1cafa67fd1196b28ab0a93b46930e6278042883efd8c26",
+  "typography": "native 9.5-10.5 pt text at 7.055 inch width",
+  "upstream_dark_sector_summary_sha256": "e7035912a1ebabc514b28b96211ce8188010d0be9cb386032ec3f683377c4b83"
 }

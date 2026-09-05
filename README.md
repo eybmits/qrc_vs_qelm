@@ -3,21 +3,34 @@
 [![CI](https://github.com/eybmits/qrc_vs_qelm/actions/workflows/ci.yml/badge.svg)](https://github.com/eybmits/qrc_vs_qelm/actions/workflows/ci.yml)
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](LICENSE)
 [![Python 3.11+](https://img.shields.io/badge/python-3.11%2B-blue.svg)](pyproject.toml)
-![tests](https://img.shields.io/badge/tests-417%20passing-brightgreen.svg)
+![tests](https://img.shields.io/badge/tests-441%20passing-brightgreen.svg)
 
 A study of when a reset-window quantum extreme learning machine can reproduce a
-recurrent quantum reservoir.  If `D_d` is the largest output gap between
+recurrent quantum reservoir. If `D_d` is the supremal scalar-output gap between
 histories with the same latest `d` inputs, the best unrestricted suffix
-predictor has uniform error exactly `D_d/2`.  Finite-window approximation is
-therefore possible precisely when this observable memory vanishes.
+predictor has uniform error exactly `D_d/2`; for vector outputs, the exact
+quantity is the Chebyshev radius of the compatible output set. Under compact
+inputs, continuous finite-dimensional QRC channels, freely concatenable
+suffixes, a fixed finite observable output, and reset-QELM density on every
+finite window, a growing family can emulate the QRC output arbitrarily well if
+and only if `D_d -> 0`.
 
-For uniformly contractive, input-Lipschitz QRCs, the positive direction is
-constructive.  History replay contributes `2 M eta^d`; a standard parallel
+When the reachable-difference closure is also compact, the decay of `D_d` is
+governed exactly by channel products on the state-difference directions that
+are both reachable and visible in the declared output. Their
+reachable-observable joint spectral radius `r_vis` gives
+`D_d -> 0` if and only if `r_vis < 1`. When `0 < r_vis < 1`, the required
+context grows asymptotically like
+`log(1/epsilon)/(-log(r_vis))`.
+
+For uniformly contractive, input-Lipschitz QRCs with scalar inputs in `[0,1]`,
+the positive direction is constructive. History replay contributes
+`2 M eta^d`; a standard parallel
 Bernstein quantum feature map contributes
 `M L_u (1-eta^d)/((1-eta)sqrt(r))`; finite shots add a separate Hoeffding term.
-This gives explicit window, qubit, outcome, and measurement resources for a
-growing reset-QELM family.  It is a one-way observable approximation theorem,
-not fixed-architecture equivalence or efficient learnability.
+This gives explicit window, qubit, outcome, and measurement resources for one
+constructive growing reset-QELM family. It is an observable-emulation theorem,
+not fixed-architecture universality or efficient learnability.
 
 The specifically quantum contribution is a two-qubit open-system realization.
 An addressable control changes a singlet population, collective symmetry
@@ -25,24 +38,25 @@ protects it under the allowed later inputs, and two-body Pauli correlations
 make it visible.  The paper compares information access, not fundamental
 computational power, and claims no quantum advantage.
 
-## Status: approximation theorem, protected-memory certificate, and phase map
+## Status: exact emulation criterion, memory-rate theorem, and phase map
 
 The frozen numerical study asks when a parallel time-delayed QELM can reproduce
-the measured trajectory of recurrent QRC teachers.  Its registered verdict is
+the measured trajectory of recurrent target QRCs. Its registered verdict is
 `CONFIRMS_FINITE_RESOURCE_FRONTIER`.  A separate frozen recurrence-fingerprint
 addendum remains a fully reported `NO_GO`.
 
-The paper fixes one two-qubit teacher and one time-homogeneous input alphabet
+The paper fixes one two-qubit target QRC and one time-homogeneous input alphabet
 with a symmetric drive and an addressable-control flag.  It then fixes one pair
 of infinite trajectories: the pair differs once in the flag and shares every
-later symmetry-preserving input.  The singlet projector is conserved throughout
-every allowed suffix, while the earlier flag changes its population.  The same
-pair therefore witnesses every finite reset window.  At
+later symmetry-preserving input. The singlet projector is conserved throughout
+every suffix drawn from the freely iterable `q=0` symmetry-preserving
+subalphabet, while the earlier flag changes its population. The same pair
+therefore witnesses every finite reset window. At
 the registered one-radian pulse the output gap is `0.1149244235`, the worst-case
 absolute-error floor is `0.0574622`, and the balanced two-history MSE floor is
 `0.0033019058`.  The statement covers every stateless prediction law
-conditioned only on the finite raw-input suffix.  It does not cover stateful
-students, supplied initial states, prefix summaries, branch labels, external
+conditioned only on the finite raw-input suffix. It does not cover stateful
+emulators, supplied initial states, prefix summaries, branch labels, external
 memory, or arbitrary symmetry-breaking noise.
 
 Exact symmetry is not required for a finite certificate. If suffix channels have
@@ -53,14 +67,20 @@ classification.
 
 ## Canonical QRC-to-QELM emulation result
 
-**Exact interface criterion, constructive QELM upper bound, and protected
-obstruction:** one recurrent QRC lies beyond every reset-based finite-window
-learner on its declared input language, whereas every uniformly contractive,
-input-Lipschitz QRC observable admits a finite-accuracy reset-QELM
-approximation.
+**Exact interface criterion, reachable-observable memory rate, constructive
+QELM upper bound, and protected obstruction:** under the compactness,
+continuity, free-suffix, fixed-output, and per-window density assumptions above,
+a growing reset-QELM family emulates a finite-dimensional QRC output arbitrarily
+well exactly when its common-suffix diameter vanishes. A protected two-qubit
+QRC lies beyond every finite reset window on its declared suffix alphabet.
 
-- The exact scalar minimax law is `E_d = D_d/2`; hence `D_d -> 0` is necessary
-  and sufficient for uniform approximation by unrestricted suffix functions.
+- The exact scalar minimax law is `E_d = D_d/2`; under those assumptions,
+  `D_d -> 0` is necessary and sufficient for uniform approximation by a
+  growing reset-QELM family that is universal on each finite window.
+- With a compact forward-invariant reachable-difference set, quotienting out
+  unreachable and permanently output-invisible directions gives `D_d -> 0`
+  exactly when the reachable-observable joint spectral radius is below one.
+  Uniform contraction is a simple corollary, not the general criterion.
 - Combining contraction with the established Bernstein quantum feature map
   gives `d*r` qubits, `(r+1)^d` grouped outcomes, explicit accuracy choices for
   `d` and `r`, and a finite-shot concentration term.  The coefficient table is
@@ -73,21 +93,22 @@ approximation.
   Its separate population-numerator calibration is `K/(K-1)=4/3` at `K=4`;
   the manuscript does not conflate the two estimands.
 - The frozen confirmatory run contains 12 independent root blocks, 144 live
-  two- and three-qubit teacher conditions nested within them, and 5,760 fitted stream cells. All primary
-  gates G0--G6 pass and the complete suite passes 417/417 tests.
+  two- and three-qubit target-QRC conditions nested within them, and 5,760
+  fitted stream cells. All primary gates G0--G6 pass.
 - Increasing the registered window from 1 to 6 reduces QELM NRMSE by a median
   78.5% on transition cells; after history is feasible, increasing the nested
   feature budget from 18 to 72 reduces representation NRMSE by 67.3%. Both
-  effects are positive in all 12 root blocks and replicate by teacher size.
+  effects are positive in all 12 root blocks and replicate by target-QRC size.
 - The quadratic classical delay model is the strongest registered control in
-  all 24 fast-forgetting root--teacher-family cells and the tested QELM loses to it in
+  all 24 fast-forgetting root--target-family cells and the tested QELM loses to it in
   every root.  This is evidence for the information-interface interpretation,
   not quantum advantage.
 
 The publication artifact is the single manuscript
 `paper/canonical_emulation/main.tex`, compiled as
-`paper/canonical_emulation/main.pdf`.  The paper is titled *When Can a
-Reset-Window QELM Reproduce a Quantum Reservoir?*.  It is 9 pages, uses 48
+`paper/canonical_emulation/main.pdf`.  The paper is titled *When Can
+Reset-Window QELMs Emulate the Input--Output Behavior of Quantum Reservoirs?*.
+It is 11 pages, uses 45
 cited references, contains exactly three main figures, and includes proofs,
 calibration, numerical controls, Methods, and the technical appendix in the
 same PDF.  The frozen
@@ -97,6 +118,28 @@ protocol, theory note, and literature audit are
 `results_canonical_confirmatory_v1/`.  The three deterministic source-backed
 paper figures are in `paper/figures/information_interface/`; the detailed
 source plots remain in `paper/figures/canonical_emulation/`.
+
+The main figures use native-size vector artwork with 9--11 pt labels, close
+to the manuscript's 10 pt body text. Figure 1 is an editable TikZ diagram;
+Figure 2 separates all 198 measured history-error points from the discrete
+feature-success map; Figure 3 aligns all three resource comparisons side by side.
+The figure renderer requires `pdflatex` and Poppler's `pdftoppm` for Figure 1,
+in addition to the Python plotting dependencies. It preserves the numerical
+source tables and records the TikZ source hash with the generated artifacts.
+
+Figure 2 additionally uses two independently validated dense cohorts.  The
+earlier two- and three-qubit replication in
+`results_dense_phase_secondary_v1/` contains 132 displayed cells, 1,584
+root-level history cells, and 4,752 root-budget QELM classifications.  After
+that map was inspected, the separate four-qubit follow-up in
+`results_dense_phase_n4_v1/` was frozen and run on the identical grid with 12
+new roots; it adds 66 displayed cells, 792 history cells, and 2,376 QELM
+classifications.  All prospective four-qubit checks pass: 12/12 roots satisfy
+the joint decay-fit criterion, the minimum-window frontier decreases
+monotonically with strict steps, and the inherited QELM anchor succeeds in
+12/12 roots.  The cohorts are shown side by side and are not pooled.  This
+supports tested target-QRC-size stability, not an asymptotic size law or quantum
+advantage.
 
 ## Post-confirmatory mechanism extensions
 
@@ -125,8 +168,8 @@ Several 12-root stress-test arms were run only after the canonical result was fr
   variance floor in only 413/1,296 rows. At
   `gamma=4,d=8`, collective loss retains a strong size-dependent memory that
   local loss does not.
-- With a fixed total student-shot budget, validation most often selects
-  `B=36` at 300 shots (17/24 paired root-teacher cells) but `B=72` at 19,200
+- With a fixed total emulator-shot budget, validation most often selects
+  `B=36` at 300 shots (17/24 paired root--target-QRC cases) but `B=72` at 19,200
   shots (22/24). Thus more ideal features help only when measurements resolve
   them. Joint multinomial simulation agrees with the analytic shot penalty
   (median ratio 1.001 after enforcing globally unique entropy tuples).
@@ -147,14 +190,16 @@ Several 12-root stress-test arms were run only after the canonical result was fr
 - With independently shot-noisy train, validation, and test QELM features, a
   validation-selected `N_T=4` policy improves from test NRMSE 0.231 at 300
   shots to 0.0800 at 19,200 shots, a 65.2% root-median reduction.
-- The `B=18 -> 72` gain is positive in all 144 root-teacher-topology cells
+- The `B=18 -> 72` gain is positive in all 144 root--target-QRC--topology cases
   across dense, chain, ring, and star six-qubit QELMs. A validation-selected
   topology still loses to quadratic delay in all 36 held-out comparisons.
 
 These are exact-simulation mechanism tests, not hardware evidence,
 confirmatory extension gates, universality of the fixed six-qubit QELM, or
-quantum advantage. The quadratic classical delay control remains stronger than
-the tested QELM in every frozen comparison.
+quantum advantage. On the registered fast-forgetting two-/three-qubit
+comparison, quadratic delay outperforms the tested QELM in all 24
+root--target-family cells; the validation-selected topology extension loses to
+quadratic delay in all 36 held-out comparisons.
 
 Authoritative extension artifacts are:
 
@@ -199,6 +244,7 @@ code, preregistration, or stored confirmatory results:
   --output-dir <figure-directory>
 .venv/bin/python pra_extension/code/render_information_interface_figures.py \
   --output-dir paper/figures/information_interface
+.venv/bin/python scripts/analyze_phase_threshold_sensitivity.py
 .venv/bin/python pra_extension/code/analyze_finite_k_history_calibration.py \
   --output-dir <new-empty-finite-k-directory>
 .venv/bin/python pra_extension/code/run_observable_memory.py \
@@ -312,7 +358,8 @@ capacity below 0.05.*
 - **Independent task link:** crossover shift 0.5364, 95% cluster interval
   [0.4333, 0.6448], with 23/24 positive shifts.
 
-The current paper source is `paper/main.tex`; `paper/manuscript_draft.md` is a
+The current paper source is `paper/canonical_emulation/main.tex`;
+`paper/manuscript_draft.md` is a
 plain-language evidence synopsis. See `paper/figures/` for figures and their
 source tables.
 
@@ -359,12 +406,62 @@ PYTHONPATH=src .venv/bin/python scripts/render_canonical_emulation_figures.py \
 See `CANONICAL_EMULATION_PREREGISTRATION.md` for the complete bound test,
 duplicate-smoke, evaluator, and freeze-verification procedure.
 
+The dense secondary roots have also now been opened, so the following is a
+same-material reproduction rather than a new prospective test:
+
+```bash
+PYTHONPATH=src .venv/bin/python scripts/run_dense_phase_secondary.py \
+  --out results_dense_phase_secondary_reproduction
+
+PYTHONPATH=src .venv/bin/python scripts/analyze_dense_phase_secondary.py \
+  --results results_dense_phase_secondary_reproduction \
+  --output-dir results_dense_phase_secondary_reproduction_analysis
+
+PYTHONPATH=src .venv/bin/python \
+  pra_extension/code/render_information_interface_figures.py \
+  --dense-phase-source \
+  results_dense_phase_secondary_reproduction_analysis/dense_phase_cells.csv \
+  --output-dir paper/figures/information_interface
+```
+
+The frozen grid, seeds, 10-of-12 badge rule, directional check, and QELM anchor
+are recorded in `DENSE_PHASE_SECONDARY_PROTOCOL.md` and
+`configs/canonical_emulation_dense_secondary_freeze.json`.
+
+The four-qubit follow-up roots have now also been opened.  Its same-material
+reproduction is:
+
+```bash
+PYTHONPATH=src:scripts .venv/bin/python scripts/run_dense_phase_n4.py \
+  --out results_dense_phase_n4_reproduction
+
+PYTHONPATH=src:scripts .venv/bin/python scripts/analyze_dense_phase_n4.py \
+  --results results_dense_phase_n4_reproduction \
+  --output-dir results_dense_phase_n4_reproduction_analysis
+
+PYTHONPATH=src:scripts:pra_extension/code .venv/bin/python \
+  pra_extension/code/render_information_interface_figures.py \
+  --dense-phase-source \
+  results_dense_phase_secondary_reproduction_analysis/dense_phase_cells.csv \
+  --dense-n4-phase-source \
+  results_dense_phase_n4_reproduction_analysis/dense_n4_phase_cells.csv \
+  --dense-n4-suffix-source \
+  results_dense_phase_n4_reproduction/suffix_decomposition.csv \
+  --output-dir paper/figures/information_interface
+```
+
+Its separate design, exact counts, gates, seed registry, and material hashes
+are recorded in `DENSE_PHASE_N4_PROTOCOL.md` and
+`configs/canonical_emulation_dense_n4_freeze.json`.
+
 ### Earlier architecture phase-map study
 
-The runners refuse to execute against an uncommitted tree (pre-registration
-integrity); each writes a manifest with the git commit, seed grid, per-cell
-feature-cache SHA-256 hashes, and package versions. Result directories
-(`results_*/`) are gitignored and regenerated locally:
+These legacy stage runners refuse to execute against an uncommitted tree
+(pre-registration integrity); each writes a manifest with the git commit, seed
+grid, per-cell feature-cache SHA-256 hashes, and package versions. Their new
+`results_*` outputs are ignored and regenerated locally. The committed
+canonical and dense evidence directories identified above are explicit release
+inputs and are not covered by that statement.
 
 ```bash
 # validation gate (reproduces reference physics) — must pass before main runs

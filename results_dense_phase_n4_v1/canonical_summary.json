@@ -1,0 +1,22 @@
+{
+  "confirmatory": false,
+  "counts": {
+    "roots": 12,
+    "stream_rows": 7920,
+    "suffix_rows": 7920,
+    "systems": 132,
+    "target_live_systems": 132
+  },
+  "decision": "CALIBRATION_ONLY",
+  "max_decomposition_identity_error": 5.551115123125783e-17,
+  "profile": "dense_n4",
+  "ptd_regime_counts": {
+    "EMULATED": 393,
+    "HISTORY_IMPOSSIBLE": 1605,
+    "REPRESENTATION_LIMITED": 106,
+    "UNRESOLVED": 272
+  },
+  "schema_version": 1,
+  "status": "PROSPECTIVE_SIZE_EXTRAPOLATION",
+  "study": "canonical_qrc_to_parallel_qelm_dense_n4"
+}

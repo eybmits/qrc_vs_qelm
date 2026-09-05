@@ -1,41 +1,34 @@
-\par Recurrent quantum reservoirs use persistent dynamics as a temporal
-resource in spin networks, noisy processors, oscillators, Rydberg arrays,
-Gaussian systems, and quantum-state inputs
-\cite{nakajima2019spatial,kutvonen2020optimizing,chen2020temporal,
-govia2021oscillator,kalfus2022hilbert,bravo2022rydberg,
-nokkala2021gaussian}.  Fading-memory and echo-state results explain when old
-state dependence becomes negligible
-\cite{boyd1985fading,grigoryeva2018sas,grigoryeva2018esn,
-grigoryeva2019differentiable,gonon2021fading,
-martinezpena2023finite,martinezpena2025input,kobayashi2024esp,
-kobayashi2026coherence}.  Dissipation, feedback, monitored dynamics, and
-non-Markovian environments change that memory horizon
-\cite{sannia2024dissipation,kobayashi2024feedback,
-morguisancho2026monitored,sannia2026nonmarkovian,paparelle2026memory,
-ricci2026damping}.
-
-Reset-window models encode recent history explicitly.  Parallel time-delayed
-QELMs upload a delay vector, while rewinding and artificial memory restriction
-replay a finite suffix from a reset state
+Existing work supplies the main ingredients but not their observable-level
+connection.  QRCs use persistent dynamics as a temporal resource across spin,
+noisy-processor, oscillator, and quantum-input settings
+\cite{nakajima2019spatial,chen2020temporal,
+govia2021oscillator,kalfus2022hilbert}.
+Fading-memory and echo-state results explain when old state dependence becomes
+negligible \cite{boyd1985fading,grigoryeva2018sas,grigoryeva2018esn,
+grigoryeva2019differentiable,gonon2021fading,martinezpena2023finite,
+martinezpena2025input,kobayashi2024esp,kobayashi2026coherence}, while
+dissipation, feedback, monitoring, and non-Markovianity alter that horizon
+\cite{sannia2024dissipation,kobayashi2024feedback,morguisancho2026monitored,
+sannia2026nonmarkovian,paparelle2026memory}.  Reset-window and
+replay schemes encode finite delays explicitly
 \cite{kawanabe2026tdqelm,assil2026memory,mujal2023measurement,
-cindrak2024restriction}.  Quantum feature maps can approximate continuous
-finite-dimensional functions, including through the repeated-encoding
-Bernstein construction used below \cite{goto2021universal,yu2024nonasymptotic}.
-Pauli-transfer, Krylov, task-coverage, conditional-information, and Fisher-mode
-analyses determine which functions of the supplied window are accessible
+cindrak2024restriction}; universality results establish rich functions of the
+supplied window \cite{goto2021universal,yu2024nonasymptotic}.  Transfer,
+Krylov, task-coverage, conditional-information, and Fisher-mode analyses
+describe dynamically accessible directions
 \cite{gross2026ptm,cindrak2025krylov,domingo2026diagnosing,keenan2026storage,
-wang2026fisher}.  Measurements and finite sampling determine which of those
-directions can be resolved
-\cite{hu2023sampling,kora2026noise,ahmed2025finite,
-mujal2023measurement,morguisancho2026monitored,huang2020shadows}.  We use a
-quadratic nonlinear-vector-autoregression model as the strongest classical
-delay control \cite{gauthier2021next}.
-
-Decoherence-free subspaces and symmetry-protected steady sectors retain state
-components that symmetric dynamics cannot erase
-\cite{zanardi1997noiseless,lidar1998dfs,albert2014symmetries}.  Existing results
-therefore describe recurrent memory, finite-window representation, and
-protected modes separately.  The connection made here is operational: a fixed
-window is exact when it contains all information still visible in the declared
-QRC output, and growing windows become arbitrarily accurate when the remaining
-output gap tends to zero.
+wang2026fisher,morguisancho2026monitored}.  Separate finite-sampling studies
+quantify which encoded directions can be resolved
+\cite{hu2023sampling,ahmed2025finite}.  Classical realization theory
+characterizes minimal switched models through reachability and observability
+\cite{petreczky2013realization}.  Joint-spectral-radius theory treats uniform
+matrix-product stability \cite{rota1960joint,jungers2009joint,
+philippe2016constrained}, and protected sectors retain symmetry-protected state
+components \cite{zanardi1997noiseless,albert2014symmetries}.
+What remains unresolved by these separate results is one architecture-level
+boundary: how visible recurrent information sets the optimum finite-window
+prediction error, and when a growing reset-QELM can close it.  We establish that
+boundary through the exact scalar minimax law $D_d/2$, an if-and-only-if
+emulation theorem, and a reachable-observable quotient whose common-product
+joint spectral radius gives the exact root-decay rate; a protected mode realizes
+the complementary obstruction.

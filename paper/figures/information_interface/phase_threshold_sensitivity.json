@@ -1,0 +1,7149 @@
+{
+  "analysis_type": "post_hoc_history_frontier_threshold_sensitivity",
+  "claim_boundary": "This post hoc analysis varies only the history-sufficiency threshold and root-success rule. It does not establish invariance of individual cell labels, QELM emulation labels, representation-limited labels, unresolved labels, or measurement-limited labels. A censored value of 7 means only that no tested window d<=6 reaches the specified rule.",
+  "counts": {
+    "frontier_loss_points": 297,
+    "frontiers": 27,
+    "history_root_cells": 2376,
+    "history_root_cells_per_teacher_size": 792,
+    "history_sufficiency_count_records": 594,
+    "input_rows": 23760,
+    "loss_window_cells": 198
+  },
+  "data_scope": {
+    "history_metric": "history_nrmse",
+    "history_row_model": "rr_same_identity",
+    "loss_rates": [
+      0.0,
+      0.2,
+      0.5,
+      0.75,
+      1.0,
+      1.25,
+      1.5,
+      2.0,
+      2.5,
+      3.0,
+      4.0
+    ],
+    "right_censored_window_meaning": "no tested window d<=6 reaches the rule",
+    "right_censored_window_value": 7,
+    "root_blocks_per_teacher_size": 12,
+    "sources": [
+      {
+        "history_root_cells": 1584,
+        "input_rows": 15840,
+        "path": "results_dense_phase_secondary_v1/suffix_decomposition.csv",
+        "roots_by_teacher_n_qubits": {
+          "2": [
+            "dense01",
+            "dense02",
+            "dense03",
+            "dense04",
+            "dense05",
+            "dense06",
+            "dense07",
+            "dense08",
+            "dense09",
+            "dense10",
+            "dense11",
+            "dense12"
+          ],
+          "3": [
+            "dense01",
+            "dense02",
+            "dense03",
+            "dense04",
+            "dense05",
+            "dense06",
+            "dense07",
+            "dense08",
+            "dense09",
+            "dense10",
+            "dense11",
+            "dense12"
+          ]
+        },
+        "sha256": "54dd6550d36fe43673d771f7ecb3cee1db17522007a0103f8172d35c9254a682",
+        "source_name": "secondary",
+        "teacher_n_qubits": [
+          2,
+          3
+        ]
+      },
+      {
+        "history_root_cells": 792,
+        "input_rows": 7920,
+        "path": "results_dense_phase_n4_v1/suffix_decomposition.csv",
+        "roots_by_teacher_n_qubits": {
+          "4": [
+            "dense_n4_01",
+            "dense_n4_02",
+            "dense_n4_03",
+            "dense_n4_04",
+            "dense_n4_05",
+            "dense_n4_06",
+            "dense_n4_07",
+            "dense_n4_08",
+            "dense_n4_09",
+            "dense_n4_10",
+            "dense_n4_11",
+            "dense_n4_12"
+          ]
+        },
+        "sha256": "6dba07c9f0d53ab94b9de32509ac69408a77c8c7add146b2dbfa49e6239705c0",
+        "source_name": "n4",
+        "teacher_n_qubits": [
+          4
+        ]
+      }
+    ],
+    "teacher_dissipator": "local_loss",
+    "teacher_n_qubits": [
+      2,
+      3,
+      4
+    ],
+    "window_lengths": [
+      1,
+      2,
+      3,
+      4,
+      5,
+      6
+    ]
+  },
+  "frontiers": [
+    {
+      "finite_loss_rate_count": 5,
+      "frontier": [
+        {
+          "display": ">6",
+          "minimum_window_censored_at_7": 7,
+          "teacher_gamma": 0.0
+        },
+        {
+          "display": ">6",
+          "minimum_window_censored_at_7": 7,
+          "teacher_gamma": 0.2
+        },
+        {
+          "display": ">6",
+          "minimum_window_censored_at_7": 7,
+          "teacher_gamma": 0.5
+        },
+        {
+          "display": ">6",
+          "minimum_window_censored_at_7": 7,
+          "teacher_gamma": 0.75
+        },
+        {
+          "display": ">6",
+          "minimum_window_censored_at_7": 7,
+          "teacher_gamma": 1.0
+        },
+        {
+          "display": ">6",
+          "minimum_window_censored_at_7": 7,
+          "teacher_gamma": 1.25
+        },
+        {
+          "display": "6",
+          "minimum_window_censored_at_7": 6,
+          "teacher_gamma": 1.5
+        },
+        {
+          "display": "4",
+          "minimum_window_censored_at_7": 4,
+          "teacher_gamma": 2.0
+        },
+        {
+          "display": "4",
+          "minimum_window_censored_at_7": 4,
+          "teacher_gamma": 2.5
+        },
+        {
+          "display": "3",
+          "minimum_window_censored_at_7": 3,
+          "teacher_gamma": 3.0
+        },
+        {
+          "display": "2",
+          "minimum_window_censored_at_7": 2,
+          "teacher_gamma": 4.0
+        }
+      ],
+      "minimum_successful_roots": 9,
+      "monotonicity_violations": [],
+      "non_increasing_with_loss": true,
+      "root_blocks": 12,
+      "strict_decrease_count": 4,
+      "teacher_n_qubits": 2,
+      "tolerance_nrmse": 0.08
+    },
+    {
+      "finite_loss_rate_count": 5,
+      "frontier": [
+        {
+          "display": ">6",
+          "minimum_window_censored_at_7": 7,
+          "teacher_gamma": 0.0
+        },
+        {
+          "display": ">6",
+          "minimum_window_censored_at_7": 7,
+          "teacher_gamma": 0.2
+        },
+        {
+          "display": ">6",
+          "minimum_window_censored_at_7": 7,
+          "teacher_gamma": 0.5
+        },
+        {
+          "display": ">6",
+          "minimum_window_censored_at_7": 7,
+          "teacher_gamma": 0.75
+        },
+        {
+          "display": ">6",
+          "minimum_window_censored_at_7": 7,
+          "teacher_gamma": 1.0
+        },
+        {
+          "display": ">6",
+          "minimum_window_censored_at_7": 7,
+          "teacher_gamma": 1.25
+        },
+        {
+          "display": "6",
+          "minimum_window_censored_at_7": 6,
+          "teacher_gamma": 1.5
+        },
+        {
+          "display": "4",
+          "minimum_window_censored_at_7": 4,
+          "teacher_gamma": 2.0
+        },
+        {
+          "display": "4",
+          "minimum_window_censored_at_7": 4,
+          "teacher_gamma": 2.5
+        },
+        {
+          "display": "3",
+          "minimum_window_censored_at_7": 3,
+          "teacher_gamma": 3.0
+        },
+        {
+          "display": "2",
+          "minimum_window_censored_at_7": 2,
+          "teacher_gamma": 4.0
+        }
+      ],
+      "minimum_successful_roots": 10,
+      "monotonicity_violations": [],
+      "non_increasing_with_loss": true,
+      "root_blocks": 12,
+      "strict_decrease_count": 4,
+      "teacher_n_qubits": 2,
+      "tolerance_nrmse": 0.08
+    },
+    {
+      "finite_loss_rate_count": 5,
+      "frontier": [
+        {
+          "display": ">6",
+          "minimum_window_censored_at_7": 7,
+          "teacher_gamma": 0.0
+        },
+        {
+          "display": ">6",
+          "minimum_window_censored_at_7": 7,
+          "teacher_gamma": 0.2
+        },
+        {
+          "display": ">6",
+          "minimum_window_censored_at_7": 7,
+          "teacher_gamma": 0.5
+        },
+        {
+          "display": ">6",
+          "minimum_window_censored_at_7": 7,
+          "teacher_gamma": 0.75
+        },
+        {
+          "display": ">6",
+          "minimum_window_censored_at_7": 7,
+          "teacher_gamma": 1.0
+        },
+        {
+          "display": ">6",
+          "minimum_window_censored_at_7": 7,
+          "teacher_gamma": 1.25
+        },
+        {
+          "display": "6",
+          "minimum_window_censored_at_7": 6,
+          "teacher_gamma": 1.5
+        },
+        {
+          "display": "4",
+          "minimum_window_censored_at_7": 4,
+          "teacher_gamma": 2.0
+        },
+        {
+          "display": "4",
+          "minimum_window_censored_at_7": 4,
+          "teacher_gamma": 2.5
+        },
+        {
+          "display": "3",
+          "minimum_window_censored_at_7": 3,
+          "teacher_gamma": 3.0
+        },
+        {
+          "display": "3",
+          "minimum_window_censored_at_7": 3,
+          "teacher_gamma": 4.0
+        }
+      ],
+      "minimum_successful_roots": 11,
+      "monotonicity_violations": [],
+      "non_increasing_with_loss": true,
+      "root_blocks": 12,
+      "strict_decrease_count": 3,
+      "teacher_n_qubits": 2,
+      "tolerance_nrmse": 0.08
+    },
+    {
+      "finite_loss_rate_count": 6,
+      "frontier": [
+        {
+          "display": ">6",
+          "minimum_window_censored_at_7": 7,
+          "teacher_gamma": 0.0
+        },
+        {
+          "display": ">6",
+          "minimum_window_censored_at_7": 7,
+          "teacher_gamma": 0.2
+        },
+        {
+          "display": ">6",
+          "minimum_window_censored_at_7": 7,
+          "teacher_gamma": 0.5
+        },
+        {
+          "display": ">6",
+          "minimum_window_censored_at_7": 7,
+          "teacher_gamma": 0.75
+        },
+        {
+          "display": ">6",
+          "minimum_window_censored_at_7": 7,
+          "teacher_gamma": 1.0
+        },
+        {
+          "display": "6",
+          "minimum_window_censored_at_7": 6,
+          "teacher_gamma": 1.25
+        },
+        {
+          "display": "5",
+          "minimum_window_censored_at_7": 5,
+          "teacher_gamma": 1.5
+        },
+        {
+          "display": "4",
+          "minimum_window_censored_at_7": 4,
+          "teacher_gamma": 2.0
+        },
+        {
+          "display": "3",
+          "minimum_window_censored_at_7": 3,
+          "teacher_gamma": 2.5
+        },
+        {
+          "display": "3",
+          "minimum_window_censored_at_7": 3,
+          "teacher_gamma": 3.0
+        },
+        {
+          "display": "2",
+          "minimum_window_censored_at_7": 2,
+          "teacher_gamma": 4.0
+        }
+      ],
+      "minimum_successful_roots": 9,
+      "monotonicity_violations": [],
+      "non_increasing_with_loss": true,
+      "root_blocks": 12,
+      "strict_decrease_count": 5,
+      "teacher_n_qubits": 2,
+      "tolerance_nrmse": 0.1
+    },
+    {
+      "finite_loss_rate_count": 6,
+      "frontier": [
+        {
+          "display": ">6",
+          "minimum_window_censored_at_7": 7,
+          "teacher_gamma": 0.0
+        },
+        {
+          "display": ">6",
+          "minimum_window_censored_at_7": 7,
+          "teacher_gamma": 0.2
+        },
+        {
+          "display": ">6",
+          "minimum_window_censored_at_7": 7,
+          "teacher_gamma": 0.5
+        },
+        {
+          "display": ">6",
+          "minimum_window_censored_at_7": 7,
+          "teacher_gamma": 0.75
+        },
+        {
+          "display": ">6",
+          "minimum_window_censored_at_7": 7,
+          "teacher_gamma": 1.0
+        },
+        {
+          "display": "6",
+          "minimum_window_censored_at_7": 6,
+          "teacher_gamma": 1.25
+        },
+        {
+          "display": "5",
+          "minimum_window_censored_at_7": 5,
+          "teacher_gamma": 1.5
+        },
+        {
+          "display": "4",
+          "minimum_window_censored_at_7": 4,
+          "teacher_gamma": 2.0
+        },
+        {
+          "display": "3",
+          "minimum_window_censored_at_7": 3,
+          "teacher_gamma": 2.5
+        },
+        {
+          "display": "3",
+          "minimum_window_censored_at_7": 3,
+          "teacher_gamma": 3.0
+        },
+        {
+          "display": "2",
+          "minimum_window_censored_at_7": 2,
+          "teacher_gamma": 4.0
+        }
+      ],
+      "minimum_successful_roots": 10,
+      "monotonicity_violations": [],
+      "non_increasing_with_loss": true,
+      "root_blocks": 12,
+      "strict_decrease_count": 5,
+      "teacher_n_qubits": 2,
+      "tolerance_nrmse": 0.1
+    },
+    {
+      "finite_loss_rate_count": 6,
+      "frontier": [
+        {
+          "display": ">6",
+          "minimum_window_censored_at_7": 7,
+          "teacher_gamma": 0.0
+        },
+        {
+          "display": ">6",
+          "minimum_window_censored_at_7": 7,
+          "teacher_gamma": 0.2
+        },
+        {
+          "display": ">6",
+          "minimum_window_censored_at_7": 7,
+          "teacher_gamma": 0.5
+        },
+        {
+          "display": ">6",
+          "minimum_window_censored_at_7": 7,
+          "teacher_gamma": 0.75
+        },
+        {
+          "display": ">6",
+          "minimum_window_censored_at_7": 7,
+          "teacher_gamma": 1.0
+        },
+        {
+          "display": "6",
+          "minimum_window_censored_at_7": 6,
+          "teacher_gamma": 1.25
+        },
+        {
+          "display": "5",
+          "minimum_window_censored_at_7": 5,
+          "teacher_gamma": 1.5
+        },
+        {
+          "display": "4",
+          "minimum_window_censored_at_7": 4,
+          "teacher_gamma": 2.0
+        },
+        {
+          "display": "3",
+          "minimum_window_censored_at_7": 3,
+          "teacher_gamma": 2.5
+        },
+        {
+          "display": "3",
+          "minimum_window_censored_at_7": 3,
+          "teacher_gamma": 3.0
+        },
+        {
+          "display": "2",
+          "minimum_window_censored_at_7": 2,
+          "teacher_gamma": 4.0
+        }
+      ],
+      "minimum_successful_roots": 11,
+      "monotonicity_violations": [],
+      "non_increasing_with_loss": true,
+      "root_blocks": 12,
+      "strict_decrease_count": 5,
+      "teacher_n_qubits": 2,
+      "tolerance_nrmse": 0.1
+    },
+    {
+      "finite_loss_rate_count": 6,
+      "frontier": [
+        {
+          "display": ">6",
+          "minimum_window_censored_at_7": 7,
+          "teacher_gamma": 0.0
+        },
+        {
+          "display": ">6",
+          "minimum_window_censored_at_7": 7,
+          "teacher_gamma": 0.2
+        },
+        {
+          "display": ">6",
+          "minimum_window_censored_at_7": 7,
+          "teacher_gamma": 0.5
+        },
+        {
+          "display": ">6",
+          "minimum_window_censored_at_7": 7,
+          "teacher_gamma": 0.75
+        },
+        {
+          "display": ">6",
+          "minimum_window_censored_at_7": 7,
+          "teacher_gamma": 1.0
+        },
+        {
+          "display": "5",
+          "minimum_window_censored_at_7": 5,
+          "teacher_gamma": 1.25
+        },
+        {
+          "display": "5",
+          "minimum_window_censored_at_7": 5,
+          "teacher_gamma": 1.5
+        },
+        {
+          "display": "4",
+          "minimum_window_censored_at_7": 4,
+          "teacher_gamma": 2.0
+        },
+        {
+          "display": "3",
+          "minimum_window_censored_at_7": 3,
+          "teacher_gamma": 2.5
+        },
+        {
+          "display": "3",
+          "minimum_window_censored_at_7": 3,
+          "teacher_gamma": 3.0
+        },
+        {
+          "display": "2",
+          "minimum_window_censored_at_7": 2,
+          "teacher_gamma": 4.0
+        }
+      ],
+      "minimum_successful_roots": 9,
+      "monotonicity_violations": [],
+      "non_increasing_with_loss": true,
+      "root_blocks": 12,
+      "strict_decrease_count": 4,
+      "teacher_n_qubits": 2,
+      "tolerance_nrmse": 0.12
+    },
+    {
+      "finite_loss_rate_count": 6,
+      "frontier": [
+        {
+          "display": ">6",
+          "minimum_window_censored_at_7": 7,
+          "teacher_gamma": 0.0
+        },
+        {
+          "display": ">6",
+          "minimum_window_censored_at_7": 7,
+          "teacher_gamma": 0.2
+        },
+        {
+          "display": ">6",
+          "minimum_window_censored_at_7": 7,
+          "teacher_gamma": 0.5
+        },
+        {
+          "display": ">6",
+          "minimum_window_censored_at_7": 7,
+          "teacher_gamma": 0.75
+        },
+        {
+          "display": ">6",
+          "minimum_window_censored_at_7": 7,
+          "teacher_gamma": 1.0
+        },
+        {
+          "display": "6",
+          "minimum_window_censored_at_7": 6,
+          "teacher_gamma": 1.25
+        },
+        {
+          "display": "5",
+          "minimum_window_censored_at_7": 5,
+          "teacher_gamma": 1.5
+        },
+        {
+          "display": "4",
+          "minimum_window_censored_at_7": 4,
+          "teacher_gamma": 2.0
+        },
+        {
+          "display": "3",
+          "minimum_window_censored_at_7": 3,
+          "teacher_gamma": 2.5
+        },
+        {
+          "display": "3",
+          "minimum_window_censored_at_7": 3,
+          "teacher_gamma": 3.0
+        },
+        {
+          "display": "2",
+          "minimum_window_censored_at_7": 2,
+          "teacher_gamma": 4.0
+        }
+      ],
+      "minimum_successful_roots": 10,
+      "monotonicity_violations": [],
+      "non_increasing_with_loss": true,
+      "root_blocks": 12,
+      "strict_decrease_count": 5,
+      "teacher_n_qubits": 2,
+      "tolerance_nrmse": 0.12
+    },
+    {
+      "finite_loss_rate_count": 6,
+      "frontier": [
+        {
+          "display": ">6",
+          "minimum_window_censored_at_7": 7,
+          "teacher_gamma": 0.0
+        },
+        {
+          "display": ">6",
+          "minimum_window_censored_at_7": 7,
+          "teacher_gamma": 0.2
+        },
+        {
+          "display": ">6",
+          "minimum_window_censored_at_7": 7,
+          "teacher_gamma": 0.5
+        },
+        {
+          "display": ">6",
+          "minimum_window_censored_at_7": 7,
+          "teacher_gamma": 0.75
+        },
+        {
+          "display": ">6",
+          "minimum_window_censored_at_7": 7,
+          "teacher_gamma": 1.0
+        },
+        {
+          "display": "6",
+          "minimum_window_censored_at_7": 6,
+          "teacher_gamma": 1.25
+        },
+        {
+          "display": "5",
+          "minimum_window_censored_at_7": 5,
+          "teacher_gamma": 1.5
+        },
+        {
+          "display": "4",
+          "minimum_window_censored_at_7": 4,
+          "teacher_gamma": 2.0
+        },
+        {
+          "display": "3",
+          "minimum_window_censored_at_7": 3,
+          "teacher_gamma": 2.5
+        },
+        {
+          "display": "3",
+          "minimum_window_censored_at_7": 3,
+          "teacher_gamma": 3.0
+        },
+        {
+          "display": "2",
+          "minimum_window_censored_at_7": 2,
+          "teacher_gamma": 4.0
+        }
+      ],
+      "minimum_successful_roots": 11,
+      "monotonicity_violations": [],
+      "non_increasing_with_loss": true,
+      "root_blocks": 12,
+      "strict_decrease_count": 5,
+      "teacher_n_qubits": 2,
+      "tolerance_nrmse": 0.12
+    },
+    {
+      "finite_loss_rate_count": 6,
+      "frontier": [
+        {
+          "display": ">6",
+          "minimum_window_censored_at_7": 7,
+          "teacher_gamma": 0.0
+        },
+        {
+          "display": ">6",
+          "minimum_window_censored_at_7": 7,
+          "teacher_gamma": 0.2
+        },
+        {
+          "display": ">6",
+          "minimum_window_censored_at_7": 7,
+          "teacher_gamma": 0.5
+        },
+        {
+          "display": ">6",
+          "minimum_window_censored_at_7": 7,
+          "teacher_gamma": 0.75
+        },
+        {
+          "display": ">6",
+          "minimum_window_censored_at_7": 7,
+          "teacher_gamma": 1.0
+        },
+        {
+          "display": "6",
+          "minimum_window_censored_at_7": 6,
+          "teacher_gamma": 1.25
+        },
+        {
+          "display": "5",
+          "minimum_window_censored_at_7": 5,
+          "teacher_gamma": 1.5
+        },
+        {
+          "display": "4",
+          "minimum_window_censored_at_7": 4,
+          "teacher_gamma": 2.0
+        },
+        {
+          "display": "3",
+          "minimum_window_censored_at_7": 3,
+          "teacher_gamma": 2.5
+        },
+        {
+          "display": "3",
+          "minimum_window_censored_at_7": 3,
+          "teacher_gamma": 3.0
+        },
+        {
+          "display": "2",
+          "minimum_window_censored_at_7": 2,
+          "teacher_gamma": 4.0
+        }
+      ],
+      "minimum_successful_roots": 9,
+      "monotonicity_violations": [],
+      "non_increasing_with_loss": true,
+      "root_blocks": 12,
+      "strict_decrease_count": 5,
+      "teacher_n_qubits": 3,
+      "tolerance_nrmse": 0.08
+    },
+    {
+      "finite_loss_rate_count": 6,
+      "frontier": [
+        {
+          "display": ">6",
+          "minimum_window_censored_at_7": 7,
+          "teacher_gamma": 0.0
+        },
+        {
+          "display": ">6",
+          "minimum_window_censored_at_7": 7,
+          "teacher_gamma": 0.2
+        },
+        {
+          "display": ">6",
+          "minimum_window_censored_at_7": 7,
+          "teacher_gamma": 0.5
+        },
+        {
+          "display": ">6",
+          "minimum_window_censored_at_7": 7,
+          "teacher_gamma": 0.75
+        },
+        {
+          "display": ">6",
+          "minimum_window_censored_at_7": 7,
+          "teacher_gamma": 1.0
+        },
+        {
+          "display": "6",
+          "minimum_window_censored_at_7": 6,
+          "teacher_gamma": 1.25
+        },
+        {
+          "display": "5",
+          "minimum_window_censored_at_7": 5,
+          "teacher_gamma": 1.5
+        },
+        {
+          "display": "4",
+          "minimum_window_censored_at_7": 4,
+          "teacher_gamma": 2.0
+        },
+        {
+          "display": "4",
+          "minimum_window_censored_at_7": 4,
+          "teacher_gamma": 2.5
+        },
+        {
+          "display": "3",
+          "minimum_window_censored_at_7": 3,
+          "teacher_gamma": 3.0
+        },
+        {
+          "display": "2",
+          "minimum_window_censored_at_7": 2,
+          "teacher_gamma": 4.0
+        }
+      ],
+      "minimum_successful_roots": 10,
+      "monotonicity_violations": [],
+      "non_increasing_with_loss": true,
+      "root_blocks": 12,
+      "strict_decrease_count": 5,
+      "teacher_n_qubits": 3,
+      "tolerance_nrmse": 0.08
+    },
+    {
+      "finite_loss_rate_count": 5,
+      "frontier": [
+        {
+          "display": ">6",
+          "minimum_window_censored_at_7": 7,
+          "teacher_gamma": 0.0
+        },
+        {
+          "display": ">6",
+          "minimum_window_censored_at_7": 7,
+          "teacher_gamma": 0.2
+        },
+        {
+          "display": ">6",
+          "minimum_window_censored_at_7": 7,
+          "teacher_gamma": 0.5
+        },
+        {
+          "display": ">6",
+          "minimum_window_censored_at_7": 7,
+          "teacher_gamma": 0.75
+        },
+        {
+          "display": ">6",
+          "minimum_window_censored_at_7": 7,
+          "teacher_gamma": 1.0
+        },
+        {
+          "display": ">6",
+          "minimum_window_censored_at_7": 7,
+          "teacher_gamma": 1.25
+        },
+        {
+          "display": "6",
+          "minimum_window_censored_at_7": 6,
+          "teacher_gamma": 1.5
+        },
+        {
+          "display": "4",
+          "minimum_window_censored_at_7": 4,
+          "teacher_gamma": 2.0
+        },
+        {
+          "display": "4",
+          "minimum_window_censored_at_7": 4,
+          "teacher_gamma": 2.5
+        },
+        {
+          "display": "3",
+          "minimum_window_censored_at_7": 3,
+          "teacher_gamma": 3.0
+        },
+        {
+          "display": "3",
+          "minimum_window_censored_at_7": 3,
+          "teacher_gamma": 4.0
+        }
+      ],
+      "minimum_successful_roots": 11,
+      "monotonicity_violations": [],
+      "non_increasing_with_loss": true,
+      "root_blocks": 12,
+      "strict_decrease_count": 3,
+      "teacher_n_qubits": 3,
+      "tolerance_nrmse": 0.08
+    },
+    {
+      "finite_loss_rate_count": 6,
+      "frontier": [
+        {
+          "display": ">6",
+          "minimum_window_censored_at_7": 7,
+          "teacher_gamma": 0.0
+        },
+        {
+          "display": ">6",
+          "minimum_window_censored_at_7": 7,
+          "teacher_gamma": 0.2
+        },
+        {
+          "display": ">6",
+          "minimum_window_censored_at_7": 7,
+          "teacher_gamma": 0.5
+        },
+        {
+          "display": ">6",
+          "minimum_window_censored_at_7": 7,
+          "teacher_gamma": 0.75
+        },
+        {
+          "display": ">6",
+          "minimum_window_censored_at_7": 7,
+          "teacher_gamma": 1.0
+        },
+        {
+          "display": "6",
+          "minimum_window_censored_at_7": 6,
+          "teacher_gamma": 1.25
+        },
+        {
+          "display": "5",
+          "minimum_window_censored_at_7": 5,
+          "teacher_gamma": 1.5
+        },
+        {
+          "display": "4",
+          "minimum_window_censored_at_7": 4,
+          "teacher_gamma": 2.0
+        },
+        {
+          "display": "3",
+          "minimum_window_censored_at_7": 3,
+          "teacher_gamma": 2.5
+        },
+        {
+          "display": "3",
+          "minimum_window_censored_at_7": 3,
+          "teacher_gamma": 3.0
+        },
+        {
+          "display": "2",
+          "minimum_window_censored_at_7": 2,
+          "teacher_gamma": 4.0
+        }
+      ],
+      "minimum_successful_roots": 9,
+      "monotonicity_violations": [],
+      "non_increasing_with_loss": true,
+      "root_blocks": 12,
+      "strict_decrease_count": 5,
+      "teacher_n_qubits": 3,
+      "tolerance_nrmse": 0.1
+    },
+    {
+      "finite_loss_rate_count": 6,
+      "frontier": [
+        {
+          "display": ">6",
+          "minimum_window_censored_at_7": 7,
+          "teacher_gamma": 0.0
+        },
+        {
+          "display": ">6",
+          "minimum_window_censored_at_7": 7,
+          "teacher_gamma": 0.2
+        },
+        {
+          "display": ">6",
+          "minimum_window_censored_at_7": 7,
+          "teacher_gamma": 0.5
+        },
+        {
+          "display": ">6",
+          "minimum_window_censored_at_7": 7,
+          "teacher_gamma": 0.75
+        },
+        {
+          "display": ">6",
+          "minimum_window_censored_at_7": 7,
+          "teacher_gamma": 1.0
+        },
+        {
+          "display": "6",
+          "minimum_window_censored_at_7": 6,
+          "teacher_gamma": 1.25
+        },
+        {
+          "display": "5",
+          "minimum_window_censored_at_7": 5,
+          "teacher_gamma": 1.5
+        },
+        {
+          "display": "4",
+          "minimum_window_censored_at_7": 4,
+          "teacher_gamma": 2.0
+        },
+        {
+          "display": "3",
+          "minimum_window_censored_at_7": 3,
+          "teacher_gamma": 2.5
+        },
+        {
+          "display": "3",
+          "minimum_window_censored_at_7": 3,
+          "teacher_gamma": 3.0
+        },
+        {
+          "display": "2",
+          "minimum_window_censored_at_7": 2,
+          "teacher_gamma": 4.0
+        }
+      ],
+      "minimum_successful_roots": 10,
+      "monotonicity_violations": [],
+      "non_increasing_with_loss": true,
+      "root_blocks": 12,
+      "strict_decrease_count": 5,
+      "teacher_n_qubits": 3,
+      "tolerance_nrmse": 0.1
+    },
+    {
+      "finite_loss_rate_count": 6,
+      "frontier": [
+        {
+          "display": ">6",
+          "minimum_window_censored_at_7": 7,
+          "teacher_gamma": 0.0
+        },
+        {
+          "display": ">6",
+          "minimum_window_censored_at_7": 7,
+          "teacher_gamma": 0.2
+        },
+        {
+          "display": ">6",
+          "minimum_window_censored_at_7": 7,
+          "teacher_gamma": 0.5
+        },
+        {
+          "display": ">6",
+          "minimum_window_censored_at_7": 7,
+          "teacher_gamma": 0.75
+        },
+        {
+          "display": ">6",
+          "minimum_window_censored_at_7": 7,
+          "teacher_gamma": 1.0
+        },
+        {
+          "display": "6",
+          "minimum_window_censored_at_7": 6,
+          "teacher_gamma": 1.25
+        },
+        {
+          "display": "5",
+          "minimum_window_censored_at_7": 5,
+          "teacher_gamma": 1.5
+        },
+        {
+          "display": "4",
+          "minimum_window_censored_at_7": 4,
+          "teacher_gamma": 2.0
+        },
+        {
+          "display": "3",
+          "minimum_window_censored_at_7": 3,
+          "teacher_gamma": 2.5
+        },
+        {
+          "display": "3",
+          "minimum_window_censored_at_7": 3,
+          "teacher_gamma": 3.0
+        },
+        {
+          "display": "2",
+          "minimum_window_censored_at_7": 2,
+          "teacher_gamma": 4.0
+        }
+      ],
+      "minimum_successful_roots": 11,
+      "monotonicity_violations": [],
+      "non_increasing_with_loss": true,
+      "root_blocks": 12,
+      "strict_decrease_count": 5,
+      "teacher_n_qubits": 3,
+      "tolerance_nrmse": 0.1
+    },
+    {
+      "finite_loss_rate_count": 7,
+      "frontier": [
+        {
+          "display": ">6",
+          "minimum_window_censored_at_7": 7,
+          "teacher_gamma": 0.0
+        },
+        {
+          "display": ">6",
+          "minimum_window_censored_at_7": 7,
+          "teacher_gamma": 0.2
+        },
+        {
+          "display": ">6",
+          "minimum_window_censored_at_7": 7,
+          "teacher_gamma": 0.5
+        },
+        {
+          "display": ">6",
+          "minimum_window_censored_at_7": 7,
+          "teacher_gamma": 0.75
+        },
+        {
+          "display": "6",
+          "minimum_window_censored_at_7": 6,
+          "teacher_gamma": 1.0
+        },
+        {
+          "display": "5",
+          "minimum_window_censored_at_7": 5,
+          "teacher_gamma": 1.25
+        },
+        {
+          "display": "4",
+          "minimum_window_censored_at_7": 4,
+          "teacher_gamma": 1.5
+        },
+        {
+          "display": "3",
+          "minimum_window_censored_at_7": 3,
+          "teacher_gamma": 2.0
+        },
+        {
+          "display": "3",
+          "minimum_window_censored_at_7": 3,
+          "teacher_gamma": 2.5
+        },
+        {
+          "display": "3",
+          "minimum_window_censored_at_7": 3,
+          "teacher_gamma": 3.0
+        },
+        {
+          "display": "2",
+          "minimum_window_censored_at_7": 2,
+          "teacher_gamma": 4.0
+        }
+      ],
+      "minimum_successful_roots": 9,
+      "monotonicity_violations": [],
+      "non_increasing_with_loss": true,
+      "root_blocks": 12,
+      "strict_decrease_count": 5,
+      "teacher_n_qubits": 3,
+      "tolerance_nrmse": 0.12
+    },
+    {
+      "finite_loss_rate_count": 7,
+      "frontier": [
+        {
+          "display": ">6",
+          "minimum_window_censored_at_7": 7,
+          "teacher_gamma": 0.0
+        },
+        {
+          "display": ">6",
+          "minimum_window_censored_at_7": 7,
+          "teacher_gamma": 0.2
+        },
+        {
+          "display": ">6",
+          "minimum_window_censored_at_7": 7,
+          "teacher_gamma": 0.5
+        },
+        {
+          "display": ">6",
+          "minimum_window_censored_at_7": 7,
+          "teacher_gamma": 0.75
+        },
+        {
+          "display": "6",
+          "minimum_window_censored_at_7": 6,
+          "teacher_gamma": 1.0
+        },
+        {
+          "display": "5",
+          "minimum_window_censored_at_7": 5,
+          "teacher_gamma": 1.25
+        },
+        {
+          "display": "4",
+          "minimum_window_censored_at_7": 4,
+          "teacher_gamma": 1.5
+        },
+        {
+          "display": "4",
+          "minimum_window_censored_at_7": 4,
+          "teacher_gamma": 2.0
+        },
+        {
+          "display": "3",
+          "minimum_window_censored_at_7": 3,
+          "teacher_gamma": 2.5
+        },
+        {
+          "display": "3",
+          "minimum_window_censored_at_7": 3,
+          "teacher_gamma": 3.0
+        },
+        {
+          "display": "2",
+          "minimum_window_censored_at_7": 2,
+          "teacher_gamma": 4.0
+        }
+      ],
+      "minimum_successful_roots": 10,
+      "monotonicity_violations": [],
+      "non_increasing_with_loss": true,
+      "root_blocks": 12,
+      "strict_decrease_count": 5,
+      "teacher_n_qubits": 3,
+      "tolerance_nrmse": 0.12
+    },
+    {
+      "finite_loss_rate_count": 6,
+      "frontier": [
+        {
+          "display": ">6",
+          "minimum_window_censored_at_7": 7,
+          "teacher_gamma": 0.0
+        },
+        {
+          "display": ">6",
+          "minimum_window_censored_at_7": 7,
+          "teacher_gamma": 0.2
+        },
+        {
+          "display": ">6",
+          "minimum_window_censored_at_7": 7,
+          "teacher_gamma": 0.5
+        },
+        {
+          "display": ">6",
+          "minimum_window_censored_at_7": 7,
+          "teacher_gamma": 0.75
+        },
+        {
+          "display": ">6",
+          "minimum_window_censored_at_7": 7,
+          "teacher_gamma": 1.0
+        },
+        {
+          "display": "6",
+          "minimum_window_censored_at_7": 6,
+          "teacher_gamma": 1.25
+        },
+        {
+          "display": "5",
+          "minimum_window_censored_at_7": 5,
+          "teacher_gamma": 1.5
+        },
+        {
+          "display": "4",
+          "minimum_window_censored_at_7": 4,
+          "teacher_gamma": 2.0
+        },
+        {
+          "display": "3",
+          "minimum_window_censored_at_7": 3,
+          "teacher_gamma": 2.5
+        },
+        {
+          "display": "3",
+          "minimum_window_censored_at_7": 3,
+          "teacher_gamma": 3.0
+        },
+        {
+          "display": "2",
+          "minimum_window_censored_at_7": 2,
+          "teacher_gamma": 4.0
+        }
+      ],
+      "minimum_successful_roots": 11,
+      "monotonicity_violations": [],
+      "non_increasing_with_loss": true,
+      "root_blocks": 12,
+      "strict_decrease_count": 5,
+      "teacher_n_qubits": 3,
+      "tolerance_nrmse": 0.12
+    },
+    {
+      "finite_loss_rate_count": 6,
+      "frontier": [
+        {
+          "display": ">6",
+          "minimum_window_censored_at_7": 7,
+          "teacher_gamma": 0.0
+        },
+        {
+          "display": ">6",
+          "minimum_window_censored_at_7": 7,
+          "teacher_gamma": 0.2
+        },
+        {
+          "display": ">6",
+          "minimum_window_censored_at_7": 7,
+          "teacher_gamma": 0.5
+        },
+        {
+          "display": ">6",
+          "minimum_window_censored_at_7": 7,
+          "teacher_gamma": 0.75
+        },
+        {
+          "display": ">6",
+          "minimum_window_censored_at_7": 7,
+          "teacher_gamma": 1.0
+        },
+        {
+          "display": "6",
+          "minimum_window_censored_at_7": 6,
+          "teacher_gamma": 1.25
+        },
+        {
+          "display": "6",
+          "minimum_window_censored_at_7": 6,
+          "teacher_gamma": 1.5
+        },
+        {
+          "display": "4",
+          "minimum_window_censored_at_7": 4,
+          "teacher_gamma": 2.0
+        },
+        {
+          "display": "4",
+          "minimum_window_censored_at_7": 4,
+          "teacher_gamma": 2.5
+        },
+        {
+          "display": "3",
+          "minimum_window_censored_at_7": 3,
+          "teacher_gamma": 3.0
+        },
+        {
+          "display": "2",
+          "minimum_window_censored_at_7": 2,
+          "teacher_gamma": 4.0
+        }
+      ],
+      "minimum_successful_roots": 9,
+      "monotonicity_violations": [],
+      "non_increasing_with_loss": true,
+      "root_blocks": 12,
+      "strict_decrease_count": 4,
+      "teacher_n_qubits": 4,
+      "tolerance_nrmse": 0.08
+    },
+    {
+      "finite_loss_rate_count": 6,
+      "frontier": [
+        {
+          "display": ">6",
+          "minimum_window_censored_at_7": 7,
+          "teacher_gamma": 0.0
+        },
+        {
+          "display": ">6",
+          "minimum_window_censored_at_7": 7,
+          "teacher_gamma": 0.2
+        },
+        {
+          "display": ">6",
+          "minimum_window_censored_at_7": 7,
+          "teacher_gamma": 0.5
+        },
+        {
+          "display": ">6",
+          "minimum_window_censored_at_7": 7,
+          "teacher_gamma": 0.75
+        },
+        {
+          "display": ">6",
+          "minimum_window_censored_at_7": 7,
+          "teacher_gamma": 1.0
+        },
+        {
+          "display": "6",
+          "minimum_window_censored_at_7": 6,
+          "teacher_gamma": 1.25
+        },
+        {
+          "display": "6",
+          "minimum_window_censored_at_7": 6,
+          "teacher_gamma": 1.5
+        },
+        {
+          "display": "5",
+          "minimum_window_censored_at_7": 5,
+          "teacher_gamma": 2.0
+        },
+        {
+          "display": "4",
+          "minimum_window_censored_at_7": 4,
+          "teacher_gamma": 2.5
+        },
+        {
+          "display": "3",
+          "minimum_window_censored_at_7": 3,
+          "teacher_gamma": 3.0
+        },
+        {
+          "display": "2",
+          "minimum_window_censored_at_7": 2,
+          "teacher_gamma": 4.0
+        }
+      ],
+      "minimum_successful_roots": 10,
+      "monotonicity_violations": [],
+      "non_increasing_with_loss": true,
+      "root_blocks": 12,
+      "strict_decrease_count": 5,
+      "teacher_n_qubits": 4,
+      "tolerance_nrmse": 0.08
+    },
+    {
+      "finite_loss_rate_count": 5,
+      "frontier": [
+        {
+          "display": ">6",
+          "minimum_window_censored_at_7": 7,
+          "teacher_gamma": 0.0
+        },
+        {
+          "display": ">6",
+          "minimum_window_censored_at_7": 7,
+          "teacher_gamma": 0.2
+        },
+        {
+          "display": ">6",
+          "minimum_window_censored_at_7": 7,
+          "teacher_gamma": 0.5
+        },
+        {
+          "display": ">6",
+          "minimum_window_censored_at_7": 7,
+          "teacher_gamma": 0.75
+        },
+        {
+          "display": ">6",
+          "minimum_window_censored_at_7": 7,
+          "teacher_gamma": 1.0
+        },
+        {
+          "display": ">6",
+          "minimum_window_censored_at_7": 7,
+          "teacher_gamma": 1.25
+        },
+        {
+          "display": "6",
+          "minimum_window_censored_at_7": 6,
+          "teacher_gamma": 1.5
+        },
+        {
+          "display": "5",
+          "minimum_window_censored_at_7": 5,
+          "teacher_gamma": 2.0
+        },
+        {
+          "display": "4",
+          "minimum_window_censored_at_7": 4,
+          "teacher_gamma": 2.5
+        },
+        {
+          "display": "3",
+          "minimum_window_censored_at_7": 3,
+          "teacher_gamma": 3.0
+        },
+        {
+          "display": "3",
+          "minimum_window_censored_at_7": 3,
+          "teacher_gamma": 4.0
+        }
+      ],
+      "minimum_successful_roots": 11,
+      "monotonicity_violations": [],
+      "non_increasing_with_loss": true,
+      "root_blocks": 12,
+      "strict_decrease_count": 4,
+      "teacher_n_qubits": 4,
+      "tolerance_nrmse": 0.08
+    },
+    {
+      "finite_loss_rate_count": 6,
+      "frontier": [
+        {
+          "display": ">6",
+          "minimum_window_censored_at_7": 7,
+          "teacher_gamma": 0.0
+        },
+        {
+          "display": ">6",
+          "minimum_window_censored_at_7": 7,
+          "teacher_gamma": 0.2
+        },
+        {
+          "display": ">6",
+          "minimum_window_censored_at_7": 7,
+          "teacher_gamma": 0.5
+        },
+        {
+          "display": ">6",
+          "minimum_window_censored_at_7": 7,
+          "teacher_gamma": 0.75
+        },
+        {
+          "display": ">6",
+          "minimum_window_censored_at_7": 7,
+          "teacher_gamma": 1.0
+        },
+        {
+          "display": "6",
+          "minimum_window_censored_at_7": 6,
+          "teacher_gamma": 1.25
+        },
+        {
+          "display": "5",
+          "minimum_window_censored_at_7": 5,
+          "teacher_gamma": 1.5
+        },
+        {
+          "display": "4",
+          "minimum_window_censored_at_7": 4,
+          "teacher_gamma": 2.0
+        },
+        {
+          "display": "3",
+          "minimum_window_censored_at_7": 3,
+          "teacher_gamma": 2.5
+        },
+        {
+          "display": "3",
+          "minimum_window_censored_at_7": 3,
+          "teacher_gamma": 3.0
+        },
+        {
+          "display": "2",
+          "minimum_window_censored_at_7": 2,
+          "teacher_gamma": 4.0
+        }
+      ],
+      "minimum_successful_roots": 9,
+      "monotonicity_violations": [],
+      "non_increasing_with_loss": true,
+      "root_blocks": 12,
+      "strict_decrease_count": 5,
+      "teacher_n_qubits": 4,
+      "tolerance_nrmse": 0.1
+    },
+    {
+      "finite_loss_rate_count": 6,
+      "frontier": [
+        {
+          "display": ">6",
+          "minimum_window_censored_at_7": 7,
+          "teacher_gamma": 0.0
+        },
+        {
+          "display": ">6",
+          "minimum_window_censored_at_7": 7,
+          "teacher_gamma": 0.2
+        },
+        {
+          "display": ">6",
+          "minimum_window_censored_at_7": 7,
+          "teacher_gamma": 0.5
+        },
+        {
+          "display": ">6",
+          "minimum_window_censored_at_7": 7,
+          "teacher_gamma": 0.75
+        },
+        {
+          "display": ">6",
+          "minimum_window_censored_at_7": 7,
+          "teacher_gamma": 1.0
+        },
+        {
+          "display": "6",
+          "minimum_window_censored_at_7": 6,
+          "teacher_gamma": 1.25
+        },
+        {
+          "display": "5",
+          "minimum_window_censored_at_7": 5,
+          "teacher_gamma": 1.5
+        },
+        {
+          "display": "4",
+          "minimum_window_censored_at_7": 4,
+          "teacher_gamma": 2.0
+        },
+        {
+          "display": "3",
+          "minimum_window_censored_at_7": 3,
+          "teacher_gamma": 2.5
+        },
+        {
+          "display": "3",
+          "minimum_window_censored_at_7": 3,
+          "teacher_gamma": 3.0
+        },
+        {
+          "display": "2",
+          "minimum_window_censored_at_7": 2,
+          "teacher_gamma": 4.0
+        }
+      ],
+      "minimum_successful_roots": 10,
+      "monotonicity_violations": [],
+      "non_increasing_with_loss": true,
+      "root_blocks": 12,
+      "strict_decrease_count": 5,
+      "teacher_n_qubits": 4,
+      "tolerance_nrmse": 0.1
+    },
+    {
+      "finite_loss_rate_count": 6,
+      "frontier": [
+        {
+          "display": ">6",
+          "minimum_window_censored_at_7": 7,
+          "teacher_gamma": 0.0
+        },
+        {
+          "display": ">6",
+          "minimum_window_censored_at_7": 7,
+          "teacher_gamma": 0.2
+        },
+        {
+          "display": ">6",
+          "minimum_window_censored_at_7": 7,
+          "teacher_gamma": 0.5
+        },
+        {
+          "display": ">6",
+          "minimum_window_censored_at_7": 7,
+          "teacher_gamma": 0.75
+        },
+        {
+          "display": ">6",
+          "minimum_window_censored_at_7": 7,
+          "teacher_gamma": 1.0
+        },
+        {
+          "display": "6",
+          "minimum_window_censored_at_7": 6,
+          "teacher_gamma": 1.25
+        },
+        {
+          "display": "5",
+          "minimum_window_censored_at_7": 5,
+          "teacher_gamma": 1.5
+        },
+        {
+          "display": "4",
+          "minimum_window_censored_at_7": 4,
+          "teacher_gamma": 2.0
+        },
+        {
+          "display": "3",
+          "minimum_window_censored_at_7": 3,
+          "teacher_gamma": 2.5
+        },
+        {
+          "display": "3",
+          "minimum_window_censored_at_7": 3,
+          "teacher_gamma": 3.0
+        },
+        {
+          "display": "2",
+          "minimum_window_censored_at_7": 2,
+          "teacher_gamma": 4.0
+        }
+      ],
+      "minimum_successful_roots": 11,
+      "monotonicity_violations": [],
+      "non_increasing_with_loss": true,
+      "root_blocks": 12,
+      "strict_decrease_count": 5,
+      "teacher_n_qubits": 4,
+      "tolerance_nrmse": 0.1
+    },
+    {
+      "finite_loss_rate_count": 7,
+      "frontier": [
+        {
+          "display": ">6",
+          "minimum_window_censored_at_7": 7,
+          "teacher_gamma": 0.0
+        },
+        {
+          "display": ">6",
+          "minimum_window_censored_at_7": 7,
+          "teacher_gamma": 0.2
+        },
+        {
+          "display": ">6",
+          "minimum_window_censored_at_7": 7,
+          "teacher_gamma": 0.5
+        },
+        {
+          "display": ">6",
+          "minimum_window_censored_at_7": 7,
+          "teacher_gamma": 0.75
+        },
+        {
+          "display": "6",
+          "minimum_window_censored_at_7": 6,
+          "teacher_gamma": 1.0
+        },
+        {
+          "display": "5",
+          "minimum_window_censored_at_7": 5,
+          "teacher_gamma": 1.25
+        },
+        {
+          "display": "5",
+          "minimum_window_censored_at_7": 5,
+          "teacher_gamma": 1.5
+        },
+        {
+          "display": "4",
+          "minimum_window_censored_at_7": 4,
+          "teacher_gamma": 2.0
+        },
+        {
+          "display": "3",
+          "minimum_window_censored_at_7": 3,
+          "teacher_gamma": 2.5
+        },
+        {
+          "display": "3",
+          "minimum_window_censored_at_7": 3,
+          "teacher_gamma": 3.0
+        },
+        {
+          "display": "2",
+          "minimum_window_censored_at_7": 2,
+          "teacher_gamma": 4.0
+        }
+      ],
+      "minimum_successful_roots": 9,
+      "monotonicity_violations": [],
+      "non_increasing_with_loss": true,
+      "root_blocks": 12,
+      "strict_decrease_count": 5,
+      "teacher_n_qubits": 4,
+      "tolerance_nrmse": 0.12
+    },
+    {
+      "finite_loss_rate_count": 7,
+      "frontier": [
+        {
+          "display": ">6",
+          "minimum_window_censored_at_7": 7,
+          "teacher_gamma": 0.0
+        },
+        {
+          "display": ">6",
+          "minimum_window_censored_at_7": 7,
+          "teacher_gamma": 0.2
+        },
+        {
+          "display": ">6",
+          "minimum_window_censored_at_7": 7,
+          "teacher_gamma": 0.5
+        },
+        {
+          "display": ">6",
+          "minimum_window_censored_at_7": 7,
+          "teacher_gamma": 0.75
+        },
+        {
+          "display": "6",
+          "minimum_window_censored_at_7": 6,
+          "teacher_gamma": 1.0
+        },
+        {
+          "display": "5",
+          "minimum_window_censored_at_7": 5,
+          "teacher_gamma": 1.25
+        },
+        {
+          "display": "5",
+          "minimum_window_censored_at_7": 5,
+          "teacher_gamma": 1.5
+        },
+        {
+          "display": "4",
+          "minimum_window_censored_at_7": 4,
+          "teacher_gamma": 2.0
+        },
+        {
+          "display": "3",
+          "minimum_window_censored_at_7": 3,
+          "teacher_gamma": 2.5
+        },
+        {
+          "display": "3",
+          "minimum_window_censored_at_7": 3,
+          "teacher_gamma": 3.0
+        },
+        {
+          "display": "2",
+          "minimum_window_censored_at_7": 2,
+          "teacher_gamma": 4.0
+        }
+      ],
+      "minimum_successful_roots": 10,
+      "monotonicity_violations": [],
+      "non_increasing_with_loss": true,
+      "root_blocks": 12,
+      "strict_decrease_count": 5,
+      "teacher_n_qubits": 4,
+      "tolerance_nrmse": 0.12
+    },
+    {
+      "finite_loss_rate_count": 6,
+      "frontier": [
+        {
+          "display": ">6",
+          "minimum_window_censored_at_7": 7,
+          "teacher_gamma": 0.0
+        },
+        {
+          "display": ">6",
+          "minimum_window_censored_at_7": 7,
+          "teacher_gamma": 0.2
+        },
+        {
+          "display": ">6",
+          "minimum_window_censored_at_7": 7,
+          "teacher_gamma": 0.5
+        },
+        {
+          "display": ">6",
+          "minimum_window_censored_at_7": 7,
+          "teacher_gamma": 0.75
+        },
+        {
+          "display": ">6",
+          "minimum_window_censored_at_7": 7,
+          "teacher_gamma": 1.0
+        },
+        {
+          "display": "6",
+          "minimum_window_censored_at_7": 6,
+          "teacher_gamma": 1.25
+        },
+        {
+          "display": "5",
+          "minimum_window_censored_at_7": 5,
+          "teacher_gamma": 1.5
+        },
+        {
+          "display": "4",
+          "minimum_window_censored_at_7": 4,
+          "teacher_gamma": 2.0
+        },
+        {
+          "display": "3",
+          "minimum_window_censored_at_7": 3,
+          "teacher_gamma": 2.5
+        },
+        {
+          "display": "3",
+          "minimum_window_censored_at_7": 3,
+          "teacher_gamma": 3.0
+        },
+        {
+          "display": "2",
+          "minimum_window_censored_at_7": 2,
+          "teacher_gamma": 4.0
+        }
+      ],
+      "minimum_successful_roots": 11,
+      "monotonicity_violations": [],
+      "non_increasing_with_loss": true,
+      "root_blocks": 12,
+      "strict_decrease_count": 5,
+      "teacher_n_qubits": 4,
+      "tolerance_nrmse": 0.12
+    }
+  ],
+  "history_sufficient_root_counts": [
+    {
+      "root_blocks": 12,
+      "successful_roots": 0,
+      "teacher_gamma": 0.0,
+      "teacher_n_qubits": 2,
+      "tolerance_nrmse": 0.08,
+      "window": 1
+    },
+    {
+      "root_blocks": 12,
+      "successful_roots": 0,
+      "teacher_gamma": 0.0,
+      "teacher_n_qubits": 2,
+      "tolerance_nrmse": 0.08,
+      "window": 2
+    },
+    {
+      "root_blocks": 12,
+      "successful_roots": 0,
+      "teacher_gamma": 0.0,
+      "teacher_n_qubits": 2,
+      "tolerance_nrmse": 0.08,
+      "window": 3
+    },
+    {
+      "root_blocks": 12,
+      "successful_roots": 0,
+      "teacher_gamma": 0.0,
+      "teacher_n_qubits": 2,
+      "tolerance_nrmse": 0.08,
+      "window": 4
+    },
+    {
+      "root_blocks": 12,
+      "successful_roots": 0,
+      "teacher_gamma": 0.0,
+      "teacher_n_qubits": 2,
+      "tolerance_nrmse": 0.08,
+      "window": 5
+    },
+    {
+      "root_blocks": 12,
+      "successful_roots": 0,
+      "teacher_gamma": 0.0,
+      "teacher_n_qubits": 2,
+      "tolerance_nrmse": 0.08,
+      "window": 6
+    },
+    {
+      "root_blocks": 12,
+      "successful_roots": 0,
+      "teacher_gamma": 0.2,
+      "teacher_n_qubits": 2,
+      "tolerance_nrmse": 0.08,
+      "window": 1
+    },
+    {
+      "root_blocks": 12,
+      "successful_roots": 0,
+      "teacher_gamma": 0.2,
+      "teacher_n_qubits": 2,
+      "tolerance_nrmse": 0.08,
+      "window": 2
+    },
+    {
+      "root_blocks": 12,
+      "successful_roots": 0,
+      "teacher_gamma": 0.2,
+      "teacher_n_qubits": 2,
+      "tolerance_nrmse": 0.08,
+      "window": 3
+    },
+    {
+      "root_blocks": 12,
+      "successful_roots": 0,
+      "teacher_gamma": 0.2,
+      "teacher_n_qubits": 2,
+      "tolerance_nrmse": 0.08,
+      "window": 4
+    },
+    {
+      "root_blocks": 12,
+      "successful_roots": 0,
+      "teacher_gamma": 0.2,
+      "teacher_n_qubits": 2,
+      "tolerance_nrmse": 0.08,
+      "window": 5
+    },
+    {
+      "root_blocks": 12,
+      "successful_roots": 0,
+      "teacher_gamma": 0.2,
+      "teacher_n_qubits": 2,
+      "tolerance_nrmse": 0.08,
+      "window": 6
+    },
+    {
+      "root_blocks": 12,
+      "successful_roots": 0,
+      "teacher_gamma": 0.5,
+      "teacher_n_qubits": 2,
+      "tolerance_nrmse": 0.08,
+      "window": 1
+    },
+    {
+      "root_blocks": 12,
+      "successful_roots": 0,
+      "teacher_gamma": 0.5,
+      "teacher_n_qubits": 2,
+      "tolerance_nrmse": 0.08,
+      "window": 2
+    },
+    {
+      "root_blocks": 12,
+      "successful_roots": 0,
+      "teacher_gamma": 0.5,
+      "teacher_n_qubits": 2,
+      "tolerance_nrmse": 0.08,
+      "window": 3
+    },
+    {
+      "root_blocks": 12,
+      "successful_roots": 0,
+      "teacher_gamma": 0.5,
+      "teacher_n_qubits": 2,
+      "tolerance_nrmse": 0.08,
+      "window": 4
+    },
+    {
+      "root_blocks": 12,
+      "successful_roots": 0,
+      "teacher_gamma": 0.5,
+      "teacher_n_qubits": 2,
+      "tolerance_nrmse": 0.08,
+      "window": 5
+    },
+    {
+      "root_blocks": 12,
+      "successful_roots": 0,
+      "teacher_gamma": 0.5,
+      "teacher_n_qubits": 2,
+      "tolerance_nrmse": 0.08,
+      "window": 6
+    },
+    {
+      "root_blocks": 12,
+      "successful_roots": 0,
+      "teacher_gamma": 0.75,
+      "teacher_n_qubits": 2,
+      "tolerance_nrmse": 0.08,
+      "window": 1
+    },
+    {
+      "root_blocks": 12,
+      "successful_roots": 0,
+      "teacher_gamma": 0.75,
+      "teacher_n_qubits": 2,
+      "tolerance_nrmse": 0.08,
+      "window": 2
+    },
+    {
+      "root_blocks": 12,
+      "successful_roots": 0,
+      "teacher_gamma": 0.75,
+      "teacher_n_qubits": 2,
+      "tolerance_nrmse": 0.08,
+      "window": 3
+    },
+    {
+      "root_blocks": 12,
+      "successful_roots": 0,
+      "teacher_gamma": 0.75,
+      "teacher_n_qubits": 2,
+      "tolerance_nrmse": 0.08,
+      "window": 4
+    },
+    {
+      "root_blocks": 12,
+      "successful_roots": 0,
+      "teacher_gamma": 0.75,
+      "teacher_n_qubits": 2,
+      "tolerance_nrmse": 0.08,
+      "window": 5
+    },
+    {
+      "root_blocks": 12,
+      "successful_roots": 0,
+      "teacher_gamma": 0.75,
+      "teacher_n_qubits": 2,
+      "tolerance_nrmse": 0.08,
+      "window": 6
+    },
+    {
+      "root_blocks": 12,
+      "successful_roots": 0,
+      "teacher_gamma": 1.0,
+      "teacher_n_qubits": 2,
+      "tolerance_nrmse": 0.08,
+      "window": 1
+    },
+    {
+      "root_blocks": 12,
+      "successful_roots": 0,
+      "teacher_gamma": 1.0,
+      "teacher_n_qubits": 2,
+      "tolerance_nrmse": 0.08,
+      "window": 2
+    },
+    {
+      "root_blocks": 12,
+      "successful_roots": 0,
+      "teacher_gamma": 1.0,
+      "teacher_n_qubits": 2,
+      "tolerance_nrmse": 0.08,
+      "window": 3
+    },
+    {
+      "root_blocks": 12,
+      "successful_roots": 0,
+      "teacher_gamma": 1.0,
+      "teacher_n_qubits": 2,
+      "tolerance_nrmse": 0.08,
+      "window": 4
+    },
+    {
+      "root_blocks": 12,
+      "successful_roots": 0,
+      "teacher_gamma": 1.0,
+      "teacher_n_qubits": 2,
+      "tolerance_nrmse": 0.08,
+      "window": 5
+    },
+    {
+      "root_blocks": 12,
+      "successful_roots": 1,
+      "teacher_gamma": 1.0,
+      "teacher_n_qubits": 2,
+      "tolerance_nrmse": 0.08,
+      "window": 6
+    },
+    {
+      "root_blocks": 12,
+      "successful_roots": 0,
+      "teacher_gamma": 1.25,
+      "teacher_n_qubits": 2,
+      "tolerance_nrmse": 0.08,
+      "window": 1
+    },
+    {
+      "root_blocks": 12,
+      "successful_roots": 0,
+      "teacher_gamma": 1.25,
+      "teacher_n_qubits": 2,
+      "tolerance_nrmse": 0.08,
+      "window": 2
+    },
+    {
+      "root_blocks": 12,
+      "successful_roots": 0,
+      "teacher_gamma": 1.25,
+      "teacher_n_qubits": 2,
+      "tolerance_nrmse": 0.08,
+      "window": 3
+    },
+    {
+      "root_blocks": 12,
+      "successful_roots": 0,
+      "teacher_gamma": 1.25,
+      "teacher_n_qubits": 2,
+      "tolerance_nrmse": 0.08,
+      "window": 4
+    },
+    {
+      "root_blocks": 12,
+      "successful_roots": 1,
+      "teacher_gamma": 1.25,
+      "teacher_n_qubits": 2,
+      "tolerance_nrmse": 0.08,
+      "window": 5
+    },
+    {
+      "root_blocks": 12,
+      "successful_roots": 7,
+      "teacher_gamma": 1.25,
+      "teacher_n_qubits": 2,
+      "tolerance_nrmse": 0.08,
+      "window": 6
+    },
+    {
+      "root_blocks": 12,
+      "successful_roots": 0,
+      "teacher_gamma": 1.5,
+      "teacher_n_qubits": 2,
+      "tolerance_nrmse": 0.08,
+      "window": 1
+    },
+    {
+      "root_blocks": 12,
+      "successful_roots": 0,
+      "teacher_gamma": 1.5,
+      "teacher_n_qubits": 2,
+      "tolerance_nrmse": 0.08,
+      "window": 2
+    },
+    {
+      "root_blocks": 12,
+      "successful_roots": 0,
+      "teacher_gamma": 1.5,
+      "teacher_n_qubits": 2,
+      "tolerance_nrmse": 0.08,
+      "window": 3
+    },
+    {
+      "root_blocks": 12,
+      "successful_roots": 1,
+      "teacher_gamma": 1.5,
+      "teacher_n_qubits": 2,
+      "tolerance_nrmse": 0.08,
+      "window": 4
+    },
+    {
+      "root_blocks": 12,
+      "successful_roots": 7,
+      "teacher_gamma": 1.5,
+      "teacher_n_qubits": 2,
+      "tolerance_nrmse": 0.08,
+      "window": 5
+    },
+    {
+      "root_blocks": 12,
+      "successful_roots": 12,
+      "teacher_gamma": 1.5,
+      "teacher_n_qubits": 2,
+      "tolerance_nrmse": 0.08,
+      "window": 6
+    },
+    {
+      "root_blocks": 12,
+      "successful_roots": 0,
+      "teacher_gamma": 2.0,
+      "teacher_n_qubits": 2,
+      "tolerance_nrmse": 0.08,
+      "window": 1
+    },
+    {
+      "root_blocks": 12,
+      "successful_roots": 0,
+      "teacher_gamma": 2.0,
+      "teacher_n_qubits": 2,
+      "tolerance_nrmse": 0.08,
+      "window": 2
+    },
+    {
+      "root_blocks": 12,
+      "successful_roots": 1,
+      "teacher_gamma": 2.0,
+      "teacher_n_qubits": 2,
+      "tolerance_nrmse": 0.08,
+      "window": 3
+    },
+    {
+      "root_blocks": 12,
+      "successful_roots": 11,
+      "teacher_gamma": 2.0,
+      "teacher_n_qubits": 2,
+      "tolerance_nrmse": 0.08,
+      "window": 4
+    },
+    {
+      "root_blocks": 12,
+      "successful_roots": 12,
+      "teacher_gamma": 2.0,
+      "teacher_n_qubits": 2,
+      "tolerance_nrmse": 0.08,
+      "window": 5
+    },
+    {
+      "root_blocks": 12,
+      "successful_roots": 12,
+      "teacher_gamma": 2.0,
+      "teacher_n_qubits": 2,
+      "tolerance_nrmse": 0.08,
+      "window": 6
+    },
+    {
+      "root_blocks": 12,
+      "successful_roots": 0,
+      "teacher_gamma": 2.5,
+      "teacher_n_qubits": 2,
+      "tolerance_nrmse": 0.08,
+      "window": 1
+    },
+    {
+      "root_blocks": 12,
+      "successful_roots": 0,
+      "teacher_gamma": 2.5,
+      "teacher_n_qubits": 2,
+      "tolerance_nrmse": 0.08,
+      "window": 2
+    },
+    {
+      "root_blocks": 12,
+      "successful_roots": 7,
+      "teacher_gamma": 2.5,
+      "teacher_n_qubits": 2,
+      "tolerance_nrmse": 0.08,
+      "window": 3
+    },
+    {
+      "root_blocks": 12,
+      "successful_roots": 12,
+      "teacher_gamma": 2.5,
+      "teacher_n_qubits": 2,
+      "tolerance_nrmse": 0.08,
+      "window": 4
+    },
+    {
+      "root_blocks": 12,
+      "successful_roots": 12,
+      "teacher_gamma": 2.5,
+      "teacher_n_qubits": 2,
+      "tolerance_nrmse": 0.08,
+      "window": 5
+    },
+    {
+      "root_blocks": 12,
+      "successful_roots": 12,
+      "teacher_gamma": 2.5,
+      "teacher_n_qubits": 2,
+      "tolerance_nrmse": 0.08,
+      "window": 6
+    },
+    {
+      "root_blocks": 12,
+      "successful_roots": 0,
+      "teacher_gamma": 3.0,
+      "teacher_n_qubits": 2,
+      "tolerance_nrmse": 0.08,
+      "window": 1
+    },
+    {
+      "root_blocks": 12,
+      "successful_roots": 0,
+      "teacher_gamma": 3.0,
+      "teacher_n_qubits": 2,
+      "tolerance_nrmse": 0.08,
+      "window": 2
+    },
+    {
+      "root_blocks": 12,
+      "successful_roots": 12,
+      "teacher_gamma": 3.0,
+      "teacher_n_qubits": 2,
+      "tolerance_nrmse": 0.08,
+      "window": 3
+    },
+    {
+      "root_blocks": 12,
+      "successful_roots": 12,
+      "teacher_gamma": 3.0,
+      "teacher_n_qubits": 2,
+      "tolerance_nrmse": 0.08,
+      "window": 4
+    },
+    {
+      "root_blocks": 12,
+      "successful_roots": 12,
+      "teacher_gamma": 3.0,
+      "teacher_n_qubits": 2,
+      "tolerance_nrmse": 0.08,
+      "window": 5
+    },
+    {
+      "root_blocks": 12,
+      "successful_roots": 12,
+      "teacher_gamma": 3.0,
+      "teacher_n_qubits": 2,
+      "tolerance_nrmse": 0.08,
+      "window": 6
+    },
+    {
+      "root_blocks": 12,
+      "successful_roots": 0,
+      "teacher_gamma": 4.0,
+      "teacher_n_qubits": 2,
+      "tolerance_nrmse": 0.08,
+      "window": 1
+    },
+    {
+      "root_blocks": 12,
+      "successful_roots": 10,
+      "teacher_gamma": 4.0,
+      "teacher_n_qubits": 2,
+      "tolerance_nrmse": 0.08,
+      "window": 2
+    },
+    {
+      "root_blocks": 12,
+      "successful_roots": 12,
+      "teacher_gamma": 4.0,
+      "teacher_n_qubits": 2,
+      "tolerance_nrmse": 0.08,
+      "window": 3
+    },
+    {
+      "root_blocks": 12,
+      "successful_roots": 12,
+      "teacher_gamma": 4.0,
+      "teacher_n_qubits": 2,
+      "tolerance_nrmse": 0.08,
+      "window": 4
+    },
+    {
+      "root_blocks": 12,
+      "successful_roots": 12,
+      "teacher_gamma": 4.0,
+      "teacher_n_qubits": 2,
+      "tolerance_nrmse": 0.08,
+      "window": 5
+    },
+    {
+      "root_blocks": 12,
+      "successful_roots": 12,
+      "teacher_gamma": 4.0,
+      "teacher_n_qubits": 2,
+      "tolerance_nrmse": 0.08,
+      "window": 6
+    },
+    {
+      "root_blocks": 12,
+      "successful_roots": 0,
+      "teacher_gamma": 0.0,
+      "teacher_n_qubits": 2,
+      "tolerance_nrmse": 0.1,
+      "window": 1
+    },
+    {
+      "root_blocks": 12,
+      "successful_roots": 0,
+      "teacher_gamma": 0.0,
+      "teacher_n_qubits": 2,
+      "tolerance_nrmse": 0.1,
+      "window": 2
+    },
+    {
+      "root_blocks": 12,
+      "successful_roots": 0,
+      "teacher_gamma": 0.0,
+      "teacher_n_qubits": 2,
+      "tolerance_nrmse": 0.1,
+      "window": 3
+    },
+    {
+      "root_blocks": 12,
+      "successful_roots": 0,
+      "teacher_gamma": 0.0,
+      "teacher_n_qubits": 2,
+      "tolerance_nrmse": 0.1,
+      "window": 4
+    },
+    {
+      "root_blocks": 12,
+      "successful_roots": 0,
+      "teacher_gamma": 0.0,
+      "teacher_n_qubits": 2,
+      "tolerance_nrmse": 0.1,
+      "window": 5
+    },
+    {
+      "root_blocks": 12,
+      "successful_roots": 0,
+      "teacher_gamma": 0.0,
+      "teacher_n_qubits": 2,
+      "tolerance_nrmse": 0.1,
+      "window": 6
+    },
+    {
+      "root_blocks": 12,
+      "successful_roots": 0,
+      "teacher_gamma": 0.2,
+      "teacher_n_qubits": 2,
+      "tolerance_nrmse": 0.1,
+      "window": 1
+    },
+    {
+      "root_blocks": 12,
+      "successful_roots": 0,
+      "teacher_gamma": 0.2,
+      "teacher_n_qubits": 2,
+      "tolerance_nrmse": 0.1,
+      "window": 2
+    },
+    {
+      "root_blocks": 12,
+      "successful_roots": 0,
+      "teacher_gamma": 0.2,
+      "teacher_n_qubits": 2,
+      "tolerance_nrmse": 0.1,
+      "window": 3
+    },
+    {
+      "root_blocks": 12,
+      "successful_roots": 0,
+      "teacher_gamma": 0.2,
+      "teacher_n_qubits": 2,
+      "tolerance_nrmse": 0.1,
+      "window": 4
+    },
+    {
+      "root_blocks": 12,
+      "successful_roots": 0,
+      "teacher_gamma": 0.2,
+      "teacher_n_qubits": 2,
+      "tolerance_nrmse": 0.1,
+      "window": 5
+    },
+    {
+      "root_blocks": 12,
+      "successful_roots": 0,
+      "teacher_gamma": 0.2,
+      "teacher_n_qubits": 2,
+      "tolerance_nrmse": 0.1,
+      "window": 6
+    },
+    {
+      "root_blocks": 12,
+      "successful_roots": 0,
+      "teacher_gamma": 0.5,
+      "teacher_n_qubits": 2,
+      "tolerance_nrmse": 0.1,
+      "window": 1
+    },
+    {
+      "root_blocks": 12,
+      "successful_roots": 0,
+      "teacher_gamma": 0.5,
+      "teacher_n_qubits": 2,
+      "tolerance_nrmse": 0.1,
+      "window": 2
+    },
+    {
+      "root_blocks": 12,
+      "successful_roots": 0,
+      "teacher_gamma": 0.5,
+      "teacher_n_qubits": 2,
+      "tolerance_nrmse": 0.1,
+      "window": 3
+    },
+    {
+      "root_blocks": 12,
+      "successful_roots": 0,
+      "teacher_gamma": 0.5,
+      "teacher_n_qubits": 2,
+      "tolerance_nrmse": 0.1,
+      "window": 4
+    },
+    {
+      "root_blocks": 12,
+      "successful_roots": 0,
+      "teacher_gamma": 0.5,
+      "teacher_n_qubits": 2,
+      "tolerance_nrmse": 0.1,
+      "window": 5
+    },
+    {
+      "root_blocks": 12,
+      "successful_roots": 0,
+      "teacher_gamma": 0.5,
+      "teacher_n_qubits": 2,
+      "tolerance_nrmse": 0.1,
+      "window": 6
+    },
+    {
+      "root_blocks": 12,
+      "successful_roots": 0,
+      "teacher_gamma": 0.75,
+      "teacher_n_qubits": 2,
+      "tolerance_nrmse": 0.1,
+      "window": 1
+    },
+    {
+      "root_blocks": 12,
+      "successful_roots": 0,
+      "teacher_gamma": 0.75,
+      "teacher_n_qubits": 2,
+      "tolerance_nrmse": 0.1,
+      "window": 2
+    },
+    {
+      "root_blocks": 12,
+      "successful_roots": 0,
+      "teacher_gamma": 0.75,
+      "teacher_n_qubits": 2,
+      "tolerance_nrmse": 0.1,
+      "window": 3
+    },
+    {
+      "root_blocks": 12,
+      "successful_roots": 0,
+      "teacher_gamma": 0.75,
+      "teacher_n_qubits": 2,
+      "tolerance_nrmse": 0.1,
+      "window": 4
+    },
+    {
+      "root_blocks": 12,
+      "successful_roots": 0,
+      "teacher_gamma": 0.75,
+      "teacher_n_qubits": 2,
+      "tolerance_nrmse": 0.1,
+      "window": 5
+    },
+    {
+      "root_blocks": 12,
+      "successful_roots": 0,
+      "teacher_gamma": 0.75,
+      "teacher_n_qubits": 2,
+      "tolerance_nrmse": 0.1,
+      "window": 6
+    },
+    {
+      "root_blocks": 12,
+      "successful_roots": 0,
+      "teacher_gamma": 1.0,
+      "teacher_n_qubits": 2,
+      "tolerance_nrmse": 0.1,
+      "window": 1
+    },
+    {
+      "root_blocks": 12,
+      "successful_roots": 0,
+      "teacher_gamma": 1.0,
+      "teacher_n_qubits": 2,
+      "tolerance_nrmse": 0.1,
+      "window": 2
+    },
+    {
+      "root_blocks": 12,
+      "successful_roots": 0,
+      "teacher_gamma": 1.0,
+      "teacher_n_qubits": 2,
+      "tolerance_nrmse": 0.1,
+      "window": 3
+    },
+    {
+      "root_blocks": 12,
+      "successful_roots": 0,
+      "teacher_gamma": 1.0,
+      "teacher_n_qubits": 2,
+      "tolerance_nrmse": 0.1,
+      "window": 4
+    },
+    {
+      "root_blocks": 12,
+      "successful_roots": 0,
+      "teacher_gamma": 1.0,
+      "teacher_n_qubits": 2,
+      "tolerance_nrmse": 0.1,
+      "window": 5
+    },
+    {
+      "root_blocks": 12,
+      "successful_roots": 3,
+      "teacher_gamma": 1.0,
+      "teacher_n_qubits": 2,
+      "tolerance_nrmse": 0.1,
+      "window": 6
+    },
+    {
+      "root_blocks": 12,
+      "successful_roots": 0,
+      "teacher_gamma": 1.25,
+      "teacher_n_qubits": 2,
+      "tolerance_nrmse": 0.1,
+      "window": 1
+    },
+    {
+      "root_blocks": 12,
+      "successful_roots": 0,
+      "teacher_gamma": 1.25,
+      "teacher_n_qubits": 2,
+      "tolerance_nrmse": 0.1,
+      "window": 2
+    },
+    {
+      "root_blocks": 12,
+      "successful_roots": 0,
+      "teacher_gamma": 1.25,
+      "teacher_n_qubits": 2,
+      "tolerance_nrmse": 0.1,
+      "window": 3
+    },
+    {
+      "root_blocks": 12,
+      "successful_roots": 1,
+      "teacher_gamma": 1.25,
+      "teacher_n_qubits": 2,
+      "tolerance_nrmse": 0.1,
+      "window": 4
+    },
+    {
+      "root_blocks": 12,
+      "successful_roots": 5,
+      "teacher_gamma": 1.25,
+      "teacher_n_qubits": 2,
+      "tolerance_nrmse": 0.1,
+      "window": 5
+    },
+    {
+      "root_blocks": 12,
+      "successful_roots": 12,
+      "teacher_gamma": 1.25,
+      "teacher_n_qubits": 2,
+      "tolerance_nrmse": 0.1,
+      "window": 6
+    },
+    {
+      "root_blocks": 12,
+      "successful_roots": 0,
+      "teacher_gamma": 1.5,
+      "teacher_n_qubits": 2,
+      "tolerance_nrmse": 0.1,
+      "window": 1
+    },
+    {
+      "root_blocks": 12,
+      "successful_roots": 0,
+      "teacher_gamma": 1.5,
+      "teacher_n_qubits": 2,
+      "tolerance_nrmse": 0.1,
+      "window": 2
+    },
+    {
+      "root_blocks": 12,
+      "successful_roots": 0,
+      "teacher_gamma": 1.5,
+      "teacher_n_qubits": 2,
+      "tolerance_nrmse": 0.1,
+      "window": 3
+    },
+    {
+      "root_blocks": 12,
+      "successful_roots": 3,
+      "teacher_gamma": 1.5,
+      "teacher_n_qubits": 2,
+      "tolerance_nrmse": 0.1,
+      "window": 4
+    },
+    {
+      "root_blocks": 12,
+      "successful_roots": 12,
+      "teacher_gamma": 1.5,
+      "teacher_n_qubits": 2,
+      "tolerance_nrmse": 0.1,
+      "window": 5
+    },
+    {
+      "root_blocks": 12,
+      "successful_roots": 12,
+      "teacher_gamma": 1.5,
+      "teacher_n_qubits": 2,
+      "tolerance_nrmse": 0.1,
+      "window": 6
+    },
+    {
+      "root_blocks": 12,
+      "successful_roots": 0,
+      "teacher_gamma": 2.0,
+      "teacher_n_qubits": 2,
+      "tolerance_nrmse": 0.1,
+      "window": 1
+    },
+    {
+      "root_blocks": 12,
+      "successful_roots": 0,
+      "teacher_gamma": 2.0,
+      "teacher_n_qubits": 2,
+      "tolerance_nrmse": 0.1,
+      "window": 2
+    },
+    {
+      "root_blocks": 12,
+      "successful_roots": 5,
+      "teacher_gamma": 2.0,
+      "teacher_n_qubits": 2,
+      "tolerance_nrmse": 0.1,
+      "window": 3
+    },
+    {
+      "root_blocks": 12,
+      "successful_roots": 12,
+      "teacher_gamma": 2.0,
+      "teacher_n_qubits": 2,
+      "tolerance_nrmse": 0.1,
+      "window": 4
+    },
+    {
+      "root_blocks": 12,
+      "successful_roots": 12,
+      "teacher_gamma": 2.0,
+      "teacher_n_qubits": 2,
+      "tolerance_nrmse": 0.1,
+      "window": 5
+    },
+    {
+      "root_blocks": 12,
+      "successful_roots": 12,
+      "teacher_gamma": 2.0,
+      "teacher_n_qubits": 2,
+      "tolerance_nrmse": 0.1,
+      "window": 6
+    },
+    {
+      "root_blocks": 12,
+      "successful_roots": 0,
+      "teacher_gamma": 2.5,
+      "teacher_n_qubits": 2,
+      "tolerance_nrmse": 0.1,
+      "window": 1
+    },
+    {
+      "root_blocks": 12,
+      "successful_roots": 1,
+      "teacher_gamma": 2.5,
+      "teacher_n_qubits": 2,
+      "tolerance_nrmse": 0.1,
+      "window": 2
+    },
+    {
+      "root_blocks": 12,
+      "successful_roots": 11,
+      "teacher_gamma": 2.5,
+      "teacher_n_qubits": 2,
+      "tolerance_nrmse": 0.1,
+      "window": 3
+    },
+    {
+      "root_blocks": 12,
+      "successful_roots": 12,
+      "teacher_gamma": 2.5,
+      "teacher_n_qubits": 2,
+      "tolerance_nrmse": 0.1,
+      "window": 4
+    },
+    {
+      "root_blocks": 12,
+      "successful_roots": 12,
+      "teacher_gamma": 2.5,
+      "teacher_n_qubits": 2,
+      "tolerance_nrmse": 0.1,
+      "window": 5
+    },
+    {
+      "root_blocks": 12,
+      "successful_roots": 12,
+      "teacher_gamma": 2.5,
+      "teacher_n_qubits": 2,
+      "tolerance_nrmse": 0.1,
+      "window": 6
+    },
+    {
+      "root_blocks": 12,
+      "successful_roots": 0,
+      "teacher_gamma": 3.0,
+      "teacher_n_qubits": 2,
+      "tolerance_nrmse": 0.1,
+      "window": 1
+    },
+    {
+      "root_blocks": 12,
+      "successful_roots": 1,
+      "teacher_gamma": 3.0,
+      "teacher_n_qubits": 2,
+      "tolerance_nrmse": 0.1,
+      "window": 2
+    },
+    {
+      "root_blocks": 12,
+      "successful_roots": 12,
+      "teacher_gamma": 3.0,
+      "teacher_n_qubits": 2,
+      "tolerance_nrmse": 0.1,
+      "window": 3
+    },
+    {
+      "root_blocks": 12,
+      "successful_roots": 12,
+      "teacher_gamma": 3.0,
+      "teacher_n_qubits": 2,
+      "tolerance_nrmse": 0.1,
+      "window": 4
+    },
+    {
+      "root_blocks": 12,
+      "successful_roots": 12,
+      "teacher_gamma": 3.0,
+      "teacher_n_qubits": 2,
+      "tolerance_nrmse": 0.1,
+      "window": 5
+    },
+    {
+      "root_blocks": 12,
+      "successful_roots": 12,
+      "teacher_gamma": 3.0,
+      "teacher_n_qubits": 2,
+      "tolerance_nrmse": 0.1,
+      "window": 6
+    },
+    {
+      "root_blocks": 12,
+      "successful_roots": 0,
+      "teacher_gamma": 4.0,
+      "teacher_n_qubits": 2,
+      "tolerance_nrmse": 0.1,
+      "window": 1
+    },
+    {
+      "root_blocks": 12,
+      "successful_roots": 12,
+      "teacher_gamma": 4.0,
+      "teacher_n_qubits": 2,
+      "tolerance_nrmse": 0.1,
+      "window": 2
+    },
+    {
+      "root_blocks": 12,
+      "successful_roots": 12,
+      "teacher_gamma": 4.0,
+      "teacher_n_qubits": 2,
+      "tolerance_nrmse": 0.1,
+      "window": 3
+    },
+    {
+      "root_blocks": 12,
+      "successful_roots": 12,
+      "teacher_gamma": 4.0,
+      "teacher_n_qubits": 2,
+      "tolerance_nrmse": 0.1,
+      "window": 4
+    },
+    {
+      "root_blocks": 12,
+      "successful_roots": 12,
+      "teacher_gamma": 4.0,
+      "teacher_n_qubits": 2,
+      "tolerance_nrmse": 0.1,
+      "window": 5
+    },
+    {
+      "root_blocks": 12,
+      "successful_roots": 12,
+      "teacher_gamma": 4.0,
+      "teacher_n_qubits": 2,
+      "tolerance_nrmse": 0.1,
+      "window": 6
+    },
+    {
+      "root_blocks": 12,
+      "successful_roots": 0,
+      "teacher_gamma": 0.0,
+      "teacher_n_qubits": 2,
+      "tolerance_nrmse": 0.12,
+      "window": 1
+    },
+    {
+      "root_blocks": 12,
+      "successful_roots": 0,
+      "teacher_gamma": 0.0,
+      "teacher_n_qubits": 2,
+      "tolerance_nrmse": 0.12,
+      "window": 2
+    },
+    {
+      "root_blocks": 12,
+      "successful_roots": 0,
+      "teacher_gamma": 0.0,
+      "teacher_n_qubits": 2,
+      "tolerance_nrmse": 0.12,
+      "window": 3
+    },
+    {
+      "root_blocks": 12,
+      "successful_roots": 0,
+      "teacher_gamma": 0.0,
+      "teacher_n_qubits": 2,
+      "tolerance_nrmse": 0.12,
+      "window": 4
+    },
+    {
+      "root_blocks": 12,
+      "successful_roots": 0,
+      "teacher_gamma": 0.0,
+      "teacher_n_qubits": 2,
+      "tolerance_nrmse": 0.12,
+      "window": 5
+    },
+    {
+      "root_blocks": 12,
+      "successful_roots": 0,
+      "teacher_gamma": 0.0,
+      "teacher_n_qubits": 2,
+      "tolerance_nrmse": 0.12,
+      "window": 6
+    },
+    {
+      "root_blocks": 12,
+      "successful_roots": 0,
+      "teacher_gamma": 0.2,
+      "teacher_n_qubits": 2,
+      "tolerance_nrmse": 0.12,
+      "window": 1
+    },
+    {
+      "root_blocks": 12,
+      "successful_roots": 0,
+      "teacher_gamma": 0.2,
+      "teacher_n_qubits": 2,
+      "tolerance_nrmse": 0.12,
+      "window": 2
+    },
+    {
+      "root_blocks": 12,
+      "successful_roots": 0,
+      "teacher_gamma": 0.2,
+      "teacher_n_qubits": 2,
+      "tolerance_nrmse": 0.12,
+      "window": 3
+    },
+    {
+      "root_blocks": 12,
+      "successful_roots": 0,
+      "teacher_gamma": 0.2,
+      "teacher_n_qubits": 2,
+      "tolerance_nrmse": 0.12,
+      "window": 4
+    },
+    {
+      "root_blocks": 12,
+      "successful_roots": 0,
+      "teacher_gamma": 0.2,
+      "teacher_n_qubits": 2,
+      "tolerance_nrmse": 0.12,
+      "window": 5
+    },
+    {
+      "root_blocks": 12,
+      "successful_roots": 0,
+      "teacher_gamma": 0.2,
+      "teacher_n_qubits": 2,
+      "tolerance_nrmse": 0.12,
+      "window": 6
+    },
+    {
+      "root_blocks": 12,
+      "successful_roots": 0,
+      "teacher_gamma": 0.5,
+      "teacher_n_qubits": 2,
+      "tolerance_nrmse": 0.12,
+      "window": 1
+    },
+    {
+      "root_blocks": 12,
+      "successful_roots": 0,
+      "teacher_gamma": 0.5,
+      "teacher_n_qubits": 2,
+      "tolerance_nrmse": 0.12,
+      "window": 2
+    },
+    {
+      "root_blocks": 12,
+      "successful_roots": 0,
+      "teacher_gamma": 0.5,
+      "teacher_n_qubits": 2,
+      "tolerance_nrmse": 0.12,
+      "window": 3
+    },
+    {
+      "root_blocks": 12,
+      "successful_roots": 0,
+      "teacher_gamma": 0.5,
+      "teacher_n_qubits": 2,
+      "tolerance_nrmse": 0.12,
+      "window": 4
+    },
+    {
+      "root_blocks": 12,
+      "successful_roots": 0,
+      "teacher_gamma": 0.5,
+      "teacher_n_qubits": 2,
+      "tolerance_nrmse": 0.12,
+      "window": 5
+    },
+    {
+      "root_blocks": 12,
+      "successful_roots": 0,
+      "teacher_gamma": 0.5,
+      "teacher_n_qubits": 2,
+      "tolerance_nrmse": 0.12,
+      "window": 6
+    },
+    {
+      "root_blocks": 12,
+      "successful_roots": 0,
+      "teacher_gamma": 0.75,
+      "teacher_n_qubits": 2,
+      "tolerance_nrmse": 0.12,
+      "window": 1
+    },
+    {
+      "root_blocks": 12,
+      "successful_roots": 0,
+      "teacher_gamma": 0.75,
+      "teacher_n_qubits": 2,
+      "tolerance_nrmse": 0.12,
+      "window": 2
+    },
+    {
+      "root_blocks": 12,
+      "successful_roots": 0,
+      "teacher_gamma": 0.75,
+      "teacher_n_qubits": 2,
+      "tolerance_nrmse": 0.12,
+      "window": 3
+    },
+    {
+      "root_blocks": 12,
+      "successful_roots": 0,
+      "teacher_gamma": 0.75,
+      "teacher_n_qubits": 2,
+      "tolerance_nrmse": 0.12,
+      "window": 4
+    },
+    {
+      "root_blocks": 12,
+      "successful_roots": 0,
+      "teacher_gamma": 0.75,
+      "teacher_n_qubits": 2,
+      "tolerance_nrmse": 0.12,
+      "window": 5
+    },
+    {
+      "root_blocks": 12,
+      "successful_roots": 0,
+      "teacher_gamma": 0.75,
+      "teacher_n_qubits": 2,
+      "tolerance_nrmse": 0.12,
+      "window": 6
+    },
+    {
+      "root_blocks": 12,
+      "successful_roots": 0,
+      "teacher_gamma": 1.0,
+      "teacher_n_qubits": 2,
+      "tolerance_nrmse": 0.12,
+      "window": 1
+    },
+    {
+      "root_blocks": 12,
+      "successful_roots": 0,
+      "teacher_gamma": 1.0,
+      "teacher_n_qubits": 2,
+      "tolerance_nrmse": 0.12,
+      "window": 2
+    },
+    {
+      "root_blocks": 12,
+      "successful_roots": 0,
+      "teacher_gamma": 1.0,
+      "teacher_n_qubits": 2,
+      "tolerance_nrmse": 0.12,
+      "window": 3
+    },
+    {
+      "root_blocks": 12,
+      "successful_roots": 0,
+      "teacher_gamma": 1.0,
+      "teacher_n_qubits": 2,
+      "tolerance_nrmse": 0.12,
+      "window": 4
+    },
+    {
+      "root_blocks": 12,
+      "successful_roots": 1,
+      "teacher_gamma": 1.0,
+      "teacher_n_qubits": 2,
+      "tolerance_nrmse": 0.12,
+      "window": 5
+    },
+    {
+      "root_blocks": 12,
+      "successful_roots": 5,
+      "teacher_gamma": 1.0,
+      "teacher_n_qubits": 2,
+      "tolerance_nrmse": 0.12,
+      "window": 6
+    },
+    {
+      "root_blocks": 12,
+      "successful_roots": 0,
+      "teacher_gamma": 1.25,
+      "teacher_n_qubits": 2,
+      "tolerance_nrmse": 0.12,
+      "window": 1
+    },
+    {
+      "root_blocks": 12,
+      "successful_roots": 0,
+      "teacher_gamma": 1.25,
+      "teacher_n_qubits": 2,
+      "tolerance_nrmse": 0.12,
+      "window": 2
+    },
+    {
+      "root_blocks": 12,
+      "successful_roots": 0,
+      "teacher_gamma": 1.25,
+      "teacher_n_qubits": 2,
+      "tolerance_nrmse": 0.12,
+      "window": 3
+    },
+    {
+      "root_blocks": 12,
+      "successful_roots": 1,
+      "teacher_gamma": 1.25,
+      "teacher_n_qubits": 2,
+      "tolerance_nrmse": 0.12,
+      "window": 4
+    },
+    {
+      "root_blocks": 12,
+      "successful_roots": 9,
+      "teacher_gamma": 1.25,
+      "teacher_n_qubits": 2,
+      "tolerance_nrmse": 0.12,
+      "window": 5
+    },
+    {
+      "root_blocks": 12,
+      "successful_roots": 12,
+      "teacher_gamma": 1.25,
+      "teacher_n_qubits": 2,
+      "tolerance_nrmse": 0.12,
+      "window": 6
+    },
+    {
+      "root_blocks": 12,
+      "successful_roots": 0,
+      "teacher_gamma": 1.5,
+      "teacher_n_qubits": 2,
+      "tolerance_nrmse": 0.12,
+      "window": 1
+    },
+    {
+      "root_blocks": 12,
+      "successful_roots": 0,
+      "teacher_gamma": 1.5,
+      "teacher_n_qubits": 2,
+      "tolerance_nrmse": 0.12,
+      "window": 2
+    },
+    {
+      "root_blocks": 12,
+      "successful_roots": 1,
+      "teacher_gamma": 1.5,
+      "teacher_n_qubits": 2,
+      "tolerance_nrmse": 0.12,
+      "window": 3
+    },
+    {
+      "root_blocks": 12,
+      "successful_roots": 7,
+      "teacher_gamma": 1.5,
+      "teacher_n_qubits": 2,
+      "tolerance_nrmse": 0.12,
+      "window": 4
+    },
+    {
+      "root_blocks": 12,
+      "successful_roots": 12,
+      "teacher_gamma": 1.5,
+      "teacher_n_qubits": 2,
+      "tolerance_nrmse": 0.12,
+      "window": 5
+    },
+    {
+      "root_blocks": 12,
+      "successful_roots": 12,
+      "teacher_gamma": 1.5,
+      "teacher_n_qubits": 2,
+      "tolerance_nrmse": 0.12,
+      "window": 6
+    },
+    {
+      "root_blocks": 12,
+      "successful_roots": 0,
+      "teacher_gamma": 2.0,
+      "teacher_n_qubits": 2,
+      "tolerance_nrmse": 0.12,
+      "window": 1
+    },
+    {
+      "root_blocks": 12,
+      "successful_roots": 1,
+      "teacher_gamma": 2.0,
+      "teacher_n_qubits": 2,
+      "tolerance_nrmse": 0.12,
+      "window": 2
+    },
+    {
+      "root_blocks": 12,
+      "successful_roots": 7,
+      "teacher_gamma": 2.0,
+      "teacher_n_qubits": 2,
+      "tolerance_nrmse": 0.12,
+      "window": 3
+    },
+    {
+      "root_blocks": 12,
+      "successful_roots": 12,
+      "teacher_gamma": 2.0,
+      "teacher_n_qubits": 2,
+      "tolerance_nrmse": 0.12,
+      "window": 4
+    },
+    {
+      "root_blocks": 12,
+      "successful_roots": 12,
+      "teacher_gamma": 2.0,
+      "teacher_n_qubits": 2,
+      "tolerance_nrmse": 0.12,
+      "window": 5
+    },
+    {
+      "root_blocks": 12,
+      "successful_roots": 12,
+      "teacher_gamma": 2.0,
+      "teacher_n_qubits": 2,
+      "tolerance_nrmse": 0.12,
+      "window": 6
+    },
+    {
+      "root_blocks": 12,
+      "successful_roots": 0,
+      "teacher_gamma": 2.5,
+      "teacher_n_qubits": 2,
+      "tolerance_nrmse": 0.12,
+      "window": 1
+    },
+    {
+      "root_blocks": 12,
+      "successful_roots": 1,
+      "teacher_gamma": 2.5,
+      "teacher_n_qubits": 2,
+      "tolerance_nrmse": 0.12,
+      "window": 2
+    },
+    {
+      "root_blocks": 12,
+      "successful_roots": 12,
+      "teacher_gamma": 2.5,
+      "teacher_n_qubits": 2,
+      "tolerance_nrmse": 0.12,
+      "window": 3
+    },
+    {
+      "root_blocks": 12,
+      "successful_roots": 12,
+      "teacher_gamma": 2.5,
+      "teacher_n_qubits": 2,
+      "tolerance_nrmse": 0.12,
+      "window": 4
+    },
+    {
+      "root_blocks": 12,
+      "successful_roots": 12,
+      "teacher_gamma": 2.5,
+      "teacher_n_qubits": 2,
+      "tolerance_nrmse": 0.12,
+      "window": 5
+    },
+    {
+      "root_blocks": 12,
+      "successful_roots": 12,
+      "teacher_gamma": 2.5,
+      "teacher_n_qubits": 2,
+      "tolerance_nrmse": 0.12,
+      "window": 6
+    },
+    {
+      "root_blocks": 12,
+      "successful_roots": 0,
+      "teacher_gamma": 3.0,
+      "teacher_n_qubits": 2,
+      "tolerance_nrmse": 0.12,
+      "window": 1
+    },
+    {
+      "root_blocks": 12,
+      "successful_roots": 6,
+      "teacher_gamma": 3.0,
+      "teacher_n_qubits": 2,
+      "tolerance_nrmse": 0.12,
+      "window": 2
+    },
+    {
+      "root_blocks": 12,
+      "successful_roots": 12,
+      "teacher_gamma": 3.0,
+      "teacher_n_qubits": 2,
+      "tolerance_nrmse": 0.12,
+      "window": 3
+    },
+    {
+      "root_blocks": 12,
+      "successful_roots": 12,
+      "teacher_gamma": 3.0,
+      "teacher_n_qubits": 2,
+      "tolerance_nrmse": 0.12,
+      "window": 4
+    },
+    {
+      "root_blocks": 12,
+      "successful_roots": 12,
+      "teacher_gamma": 3.0,
+      "teacher_n_qubits": 2,
+      "tolerance_nrmse": 0.12,
+      "window": 5
+    },
+    {
+      "root_blocks": 12,
+      "successful_roots": 12,
+      "teacher_gamma": 3.0,
+      "teacher_n_qubits": 2,
+      "tolerance_nrmse": 0.12,
+      "window": 6
+    },
+    {
+      "root_blocks": 12,
+      "successful_roots": 0,
+      "teacher_gamma": 4.0,
+      "teacher_n_qubits": 2,
+      "tolerance_nrmse": 0.12,
+      "window": 1
+    },
+    {
+      "root_blocks": 12,
+      "successful_roots": 12,
+      "teacher_gamma": 4.0,
+      "teacher_n_qubits": 2,
+      "tolerance_nrmse": 0.12,
+      "window": 2
+    },
+    {
+      "root_blocks": 12,
+      "successful_roots": 12,
+      "teacher_gamma": 4.0,
+      "teacher_n_qubits": 2,
+      "tolerance_nrmse": 0.12,
+      "window": 3
+    },
+    {
+      "root_blocks": 12,
+      "successful_roots": 12,
+      "teacher_gamma": 4.0,
+      "teacher_n_qubits": 2,
+      "tolerance_nrmse": 0.12,
+      "window": 4
+    },
+    {
+      "root_blocks": 12,
+      "successful_roots": 12,
+      "teacher_gamma": 4.0,
+      "teacher_n_qubits": 2,
+      "tolerance_nrmse": 0.12,
+      "window": 5
+    },
+    {
+      "root_blocks": 12,
+      "successful_roots": 12,
+      "teacher_gamma": 4.0,
+      "teacher_n_qubits": 2,
+      "tolerance_nrmse": 0.12,
+      "window": 6
+    },
+    {
+      "root_blocks": 12,
+      "successful_roots": 0,
+      "teacher_gamma": 0.0,
+      "teacher_n_qubits": 3,
+      "tolerance_nrmse": 0.08,
+      "window": 1
+    },
+    {
+      "root_blocks": 12,
+      "successful_roots": 0,
+      "teacher_gamma": 0.0,
+      "teacher_n_qubits": 3,
+      "tolerance_nrmse": 0.08,
+      "window": 2
+    },
+    {
+      "root_blocks": 12,
+      "successful_roots": 0,
+      "teacher_gamma": 0.0,
+      "teacher_n_qubits": 3,
+      "tolerance_nrmse": 0.08,
+      "window": 3
+    },
+    {
+      "root_blocks": 12,
+      "successful_roots": 0,
+      "teacher_gamma": 0.0,
+      "teacher_n_qubits": 3,
+      "tolerance_nrmse": 0.08,
+      "window": 4
+    },
+    {
+      "root_blocks": 12,
+      "successful_roots": 0,
+      "teacher_gamma": 0.0,
+      "teacher_n_qubits": 3,
+      "tolerance_nrmse": 0.08,
+      "window": 5
+    },
+    {
+      "root_blocks": 12,
+      "successful_roots": 0,
+      "teacher_gamma": 0.0,
+      "teacher_n_qubits": 3,
+      "tolerance_nrmse": 0.08,
+      "window": 6
+    },
+    {
+      "root_blocks": 12,
+      "successful_roots": 0,
+      "teacher_gamma": 0.2,
+      "teacher_n_qubits": 3,
+      "tolerance_nrmse": 0.08,
+      "window": 1
+    },
+    {
+      "root_blocks": 12,
+      "successful_roots": 0,
+      "teacher_gamma": 0.2,
+      "teacher_n_qubits": 3,
+      "tolerance_nrmse": 0.08,
+      "window": 2
+    },
+    {
+      "root_blocks": 12,
+      "successful_roots": 0,
+      "teacher_gamma": 0.2,
+      "teacher_n_qubits": 3,
+      "tolerance_nrmse": 0.08,
+      "window": 3
+    },
+    {
+      "root_blocks": 12,
+      "successful_roots": 0,
+      "teacher_gamma": 0.2,
+      "teacher_n_qubits": 3,
+      "tolerance_nrmse": 0.08,
+      "window": 4
+    },
+    {
+      "root_blocks": 12,
+      "successful_roots": 0,
+      "teacher_gamma": 0.2,
+      "teacher_n_qubits": 3,
+      "tolerance_nrmse": 0.08,
+      "window": 5
+    },
+    {
+      "root_blocks": 12,
+      "successful_roots": 0,
+      "teacher_gamma": 0.2,
+      "teacher_n_qubits": 3,
+      "tolerance_nrmse": 0.08,
+      "window": 6
+    },
+    {
+      "root_blocks": 12,
+      "successful_roots": 0,
+      "teacher_gamma": 0.5,
+      "teacher_n_qubits": 3,
+      "tolerance_nrmse": 0.08,
+      "window": 1
+    },
+    {
+      "root_blocks": 12,
+      "successful_roots": 0,
+      "teacher_gamma": 0.5,
+      "teacher_n_qubits": 3,
+      "tolerance_nrmse": 0.08,
+      "window": 2
+    },
+    {
+      "root_blocks": 12,
+      "successful_roots": 0,
+      "teacher_gamma": 0.5,
+      "teacher_n_qubits": 3,
+      "tolerance_nrmse": 0.08,
+      "window": 3
+    },
+    {
+      "root_blocks": 12,
+      "successful_roots": 0,
+      "teacher_gamma": 0.5,
+      "teacher_n_qubits": 3,
+      "tolerance_nrmse": 0.08,
+      "window": 4
+    },
+    {
+      "root_blocks": 12,
+      "successful_roots": 0,
+      "teacher_gamma": 0.5,
+      "teacher_n_qubits": 3,
+      "tolerance_nrmse": 0.08,
+      "window": 5
+    },
+    {
+      "root_blocks": 12,
+      "successful_roots": 0,
+      "teacher_gamma": 0.5,
+      "teacher_n_qubits": 3,
+      "tolerance_nrmse": 0.08,
+      "window": 6
+    },
+    {
+      "root_blocks": 12,
+      "successful_roots": 0,
+      "teacher_gamma": 0.75,
+      "teacher_n_qubits": 3,
+      "tolerance_nrmse": 0.08,
+      "window": 1
+    },
+    {
+      "root_blocks": 12,
+      "successful_roots": 0,
+      "teacher_gamma": 0.75,
+      "teacher_n_qubits": 3,
+      "tolerance_nrmse": 0.08,
+      "window": 2
+    },
+    {
+      "root_blocks": 12,
+      "successful_roots": 0,
+      "teacher_gamma": 0.75,
+      "teacher_n_qubits": 3,
+      "tolerance_nrmse": 0.08,
+      "window": 3
+    },
+    {
+      "root_blocks": 12,
+      "successful_roots": 0,
+      "teacher_gamma": 0.75,
+      "teacher_n_qubits": 3,
+      "tolerance_nrmse": 0.08,
+      "window": 4
+    },
+    {
+      "root_blocks": 12,
+      "successful_roots": 0,
+      "teacher_gamma": 0.75,
+      "teacher_n_qubits": 3,
+      "tolerance_nrmse": 0.08,
+      "window": 5
+    },
+    {
+      "root_blocks": 12,
+      "successful_roots": 0,
+      "teacher_gamma": 0.75,
+      "teacher_n_qubits": 3,
+      "tolerance_nrmse": 0.08,
+      "window": 6
+    },
+    {
+      "root_blocks": 12,
+      "successful_roots": 0,
+      "teacher_gamma": 1.0,
+      "teacher_n_qubits": 3,
+      "tolerance_nrmse": 0.08,
+      "window": 1
+    },
+    {
+      "root_blocks": 12,
+      "successful_roots": 0,
+      "teacher_gamma": 1.0,
+      "teacher_n_qubits": 3,
+      "tolerance_nrmse": 0.08,
+      "window": 2
+    },
+    {
+      "root_blocks": 12,
+      "successful_roots": 0,
+      "teacher_gamma": 1.0,
+      "teacher_n_qubits": 3,
+      "tolerance_nrmse": 0.08,
+      "window": 3
+    },
+    {
+      "root_blocks": 12,
+      "successful_roots": 0,
+      "teacher_gamma": 1.0,
+      "teacher_n_qubits": 3,
+      "tolerance_nrmse": 0.08,
+      "window": 4
+    },
+    {
+      "root_blocks": 12,
+      "successful_roots": 0,
+      "teacher_gamma": 1.0,
+      "teacher_n_qubits": 3,
+      "tolerance_nrmse": 0.08,
+      "window": 5
+    },
+    {
+      "root_blocks": 12,
+      "successful_roots": 3,
+      "teacher_gamma": 1.0,
+      "teacher_n_qubits": 3,
+      "tolerance_nrmse": 0.08,
+      "window": 6
+    },
+    {
+      "root_blocks": 12,
+      "successful_roots": 0,
+      "teacher_gamma": 1.25,
+      "teacher_n_qubits": 3,
+      "tolerance_nrmse": 0.08,
+      "window": 1
+    },
+    {
+      "root_blocks": 12,
+      "successful_roots": 0,
+      "teacher_gamma": 1.25,
+      "teacher_n_qubits": 3,
+      "tolerance_nrmse": 0.08,
+      "window": 2
+    },
+    {
+      "root_blocks": 12,
+      "successful_roots": 0,
+      "teacher_gamma": 1.25,
+      "teacher_n_qubits": 3,
+      "tolerance_nrmse": 0.08,
+      "window": 3
+    },
+    {
+      "root_blocks": 12,
+      "successful_roots": 0,
+      "teacher_gamma": 1.25,
+      "teacher_n_qubits": 3,
+      "tolerance_nrmse": 0.08,
+      "window": 4
+    },
+    {
+      "root_blocks": 12,
+      "successful_roots": 3,
+      "teacher_gamma": 1.25,
+      "teacher_n_qubits": 3,
+      "tolerance_nrmse": 0.08,
+      "window": 5
+    },
+    {
+      "root_blocks": 12,
+      "successful_roots": 10,
+      "teacher_gamma": 1.25,
+      "teacher_n_qubits": 3,
+      "tolerance_nrmse": 0.08,
+      "window": 6
+    },
+    {
+      "root_blocks": 12,
+      "successful_roots": 0,
+      "teacher_gamma": 1.5,
+      "teacher_n_qubits": 3,
+      "tolerance_nrmse": 0.08,
+      "window": 1
+    },
+    {
+      "root_blocks": 12,
+      "successful_roots": 0,
+      "teacher_gamma": 1.5,
+      "teacher_n_qubits": 3,
+      "tolerance_nrmse": 0.08,
+      "window": 2
+    },
+    {
+      "root_blocks": 12,
+      "successful_roots": 0,
+      "teacher_gamma": 1.5,
+      "teacher_n_qubits": 3,
+      "tolerance_nrmse": 0.08,
+      "window": 3
+    },
+    {
+      "root_blocks": 12,
+      "successful_roots": 2,
+      "teacher_gamma": 1.5,
+      "teacher_n_qubits": 3,
+      "tolerance_nrmse": 0.08,
+      "window": 4
+    },
+    {
+      "root_blocks": 12,
+      "successful_roots": 10,
+      "teacher_gamma": 1.5,
+      "teacher_n_qubits": 3,
+      "tolerance_nrmse": 0.08,
+      "window": 5
+    },
+    {
+      "root_blocks": 12,
+      "successful_roots": 12,
+      "teacher_gamma": 1.5,
+      "teacher_n_qubits": 3,
+      "tolerance_nrmse": 0.08,
+      "window": 6
+    },
+    {
+      "root_blocks": 12,
+      "successful_roots": 0,
+      "teacher_gamma": 2.0,
+      "teacher_n_qubits": 3,
+      "tolerance_nrmse": 0.08,
+      "window": 1
+    },
+    {
+      "root_blocks": 12,
+      "successful_roots": 0,
+      "teacher_gamma": 2.0,
+      "teacher_n_qubits": 3,
+      "tolerance_nrmse": 0.08,
+      "window": 2
+    },
+    {
+      "root_blocks": 12,
+      "successful_roots": 2,
+      "teacher_gamma": 2.0,
+      "teacher_n_qubits": 3,
+      "tolerance_nrmse": 0.08,
+      "window": 3
+    },
+    {
+      "root_blocks": 12,
+      "successful_roots": 11,
+      "teacher_gamma": 2.0,
+      "teacher_n_qubits": 3,
+      "tolerance_nrmse": 0.08,
+      "window": 4
+    },
+    {
+      "root_blocks": 12,
+      "successful_roots": 12,
+      "teacher_gamma": 2.0,
+      "teacher_n_qubits": 3,
+      "tolerance_nrmse": 0.08,
+      "window": 5
+    },
+    {
+      "root_blocks": 12,
+      "successful_roots": 12,
+      "teacher_gamma": 2.0,
+      "teacher_n_qubits": 3,
+      "tolerance_nrmse": 0.08,
+      "window": 6
+    },
+    {
+      "root_blocks": 12,
+      "successful_roots": 0,
+      "teacher_gamma": 2.5,
+      "teacher_n_qubits": 3,
+      "tolerance_nrmse": 0.08,
+      "window": 1
+    },
+    {
+      "root_blocks": 12,
+      "successful_roots": 0,
+      "teacher_gamma": 2.5,
+      "teacher_n_qubits": 3,
+      "tolerance_nrmse": 0.08,
+      "window": 2
+    },
+    {
+      "root_blocks": 12,
+      "successful_roots": 9,
+      "teacher_gamma": 2.5,
+      "teacher_n_qubits": 3,
+      "tolerance_nrmse": 0.08,
+      "window": 3
+    },
+    {
+      "root_blocks": 12,
+      "successful_roots": 12,
+      "teacher_gamma": 2.5,
+      "teacher_n_qubits": 3,
+      "tolerance_nrmse": 0.08,
+      "window": 4
+    },
+    {
+      "root_blocks": 12,
+      "successful_roots": 12,
+      "teacher_gamma": 2.5,
+      "teacher_n_qubits": 3,
+      "tolerance_nrmse": 0.08,
+      "window": 5
+    },
+    {
+      "root_blocks": 12,
+      "successful_roots": 12,
+      "teacher_gamma": 2.5,
+      "teacher_n_qubits": 3,
+      "tolerance_nrmse": 0.08,
+      "window": 6
+    },
+    {
+      "root_blocks": 12,
+      "successful_roots": 0,
+      "teacher_gamma": 3.0,
+      "teacher_n_qubits": 3,
+      "tolerance_nrmse": 0.08,
+      "window": 1
+    },
+    {
+      "root_blocks": 12,
+      "successful_roots": 0,
+      "teacher_gamma": 3.0,
+      "teacher_n_qubits": 3,
+      "tolerance_nrmse": 0.08,
+      "window": 2
+    },
+    {
+      "root_blocks": 12,
+      "successful_roots": 12,
+      "teacher_gamma": 3.0,
+      "teacher_n_qubits": 3,
+      "tolerance_nrmse": 0.08,
+      "window": 3
+    },
+    {
+      "root_blocks": 12,
+      "successful_roots": 12,
+      "teacher_gamma": 3.0,
+      "teacher_n_qubits": 3,
+      "tolerance_nrmse": 0.08,
+      "window": 4
+    },
+    {
+      "root_blocks": 12,
+      "successful_roots": 12,
+      "teacher_gamma": 3.0,
+      "teacher_n_qubits": 3,
+      "tolerance_nrmse": 0.08,
+      "window": 5
+    },
+    {
+      "root_blocks": 12,
+      "successful_roots": 12,
+      "teacher_gamma": 3.0,
+      "teacher_n_qubits": 3,
+      "tolerance_nrmse": 0.08,
+      "window": 6
+    },
+    {
+      "root_blocks": 12,
+      "successful_roots": 0,
+      "teacher_gamma": 4.0,
+      "teacher_n_qubits": 3,
+      "tolerance_nrmse": 0.08,
+      "window": 1
+    },
+    {
+      "root_blocks": 12,
+      "successful_roots": 10,
+      "teacher_gamma": 4.0,
+      "teacher_n_qubits": 3,
+      "tolerance_nrmse": 0.08,
+      "window": 2
+    },
+    {
+      "root_blocks": 12,
+      "successful_roots": 12,
+      "teacher_gamma": 4.0,
+      "teacher_n_qubits": 3,
+      "tolerance_nrmse": 0.08,
+      "window": 3
+    },
+    {
+      "root_blocks": 12,
+      "successful_roots": 12,
+      "teacher_gamma": 4.0,
+      "teacher_n_qubits": 3,
+      "tolerance_nrmse": 0.08,
+      "window": 4
+    },
+    {
+      "root_blocks": 12,
+      "successful_roots": 12,
+      "teacher_gamma": 4.0,
+      "teacher_n_qubits": 3,
+      "tolerance_nrmse": 0.08,
+      "window": 5
+    },
+    {
+      "root_blocks": 12,
+      "successful_roots": 12,
+      "teacher_gamma": 4.0,
+      "teacher_n_qubits": 3,
+      "tolerance_nrmse": 0.08,
+      "window": 6
+    },
+    {
+      "root_blocks": 12,
+      "successful_roots": 0,
+      "teacher_gamma": 0.0,
+      "teacher_n_qubits": 3,
+      "tolerance_nrmse": 0.1,
+      "window": 1
+    },
+    {
+      "root_blocks": 12,
+      "successful_roots": 0,
+      "teacher_gamma": 0.0,
+      "teacher_n_qubits": 3,
+      "tolerance_nrmse": 0.1,
+      "window": 2
+    },
+    {
+      "root_blocks": 12,
+      "successful_roots": 0,
+      "teacher_gamma": 0.0,
+      "teacher_n_qubits": 3,
+      "tolerance_nrmse": 0.1,
+      "window": 3
+    },
+    {
+      "root_blocks": 12,
+      "successful_roots": 0,
+      "teacher_gamma": 0.0,
+      "teacher_n_qubits": 3,
+      "tolerance_nrmse": 0.1,
+      "window": 4
+    },
+    {
+      "root_blocks": 12,
+      "successful_roots": 0,
+      "teacher_gamma": 0.0,
+      "teacher_n_qubits": 3,
+      "tolerance_nrmse": 0.1,
+      "window": 5
+    },
+    {
+      "root_blocks": 12,
+      "successful_roots": 0,
+      "teacher_gamma": 0.0,
+      "teacher_n_qubits": 3,
+      "tolerance_nrmse": 0.1,
+      "window": 6
+    },
+    {
+      "root_blocks": 12,
+      "successful_roots": 0,
+      "teacher_gamma": 0.2,
+      "teacher_n_qubits": 3,
+      "tolerance_nrmse": 0.1,
+      "window": 1
+    },
+    {
+      "root_blocks": 12,
+      "successful_roots": 0,
+      "teacher_gamma": 0.2,
+      "teacher_n_qubits": 3,
+      "tolerance_nrmse": 0.1,
+      "window": 2
+    },
+    {
+      "root_blocks": 12,
+      "successful_roots": 0,
+      "teacher_gamma": 0.2,
+      "teacher_n_qubits": 3,
+      "tolerance_nrmse": 0.1,
+      "window": 3
+    },
+    {
+      "root_blocks": 12,
+      "successful_roots": 0,
+      "teacher_gamma": 0.2,
+      "teacher_n_qubits": 3,
+      "tolerance_nrmse": 0.1,
+      "window": 4
+    },
+    {
+      "root_blocks": 12,
+      "successful_roots": 0,
+      "teacher_gamma": 0.2,
+      "teacher_n_qubits": 3,
+      "tolerance_nrmse": 0.1,
+      "window": 5
+    },
+    {
+      "root_blocks": 12,
+      "successful_roots": 0,
+      "teacher_gamma": 0.2,
+      "teacher_n_qubits": 3,
+      "tolerance_nrmse": 0.1,
+      "window": 6
+    },
+    {
+      "root_blocks": 12,
+      "successful_roots": 0,
+      "teacher_gamma": 0.5,
+      "teacher_n_qubits": 3,
+      "tolerance_nrmse": 0.1,
+      "window": 1
+    },
+    {
+      "root_blocks": 12,
+      "successful_roots": 0,
+      "teacher_gamma": 0.5,
+      "teacher_n_qubits": 3,
+      "tolerance_nrmse": 0.1,
+      "window": 2
+    },
+    {
+      "root_blocks": 12,
+      "successful_roots": 0,
+      "teacher_gamma": 0.5,
+      "teacher_n_qubits": 3,
+      "tolerance_nrmse": 0.1,
+      "window": 3
+    },
+    {
+      "root_blocks": 12,
+      "successful_roots": 0,
+      "teacher_gamma": 0.5,
+      "teacher_n_qubits": 3,
+      "tolerance_nrmse": 0.1,
+      "window": 4
+    },
+    {
+      "root_blocks": 12,
+      "successful_roots": 0,
+      "teacher_gamma": 0.5,
+      "teacher_n_qubits": 3,
+      "tolerance_nrmse": 0.1,
+      "window": 5
+    },
+    {
+      "root_blocks": 12,
+      "successful_roots": 0,
+      "teacher_gamma": 0.5,
+      "teacher_n_qubits": 3,
+      "tolerance_nrmse": 0.1,
+      "window": 6
+    },
+    {
+      "root_blocks": 12,
+      "successful_roots": 0,
+      "teacher_gamma": 0.75,
+      "teacher_n_qubits": 3,
+      "tolerance_nrmse": 0.1,
+      "window": 1
+    },
+    {
+      "root_blocks": 12,
+      "successful_roots": 0,
+      "teacher_gamma": 0.75,
+      "teacher_n_qubits": 3,
+      "tolerance_nrmse": 0.1,
+      "window": 2
+    },
+    {
+      "root_blocks": 12,
+      "successful_roots": 0,
+      "teacher_gamma": 0.75,
+      "teacher_n_qubits": 3,
+      "tolerance_nrmse": 0.1,
+      "window": 3
+    },
+    {
+      "root_blocks": 12,
+      "successful_roots": 0,
+      "teacher_gamma": 0.75,
+      "teacher_n_qubits": 3,
+      "tolerance_nrmse": 0.1,
+      "window": 4
+    },
+    {
+      "root_blocks": 12,
+      "successful_roots": 0,
+      "teacher_gamma": 0.75,
+      "teacher_n_qubits": 3,
+      "tolerance_nrmse": 0.1,
+      "window": 5
+    },
+    {
+      "root_blocks": 12,
+      "successful_roots": 1,
+      "teacher_gamma": 0.75,
+      "teacher_n_qubits": 3,
+      "tolerance_nrmse": 0.1,
+      "window": 6
+    },
+    {
+      "root_blocks": 12,
+      "successful_roots": 0,
+      "teacher_gamma": 1.0,
+      "teacher_n_qubits": 3,
+      "tolerance_nrmse": 0.1,
+      "window": 1
+    },
+    {
+      "root_blocks": 12,
+      "successful_roots": 0,
+      "teacher_gamma": 1.0,
+      "teacher_n_qubits": 3,
+      "tolerance_nrmse": 0.1,
+      "window": 2
+    },
+    {
+      "root_blocks": 12,
+      "successful_roots": 0,
+      "teacher_gamma": 1.0,
+      "teacher_n_qubits": 3,
+      "tolerance_nrmse": 0.1,
+      "window": 3
+    },
+    {
+      "root_blocks": 12,
+      "successful_roots": 0,
+      "teacher_gamma": 1.0,
+      "teacher_n_qubits": 3,
+      "tolerance_nrmse": 0.1,
+      "window": 4
+    },
+    {
+      "root_blocks": 12,
+      "successful_roots": 1,
+      "teacher_gamma": 1.0,
+      "teacher_n_qubits": 3,
+      "tolerance_nrmse": 0.1,
+      "window": 5
+    },
+    {
+      "root_blocks": 12,
+      "successful_roots": 8,
+      "teacher_gamma": 1.0,
+      "teacher_n_qubits": 3,
+      "tolerance_nrmse": 0.1,
+      "window": 6
+    },
+    {
+      "root_blocks": 12,
+      "successful_roots": 0,
+      "teacher_gamma": 1.25,
+      "teacher_n_qubits": 3,
+      "tolerance_nrmse": 0.1,
+      "window": 1
+    },
+    {
+      "root_blocks": 12,
+      "successful_roots": 0,
+      "teacher_gamma": 1.25,
+      "teacher_n_qubits": 3,
+      "tolerance_nrmse": 0.1,
+      "window": 2
+    },
+    {
+      "root_blocks": 12,
+      "successful_roots": 0,
+      "teacher_gamma": 1.25,
+      "teacher_n_qubits": 3,
+      "tolerance_nrmse": 0.1,
+      "window": 3
+    },
+    {
+      "root_blocks": 12,
+      "successful_roots": 1,
+      "teacher_gamma": 1.25,
+      "teacher_n_qubits": 3,
+      "tolerance_nrmse": 0.1,
+      "window": 4
+    },
+    {
+      "root_blocks": 12,
+      "successful_roots": 8,
+      "teacher_gamma": 1.25,
+      "teacher_n_qubits": 3,
+      "tolerance_nrmse": 0.1,
+      "window": 5
+    },
+    {
+      "root_blocks": 12,
+      "successful_roots": 11,
+      "teacher_gamma": 1.25,
+      "teacher_n_qubits": 3,
+      "tolerance_nrmse": 0.1,
+      "window": 6
+    },
+    {
+      "root_blocks": 12,
+      "successful_roots": 0,
+      "teacher_gamma": 1.5,
+      "teacher_n_qubits": 3,
+      "tolerance_nrmse": 0.1,
+      "window": 1
+    },
+    {
+      "root_blocks": 12,
+      "successful_roots": 0,
+      "teacher_gamma": 1.5,
+      "teacher_n_qubits": 3,
+      "tolerance_nrmse": 0.1,
+      "window": 2
+    },
+    {
+      "root_blocks": 12,
+      "successful_roots": 0,
+      "teacher_gamma": 1.5,
+      "teacher_n_qubits": 3,
+      "tolerance_nrmse": 0.1,
+      "window": 3
+    },
+    {
+      "root_blocks": 12,
+      "successful_roots": 6,
+      "teacher_gamma": 1.5,
+      "teacher_n_qubits": 3,
+      "tolerance_nrmse": 0.1,
+      "window": 4
+    },
+    {
+      "root_blocks": 12,
+      "successful_roots": 11,
+      "teacher_gamma": 1.5,
+      "teacher_n_qubits": 3,
+      "tolerance_nrmse": 0.1,
+      "window": 5
+    },
+    {
+      "root_blocks": 12,
+      "successful_roots": 12,
+      "teacher_gamma": 1.5,
+      "teacher_n_qubits": 3,
+      "tolerance_nrmse": 0.1,
+      "window": 6
+    },
+    {
+      "root_blocks": 12,
+      "successful_roots": 0,
+      "teacher_gamma": 2.0,
+      "teacher_n_qubits": 3,
+      "tolerance_nrmse": 0.1,
+      "window": 1
+    },
+    {
+      "root_blocks": 12,
+      "successful_roots": 0,
+      "teacher_gamma": 2.0,
+      "teacher_n_qubits": 3,
+      "tolerance_nrmse": 0.1,
+      "window": 2
+    },
+    {
+      "root_blocks": 12,
+      "successful_roots": 6,
+      "teacher_gamma": 2.0,
+      "teacher_n_qubits": 3,
+      "tolerance_nrmse": 0.1,
+      "window": 3
+    },
+    {
+      "root_blocks": 12,
+      "successful_roots": 12,
+      "teacher_gamma": 2.0,
+      "teacher_n_qubits": 3,
+      "tolerance_nrmse": 0.1,
+      "window": 4
+    },
+    {
+      "root_blocks": 12,
+      "successful_roots": 12,
+      "teacher_gamma": 2.0,
+      "teacher_n_qubits": 3,
+      "tolerance_nrmse": 0.1,
+      "window": 5
+    },
+    {
+      "root_blocks": 12,
+      "successful_roots": 12,
+      "teacher_gamma": 2.0,
+      "teacher_n_qubits": 3,
+      "tolerance_nrmse": 0.1,
+      "window": 6
+    },
+    {
+      "root_blocks": 12,
+      "successful_roots": 0,
+      "teacher_gamma": 2.5,
+      "teacher_n_qubits": 3,
+      "tolerance_nrmse": 0.1,
+      "window": 1
+    },
+    {
+      "root_blocks": 12,
+      "successful_roots": 0,
+      "teacher_gamma": 2.5,
+      "teacher_n_qubits": 3,
+      "tolerance_nrmse": 0.1,
+      "window": 2
+    },
+    {
+      "root_blocks": 12,
+      "successful_roots": 12,
+      "teacher_gamma": 2.5,
+      "teacher_n_qubits": 3,
+      "tolerance_nrmse": 0.1,
+      "window": 3
+    },
+    {
+      "root_blocks": 12,
+      "successful_roots": 12,
+      "teacher_gamma": 2.5,
+      "teacher_n_qubits": 3,
+      "tolerance_nrmse": 0.1,
+      "window": 4
+    },
+    {
+      "root_blocks": 12,
+      "successful_roots": 12,
+      "teacher_gamma": 2.5,
+      "teacher_n_qubits": 3,
+      "tolerance_nrmse": 0.1,
+      "window": 5
+    },
+    {
+      "root_blocks": 12,
+      "successful_roots": 12,
+      "teacher_gamma": 2.5,
+      "teacher_n_qubits": 3,
+      "tolerance_nrmse": 0.1,
+      "window": 6
+    },
+    {
+      "root_blocks": 12,
+      "successful_roots": 0,
+      "teacher_gamma": 3.0,
+      "teacher_n_qubits": 3,
+      "tolerance_nrmse": 0.1,
+      "window": 1
+    },
+    {
+      "root_blocks": 12,
+      "successful_roots": 0,
+      "teacher_gamma": 3.0,
+      "teacher_n_qubits": 3,
+      "tolerance_nrmse": 0.1,
+      "window": 2
+    },
+    {
+      "root_blocks": 12,
+      "successful_roots": 12,
+      "teacher_gamma": 3.0,
+      "teacher_n_qubits": 3,
+      "tolerance_nrmse": 0.1,
+      "window": 3
+    },
+    {
+      "root_blocks": 12,
+      "successful_roots": 12,
+      "teacher_gamma": 3.0,
+      "teacher_n_qubits": 3,
+      "tolerance_nrmse": 0.1,
+      "window": 4
+    },
+    {
+      "root_blocks": 12,
+      "successful_roots": 12,
+      "teacher_gamma": 3.0,
+      "teacher_n_qubits": 3,
+      "tolerance_nrmse": 0.1,
+      "window": 5
+    },
+    {
+      "root_blocks": 12,
+      "successful_roots": 12,
+      "teacher_gamma": 3.0,
+      "teacher_n_qubits": 3,
+      "tolerance_nrmse": 0.1,
+      "window": 6
+    },
+    {
+      "root_blocks": 12,
+      "successful_roots": 0,
+      "teacher_gamma": 4.0,
+      "teacher_n_qubits": 3,
+      "tolerance_nrmse": 0.1,
+      "window": 1
+    },
+    {
+      "root_blocks": 12,
+      "successful_roots": 12,
+      "teacher_gamma": 4.0,
+      "teacher_n_qubits": 3,
+      "tolerance_nrmse": 0.1,
+      "window": 2
+    },
+    {
+      "root_blocks": 12,
+      "successful_roots": 12,
+      "teacher_gamma": 4.0,
+      "teacher_n_qubits": 3,
+      "tolerance_nrmse": 0.1,
+      "window": 3
+    },
+    {
+      "root_blocks": 12,
+      "successful_roots": 12,
+      "teacher_gamma": 4.0,
+      "teacher_n_qubits": 3,
+      "tolerance_nrmse": 0.1,
+      "window": 4
+    },
+    {
+      "root_blocks": 12,
+      "successful_roots": 12,
+      "teacher_gamma": 4.0,
+      "teacher_n_qubits": 3,
+      "tolerance_nrmse": 0.1,
+      "window": 5
+    },
+    {
+      "root_blocks": 12,
+      "successful_roots": 12,
+      "teacher_gamma": 4.0,
+      "teacher_n_qubits": 3,
+      "tolerance_nrmse": 0.1,
+      "window": 6
+    },
+    {
+      "root_blocks": 12,
+      "successful_roots": 0,
+      "teacher_gamma": 0.0,
+      "teacher_n_qubits": 3,
+      "tolerance_nrmse": 0.12,
+      "window": 1
+    },
+    {
+      "root_blocks": 12,
+      "successful_roots": 0,
+      "teacher_gamma": 0.0,
+      "teacher_n_qubits": 3,
+      "tolerance_nrmse": 0.12,
+      "window": 2
+    },
+    {
+      "root_blocks": 12,
+      "successful_roots": 0,
+      "teacher_gamma": 0.0,
+      "teacher_n_qubits": 3,
+      "tolerance_nrmse": 0.12,
+      "window": 3
+    },
+    {
+      "root_blocks": 12,
+      "successful_roots": 0,
+      "teacher_gamma": 0.0,
+      "teacher_n_qubits": 3,
+      "tolerance_nrmse": 0.12,
+      "window": 4
+    },
+    {
+      "root_blocks": 12,
+      "successful_roots": 0,
+      "teacher_gamma": 0.0,
+      "teacher_n_qubits": 3,
+      "tolerance_nrmse": 0.12,
+      "window": 5
+    },
+    {
+      "root_blocks": 12,
+      "successful_roots": 0,
+      "teacher_gamma": 0.0,
+      "teacher_n_qubits": 3,
+      "tolerance_nrmse": 0.12,
+      "window": 6
+    },
+    {
+      "root_blocks": 12,
+      "successful_roots": 0,
+      "teacher_gamma": 0.2,
+      "teacher_n_qubits": 3,
+      "tolerance_nrmse": 0.12,
+      "window": 1
+    },
+    {
+      "root_blocks": 12,
+      "successful_roots": 0,
+      "teacher_gamma": 0.2,
+      "teacher_n_qubits": 3,
+      "tolerance_nrmse": 0.12,
+      "window": 2
+    },
+    {
+      "root_blocks": 12,
+      "successful_roots": 0,
+      "teacher_gamma": 0.2,
+      "teacher_n_qubits": 3,
+      "tolerance_nrmse": 0.12,
+      "window": 3
+    },
+    {
+      "root_blocks": 12,
+      "successful_roots": 0,
+      "teacher_gamma": 0.2,
+      "teacher_n_qubits": 3,
+      "tolerance_nrmse": 0.12,
+      "window": 4
+    },
+    {
+      "root_blocks": 12,
+      "successful_roots": 0,
+      "teacher_gamma": 0.2,
+      "teacher_n_qubits": 3,
+      "tolerance_nrmse": 0.12,
+      "window": 5
+    },
+    {
+      "root_blocks": 12,
+      "successful_roots": 0,
+      "teacher_gamma": 0.2,
+      "teacher_n_qubits": 3,
+      "tolerance_nrmse": 0.12,
+      "window": 6
+    },
+    {
+      "root_blocks": 12,
+      "successful_roots": 0,
+      "teacher_gamma": 0.5,
+      "teacher_n_qubits": 3,
+      "tolerance_nrmse": 0.12,
+      "window": 1
+    },
+    {
+      "root_blocks": 12,
+      "successful_roots": 0,
+      "teacher_gamma": 0.5,
+      "teacher_n_qubits": 3,
+      "tolerance_nrmse": 0.12,
+      "window": 2
+    },
+    {
+      "root_blocks": 12,
+      "successful_roots": 0,
+      "teacher_gamma": 0.5,
+      "teacher_n_qubits": 3,
+      "tolerance_nrmse": 0.12,
+      "window": 3
+    },
+    {
+      "root_blocks": 12,
+      "successful_roots": 0,
+      "teacher_gamma": 0.5,
+      "teacher_n_qubits": 3,
+      "tolerance_nrmse": 0.12,
+      "window": 4
+    },
+    {
+      "root_blocks": 12,
+      "successful_roots": 0,
+      "teacher_gamma": 0.5,
+      "teacher_n_qubits": 3,
+      "tolerance_nrmse": 0.12,
+      "window": 5
+    },
+    {
+      "root_blocks": 12,
+      "successful_roots": 0,
+      "teacher_gamma": 0.5,
+      "teacher_n_qubits": 3,
+      "tolerance_nrmse": 0.12,
+      "window": 6
+    },
+    {
+      "root_blocks": 12,
+      "successful_roots": 0,
+      "teacher_gamma": 0.75,
+      "teacher_n_qubits": 3,
+      "tolerance_nrmse": 0.12,
+      "window": 1
+    },
+    {
+      "root_blocks": 12,
+      "successful_roots": 0,
+      "teacher_gamma": 0.75,
+      "teacher_n_qubits": 3,
+      "tolerance_nrmse": 0.12,
+      "window": 2
+    },
+    {
+      "root_blocks": 12,
+      "successful_roots": 0,
+      "teacher_gamma": 0.75,
+      "teacher_n_qubits": 3,
+      "tolerance_nrmse": 0.12,
+      "window": 3
+    },
+    {
+      "root_blocks": 12,
+      "successful_roots": 0,
+      "teacher_gamma": 0.75,
+      "teacher_n_qubits": 3,
+      "tolerance_nrmse": 0.12,
+      "window": 4
+    },
+    {
+      "root_blocks": 12,
+      "successful_roots": 0,
+      "teacher_gamma": 0.75,
+      "teacher_n_qubits": 3,
+      "tolerance_nrmse": 0.12,
+      "window": 5
+    },
+    {
+      "root_blocks": 12,
+      "successful_roots": 1,
+      "teacher_gamma": 0.75,
+      "teacher_n_qubits": 3,
+      "tolerance_nrmse": 0.12,
+      "window": 6
+    },
+    {
+      "root_blocks": 12,
+      "successful_roots": 0,
+      "teacher_gamma": 1.0,
+      "teacher_n_qubits": 3,
+      "tolerance_nrmse": 0.12,
+      "window": 1
+    },
+    {
+      "root_blocks": 12,
+      "successful_roots": 0,
+      "teacher_gamma": 1.0,
+      "teacher_n_qubits": 3,
+      "tolerance_nrmse": 0.12,
+      "window": 2
+    },
+    {
+      "root_blocks": 12,
+      "successful_roots": 0,
+      "teacher_gamma": 1.0,
+      "teacher_n_qubits": 3,
+      "tolerance_nrmse": 0.12,
+      "window": 3
+    },
+    {
+      "root_blocks": 12,
+      "successful_roots": 0,
+      "teacher_gamma": 1.0,
+      "teacher_n_qubits": 3,
+      "tolerance_nrmse": 0.12,
+      "window": 4
+    },
+    {
+      "root_blocks": 12,
+      "successful_roots": 3,
+      "teacher_gamma": 1.0,
+      "teacher_n_qubits": 3,
+      "tolerance_nrmse": 0.12,
+      "window": 5
+    },
+    {
+      "root_blocks": 12,
+      "successful_roots": 10,
+      "teacher_gamma": 1.0,
+      "teacher_n_qubits": 3,
+      "tolerance_nrmse": 0.12,
+      "window": 6
+    },
+    {
+      "root_blocks": 12,
+      "successful_roots": 0,
+      "teacher_gamma": 1.25,
+      "teacher_n_qubits": 3,
+      "tolerance_nrmse": 0.12,
+      "window": 1
+    },
+    {
+      "root_blocks": 12,
+      "successful_roots": 0,
+      "teacher_gamma": 1.25,
+      "teacher_n_qubits": 3,
+      "tolerance_nrmse": 0.12,
+      "window": 2
+    },
+    {
+      "root_blocks": 12,
+      "successful_roots": 0,
+      "teacher_gamma": 1.25,
+      "teacher_n_qubits": 3,
+      "tolerance_nrmse": 0.12,
+      "window": 3
+    },
+    {
+      "root_blocks": 12,
+      "successful_roots": 3,
+      "teacher_gamma": 1.25,
+      "teacher_n_qubits": 3,
+      "tolerance_nrmse": 0.12,
+      "window": 4
+    },
+    {
+      "root_blocks": 12,
+      "successful_roots": 10,
+      "teacher_gamma": 1.25,
+      "teacher_n_qubits": 3,
+      "tolerance_nrmse": 0.12,
+      "window": 5
+    },
+    {
+      "root_blocks": 12,
+      "successful_roots": 12,
+      "teacher_gamma": 1.25,
+      "teacher_n_qubits": 3,
+      "tolerance_nrmse": 0.12,
+      "window": 6
+    },
+    {
+      "root_blocks": 12,
+      "successful_roots": 0,
+      "teacher_gamma": 1.5,
+      "teacher_n_qubits": 3,
+      "tolerance_nrmse": 0.12,
+      "window": 1
+    },
+    {
+      "root_blocks": 12,
+      "successful_roots": 0,
+      "teacher_gamma": 1.5,
+      "teacher_n_qubits": 3,
+      "tolerance_nrmse": 0.12,
+      "window": 2
+    },
+    {
+      "root_blocks": 12,
+      "successful_roots": 1,
+      "teacher_gamma": 1.5,
+      "teacher_n_qubits": 3,
+      "tolerance_nrmse": 0.12,
+      "window": 3
+    },
+    {
+      "root_blocks": 12,
+      "successful_roots": 10,
+      "teacher_gamma": 1.5,
+      "teacher_n_qubits": 3,
+      "tolerance_nrmse": 0.12,
+      "window": 4
+    },
+    {
+      "root_blocks": 12,
+      "successful_roots": 12,
+      "teacher_gamma": 1.5,
+      "teacher_n_qubits": 3,
+      "tolerance_nrmse": 0.12,
+      "window": 5
+    },
+    {
+      "root_blocks": 12,
+      "successful_roots": 12,
+      "teacher_gamma": 1.5,
+      "teacher_n_qubits": 3,
+      "tolerance_nrmse": 0.12,
+      "window": 6
+    },
+    {
+      "root_blocks": 12,
+      "successful_roots": 0,
+      "teacher_gamma": 2.0,
+      "teacher_n_qubits": 3,
+      "tolerance_nrmse": 0.12,
+      "window": 1
+    },
+    {
+      "root_blocks": 12,
+      "successful_roots": 0,
+      "teacher_gamma": 2.0,
+      "teacher_n_qubits": 3,
+      "tolerance_nrmse": 0.12,
+      "window": 2
+    },
+    {
+      "root_blocks": 12,
+      "successful_roots": 9,
+      "teacher_gamma": 2.0,
+      "teacher_n_qubits": 3,
+      "tolerance_nrmse": 0.12,
+      "window": 3
+    },
+    {
+      "root_blocks": 12,
+      "successful_roots": 12,
+      "teacher_gamma": 2.0,
+      "teacher_n_qubits": 3,
+      "tolerance_nrmse": 0.12,
+      "window": 4
+    },
+    {
+      "root_blocks": 12,
+      "successful_roots": 12,
+      "teacher_gamma": 2.0,
+      "teacher_n_qubits": 3,
+      "tolerance_nrmse": 0.12,
+      "window": 5
+    },
+    {
+      "root_blocks": 12,
+      "successful_roots": 12,
+      "teacher_gamma": 2.0,
+      "teacher_n_qubits": 3,
+      "tolerance_nrmse": 0.12,
+      "window": 6
+    },
+    {
+      "root_blocks": 12,
+      "successful_roots": 0,
+      "teacher_gamma": 2.5,
+      "teacher_n_qubits": 3,
+      "tolerance_nrmse": 0.12,
+      "window": 1
+    },
+    {
+      "root_blocks": 12,
+      "successful_roots": 1,
+      "teacher_gamma": 2.5,
+      "teacher_n_qubits": 3,
+      "tolerance_nrmse": 0.12,
+      "window": 2
+    },
+    {
+      "root_blocks": 12,
+      "successful_roots": 12,
+      "teacher_gamma": 2.5,
+      "teacher_n_qubits": 3,
+      "tolerance_nrmse": 0.12,
+      "window": 3
+    },
+    {
+      "root_blocks": 12,
+      "successful_roots": 12,
+      "teacher_gamma": 2.5,
+      "teacher_n_qubits": 3,
+      "tolerance_nrmse": 0.12,
+      "window": 4
+    },
+    {
+      "root_blocks": 12,
+      "successful_roots": 12,
+      "teacher_gamma": 2.5,
+      "teacher_n_qubits": 3,
+      "tolerance_nrmse": 0.12,
+      "window": 5
+    },
+    {
+      "root_blocks": 12,
+      "successful_roots": 12,
+      "teacher_gamma": 2.5,
+      "teacher_n_qubits": 3,
+      "tolerance_nrmse": 0.12,
+      "window": 6
+    },
+    {
+      "root_blocks": 12,
+      "successful_roots": 0,
+      "teacher_gamma": 3.0,
+      "teacher_n_qubits": 3,
+      "tolerance_nrmse": 0.12,
+      "window": 1
+    },
+    {
+      "root_blocks": 12,
+      "successful_roots": 8,
+      "teacher_gamma": 3.0,
+      "teacher_n_qubits": 3,
+      "tolerance_nrmse": 0.12,
+      "window": 2
+    },
+    {
+      "root_blocks": 12,
+      "successful_roots": 12,
+      "teacher_gamma": 3.0,
+      "teacher_n_qubits": 3,
+      "tolerance_nrmse": 0.12,
+      "window": 3
+    },
+    {
+      "root_blocks": 12,
+      "successful_roots": 12,
+      "teacher_gamma": 3.0,
+      "teacher_n_qubits": 3,
+      "tolerance_nrmse": 0.12,
+      "window": 4
+    },
+    {
+      "root_blocks": 12,
+      "successful_roots": 12,
+      "teacher_gamma": 3.0,
+      "teacher_n_qubits": 3,
+      "tolerance_nrmse": 0.12,
+      "window": 5
+    },
+    {
+      "root_blocks": 12,
+      "successful_roots": 12,
+      "teacher_gamma": 3.0,
+      "teacher_n_qubits": 3,
+      "tolerance_nrmse": 0.12,
+      "window": 6
+    },
+    {
+      "root_blocks": 12,
+      "successful_roots": 0,
+      "teacher_gamma": 4.0,
+      "teacher_n_qubits": 3,
+      "tolerance_nrmse": 0.12,
+      "window": 1
+    },
+    {
+      "root_blocks": 12,
+      "successful_roots": 12,
+      "teacher_gamma": 4.0,
+      "teacher_n_qubits": 3,
+      "tolerance_nrmse": 0.12,
+      "window": 2
+    },
+    {
+      "root_blocks": 12,
+      "successful_roots": 12,
+      "teacher_gamma": 4.0,
+      "teacher_n_qubits": 3,
+      "tolerance_nrmse": 0.12,
+      "window": 3
+    },
+    {
+      "root_blocks": 12,
+      "successful_roots": 12,
+      "teacher_gamma": 4.0,
+      "teacher_n_qubits": 3,
+      "tolerance_nrmse": 0.12,
+      "window": 4
+    },
+    {
+      "root_blocks": 12,
+      "successful_roots": 12,
+      "teacher_gamma": 4.0,
+      "teacher_n_qubits": 3,
+      "tolerance_nrmse": 0.12,
+      "window": 5
+    },
+    {
+      "root_blocks": 12,
+      "successful_roots": 12,
+      "teacher_gamma": 4.0,
+      "teacher_n_qubits": 3,
+      "tolerance_nrmse": 0.12,
+      "window": 6
+    },
+    {
+      "root_blocks": 12,
+      "successful_roots": 0,
+      "teacher_gamma": 0.0,
+      "teacher_n_qubits": 4,
+      "tolerance_nrmse": 0.08,
+      "window": 1
+    },
+    {
+      "root_blocks": 12,
+      "successful_roots": 0,
+      "teacher_gamma": 0.0,
+      "teacher_n_qubits": 4,
+      "tolerance_nrmse": 0.08,
+      "window": 2
+    },
+    {
+      "root_blocks": 12,
+      "successful_roots": 0,
+      "teacher_gamma": 0.0,
+      "teacher_n_qubits": 4,
+      "tolerance_nrmse": 0.08,
+      "window": 3
+    },
+    {
+      "root_blocks": 12,
+      "successful_roots": 0,
+      "teacher_gamma": 0.0,
+      "teacher_n_qubits": 4,
+      "tolerance_nrmse": 0.08,
+      "window": 4
+    },
+    {
+      "root_blocks": 12,
+      "successful_roots": 0,
+      "teacher_gamma": 0.0,
+      "teacher_n_qubits": 4,
+      "tolerance_nrmse": 0.08,
+      "window": 5
+    },
+    {
+      "root_blocks": 12,
+      "successful_roots": 0,
+      "teacher_gamma": 0.0,
+      "teacher_n_qubits": 4,
+      "tolerance_nrmse": 0.08,
+      "window": 6
+    },
+    {
+      "root_blocks": 12,
+      "successful_roots": 0,
+      "teacher_gamma": 0.2,
+      "teacher_n_qubits": 4,
+      "tolerance_nrmse": 0.08,
+      "window": 1
+    },
+    {
+      "root_blocks": 12,
+      "successful_roots": 0,
+      "teacher_gamma": 0.2,
+      "teacher_n_qubits": 4,
+      "tolerance_nrmse": 0.08,
+      "window": 2
+    },
+    {
+      "root_blocks": 12,
+      "successful_roots": 0,
+      "teacher_gamma": 0.2,
+      "teacher_n_qubits": 4,
+      "tolerance_nrmse": 0.08,
+      "window": 3
+    },
+    {
+      "root_blocks": 12,
+      "successful_roots": 0,
+      "teacher_gamma": 0.2,
+      "teacher_n_qubits": 4,
+      "tolerance_nrmse": 0.08,
+      "window": 4
+    },
+    {
+      "root_blocks": 12,
+      "successful_roots": 0,
+      "teacher_gamma": 0.2,
+      "teacher_n_qubits": 4,
+      "tolerance_nrmse": 0.08,
+      "window": 5
+    },
+    {
+      "root_blocks": 12,
+      "successful_roots": 0,
+      "teacher_gamma": 0.2,
+      "teacher_n_qubits": 4,
+      "tolerance_nrmse": 0.08,
+      "window": 6
+    },
+    {
+      "root_blocks": 12,
+      "successful_roots": 0,
+      "teacher_gamma": 0.5,
+      "teacher_n_qubits": 4,
+      "tolerance_nrmse": 0.08,
+      "window": 1
+    },
+    {
+      "root_blocks": 12,
+      "successful_roots": 0,
+      "teacher_gamma": 0.5,
+      "teacher_n_qubits": 4,
+      "tolerance_nrmse": 0.08,
+      "window": 2
+    },
+    {
+      "root_blocks": 12,
+      "successful_roots": 0,
+      "teacher_gamma": 0.5,
+      "teacher_n_qubits": 4,
+      "tolerance_nrmse": 0.08,
+      "window": 3
+    },
+    {
+      "root_blocks": 12,
+      "successful_roots": 0,
+      "teacher_gamma": 0.5,
+      "teacher_n_qubits": 4,
+      "tolerance_nrmse": 0.08,
+      "window": 4
+    },
+    {
+      "root_blocks": 12,
+      "successful_roots": 0,
+      "teacher_gamma": 0.5,
+      "teacher_n_qubits": 4,
+      "tolerance_nrmse": 0.08,
+      "window": 5
+    },
+    {
+      "root_blocks": 12,
+      "successful_roots": 0,
+      "teacher_gamma": 0.5,
+      "teacher_n_qubits": 4,
+      "tolerance_nrmse": 0.08,
+      "window": 6
+    },
+    {
+      "root_blocks": 12,
+      "successful_roots": 0,
+      "teacher_gamma": 0.75,
+      "teacher_n_qubits": 4,
+      "tolerance_nrmse": 0.08,
+      "window": 1
+    },
+    {
+      "root_blocks": 12,
+      "successful_roots": 0,
+      "teacher_gamma": 0.75,
+      "teacher_n_qubits": 4,
+      "tolerance_nrmse": 0.08,
+      "window": 2
+    },
+    {
+      "root_blocks": 12,
+      "successful_roots": 0,
+      "teacher_gamma": 0.75,
+      "teacher_n_qubits": 4,
+      "tolerance_nrmse": 0.08,
+      "window": 3
+    },
+    {
+      "root_blocks": 12,
+      "successful_roots": 0,
+      "teacher_gamma": 0.75,
+      "teacher_n_qubits": 4,
+      "tolerance_nrmse": 0.08,
+      "window": 4
+    },
+    {
+      "root_blocks": 12,
+      "successful_roots": 0,
+      "teacher_gamma": 0.75,
+      "teacher_n_qubits": 4,
+      "tolerance_nrmse": 0.08,
+      "window": 5
+    },
+    {
+      "root_blocks": 12,
+      "successful_roots": 0,
+      "teacher_gamma": 0.75,
+      "teacher_n_qubits": 4,
+      "tolerance_nrmse": 0.08,
+      "window": 6
+    },
+    {
+      "root_blocks": 12,
+      "successful_roots": 0,
+      "teacher_gamma": 1.0,
+      "teacher_n_qubits": 4,
+      "tolerance_nrmse": 0.08,
+      "window": 1
+    },
+    {
+      "root_blocks": 12,
+      "successful_roots": 0,
+      "teacher_gamma": 1.0,
+      "teacher_n_qubits": 4,
+      "tolerance_nrmse": 0.08,
+      "window": 2
+    },
+    {
+      "root_blocks": 12,
+      "successful_roots": 0,
+      "teacher_gamma": 1.0,
+      "teacher_n_qubits": 4,
+      "tolerance_nrmse": 0.08,
+      "window": 3
+    },
+    {
+      "root_blocks": 12,
+      "successful_roots": 0,
+      "teacher_gamma": 1.0,
+      "teacher_n_qubits": 4,
+      "tolerance_nrmse": 0.08,
+      "window": 4
+    },
+    {
+      "root_blocks": 12,
+      "successful_roots": 1,
+      "teacher_gamma": 1.0,
+      "teacher_n_qubits": 4,
+      "tolerance_nrmse": 0.08,
+      "window": 5
+    },
+    {
+      "root_blocks": 12,
+      "successful_roots": 5,
+      "teacher_gamma": 1.0,
+      "teacher_n_qubits": 4,
+      "tolerance_nrmse": 0.08,
+      "window": 6
+    },
+    {
+      "root_blocks": 12,
+      "successful_roots": 0,
+      "teacher_gamma": 1.25,
+      "teacher_n_qubits": 4,
+      "tolerance_nrmse": 0.08,
+      "window": 1
+    },
+    {
+      "root_blocks": 12,
+      "successful_roots": 0,
+      "teacher_gamma": 1.25,
+      "teacher_n_qubits": 4,
+      "tolerance_nrmse": 0.08,
+      "window": 2
+    },
+    {
+      "root_blocks": 12,
+      "successful_roots": 0,
+      "teacher_gamma": 1.25,
+      "teacher_n_qubits": 4,
+      "tolerance_nrmse": 0.08,
+      "window": 3
+    },
+    {
+      "root_blocks": 12,
+      "successful_roots": 1,
+      "teacher_gamma": 1.25,
+      "teacher_n_qubits": 4,
+      "tolerance_nrmse": 0.08,
+      "window": 4
+    },
+    {
+      "root_blocks": 12,
+      "successful_roots": 5,
+      "teacher_gamma": 1.25,
+      "teacher_n_qubits": 4,
+      "tolerance_nrmse": 0.08,
+      "window": 5
+    },
+    {
+      "root_blocks": 12,
+      "successful_roots": 10,
+      "teacher_gamma": 1.25,
+      "teacher_n_qubits": 4,
+      "tolerance_nrmse": 0.08,
+      "window": 6
+    },
+    {
+      "root_blocks": 12,
+      "successful_roots": 0,
+      "teacher_gamma": 1.5,
+      "teacher_n_qubits": 4,
+      "tolerance_nrmse": 0.08,
+      "window": 1
+    },
+    {
+      "root_blocks": 12,
+      "successful_roots": 0,
+      "teacher_gamma": 1.5,
+      "teacher_n_qubits": 4,
+      "tolerance_nrmse": 0.08,
+      "window": 2
+    },
+    {
+      "root_blocks": 12,
+      "successful_roots": 0,
+      "teacher_gamma": 1.5,
+      "teacher_n_qubits": 4,
+      "tolerance_nrmse": 0.08,
+      "window": 3
+    },
+    {
+      "root_blocks": 12,
+      "successful_roots": 4,
+      "teacher_gamma": 1.5,
+      "teacher_n_qubits": 4,
+      "tolerance_nrmse": 0.08,
+      "window": 4
+    },
+    {
+      "root_blocks": 12,
+      "successful_roots": 8,
+      "teacher_gamma": 1.5,
+      "teacher_n_qubits": 4,
+      "tolerance_nrmse": 0.08,
+      "window": 5
+    },
+    {
+      "root_blocks": 12,
+      "successful_roots": 11,
+      "teacher_gamma": 1.5,
+      "teacher_n_qubits": 4,
+      "tolerance_nrmse": 0.08,
+      "window": 6
+    },
+    {
+      "root_blocks": 12,
+      "successful_roots": 0,
+      "teacher_gamma": 2.0,
+      "teacher_n_qubits": 4,
+      "tolerance_nrmse": 0.08,
+      "window": 1
+    },
+    {
+      "root_blocks": 12,
+      "successful_roots": 0,
+      "teacher_gamma": 2.0,
+      "teacher_n_qubits": 4,
+      "tolerance_nrmse": 0.08,
+      "window": 2
+    },
+    {
+      "root_blocks": 12,
+      "successful_roots": 1,
+      "teacher_gamma": 2.0,
+      "teacher_n_qubits": 4,
+      "tolerance_nrmse": 0.08,
+      "window": 3
+    },
+    {
+      "root_blocks": 12,
+      "successful_roots": 9,
+      "teacher_gamma": 2.0,
+      "teacher_n_qubits": 4,
+      "tolerance_nrmse": 0.08,
+      "window": 4
+    },
+    {
+      "root_blocks": 12,
+      "successful_roots": 12,
+      "teacher_gamma": 2.0,
+      "teacher_n_qubits": 4,
+      "tolerance_nrmse": 0.08,
+      "window": 5
+    },
+    {
+      "root_blocks": 12,
+      "successful_roots": 12,
+      "teacher_gamma": 2.0,
+      "teacher_n_qubits": 4,
+      "tolerance_nrmse": 0.08,
+      "window": 6
+    },
+    {
+      "root_blocks": 12,
+      "successful_roots": 0,
+      "teacher_gamma": 2.5,
+      "teacher_n_qubits": 4,
+      "tolerance_nrmse": 0.08,
+      "window": 1
+    },
+    {
+      "root_blocks": 12,
+      "successful_roots": 0,
+      "teacher_gamma": 2.5,
+      "teacher_n_qubits": 4,
+      "tolerance_nrmse": 0.08,
+      "window": 2
+    },
+    {
+      "root_blocks": 12,
+      "successful_roots": 6,
+      "teacher_gamma": 2.5,
+      "teacher_n_qubits": 4,
+      "tolerance_nrmse": 0.08,
+      "window": 3
+    },
+    {
+      "root_blocks": 12,
+      "successful_roots": 12,
+      "teacher_gamma": 2.5,
+      "teacher_n_qubits": 4,
+      "tolerance_nrmse": 0.08,
+      "window": 4
+    },
+    {
+      "root_blocks": 12,
+      "successful_roots": 12,
+      "teacher_gamma": 2.5,
+      "teacher_n_qubits": 4,
+      "tolerance_nrmse": 0.08,
+      "window": 5
+    },
+    {
+      "root_blocks": 12,
+      "successful_roots": 12,
+      "teacher_gamma": 2.5,
+      "teacher_n_qubits": 4,
+      "tolerance_nrmse": 0.08,
+      "window": 6
+    },
+    {
+      "root_blocks": 12,
+      "successful_roots": 0,
+      "teacher_gamma": 3.0,
+      "teacher_n_qubits": 4,
+      "tolerance_nrmse": 0.08,
+      "window": 1
+    },
+    {
+      "root_blocks": 12,
+      "successful_roots": 0,
+      "teacher_gamma": 3.0,
+      "teacher_n_qubits": 4,
+      "tolerance_nrmse": 0.08,
+      "window": 2
+    },
+    {
+      "root_blocks": 12,
+      "successful_roots": 12,
+      "teacher_gamma": 3.0,
+      "teacher_n_qubits": 4,
+      "tolerance_nrmse": 0.08,
+      "window": 3
+    },
+    {
+      "root_blocks": 12,
+      "successful_roots": 12,
+      "teacher_gamma": 3.0,
+      "teacher_n_qubits": 4,
+      "tolerance_nrmse": 0.08,
+      "window": 4
+    },
+    {
+      "root_blocks": 12,
+      "successful_roots": 12,
+      "teacher_gamma": 3.0,
+      "teacher_n_qubits": 4,
+      "tolerance_nrmse": 0.08,
+      "window": 5
+    },
+    {
+      "root_blocks": 12,
+      "successful_roots": 12,
+      "teacher_gamma": 3.0,
+      "teacher_n_qubits": 4,
+      "tolerance_nrmse": 0.08,
+      "window": 6
+    },
+    {
+      "root_blocks": 12,
+      "successful_roots": 0,
+      "teacher_gamma": 4.0,
+      "teacher_n_qubits": 4,
+      "tolerance_nrmse": 0.08,
+      "window": 1
+    },
+    {
+      "root_blocks": 12,
+      "successful_roots": 10,
+      "teacher_gamma": 4.0,
+      "teacher_n_qubits": 4,
+      "tolerance_nrmse": 0.08,
+      "window": 2
+    },
+    {
+      "root_blocks": 12,
+      "successful_roots": 12,
+      "teacher_gamma": 4.0,
+      "teacher_n_qubits": 4,
+      "tolerance_nrmse": 0.08,
+      "window": 3
+    },
+    {
+      "root_blocks": 12,
+      "successful_roots": 12,
+      "teacher_gamma": 4.0,
+      "teacher_n_qubits": 4,
+      "tolerance_nrmse": 0.08,
+      "window": 4
+    },
+    {
+      "root_blocks": 12,
+      "successful_roots": 12,
+      "teacher_gamma": 4.0,
+      "teacher_n_qubits": 4,
+      "tolerance_nrmse": 0.08,
+      "window": 5
+    },
+    {
+      "root_blocks": 12,
+      "successful_roots": 12,
+      "teacher_gamma": 4.0,
+      "teacher_n_qubits": 4,
+      "tolerance_nrmse": 0.08,
+      "window": 6
+    },
+    {
+      "root_blocks": 12,
+      "successful_roots": 0,
+      "teacher_gamma": 0.0,
+      "teacher_n_qubits": 4,
+      "tolerance_nrmse": 0.1,
+      "window": 1
+    },
+    {
+      "root_blocks": 12,
+      "successful_roots": 0,
+      "teacher_gamma": 0.0,
+      "teacher_n_qubits": 4,
+      "tolerance_nrmse": 0.1,
+      "window": 2
+    },
+    {
+      "root_blocks": 12,
+      "successful_roots": 0,
+      "teacher_gamma": 0.0,
+      "teacher_n_qubits": 4,
+      "tolerance_nrmse": 0.1,
+      "window": 3
+    },
+    {
+      "root_blocks": 12,
+      "successful_roots": 0,
+      "teacher_gamma": 0.0,
+      "teacher_n_qubits": 4,
+      "tolerance_nrmse": 0.1,
+      "window": 4
+    },
+    {
+      "root_blocks": 12,
+      "successful_roots": 0,
+      "teacher_gamma": 0.0,
+      "teacher_n_qubits": 4,
+      "tolerance_nrmse": 0.1,
+      "window": 5
+    },
+    {
+      "root_blocks": 12,
+      "successful_roots": 0,
+      "teacher_gamma": 0.0,
+      "teacher_n_qubits": 4,
+      "tolerance_nrmse": 0.1,
+      "window": 6
+    },
+    {
+      "root_blocks": 12,
+      "successful_roots": 0,
+      "teacher_gamma": 0.2,
+      "teacher_n_qubits": 4,
+      "tolerance_nrmse": 0.1,
+      "window": 1
+    },
+    {
+      "root_blocks": 12,
+      "successful_roots": 0,
+      "teacher_gamma": 0.2,
+      "teacher_n_qubits": 4,
+      "tolerance_nrmse": 0.1,
+      "window": 2
+    },
+    {
+      "root_blocks": 12,
+      "successful_roots": 0,
+      "teacher_gamma": 0.2,
+      "teacher_n_qubits": 4,
+      "tolerance_nrmse": 0.1,
+      "window": 3
+    },
+    {
+      "root_blocks": 12,
+      "successful_roots": 0,
+      "teacher_gamma": 0.2,
+      "teacher_n_qubits": 4,
+      "tolerance_nrmse": 0.1,
+      "window": 4
+    },
+    {
+      "root_blocks": 12,
+      "successful_roots": 0,
+      "teacher_gamma": 0.2,
+      "teacher_n_qubits": 4,
+      "tolerance_nrmse": 0.1,
+      "window": 5
+    },
+    {
+      "root_blocks": 12,
+      "successful_roots": 0,
+      "teacher_gamma": 0.2,
+      "teacher_n_qubits": 4,
+      "tolerance_nrmse": 0.1,
+      "window": 6
+    },
+    {
+      "root_blocks": 12,
+      "successful_roots": 0,
+      "teacher_gamma": 0.5,
+      "teacher_n_qubits": 4,
+      "tolerance_nrmse": 0.1,
+      "window": 1
+    },
+    {
+      "root_blocks": 12,
+      "successful_roots": 0,
+      "teacher_gamma": 0.5,
+      "teacher_n_qubits": 4,
+      "tolerance_nrmse": 0.1,
+      "window": 2
+    },
+    {
+      "root_blocks": 12,
+      "successful_roots": 0,
+      "teacher_gamma": 0.5,
+      "teacher_n_qubits": 4,
+      "tolerance_nrmse": 0.1,
+      "window": 3
+    },
+    {
+      "root_blocks": 12,
+      "successful_roots": 0,
+      "teacher_gamma": 0.5,
+      "teacher_n_qubits": 4,
+      "tolerance_nrmse": 0.1,
+      "window": 4
+    },
+    {
+      "root_blocks": 12,
+      "successful_roots": 0,
+      "teacher_gamma": 0.5,
+      "teacher_n_qubits": 4,
+      "tolerance_nrmse": 0.1,
+      "window": 5
+    },
+    {
+      "root_blocks": 12,
+      "successful_roots": 0,
+      "teacher_gamma": 0.5,
+      "teacher_n_qubits": 4,
+      "tolerance_nrmse": 0.1,
+      "window": 6
+    },
+    {
+      "root_blocks": 12,
+      "successful_roots": 0,
+      "teacher_gamma": 0.75,
+      "teacher_n_qubits": 4,
+      "tolerance_nrmse": 0.1,
+      "window": 1
+    },
+    {
+      "root_blocks": 12,
+      "successful_roots": 0,
+      "teacher_gamma": 0.75,
+      "teacher_n_qubits": 4,
+      "tolerance_nrmse": 0.1,
+      "window": 2
+    },
+    {
+      "root_blocks": 12,
+      "successful_roots": 0,
+      "teacher_gamma": 0.75,
+      "teacher_n_qubits": 4,
+      "tolerance_nrmse": 0.1,
+      "window": 3
+    },
+    {
+      "root_blocks": 12,
+      "successful_roots": 0,
+      "teacher_gamma": 0.75,
+      "teacher_n_qubits": 4,
+      "tolerance_nrmse": 0.1,
+      "window": 4
+    },
+    {
+      "root_blocks": 12,
+      "successful_roots": 0,
+      "teacher_gamma": 0.75,
+      "teacher_n_qubits": 4,
+      "tolerance_nrmse": 0.1,
+      "window": 5
+    },
+    {
+      "root_blocks": 12,
+      "successful_roots": 2,
+      "teacher_gamma": 0.75,
+      "teacher_n_qubits": 4,
+      "tolerance_nrmse": 0.1,
+      "window": 6
+    },
+    {
+      "root_blocks": 12,
+      "successful_roots": 0,
+      "teacher_gamma": 1.0,
+      "teacher_n_qubits": 4,
+      "tolerance_nrmse": 0.1,
+      "window": 1
+    },
+    {
+      "root_blocks": 12,
+      "successful_roots": 0,
+      "teacher_gamma": 1.0,
+      "teacher_n_qubits": 4,
+      "tolerance_nrmse": 0.1,
+      "window": 2
+    },
+    {
+      "root_blocks": 12,
+      "successful_roots": 0,
+      "teacher_gamma": 1.0,
+      "teacher_n_qubits": 4,
+      "tolerance_nrmse": 0.1,
+      "window": 3
+    },
+    {
+      "root_blocks": 12,
+      "successful_roots": 0,
+      "teacher_gamma": 1.0,
+      "teacher_n_qubits": 4,
+      "tolerance_nrmse": 0.1,
+      "window": 4
+    },
+    {
+      "root_blocks": 12,
+      "successful_roots": 3,
+      "teacher_gamma": 1.0,
+      "teacher_n_qubits": 4,
+      "tolerance_nrmse": 0.1,
+      "window": 5
+    },
+    {
+      "root_blocks": 12,
+      "successful_roots": 8,
+      "teacher_gamma": 1.0,
+      "teacher_n_qubits": 4,
+      "tolerance_nrmse": 0.1,
+      "window": 6
+    },
+    {
+      "root_blocks": 12,
+      "successful_roots": 0,
+      "teacher_gamma": 1.25,
+      "teacher_n_qubits": 4,
+      "tolerance_nrmse": 0.1,
+      "window": 1
+    },
+    {
+      "root_blocks": 12,
+      "successful_roots": 0,
+      "teacher_gamma": 1.25,
+      "teacher_n_qubits": 4,
+      "tolerance_nrmse": 0.1,
+      "window": 2
+    },
+    {
+      "root_blocks": 12,
+      "successful_roots": 0,
+      "teacher_gamma": 1.25,
+      "teacher_n_qubits": 4,
+      "tolerance_nrmse": 0.1,
+      "window": 3
+    },
+    {
+      "root_blocks": 12,
+      "successful_roots": 4,
+      "teacher_gamma": 1.25,
+      "teacher_n_qubits": 4,
+      "tolerance_nrmse": 0.1,
+      "window": 4
+    },
+    {
+      "root_blocks": 12,
+      "successful_roots": 8,
+      "teacher_gamma": 1.25,
+      "teacher_n_qubits": 4,
+      "tolerance_nrmse": 0.1,
+      "window": 5
+    },
+    {
+      "root_blocks": 12,
+      "successful_roots": 11,
+      "teacher_gamma": 1.25,
+      "teacher_n_qubits": 4,
+      "tolerance_nrmse": 0.1,
+      "window": 6
+    },
+    {
+      "root_blocks": 12,
+      "successful_roots": 0,
+      "teacher_gamma": 1.5,
+      "teacher_n_qubits": 4,
+      "tolerance_nrmse": 0.1,
+      "window": 1
+    },
+    {
+      "root_blocks": 12,
+      "successful_roots": 0,
+      "teacher_gamma": 1.5,
+      "teacher_n_qubits": 4,
+      "tolerance_nrmse": 0.1,
+      "window": 2
+    },
+    {
+      "root_blocks": 12,
+      "successful_roots": 0,
+      "teacher_gamma": 1.5,
+      "teacher_n_qubits": 4,
+      "tolerance_nrmse": 0.1,
+      "window": 3
+    },
+    {
+      "root_blocks": 12,
+      "successful_roots": 6,
+      "teacher_gamma": 1.5,
+      "teacher_n_qubits": 4,
+      "tolerance_nrmse": 0.1,
+      "window": 4
+    },
+    {
+      "root_blocks": 12,
+      "successful_roots": 11,
+      "teacher_gamma": 1.5,
+      "teacher_n_qubits": 4,
+      "tolerance_nrmse": 0.1,
+      "window": 5
+    },
+    {
+      "root_blocks": 12,
+      "successful_roots": 12,
+      "teacher_gamma": 1.5,
+      "teacher_n_qubits": 4,
+      "tolerance_nrmse": 0.1,
+      "window": 6
+    },
+    {
+      "root_blocks": 12,
+      "successful_roots": 0,
+      "teacher_gamma": 2.0,
+      "teacher_n_qubits": 4,
+      "tolerance_nrmse": 0.1,
+      "window": 1
+    },
+    {
+      "root_blocks": 12,
+      "successful_roots": 0,
+      "teacher_gamma": 2.0,
+      "teacher_n_qubits": 4,
+      "tolerance_nrmse": 0.1,
+      "window": 2
+    },
+    {
+      "root_blocks": 12,
+      "successful_roots": 1,
+      "teacher_gamma": 2.0,
+      "teacher_n_qubits": 4,
+      "tolerance_nrmse": 0.1,
+      "window": 3
+    },
+    {
+      "root_blocks": 12,
+      "successful_roots": 11,
+      "teacher_gamma": 2.0,
+      "teacher_n_qubits": 4,
+      "tolerance_nrmse": 0.1,
+      "window": 4
+    },
+    {
+      "root_blocks": 12,
+      "successful_roots": 12,
+      "teacher_gamma": 2.0,
+      "teacher_n_qubits": 4,
+      "tolerance_nrmse": 0.1,
+      "window": 5
+    },
+    {
+      "root_blocks": 12,
+      "successful_roots": 12,
+      "teacher_gamma": 2.0,
+      "teacher_n_qubits": 4,
+      "tolerance_nrmse": 0.1,
+      "window": 6
+    },
+    {
+      "root_blocks": 12,
+      "successful_roots": 0,
+      "teacher_gamma": 2.5,
+      "teacher_n_qubits": 4,
+      "tolerance_nrmse": 0.1,
+      "window": 1
+    },
+    {
+      "root_blocks": 12,
+      "successful_roots": 0,
+      "teacher_gamma": 2.5,
+      "teacher_n_qubits": 4,
+      "tolerance_nrmse": 0.1,
+      "window": 2
+    },
+    {
+      "root_blocks": 12,
+      "successful_roots": 11,
+      "teacher_gamma": 2.5,
+      "teacher_n_qubits": 4,
+      "tolerance_nrmse": 0.1,
+      "window": 3
+    },
+    {
+      "root_blocks": 12,
+      "successful_roots": 12,
+      "teacher_gamma": 2.5,
+      "teacher_n_qubits": 4,
+      "tolerance_nrmse": 0.1,
+      "window": 4
+    },
+    {
+      "root_blocks": 12,
+      "successful_roots": 12,
+      "teacher_gamma": 2.5,
+      "teacher_n_qubits": 4,
+      "tolerance_nrmse": 0.1,
+      "window": 5
+    },
+    {
+      "root_blocks": 12,
+      "successful_roots": 12,
+      "teacher_gamma": 2.5,
+      "teacher_n_qubits": 4,
+      "tolerance_nrmse": 0.1,
+      "window": 6
+    },
+    {
+      "root_blocks": 12,
+      "successful_roots": 0,
+      "teacher_gamma": 3.0,
+      "teacher_n_qubits": 4,
+      "tolerance_nrmse": 0.1,
+      "window": 1
+    },
+    {
+      "root_blocks": 12,
+      "successful_roots": 1,
+      "teacher_gamma": 3.0,
+      "teacher_n_qubits": 4,
+      "tolerance_nrmse": 0.1,
+      "window": 2
+    },
+    {
+      "root_blocks": 12,
+      "successful_roots": 12,
+      "teacher_gamma": 3.0,
+      "teacher_n_qubits": 4,
+      "tolerance_nrmse": 0.1,
+      "window": 3
+    },
+    {
+      "root_blocks": 12,
+      "successful_roots": 12,
+      "teacher_gamma": 3.0,
+      "teacher_n_qubits": 4,
+      "tolerance_nrmse": 0.1,
+      "window": 4
+    },
+    {
+      "root_blocks": 12,
+      "successful_roots": 12,
+      "teacher_gamma": 3.0,
+      "teacher_n_qubits": 4,
+      "tolerance_nrmse": 0.1,
+      "window": 5
+    },
+    {
+      "root_blocks": 12,
+      "successful_roots": 12,
+      "teacher_gamma": 3.0,
+      "teacher_n_qubits": 4,
+      "tolerance_nrmse": 0.1,
+      "window": 6
+    },
+    {
+      "root_blocks": 12,
+      "successful_roots": 0,
+      "teacher_gamma": 4.0,
+      "teacher_n_qubits": 4,
+      "tolerance_nrmse": 0.1,
+      "window": 1
+    },
+    {
+      "root_blocks": 12,
+      "successful_roots": 12,
+      "teacher_gamma": 4.0,
+      "teacher_n_qubits": 4,
+      "tolerance_nrmse": 0.1,
+      "window": 2
+    },
+    {
+      "root_blocks": 12,
+      "successful_roots": 12,
+      "teacher_gamma": 4.0,
+      "teacher_n_qubits": 4,
+      "tolerance_nrmse": 0.1,
+      "window": 3
+    },
+    {
+      "root_blocks": 12,
+      "successful_roots": 12,
+      "teacher_gamma": 4.0,
+      "teacher_n_qubits": 4,
+      "tolerance_nrmse": 0.1,
+      "window": 4
+    },
+    {
+      "root_blocks": 12,
+      "successful_roots": 12,
+      "teacher_gamma": 4.0,
+      "teacher_n_qubits": 4,
+      "tolerance_nrmse": 0.1,
+      "window": 5
+    },
+    {
+      "root_blocks": 12,
+      "successful_roots": 12,
+      "teacher_gamma": 4.0,
+      "teacher_n_qubits": 4,
+      "tolerance_nrmse": 0.1,
+      "window": 6
+    },
+    {
+      "root_blocks": 12,
+      "successful_roots": 0,
+      "teacher_gamma": 0.0,
+      "teacher_n_qubits": 4,
+      "tolerance_nrmse": 0.12,
+      "window": 1
+    },
+    {
+      "root_blocks": 12,
+      "successful_roots": 0,
+      "teacher_gamma": 0.0,
+      "teacher_n_qubits": 4,
+      "tolerance_nrmse": 0.12,
+      "window": 2
+    },
+    {
+      "root_blocks": 12,
+      "successful_roots": 0,
+      "teacher_gamma": 0.0,
+      "teacher_n_qubits": 4,
+      "tolerance_nrmse": 0.12,
+      "window": 3
+    },
+    {
+      "root_blocks": 12,
+      "successful_roots": 0,
+      "teacher_gamma": 0.0,
+      "teacher_n_qubits": 4,
+      "tolerance_nrmse": 0.12,
+      "window": 4
+    },
+    {
+      "root_blocks": 12,
+      "successful_roots": 0,
+      "teacher_gamma": 0.0,
+      "teacher_n_qubits": 4,
+      "tolerance_nrmse": 0.12,
+      "window": 5
+    },
+    {
+      "root_blocks": 12,
+      "successful_roots": 0,
+      "teacher_gamma": 0.0,
+      "teacher_n_qubits": 4,
+      "tolerance_nrmse": 0.12,
+      "window": 6
+    },
+    {
+      "root_blocks": 12,
+      "successful_roots": 0,
+      "teacher_gamma": 0.2,
+      "teacher_n_qubits": 4,
+      "tolerance_nrmse": 0.12,
+      "window": 1
+    },
+    {
+      "root_blocks": 12,
+      "successful_roots": 0,
+      "teacher_gamma": 0.2,
+      "teacher_n_qubits": 4,
+      "tolerance_nrmse": 0.12,
+      "window": 2
+    },
+    {
+      "root_blocks": 12,
+      "successful_roots": 0,
+      "teacher_gamma": 0.2,
+      "teacher_n_qubits": 4,
+      "tolerance_nrmse": 0.12,
+      "window": 3
+    },
+    {
+      "root_blocks": 12,
+      "successful_roots": 0,
+      "teacher_gamma": 0.2,
+      "teacher_n_qubits": 4,
+      "tolerance_nrmse": 0.12,
+      "window": 4
+    },
+    {
+      "root_blocks": 12,
+      "successful_roots": 0,
+      "teacher_gamma": 0.2,
+      "teacher_n_qubits": 4,
+      "tolerance_nrmse": 0.12,
+      "window": 5
+    },
+    {
+      "root_blocks": 12,
+      "successful_roots": 0,
+      "teacher_gamma": 0.2,
+      "teacher_n_qubits": 4,
+      "tolerance_nrmse": 0.12,
+      "window": 6
+    },
+    {
+      "root_blocks": 12,
+      "successful_roots": 0,
+      "teacher_gamma": 0.5,
+      "teacher_n_qubits": 4,
+      "tolerance_nrmse": 0.12,
+      "window": 1
+    },
+    {
+      "root_blocks": 12,
+      "successful_roots": 0,
+      "teacher_gamma": 0.5,
+      "teacher_n_qubits": 4,
+      "tolerance_nrmse": 0.12,
+      "window": 2
+    },
+    {
+      "root_blocks": 12,
+      "successful_roots": 0,
+      "teacher_gamma": 0.5,
+      "teacher_n_qubits": 4,
+      "tolerance_nrmse": 0.12,
+      "window": 3
+    },
+    {
+      "root_blocks": 12,
+      "successful_roots": 0,
+      "teacher_gamma": 0.5,
+      "teacher_n_qubits": 4,
+      "tolerance_nrmse": 0.12,
+      "window": 4
+    },
+    {
+      "root_blocks": 12,
+      "successful_roots": 0,
+      "teacher_gamma": 0.5,
+      "teacher_n_qubits": 4,
+      "tolerance_nrmse": 0.12,
+      "window": 5
+    },
+    {
+      "root_blocks": 12,
+      "successful_roots": 0,
+      "teacher_gamma": 0.5,
+      "teacher_n_qubits": 4,
+      "tolerance_nrmse": 0.12,
+      "window": 6
+    },
+    {
+      "root_blocks": 12,
+      "successful_roots": 0,
+      "teacher_gamma": 0.75,
+      "teacher_n_qubits": 4,
+      "tolerance_nrmse": 0.12,
+      "window": 1
+    },
+    {
+      "root_blocks": 12,
+      "successful_roots": 0,
+      "teacher_gamma": 0.75,
+      "teacher_n_qubits": 4,
+      "tolerance_nrmse": 0.12,
+      "window": 2
+    },
+    {
+      "root_blocks": 12,
+      "successful_roots": 0,
+      "teacher_gamma": 0.75,
+      "teacher_n_qubits": 4,
+      "tolerance_nrmse": 0.12,
+      "window": 3
+    },
+    {
+      "root_blocks": 12,
+      "successful_roots": 0,
+      "teacher_gamma": 0.75,
+      "teacher_n_qubits": 4,
+      "tolerance_nrmse": 0.12,
+      "window": 4
+    },
+    {
+      "root_blocks": 12,
+      "successful_roots": 0,
+      "teacher_gamma": 0.75,
+      "teacher_n_qubits": 4,
+      "tolerance_nrmse": 0.12,
+      "window": 5
+    },
+    {
+      "root_blocks": 12,
+      "successful_roots": 4,
+      "teacher_gamma": 0.75,
+      "teacher_n_qubits": 4,
+      "tolerance_nrmse": 0.12,
+      "window": 6
+    },
+    {
+      "root_blocks": 12,
+      "successful_roots": 0,
+      "teacher_gamma": 1.0,
+      "teacher_n_qubits": 4,
+      "tolerance_nrmse": 0.12,
+      "window": 1
+    },
+    {
+      "root_blocks": 12,
+      "successful_roots": 0,
+      "teacher_gamma": 1.0,
+      "teacher_n_qubits": 4,
+      "tolerance_nrmse": 0.12,
+      "window": 2
+    },
+    {
+      "root_blocks": 12,
+      "successful_roots": 0,
+      "teacher_gamma": 1.0,
+      "teacher_n_qubits": 4,
+      "tolerance_nrmse": 0.12,
+      "window": 3
+    },
+    {
+      "root_blocks": 12,
+      "successful_roots": 1,
+      "teacher_gamma": 1.0,
+      "teacher_n_qubits": 4,
+      "tolerance_nrmse": 0.12,
+      "window": 4
+    },
+    {
+      "root_blocks": 12,
+      "successful_roots": 5,
+      "teacher_gamma": 1.0,
+      "teacher_n_qubits": 4,
+      "tolerance_nrmse": 0.12,
+      "window": 5
+    },
+    {
+      "root_blocks": 12,
+      "successful_roots": 10,
+      "teacher_gamma": 1.0,
+      "teacher_n_qubits": 4,
+      "tolerance_nrmse": 0.12,
+      "window": 6
+    },
+    {
+      "root_blocks": 12,
+      "successful_roots": 0,
+      "teacher_gamma": 1.25,
+      "teacher_n_qubits": 4,
+      "tolerance_nrmse": 0.12,
+      "window": 1
+    },
+    {
+      "root_blocks": 12,
+      "successful_roots": 0,
+      "teacher_gamma": 1.25,
+      "teacher_n_qubits": 4,
+      "tolerance_nrmse": 0.12,
+      "window": 2
+    },
+    {
+      "root_blocks": 12,
+      "successful_roots": 0,
+      "teacher_gamma": 1.25,
+      "teacher_n_qubits": 4,
+      "tolerance_nrmse": 0.12,
+      "window": 3
+    },
+    {
+      "root_blocks": 12,
+      "successful_roots": 4,
+      "teacher_gamma": 1.25,
+      "teacher_n_qubits": 4,
+      "tolerance_nrmse": 0.12,
+      "window": 4
+    },
+    {
+      "root_blocks": 12,
+      "successful_roots": 10,
+      "teacher_gamma": 1.25,
+      "teacher_n_qubits": 4,
+      "tolerance_nrmse": 0.12,
+      "window": 5
+    },
+    {
+      "root_blocks": 12,
+      "successful_roots": 12,
+      "teacher_gamma": 1.25,
+      "teacher_n_qubits": 4,
+      "tolerance_nrmse": 0.12,
+      "window": 6
+    },
+    {
+      "root_blocks": 12,
+      "successful_roots": 0,
+      "teacher_gamma": 1.5,
+      "teacher_n_qubits": 4,
+      "tolerance_nrmse": 0.12,
+      "window": 1
+    },
+    {
+      "root_blocks": 12,
+      "successful_roots": 0,
+      "teacher_gamma": 1.5,
+      "teacher_n_qubits": 4,
+      "tolerance_nrmse": 0.12,
+      "window": 2
+    },
+    {
+      "root_blocks": 12,
+      "successful_roots": 1,
+      "teacher_gamma": 1.5,
+      "teacher_n_qubits": 4,
+      "tolerance_nrmse": 0.12,
+      "window": 3
+    },
+    {
+      "root_blocks": 12,
+      "successful_roots": 8,
+      "teacher_gamma": 1.5,
+      "teacher_n_qubits": 4,
+      "tolerance_nrmse": 0.12,
+      "window": 4
+    },
+    {
+      "root_blocks": 12,
+      "successful_roots": 12,
+      "teacher_gamma": 1.5,
+      "teacher_n_qubits": 4,
+      "tolerance_nrmse": 0.12,
+      "window": 5
+    },
+    {
+      "root_blocks": 12,
+      "successful_roots": 12,
+      "teacher_gamma": 1.5,
+      "teacher_n_qubits": 4,
+      "tolerance_nrmse": 0.12,
+      "window": 6
+    },
+    {
+      "root_blocks": 12,
+      "successful_roots": 0,
+      "teacher_gamma": 2.0,
+      "teacher_n_qubits": 4,
+      "tolerance_nrmse": 0.12,
+      "window": 1
+    },
+    {
+      "root_blocks": 12,
+      "successful_roots": 0,
+      "teacher_gamma": 2.0,
+      "teacher_n_qubits": 4,
+      "tolerance_nrmse": 0.12,
+      "window": 2
+    },
+    {
+      "root_blocks": 12,
+      "successful_roots": 7,
+      "teacher_gamma": 2.0,
+      "teacher_n_qubits": 4,
+      "tolerance_nrmse": 0.12,
+      "window": 3
+    },
+    {
+      "root_blocks": 12,
+      "successful_roots": 12,
+      "teacher_gamma": 2.0,
+      "teacher_n_qubits": 4,
+      "tolerance_nrmse": 0.12,
+      "window": 4
+    },
+    {
+      "root_blocks": 12,
+      "successful_roots": 12,
+      "teacher_gamma": 2.0,
+      "teacher_n_qubits": 4,
+      "tolerance_nrmse": 0.12,
+      "window": 5
+    },
+    {
+      "root_blocks": 12,
+      "successful_roots": 12,
+      "teacher_gamma": 2.0,
+      "teacher_n_qubits": 4,
+      "tolerance_nrmse": 0.12,
+      "window": 6
+    },
+    {
+      "root_blocks": 12,
+      "successful_roots": 0,
+      "teacher_gamma": 2.5,
+      "teacher_n_qubits": 4,
+      "tolerance_nrmse": 0.12,
+      "window": 1
+    },
+    {
+      "root_blocks": 12,
+      "successful_roots": 1,
+      "teacher_gamma": 2.5,
+      "teacher_n_qubits": 4,
+      "tolerance_nrmse": 0.12,
+      "window": 2
+    },
+    {
+      "root_blocks": 12,
+      "successful_roots": 12,
+      "teacher_gamma": 2.5,
+      "teacher_n_qubits": 4,
+      "tolerance_nrmse": 0.12,
+      "window": 3
+    },
+    {
+      "root_blocks": 12,
+      "successful_roots": 12,
+      "teacher_gamma": 2.5,
+      "teacher_n_qubits": 4,
+      "tolerance_nrmse": 0.12,
+      "window": 4
+    },
+    {
+      "root_blocks": 12,
+      "successful_roots": 12,
+      "teacher_gamma": 2.5,
+      "teacher_n_qubits": 4,
+      "tolerance_nrmse": 0.12,
+      "window": 5
+    },
+    {
+      "root_blocks": 12,
+      "successful_roots": 12,
+      "teacher_gamma": 2.5,
+      "teacher_n_qubits": 4,
+      "tolerance_nrmse": 0.12,
+      "window": 6
+    },
+    {
+      "root_blocks": 12,
+      "successful_roots": 0,
+      "teacher_gamma": 3.0,
+      "teacher_n_qubits": 4,
+      "tolerance_nrmse": 0.12,
+      "window": 1
+    },
+    {
+      "root_blocks": 12,
+      "successful_roots": 7,
+      "teacher_gamma": 3.0,
+      "teacher_n_qubits": 4,
+      "tolerance_nrmse": 0.12,
+      "window": 2
+    },
+    {
+      "root_blocks": 12,
+      "successful_roots": 12,
+      "teacher_gamma": 3.0,
+      "teacher_n_qubits": 4,
+      "tolerance_nrmse": 0.12,
+      "window": 3
+    },
+    {
+      "root_blocks": 12,
+      "successful_roots": 12,
+      "teacher_gamma": 3.0,
+      "teacher_n_qubits": 4,
+      "tolerance_nrmse": 0.12,
+      "window": 4
+    },
+    {
+      "root_blocks": 12,
+      "successful_roots": 12,
+      "teacher_gamma": 3.0,
+      "teacher_n_qubits": 4,
+      "tolerance_nrmse": 0.12,
+      "window": 5
+    },
+    {
+      "root_blocks": 12,
+      "successful_roots": 12,
+      "teacher_gamma": 3.0,
+      "teacher_n_qubits": 4,
+      "tolerance_nrmse": 0.12,
+      "window": 6
+    },
+    {
+      "root_blocks": 12,
+      "successful_roots": 0,
+      "teacher_gamma": 4.0,
+      "teacher_n_qubits": 4,
+      "tolerance_nrmse": 0.12,
+      "window": 1
+    },
+    {
+      "root_blocks": 12,
+      "successful_roots": 12,
+      "teacher_gamma": 4.0,
+      "teacher_n_qubits": 4,
+      "tolerance_nrmse": 0.12,
+      "window": 2
+    },
+    {
+      "root_blocks": 12,
+      "successful_roots": 12,
+      "teacher_gamma": 4.0,
+      "teacher_n_qubits": 4,
+      "tolerance_nrmse": 0.12,
+      "window": 3
+    },
+    {
+      "root_blocks": 12,
+      "successful_roots": 12,
+      "teacher_gamma": 4.0,
+      "teacher_n_qubits": 4,
+      "tolerance_nrmse": 0.12,
+      "window": 4
+    },
+    {
+      "root_blocks": 12,
+      "successful_roots": 12,
+      "teacher_gamma": 4.0,
+      "teacher_n_qubits": 4,
+      "tolerance_nrmse": 0.12,
+      "window": 5
+    },
+    {
+      "root_blocks": 12,
+      "successful_roots": 12,
+      "teacher_gamma": 4.0,
+      "teacher_n_qubits": 4,
+      "tolerance_nrmse": 0.12,
+      "window": 6
+    }
+  ],
+  "primary_frontiers": [
+    {
+      "finite_loss_rate_count": 6,
+      "frontier": [
+        {
+          "display": ">6",
+          "minimum_window_censored_at_7": 7,
+          "teacher_gamma": 0.0
+        },
+        {
+          "display": ">6",
+          "minimum_window_censored_at_7": 7,
+          "teacher_gamma": 0.2
+        },
+        {
+          "display": ">6",
+          "minimum_window_censored_at_7": 7,
+          "teacher_gamma": 0.5
+        },
+        {
+          "display": ">6",
+          "minimum_window_censored_at_7": 7,
+          "teacher_gamma": 0.75
+        },
+        {
+          "display": ">6",
+          "minimum_window_censored_at_7": 7,
+          "teacher_gamma": 1.0
+        },
+        {
+          "display": "6",
+          "minimum_window_censored_at_7": 6,
+          "teacher_gamma": 1.25
+        },
+        {
+          "display": "5",
+          "minimum_window_censored_at_7": 5,
+          "teacher_gamma": 1.5
+        },
+        {
+          "display": "4",
+          "minimum_window_censored_at_7": 4,
+          "teacher_gamma": 2.0
+        },
+        {
+          "display": "3",
+          "minimum_window_censored_at_7": 3,
+          "teacher_gamma": 2.5
+        },
+        {
+          "display": "3",
+          "minimum_window_censored_at_7": 3,
+          "teacher_gamma": 3.0
+        },
+        {
+          "display": "2",
+          "minimum_window_censored_at_7": 2,
+          "teacher_gamma": 4.0
+        }
+      ],
+      "minimum_successful_roots": 10,
+      "monotonicity_violations": [],
+      "non_increasing_with_loss": true,
+      "root_blocks": 12,
+      "strict_decrease_count": 5,
+      "teacher_n_qubits": 2,
+      "tolerance_nrmse": 0.1
+    },
+    {
+      "finite_loss_rate_count": 6,
+      "frontier": [
+        {
+          "display": ">6",
+          "minimum_window_censored_at_7": 7,
+          "teacher_gamma": 0.0
+        },
+        {
+          "display": ">6",
+          "minimum_window_censored_at_7": 7,
+          "teacher_gamma": 0.2
+        },
+        {
+          "display": ">6",
+          "minimum_window_censored_at_7": 7,
+          "teacher_gamma": 0.5
+        },
+        {
+          "display": ">6",
+          "minimum_window_censored_at_7": 7,
+          "teacher_gamma": 0.75
+        },
+        {
+          "display": ">6",
+          "minimum_window_censored_at_7": 7,
+          "teacher_gamma": 1.0
+        },
+        {
+          "display": "6",
+          "minimum_window_censored_at_7": 6,
+          "teacher_gamma": 1.25
+        },
+        {
+          "display": "5",
+          "minimum_window_censored_at_7": 5,
+          "teacher_gamma": 1.5
+        },
+        {
+          "display": "4",
+          "minimum_window_censored_at_7": 4,
+          "teacher_gamma": 2.0
+        },
+        {
+          "display": "3",
+          "minimum_window_censored_at_7": 3,
+          "teacher_gamma": 2.5
+        },
+        {
+          "display": "3",
+          "minimum_window_censored_at_7": 3,
+          "teacher_gamma": 3.0
+        },
+        {
+          "display": "2",
+          "minimum_window_censored_at_7": 2,
+          "teacher_gamma": 4.0
+        }
+      ],
+      "minimum_successful_roots": 10,
+      "monotonicity_violations": [],
+      "non_increasing_with_loss": true,
+      "root_blocks": 12,
+      "strict_decrease_count": 5,
+      "teacher_n_qubits": 3,
+      "tolerance_nrmse": 0.1
+    },
+    {
+      "finite_loss_rate_count": 6,
+      "frontier": [
+        {
+          "display": ">6",
+          "minimum_window_censored_at_7": 7,
+          "teacher_gamma": 0.0
+        },
+        {
+          "display": ">6",
+          "minimum_window_censored_at_7": 7,
+          "teacher_gamma": 0.2
+        },
+        {
+          "display": ">6",
+          "minimum_window_censored_at_7": 7,
+          "teacher_gamma": 0.5
+        },
+        {
+          "display": ">6",
+          "minimum_window_censored_at_7": 7,
+          "teacher_gamma": 0.75
+        },
+        {
+          "display": ">6",
+          "minimum_window_censored_at_7": 7,
+          "teacher_gamma": 1.0
+        },
+        {
+          "display": "6",
+          "minimum_window_censored_at_7": 6,
+          "teacher_gamma": 1.25
+        },
+        {
+          "display": "5",
+          "minimum_window_censored_at_7": 5,
+          "teacher_gamma": 1.5
+        },
+        {
+          "display": "4",
+          "minimum_window_censored_at_7": 4,
+          "teacher_gamma": 2.0
+        },
+        {
+          "display": "3",
+          "minimum_window_censored_at_7": 3,
+          "teacher_gamma": 2.5
+        },
+        {
+          "display": "3",
+          "minimum_window_censored_at_7": 3,
+          "teacher_gamma": 3.0
+        },
+        {
+          "display": "2",
+          "minimum_window_censored_at_7": 2,
+          "teacher_gamma": 4.0
+        }
+      ],
+      "minimum_successful_roots": 10,
+      "monotonicity_violations": [],
+      "non_increasing_with_loss": true,
+      "root_blocks": 12,
+      "strict_decrease_count": 5,
+      "teacher_n_qubits": 4,
+      "tolerance_nrmse": 0.1
+    }
+  ],
+  "schema_version": 1,
+  "sensitivity_summary": {
+    "all_27_measured_frontiers_non_increasing_with_loss": true,
+    "alternative_frontier_point_shifts_relative_to_primary": {
+      "longer": 25,
+      "same": 227,
+      "shorter": 12
+    },
+    "alternative_frontier_points_compared_with_primary": 264,
+    "frontiers_evaluated": 27,
+    "non_increasing_frontiers": 27,
+    "pointwise_frontier_ranges": [
+      {
+        "maximum_window_over_threshold_grid": 7,
+        "minimum_window_over_threshold_grid": 7,
+        "stable_across_all_nine_threshold_rules": true,
+        "teacher_gamma": 0.0,
+        "teacher_n_qubits": 2
+      },
+      {
+        "maximum_window_over_threshold_grid": 7,
+        "minimum_window_over_threshold_grid": 7,
+        "stable_across_all_nine_threshold_rules": true,
+        "teacher_gamma": 0.2,
+        "teacher_n_qubits": 2
+      },
+      {
+        "maximum_window_over_threshold_grid": 7,
+        "minimum_window_over_threshold_grid": 7,
+        "stable_across_all_nine_threshold_rules": true,
+        "teacher_gamma": 0.5,
+        "teacher_n_qubits": 2
+      },
+      {
+        "maximum_window_over_threshold_grid": 7,
+        "minimum_window_over_threshold_grid": 7,
+        "stable_across_all_nine_threshold_rules": true,
+        "teacher_gamma": 0.75,
+        "teacher_n_qubits": 2
+      },
+      {
+        "maximum_window_over_threshold_grid": 7,
+        "minimum_window_over_threshold_grid": 7,
+        "stable_across_all_nine_threshold_rules": true,
+        "teacher_gamma": 1.0,
+        "teacher_n_qubits": 2
+      },
+      {
+        "maximum_window_over_threshold_grid": 7,
+        "minimum_window_over_threshold_grid": 5,
+        "stable_across_all_nine_threshold_rules": false,
+        "teacher_gamma": 1.25,
+        "teacher_n_qubits": 2
+      },
+      {
+        "maximum_window_over_threshold_grid": 6,
+        "minimum_window_over_threshold_grid": 5,
+        "stable_across_all_nine_threshold_rules": false,
+        "teacher_gamma": 1.5,
+        "teacher_n_qubits": 2
+      },
+      {
+        "maximum_window_over_threshold_grid": 4,
+        "minimum_window_over_threshold_grid": 4,
+        "stable_across_all_nine_threshold_rules": true,
+        "teacher_gamma": 2.0,
+        "teacher_n_qubits": 2
+      },
+      {
+        "maximum_window_over_threshold_grid": 4,
+        "minimum_window_over_threshold_grid": 3,
+        "stable_across_all_nine_threshold_rules": false,
+        "teacher_gamma": 2.5,
+        "teacher_n_qubits": 2
+      },
+      {
+        "maximum_window_over_threshold_grid": 3,
+        "minimum_window_over_threshold_grid": 3,
+        "stable_across_all_nine_threshold_rules": true,
+        "teacher_gamma": 3.0,
+        "teacher_n_qubits": 2
+      },
+      {
+        "maximum_window_over_threshold_grid": 3,
+        "minimum_window_over_threshold_grid": 2,
+        "stable_across_all_nine_threshold_rules": false,
+        "teacher_gamma": 4.0,
+        "teacher_n_qubits": 2
+      },
+      {
+        "maximum_window_over_threshold_grid": 7,
+        "minimum_window_over_threshold_grid": 7,
+        "stable_across_all_nine_threshold_rules": true,
+        "teacher_gamma": 0.0,
+        "teacher_n_qubits": 3
+      },
+      {
+        "maximum_window_over_threshold_grid": 7,
+        "minimum_window_over_threshold_grid": 7,
+        "stable_across_all_nine_threshold_rules": true,
+        "teacher_gamma": 0.2,
+        "teacher_n_qubits": 3
+      },
+      {
+        "maximum_window_over_threshold_grid": 7,
+        "minimum_window_over_threshold_grid": 7,
+        "stable_across_all_nine_threshold_rules": true,
+        "teacher_gamma": 0.5,
+        "teacher_n_qubits": 3
+      },
+      {
+        "maximum_window_over_threshold_grid": 7,
+        "minimum_window_over_threshold_grid": 7,
+        "stable_across_all_nine_threshold_rules": true,
+        "teacher_gamma": 0.75,
+        "teacher_n_qubits": 3
+      },
+      {
+        "maximum_window_over_threshold_grid": 7,
+        "minimum_window_over_threshold_grid": 6,
+        "stable_across_all_nine_threshold_rules": false,
+        "teacher_gamma": 1.0,
+        "teacher_n_qubits": 3
+      },
+      {
+        "maximum_window_over_threshold_grid": 7,
+        "minimum_window_over_threshold_grid": 5,
+        "stable_across_all_nine_threshold_rules": false,
+        "teacher_gamma": 1.25,
+        "teacher_n_qubits": 3
+      },
+      {
+        "maximum_window_over_threshold_grid": 6,
+        "minimum_window_over_threshold_grid": 4,
+        "stable_across_all_nine_threshold_rules": false,
+        "teacher_gamma": 1.5,
+        "teacher_n_qubits": 3
+      },
+      {
+        "maximum_window_over_threshold_grid": 4,
+        "minimum_window_over_threshold_grid": 3,
+        "stable_across_all_nine_threshold_rules": false,
+        "teacher_gamma": 2.0,
+        "teacher_n_qubits": 3
+      },
+      {
+        "maximum_window_over_threshold_grid": 4,
+        "minimum_window_over_threshold_grid": 3,
+        "stable_across_all_nine_threshold_rules": false,
+        "teacher_gamma": 2.5,
+        "teacher_n_qubits": 3
+      },
+      {
+        "maximum_window_over_threshold_grid": 3,
+        "minimum_window_over_threshold_grid": 3,
+        "stable_across_all_nine_threshold_rules": true,
+        "teacher_gamma": 3.0,
+        "teacher_n_qubits": 3
+      },
+      {
+        "maximum_window_over_threshold_grid": 3,
+        "minimum_window_over_threshold_grid": 2,
+        "stable_across_all_nine_threshold_rules": false,
+        "teacher_gamma": 4.0,
+        "teacher_n_qubits": 3
+      },
+      {
+        "maximum_window_over_threshold_grid": 7,
+        "minimum_window_over_threshold_grid": 7,
+        "stable_across_all_nine_threshold_rules": true,
+        "teacher_gamma": 0.0,
+        "teacher_n_qubits": 4
+      },
+      {
+        "maximum_window_over_threshold_grid": 7,
+        "minimum_window_over_threshold_grid": 7,
+        "stable_across_all_nine_threshold_rules": true,
+        "teacher_gamma": 0.2,
+        "teacher_n_qubits": 4
+      },
+      {
+        "maximum_window_over_threshold_grid": 7,
+        "minimum_window_over_threshold_grid": 7,
+        "stable_across_all_nine_threshold_rules": true,
+        "teacher_gamma": 0.5,
+        "teacher_n_qubits": 4
+      },
+      {
+        "maximum_window_over_threshold_grid": 7,
+        "minimum_window_over_threshold_grid": 7,
+        "stable_across_all_nine_threshold_rules": true,
+        "teacher_gamma": 0.75,
+        "teacher_n_qubits": 4
+      },
+      {
+        "maximum_window_over_threshold_grid": 7,
+        "minimum_window_over_threshold_grid": 6,
+        "stable_across_all_nine_threshold_rules": false,
+        "teacher_gamma": 1.0,
+        "teacher_n_qubits": 4
+      },
+      {
+        "maximum_window_over_threshold_grid": 7,
+        "minimum_window_over_threshold_grid": 5,
+        "stable_across_all_nine_threshold_rules": false,
+        "teacher_gamma": 1.25,
+        "teacher_n_qubits": 4
+      },
+      {
+        "maximum_window_over_threshold_grid": 6,
+        "minimum_window_over_threshold_grid": 5,
+        "stable_across_all_nine_threshold_rules": false,
+        "teacher_gamma": 1.5,
+        "teacher_n_qubits": 4
+      },
+      {
+        "maximum_window_over_threshold_grid": 5,
+        "minimum_window_over_threshold_grid": 4,
+        "stable_across_all_nine_threshold_rules": false,
+        "teacher_gamma": 2.0,
+        "teacher_n_qubits": 4
+      },
+      {
+        "maximum_window_over_threshold_grid": 4,
+        "minimum_window_over_threshold_grid": 3,
+        "stable_across_all_nine_threshold_rules": false,
+        "teacher_gamma": 2.5,
+        "teacher_n_qubits": 4
+      },
+      {
+        "maximum_window_over_threshold_grid": 3,
+        "minimum_window_over_threshold_grid": 3,
+        "stable_across_all_nine_threshold_rules": true,
+        "teacher_gamma": 3.0,
+        "teacher_n_qubits": 4
+      },
+      {
+        "maximum_window_over_threshold_grid": 3,
+        "minimum_window_over_threshold_grid": 2,
+        "stable_across_all_nine_threshold_rules": false,
+        "teacher_gamma": 4.0,
+        "teacher_n_qubits": 4
+      }
+    ],
+    "teacher_size_loss_points": 33,
+    "teacher_size_loss_points_changed_across_threshold_grid": 16,
+    "teacher_size_loss_points_stable_across_all_nine_threshold_rules": 17
+  },
+  "supported_statement": "Across the tested two-, three-, and four-qubit local-loss cohorts, all 27 post hoc measured history-sufficiency frontiers are non-increasing over the sampled loss grid when the NRMSE tolerance is varied over 0.08, 0.10, and 0.12 and the root-success rule over 9, 10, and 11 of 12.",
+  "threshold_grid": {
+    "frontiers_per_teacher_size": 9,
+    "frontiers_total": 27,
+    "minimum_successful_roots": [
+      9,
+      10,
+      11
+    ],
+    "nrmse_tolerances": [
+      0.08,
+      0.1,
+      0.12
+    ],
+    "primary_minimum_successful_roots": 10,
+    "primary_tolerance_nrmse": 0.1
+  }
+}

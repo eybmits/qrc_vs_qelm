@@ -1,78 +1,112 @@
-\section*{Numerical phase diagram}
+\section{Numerical results and discussion}
+\label{sec:numerics}
 
-The simulations probe the corresponding history, representation, and
-measurement bottlenecks in their natural order.  First ask whether the window
-contains the relevant history.
-Then ask whether the fixed QELM has enough features.  Finally ask whether the
-measurements are accurate enough.  Common-suffix panels measure the first limit
-without fitting a learner; independent train, validation, and test streams
-measure the remaining prediction error.
+The theory suggests a practical order of questions.  Does the window contain
+enough history?  If it does, can the chosen features represent the resulting
+map?  If they can, are there enough measurements to resolve them?  Our
+held-out experiments test this hierarchy.  They illustrate the finite-resource
+consequences of observable forgetting; they do not estimate the worst-case
+$D_d$ or the joint spectral radius $r_{\rm vis}$.
+
+\begin{figure*}[t]
+ \includegraphics[width=\textwidth]{fig02_information_frontier.pdf}
+ \caption{\textbf{Longer context reduces missing history; successful emulation also needs the right features.}
+ \textbf{a}--\textbf{c} Median old-history error versus loss rate for all six
+ tested windows.  Markers show all 198 simulated loss--window cells; lines
+ connect measured points.  Errors are normalized RMSE shown as percentages;
+ the dashed line marks $10\%=0.10$.  \textbf{d}--\textbf{f} Feature requirements
+ at the six tested transition rates, shown as discrete rows.  Colored shapes
+ give the smallest tested budget $B\in\{18,36,72\}$ that meets the total-error
+ target in at least 10 of 12 roots, after the history target is met in at least
+ 10 roots.  Crosses mark history-sufficient cells with no successful tested
+ budget; pale dots mark insufficient history.  All lower rates fail the
+ history rule.  A root is an independent realization block, so the robust
+ rule is distinct from the median crossing above.  Columns show the frozen
+ two- and three-qubit cohort and the separately frozen four-qubit follow-up;
+ cohorts are not pooled.}
+ \label{fig:information-frontier}
+\end{figure*}
 
 \subsection{Include enough history}
-\label{sec:results}
 
-Figure~\ref{fig:information-frontier} shows the basic transition.  At weak
-loss, old prefixes still change the QRC output for every tested window, so no
-tested feature budget can solve the task.  Faster loss makes old inputs fade and moves
-the boundary to shorter windows.  Across the transition cells fixed in
-advance, increasing $d=1\to6$ reduces held-out QELM NRMSE by a median across
-the 12 independent roots of
-$78.45\%$ (95\% CI $[76.64,80.80]\%$), with the same improvement direction in
-12/12 roots.
+Figure~\ref{fig:information-frontier} shows the first transition.  Under weak
+loss, old prefixes still change the target output throughout the tested
+window range, and no feature budget can repair the missing inputs.  Increasing
+loss makes old inputs fade and shifts the measured frontier toward shorter
+windows.  Across the preregistered transition cells ($B=72$,
+$\gamma_T\in\{2,4\}$), increasing $d=1\to6$ reduces held-out QELM NRMSE by a root median of $78.45\%$ (95\% CI
+$[76.64,80.80]\%$), with the same direction in all 12 roots.
 
-The fast-forgetting slice gives a concrete path through the diagram.  At
-$\gamma_T=4,d=1,B=72$, all 24 cases---12 independent roots for each of two
-teacher sizes---are history limited.
-At $d=6,B=18$, history is sufficient but 22/24 cells are representation
-limited.  At $d=6,B=36$, all 24 cells reach the $0.10$ tolerance.  The median
-total NRMSE for $N_T=2$ and 3 falls from $0.287$ and $0.263$ at the short
-window to $0.0710$ and $0.0629$ after supplying a sufficient window and feature
-budget.
+The dense map tests 11 loss rates and every integer window from one to six.
+All rootwise local-loss decay fits have negative slope for both confirmatory
+target QRC sizes.  The independent four-qubit cohort also has negative
+rootwise decay slopes and a non-increasing frontier, and every root reaches
+the inherited anchor $\gamma_T=4,d=6,B=72$.  In all three sizes, no tested
+window is history-sufficient through $\gamma_T=1$, whereas the minimum window
+falls to two by $\gamma_T=4$.  This establishes the loss--window crossover for
+the tested two-, three-, and four-qubit QRCs, not an asymptotic size law.
 
-Local-loss results collapse across teacher size and window when plotted against
-$\gamma_Tdt\,d$.  The fitted log-history slope is negative in all 12 roots,
-with medians $-0.5479$ for $N_T=2$ and $-0.5042$ for $N_T=3$ and rootwise
-$R^2\geq0.9158$.  This is the empirical counterpart of exponential forgetting
-in Eq.~\eqref{eq:incremental-channel}; it does not estimate a uniform channel
-contraction constant.
+The primary frontier uses the preregistered NRMSE tolerance $0.10$ and a
+10-of-12 root requirement.  A post hoc sensitivity analysis varies the
+tolerance over $0.08$, $0.10$, and $0.12$ and the requirement over 9, 10, and
+11 roots.  Exact crossing cells change, but all 27 measured, right-censored
+size--tolerance--rule frontiers remain non-increasing with loss.  The ordering is therefore not a
+single-threshold artifact.
 
-The boundary also depends on the dissipator and measured output.  On 79 cells
-shared by all channel families, $d=1\to8$ reduces history NRMSE by $48.73\%$
-for local loss, $54.97\%$ for collective loss, and $9.00\%$ for dephasing.
-Unsnapped continuous inputs preserve this ordering.  The relevant memory is
-therefore the part of the recurrent state that both survives the dynamics and
-remains visible in the output.
+On the fast-forgetting slice, the resource limits appear in sequence.  At
+$d=1,B=72$, all roots are history limited.  At $d=6,B=18$, the history
+target is met but the fixed QELM is usually representation limited.  At
+$d=6,B=36$, every root in all three target QRC sizes reaches the tolerance.  These
+anchors connect the phase map to the separate resource traces in
+Fig.~\ref{fig:resource-diagnosis}.
+
+\begin{figure*}[t]
+ \includegraphics[width=\textwidth]{fig03_resource_diagnosis.pdf}
+ \caption{\textbf{Three resources address three different limits.}
+ All errors are normalized RMSE shown as percentages ($10\%=0.10$).
+ \textbf{a} Old-history NRMSE falls with scaled context
+ $\gamma_T\Delta t\,d$; faint curves are roots, heavy curves are size-wise
+ medians, and bands span the 10th--90th root percentiles.
+ \textbf{b} Once history is sufficient at
+ $\gamma_T=4,d=6$, more measured features reduce total QELM NRMSE; faint
+ curves are roots and heavy curves are medians.  \textbf{c} More shots reduce
+ validation-selected test NRMSE; curves are root medians and the pale band
+ spans the selected policy's 10th--90th percentiles.  Dashed horizontal lines
+ mark the $0.10$ target.  Panel \textbf{c} is a post-confirmatory finite-shot
+ follow-up with 16 complete fit-and-selection replicates per four-qubit root.}
+ \label{fig:resource-diagnosis}
+\end{figure*}
 
 \subsection{Add enough features}
 
-On the history-feasible slice $\gamma_T=4,d=6$, increasing the QELM budget from
-$B=18$ to 72 reduces common-suffix representation NRMSE by a median across the
-12 independent roots of
-$67.26\%$ (95\% CI $[55.33,75.63]\%$), again with the same direction in 12/12
-roots and both teacher sizes.  At $B=72$, all 24 cells remain emulated, with
-median total NRMSE $0.0586$ for $N_T=2$ and $0.0556$ for $N_T=3$.  More
-features help after the suffix is informative; they do not change a
-history-limited cell.
+On the history-sufficient slice $\gamma_T=4,d=6$, increasing the QELM budget
+from $B=18$ to 72 reduces common-suffix representation NRMSE by a root median
+of $67.26\%$ (95\% CI $[55.33,75.63]\%$), with the same direction in all 12
+roots and both confirmatory sizes.  At $B=72$, all 24 confirmatory
+root-by-size cases are emulated.  Additional features can meet the total-error
+target only after the window is history-sufficient; they do not change the old-history term
+[Fig.~\ref{fig:resource-diagnosis}(b)].
 
 \subsection{Use enough shots}
 
-The finite-shot study repeats training, validation, and testing with
-independently sampled features.  The validation-selected test NRMSE falls from
+The post-confirmatory exploratory finite-shot study repeats training, validation, and testing with
+independently sampled features.  Validation-selected test NRMSE falls from
 $0.231$ at 300 shots per input to $0.0800$ at 19,200 shots, a $65.20\%$
-reduction (95\% CI $[64.04,66.47]\%$), positive in 12/12 roots.  None of the
-12 root-level medians reaches NRMSE $0.10$ at 300 shots; 11/12 do so at 19,200
-shots.  Each root-level score summarizes 16 independent complete refits.
-Validation selects $B=36$ most often at low shot counts and $B=72$ at high shot
-counts.  Thus a larger feature set becomes useful only when the measurement
-budget can resolve it \cite{hu2023sampling,ahmed2025finite}.
+reduction (95\% CI $[64.04,66.47]\%$), positive in all 12 roots.  Validation
+selects $B=36$ most often at low shot counts and $B=72$ at high shot counts.
+In this experiment, the extra features improve selected test error only when
+the measurement budget resolves them [Fig.~\ref{fig:resource-diagnosis}(c)]
+\cite{hu2023sampling,ahmed2025finite}.
 
-\subsection{Classical controls}
+\subsection{Classical controls and interpretation}
 
-The information transition is not specific to the tested quantum feature map.
 Linear delay, quadratic delay, and dimension-matched random-tanh controls use
-the same windows and data splits as the QELM.  Quadratic delay is the best
-classical control in all 24 fast-forgetting cases---12 independent roots for
-each of two teacher sizes.  The
-QELM relative gain is negative in every root, with median $-1.335$.  The
-experiment therefore isolates recurrent information from finite-window
-information while retaining a strong classical baseline.
+the same windows and splits as the QELM.  Quadratic delay is the strongest
+classical control in all 24 fast-forgetting confirmatory cases and outperforms
+the $B=72$ QELM in every root.  The experiments therefore support the information
+criterion and its history--representation--measurement diagnosis.  They do not
+support a quantum-advantage interpretation for the tested emulator.
+
+Thus fading memory permits finite-context emulation only after sufficient
+context, features, and shots, whereas persistent visible memory creates an
+architecture-independent error floor.

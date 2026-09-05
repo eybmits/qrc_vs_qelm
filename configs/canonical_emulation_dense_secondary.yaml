@@ -1,0 +1,173 @@
+schema_version: 1
+study: canonical_qrc_to_parallel_qelm_dense_secondary
+status: PROSPECTIVE_SECONDARY_REPLICATION
+freeze_record: canonical_emulation_dense_secondary_freeze.json
+
+common:
+  teacher:
+    n_qubits: [2, 3]
+    dissipators: [local_loss]
+    gammas: [0.0, 0.2, 0.5, 0.75, 1.0, 1.25, 1.5, 2.0, 2.5, 3.0, 4.0]
+    dt: 0.5
+    h: 0.5
+    h_in: 1.0
+    J_s: 1.0
+    n_virtual: 1
+    target_observables:
+      axes: [x, y, z]
+      max_weight: 2
+  student:
+    architecture: ptd_parallel
+    encoding: parallel
+    n_qubits: 6
+    gamma: 0.0
+    dissipator: local_loss
+    T_evolve: 0.5
+    h: 0.5
+    J_s: 1.0
+    windows: [1, 2, 3, 4, 5, 6]
+    max_snapshots: 4
+    snapshot_budgets: [1, 2, 4]
+    observables:
+      axes: [x, y, z]
+      max_weight: 1
+  input:
+    distribution: uniform_discrete
+    quantize_levels: 33
+  fit:
+    alpha_grid: [0.0, 1.0e-10, 1.0e-8, 1.0e-6, 1.0e-4, 1.0e-2, 1.0, 1.0e2, 1.0e4, 1.0e6, "+inf"]
+    train_only_feature_standardization: true
+  suffix_ensemble:
+    prefix_burnin: 128
+  decision:
+    tolerance_nrmse: 0.10
+    min_target_variance: 1.0e-8
+    min_root_successes: 10
+    roots_total: 12
+    min_spearman: 0.80
+    min_g2_live_systems_per_family: 5
+    min_window_gain: 0.20
+    min_feature_gain: 0.20
+    min_best_classical_gain: 0.10
+    min_scaling_r_squared: 0.85
+    g4_gammas: [2.0, 4.0]
+    g5_gamma: 4.0
+
+profiles:
+  dense_secondary:
+    confirmatory: false
+    train_rows: 480
+    val_rows: 160
+    test_rows: 320
+    suffix_groups: 32
+    prefix_branches: 4
+    prefix_burnin: 128
+    roots:
+      - root_id: dense01
+        teacher_coupling_seeds: {"2": 830101, "3": 830102}
+        student_coupling_seed: 840101
+        train_input_seed: 850101
+        val_input_seed: 860101
+        test_input_seed: 870101
+        suffix_input_seed: 880101
+        prefix_input_seed: 890101
+        classical_feature_seed: 900101
+      - root_id: dense02
+        teacher_coupling_seeds: {"2": 830201, "3": 830202}
+        student_coupling_seed: 840201
+        train_input_seed: 850201
+        val_input_seed: 860201
+        test_input_seed: 870201
+        suffix_input_seed: 880201
+        prefix_input_seed: 890201
+        classical_feature_seed: 900201
+      - root_id: dense03
+        teacher_coupling_seeds: {"2": 830301, "3": 830302}
+        student_coupling_seed: 840301
+        train_input_seed: 850301
+        val_input_seed: 860301
+        test_input_seed: 870301
+        suffix_input_seed: 880301
+        prefix_input_seed: 890301
+        classical_feature_seed: 900301
+      - root_id: dense04
+        teacher_coupling_seeds: {"2": 830401, "3": 830402}
+        student_coupling_seed: 840401
+        train_input_seed: 850401
+        val_input_seed: 860401
+        test_input_seed: 870401
+        suffix_input_seed: 880401
+        prefix_input_seed: 890401
+        classical_feature_seed: 900401
+      - root_id: dense05
+        teacher_coupling_seeds: {"2": 830501, "3": 830502}
+        student_coupling_seed: 840501
+        train_input_seed: 850501
+        val_input_seed: 860501
+        test_input_seed: 870501
+        suffix_input_seed: 880501
+        prefix_input_seed: 890501
+        classical_feature_seed: 900501
+      - root_id: dense06
+        teacher_coupling_seeds: {"2": 830601, "3": 830602}
+        student_coupling_seed: 840601
+        train_input_seed: 850601
+        val_input_seed: 860601
+        test_input_seed: 870601
+        suffix_input_seed: 880601
+        prefix_input_seed: 890601
+        classical_feature_seed: 900601
+      - root_id: dense07
+        teacher_coupling_seeds: {"2": 830701, "3": 830702}
+        student_coupling_seed: 840701
+        train_input_seed: 850701
+        val_input_seed: 860701
+        test_input_seed: 870701
+        suffix_input_seed: 880701
+        prefix_input_seed: 890701
+        classical_feature_seed: 900701
+      - root_id: dense08
+        teacher_coupling_seeds: {"2": 830801, "3": 830802}
+        student_coupling_seed: 840801
+        train_input_seed: 850801
+        val_input_seed: 860801
+        test_input_seed: 870801
+        suffix_input_seed: 880801
+        prefix_input_seed: 890801
+        classical_feature_seed: 900801
+      - root_id: dense09
+        teacher_coupling_seeds: {"2": 830901, "3": 830902}
+        student_coupling_seed: 840901
+        train_input_seed: 850901
+        val_input_seed: 860901
+        test_input_seed: 870901
+        suffix_input_seed: 880901
+        prefix_input_seed: 890901
+        classical_feature_seed: 900901
+      - root_id: dense10
+        teacher_coupling_seeds: {"2": 831001, "3": 831002}
+        student_coupling_seed: 841001
+        train_input_seed: 851001
+        val_input_seed: 861001
+        test_input_seed: 871001
+        suffix_input_seed: 881001
+        prefix_input_seed: 891001
+        classical_feature_seed: 901001
+      - root_id: dense11
+        teacher_coupling_seeds: {"2": 831101, "3": 831102}
+        student_coupling_seed: 841101
+        train_input_seed: 851101
+        val_input_seed: 861101
+        test_input_seed: 871101
+        suffix_input_seed: 881101
+        prefix_input_seed: 891101
+        classical_feature_seed: 901101
+      - root_id: dense12
+        teacher_coupling_seeds: {"2": 831201, "3": 831202}
+        student_coupling_seed: 841201
+        train_input_seed: 851201
+        val_input_seed: 861201
+        test_input_seed: 871201
+        suffix_input_seed: 881201
+        prefix_input_seed: 891201
+        classical_feature_seed: 901201

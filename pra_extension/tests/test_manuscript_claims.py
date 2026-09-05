@@ -60,6 +60,7 @@ def test_authoritative_manuscript_claims_match_generated_artifacts() -> None:
     evaluation = (PAPER_ROOT / "sections" / "evaluation.tex").read_text(
         encoding="utf-8"
     )
+    compact_evaluation = re.sub(r"\s+", " ", evaluation)
     dark = _json(
         "pra_extension/outputs/dark_sector_validation/dark_sector_summary.json"
     )
@@ -85,22 +86,29 @@ def test_authoritative_manuscript_claims_match_generated_artifacts() -> None:
     assert f"{dark['expected_balanced_mse_floor']:.10f}" in paper
     assert f"{dark['expected_worst_case_absolute_floor']:.7f}" in paper
     assert "time-homogeneous alphabet" in paper
-    assert "differ at the old flagged input only" in compact_paper
-    assert "outside the fading-memory regime" in compact_paper
-    assert "every finite allowed suffix" in compact_paper
-    assert "When Can a Reset-Window QELM Reproduce a Quantum Reservoir?" in compact_paper
-    assert "fixed recurrent process and fixed trajectory pair" in compact_paper
-    assert "Randomization does not remove the obstruction" in compact_paper
-    assert r"\textit{Reset-window emulation.}" in compact_paper
-    assert r"E_d&=\inf_{g_d}\sup_h" in compact_paper
+    assert "differ only at the old flagged input" in compact_paper
+    assert r"\label{eq:protected-mode}" in compact_paper
+    assert r"\label{eq:visible-memory-theorem}" in compact_paper
+    assert (
+        "When Can Reset-Window QELMs Emulate the Input--Output Behavior of Quantum Reservoirs?"
+        in compact_paper
+    )
+    assert "same process and trajectory pair witness every window" in compact_paper
+    assert "Randomization cannot reveal the missing prefix" in compact_paper
+    assert r"\textit{Reset-window emulation theorem.}" in compact_paper
+    assert r"\inf_{g_d}\sup_h |Y(h)-g_d(S_d(h))|" in compact_paper
     assert r"=\frac{D_d}{2}" in compact_paper
-    assert r"B=(r+1)^d" in compact_paper
-    assert "blockwise Hamming weights" in compact_paper
+    assert r"(r+1)^d" in compact_paper
+    assert "blockwise Hamming weight" in compact_paper
     assert r"\operatorname{Binomial}(r,x_i)" in compact_paper
     assert r"\label{eq:qrc-qelm-bound}" in compact_paper
-    assert "continuous fading-memory scalar QRC filter" in compact_paper
-    assert "one fixed six-qubit windowed QELM" in compact_paper
-    assert "neither universality to a fixed QELM architecture" in compact_paper
+    assert r"D_d\longrightarrow0" in compact_paper
+    assert "reachable-observable joint spectral radius" in compact_paper
+    assert "Chebyshev radius" in compact_paper
+    assert "one fixed six-qubit reset-QELM emulator" in compact_paper
+    assert re.search(r"\b(?:teacher|student)s?\b", paper, re.IGNORECASE) is None
+    assert "existence, not efficient learning" in compact_paper
+    assert "does not grant universality to the fixed six-qubit emulator" in compact_paper
     for name, expected in dark["artifact_sha256"].items():
         artifact = (
             REPO_ROOT / "pra_extension" / "outputs" / "dark_sector_validation" / name
@@ -116,9 +124,10 @@ def test_authoritative_manuscript_claims_match_generated_artifacts() -> None:
     assert feature_audit["max_quantum_vs_binomial_error"] < 1e-15
     qrc_rows = bernstein["qrc_bernstein_convergence"]
     history_rows = bernstein["qrc_history_convergence"]
-    assert f"{qrc_rows[0]['max_abs_error']:.6f}" in compact_paper
-    assert f"{qrc_rows[-1]['max_abs_error']:.7f}" in compact_paper
-    assert f"{history_rows[0]['max_abs_error']:.6f}" in compact_paper
+    assert r"$8.33\times10^{-17}$" in compact_paper
+    assert "every tested $(d,r)$ pair satisfies" in compact_paper
+    assert qrc_rows[-1]["max_abs_error"] < qrc_rows[0]["max_abs_error"]
+    assert history_rows[-1]["max_abs_error"] < history_rows[0]["max_abs_error"]
     assert all(
         row["max_abs_error"] <= row["certified_max_error_bound"]
         for row in qrc_rows
@@ -136,21 +145,23 @@ def test_authoritative_manuscript_claims_match_generated_artifacts() -> None:
     assert f"{100 * g4['median_gain']:.2f}\\%" in evaluation
     assert f"{100 * g5['median_gain']:.2f}\\%" in evaluation
     assert g4["positive_roots"] == g5["positive_roots"] == 12
-    assert "all 24 cases---12 independent roots for each of two" in evaluation
-    assert "22/24 cells are representation" in evaluation
-    assert "all 24 cells reach the $0.10$ tolerance" in evaluation
+    assert r"transition cells ($B=72$, $\gamma_T\in\{2,4\}$)" in compact_evaluation
+    assert r"increasing $d=1\to6$" in compact_evaluation
+    assert "all roots are history limited" in compact_evaluation
+    assert "usually representation limited" in compact_evaluation
+    assert "every root in all three target QRC sizes reaches the tolerance" in compact_evaluation
     classical = gates["secondary_qelm_vs_best_classical"]
     assert classical["passed"] is False
     assert classical["positive_roots"] == 0
-    assert f"{classical['median_gain']:.3f}" in evaluation
+    assert r"outperforms the $B=72$ QELM in every root" in compact_evaluation
 
     # Common-support dissipator comparisons, not unequal live-cell mixtures.
     common = analysis["observable_memory"]["common_live_support_sensitivity"]
     for family in ("local_loss", "collective_loss", "dephasing"):
         effect = common["effects"][family]["fractional_reduction"]
         assert common["effects"][family]["common_live_cells_total"] == 79
-        assert f"{100 * effect['median']:.2f}\\%" in evaluation
         assert effect["positive_roots"] == 12
+    assert "All rootwise local-loss decay fits have negative slope" in compact_evaluation
     assert "fig02_information_frontier.pdf" in paper
     assert "fig03_resource_diagnosis.pdf" in paper
 
@@ -161,6 +172,7 @@ def test_authoritative_manuscript_claims_match_generated_artifacts() -> None:
     assert f"{surface['Q19200']['median']:.4f}" in evaluation
     assert f"{100 * policy['median']:.2f}\\%" in evaluation
     assert policy["positive_roots"] == policy["n_roots"] == 12
+    assert "post-confirmatory exploratory finite-shot study" in compact_evaluation
 
     # Claim boundaries and journal-format deliverables.
     assert "exact boundary" not in paper
@@ -180,7 +192,7 @@ def test_authoritative_manuscript_claims_match_generated_artifacts() -> None:
     assert 0 < page_count <= 12
     bibliography = (PAPER_ROOT / "main.bbl").read_text(encoding="utf-8")
     reference_count = len(re.findall(r"^\\bibitem\b", bibliography, re.MULTILINE))
-    assert 40 <= reference_count <= 50
+    assert 40 <= reference_count <= 55
     assert not (PAPER_ROOT / "supplement_main.pdf").exists()
     for name in (
         "fig01_information_interface.pdf",

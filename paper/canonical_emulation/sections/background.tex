@@ -1,162 +1,184 @@
-\section*{Results}
+\section{Observable-memory criterion}
+\label{sec:criterion}
 
-\subsection{The information contained in a window}
+\subsection{What a finite context knows}
 
-A recurrent process carries its state forward,
-$\rho_t=\Phi_{a_t}(\rho_{t-1})$, and produces the scalar output
-$Y_t=\operatorname{Tr}(O\rho_t)$.  A reset-window learner receives only
-$S_t^{(d)}=(a_{t-d+1},\ldots,a_t)$ and returns a function of that suffix.  It
-may use any quantum or classical feature map and any stateless readout.
+A recurrent process updates a carried state,
+$\rho_t=\Phi_{a_t}(\rho_{t-1})$, and returns a declared observable output
+$Y_t$.  For a history $h$ ending at $t$, a reset-window model instead receives
+only the suffix $S_d(h)=(a_{t-d+1},\ldots,a_t)$.  Regardless of its feature map or readout,
+it must give the same prediction to any two histories with the same suffix.
 
-Let $D_d$ be the largest output difference between two admissible histories
-that have the same last $d$ inputs.  Let $E_d$ be the smallest worst-case error
-among all functions of that window.  Then
+We quantify exactly what this restriction hides.  Let
 \begin{equation}
- \begin{split}
- D_d&=\sup_{S_d(h)=S_d(h')}|Y(h)-Y(h')|,\\
- E_d&=\inf_{g_d}\sup_h|Y(h)-g_d(S_d(h))|=\frac{D_d}{2}.
- \end{split}
+ D_d=\sup_{S_d(h)=S_d(h')}\|Y(h)-Y(h')\|
+ \label{eq:diameter}
+\end{equation}
+be the supremal output difference between admissible histories that share their
+last $d$ inputs.  Thus $D_d$ measures past information that remains visible at
+the output but lies outside the window.  It depends on the recurrent process,
+the admissible histories, and the declared output---not on the approximating
+architecture.
+
+For a scalar output, this one number gives the minimum possible worst-case
+error among all unrestricted suffix predictors:
+\begin{equation}
+ \inf_{g_d}\sup_h |Y(h)-g_d(S_d(h))|=\frac{D_d}{2}.
  \label{eq:window-law}
 \end{equation}
-The proof is immediate.  Two histories with the same window must receive the
-same prediction $a$.  If their correct outputs are $y$ and $y'$, then
-$|y-y'|\leq|y-a|+|y'-a|$, so one error is at least half their gap.  Conversely,
-for each window, predict the midpoint between the infimum and supremum of its
-compatible outputs.  Its error is at most half that range.  Taking the
-supremum over windows proves Eq.~\eqref{eq:window-law}; values approaching the
-two endpoints give the lower bound when an endpoint is not attained.
+For each suffix, the optimal prediction is the midpoint of its compatible
+output range.  Compatible pairs with separation approaching $D_d$ show why no
+prediction can do better.  For vector outputs, the optimum is the radius of
+the smallest ball containing each compatible output set and lies between
+$D_d/2$ and $D_d$; the precise statement is proved in the Appendix.
+Randomization cannot reveal the missing prefix, because its prediction law is
+still identical for identical suffixes.
 
-Equation~\eqref{eq:window-law} is the complete information test.  If $D_d=0$,
-that window is exact.  If $D_d\to0$, longer windows approximate the output to
-arbitrary accuracy.  If
-$D_d\geq\Delta>0$ for every $d$, every finite-window predictor has error at
-least $\Delta/2$.  Randomization does not remove the obstruction because the
-prediction distribution is still identical for identical windows.  The
-criterion concerns the declared output: state information that never reaches
-the measurement does not contribute.
+Equation~\eqref{eq:window-law} separates three cases.  If $D_d=0$ for some
+finite $d$, that context determines the output exactly.  If $D_d>0$ at every
+finite $d$ but $D_d\to0$, longer contexts give arbitrary accuracy.  If $D_d$
+does not tend to zero, recurrently stored information imposes a nonzero error
+floor on every finite-context model.
 
-\subsection{Fading memory can be replaced by a window}
+\subsection{The exact reset-QELM boundary}
 
-Write $D_{\rm tr}(\rho,\sigma)=\tfrac12\|\rho-\sigma\|_1$.  For scalar inputs
-$u,v\in[0,1]$, suppose the channels obey the uniform incremental bound
+The same condition decides asymptotic QRC-to-QELM emulation.  Let the input
+alphabet be compact, let the finite-dimensional QRC channels depend
+continuously on the input, and let
+$Y=\mathcal C(\rho)$ be a fixed finite vector of observable expectations.
+Require every finite suffix word to be appendable to every admissible
+prehistory.  Assume also that
+a growing exact-expectation reset-QELM family is dense in the continuous
+functions on each finite input window.
+
+\textit{Reset-window emulation theorem.}  Under these assumptions,
 \begin{equation}
- \begin{split}
- D_{\rm tr}(\Phi_u(\rho),\Phi_v(\sigma))
-   &\leq\eta D_{\rm tr}(\rho,\sigma)\\[-2pt]
-   &\quad+L_u|u-v|,
-   \qquad 0\leq\eta<1,\\
- D_d&\leq2M\eta^d,
- \qquad E_d\leq M\eta^d .
- \end{split}
+ \begin{aligned}
+ D_d\longrightarrow0\quad\Longleftrightarrow\quad&
+ \text{for every $\varepsilon>0$ there are}\\
+ &d<\infty\text{ and a reset-QELM $Q_d$}\\
+ &\text{with uniform error below $\varepsilon$.}
+ \end{aligned}
+ \label{eq:qrc-qelm-equivalence}
+\end{equation}
+The necessity is purely informational: two histories sharing the window
+receive one prediction, so their output gap is less than twice the emulator
+error.  For sufficiency, replay the last $d$ channels from one fixed reachable
+state.  This produces a continuous function of the suffix whose error is at
+most $D_d$.  Once $d$ makes that error small, finite-window universality
+approximates the replay map.  The Appendix gives the proof in full.
+
+For scalar inputs with windows in $[0,1]^d$, a repeated-encoding Bernstein construction
+supplies one explicit growing reset-QELM family
+\cite{goto2021universal,yu2024nonasymptotic}.  It establishes
+existence, not efficient learning: the required qubits and coefficient table
+grow with the window and desired accuracy.  It also does not grant
+universality to the fixed six-qubit emulator used in Sec.~\ref{sec:numerics}.
+Finite features and finite shots remain separate practical limitations.
+
+\subsection{Two physical regimes}
+
+Uniformly contractive dynamics give the simplest fading-memory case.  If every
+common-input step obeys
+\begin{equation}
+ D_{\rm tr}\!\left(\Phi_u(\rho),\Phi_u(\sigma)\right)
+ \leq\eta D_{\rm tr}(\rho,\sigma),\qquad \eta<1,
  \label{eq:incremental-channel}
 \end{equation}
-Here $M=\|O\|_\infty$.  Setting $u=v$ shows that the state difference shrinks
-once per common input, giving
-$D_{\rm tr}(\rho_d,\rho_d')\leq\eta^d$, while a bounded observable turns trace
-distance into an output difference of at most $2M\eta^d$.  Thus a QRC
-with uniform fading memory needs a window that grows only logarithmically with
-the requested inverse accuracy.
-
-The same inequality makes the replay output Lipschitz-continuous in the retained
-inputs.  Encode each of the $d$ coordinates into $r$ fresh qubits and group
-computational-basis outcomes by their blockwise Hamming weights.  These
-probabilities form the multivariate Bernstein basis
-\cite{goto2021universal,yu2024nonasymptotic}.
-
-\textit{Reset-window emulation.}
-For integers $d,r,Q\geq1$ and $0<\alpha<1$, there is a gate-based reset QELM
-with $n=rd$ qubits and $B=(r+1)^d$ grouped outcomes.  Its exact-expectation
-output $Q_{d,r}$ obeys a uniform bound, and for every fixed history $h$ its
-$Q$-shot estimate $\widehat Q_{d,r,Q}$ obeys the pointwise bound
+A scalar observable $O$ consequently satisfies
 \begin{equation}
- \begin{aligned}
- \epsilon_{\rm hist}&=2M\eta^d,\\
- \epsilon_{\rm rep}&=\frac{ML_u(1-\eta^d)}{(1-\eta)\sqrt r},\\
- \epsilon_{\rm shot}&=M\sqrt{\frac{2\log(2/\alpha)}{Q}},\\
- \epsilon_{\rm tot}&=\epsilon_{\rm hist}+\epsilon_{\rm rep}+\epsilon_{\rm shot},\\
- \sup_h|Y(h)-Q_{d,r}(h)|
- &\leq\epsilon_{\rm hist}+\epsilon_{\rm rep},\\
- \Pr\!\left[|Y(h)-\widehat Q_{d,r,Q}(h)|\leq\epsilon_{\rm tot}\right]
- &\geq1-\alpha .
- \end{aligned}
- \label{eq:qrc-qelm-bound}
+ D_d\leq 2\|O\|_\infty\eta^d.
+ \label{eq:contraction-bound}
 \end{equation}
-The construction has three steps.  Replay the last $d$ QRC channels from one
-fixed state; contraction bounds the discarded prefix by the first term.
-Bernstein approximation represents the resulting continuous function of the
-window and gives the second term.  Averaging the bounded score over $Q$ circuit
-shots gives the third term.  The triangle inequality combines them.
-The minimax certificate $E_d\leq M\eta^d$ may use the best midpoint for every
-window; replay from one fixed state is constructive but gives the looser
-$2M\eta^d$ term.
+Old observable influence therefore decays exponentially, and a finite context
+suffices for every fixed target accuracy.  Full-state contraction is stronger
+than necessary: neutral state directions cause no obstruction when the input
+cannot reach them or no future declared output can reveal them.
 
-Each term can be made arbitrarily small.  Consequently, every continuous
-fading-memory scalar QRC filter on a compact input interval is uniformly
-approximable by a growing reset-QELM family: first choose a long enough window,
-then a rich enough finite-window feature map.  This is an existence result for
-a scalable family.  It gives neither universality to a fixed QELM architecture
-nor an efficient method for learning the exponentially large coefficient
-table.
-
-\begin{figure*}[t]
- \includegraphics[width=\textwidth]{fig02_information_frontier.pdf}
- \caption{\textbf{When finite-window prediction becomes feasible.}
- For each displayed window, light gray means that output-relevant history
- remains outside that window at every tested feature budget.  Green, blue, and
- purple give the smallest successful budgets $B=18,36,72$, respectively, where
- success is the modal class across 12 independent roots at NRMSE tolerance
- $0.10$.  Orange is unresolved, and hatching marks root disagreement for at
- least one budget.  The map uses the frozen finite common-suffix panels drawn
- from the 33-symbol input alphabet.}
- \label{fig:information-frontier}
-\end{figure*}
-
-\subsection{Protected quantum memory cannot be replaced by a finite window}
-
-A lasting obstruction needs one state quantity that an old input changes,
-later inputs preserve, and the readout can observe.  A two-qubit singlet mode
-has all three properties.  Its projector is visible through two-body Pauli
-correlations, and symmetric channels leave it unchanged:
+The opposite case is a protected visible mode.  Suppose an old input prepares
+two reachable states whose expectation of an operator $P$ differs by
+$\delta>0$.  Let a nonempty suffix subalphabet be freely iterable after both
+histories, with $\Phi_u^\dagger(P)=P$ for each symbol in that subalphabet.
+For the declared scalar output $Y=\operatorname{Tr}(P\rho)$, every common
+suffix drawn from this subalphabet preserves the difference.  Because $D_d$
+is a supremum over compatible history pairs,
 \begin{equation}
- \begin{aligned}
- P_-&=|\psi^-\rangle\!\langle\psi^-|
- =\frac{II-XX-YY-ZZ}{4},\\
- \Phi_{(u,0)}^\dagger(P_-)&=P_- .
- \end{aligned}
+ D_d\geq\delta\qquad\text{for every finite }d.
+ \label{eq:protected-mode}
+\end{equation}
+
+A two-qubit QRC realizes this obstruction.  The singlet projector
+\begin{equation}
+ P_-=|\psi^-\rangle\!\langle\psi^-|
+ =\frac{II-XX-YY-ZZ}{4}
  \label{eq:protected-singlet}
 \end{equation}
-Here each time step uses the same time-homogeneous alphabet $a=(u,q)$.
-The continuous value $u$ drives both qubits symmetrically; the flag $q$ applies
-an addressable pulse to the first qubit.  After the old flagged input, the
-allowed suffixes have arbitrary symmetric drives and $q=0$.  Exchange symmetry
-and collective loss protect $P_-$, whereas the old local pulse changes its
-population by
-$\Delta p_-=\tfrac12\sin^2(0.5)=0.1149244235$.
+is directly measurable through Pauli correlations.  Symmetric drives and collective loss
+preserve it.  Every step uses the same time-homogeneous alphabet
+$a=(u,q)$: $u$ drives both qubits symmetrically, while $q$ may apply an
+addressable pulse to the first qubit.  One old one-radian pulse changes the
+singlet population by $\delta p_-=\tfrac12\sin^2(0.5)$.  The resulting output
+gap is $0.1149244235$.  Two histories differ only at the old flagged input.
+They then receive any common suffix from the freely iterable $q=0$
+subalphabet.  The gap persists at every length.  Taking $p_-$ as the scalar output,
+Eq.~\eqref{eq:window-law} therefore forces worst-case absolute error of at least $0.0574622$ for every
+finite-window emulator.  The same process and trajectory pair witness every
+window.  Matched controls distinguish symmetry protection from generic slow
+decay.  Local loss reduces the median gap after 80 suffix steps to
+$1.57\times10^{-5}$.  Asymmetric collective loss produces a nonzero initial
+singlet decay and hence breaks exact conservation.  The
+mechanism is quantum, but the resulting information bound applies to every
+stateless quantum or classical window model.
 
-Fix one infinite symmetric drive stream.  Two trajectories differ at the old
-flagged input only and share every later input.  For a window of length $d$, we
-evaluate after $d$ shared inputs.  The learner therefore sees identical data,
-while the recurrent outputs retain the same gap.  For the two branches weighted
-equally, let $R_{\rm pair}$ denote their mean squared prediction error.
-Equation~\eqref{eq:window-law} and the appendix identity give
+\subsection{A dynamical test for observable forgetting}
+
+The preceding cases are unified by discarding state directions that are
+irrelevant to the input--output map.  Consider only differences between states
+that admissible histories can reach, and identify two such differences when
+no present or future declared output can distinguish them.  Each input channel
+then induces a linear map $A_u$ on this reachable-observable quotient space.
+Its joint spectral radius is
 \begin{equation}
- \begin{aligned}
- E_d&\geq0.0574622 &&\text{for every finite }d,\\
- R_{\rm pair}&\geq0.0033019058 .
- \end{aligned}
- \label{eq:protected-floor}
+ r_{\rm vis}
+ =\lim_{d\to\infty}
+ \sup_{u_1,\ldots,u_d}
+ \|A_{u_d}\cdots A_{u_1}\|^{1/d}.
+ \label{eq:visible-radius-definition}
 \end{equation}
-The same fixed recurrent process and fixed trajectory pair witness every
-window.  The filter is therefore outside the fading-memory regime for the
-declared output and symmetry-preserving suffix alphabet.
+The value does not depend on the chosen norm.  The quotient construction and
+its compactness assumptions are detailed in the Appendix
+\cite{rota1960joint,jungers2009joint}.
 
-Numerical propagation over 12 independent couplings preserves the output gap
-under collective loss to a maximum drift of $7.63\times10^{-16}$ through 80
-suffix inputs.  Replacing collective by matched local loss reduces the median
-gap to $1.57\times10^{-5}$ at step 80.  Small symmetry violations give a finite
-certified persistence horizon; the short derivation is included below.
+\textit{Observable-memory theorem.}  Under the same freely concatenable,
+compact finite-dimensional setting,
+\begin{equation}
+ D_d\to0\quad\Longleftrightarrow\quad r_{\rm vis}<1,
+ \qquad
+ \lim_{d\to\infty}D_d^{1/d}=r_{\rm vis}.
+ \label{eq:visible-memory-theorem}
+\end{equation}
+In words, old information becomes window-approximable exactly when every
+reachable and observable state difference is uniformly damped.
+Individual-channel spectra are insufficient because a common suffix may
+contain arbitrary channel products.  Full-state contraction is unnecessary
+because unreachable and permanently invisible directions have been removed.
+The protected singlet
+supplies nondecaying channel products, equivalently $D_d\geq\delta$, and hence
+$r_{\rm vis}=1$; uniform contraction gives $r_{\rm vis}\leq\eta<1$.
 
-The information law itself is classical: any stateless window model faces the
-same missing input.  The quantum physics lies in the mechanism that stores the
-input, protects it with an open-system symmetry, and exposes it through Pauli
-measurements.  Entanglement alone is not the obstruction.
+For scalar outputs, define the context required for worst-case error below
+$\varepsilon$ by
+\begin{equation}
+ d_\varepsilon=\min\{d:D_d<2\varepsilon\}.
+ \label{eq:context-length}
+\end{equation}
+When $0<r_{\rm vis}<1$, the asymptotic resource law is
+\begin{equation}
+ \lim_{\varepsilon\downarrow0}
+ \frac{d_\varepsilon}{\log(1/\varepsilon)}
+ =\frac{1}{-\log r_{\rm vis}}.
+ \label{eq:window-complexity}
+\end{equation}
+Thus slowly fading observable memory requires a long explicit context, while
+protected observable memory cannot be replaced to arbitrary accuracy by any
+finite context.
