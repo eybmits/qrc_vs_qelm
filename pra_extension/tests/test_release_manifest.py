@@ -79,7 +79,8 @@ def _fake_repository(root: Path) -> tuple[Path, Path]:
     for relative in release.THRESHOLD_SENSITIVITY_FILES:
         _write(root / relative, f"analysis code for {relative}\n")
     for relative in release.HISTORICAL_REGRESSION_FILES:
-        _write(root / relative, "value\n1\n")
+        path = root / relative
+        _write(path, "{}\n" if path.suffix == ".json" else "value\n1\n")
     for relative in release.REQUIRED_PAPER_SOURCES:
         _write(root / relative, f"paper source for {relative}\n")
     _write(
@@ -353,7 +354,7 @@ def test_historical_regression_fixtures_are_separate_and_hash_pinned(
 ) -> None:
     root = Path(__file__).resolve().parents[2]
     historical = release.PINNED_HISTORICAL_REGRESSION_HASHES.copy()
-    assert len(historical) == 3
+    assert len(historical) == 7
     assert set(historical) == set(release.HISTORICAL_REGRESSION_FILES)
     assert not set(historical).intersection(release.AUTHORITATIVE_EXTENSION_FILES)
     assert not set(historical).intersection(release.PINNED_AUTHORITATIVE_HASHES)

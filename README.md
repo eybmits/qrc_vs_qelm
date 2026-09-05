@@ -365,9 +365,10 @@ source tables.
 
 ## Repo layout
 
-Three historical raw CSVs are retained as hash-pinned regression fixtures:
-the v2 observable-memory and finite-shot profiles and the v1 four-qubit
-finite-shot profile. Their release role is `historical_regression_fixture_only`,
+Seven historical CSV/JSON inputs are retained as hash-pinned regression fixtures:
+the v2 observable-memory and finite-shot profiles, the v1 four-qubit
+finite-shot profile, and four inputs to the legacy recurrence-fingerprint
+figure test. Their release role is `historical_regression_fixture_only`,
 not current paper evidence. They keep the original strict-profile and
 mutation-rejection tests runnable from a fresh clone. Bibliography checks read
 the committed PDF directly and do not require local BibTeX build files.

@@ -451,8 +451,8 @@ THRESHOLD_SENSITIVITY_FILES: dict[str, str] = {
     ),
 }
 
-# These unchanged historical tables support schema and mutation-rejection
-# regression tests only. They are not authoritative evidence for the paper.
+# These unchanged historical artifacts support schema, mutation-rejection,
+# and renderer regression tests only. They are not current paper evidence.
 HISTORICAL_REGRESSION_FILES: dict[str, str] = {
     (
         "pra_extension/outputs/observable_memory_full_exploratory_v2_12roots/"
@@ -465,6 +465,19 @@ HISTORICAL_REGRESSION_FILES: dict[str, str] = {
     (
         "pra_extension/outputs/finite_shots_n4_exploratory_v1_12roots/"
         "finite_shot_results.csv"
+    ): "historical_regression_fixture_only",
+    (
+        "results_recurrence_fingerprint_heldout/"
+        "fingerprint_predictions_unblinded.csv"
+    ): "historical_regression_fixture_only",
+    (
+        "results_recurrence_fingerprint_heldout/task_link_scores.csv"
+    ): "historical_regression_fixture_only",
+    (
+        "results_recurrence_fingerprint_heldout/task_link_systems.csv"
+    ): "historical_regression_fixture_only",
+    (
+        "results_recurrence_fingerprint_heldout/recurrence_fingerprint_study.json"
     ): "historical_regression_fixture_only",
 }
 
@@ -482,6 +495,19 @@ PINNED_HISTORICAL_REGRESSION_HASHES = {
         "pra_extension/outputs/finite_shots_n4_exploratory_v1_12roots/"
         "finite_shot_results.csv"
     ): "8853e7f4def056e62de1c505794eab1b7496f8518ac8837764e5cf0371e1cc10",
+    (
+        "results_recurrence_fingerprint_heldout/"
+        "fingerprint_predictions_unblinded.csv"
+    ): "51942d1f67eec7c626785ce591c2a13199e7d72214e27944321ee5c163e2710c",
+    (
+        "results_recurrence_fingerprint_heldout/task_link_scores.csv"
+    ): "696c28723ecf0893182092c69879e95ccda70ebe07dd95bbace83e4c9ec5b281",
+    (
+        "results_recurrence_fingerprint_heldout/task_link_systems.csv"
+    ): "24462981a9ba3c13388699dbf2defe8b9b42ba6585467209e70ac3119bbc5ebe",
+    (
+        "results_recurrence_fingerprint_heldout/recurrence_fingerprint_study.json"
+    ): "67afb800c2996950d34ebb2b7741678826c4f650424cdb12191157f85892f1e8",
 }
 
 # These audited post-confirmatory artifacts are pinned so superseded shot

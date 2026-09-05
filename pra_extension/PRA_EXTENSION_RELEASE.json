@@ -1,6 +1,6 @@
 {
-  "artifact_count": 217,
-  "artifact_set_sha256": "21ad09a0d5648221471a2364a1232b8fc899bed4b9d111352edc1a840a5a75a5",
+  "artifact_count": 221,
+  "artifact_set_sha256": "4cea51189b029bea69d35cdede32bd38a1108a3ff126bf4fdb672f5cc349eea3",
   "artifacts": {
     "CANONICAL_EMULATION_LITERATURE_POSITIONING.md": {
       "role": "post_confirmatory_literature_positioning",
@@ -49,8 +49,8 @@
     },
     "README.md": {
       "role": "repository_reproduction_guide",
-      "sha256": "c4ae558db059e3f683659cb3375be92760bc2ac780e6d7c5ead8acbe7b6f7eb8",
-      "size_bytes": 28189
+      "sha256": "ff642f78fbdd2b8c4c7217b1f0ba08db0fea5aa040604135334c9748d842f337",
+      "size_bytes": 28259
     },
     "configs/DARK_SECTOR_VALIDATION_PROTOCOL.md": {
       "role": "frozen_dark_sector_protocol",
@@ -414,8 +414,8 @@
     },
     "pra_extension/code/build_release_manifest.py": {
       "role": "extension_code",
-      "sha256": "9d54685c64fd6b88e9d65205b8a57c3fa2a6d3b860d394b1dc7c7d988cc89f78",
-      "size_bytes": 53247
+      "sha256": "1fce8d211a2b01da88adff6067ccd80082b4f8dde7b98de79400cd97e7ce7361",
+      "size_bytes": 54419
     },
     "pra_extension/code/dark_sector.py": {
       "role": "extension_code",
@@ -889,8 +889,8 @@
     },
     "pra_extension/tests/test_release_manifest.py": {
       "role": "extension_test",
-      "sha256": "0b9181fc6a11270cd3b433d110e398c30483ad21237110f3ac9ebba0d5167bb1",
-      "size_bytes": 14089
+      "sha256": "785d9c9d48bbf55bc068a9dab27738877c92e62e8776f66cbb336339eabdc77a",
+      "size_bytes": 14147
     },
     "pra_extension/tests/test_student_architecture.py": {
       "role": "extension_test",
@@ -1052,6 +1052,26 @@
       "sha256": "32416a07bdd5558717afd150acea6a3f85d1fa30ceeac04849d6b16b9a7a1d17",
       "size_bytes": 1529
     },
+    "results_recurrence_fingerprint_heldout/fingerprint_predictions_unblinded.csv": {
+      "role": "historical_regression_fixture_only",
+      "sha256": "51942d1f67eec7c626785ce591c2a13199e7d72214e27944321ee5c163e2710c",
+      "size_bytes": 2134709
+    },
+    "results_recurrence_fingerprint_heldout/recurrence_fingerprint_study.json": {
+      "role": "historical_regression_fixture_only",
+      "sha256": "67afb800c2996950d34ebb2b7741678826c4f650424cdb12191157f85892f1e8",
+      "size_bytes": 17226
+    },
+    "results_recurrence_fingerprint_heldout/task_link_scores.csv": {
+      "role": "historical_regression_fixture_only",
+      "sha256": "696c28723ecf0893182092c69879e95ccda70ebe07dd95bbace83e4c9ec5b281",
+      "size_bytes": 10332
+    },
+    "results_recurrence_fingerprint_heldout/task_link_systems.csv": {
+      "role": "historical_regression_fixture_only",
+      "sha256": "24462981a9ba3c13388699dbf2defe8b9b42ba6585467209e70ac3119bbc5ebe",
+      "size_bytes": 1768
+    },
     "scripts/analyze_dense_phase_n4.py": {
       "role": "dense_n4_analysis_code",
       "sha256": "ec5fd6e0035fbe06de52b928c8bd47a64ff03e2eed41818bc4f5ae426c953451",
@@ -1123,7 +1143,7 @@
     "pra_extension": "EXPLORATORY_POST_CONFIRMATORY"
   },
   "figures_directory": "pra_extension/figures_pra_final_v6",
-  "manifest_identity_sha256": "cac236d999ad06b79858c15299996fc451b0a3780f8301706a81a5475c56496e",
+  "manifest_identity_sha256": "ba458b2474d3e0dacaa0b3a16800f48f3bcf5ac73efa06bce5304e7ba7c1c221",
   "paper_pdf": "paper/canonical_emulation/main.pdf",
   "schema_version": 1,
   "source_hash_checks": [
