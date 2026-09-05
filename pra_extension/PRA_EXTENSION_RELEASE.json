@@ -1,6 +1,6 @@
 {
-  "artifact_count": 214,
-  "artifact_set_sha256": "608db5d6cf4e9bcc3f067bb30bc664f81c1b3bfae511491fe49ed352dea0bc89",
+  "artifact_count": 217,
+  "artifact_set_sha256": "21ad09a0d5648221471a2364a1232b8fc899bed4b9d111352edc1a840a5a75a5",
   "artifacts": {
     "CANONICAL_EMULATION_LITERATURE_POSITIONING.md": {
       "role": "post_confirmatory_literature_positioning",
@@ -49,8 +49,8 @@
     },
     "README.md": {
       "role": "repository_reproduction_guide",
-      "sha256": "c9bac7a6bf80858ed1379dabd69792f1189c3178e73929d432955629d2d12744",
-      "size_bytes": 27739
+      "sha256": "c4ae558db059e3f683659cb3375be92760bc2ac780e6d7c5ead8acbe7b6f7eb8",
+      "size_bytes": 28189
     },
     "configs/DARK_SECTOR_VALIDATION_PROTOCOL.md": {
       "role": "frozen_dark_sector_protocol",
@@ -414,8 +414,8 @@
     },
     "pra_extension/code/build_release_manifest.py": {
       "role": "extension_code",
-      "sha256": "23d7c2e4f047946a2eff86be93c82cf17ab0033fb1828bff5da02a8e94110a9a",
-      "size_bytes": 51653
+      "sha256": "9d54685c64fd6b88e9d65205b8a57c3fa2a6d3b860d394b1dc7c7d988cc89f78",
+      "size_bytes": 53247
     },
     "pra_extension/code/dark_sector.py": {
       "role": "extension_code",
@@ -667,6 +667,11 @@
       "sha256": "2b746ec65340a31afa088ea3e884789c7b8f5c3397eb9bcbfbfd778c633d4be5",
       "size_bytes": 2427
     },
+    "pra_extension/outputs/finite_shots_full_exploratory_v2_12roots/finite_shot_results.csv": {
+      "role": "historical_regression_fixture_only",
+      "sha256": "c32b1603945fa6a8639c14c2b556052b0529613f278e1a02f95d08d4db99d60d",
+      "size_bytes": 216760
+    },
     "pra_extension/outputs/finite_shots_full_exploratory_v4b_refit_design_12roots/finite_shot_results.csv": {
       "role": "raw_finite_shot_table_n2_n3",
       "sha256": "6554574812348bb0a83efbe67dfba22bb51dce8e6155332ca2ca81a1db1170a2",
@@ -681,6 +686,11 @@
       "role": "strict_analysis_finite_shots_n4",
       "sha256": "d50d47d52dd248fa124cdad1d39c217c008f1096e22781db258b4cc973014e5a",
       "size_bytes": 11295
+    },
+    "pra_extension/outputs/finite_shots_n4_exploratory_v1_12roots/finite_shot_results.csv": {
+      "role": "historical_regression_fixture_only",
+      "sha256": "8853e7f4def056e62de1c505794eab1b7496f8518ac8837764e5cf0371e1cc10",
+      "size_bytes": 120632
     },
     "pra_extension/outputs/finite_shots_n4_exploratory_v2b_refit_design_12roots/finite_shot_results.csv": {
       "role": "raw_finite_shot_table_n4",
@@ -701,6 +711,11 @@
       "role": "continuous_input_run_summary",
       "sha256": "7fff3dbbf18ccce599a416c6f044e7b89559676315ca600b9aeef592667711d3",
       "size_bytes": 37696
+    },
+    "pra_extension/outputs/observable_memory_full_exploratory_v2_12roots/observable_memory_results.csv": {
+      "role": "historical_regression_fixture_only",
+      "sha256": "f0f89e26e75fa033d53de66afd68ce7fd09955bc16f351fca4e128e0868029a5",
+      "size_bytes": 1922230
     },
     "pra_extension/outputs/observable_memory_full_exploratory_v3_rigorous_12roots/observable_memory_results.csv": {
       "role": "raw_observable_memory_table",
@@ -854,8 +869,8 @@
     },
     "pra_extension/tests/test_manuscript_claims.py": {
       "role": "extension_test",
-      "sha256": "1caad8594239879c0d6068cf9a0ac812e24cb070832bb7213b0910c6d87e67b2",
-      "size_bytes": 10076
+      "sha256": "519b53c86f3f13915b0a70beb2a6bf1f2566668347bd3b76534b974f72cf18df",
+      "size_bytes": 10274
     },
     "pra_extension/tests/test_n4_shot_analysis.py": {
       "role": "extension_test",
@@ -874,8 +889,8 @@
     },
     "pra_extension/tests/test_release_manifest.py": {
       "role": "extension_test",
-      "sha256": "e9b128d1668e5ea6a7349e146f4d338a3bc28c55c2d78a21cd475d3bab6854af",
-      "size_bytes": 12473
+      "sha256": "0b9181fc6a11270cd3b433d110e398c30483ad21237110f3ac9ebba0d5167bb1",
+      "size_bytes": 14089
     },
     "pra_extension/tests/test_student_architecture.py": {
       "role": "extension_test",
@@ -1108,7 +1123,7 @@
     "pra_extension": "EXPLORATORY_POST_CONFIRMATORY"
   },
   "figures_directory": "pra_extension/figures_pra_final_v6",
-  "manifest_identity_sha256": "106384cf791f09c924c1602fe2d6823cb22a56e348aff252e6730e1fc103943c",
+  "manifest_identity_sha256": "cac236d999ad06b79858c15299996fc451b0a3780f8301706a81a5475c56496e",
   "paper_pdf": "paper/canonical_emulation/main.pdf",
   "schema_version": 1,
   "source_hash_checks": [

@@ -78,6 +78,8 @@ def _fake_repository(root: Path) -> tuple[Path, Path]:
             _write(path, "value\n1\n")
     for relative in release.THRESHOLD_SENSITIVITY_FILES:
         _write(root / relative, f"analysis code for {relative}\n")
+    for relative in release.HISTORICAL_REGRESSION_FILES:
+        _write(root / relative, "value\n1\n")
     for relative in release.REQUIRED_PAPER_SOURCES:
         _write(root / relative, f"paper source for {relative}\n")
     _write(
@@ -251,6 +253,7 @@ def test_release_manifest_is_deterministic_and_fails_closed(
 ) -> None:
     figures, paper = _fake_repository(tmp_path)
     monkeypatch.setattr(release, "PINNED_AUTHORITATIVE_HASHES", {})
+    monkeypatch.setattr(release, "PINNED_HISTORICAL_REGRESSION_HASHES", {})
 
     first = release.build_manifest(
         repo_root=tmp_path,
@@ -321,6 +324,10 @@ def test_release_manifest_is_deterministic_and_fails_closed(
         == "post_hoc_phase_threshold_analysis_code"
     )
     assert not any("supplement_main" in path for path in first["artifacts"])
+    for relative in release.HISTORICAL_REGRESSION_FILES:
+        assert first["artifacts"][relative]["role"] == (
+            "historical_regression_fixture_only"
+        )
 
     linked_source = tmp_path / release.SOURCE_HASH_LINKS[0][3]
     linked_source.write_text("value\nchanged\n", encoding="utf-8")
@@ -339,6 +346,34 @@ def test_release_manifest_is_deterministic_and_fails_closed(
             figures_dir=figures,
             paper_pdf=paper,
         )
+
+
+def test_historical_regression_fixtures_are_separate_and_hash_pinned(
+    tmp_path: Path, monkeypatch: pytest.MonkeyPatch
+) -> None:
+    root = Path(__file__).resolve().parents[2]
+    historical = release.PINNED_HISTORICAL_REGRESSION_HASHES.copy()
+    assert len(historical) == 3
+    assert set(historical) == set(release.HISTORICAL_REGRESSION_FILES)
+    assert not set(historical).intersection(release.AUTHORITATIVE_EXTENSION_FILES)
+    assert not set(historical).intersection(release.PINNED_AUTHORITATIVE_HASHES)
+    assert set(release.HISTORICAL_REGRESSION_FILES.values()) == {
+        "historical_regression_fixture_only"
+    }
+    monkeypatch.setattr(release, "PINNED_AUTHORITATIVE_HASHES", {})
+    for relative, expected in historical.items():
+        assert _sha(root / relative) == expected
+        fixture = tmp_path / relative
+        _write(fixture, "original\n")
+        monkeypatch.setattr(
+            release, "PINNED_HISTORICAL_REGRESSION_HASHES", {relative: _sha(fixture)}
+        )
+        release._verify_pinned_hashes(tmp_path)
+        _write(fixture, "mutated\n")
+        with pytest.raises(
+            release.ManifestError, match="pinned historical regression hash mismatch"
+        ):
+            release._verify_pinned_hashes(tmp_path)
 
 
 def test_checked_in_release_manifest_matches_live_inputs() -> None:

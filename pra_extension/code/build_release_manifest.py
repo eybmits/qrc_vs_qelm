@@ -451,6 +451,39 @@ THRESHOLD_SENSITIVITY_FILES: dict[str, str] = {
     ),
 }
 
+# These unchanged historical tables support schema and mutation-rejection
+# regression tests only. They are not authoritative evidence for the paper.
+HISTORICAL_REGRESSION_FILES: dict[str, str] = {
+    (
+        "pra_extension/outputs/observable_memory_full_exploratory_v2_12roots/"
+        "observable_memory_results.csv"
+    ): "historical_regression_fixture_only",
+    (
+        "pra_extension/outputs/finite_shots_full_exploratory_v2_12roots/"
+        "finite_shot_results.csv"
+    ): "historical_regression_fixture_only",
+    (
+        "pra_extension/outputs/finite_shots_n4_exploratory_v1_12roots/"
+        "finite_shot_results.csv"
+    ): "historical_regression_fixture_only",
+}
+
+# Verified against each historical run's existing artifact_sha256 ledger.
+PINNED_HISTORICAL_REGRESSION_HASHES = {
+    (
+        "pra_extension/outputs/observable_memory_full_exploratory_v2_12roots/"
+        "observable_memory_results.csv"
+    ): "f0f89e26e75fa033d53de66afd68ce7fd09955bc16f351fca4e128e0868029a5",
+    (
+        "pra_extension/outputs/finite_shots_full_exploratory_v2_12roots/"
+        "finite_shot_results.csv"
+    ): "c32b1603945fa6a8639c14c2b556052b0529613f278e1a02f95d08d4db99d60d",
+    (
+        "pra_extension/outputs/finite_shots_n4_exploratory_v1_12roots/"
+        "finite_shot_results.csv"
+    ): "8853e7f4def056e62de1c505794eab1b7496f8518ac8837764e5cf0371e1cc10",
+}
+
 # These audited post-confirmatory artifacts are pinned so superseded shot
 # protocols or stale analyses cannot silently enter the release.
 PINNED_AUTHORITATIVE_HASHES = {
@@ -1130,16 +1163,21 @@ def _verify_analysis_boundaries(repo_root: Path) -> None:
             )
 
 
-def _verify_pinned_authoritative_hashes(repo_root: Path) -> None:
-    for relative, expected in sorted(PINNED_AUTHORITATIVE_HASHES.items()):
-        path = repo_root / relative
-        _require_regular_file(path, label="pinned authoritative artifact")
-        actual = sha256_file(path)
-        if actual != expected:
-            raise ManifestError(
-                f"pinned authoritative hash mismatch for {relative}: "
-                f"expected {expected}, actual {actual}"
-            )
+def _verify_pinned_hashes(repo_root: Path) -> None:
+    inventories = (
+        ("pinned authoritative", PINNED_AUTHORITATIVE_HASHES),
+        ("pinned historical regression", PINNED_HISTORICAL_REGRESSION_HASHES),
+    )
+    for label, hashes in inventories:
+        for relative, expected in sorted(hashes.items()):
+            path = repo_root / relative
+            _require_regular_file(path, label=f"{label} artifact")
+            actual = sha256_file(path)
+            if actual != expected:
+                raise ManifestError(
+                    f"{label} hash mismatch for {relative}: "
+                    f"expected {expected}, actual {actual}"
+                )
 
 
 def _collect_and_verify_figures(
@@ -1210,7 +1248,7 @@ def build_manifest(
 
     frozen_identity = _verify_frozen_identity(root)
     _verify_analysis_boundaries(root)
-    _verify_pinned_authoritative_hashes(root)
+    _verify_pinned_hashes(root)
 
     roles: dict[str, str] = dict(AUTHORITATIVE_EXTENSION_FILES)
     roles.update(DOCUMENTATION_FILES)
@@ -1221,6 +1259,7 @@ def build_manifest(
     roles.update(DENSE_SECONDARY_FILES)
     roles.update(DENSE_N4_FILES)
     roles.update(THRESHOLD_SENSITIVITY_FILES)
+    roles.update(HISTORICAL_REGRESSION_FILES)
     roles.update(REQUIRED_PAPER_ARTIFACTS)
     roles.update(_collect_python_files(root))
     roles.update(_collect_paper_sources(root))

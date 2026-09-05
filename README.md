@@ -3,7 +3,7 @@
 [![CI](https://github.com/eybmits/qrc_vs_qelm/actions/workflows/ci.yml/badge.svg)](https://github.com/eybmits/qrc_vs_qelm/actions/workflows/ci.yml)
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](LICENSE)
 [![Python 3.11+](https://img.shields.io/badge/python-3.11%2B-blue.svg)](pyproject.toml)
-![tests](https://img.shields.io/badge/tests-441%20passing-brightgreen.svg)
+![tests](https://img.shields.io/badge/tests-442%20passing-brightgreen.svg)
 
 A study of when a reset-window quantum extreme learning machine can reproduce a
 recurrent quantum reservoir. If `D_d` is the supremal scalar-output gap between
@@ -364,6 +364,13 @@ plain-language evidence synopsis. See `paper/figures/` for figures and their
 source tables.
 
 ## Repo layout
+
+Three historical raw CSVs are retained as hash-pinned regression fixtures:
+the v2 observable-memory and finite-shot profiles and the v1 four-qubit
+finite-shot profile. Their release role is `historical_regression_fixture_only`,
+not current paper evidence. They keep the original strict-profile and
+mutation-rejection tests runnable from a fresh clone. Bibliography checks read
+the committed PDF directly and do not require local BibTeX build files.
 
 - `src/qrc_vs_qelm/` — package: `core/` (ported Lindblad simulator), `models/`
   (QRC + QELM), `matching.py`, `pipeline.py`, `tasks.py`/`task_families.py`,

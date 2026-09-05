@@ -3,6 +3,7 @@ from __future__ import annotations
 import hashlib
 import json
 import re
+import subprocess
 import zlib
 from pathlib import Path
 
@@ -190,8 +191,14 @@ def test_authoritative_manuscript_claims_match_generated_artifacts() -> None:
     assert "fig03_dissipation_window_scaling_compact.pdf" not in paper
     page_count = _pdf_page_count(PAPER_ROOT / "main.pdf")
     assert 0 < page_count <= 12
-    bibliography = (PAPER_ROOT / "main.bbl").read_text(encoding="utf-8")
-    reference_count = len(re.findall(r"^\\bibitem\b", bibliography, re.MULTILINE))
+    # Check the delivered bibliography, not an ignored local BibTeX build file.
+    destinations = subprocess.run(
+        ["pdfinfo", "-dests", str(PAPER_ROOT / "main.pdf")],
+        check=True,
+        capture_output=True,
+        text=True,
+    ).stdout
+    reference_count = len(set(re.findall(r'"cite\.([^"\n]+)"', destinations)))
     assert 40 <= reference_count <= 55
     assert not (PAPER_ROOT / "supplement_main.pdf").exists()
     for name in (
