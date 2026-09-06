@@ -1,34 +1,34 @@
-Existing work supplies the main ingredients but not their observable-level
-connection.  QRCs use persistent dynamics as a temporal resource across spin,
-noisy-processor, oscillator, and quantum-input settings
-\cite{nakajima2019spatial,chen2020temporal,
-govia2021oscillator,kalfus2022hilbert}.
-Fading-memory and echo-state results explain when old state dependence becomes
-negligible \cite{boyd1985fading,grigoryeva2018sas,grigoryeva2018esn,
+Prior work addresses several parts of this comparison.  QRCs retain temporal
+information in spin systems, noisy processors, and oscillators
+\cite{nakajima2019spatial,chen2020temporal,govia2021oscillator,kalfus2022hilbert}.
+Fading-memory and echo-state results describe when dependence on older states
+becomes negligible \cite{boyd1985fading,grigoryeva2018sas,grigoryeva2018esn,
 grigoryeva2019differentiable,gonon2021fading,martinezpena2023finite,
-martinezpena2025input,kobayashi2024esp,kobayashi2026coherence}, while
-dissipation, feedback, monitoring, and non-Markovianity alter that horizon
+martinezpena2025input,kobayashi2024esp,kobayashi2026coherence}.
+Dissipation, feedback, monitoring, and interactions with an environment that
+retains memory can change this behavior
 \cite{sannia2024dissipation,kobayashi2024feedback,morguisancho2026monitored,
-sannia2026nonmarkovian,paparelle2026memory}.  Reset-window and
-replay schemes encode finite delays explicitly
+sannia2026nonmarkovian,paparelle2026memory}.
+
+A complementary approach supplies the history explicitly through delay
+coordinates or replays recent inputs from a reset state
 \cite{kawanabe2026tdqelm,assil2026memory,mujal2023measurement,
-cindrak2024restriction}; universality results establish rich functions of the
-supplied window \cite{goto2021universal,yu2024nonasymptotic}.  Transfer,
-Krylov, task-coverage, conditional-information, and Fisher-mode analyses
-describe dynamically accessible directions
+cindrak2024restriction}.  Universal quantum feature families can approximate
+continuous functions of these supplied inputs
+\cite{goto2021universal,yu2024nonasymptotic}, while finite-sampling studies
+describe the measurements needed to resolve their features
+\cite{hu2023sampling,ahmed2025finite}.  These representation and measurement
+questions are distinct from whether the supplied window determines the
+target output in the first place.
+
+The dynamical part of our analysis builds on work identifying which state
+changes inputs can generate and which measurements can detect
 \cite{gross2026ptm,cindrak2025krylov,domingo2026diagnosing,keenan2026storage,
-wang2026fisher,morguisancho2026monitored}.  Separate finite-sampling studies
-quantify which encoded directions can be resolved
-\cite{hu2023sampling,ahmed2025finite}.  Classical realization theory
-characterizes minimal switched models through reachability and observability
-\cite{petreczky2013realization}.  Joint-spectral-radius theory treats uniform
-matrix-product stability \cite{rota1960joint,jungers2009joint,
-philippe2016constrained}, and protected sectors retain symmetry-protected state
+wang2026fisher}.  Classical realization theory formalizes this distinction
+through reachability and observability \cite{petreczky2013realization};
+stability theory studies decay under sequences of different updates
+\cite{rota1960joint,jungers2009joint,philippe2016constrained}.
+Protected quantum sectors provide the complementary case of persistent state
 components \cite{zanardi1997noiseless,albert2014symmetries}.
-What remains unresolved by these separate results is one architecture-level
-boundary: how visible recurrent information sets the optimum finite-window
-prediction error, and when a growing reset-QELM can close it.  We establish that
-boundary through the exact scalar minimax law $D_d/2$, an if-and-only-if
-emulation theorem, and a reachable-observable quotient whose common-product
-joint spectral radius gives the exact root-decay rate; a protected mode realizes
-the complementary obstruction.
+We connect these perspectives to the finite-window prediction error and to
+the conditions under which a reset-QELM can emulate a recurrent QRC.

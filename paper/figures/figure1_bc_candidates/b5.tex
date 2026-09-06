@@ -1,0 +1,33 @@
+\input{style.tex}
+\begin{document}
+\begin{candidate}{b}
+\node at (1.09,5.03) {old histories};
+\node at (4.07,5.28) {shared later inputs};
+\node at (7.02,5.03) {readout};
+% Alternative pairs under repeated channels; these do not certify a supremum.
+\foreach \yy/\col/\gap in {4.01/blue/.09,1.77/red/.31}{
+ \draw[ink,line width=.6pt] (1.06,\yy+.15)--(5.96,\yy+.15);
+ \draw[ink,line width=.6pt] (1.06,\yy-.15)--(5.96,\yy-.15);
+ \fill[\col] (1.06,\yy+.15) circle (.082);
+ \draw[\col,fill=white,line width=.8pt] (1.06,\yy-.15) circle (.082);
+ \foreach \xx/\kk in {2.43/1,3.96/2,5.49/d}{
+  \node[gate,minimum width=.72cm,minimum height=.79cm] at (\xx,\yy) {$\Phi$};
+  \draw[flow,purple] (\xx,\yy+.80)--(\xx,\yy+.43);
+  \node[text=purple] at (\xx,\yy+.99) {$a_{\kk}$};
+ }
+ \node at (4.73,\yy+.03) {$\cdots$};
+ % Readout is the same map applied separately to both histories.
+ \draw[softflow] (5.96,\yy+.15)--(6.59,\yy+.15);
+ \draw[softflow] (5.96,\yy-.15)--(6.59,\yy-.15);
+ \meter{6.86}{\yy}{gold}
+ \draw[softflow] (7.13,\yy+.12)--(7.53,\yy+.12)--(7.87,\yy+\gap);
+ \draw[softflow] (7.13,\yy-.12)--(7.53,\yy-.12)--(7.87,\yy-\gap);
+ \fill[\col] (7.99,\yy+\gap) circle (.06);
+ \draw[\col,fill=white,line width=.8pt] (7.99,\yy-\gap) circle (.06);
+}
+% The paired state paths remain distinct; only measured outputs are compared.
+\node[text=blue] at (6.97,3.28) {gap shrinks};
+\node[text=red] at (6.97,1.00) {gap survives};
+\node[note] at (3.81,.36) {different pasts; the same recent input sequence};
+\end{candidate}
+\end{document}

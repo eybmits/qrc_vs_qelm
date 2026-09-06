@@ -25,6 +25,7 @@ from matplotlib.patches import FancyArrowPatch, FancyBboxPatch
 import numpy as np
 import pandas as pd
 
+from figure1_timeseries import provenance as timeseries_provenance
 from render_compact_phase_map import _validated_source as validated_phase_source
 from render_compact_scaling import _validated_source as validated_scaling_source
 
@@ -98,16 +99,16 @@ STYLE: dict[str, Any] = {
     "axes_labelsize": 10.0,
     "axes_titlesize": 10.5,
     "tick_labelsize": 9.0,
-    "legend_fontsize": 9.0,
-    "axes_linewidth": 0.65,
-    "primary_linewidth": 1.3,
+    "legend_fontsize": 8.5,
+    "axes_linewidth": 0.55,
+    "primary_linewidth": 1.1,
     "grid_linewidth": 0.45,
 }
 
 FIGURE_SIZES = {
-    "fig1": (7.055, 4.40),
-    "fig2": (7.055, 6.10),
-    "fig3": (7.055, 3.50),
+    "fig1": (7.055, 13.0 / 2.54),
+    "fig2": (7.055, 2.65),
+    "fig3": (7.055, 2.40),
 }
 
 PALETTE = {
@@ -124,21 +125,21 @@ PALETTE = {
     "scrambled_light": "#FEECE9",
     "yellow": "#FFC943",
     "pale_yellow": "#FFDD92",
-    "orange": "#FF8431",
+    "orange": "#FC4D30",
     "purple": "#A93BFF",
     "viridis_18": "#7AD151",
     "viridis_36": "#2A788E",
     "viridis_72": "#482475",
-    "family_2": "#253494",
-    "family_3": "#E8590C",
-    "story_ink": "#20242A",
+    "family_2": "#3B86FF",
+    "family_3": "#FC4D30",
+    "story_ink": "#000000",
     "story_border": "#CBD5E1",
     "story_neutral": "#F8FAFC",
-    "story_blue": "#3572C6",
+    "story_blue": "#3B86FF",
     "story_blue_light": "#EDF3FC",
-    "story_green": "#169B62",
+    "story_green": "#00A14B",
     "story_green_light": "#EBF7F1",
-    "story_orange": "#D97716",
+    "story_orange": "#FC4D30",
     "story_orange_light": "#FFF1DF",
     "white": "#FFFFFF",
 }
@@ -182,7 +183,7 @@ def _base_style() -> None:
             "font.size": STYLE["font_size"],
             "mathtext.fontset": "cm",
             "axes.labelsize": STYLE["axes_labelsize"],
-            "axes.labelweight": "normal",
+            "axes.labelweight": "bold",
             "axes.titlesize": STYLE["axes_titlesize"],
             "axes.titleweight": "normal",
             "xtick.labelsize": STYLE["tick_labelsize"],
@@ -206,13 +207,13 @@ def _base_style() -> None:
 def _panel_heading(
     ax: plt.Axes,
     label: str,
-    title: str,
+    title: str = "",
     *,
     y: float = 1.015,
     title_x: float = 0.042,
     verticalalignment: str = "bottom",
 ) -> None:
-    """Draw the reference paper's separate bold panel letter and plain title."""
+    """Draw a panel letter, with an optional legacy title kept separate."""
     ax.text(
         0.0,
         y,
@@ -224,22 +225,23 @@ def _panel_heading(
         fontweight="bold",
         clip_on=False,
     )
-    ax.text(
-        title_x,
-        y,
-        title,
-        transform=ax.transAxes,
-        ha="left",
-        va=verticalalignment,
-        fontsize=STYLE["axes_titlesize"],
-        fontweight="normal",
-        clip_on=False,
-    )
+    if title:
+        ax.text(
+            title_x,
+            y,
+            title,
+            transform=ax.transAxes,
+            ha="left",
+            va=verticalalignment,
+            fontsize=STYLE["axes_titlesize"],
+            fontweight="normal",
+            clip_on=False,
+        )
 
 
 def _style_quant_axis(ax: plt.Axes, *, log_minor_y: bool = False) -> None:
     for name, spine in ax.spines.items():
-        spine.set_visible(name in {"left", "bottom"})
+        spine.set_visible(True)
         spine.set_color(INK)
         spine.set_linewidth(STYLE["axes_linewidth"])
     ax.tick_params(
@@ -255,7 +257,7 @@ def _style_quant_axis(ax: plt.Axes, *, log_minor_y: bool = False) -> None:
         which="major",
         color=GRID,
         linewidth=STYLE["grid_linewidth"],
-        alpha=0.20,
+        alpha=0.30,
     )
     if log_minor_y:
         ax.grid(
@@ -366,8 +368,18 @@ def render_figure_1(dark_summary_path: Path, output_dir: Path) -> tuple[Path, ..
     _load_dark_summary(dark_summary_path)
     pdf = output_dir / "fig01_information_interface.pdf"
     png = output_dir / "fig01_information_interface.png"
-    source = output_dir / "fig01_information_interface_source.json"
+    # Preserve the old provenance byte-for-byte: the prospective N5 seed audit
+    # froze it before the current drawing revision. New renders have a separate
+    # provenance file, never an updated historical audit snapshot.
+    source = output_dir / "fig01_information_interface_render_source.json"
+    historical_source = DEFAULT_OUTPUT / "fig01_information_interface_source.json"
+    historical_sha256 = _sha256(historical_source)
+    if historical_sha256 != (
+        "d5a76f449661e3f4fabf909a6271208f838907f076db1c02652b771665d23965"
+    ):
+        raise ValueError("The frozen Figure 1 input-audit snapshot changed")
     tikz_source = DEFAULT_OUTPUT / "fig01_information_interface.tex"
+    input_timeseries = timeseries_provenance(tikz_source)
     with tempfile.TemporaryDirectory(prefix="qrc-tikz-") as build:
         subprocess.run(
             ["pdflatex", "-no-shell-escape", "-interaction=nonstopmode",
@@ -381,6 +393,17 @@ def render_figure_1(dark_summary_path: Path, output_dir: Path) -> tuple[Path, ..
             check=True, capture_output=True, text=True,
         )
     source_payload = {
+        "historical_input_audit": {
+            "path": str(historical_source.relative_to(REPO_ROOT)),
+            "sha256": historical_sha256,
+            "status": "historical snapshot retained for the prospective N5 seed audit; "
+                      "not the source description of the current drawing",
+        },
+        "input_timeseries": input_timeseries,
+        "selected_design": "variant_a_architectures",
+        "selected_theory_panel": "B4",
+        "removed_panel": "c",
+        "canvas_aspect_ratio": 17.9197 / 13.0,
         "common_suffix_diameter": (
             "supremal declared-output distance between histories sharing the last d inputs"
         ),
@@ -392,9 +415,8 @@ def render_figure_1(dark_summary_path: Path, output_dir: Path) -> tuple[Path, ..
             "when can explicit finite context reproduce recurrent input-output behavior"
         ),
         "panels": {
-            "a": "recurrent quantum state versus reset-window input-output emulation",
-            "b": "input-reachable and future-output-visible memory directions",
-            "c": "uniformly fading relevant memory versus persistent visible memory",
+            "a": "recurrent and reset-window architectures with one shared illustrative output-comparison timeline",
+            "b": "optimal scalar history error versus context, tolerance crossing, and a persistent floor",
         },
         "regimes": {
             "fading": {
@@ -420,9 +442,52 @@ def render_figure_1(dark_summary_path: Path, output_dir: Path) -> tuple[Path, ..
             "observable output; the iff statement additionally assumes compact inputs "
             "with freely concatenable suffixes and per-window reset-QELM density"
         ),
+        "panel_b_history_error": {
+            "design_candidate": "B4",
+            "status": "conceptual illustration, not simulated or fitted evidence",
+            "quantity": "D_d/2",
+            "loss": "worst-case absolute scalar error",
+            "comparison": "largest output ambiguity over all histories sharing their last d inputs",
+            "tolerance": "epsilon is a desired scalar history-error tolerance, not an empirical test threshold",
+            "crossing": "schematic continuous crossing, not the first strict integer d_epsilon",
+            "fading": "blue error curve tends to zero and enters the green tolerance band",
+            "persistent": "red error floor stays above the illustrated tolerance",
+            "scope": "unrestricted window-only optimum; finite QELM representation and measurement errors remain separate",
+            "axes_size_cm": [6.40, 2.40],
+            "blue_curve": "one analytic exponential; continuous value and slope at the tolerance crossing",
+            "blue_curve_display": {
+                "panel_translation_cm": [4.0, 0.0],
+                "coordinate_scope": "local coordinates before the panel translation",
+                "baseline_y_cm": 0.85,
+                "amplitude_cm": 2.19,
+                "decay_per_cm": 0.40707656282948684,
+                "origin_x_cm": 1.66,
+                "domain_x_cm": [1.66, 7.52],
+                "crossing_cm": [4.76, 1.47],
+            },
+        },
+        "panel_a_output_comparisons": input_timeseries["output_comparisons"],
         "upstream_dark_sector_summary_sha256": _sha256(dark_summary_path),
         "tikz_source_sha256": _sha256(tikz_source),
-        "typography": "native 9.5-10.5 pt text at 7.055 inch width",
+        "typography": "native 11 pt labels and 12 pt panel letters at 7.055 inch width",
+        "history_access": "the interior point at t=180 supplies the current scalar; "
+                          "older inputs act through the carried-state loop; the exact causal "
+                          "window is 141--180 and grey future samples 181--200 are display-only",
+        "past_input_cue": "blue brace over the older-input interval labeled past in rho_{t-1}; "
+                          "not a second input wire, history replay, or claim of lossless history storage",
+        "lane_spacing": "one 4.40 cm square input centered between model lanes, replacing both 3.60 cm input plots; "
+                        "a green causal-window brace feeds the reset encoder from below without crossing quantum wires; "
+                        "one 4.40 cm output comparison replaces the two former output plots; centered panel b is unchanged",
+        "architecture_motifs": "three-wire general QRC channel block and explicit reset encoding plus fixed gates; "
+                               "matching gold observable banks and compact unlabeled readout triangles; both outputs feed one comparison timeline",
+        "readout_scope": "fixed target readout (identity for the declared observable vector); "
+                         "trained reset-QELM emulator readout; operations remain defined by the caption and model section "
+                         "while endpoints are labeled Y_t and its hatted counterpart, with no trained-readout text",
+        "observable_notation": "O_1,...,O_m used independently in both banks as model-specific labels; "
+                               "no identical-operator or equal-feature-count claim",
+        "annotation_scope": "no standalone zoom or schematic tags; one unchanged input amplitude scale; "
+                            "one output axis reserves legend headroom and marks when an old bit leaves its window; "
+                            "caption identifies the ideal toy reference, illustrative status and future exclusion",
     }
     source.write_text(
         json.dumps(source_payload, indent=2, sort_keys=True) + "\n",
@@ -915,6 +980,12 @@ def render_figure_2(
     dense_n4_suffix_source_path: Path,
     output_dir: Path,
 ) -> tuple[Path, ...]:
+    """Combine history and robust emulation status at the same measured cells.
+
+    The line color encodes context, never the feature budget. Marker shape
+    carries the unchanged root-level classification, including cells whose
+    median crosses the target without passing the 10-of-12 history rule.
+    """
     table = _validated_dense_merged_source(
         dense_phase_source_path,
         dense_suffix_source_path,
@@ -924,101 +995,84 @@ def render_figure_2(
     _base_style()
     fig = plt.figure(figsize=FIGURE_SIZES["fig2"], facecolor=WHITE)
     windows = (1, 2, 3, 4, 5, 6)
-    transition_gammas = (1.25, 1.5, 2.0, 2.5, 3.0, 4.0)
-    # Window colors are ordered shades; feature counts use distinct shapes.
-    window_colors = ("#A1CBD0", "#65AEBB", "#348EA7", "#226D94", "#244C79", "#172F53")
-    window_markers = ("o", "s", "^", "D", "v", "P")
-    budget_styles = {
-        18: (PALETTE["story_green"], "o"),
-        36: (PALETTE["viridis_36"], "s"),
-        72: (PALETTE["viridis_72"], "D"),
+    # Viridis colors extracted from the supplied reference's vector artwork.
+    window_colors = ("#7AD151", "#44BF70", "#1FA088", "#2A788E", "#414487", "#482475")
+    outcome_styles = {
+        "HISTORY_NOT_ROBUST": ("o", 2.6, False),
+        "NO_TESTED_QELM_ROBUST": ("x", 4.5, True),
+        "QELM_18": ("o", 4.3, True),
+        "QELM_36": ("s", 4.3, True),
+        "QELM_72": ("D", 4.3, True),
     }
-    lefts = (0.11, 0.415, 0.72)
-    width = 0.26
-    top_axes = [fig.add_axes([left, 0.585, width, 0.265]) for left in lefts]
-    bottom_axes = [fig.add_axes([left, 0.205, width, 0.205]) for left in lefts]
-    fig.text(0.98, 0.974, "Dashed line: 10% target", fontsize=9, color="#545A61", ha="right", va="top")
-    fig.legend(
-        handles=[
-            Line2D([], [], color=color, marker=marker, markersize=4,
-                   linewidth=1.3, label=f"{window} input" + ("s" if window > 1 else ""))
-            for window, color, marker in zip(windows, window_colors, window_markers)
-        ],
-        loc="upper center", bbox_to_anchor=(0.52, 0.936), ncol=6,
-        frameon=False, handlelength=1.25, handletextpad=0.4, columnspacing=1.0,
-        borderaxespad=0,
-    )
-    fig.text(0.11, 0.443, "Smallest successful feature count; success in at least 10 of 12 roots", fontsize=9, va="bottom")
-    for panel, (ax, cell_ax, n_qubits) in enumerate(zip(top_axes, bottom_axes, (2, 3, 4))):
+    width = 0.27
+    height = width * fig.get_figwidth() / fig.get_figheight()
+    axes = [fig.add_axes([left, 0.225, width, height]) for left in (0.10, 0.41, 0.72)]
+    for panel, (ax, n_qubits) in enumerate(zip(axes, (2, 3, 4))):
+        ax.set_box_aspect(1)
         family = table[table["teacher_n_qubits"].eq(n_qubits)]
-        for window, color, marker in zip(windows, window_colors, window_markers):
+        for window, color in zip(windows, window_colors):
             curve = family[family["window"].eq(window)].sort_values("teacher_gamma")
             ax.plot(curve["teacher_gamma"], curve["median_history_nrmse"],
-                    color=color, marker=marker, markersize=3.5,
-                    markeredgewidth=0.5, linewidth=1.1, zorder=3)
+                    color=color, linewidth=1.0, zorder=2)
+            for outcome, (marker, size, filled) in outcome_styles.items():
+                selected = curve[curve["display_outcome"].eq(outcome)]
+                ax.plot(
+                    selected["teacher_gamma"], selected["median_history_nrmse"],
+                    linestyle="none", marker=marker, markersize=size,
+                    markerfacecolor=color if filled else WHITE,
+                    markeredgecolor=color, markeredgewidth=0.85 if marker == "x" else 0.65,
+                    zorder=4,
+                )
+            endpoint = curve.iloc[-1]
+            ax.text(4.12, float(endpoint["median_history_nrmse"]), f"$d={window}$",
+                    color=INK, fontsize=8.0, va="center", ha="left")
         ax.set_yscale("log")
-        ax.set_ylim(7e-4, 1.18)
-        ax.set_xlim(-0.08, 4.12)
+        ax.set_ylim(7e-4, 3.0)
+        ax.set_xlim(-0.08, 4.90)
         ax.set_xticks((0, 1, 2, 3, 4))
         ax.set_yticks((0.001, 0.01, 0.10, 1.0), ("0.1%", "1%", "10%", "100%"))
-        ax.axhline(0.10, color="#7A7D82", linestyle=(0, (4, 3)), linewidth=0.85, zorder=2)
+        ax.axhline(0.10, color=MUTED, linestyle=(0, (4, 3)), linewidth=0.75, zorder=1)
         if panel == 0:
-            ax.set_ylabel("old-history error", labelpad=5)
+            ax.set_ylabel("old-history error", labelpad=4)
         else:
             ax.tick_params(labelleft=False)
         ax.set_xlabel(r"loss rate $\gamma_T$", labelpad=3)
-        _panel_heading(ax, chr(97 + panel), f"{n_qubits}-qubit QRC", y=1.055, title_x=0.115)
+        ax.text(0.035, 0.97, chr(97 + panel), transform=ax.transAxes,
+                va="top", fontweight="bold", fontsize=STYLE["axes_titlesize"])
+        ax.text(0.965, 0.97, f"{n_qubits}-qubit QRC", transform=ax.transAxes,
+                va="top", ha="right", fontsize=9.0)
         _style_quant_axis(ax)
 
-        lookup = {(float(row.teacher_gamma), int(row.window)): row for row in family.itertuples(index=False)}
-        for y, gamma in enumerate(transition_gammas):
-            for window in windows:
-                outcome = str(lookup[(gamma, window)].display_outcome)
-                if outcome.startswith("QELM_"):
-                    color, marker = budget_styles[int(outcome.removeprefix("QELM_"))]
-                    cell_ax.scatter(window, y, s=49, marker=marker, color=color,
-                                    linewidth=0.6, edgecolor=WHITE, zorder=4)
-                elif outcome == "HISTORY_NOT_ROBUST":
-                    cell_ax.scatter(window, y, s=10, marker="o", color="#CCD2DA", zorder=3)
-                elif outcome == "NO_TESTED_QELM_ROBUST":
-                    cell_ax.scatter(window, y, s=40, marker="x", color=PALETTE["story_orange"],
-                                    linewidth=1.5, zorder=4)
-                else:
-                    raise ValueError(f"unsupported display outcome: {outcome}")
-        cell_ax.set_xlim(0.5, 6.5)
-        cell_ax.set_ylim(-0.5, 5.5)
-        cell_ax.set_xticks(windows)
-        cell_ax.set_yticks(range(6), [f"{gamma:g}" for gamma in transition_gammas])
-        cell_ax.set_xlabel("window length $d$", labelpad=3)
-        if panel == 0:
-            cell_ax.set_ylabel(r"loss rate $\gamma_T$", labelpad=5)
-        else:
-            cell_ax.tick_params(labelleft=False)
-        cell_ax.text(-0.075, 1.015, chr(100 + panel), transform=cell_ax.transAxes,
-                     fontsize=10.5, fontweight="bold", ha="left", va="bottom")
-        _style_quant_axis(cell_ax)
-        cell_ax.grid(axis="x", color=GRID, linewidth=0.4, alpha=0.13)
-    feature_handles = [
-        Line2D([], [], linestyle="none", marker=marker, color=color, markersize=6,
-               label=f"{budget} features")
-        for budget, (color, marker) in budget_styles.items()
+    # Each explanatory key occupies unused low-error space. Context lengths
+    # are labeled on the curves, so a second six-entry legend is unnecessary.
+    marker_keys = [
+        [
+            Line2D([], [], linestyle="none", marker="o", markerfacecolor=WHITE,
+                   markeredgecolor=INK, markersize=3.0, label="history unmet"),
+            Line2D([], [], linestyle="none", marker="x", color=INK,
+                   markersize=4.5, label="QELM unmet"),
+        ],
+        [
+            Line2D([], [], linestyle="none", marker=marker, color=INK,
+                   markersize=4.3, label=f"{budget} features")
+            for budget, marker in ((18, "o"), (36, "s"), (72, "D"))
+        ],
+        [
+            Line2D([], [], color=MUTED, linestyle=(0, (4, 3)), linewidth=0.75,
+                   label="10% target"),
+        ],
     ]
-    fig.legend(handles=feature_handles, loc="lower left", bbox_to_anchor=(0.10, 0.080),
-               ncol=3, frameon=False, handletextpad=0.25, columnspacing=1.0, borderaxespad=0)
-    fig.legend(handles=[
-        Line2D([], [], linestyle="none", marker="x", color=PALETTE["story_orange"],
-               markersize=6, markeredgewidth=1.5, label="no tested QELM succeeds"),
-        Line2D([], [], linestyle="none", marker="o", color="#CCD2DA", markersize=4,
-               label="history target unmet"),
-    ], loc="lower left", bbox_to_anchor=(0.10, 0.040), ncol=2, frameon=False,
-       handletextpad=0.25, columnspacing=1.5, borderaxespad=0)
-    fig.text(0.11, 0.009, r"Loss $\leq 1$: no tested window meets the history target in at least 10 of 12 roots.",
-             fontsize=9, va="bottom", color="#545A61")
+    for ax, handles in zip(axes, marker_keys):
+        legend = ax.legend(handles=handles, loc="lower left", fontsize=8.0,
+                           frameon=True, fancybox=True, framealpha=0.97,
+                           handlelength=1.0, handletextpad=0.4, borderpad=0.35,
+                           labelspacing=0.3, borderaxespad=0.5)
+        _style_legend(legend)
     pdf = output_dir / "fig02_information_frontier.pdf"
     png = output_dir / "fig02_information_frontier.png"
     source = output_dir / "fig02_information_frontier_source.csv"
     table.to_csv(source, index=False)
-    fig.savefig(pdf, metadata=_metadata("Dense information and feature frontier"))
+    fig.savefig(pdf, metadata=_metadata("History curves with robust QELM outcomes"))
     fig.savefig(png, dpi=320)
     plt.close(fig)
     return pdf, png, source
@@ -1077,8 +1131,13 @@ def _validated_shot_effects(path: Path) -> pd.DataFrame:
 
 
 def _resource_diagnosis_axes(fig):
-    """Keep the three resource interventions aligned in one publication row."""
-    return [fig.add_axes([left, 0.37, 0.21, 0.46]) for left in (0.10, 0.43, 0.76)]
+    """Keep three physically square resource panels in one publication row."""
+    width = 0.24
+    height = width * fig.get_figwidth() / fig.get_figheight()
+    axes = [fig.add_axes([left, 0.22, width, height]) for left in (0.095, 0.415, 0.735)]
+    for ax in axes:
+        ax.set_box_aspect(1)
+    return axes
 
 
 def render_figure_3(
@@ -1095,6 +1154,13 @@ def render_figure_3(
     axes = _resource_diagnosis_axes(fig)
     family_colors = {2: PALETTE["family_2"], 3: PALETTE["family_3"]}
     family_markers = {2: "o", 3: "D"}
+    family_handles = [
+        Line2D([], [], color=family_colors[n], marker=family_markers[n],
+               markerfacecolor=WHITE if n == 2 else family_colors[n],
+               markersize=3.7, markeredgewidth=0.6,
+               linewidth=STYLE["primary_linewidth"], label=f"{n}-qubit QRC")
+        for n in (2, 3)
+    ]
 
     ax = axes[0]
     root_scaling = (
@@ -1103,33 +1169,19 @@ def render_figure_3(
     )
     for n_qubits in (2, 3):
         family = root_scaling[root_scaling["teacher_n_qubits"].eq(n_qubits)]
-        for _, root in family.groupby("root_id"):
-            ax.plot(
-                root["scaling_x"],
-                root["history_nrmse"],
-                color=family_colors[n_qubits],
-                alpha=0.13,
-                linewidth=0.50,
-                zorder=1,
-            )
         summary = family.groupby("scaling_x")["history_nrmse"].agg(
             median="median", q10=lambda values: values.quantile(0.10), q90=lambda values: values.quantile(0.90)
         ).reset_index()
-        ax.fill_between(
-            summary["scaling_x"],
-            summary["q10"],
-            summary["q90"],
-            color=family_colors[n_qubits],
-            alpha=0.14,
-            linewidth=0,
-            zorder=0,
-        )
-        ax.plot(
+        ax.errorbar(
             summary["scaling_x"],
             summary["median"],
+            yerr=np.vstack([summary["median"] - summary["q10"],
+                            summary["q90"] - summary["median"]]),
+            capsize=1.5, capthick=0.7, elinewidth=0.7,
             color=family_colors[n_qubits],
             marker=family_markers[n_qubits],
-            markersize=4.2,
+            markersize=3.7,
+            markerfacecolor=WHITE if n_qubits == 2 else family_colors[n_qubits],
             markeredgewidth=0.6,
             linewidth=STYLE["primary_linewidth"],
             label=f"{n_qubits}-qubit QRC",
@@ -1147,31 +1199,42 @@ def render_figure_3(
     )
     ax.set_yscale("log")
     ax.set_xlim(-0.30, 12.50)
-    ax.set_ylim(5e-4, 1.15)
+    ax.set_ylim(5e-4, 2.5)
     ax.set_yticks((0.001, 0.01, 0.1, 1), ("0.1%", "1%", "10%", "100%"))
     ax.set_xticks((0, 3, 6, 9, 12))
-    ax.set_xlabel("loss $\\times$ context\n$\\gamma_T\\,\\Delta t\\,d$")
+    ax.set_xlabel("scaled context $\\gamma_T\\,\\Delta t\\,d$")
     ax.set_ylabel("old-history error")
-    _panel_heading(ax, "a", "Include enough\nhistory", y=1.25, title_x=0.15, verticalalignment="top")
+    legend = ax.legend(
+        handles=family_handles,
+        loc="lower left",
+        frameon=True,
+        fancybox=True,
+        fontsize=STYLE["legend_fontsize"],
+        handlelength=1.2,
+        handletextpad=0.4,
+        borderpad=0.3,
+        borderaxespad=0.45,
+        labelspacing=0.25,
+    )
+    _style_legend(legend)
 
     ax = axes[1]
     for n_qubits in (2, 3):
         family = features[features["teacher_n_qubits"].eq(n_qubits)]
-        for _, root in family.groupby("root_id"):
-            ax.plot(
-                root["feature_budget"],
-                root["total_nrmse"],
-                color=family_colors[n_qubits],
-                alpha=0.15,
-                linewidth=0.55,
-            )
-        summary = family.groupby("feature_budget", as_index=False)["total_nrmse"].median()
-        ax.plot(
+        summary = family.groupby("feature_budget")["total_nrmse"].agg(
+            median="median", q10=lambda values: values.quantile(0.10),
+            q90=lambda values: values.quantile(0.90),
+        ).reset_index()
+        ax.errorbar(
             summary["feature_budget"],
-            summary["total_nrmse"],
+            summary["median"],
+            yerr=np.vstack([summary["median"] - summary["q10"],
+                            summary["q90"] - summary["median"]]),
+            capsize=1.5, capthick=0.7, elinewidth=0.7,
             color=family_colors[n_qubits],
             marker=family_markers[n_qubits],
-            markersize=4.5,
+            markersize=3.7,
+            markerfacecolor=WHITE if n_qubits == 2 else family_colors[n_qubits],
             markeredgewidth=0.6,
             linewidth=STYLE["primary_linewidth"],
             label=f"{n_qubits}-qubit QRC",
@@ -1186,16 +1249,28 @@ def render_figure_3(
         fontsize=9.0,
         color=MUTED,
     )
-    ax.set_ylim(0.035, 0.28)
+    ax.set_ylim(0.035, 0.325)
     ax.set_xticks((18, 36, 72))
     ax.set_yticks((0.05, 0.10, 0.15, 0.20, 0.25), ("5%", "10%", "15%", "20%", "25%"))
     ax.set_xlabel("measured features $B$")
     ax.set_ylabel("QELM emulation error")
-    _panel_heading(ax, "b", "Add enough\nfeatures", y=1.25, title_x=0.15, verticalalignment="top")
+    legend = ax.legend(
+        handles=family_handles,
+        loc="upper right",
+        frameon=True,
+        fancybox=True,
+        fontsize=STYLE["legend_fontsize"],
+        handlelength=1.2,
+        handletextpad=0.4,
+        borderpad=0.3,
+        borderaxespad=0.45,
+        labelspacing=0.25,
+    )
+    _style_legend(legend)
 
     ax = axes[2]
     shot_styles = {
-        "test_nrmse_B18": (PALETTE["story_green"], "o", "-", "18 features"),
+        "test_nrmse_B18": (PALETTE["viridis_18"], "o", "-", "18 features"),
         "test_nrmse_B36": (PALETTE["viridis_36"], "s", "-", "36 features"),
         "test_nrmse_B72": (PALETTE["viridis_72"], "D", "-", "72 features"),
         "selected_policy_test_nrmse": (INK, "*", "--", "validation-selected"),
@@ -1214,20 +1289,21 @@ def render_figure_3(
             linewidth=STYLE["primary_linewidth"],
             linestyle=linestyle,
             label=label,
+            zorder=5 if column == "selected_policy_test_nrmse" else 3,
         )
         if column == "selected_policy_test_nrmse":
-            ax.fill_between(
+            ax.errorbar(
                 summary["total_shots"],
-                summary["q10"],
-                summary["q90"],
-                color=PALETTE["story_blue"],
-                alpha=0.10,
-                linewidth=0,
+                summary["median"],
+                yerr=np.vstack([summary["median"] - summary["q10"],
+                                summary["q90"] - summary["median"]]),
+                fmt="none", color=INK, capsize=1.5, capthick=0.7,
+                elinewidth=0.7, zorder=4,
             )
     ax.set_xscale("log", base=4)
     ax.set_xticks((300, 1200, 4800, 19200), ("300", "1.2k", "4.8k", "19.2k"))
-    ax.set_ylim(0.065, 0.295)
-    ax.set_yticks((0.10, 0.15, 0.20, 0.25), ("10%", "15%", "20%", "25%"))
+    ax.set_ylim(0.065, 0.39)
+    ax.set_yticks((0.10, 0.20, 0.30), ("10%", "20%", "30%"))
     ax.set_xlabel("shots per input $Q$")
     ax.set_ylabel("QELM test error")
     ax.axhline(0.10, color=MUTED, linestyle=(0, (4, 3)), linewidth=0.85)
@@ -1240,46 +1316,30 @@ def render_figure_3(
         fontsize=9.0,
         color=MUTED,
     )
-    _panel_heading(ax, "c", "Resolve features\nwith enough shots", y=1.25, title_x=0.15, verticalalignment="top")
-    family_handles, family_labels = axes[0].get_legend_handles_labels()
-    fig.legend(
-        family_handles,
-        family_labels,
-        title="Panels a, b",
-        title_fontsize=9.0,
-        frameon=False,
-        fontsize=9.0,
-        loc="upper left",
-        bbox_to_anchor=(0.10, 0.21),
-        handlelength=1.5,
-        handletextpad=0.5,
-        borderaxespad=0,
-        labelspacing=0.35,
+    legend = ax.legend(
+        loc="upper right",
+        frameon=True,
+        fancybox=True,
+        fontsize=STYLE["legend_fontsize"],
+        handlelength=1.2,
+        handletextpad=0.4,
+        borderpad=0.3,
+        borderaxespad=0.45,
+        labelspacing=0.25,
     )
-    shot_handles, shot_labels = ax.get_legend_handles_labels()
-    fig.legend(
-        shot_handles,
-        shot_labels,
-        title="Panel c: 4-qubit QRC, finite-shot follow-up",
-        title_fontsize=9.0,
-        frameon=False,
-        fontsize=9.0,
-        loc="upper left",
-        bbox_to_anchor=(0.43, 0.21),
-        ncol=2,
-        columnspacing=1.2,
-        handlelength=1.5,
-        handletextpad=0.5,
-        borderaxespad=0,
-        labelspacing=0.35,
-    )
-    fig.text(0.10, 0.006, "Error: normalized RMSE. Curves: root medians; pale traces or bands: root variability.",
-             fontsize=9.0, color="#545A61", va="bottom")
+    _style_legend(legend)
 
     for index, ax in enumerate(axes):
         _style_quant_axis(ax)
+        ax.text(
+            0.045, 0.965, "abc"[index],
+            transform=ax.transAxes,
+            ha="left", va="top",
+            fontsize=STYLE["axes_titlesize"],
+            fontweight="bold",
+        )
         ax.xaxis.labelpad = 4.0
-        ax.yaxis.labelpad = 5.0
+        ax.yaxis.labelpad = 3.0
     pdf = output_dir / "fig03_resource_diagnosis.pdf"
     png = output_dir / "fig03_resource_diagnosis.png"
     source = output_dir / "fig03_resource_diagnosis_source.csv"

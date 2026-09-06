@@ -1,0 +1,19 @@
+{
+  "figures": {
+    "fig01_information_interface.pdf": {
+      "anonymous_sha256": "600ced9e267888b274f79c1fc47414c9448f9be86353912b4032649393efd4b7",
+      "page_content_streams_identical": true,
+      "source_sha256": "8171c2353ecc6cd6fb15a0090c428a77dd4df5a67161dc200767d95617851b42"
+    },
+    "fig03_resource_diagnosis.pdf": {
+      "anonymous_sha256": "41db37cb278525d2872b5aabaf9265369bc68922a22269a8d75774fea34f99ce",
+      "page_content_streams_identical": true,
+      "source_sha256": "6ef3b0cadd05bd453b833c517ad1535884f64187bf4dc9c44469b69eef303ee0"
+    },
+    "fig04_long_context_n5.pdf": {
+      "anonymous_sha256": "05be0d3e56b39d40f83ce333fe93b7403016e293d35964197d68841f9ab2db78",
+      "page_content_streams_identical": true,
+      "source_sha256": "cce06708945d3d74dfcb69ad136c280adcc8791313199ecaa8652ba8d9d23d72"
+    }
+  }
+}

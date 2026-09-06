@@ -2,11 +2,159 @@
 
 ## Current manuscript
 
-The revised paper is titled **When Can Reset-Window QELMs Emulate the
-Input--Output Behavior of Quantum Reservoirs?** It is one
-self-contained 11-page PDF with 45 cited
-references, three main figures, continuous prose,
+The revised paper is titled **When Can Finite-Context QELMs Replace
+Quantum Reservoir Memory?** It is one
+self-contained 12-page journal-format PDF with 45 cited
+references, four main figures, continuous prose,
 Methods, and a technical appendix. There is no separate supplemental PDF.
+
+The separate ICAART-format rendition remains one 12-page anonymous paper.
+
+The latest requested editorial revision restores the circuit-style QRC channel
+block in Figure 1, uses identical gold observable banks and readout symbols,
+and shortens its caption. The target readout remains fixed (identity in the
+experiments); only the emulator is trained to match it. No experiment changes.
+The requested removal of tool disclosures applies to the manuscript text.
+The conference-format artifact is therefore an editorial draft, not a
+submission-ready ICAART paper: the official disclosure requirement is still
+recorded as unmet in the external checklist and validation report.
+
+### Reference-style figure revision (6 September 2026)
+
+The supplied `2608.25511v1 (5).pdf` was inspected at matched PDF rendering
+scale and through its embedded font/vector resources. Its Helvetica-family
+labels, bold axis text, thin four-sided axes, compact inset legends and
+panel lettering guide the redesign. Our larger text is retained for reading
+at normal manuscript scale. Actual reference colors are now shared: blue
+#3B86FF, green #00A14B, red #FC4D30, purple #A93BFF and gold #FFC943;
+ordered context/feature encodings use its viridis sequence. No reference
+data or physical-regime claims are imported.
+
+Figure 2 combines the former six panels into three square curve panels.
+All 198 median-history measurements and all five root-level outcome classes
+remain: context is encoded by curve color and direct end labels, while
+open dots, crosses and filled budget-specific shapes show the unchanged
+10-of-12 success rule. The caption distinguishes that rule from median
+threshold crossings. Figure 3 retains its exact source values, root medians
+and capped 10th--90th root-percentile whiskers, with square axes and
+in-panel legends. All faint individual-root lines and bands are removed;
+the whiskers describe variability rather than confidence intervals. Both
+quantitative CSV exports remain byte-identical. Figure 1 retains native
+TikZ and the exact simulated time-series samples. Two aligned processing
+lanes now show the QRC node network and reset-QELM encoding/fixed gates,
+with gold observable/feature banks and compact theory panels below. The
+current-input arrow and blue carried-state loop distinguish fresh input
+from accumulated history; the caption states the sequential update explicitly.
+
+### Separate prospective larger-system study (6 September 2026)
+
+A new, separately frozen study extends the numerical scope to five-qubit
+targets, 45 declared Pauli outputs, a ten-qubit fixed reset-QELM, windows
+2/4/6/8/10, losses 1 and 4, and budgets 30/60/120. Twelve fresh roots produce
+24 live systems. The backend was checked against the original dense model,
+108 bound tests passed, and two development runs agreed before fresh data
+were generated. The original confirmatory gates and cohorts are unchanged.
+
+Window 2 to 10 reduces history NRMSE in all twelve roots at each loss:
+median paired reductions 93.55% and 99.63%. At loss 1, windows 6, 8 and 10
+meet the robust history rule but no tested QELM budget meets the total-error
+rule. At loss 4, the 60-feature emulator reaches the target in every root
+from window 4 onward. Quadratic delay beats the fixed 120-feature QELM in
+118 of 120 streaming root-condition comparisons. The fixed emulator can
+therefore fail even while the history term continues falling; this is not
+evidence of quantum advantage or universal failure of other QELMs.
+
+Figure 4 includes every prespecified window and both losses, with capped
+root-percentile whiskers for history, the fixed 120-feature QELM, and the
+quadratic control. Both manuscripts remain twelve pages without changing
+fonts, margins or publisher formatting files. Full methods and proofs stay
+in the same PDF. A 120-entry evidence archive seals the numerical sources,
+development checks, raw results and independent analysis; its machine-local
+freeze paths are documented rather than claimed portable.
+
+The release manifest seals N5 in the named
+`prospective_followups.long_context_n5.artifacts` layer. This prevents the
+legacy prior-seed scanner from interpreting the current cohort's own results
+as earlier seed use. All files and hashes remain present; frozen numerical
+sources and tests are untouched. New studies must explicitly include this
+completed cohort when constructing their own prior-seed inventory.
+
+### Accessibility revision (5 September 2026)
+
+The main text now follows six sections: Introduction; Quantum Reservoirs and
+Reset-Window Models; Limits of Finite-Window Emulation; Dynamical Origins of
+Observable Memory; Numerical Experiments; and Discussion and Conclusions.
+Only the dynamics and numerical sections have main-text subsections. A short
+model section defines the carried state, declared output, reset, and input
+window before the theory. The information bound comes before the dynamical
+criterion, with physical meaning introduced before specialized notation.
+The numerical section introduces architectures, independent roots, and the
+evaluation protocol before interpreting the results. Full proofs and methods
+remain in two appendices in this PDF.
+
+Comparison with the preceding revision preserves all 45 citation keys, 26
+labeled equations, and all three figure blocks and captions. Figure size and
+artwork are unchanged; float declarations are positioned to keep the figures
+near the relevant text. The exact protected-memory gap and absolute-error
+floor are retained beside their pulse derivation in Appendix A. The model
+description explicitly distinguishes identical exact-expectation predictions
+from identical prediction distributions under finite-shot sampling. No new
+experiment, numerical result, or stronger scientific claim was introduced.
+
+### Title-free square plots and overview design study
+
+A subsequent presentation pass removes narrative and size titles from the
+plots and makes all nine quantitative axes physically square. Axis units,
+scales, series, and uncertainty are unchanged; the two source CSV exports
+remain byte-identical. Captions now carry the two/three/four-qubit panel
+mapping. The user selected architecture-first design A as the new Figure 1.
+The user's subsequent request replaces the square overview with a compact
+17.9197-by-9.2-cm circuit-oriented layout, about 49% lower at the same width.
+The schematic curve axis remains square; Figures 2 and 3 are unchanged.
+Native 9.5-pt labels, aligned black wires, a general QRC channel block,
+reset-QELM gate symbols, gold measurement/readout accents and restrained
+panel borders follow the supplied reference style. Explanatory paragraphs
+move to the caption, which retains the theorem assumptions and schematic
+architecture status. The older input waveform is
+blue, and the recent window is teal. Two aligned blue memory paths use solid
+and dashed strokes, filled and open markers, and explicit output differences
+to distinguish visible from permanently invisible state differences. Both
+branches remain visible; stored but unreadable memory is not depicted as
+absent. The selected source and two retained alternatives are delivered with
+LaTeX sources, vector PDFs, PNG previews, and hashes. Captions follow the new
+panel order without altering the scientific statements.
+
+The subsequent simplification keeps this footprint but removes the outer
+frames and perimeter window route. Identical local teal traces identify the
+same window in the two model lanes. One fixed $U(S_d)$ block replaces the
+encoding/brickwork sequence, and grouped measurement interfaces replace the
+repeated meter icons. Panel c shows two alternative state-difference cases,
+not a physical splitting of one difference. Final-size PDF review found no
+overlapping labels; the ICAART copy uses the same vector artwork.
+
+The input glyph is now replaced by a reproducible sampled time series and
+an exact suffix zoom: the first 120 post-transient Mackey--Glass samples at
+seed 1, with the last 20 supplied to the illustrative reset interface. Both
+axes are physically square and retain the same unscaled amplitudes. Lines
+join the samples directly, without smoothing. This is a simulated input
+illustration, not a new emulation experiment or an evaluation stream; the
+caption and source provenance distinguish it from the independent 33-symbol
+inputs used for the numerical evaluation. Figures 2 and 3 are unchanged.
+
+The readability revision raises native Figure 1 labels to 11 pt and panel
+letters to 12 pt, enlarges channel/measurement/readout symbols and sample
+markers, and adds clearance below the feature-map block. The data, axis
+geometry and compact canvas stay fixed. Declaring the float after the first
+Introduction paragraph brings the overview forward for page-two placement.
+
+The history-access revision adds a blue brace over the entire upper input
+history, explicitly labeled "one input at a time" to distinguish sequential
+QRC updates from reset-window encoding. Earlier input still acts through the
+carried state, not a batch input register. The upper workflow is raised by
+0.9 cm on a 17.9197-by-10.6-cm canvas while all fonts and data axes retain
+their physical sizes. Plain-language output-difference and output-relevance
+labels simplify panels b and c; the caption retains maximization over shared
+windows and the distinction between some and every future continuation.
 
 The paper asks one question throughout:
 

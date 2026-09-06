@@ -1,0 +1,196 @@
+{
+  "artifacts": {
+    "DESIGN_BRIEF.md": "3a032c17202b4173efff4fed3f19999ceeeec747400064ec072a5f8b64df9307",
+    "README.md": "742bcd8e42e34afd455e22f25a82342d154b90624fa8fd58f6147008f3f67aa3",
+    "b1.pdf": "c8ec2ac2e456fd821f159a40a8e7480a7745d14ae4d8048f5de540cc3dbe3cae",
+    "b1.png": "0cac30eee6a970da979d00a4f7535dfdae73747c0b39b9655107b7af05e35f32",
+    "b1.tex": "c84349670e76e28bdeff9124ac8d8cbd01335a9a18db2c26ee8ab05cba47ea26",
+    "b2.pdf": "da18bc5a69f25fed926667a5d07febc8ba6230230044bfd1a1481444aa01bbc6",
+    "b2.png": "e041b098cdd15a6ba6eb8c47d236cfdfbc79b6583601030ff8bc5d67c17292be",
+    "b2.tex": "8660555f75cf335d51cdc2bcbff874c9c35e0eab2d45fcb228d224055a6aa9c9",
+    "b3.pdf": "05f09b851e7c2c057ed28666c0fc152523ccc48bb14e75db85ed52fd15cc4323",
+    "b3.png": "141cebf6233a1e7f579ccac2586a4079985af2950f1e2fdea7db46e618cbf32f",
+    "b3.tex": "a0b39e154eb191f8cadc7f6847f548f519935b1701a466ddb6e5505794367751",
+    "b4.pdf": "0e18267d4bdf04dadb5ec2e2ab00d37444589dcf39eb3ea82bf390d539e1583b",
+    "b4.png": "297a334a51b5997a266fbaba51b62984ee57ac9d8d24d5caadeb4716faecd379",
+    "b4.tex": "56f6639cab1d0f5de7cead61e08d060bc8020bf11c1bdc13318e565267934c95",
+    "b5.pdf": "b795acd009da1da6038fc0177d9a4d521cd657feb28efb8a0231e7a266bb8b3b",
+    "b5.png": "f1404f555ac1c46a42cd88ee2b0280976f8bbdd8f05cd1c4ed6cb540f608a535",
+    "b5.tex": "a9bdf59216bfbd558e4e42c515f21f7726a307905f56246f08ee045a0bb9ee5c",
+    "b_descriptions.json": "eb910033dc34384fb4dbd339467f34659308fe0ec51d50959c75d16ca69e9da8",
+    "c1.pdf": "036ee7a496eb934182a3d3ae984922a60b8e83cdfb1bc021f82c12860ccc7ce1",
+    "c1.png": "722a66fed2c3ebdb9418d235e5c4c974dcbadc2ab42f762f630fff703a44485b",
+    "c1.tex": "0280332073c360c2cd564ec6501b9ed7307229e7ec2ebb49d91f4ba6b73cd65e",
+    "c2.pdf": "60d02d543f1ef7df72fb8a7f5e170cdf30bf68a71c00af25c861141d88dfffb1",
+    "c2.png": "eccba32c76ba02ee644bccaf75859c90c484a207c8ba95db820ca807a3c8d2ca",
+    "c2.tex": "f99e571c3cc15287527a155cb29ad9c1febcc3bd782864dd2916fb42b8c5c752",
+    "c3.pdf": "77706dc88f7b8a5077dd6508e8bf3e923fcdec1bd8fb0de0ad1c7acd29270959",
+    "c3.png": "0f93cdf6f57fba15b48a53a039df4b10706be49bdf7e994e742e55b56e735b44",
+    "c3.tex": "e6c008979207586cda1887b700b489d9f293857d16ee841bf23ee49a3a0e472e",
+    "c4.pdf": "ebcaa7fe80870ee61a7bd55f831541e5e30d00462f614be0735d395b9ad95cc6",
+    "c4.png": "7bffc8da6fd70ab72e9e4446b234246f29964ba1c7f68fa4dfcbf568c0c11157",
+    "c4.tex": "bafc7dfd95eab74d32b06254cf2cba408cca477fbc64ee120c599209aa3f6d2d",
+    "c5.pdf": "2d6c8449bd3dae17b0afe9afa03439d96b7ac1930298dccb4edd98bede310ae2",
+    "c5.png": "d8609d9fca56d69e7dfd3123ea8784c4a9b89de51c8e6ce0a5765e55090e60d2",
+    "c5.tex": "382bbfc79fed9edaac5d6d6a29a0373e32580a2d06d04899e2af91ee643c5859",
+    "c_descriptions.json": "8fad257fad9f66940120022b3aee38a5684e5cf078edf1778fbed4c3dd96a239",
+    "overview_b.png": "6ee2689f3d99e8aa648ec88e46930a3221ab51e4800a00d76e93c59c5f2cc7ff",
+    "overview_c.png": "914680af0d48b96e9fcfa1d5466a757fdf9eef0a5f384e6a527a0824a7ce6e0f",
+    "render_figure1_bc_candidates.py": "ef8d457405bb605a354be7f537e17c0529704903ec4a20c705914074bd6d37e6",
+    "selection.pdf": "d82a6e777bc6767d0a414979ca98503d28bcd1a6bf4ff71745793a0e31c7be3e",
+    "selection.tex": "d594cf311c4eedaca0cb9f98f30157ffc0e06adebc50453161d45bb0c6ab75ee",
+    "selection_guide.json": "10ee4e32b04301f4f168d0cecf892e368bb3d6d48d27ae7d3472e3174fa617f5",
+    "style.tex": "4e0958743fb1fe66a79d84b1cf50e5bfdcc27c69053f86a1ff794461a4f08a8b",
+    "test_figure1_bc_candidates.py": "9849caa34967a3c13415cd1babe8c3f8f0ce340f954f2168fe70b9ae53e915c5"
+  },
+  "label_size_pt": 10,
+  "native_size_cm": [
+    8.6,
+    5.6
+  ],
+  "reference": {
+    "figure": 1,
+    "page": 2,
+    "supplied_filename": "2608.25511v1 (5).pdf",
+    "title": "Superextensive learning in quantum reservoirs at the onset of information scrambling",
+    "use": "presentation reference only; no reference-paper data reused"
+  },
+  "renderer_sha256": "ef8d457405bb605a354be7f537e17c0529704903ec4a20c705914074bd6d37e6",
+  "schema": "figure1_bc_selection_v1",
+  "scope": "Ten conceptual illustrations; not simulations, uncertainty bands, or new evidence.",
+  "selected_b": null,
+  "selected_c": null,
+  "status": "awaiting_user_selection_no_manuscript_replacement",
+  "unchanged_during_build": {
+    "after": {
+      "paper/canonical_emulation/main.pdf": "c11173999a8fd7b5f65a118a0edf779635df19538cab3222063cd276a116c71d",
+      "paper/figures/figure1_variants/variant_a_architectures.tex": "18659c34e45a503be7311d9c2305a62521982d5212382313ec401a29827252ba",
+      "paper/figures/information_interface/fig01_information_interface.pdf": "97d0a5c623428dbdafddbe9fbad8883139460892d9e41e073229930dbfbb056d",
+      "paper/figures/information_interface/fig01_information_interface.tex": "18659c34e45a503be7311d9c2305a62521982d5212382313ec401a29827252ba",
+      "paper/figures/information_interface/fig01_information_interface_source.json": "d5a76f449661e3f4fabf909a6271208f838907f076db1c02652b771665d23965",
+      "paper/icaart2027/submission.pdf": "2a1aa63fa6044c83275355be5f11e80eab9add6998dc09765239f7984d3e4ea5",
+      "pra_extension/PRA_EXTENSION_RELEASE.json": "da3235d2ccaa79395eaf2d5963f562e9d4b2ba204bd7a24e3b8721b0a41e119f"
+    },
+    "before": {
+      "paper/canonical_emulation/main.pdf": "c11173999a8fd7b5f65a118a0edf779635df19538cab3222063cd276a116c71d",
+      "paper/figures/figure1_variants/variant_a_architectures.tex": "18659c34e45a503be7311d9c2305a62521982d5212382313ec401a29827252ba",
+      "paper/figures/information_interface/fig01_information_interface.pdf": "97d0a5c623428dbdafddbe9fbad8883139460892d9e41e073229930dbfbb056d",
+      "paper/figures/information_interface/fig01_information_interface.tex": "18659c34e45a503be7311d9c2305a62521982d5212382313ec401a29827252ba",
+      "paper/figures/information_interface/fig01_information_interface_source.json": "d5a76f449661e3f4fabf909a6271208f838907f076db1c02652b771665d23965",
+      "paper/icaart2027/submission.pdf": "2a1aa63fa6044c83275355be5f11e80eab9add6998dc09765239f7984d3e4ea5",
+      "pra_extension/PRA_EXTENSION_RELEASE.json": "da3235d2ccaa79395eaf2d5963f562e9d4b2ba204bd7a24e3b8721b0a41e119f"
+    }
+  },
+  "variants": {
+    "b1": {
+      "caption_de": "Konzeptuelle Ausgabebereiche für identische jüngste Eingaben: Mehr Kontext kann die Mehrdeutigkeit schließen oder einen Rest lassen. Die Bänder umschließen kleinste und größte Ausgaben; keine Messdaten oder Konfidenzintervalle.",
+      "conceptual_only": true,
+      "id": "B1",
+      "pdf_size_points": [
+        243.78,
+        158.74
+      ],
+      "scope_en": "Conceptual enclosing intervals between the smallest and largest scalar outputs conditional on illustrated recent windows; compatible outputs need not fill each interval. A range at one window need not attain the global worst-case diameter D_d. The limiting alternatives are stipulated, not inferred from finite data.",
+      "title_de": "Mögliche Ausgaben werden enger"
+    },
+    "b2": {
+      "caption_de": "Zwei Geschichten teilen dasselbe jüngste Fenster. Der QRC kann verschiedene Ausgaben erzeugen; ein reiner Fensterprädiktor erhält identische Information und muss dieselbe Vorhersage liefern. Das Paar illustriert den Mechanismus, nicht das globale Maximum.",
+      "conceptual_only": true,
+      "id": "B2",
+      "pdf_size_points": [
+        243.78,
+        158.74
+      ],
+      "scope_en": "One conceptual compatible-history pair illustrates information asymmetry and the forced identical prediction of a deterministic window-only predictor. Its output gap is only a lower bound on the compatible-output diameter, not the universal worst case.",
+      "title_de": "Gleiches Fenster, verschiedene Vergangenheit"
+    },
+    "b3": {
+      "caption_de": "Intervalle umschließen kleinste und größte kompatible Ausgaben. Gold markiert die optimale unbeschränkte Mittelpunktvorhersage. Mit längerem Fenster schrumpft die Mehrdeutigkeit links, rechts bleibt sie bestehen; vier illustrative Stufen beweisen kein asymptotisches Verhalten.",
+      "conceptual_only": true,
+      "id": "B3",
+      "pdf_size_points": [
+        243.78,
+        158.74
+      ],
+      "scope_en": "Intervals enclose the smallest and largest compatible scalar outputs at each illustrated recent window; intermediate values need not be attainable. Their midpoint minimizes unrestricted worst-case absolute error for that window. No particular QELM is asserted to realize it, and no finite ladder proves uniform fading or persistence.",
+      "title_de": "Schrittweise weniger Mehrdeutigkeit"
+    },
+    "b4": {
+      "caption_de": "Der optimale skalare Geschichtsfehler beträgt die Hälfte des größten kompatiblen Ausgabespalts. Eine fallende Grenze erreicht die Toleranz; ein positiver Rest darüber verhindert dies. Beide Kurven sind konzeptuell, keine Lernergebnisse.",
+      "conceptual_only": true,
+      "id": "B4",
+      "pdf_size_points": [
+        243.78,
+        158.74
+      ],
+      "scope_en": "D_d is the supremum over all compatible history pairs and all current windows. D_d/2 is the unrestricted scalar worst-case absolute-error optimum. Curves and the continuous tolerance crossing are conceptual limiting alternatives, not empirical fits, the first strict integer d_epsilon, or efficiency claims.",
+      "title_de": "Kontext bis zur Fehlertoleranz"
+    },
+    "b5": {
+      "caption_de": "Verschiedene alte Geschichten durchlaufen dieselben späteren Eingaben. Am festen Readout kann ihr Ausgabespalt schrumpfen oder fortbestehen. Die alternativen Paare illustrieren Wirkungswege; sie bestimmen nicht allein den größten Geschichtsfehler.",
+      "conceptual_only": true,
+      "id": "B5",
+      "pdf_size_points": [
+        243.78,
+        158.74
+      ],
+      "scope_en": "Alternative input-reachable state pairs under matched later channel inputs. The final declared readout compares their outputs; state paths are not asserted to merge. A chosen pair supplies only a lower bound on D_d, and its fading does not certify uniform fading.",
+      "title_de": "Was von früher übrig bleibt"
+    },
+    "c1": {
+      "caption_de": "Schematisch: Zwei unterschiedliche Zustandspaare durchlaufen dieselben späteren Eingaben. Oben kann ein Ausgangsunterschied sichtbar werden. Unten ist gleiche Ausgabe für jede erlaubte Fortsetzung vorausgesetzt; dieser interne Unterschied darf bestehen bleiben.",
+      "conceptual_only": true,
+      "id": "C1",
+      "pdf_size_points": [
+        243.78,
+        158.74
+      ],
+      "scope_en": "Alternative input-created state pairs pass separately through shared updates and declared output measurements. The lower all-continuations equality is stipulated, including the empty continuation; neither fading nor empirical behavior is established.",
+      "title_de": "Zwei Zustände, gleiche Messung"
+    },
+    "c2": {
+      "caption_de": "Schematisch: Ein interner Unterschied kann zum Ausgang gelangen oder in einem abgeschlossenen unsichtbaren Bereich bleiben. Dessen Abschluss unter allen erlaubten Eingaben ist vorausgesetzt; gezeichnete Verbindungen allein beweisen ihn nicht.",
+      "conceptual_only": true,
+      "id": "C2",
+      "pdf_size_points": [
+        243.78,
+        158.74
+      ],
+      "scope_en": "Nodes and arrows illustrate possible propagation of an input-created state difference, not a physical qubit network. The lower hidden sector is assumed invariant and output-invisible under every allowed update; no finite graph establishes universal invisibility.",
+      "title_de": "Erreicht der Unterschied den Ausgang?"
+    },
+    "c3": {
+      "caption_de": "Schematisch: Gleiche Ausgaben jetzt schließen spätere Unterschiede nicht aus. Nur wenn ein anderes Zustandspaar unter jeder erlaubten Fortsetzung gleiche Ausgaben behält, darf sein interner Unterschied dauerhaft unsichtbar bleiben. Diese Bedingung ist vorausgesetzt.",
+      "conceptual_only": true,
+      "id": "C3",
+      "pdf_size_points": [
+        243.78,
+        158.74
+      ],
+      "scope_en": "Two alternative input-created pairs distinguish current output equality from equality under all future continuations. Gold comparisons denote declared outputs, not an invasive measurement sequence. Universal equality in the lower row is stipulated.",
+      "title_de": "Heute gleich, später unterscheidbar"
+    },
+    "c4": {
+      "caption_de": "Schematische Zustandsgeometrie: Unterschiedliche Zustände liefern denselben Ausgang. Jede erlaubte Eingabe hält ihren Unterschied in einer unsichtbaren Richtung. Diese Invarianz ist vorausgesetzt; eine einzelne Projektion könnte sie nicht belegen.",
+      "conceptual_only": true,
+      "id": "C4",
+      "pdf_size_points": [
+        243.78,
+        158.74
+      ],
+      "scope_en": "A conceptual state-space projection illustrates a difference in an invariant output-invisible direction. Neither a physical Bloch-space construction nor proof from a projection is claimed; invariance under every allowed update is an explicit condition.",
+      "title_de": "Ein dauerhaft unsichtbarer Unterschied"
+    },
+    "c5": {
+      "caption_de": "Schematisch: Zustände werden genau dann zusammengefasst, wenn sämtliche erlaubten Fortsetzungen dieselben Ausgaben liefern. Unterschiede innerhalb einer Gruppe dürfen bestehen bleiben. Verschiedene Gruppen unterscheiden sich für mindestens eine Fortsetzung.",
+      "conceptual_only": true,
+      "id": "C5",
+      "pdf_size_points": [
+        243.78,
+        158.74
+      ],
+      "scope_en": "Groups are defined by identical full future-output behavior, including the empty continuation, not inferred from a sampled set of outputs. Distinct groups have at least one distinguishing allowed continuation. No learning or efficiency claim follows.",
+      "title_de": "Gleiches Verhalten, verschiedene Zustände"
+    }
+  }
+}

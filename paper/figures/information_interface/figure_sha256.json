@@ -1,11 +1,11 @@
 {
-  "fig01_information_interface.pdf": "326c4920f4c19a1e30084af02b75c1406ff03a141fd6d2cce05ba6b7dba55806",
-  "fig01_information_interface.png": "1b45f8ee4c7bfab8e8f22b4d72acf2b59882ad584efa8672e4a3dc74f08b53b1",
-  "fig01_information_interface_source.json": "65969d59e00c03e807682ae5bc8223ff8df1234037752917e0996c4af928cbee",
-  "fig02_information_frontier.pdf": "e675e22e3ed89f33c0178b950e162ed1cf0ce55851b286a37e346bd70a225a61",
-  "fig02_information_frontier.png": "1f29dd932b07f0f1265488b82f207f496edd6066abb16032bd679663aa08466e",
+  "fig01_information_interface.pdf": "8171c2353ecc6cd6fb15a0090c428a77dd4df5a67161dc200767d95617851b42",
+  "fig01_information_interface.png": "2be9eec379a0600d314724a373a0c345b243e760df21b8760e4478187fa38333",
+  "fig01_information_interface_render_source.json": "59ed4eac15448d3fd832d58e326016a97390bc6affeaca295632908dce1db7e3",
+  "fig02_information_frontier.pdf": "e26a581721d36d7c66e83c2785b5c6e74189f329959f5533bca80b0596c688db",
+  "fig02_information_frontier.png": "361fa629f046578e332fa9fc7005c74ee47005da938bec1c3a20b116cb284955",
   "fig02_information_frontier_source.csv": "fb40ca1f38dc05006190c1b67a1b195b153b5eb9c92f292633471c8cc178896f",
-  "fig03_resource_diagnosis.pdf": "3cd534e7c112937df7bfebbe024906e4fc0445b196aa84badd2a60e2cb98e2f5",
-  "fig03_resource_diagnosis.png": "5c6c3f73f2b8ee47ff9a127e25f97455da1005c1dab547f224b1bb92c330b5d1",
+  "fig03_resource_diagnosis.pdf": "6ef3b0cadd05bd453b833c517ad1535884f64187bf4dc9c44469b69eef303ee0",
+  "fig03_resource_diagnosis.png": "2d5032677e937986d1a993b341ecbb663ba0a07734a15da78ffc6f505f2b8a66",
   "fig03_resource_diagnosis_source.csv": "6f908c2681d52839069a55539abb1e4cdb3c9af07b6e4e015b5659fec231247b"
 }

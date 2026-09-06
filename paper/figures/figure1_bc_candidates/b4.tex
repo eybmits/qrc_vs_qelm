@@ -1,0 +1,26 @@
+\input{style.tex}
+\begin{document}
+\begin{candidate}{b}
+% Universal scalar history error, not the error of a particular trained QELM.
+\fill[green!8] (1.09,.97) rectangle (7.60,1.91);
+\draw[flow] (1.09,.97)--(7.85,.97);
+\draw[flow] (1.09,.97)--(1.09,4.93);
+\node[rotate=90] at (.34,3.00) {best possible history error};
+\node[anchor=north] at (4.77,.47) {window length $d$};
+\draw[muted,densely dashed,line width=.6pt] (1.09,1.91)--(7.60,1.91);
+\node[anchor=east] at (.96,1.91) {$\varepsilon$};
+\node[text=green] at (6.27,1.61) {within tolerance};
+\node[observable,minimum height=.52cm] at (5.72,4.79) {scalar optimum: $D_d/2$};
+\draw[blue,line width=1.05pt] (1.31,4.57)
+ .. controls (2.04,3.08) and (2.99,2.20) .. (3.94,1.91)
+ .. controls (4.83,1.24) and (6.05,1.10) .. (7.50,1.07);
+\draw[red,line width=1.05pt] (1.31,4.57)
+ .. controls (2.17,2.59) and (3.77,2.46) .. (7.50,2.45);
+\node[text=red] at (6.26,2.85) {persistent floor};
+\draw[green,densely dashed,line width=.6pt] (3.94,.97)--(3.94,1.91);
+\fill[green] (3.94,1.91) circle (.055);
+% The marker is a conceptual crossing, not the first strict integer d_epsilon.
+\node at (3.94,.73) {crossing};
+\node[text=blue] at (4.60,3.83) {past influence fades};
+\end{candidate}
+\end{document}

@@ -60,13 +60,19 @@ def _fake_repository(root: Path) -> tuple[Path, Path]:
     for relative in release.DENSE_N4_FILES:
         path = root / relative
         _write(path, "{}\n" if path.suffix == ".json" else "value\n1\n")
+    for relative in release.LONG_CONTEXT_N5_FILES:
+        path = root / relative
+        _write(path, "{}\n" if path.suffix == ".json" else "value\n1\n")
 
     for relative in release.DOCUMENTATION_FILES:
         _write(root / relative, f"documentation for {relative}\n")
     for relative in release.DARK_SECTOR_FILES:
         path = root / relative
         _write(path, "{}\n" if path.suffix == ".json" else "value\n1\n")
-    for relative in release.COMPACT_PRA_FIGURE_FILES:
+    for relative in (
+        *release.COMPACT_PRA_FIGURE_FILES,
+        *release.FIGURE1_DESIGN_FILES,
+    ):
         path = root / relative
         if path.suffix == ".pdf":
             _write(path, b"%PDF-1.4\n%%EOF\n")
@@ -249,6 +255,29 @@ def _fake_repository(root: Path) -> tuple[Path, Path]:
     return figures, paper
 
 
+def test_followup_layer_binds_changes_and_requires_every_record(
+    tmp_path: Path, monkeypatch: pytest.MonkeyPatch
+) -> None:
+    figures, paper = _fake_repository(tmp_path)
+    monkeypatch.setattr(release, "PINNED_AUTHORITATIVE_HASHES", {})
+    monkeypatch.setattr(release, "PINNED_HISTORICAL_REGRESSION_HASHES", {})
+    kwargs = dict(repo_root=tmp_path, figures_dir=figures, paper_pdf=paper)
+    before = release.build_manifest(**kwargs)
+    relative = "results_n5_long_context_v1/run/stream_metrics.csv"
+    record = tmp_path / relative
+    record.write_text("value\n2\n")
+    after = release.build_manifest(**kwargs)
+    assert before["artifacts"] == after["artifacts"]
+    first = before["prospective_followups"]["long_context_n5"]
+    second = after["prospective_followups"]["long_context_n5"]
+    assert first["artifact_set_sha256"] != second["artifact_set_sha256"]
+    assert before["manifest_identity_sha256"] != after["manifest_identity_sha256"]
+    assert second["artifacts"][relative]["sha256"] == _sha(record)
+    record.unlink()
+    with pytest.raises(release.ManifestError):
+        release.build_manifest(**kwargs)
+
+
 def test_release_manifest_is_deterministic_and_fails_closed(
     tmp_path: Path, monkeypatch: pytest.MonkeyPatch
 ) -> None:
@@ -267,10 +296,24 @@ def test_release_manifest_is_deterministic_and_fails_closed(
         paper_pdf=paper,
     )
     assert first == second
+    assert set(release.FIGURE1_DESIGN_FILES) <= set(first["artifacts"])
+    followup = first["prospective_followups"]["long_context_n5"]
+    assert set(release.LONG_CONTEXT_N5_FILES) == set(followup["artifacts"])
+    assert not set(release.LONG_CONTEXT_N5_FILES) & set(first["artifacts"])
+    assert followup["status"] == "FROZEN_PROSPECTIVE_LONG_N5"
+    assert followup["artifact_count"] == len(release.LONG_CONTEXT_N5_FILES)
+    assert followup["artifact_set_sha256"] == release.sha256_json({
+        name: _sha(tmp_path / name) for name in release.LONG_CONTEXT_N5_FILES
+    })
+    assert first["total_artifact_count"] == first["artifact_count"] + followup["artifact_count"]
+    for name, entry in followup["artifacts"].items():
+        assert entry["role"] == release.LONG_CONTEXT_N5_FILES[name]
+        assert entry["sha256"] == _sha(tmp_path / name)
     assert first["canonical_frozen_identity"]["material_file_count"] > 0
     assert first["evidence_layers"] == {
         "canonical": "FROZEN_CONFIRMATORY",
         "dense_n4": "FROZEN_PROSPECTIVE_N4",
+        "long_context_n5": "FROZEN_PROSPECTIVE_LONG_N5",
         "dense_secondary": "FROZEN_PROSPECTIVE_SECONDARY",
         "dark_sector": "FROZEN_VALIDATION",
         "pra_extension": "EXPLORATORY_POST_CONFIRMATORY",
@@ -316,6 +359,20 @@ def test_release_manifest_is_deterministic_and_fails_closed(
         in first["artifacts"]
     )
     assert "paper/canonical_emulation/main.pdf" in first["artifacts"]
+    historical_figure1 = (
+        "paper/figures/information_interface/fig01_information_interface_source.json"
+    )
+    current_figure1 = (
+        "paper/figures/information_interface/fig01_information_interface_render_source.json"
+    )
+    assert first["artifacts"][historical_figure1]["role"] == (
+        "historical_figure1_input_audit_snapshot_frozen_by_n5"
+    )
+    assert first["artifacts"][current_figure1]["role"] == "information_interface_figure_source"
+    assert (
+        current_figure1, "historical_input_audit", "sha256", historical_figure1,
+    ) in release.SOURCE_HASH_LINKS
+    assert not any(link[0] == historical_figure1 for link in release.SOURCE_HASH_LINKS)
     assert (
         "paper/figures/information_interface/phase_threshold_sensitivity.json"
         in first["artifacts"]

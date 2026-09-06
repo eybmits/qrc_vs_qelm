@@ -1,0 +1,44 @@
+\section{QUANTUM RESERVOIRS AND RESET-WINDOW MODELS}
+\label{sec:models}
+
+A QRC carries a quantum state $\rho_t$ from one input to the next.  Its update
+has the familiar recurrent form
+$\rho_t=\Phi_{a_t}(\rho_{t-1})$.  Here the density matrix $\rho_t$ describes
+the internal state, and the quantum channel $\Phi_{a_t}$ is a physically
+allowed update, including any dissipation.  An observable $O_j$ is a
+measurement quantity; its expectation $\operatorname{Tr}(O_j\rho_t)$ supplies
+one output component.  We fix a finite collection of these quantities and
+write its output as $Y_t=\mathcal C(\rho_t)$
+\cite{fujii2017harnessing,mujal2021opportunities}.
+Any linear QRC readout, once trained and held fixed, can be included in
+$\mathcal C$ by absorbing its weights into the observables. Our simulations
+return the observable expectations directly: the target readout is the identity.
+
+A reset-window QELM carries no state between predictions.  Each prediction
+starts from the same quantum state, encodes the last $d$ inputs, and measures
+observables $P_j$. Their expectations form the features that a trained
+linear readout combines into an output
+\cite{innocenti2023potential,kawanabe2026tdqelm}.  For a history $h$ ending at
+time $t$, denote that input window by
+$S_d(h)=(a_{t-d+1},\ldots,a_t)$.  Two histories with the same $S_d(h)$ therefore
+produce the same exact-expectation prediction, whatever their earlier inputs.
+With sampled measurements, their prediction distributions are identical even
+though individual outcomes can differ.  More qubits or
+features can enrich the function of this window, but cannot supply its
+missing past.
+
+Emulation means reproducing the target QRC's fixed, declared input--output
+map.  It does not require reconstruction of the full quantum state, and it
+is not a comparison of general predictive performance on unrelated tasks.
+Figure~\ref{fig:information-interface} illustrates the distinction.  We first
+ask what any window-only predictor can recover, before imposing the feature
+and measurement limits of a particular QELM.
+
+Figure~\ref{fig:information-interface}(a) shows 201 illustrative Mackey--Glass
+samples: at $t=180$, the green window contains inputs 141--180.
+Grey future samples are excluded. The separate output example has two histories
+differing only in one old bit, with identical later inputs. After the bit leaves
+a 40-input window, the ideal window predictor returns their output midpoint;
+the QRC retains its effect. Only one history is drawn; green is not a trained QELM.
+Its baseline is independent of the left trace; neither plot is evaluation data.
+Experiments use independent 33-symbol inputs. Circuit symbols allow dissipative QRC channels.

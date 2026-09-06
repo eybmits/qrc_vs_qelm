@@ -1,0 +1,47 @@
+\input{style.tex}
+\begin{document}
+\begin{candidate}{c}
+% Conceptual routes of a state difference, not a physical qubit graph.
+% The complete hidden sector is assumed closed under every allowed update.
+\node[align=center] at (1.60,4.81) {input-created\\pair};
+\node[text=purple] at (5.05,4.95) {some input sequence};
+\node[state] at (.82,4.08) {$\rho_1$};
+\node[state,draw=red,fill=red!7] at (1.67,4.08) {$\sigma_1$};
+\node at (1.22,3.53) {$\rho_1\ne\sigma_1$};
+\draw[flow] (2.03,4.08)--(2.67,4.08);
+\foreach \x/\y in {2.95/4.08,4.02/4.43,4.18/3.66,5.28/4.08}{
+ \node[circle,draw=ink,fill=neutral,minimum size=.22cm,inner sep=0pt] at (\x,\y) {};
+}
+\draw[softflow] (3.08,4.12)--(3.88,4.39);
+\draw[softflow] (3.08,4.02)--(4.02,3.71);
+\draw[softflow] (4.15,4.39)--(5.14,4.12);
+\draw[softflow] (4.31,3.71)--(5.14,4.02);
+\draw[flow,blue,line width=1.0pt] (2.96,4.09)--(4.02,4.44)--(5.27,4.10)--(6.08,4.10);
+\meter{6.35}{4.10}{gold}
+\draw[flow] (6.62,4.10)--(7.05,4.10);
+\fill[blue] (7.27,4.26) circle (.065);
+\draw[red,fill=white,line width=.9pt] (7.27,3.94) circle (.065);
+\node at (7.12,3.49) {can differ};
+\node[text=blue] at (4.47,3.20) {a route to the readout};
+\draw[rule] (.48,2.83)--(8.12,2.83);
+\node[text=purple] at (5.05,2.43) {every input sequence};
+\node[state] at (.82,1.69) {$\rho_2$};
+\node[state,draw=red,fill=red!7] at (1.67,1.69) {$\sigma_2$};
+\node at (1.22,1.12) {$\rho_2\ne\sigma_2$};
+\draw[flow] (2.03,1.69)--(2.67,1.69);
+\draw[green,fill=green!5,rounded corners=9pt] (2.71,.75) rectangle (5.55,2.22);
+\foreach \x/\y in {3.14/1.71,4.20/1.92,5.08/1.38,3.80/1.11}{
+ \node[circle,draw=green,fill=white,minimum size=.22cm,inner sep=0pt] at (\x,\y) {};
+}
+\draw[softflow] (3.27,1.74)--(4.06,1.89);
+\draw[softflow] (4.32,1.84)--(4.98,1.46);
+\draw[softflow] (4.94,1.35)--(3.94,1.14);
+\draw[softflow] (3.68,1.20)--(3.22,1.60);
+\meter{6.35}{1.69}{gold}
+\draw[flow] (6.62,1.69)--(7.05,1.69);
+\fill[blue] (7.27,1.69) circle (.065);
+\draw[red,line width=.9pt] (7.27,1.69) circle (.075);
+\node at (7.12,1.07) {always equal};
+\node[text=green] at (4.32,.34) {the hidden sector stays closed};
+\end{candidate}
+\end{document}

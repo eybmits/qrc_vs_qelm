@@ -1,0 +1,56 @@
+\documentclass[a4paper,twoside]{article}
+
+% The four publisher formatting files are used without modification.
+\ifdefined\pdfinfoomitdate\pdfinfoomitdate=1\fi
+\ifdefined\pdftrailerid\pdftrailerid{}\fi
+\ifdefined\pdfsuppressptexinfo\pdfsuppressptexinfo=-1\fi
+\usepackage{epsfig,subcaption,calc,amssymb,amstext,amsmath,amsthm,multicol}
+\usepackage{pslatex,apalike,algorithm2e}
+\usepackage[bottom]{footmisc}
+\usepackage{graphicx,microtype,placeins,xcolor}
+\definecolor{linkblue}{HTML}{1F4E79}
+\usepackage[unicode,colorlinks=true,linkcolor=linkblue,citecolor=linkblue,urlcolor=linkblue]{hyperref}
+\let\mathematicalsup\sup
+\usepackage{SCITEPRESS}
+% SCITEPRESS reuses \sup for author-affiliation superscripts. Restore the
+% mathematical operator in this anonymous mathematical manuscript.
+\let\authorsup\sup
+\let\sup\mathematicalsup
+\hypersetup{
+ pdftitle={When Can Finite-Context QELMs Replace Quantum Reservoir Memory?},
+ pdfauthor={},pdfsubject={Anonymous editorial draft in ICAART 2027 format},
+ pdfkeywords={Quantum Reservoir Computing, Quantum Extreme Learning Machines, Temporal Learning}
+}
+\graphicspath{{figures/}}
+\newcommand{\QRC}{\mathrm{QRC}}
+\newcommand{\QELM}{\mathrm{QELM}}
+\newcommand{\nrmse}{\mathrm{NRMSE}}
+\newcommand{\risk}{\mathcal R}
+\newcommand{\hist}{H_d}
+\newcommand{\doi}[1]{\href{https://doi.org/#1}{doi:\nolinkurl{#1}}}
+
+% Keep full-width figures on separate pages without reducing their display size.
+\setcounter{dbltopnumber}{1}
+
+\begin{document}
+\title{When Can Finite-Context QELMs Replace Quantum Reservoir Memory?}
+% No author, affiliation, email, ORCID, date, or acknowledgements in review PDF.
+\author{}
+\keywords{Quantum Reservoir Computing, Quantum Extreme Learning Machines, Temporal Learning, Fading Memory, Finite Context.}
+\abstract{\input{sections/abstract}}
+\onecolumn\maketitle\normalsize\setcounter{footnote}{0}\vfill
+
+\input{sections/introduction}
+\input{sections/models}
+\input{sections/background}
+\input{sections/dynamics}
+\input{sections/evaluation}
+\FloatBarrier
+\input{sections/conclusion}
+\bibliographystyle{apalike}
+{\small\microtypesetup{expansion=false}\bibliography{references}}
+% The publisher requires an unnumbered appendix after the references,
+% continuing on the same page, within the one submitted paper.
+\input{sections/appendix}
+\input{sections/methodology}
+\end{document}

@@ -321,6 +321,7 @@ AUTHORITATIVE_EXTENSION_FILES: dict[str, str] = {
 
 DOCUMENTATION_FILES: dict[str, str] = {
     "README.md": "repository_reproduction_guide",
+    "REPRODUCIBILITY.md": "claim_to_artifact_reproduction_and_interpretation_guide",
     "PRA_REVISION_REPORT.md": "referee_response_and_claim_boundary",
     "CANONICAL_EMULATION_LITERATURE_POSITIONING.md": (
         "post_confirmatory_literature_positioning"
@@ -343,7 +344,9 @@ REQUIRED_PAPER_SOURCES = (
     "paper/canonical_emulation/sections/abstract.tex",
     "paper/canonical_emulation/sections/introduction.tex",
     "paper/canonical_emulation/sections/related-work.tex",
+    "paper/canonical_emulation/sections/models.tex",
     "paper/canonical_emulation/sections/background.tex",
+    "paper/canonical_emulation/sections/dynamics.tex",
     "paper/canonical_emulation/sections/evaluation.tex",
     "paper/canonical_emulation/sections/conclusion.tex",
     "paper/canonical_emulation/sections/methodology.tex",
@@ -351,6 +354,47 @@ REQUIRED_PAPER_SOURCES = (
 )
 
 REQUIRED_PAPER_ARTIFACTS: dict[str, str] = {}
+
+# Separate prospective cohort: never merge these roots with the primary gates.
+LONG_CONTEXT_N5_FILES = {
+    "LONG_CONTEXT_N5_PROTOCOL.md": "frozen_prospective_long_n5_protocol",
+    "configs/canonical_emulation_long_n5.yaml": "frozen_prospective_long_n5_config",
+    "configs/canonical_emulation_long_n5_freeze.json": "frozen_prospective_long_n5_identity",
+    "paper/figures/information_interface/LONG_CONTEXT_CHART_CONTRACT.md": "prospective_long_n5_display_contract",
+    **{f"scripts/{name}.py": "long_n5_numerical_audit_code" for name in (
+        "run_long_context_n5", "analyze_long_context_n5",
+        "long_context_n5_common", "long_context_qelm_backend",
+    )},
+    **{f"results_n5_long_context_v1/run/{name}": "long_n5_complete_run_evidence" for name in (
+        "canonical_manifest.json", "canonical_summary.json", "long_context_run_audit.json",
+        "stream_metrics.csv", "suffix_decomposition.csv", "system_diagnostics.csv",
+    )},
+    **{f"results_n5_long_context_v1/analysis/{name}": "long_n5_complete_analysis_evidence" for name in (
+        "long_n5_analysis_manifest.json", "long_n5_summary.json", "long_n5_cells.csv",
+        "long_n5_history_root_contrasts.csv", "long_n5_classical_root_comparisons.csv",
+        "long_n5_stream_plot_source.csv",
+    )},
+    **{f"paper/figures/long_context_n5/{name}": "long_n5_separate_followup_figure" for name in (
+        "fig04_long_context_n5.pdf", "fig04_long_context_n5.png",
+        "fig04_long_context_n5_source.csv", "figure_sha256.json",
+    )},
+}
+
+# Design alternatives are handed off separately; none is an additional result
+# or a silently selected replacement for the three authoritative figures.
+FIGURE1_DESIGN_FILES = {
+    f"paper/figures/figure1_variants/{name}.{extension}": "figure1_design_candidate"
+    for name in (
+        "variant_a_architectures", "variant_b_same_window", "variant_c_relevant_memory"
+    )
+    for extension in ("tex", "pdf", "png")
+}
+FIGURE1_DESIGN_FILES.update({
+    "pra_extension/code/figure1_timeseries.py": "figure1_illustrative_input_provenance",
+    "paper/figures/figure1_variants/DESIGN_NOTES.md": "figure1_design_contract",
+    "paper/figures/figure1_variants/variant_a_notes.md": "figure1_candidate_design_notes",
+    "paper/figures/figure1_variants/design_manifest.json": "figure1_design_hash_ledger",
+})
 
 DARK_SECTOR_FILES: dict[str, str] = {
     "configs/dark_sector_validation.json": "frozen_dark_sector_configuration",
@@ -418,6 +462,9 @@ COMPACT_PRA_FIGURE_FILES: dict[str, str] = {
     ): "information_interface_figure_png",
     (
         "paper/figures/information_interface/fig01_information_interface_source.json"
+    ): "historical_figure1_input_audit_snapshot_frozen_by_n5",
+    (
+        "paper/figures/information_interface/fig01_information_interface_render_source.json"
     ): "information_interface_figure_source",
     (
         "paper/figures/information_interface/fig02_information_frontier.pdf"
@@ -569,10 +616,16 @@ EXPLORATORY_ANALYSES = (
 # (JSON file, object key containing recorded hashes, recorded key, source file)
 SOURCE_HASH_LINKS = (
     (
-        "paper/figures/information_interface/fig01_information_interface_source.json",
+        "paper/figures/information_interface/fig01_information_interface_render_source.json",
         "",
         "tikz_source_sha256",
         "paper/figures/information_interface/fig01_information_interface.tex",
+    ),
+    (
+        "paper/figures/information_interface/fig01_information_interface_render_source.json",
+        "historical_input_audit",
+        "sha256",
+        "paper/figures/information_interface/fig01_information_interface_source.json",
     ),
     *tuple(
         (
@@ -623,7 +676,7 @@ SOURCE_HASH_LINKS = (
         for name in (
             "fig01_information_interface.pdf",
             "fig01_information_interface.png",
-            "fig01_information_interface_source.json",
+            "fig01_information_interface_render_source.json",
             "fig02_information_frontier.pdf",
             "fig02_information_frontier.png",
             "fig02_information_frontier_source.csv",
@@ -1287,6 +1340,7 @@ def build_manifest(
     roles.update(THRESHOLD_SENSITIVITY_FILES)
     roles.update(HISTORICAL_REGRESSION_FILES)
     roles.update(REQUIRED_PAPER_ARTIFACTS)
+    roles.update(FIGURE1_DESIGN_FILES)
     roles.update(_collect_python_files(root))
     roles.update(_collect_paper_sources(root))
     roles.update(_collect_and_verify_figures(root, figures))
@@ -1302,6 +1356,28 @@ def build_manifest(
             load_strict_json_object(path)
         artifacts[relative] = _artifact_entry(path, root, role)
 
+    # The legacy seed scanner interprets top-level artifacts as PRIOR evidence.
+    # The current follow-up must not become its own prior study. Keep its complete
+    # inventory in a separately identified, equally content-addressed cohort.
+    # Future studies must explicitly include this completed cohort in their
+    # prior-seed registry; do not assume the legacy scanner discovers this layer.
+    followup_artifacts: dict[str, dict[str, Any]] = {}
+    for relative, role in sorted(LONG_CONTEXT_N5_FILES.items()):
+        path = root / relative
+        if path.suffix.lower() == ".json":
+            load_strict_json_object(path)
+        followup_artifacts[relative] = _artifact_entry(path, root, role)
+    followup_hashes = {
+        relative: entry["sha256"] for relative, entry in followup_artifacts.items()
+    }
+    followup = {
+        "status": "FROZEN_PROSPECTIVE_LONG_N5",
+        "prior_seed_scope": "Prior-source inventory is bound by this cohort's freeze; future studies must explicitly include completed follow-up cohorts.",
+        "artifacts": followup_artifacts,
+        "artifact_count": len(followup_artifacts),
+        "artifact_set_sha256": sha256_json(followup_hashes),
+    }
+
     source_hash_checks = _verify_embedded_source_hashes(root)
     artifact_hashes = {
         relative: entry["sha256"] for relative, entry in artifacts.items()
@@ -1313,6 +1389,7 @@ def build_manifest(
             "canonical": "FROZEN_CONFIRMATORY",
             "dense_secondary": "FROZEN_PROSPECTIVE_SECONDARY",
             "dense_n4": "FROZEN_PROSPECTIVE_N4",
+            "long_context_n5": "FROZEN_PROSPECTIVE_LONG_N5",
             "dark_sector": "FROZEN_VALIDATION",
             "pra_extension": "EXPLORATORY_POST_CONFIRMATORY",
         },
@@ -1332,6 +1409,8 @@ def build_manifest(
         "artifacts": artifacts,
         "artifact_count": len(artifacts),
         "artifact_set_sha256": sha256_json(artifact_hashes),
+        "prospective_followups": {"long_context_n5": followup},
+        "total_artifact_count": len(artifacts) + len(followup_artifacts),
     }
     manifest["manifest_identity_sha256"] = sha256_json(manifest)
     return manifest
@@ -1386,6 +1465,8 @@ def main(argv: Iterable[str] | None = None) -> int:
             paper_pdf=args.paper_pdf,
         )
         artifact_paths = {(root / path).resolve() for path in manifest["artifacts"]}
+        for followup in manifest["prospective_followups"].values():
+            artifact_paths.update((root / path).resolve() for path in followup["artifacts"])
         if output in artifact_paths:
             raise ManifestError("manifest output cannot also be a hashed input artifact")
         write_manifest(manifest, output)
@@ -1397,7 +1478,7 @@ def main(argv: Iterable[str] | None = None) -> int:
         output_display = str(output)
     print(
         f"wrote {output_display} with "
-        f"{manifest['artifact_count']} artifacts; "
+        f"{manifest['total_artifact_count']} artifacts across evidence layers; "
         f"identity={manifest['manifest_identity_sha256']}"
     )
     return 0

@@ -1,0 +1,29 @@
+\input{style.tex}
+\begin{document}
+\begin{candidate}{c}
+% Each group is DEFINED by equality of all declared outputs under every
+% allowed continuation, including the empty one. Finite examples do not prove it.
+\node at (1.97,4.98) {input-created states};
+\node at (6.51,4.98) {future-output behavior};
+\draw[blue,fill=blue!5,rounded corners=12pt] (.48,3.04) rectangle (3.55,4.40);
+\node[state,minimum size=.61cm] (a1) at (1.11,3.89) {$\rho_a$};
+\node[state,draw=red,fill=red!7,minimum size=.61cm] (a2) at (2.12,3.89) {$\sigma_a$};
+\fill[ink] (2.99,3.89) circle (.026);
+\fill[ink] (3.14,3.89) circle (.026);
+\fill[ink] (3.29,3.89) circle (.026);
+\node at (1.97,3.26) {one group};
+\draw[flow] (3.57,3.73)--(4.68,3.73);
+\node[observable,minimum width=3.16cm,minimum height=1.17cm,align=center] at (6.39,3.73) {one behavior A\\for the whole group};
+\draw[green,fill=green!5,rounded corners=12pt] (.48,.90) rectangle (3.55,2.26);
+\node[state,minimum size=.61cm] (b1) at (1.11,1.75) {$\rho_b$};
+\node[state,draw=red,fill=red!7,minimum size=.61cm] (b2) at (2.12,1.75) {$\sigma_b$};
+\fill[ink] (2.99,1.75) circle (.026);
+\fill[ink] (3.14,1.75) circle (.026);
+\fill[ink] (3.29,1.75) circle (.026);
+\node at (1.97,1.12) {another group};
+\draw[flow] (3.57,1.59)--(4.68,1.59);
+\node[observable,minimum width=3.16cm,minimum height=1.17cm,align=center] at (6.39,1.59) {another behavior B\\for the whole group};
+\node[text=purple] at (6.38,2.66) {every allowed continuation};
+\node[text=green] at (4.28,.35) {within each group, state differences may persist};
+\end{candidate}
+\end{document}

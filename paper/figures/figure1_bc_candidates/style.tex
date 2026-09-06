@@ -1,0 +1,39 @@
+\documentclass[tikz,border=0pt]{standalone}
+\usepackage[T1]{fontenc}
+\usepackage{helvet}
+\usepackage{amsmath,amssymb}
+\usepackage{fix-cm}
+\renewcommand{\familydefault}{\sfdefault}
+\usetikzlibrary{arrows.meta,calc,decorations.pathreplacing,patterns,positioning}
+\pdfinfoomitdate=1
+\pdftrailerid{}
+\definecolor{ink}{HTML}{000000}
+\definecolor{blue}{HTML}{3B86FF}
+\definecolor{green}{HTML}{00A14B}
+\definecolor{red}{HTML}{FC4D30}
+\definecolor{purple}{HTML}{A93BFF}
+\definecolor{gold}{HTML}{FFC943}
+\definecolor{palegold}{HTML}{FFDD92}
+\definecolor{muted}{HTML}{747474}
+\definecolor{neutral}{HTML}{F1F2F2}
+\definecolor{rule}{HTML}{D9D9D9}
+\newenvironment{candidate}[1]{%
+ \begin{tikzpicture}[x=1cm,y=1cm,line width=.65pt,text=ink,
+  font=\fontsize{10}{11.7}\selectfont,
+  every node/.style={inner sep=1.4pt},
+  flow/.style={-{Stealth[length=1.6mm,width=1.1mm]},line width=.75pt},
+  softflow/.style={-{Stealth[length=1.45mm,width=1mm]},line width=.6pt},
+  state/.style={circle,draw=blue,fill=blue!8,minimum size=.60cm,line width=.8pt},
+  gate/.style={draw=ink,fill=neutral,rounded corners=1.8pt,line width=.65pt},
+  observable/.style={draw=ink,fill=gold,rounded corners=1.2pt,line width=.65pt},
+  note/.style={text=muted,font=\fontsize{10}{11.7}\selectfont}]
+  \useasboundingbox (0,0) rectangle (8.60,5.60);
+  \fill[white] (0,0) rectangle (8.60,5.60);
+  \node[anchor=west,font=\bfseries\fontsize{12}{13}\selectfont] at (.08,5.37) {#1};
+}{\end{tikzpicture}}
+\newcommand{\meter}[3]{%
+ \begin{scope}[shift={(#1,#2)}]
+  \draw[ink,fill=#3,rounded corners=1pt] (-.24,-.22) rectangle (.24,.22);
+  \draw[ink,line width=.5pt] (-.16,-.075) arc[start angle=155,end angle=25,radius=.18];
+  \draw[ink,line width=.6pt,-{Stealth[length=1.0mm]}] (0,-.075)--(.105,.12);
+ \end{scope}}

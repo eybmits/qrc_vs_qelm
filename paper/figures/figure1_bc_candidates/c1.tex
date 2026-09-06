@@ -1,0 +1,45 @@
+\input{style.tex}
+\begin{document}
+\begin{candidate}{c}
+% Two alternative input-created pairs; each arrow applies the same map
+% separately to the two states. The lower universal case is stipulated.
+\node[anchor=west] at (.48,5.06) {different states};
+\node at (5.75,5.06) {declared output};
+\node[text=purple] at (3.45,4.64) {some continuation};
+\draw[flow,purple] (3.45,4.40)--(3.45,4.18);
+\node[state] (r1) at (.92,3.92) {$\rho_1$};
+\node[state,draw=red,fill=red!7] (s1) at (.92,3.22) {$\sigma_1$};
+\node[gate,minimum width=1.90cm,minimum height=1.18cm] (g1) at (3.45,3.57) {};
+\node[align=center] at (3.45,3.57) {same\\updates};
+\draw[flow] (r1.east)--(2.49,3.92);
+\draw[flow] (s1.east)--(2.49,3.22);
+\draw[flow] (4.40,3.92)--(5.19,3.92);
+\draw[flow] (4.40,3.22)--(5.19,3.22);
+\meter{5.45}{3.92}{gold}
+\meter{5.45}{3.22}{gold}
+\draw[flow] (5.71,3.92)--(6.38,3.92);
+\draw[flow] (5.71,3.22)--(6.38,3.22);
+\fill[blue] (6.50,3.92) circle (.075);
+\draw[red,fill=white,line width=1pt] (6.50,3.22) circle (.075);
+\node[align=center] at (7.50,3.57) {can\\differ};
+\draw[rule] (.48,2.72)--(8.12,2.72);
+\node[text=purple] at (3.45,2.39) {every continuation};
+\draw[flow,purple] (3.45,2.16)--(3.45,1.94);
+\node[state] (r2) at (.92,1.68) {$\rho_2$};
+\node[state,draw=red,fill=red!7] (s2) at (.92,.98) {$\sigma_2$};
+\node[gate,minimum width=1.90cm,minimum height=1.18cm] (g2) at (3.45,1.33) {};
+\node[align=center] at (3.45,1.33) {same\\updates};
+\draw[flow] (r2.east)--(2.49,1.68);
+\draw[flow] (s2.east)--(2.49,.98);
+\draw[flow] (4.40,1.68)--(5.19,1.68);
+\draw[flow] (4.40,.98)--(5.19,.98);
+\meter{5.45}{1.68}{gold}
+\meter{5.45}{.98}{gold}
+\draw[flow] (5.71,1.68)--(6.38,1.38);
+\draw[flow] (5.71,.98)--(6.38,1.28);
+\fill[blue] (6.50,1.33) circle (.075);
+\draw[red,line width=1pt] (6.50,1.33) circle (.085);
+\node[align=center] at (7.50,1.33) {always\\equal};
+\node[text=green] at (4.28,.35) {the lower state difference may persist};
+\end{candidate}
+\end{document}

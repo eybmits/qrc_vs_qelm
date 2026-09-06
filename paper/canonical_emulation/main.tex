@@ -15,20 +15,23 @@
   urlcolor=linkblue
 ]{hyperref}
 \hypersetup{
-  pdftitle={When Can Reset-Window QELMs Emulate the Input--Output Behavior of Quantum Reservoirs?},
+  pdftitle={When Can Finite-Context QELMs Replace Quantum Reservoir Memory?},
   pdfauthor={Anonymous Authors}
 }
 
-\graphicspath{{../figures/information_interface/}{../figures/compact_pra/}{../figures/canonical_emulation/}{../../pra_extension/figures_pra_final_v6/}}
+\graphicspath{{../figures/information_interface/}{../figures/long_context_n5/}{../figures/compact_pra/}{../figures/canonical_emulation/}{../../pra_extension/figures_pra_final_v6/}}
 \newcommand{\QRC}{\mathrm{QRC}}
 \newcommand{\QELM}{\mathrm{QELM}}
 \newcommand{\nrmse}{\mathrm{NRMSE}}
 \newcommand{\risk}{\mathcal R}
 \newcommand{\hist}{H_d}
 
+% Keep full-width figures on separate pages without reducing their display size.
+\setcounter{dbltopnumber}{1}
+
 \begin{document}
 
-\title{When Can Reset-Window QELMs Emulate the Input--Output Behavior of Quantum Reservoirs?}
+\title{When Can Finite-Context QELMs Replace Quantum Reservoir Memory?}
 \author{Anonymous Authors}
 \noaffiliation
 \date{1 September 2026}
@@ -40,7 +43,9 @@
 \maketitle
 
 \input{sections/introduction}
+\input{sections/models}
 \input{sections/background}
+\input{sections/dynamics}
 \input{sections/evaluation}
 \FloatBarrier
 \input{sections/conclusion}
@@ -48,5 +53,8 @@
 \input{sections/methodology}
 
 \bibliography{references}
+
+\noindent Code, protocols, and reproducibility details:
+\href{https://github.com/eybmits/qrc_vs_qelm}{companion repository}.
 
 \end{document}

@@ -1,5 +1,5 @@
 \appendix
-\section{Proofs and calibration details}
+\section{Mathematical proofs and constructions}
 \label{app:proofs}
 
 \subsection{Window laws and emulation theorem}
@@ -225,7 +225,9 @@ expectation of $P$.  The addressable pulse loads the singlet because
 \end{equation}
 This yields $\delta p_-=\tfrac12\sin^2(\theta/2)$, while
 Eq.~\eqref{eq:protected-singlet} makes the population accessible through the
-declared Pauli correlations.  For the two histories in the main text,
+declared Pauli correlations.  At the one-radian pulse used here, the output
+gap is $0.1149244235$, forcing a worst-case absolute error of at least
+$0.0574622$ for every finite window.  For the two histories in the main text,
 Eq.~\eqref{eq:balanced-pair} gives the same minimum balanced-pair MSE at
 every finite $d$:
 \begin{equation}
@@ -253,6 +255,9 @@ $p_s$ be one suffix prediction.  The realized squared error separates exactly:
  \end{aligned}
  \label{eq:panel-decomposition}
 \end{equation}
+The second term is residual emulator error, not pure feature-approximation
+error: it can also reflect finite-data estimation, ridge regularization,
+and sampling variability of the suffix mean.
 The cross term vanishes within every suffix group.  This is a
 distribution-dependent MSE identity, not the worst-case uniform law in
 Eqs.~\eqref{eq:window-law} and \eqref{eq:visible-memory-theorem}.  With
@@ -262,3 +267,4 @@ population conditional variance.  The unbiased factor is $4/3$ for the
 registered $n_{\rm pre}=4$.  Applying this correction changes no cell
 originally classified as emulated or representation limited, and leaves the
 reported window and feature effects unchanged.
+This history correction does not isolate feature approximation in the residual.

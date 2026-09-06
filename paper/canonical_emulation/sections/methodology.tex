@@ -98,9 +98,12 @@ replicates---are the independent statistical units.  Confidence intervals use
 The registered decision order first excludes target variances below $10^{-8}$.
 For the remaining cells it asks whether the sampled history floor exceeds the
 tolerance; whether the total QELM error reaches the tolerance; and, if not,
-whether replay shows that the suffix map itself is representable.  This gives
+whether the replay control reaches the tolerance.  This gives
 history-limited, emulated, representation-limited, and unresolved outcomes
 without treating feature count as a remedy for missing inputs.
+Here, representation limited is an operational diagnosis: history passes,
+the fitted QELM fails, and replay succeeds. It does not isolate the best
+approximation attainable with the QELM features.
 
 Linear delay, quadratic delay, dimension-matched random-tanh, intercept-only,
 and reset--replay controls receive the same windows and data splits.  Replay
@@ -127,18 +130,29 @@ $B$; test targets enter neither decision.  Every replicate repeats the full
 fit-and-selection procedure before evaluation on independently sampled test
 features.  Target QRC outputs remain exact expectation values.
 
+\subsection{Larger targets and longer context}
+
+A separate prospective study uses 12 new roots, five-qubit local-loss targets
+with 45 outputs, $\gamma_T\in\{1,4\}$, and $d\in\{2,4,6,8,10\}$.
+A ten-qubit reset-QELM supplies one qubit per input and remains fixed across
+these windows; nested checkpoints give $B\in\{30,60,120\}$.
+Splits, burn-in, controls, and fitting rules are unchanged; the diagnostic
+uses 32 length-ten suffixes with four old prefixes each. Two duplicate
+development runs and dense-backend equivalence tests precede the frozen
+execution. All cells are retained. Paired history contrasts use 10,000
+whole-root bootstrap draws; the QELM--quadratic comparison fixes $B=120$
+before test evaluation. The larger register is an additional resource,
+so cross-cohort differences cannot be attributed to window length alone.
+
 \subsection{Scope and availability}
 
 The confirmatory matrix is restricted to two- and three-qubit local-loss QRCs,
 a 33-symbol input alphabet, exact expectation values, and one six-qubit
 reset-QELM emulator.  The four-qubit phase map and finite-shot study are
-separate 12-root extensions.  The theorems concern fixed finite vectors of
+separate 12-root extensions, as is the five-qubit long-context study.
+The theorems concern fixed finite vectors of
 observable expectations under the stated compactness, channel-continuity, and
 free-suffix-concatenation assumptions.  They neither
 make the tested feature map universal nor provide a sample-efficient training
 algorithm.  All results are simulations; they exclude hardware, gate,
 state-preparation-and-measurement, drift, and measurement-backaction errors.
-
-Source code, frozen configurations, raw result tables, figure sources, and the
-content-addressed release manifest are available at
-\href{https://github.com/eybmits/qrc_vs_qelm}{github.com/eybmits/qrc\_vs\_qelm}.

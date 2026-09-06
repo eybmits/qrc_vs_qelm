@@ -1,0 +1,434 @@
+{
+  "schema": "icaart2027_submission_qa_v2",
+  "pdf": "submission.pdf",
+  "pdf_sha256": "61c46a1f57a3b6a8c8d43e9aba8e13ae6044c348b15b1c2e6dc0d76fe78404c0",
+  "extraction_backend": "pypdf + Poppler",
+  "passed": false,
+  "format_passed": true,
+  "policy_passed": false,
+  "submission_ready": false,
+  "submission_blockers": [
+    "required_ai_disclosure_and_tool_citations_missing_or_incomplete",
+    "human_scientific_author_and_policy_approval_pending"
+  ],
+  "checks": {
+    "page_budget": {
+      "passed": true,
+      "pages": 12,
+      "maximum": 12
+    },
+    "a4_page_size": {
+      "passed": true,
+      "page_sizes_points": [
+        [
+          595.276,
+          841.89
+        ],
+        [
+          595.276,
+          841.89
+        ],
+        [
+          595.276,
+          841.89
+        ],
+        [
+          595.276,
+          841.89
+        ],
+        [
+          595.276,
+          841.89
+        ],
+        [
+          595.276,
+          841.89
+        ],
+        [
+          595.276,
+          841.89
+        ],
+        [
+          595.276,
+          841.89
+        ],
+        [
+          595.276,
+          841.89
+        ],
+        [
+          595.276,
+          841.89
+        ],
+        [
+          595.276,
+          841.89
+        ],
+        [
+          595.276,
+          841.89
+        ]
+      ]
+    },
+    "character_budget": {
+      "passed": true,
+      "characters": 43574,
+      "minimum": 10000,
+      "maximum": 50000,
+      "definition": "Unicode, whitespace excluded"
+    },
+    "anonymous_pdf": {
+      "passed": true,
+      "identifying_hits": [],
+      "author_metadata": ""
+    },
+    "no_embedded_attachments": {
+      "passed": true,
+      "count": 0
+    },
+    "no_placeholder_text": {
+      "passed": true,
+      "hits": []
+    },
+    "no_physical_page_clipping": {
+      "passed": true,
+      "hits": []
+    },
+    "abstract_length": {
+      "passed": true,
+      "words": 172,
+      "minimum": 70,
+      "maximum": 200
+    },
+    "resolved_latex_references": {
+      "passed": true,
+      "errors": []
+    },
+    "embedded_fonts": {
+      "passed": true,
+      "fonts": [
+        {
+          "name": "VKLUJD+NimbusRomNo9L-Medi",
+          "embedded": true,
+          "subset": true,
+          "unicode": true
+        },
+        {
+          "name": "VPCBLT+NimbusRomNo9L-Regu",
+          "embedded": true,
+          "subset": true,
+          "unicode": true
+        },
+        {
+          "name": "GKHHBZ+NimbusRomNo9L-ReguItal",
+          "embedded": true,
+          "subset": true,
+          "unicode": true
+        },
+        {
+          "name": "UHIXIU+CMMI10",
+          "embedded": true,
+          "subset": true,
+          "unicode": true
+        },
+        {
+          "name": "KXHGEG+StandardSymL",
+          "embedded": true,
+          "subset": true,
+          "unicode": true
+        },
+        {
+          "name": "QEPAFQ+NimbusSanL-Bold",
+          "embedded": true,
+          "subset": true,
+          "unicode": true
+        },
+        {
+          "name": "TRQZHK+NimbusSanL-Regu",
+          "embedded": true,
+          "subset": true,
+          "unicode": true
+        },
+        {
+          "name": "UHIXIU+CMMI10",
+          "embedded": true,
+          "subset": true,
+          "unicode": true
+        },
+        {
+          "name": "MUFMYZ+CMMI7",
+          "embedded": true,
+          "subset": true,
+          "unicode": true
+        },
+        {
+          "name": "PXBGHL+CMSY7",
+          "embedded": true,
+          "subset": true,
+          "unicode": true
+        },
+        {
+          "name": "EJASTL+CMR7",
+          "embedded": true,
+          "subset": true,
+          "unicode": true
+        },
+        {
+          "name": "MYMPAC+CMR10",
+          "embedded": true,
+          "subset": true,
+          "unicode": true
+        },
+        {
+          "name": "HWAJKK+CMMI5",
+          "embedded": true,
+          "subset": true,
+          "unicode": true
+        },
+        {
+          "name": "RFXXVX+CMSY10",
+          "embedded": true,
+          "subset": true,
+          "unicode": true
+        },
+        {
+          "name": "KFAPYO+CMEX10",
+          "embedded": true,
+          "subset": true,
+          "unicode": true
+        },
+        {
+          "name": "MYMPAC+CMR10",
+          "embedded": true,
+          "subset": true,
+          "unicode": true
+        },
+        {
+          "name": "RFXXVX+CMSY10",
+          "embedded": true,
+          "subset": true,
+          "unicode": true
+        },
+        {
+          "name": "LPHAOW+URWChanceryL-MediItal",
+          "embedded": true,
+          "subset": true,
+          "unicode": true
+        },
+        {
+          "name": "BDURGT+HelveticaNeue",
+          "embedded": true,
+          "subset": true,
+          "unicode": true
+        },
+        {
+          "name": "BHZUIX+HelveticaNeue-Bold",
+          "embedded": true,
+          "subset": true,
+          "unicode": true
+        },
+        {
+          "name": "BTIKWL+Cmmi10",
+          "embedded": true,
+          "subset": true,
+          "unicode": true
+        },
+        {
+          "name": "GDVQXM+Cmr10",
+          "embedded": true,
+          "subset": true,
+          "unicode": true
+        },
+        {
+          "name": "GGBSME+HelveticaNeue",
+          "embedded": true,
+          "subset": true,
+          "unicode": true
+        },
+        {
+          "name": "EPACPX+HelveticaNeue-Bold",
+          "embedded": true,
+          "subset": true,
+          "unicode": true
+        },
+        {
+          "name": "CPXVLE+HelveticaNeue-Bold",
+          "embedded": true,
+          "subset": true,
+          "unicode": true
+        },
+        {
+          "name": "BOSEUO+Cmmi10",
+          "embedded": true,
+          "subset": true,
+          "unicode": true
+        },
+        {
+          "name": "CAFOEF+Cmr10",
+          "embedded": true,
+          "subset": true,
+          "unicode": true
+        },
+        {
+          "name": "KFAPYO+CMEX10",
+          "embedded": true,
+          "subset": true,
+          "unicode": true
+        },
+        {
+          "name": "RAZVEJ+MSBM10",
+          "embedded": true,
+          "subset": true,
+          "unicode": true
+        },
+        {
+          "name": "PKMWFM+MSBM7",
+          "embedded": true,
+          "subset": true,
+          "unicode": true
+        }
+      ]
+    },
+    "official_template_unchanged": {
+      "passed": true,
+      "files": [
+        {
+          "path": "SCITEPRESS.sty",
+          "matches": true,
+          "sha256": "d4a8482e5b2772a279b881012bedd813023f3c614287e02d5c648497ade3bf14"
+        },
+        {
+          "path": "apalike.bst",
+          "matches": true,
+          "sha256": "6977bea0847e4b850fd5bdc948beeaa50cd4d0c2a275e74a5fd68309a9628191"
+        },
+        {
+          "path": "apalike.sty",
+          "matches": true,
+          "sha256": "183bdccc3608e9db948dbd1cdffec3e2a476650dad223c7a3294325371fc0339"
+        },
+        {
+          "path": "article.cls",
+          "matches": true,
+          "sha256": "23e48b9a27539b6589503b6b5c5ff1451b58edfb245a0fa4c5847bb94392d32c"
+        }
+      ]
+    }
+  },
+  "policy_checks": {
+    "required_ai_disclosure": {
+      "passed": false,
+      "required_for_this_project": true,
+      "components": {
+        "named_tool_in_pdf": false,
+        "disclosure_in_pdf": false,
+        "affected_section_tool_citations": false,
+        "conceptual_figure_credit_and_prompt": false
+      },
+      "known_use": "Research, text, code and conceptual-figure preparation included tool assistance.",
+      "policy_checked_on": "2026-09-06",
+      "sources": [
+        "https://icaart.scitevents.org/Guidelines.aspx?y=2027",
+        "https://icaart.scitevents.org/AiTools.aspx?y=2027"
+      ],
+      "note": "Missing disclosure is a submission blocker, not a formatting defect. Human review must check accuracy, scope, placement and figure-credit adequacy."
+    }
+  },
+  "geometry_diagnostics": {
+    "physical_page_clipping": [],
+    "template_margin_excursions": [
+      {
+        "page": 4,
+        "box": [
+          334.104,
+          713.134467,
+          339.838175,
+          725.925408
+        ]
+      },
+      {
+        "page": 4,
+        "box": [
+          352.494645,
+          709.631985,
+          362.096599,
+          726.917096
+        ]
+      },
+      {
+        "page": 4,
+        "box": [
+          368.319,
+          709.631985,
+          381.77648,
+          726.917096
+        ]
+      },
+      {
+        "page": 4,
+        "box": [
+          388.004,
+          709.631985,
+          390.77161,
+          726.917096
+        ]
+      },
+      {
+        "page": 4,
+        "box": [
+          440.592,
+          717.433357,
+          445.5733,
+          726.339922
+        ]
+      },
+      {
+        "page": 10,
+        "box": [
+          183.156,
+          713.401985,
+          190.90491,
+          730.687096
+        ]
+      },
+      {
+        "page": 11,
+        "box": [
+          308.995,
+          712.627985,
+          316.733948,
+          729.913096
+        ]
+      },
+      {
+        "page": 11,
+        "box": [
+          317.839796,
+          712.627985,
+          320.607407,
+          729.913096
+        ]
+      },
+      {
+        "page": 11,
+        "box": [
+          321.713255,
+          712.627985,
+          324.480865,
+          729.913096
+        ]
+      },
+      {
+        "page": 11,
+        "box": [
+          325.576751,
+          712.627985,
+          328.344362,
+          729.913096
+        ]
+      }
+    ],
+    "note": "Glyph-box diagnostics only; inspect rendered pages for overlap and layout."
+  },
+  "scope": "Separate format/anonymity and necessary-disclosure checks. An editorial draft may pass formatting while failing venue policy. Visual review, human approval and portal submission remain separate."
+}

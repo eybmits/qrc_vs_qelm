@@ -1,0 +1,742 @@
+{
+  "fresh_results_previously_opened": false,
+  "frozen_at_utc": "2026-09-06T14:23:13.344000+00:00",
+  "material": {
+    "files": {
+      "LONG_CONTEXT_N5_PROTOCOL.md": "b413438a789cb2fba003c965b2a065f8ccaf77451a465901764c5fba8f05517e",
+      "configs/canonical_emulation_long_n5.yaml": "e3f17413f6391a02abacb115b4cc063f19f914dc262c20e3a9d6b4500403d62e",
+      "pra_extension/tests/test_long_context_n5.py": "4de8e5dafff4a7fcb4d66e521dda4f329b7d964cecc1be88fc61359448d9e4b5",
+      "pra_extension/tests/test_long_context_qelm_backend.py": "9a30086dcda86f5573992f572262abb473e750545bb91a5c8367d4295515afa1",
+      "pyproject.toml": "3253b09077b53cb50a8812824451dd89da11b8880a960b67fe9825a862abea71",
+      "scripts/analyze_long_context_n5.py": "c5fc5db7468046c204236576287143f4e5d7fb5422f2dddbff2fba5e7e920e49",
+      "scripts/dense_phase_n4_common.py": "494005216b921708eeaf4a323c4817673d08d36632ed7fab8e729fd600995584",
+      "scripts/long_context_n5_common.py": "2014747e5dea2a994ebfbbf09906d59f9303222eaf8cf948651943ea2ddf1af9",
+      "scripts/long_context_qelm_backend.py": "9ac7e833f94f5ddde11107f5b3ab8e4b20f78375e461431651ab86da38539008",
+      "scripts/run_long_context_n5.py": "415bd8366eb863fab3f3ea4b339f83faf2e272618b3952c551c3dea58541f3c0",
+      "src/qrc_vs_qelm/__init__.py": "91447944015cec709e8aa7655f7e9d64e1e4508e7023a57fe3746911c0fc6fed",
+      "src/qrc_vs_qelm/canonical_emulation.py": "480af731e2fd9045b73c260b27d2c14ab565338b28c96e0990fe53160a3bfa19",
+      "src/qrc_vs_qelm/canonical_gates.py": "da6f8ce014e1d44e14d1bc7c852b35817a5440116e661875978859828e1e8f88",
+      "src/qrc_vs_qelm/canonical_resources.py": "523e27f7a71c83a3c8b0eb5334a65e54ffba213eee51780ad0a6371adb27a03a",
+      "src/qrc_vs_qelm/canonical_study.py": "ffc7e5e807d00fb578eb7db2933390360a91e8dbf89862658397d120c60fb768",
+      "src/qrc_vs_qelm/checkpointing.py": "da5c7b5833b86f5a8094e959197ea138bc6cb7692a10ef032ded145fca26ae35",
+      "src/qrc_vs_qelm/controls.py": "fe8228b3e91ee29a44f1a243494951f9e85223f50ab72a5cc52ecaaa0575b02d",
+      "src/qrc_vs_qelm/core/__init__.py": "35b59aa2929dfa5d89631f0ee429a8ed85287e2d0d63471be22bfa5f86a04db8",
+      "src/qrc_vs_qelm/core/diagnostics.py": "c03901b126ef01068959b7d5c87832e8a95537aa7beddacbf93f4c1d7cb34640",
+      "src/qrc_vs_qelm/core/dissipators.py": "f1e1ee7dcf59b943ac360e9a296e8565c62a450fda12a60f387b497b3acfecf7",
+      "src/qrc_vs_qelm/core/liouvillian.py": "bfb6eda88c5d9c2bbbedda7bd88e5eef8b39ab0970d9f25f9e0b1a600448c26b",
+      "src/qrc_vs_qelm/core/operators.py": "d0bed61609a3a3a10dc64cf2695c1999dc87afad511d3515eecb53b5cfcbd13b",
+      "src/qrc_vs_qelm/core/readout.py": "9235f8f6c2d8d370d84c5a7f89bf3d33e8c6801de792346594442113ad794db9",
+      "src/qrc_vs_qelm/core/reservoirs.py": "e9e722ffeba65b35a89ec7f04e6dbd6b30f9f556c6b05052557a6c29ab40eb4b",
+      "src/qrc_vs_qelm/core/sparse_evolve.py": "af1778f158ffc6ce6fb95d1e0295008516d54f906ab8adce54d62c17222294eb",
+      "src/qrc_vs_qelm/core/tasks.py": "dd9a41e38f43c94426b6da59118c034474a794328e1bb96092b06ca1305fa31d",
+      "src/qrc_vs_qelm/emulation.py": "ce4a726e4986b1870053b8e27af723974ec563a3a7acfec43a4c9598aad90305",
+      "src/qrc_vs_qelm/gates.py": "8bc4b1d96fc158314700f5d4e701e39fda044fe4f8a78e4c0ca8433bb43a3cf9",
+      "src/qrc_vs_qelm/ipc.py": "472947226764c4d67925b6d8121906203fa77018d5743a69251689a5a8d02035",
+      "src/qrc_vs_qelm/manifests.py": "22064b88af9700f6fd709220226113d2d16e0ecd9a24f63037962fbf15c05c30",
+      "src/qrc_vs_qelm/matching.py": "1a8c2d33a40a6cbb218b785c3347cf7507d1813fd42d20a71036eb158e48b2fb",
+      "src/qrc_vs_qelm/models/__init__.py": "091dcc362349acac4b12e5414baf7fe6db4a1f432a8b15bd68c0d565e605ed1b",
+      "src/qrc_vs_qelm/models/api.py": "abd2434f0a5eb361381e0731a70ff3a3ca47f506976698a834cb3f9b6b3be205",
+      "src/qrc_vs_qelm/models/qelm.py": "5cc70670982bdb180c4a1e9846935ab2fb4c38870147f796734f809524e2dd62",
+      "src/qrc_vs_qelm/pipeline.py": "3173dc3c9ecc43d91e9ffd68a993b36c0e4715406fb4504e26b5db3aee42b6f1",
+      "src/qrc_vs_qelm/provenance.py": "b08001893370b035404d1555b88792702b9d8eeeae98984fe4528424b4668006",
+      "src/qrc_vs_qelm/recurrence_fingerprint.py": "aea999754104926b6ffa6407e9b5e75027c7cef0ee3a20e1b754f8fb30e53bee",
+      "src/qrc_vs_qelm/run_report.py": "f7b19604e6f06a0393f792a42846f158c7680eaaf6e9b69c96f661d165bc178b",
+      "src/qrc_vs_qelm/run_stage1.py": "7781fc453023cc2ce1e28668176b1b776b4f5d656ef7939100ee879340871f5f",
+      "src/qrc_vs_qelm/run_stage2.py": "9a12ccbaa01985d98bb0f7ac8e6b05a5a3a95cbe241184f128f900d28171107e",
+      "src/qrc_vs_qelm/run_stage3.py": "57bfbaa643b49fb9ddd723f3ea22bf4a5384177661c9d2c313e8765470b8f288",
+      "src/qrc_vs_qelm/run_stage_ipc.py": "b81f3190adaf91b73d5f1c58fcc6b93f39fc27b918449cc5a54f0c76d42e476b",
+      "src/qrc_vs_qelm/seeds.py": "499dcef01117709f0d8d05684d1cf3ef0c94b69d694227c8e09cde603a6a48c2",
+      "src/qrc_vs_qelm/shots.py": "657a9ce547b0af6e7575d379b19b357811480620060f1ec3f89b9516241efdd9",
+      "src/qrc_vs_qelm/stats.py": "0b2f13cee78c55bc538dd4aa1af297584d8c526999c8a94fd9e0d65ed8dc11fb",
+      "src/qrc_vs_qelm/task_families.py": "7a9518d6d660b92f147b851f1740deb2ebfbbc11bee86354a7a3d70326508f50",
+      "tests/test_canonical_emulation.py": "2e758325949001e359152c849239939346dbfe048f26923b6abf4ed423332530",
+      "tests/test_canonical_resources.py": "a5b314589622a7c96dbde116a2f208885d06ea14ec8b926e2cda76a0d7d18d41",
+      "tests/test_canonical_study.py": "448d55da3857c1ac4a3f927e74a8f0d9cb2d1e931a3b94cf6c89450235972a19",
+      "tests/test_emulation.py": "510e583fe5b43c7ee3a029768248102d791ded544cc6fe819878a3734839fa0e",
+      "tests/test_qelm.py": "a1317f36e20ba8ac4ec06c8a89fc724f1a5223b4d45b53bf59217fc00ea6b74f"
+    },
+    "identity_sha256": "85e95081d106a191449f6c16b90797dc2cb16575b7388d5c3577e638bf5705c1"
+  },
+  "profile": "long_n5",
+  "schema_version": 1,
+  "seeds": {
+    "passed": true,
+    "prior_seed_registry_sha256": "daa403eb552c3b550dd9205eb7b183a470d8ff4070909bb023532afa472729b5",
+    "prior_seed_source_files": {
+      "checkpoints/ipc_pilot_result.json": "81e68ab1a565bc34da8b1fa4f7d5e61ce5e024826a405f002e737dcbbfba5ab6",
+      "configs/canonical_emulation.yaml": "78e293aed9e14aa9fc38233c0efc29d712445f90648abf2ab8977375c4fc4c38",
+      "configs/canonical_emulation_dense_n4.yaml": "fd3ad10797efdfb0aea69c01303bbfe4f51a7e87df169548dfa336656d80486e",
+      "configs/canonical_emulation_dense_secondary.yaml": "47a7404da97090bfe3290822135d6fa60a40f9bef928b3173d1962299d1099ab",
+      "configs/dark_sector_validation.json": "34571af25c78e42ed4d214789db1974552a79cbdd7ae345e05d9bd6377be6546",
+      "configs/emulation_pilot.yaml": "6a79d627c9c66db28c8efcc99a1015e9dd1315d1c99d6881758ca5717587f5fa",
+      "configs/full.yaml": "3dfda650bb7a859a81db19a4b1662ee1b91eb766154c542dc088ac8e15768285",
+      "configs/smoke.yaml": "4afe68a4638ffaff567c3619aa615f8c7f9d1cdb5854e2d0e15be67bbc730c02",
+      "data/frozen/frozen_v1_config.json": "d5df9a0c1e6cae022fa8fb62ad53d857003818831b152567a5c68b41c8f89823",
+      "data/frozen/recurrence_fingerprint_v1.json": "9098b7d6fdf55381d8179321b2a5fcfd5c3821be1df79163424687beb41cac44",
+      "data/reference/best_vs_best.json": "1925fde60b7be51e5f4965de9adbb048c0569f687d396d8ad11865e25456683c",
+      "data/reference/confirm_stm.json": "6c9a3635a4ab8852bc46697bbf157fa7b318fb3c1117232d3c337f3f4592cdec",
+      "paper/figures/information_interface/fig01_information_interface_source.json": "d5a76f449661e3f4fabf909a6271208f838907f076db1c02652b771665d23965",
+      "pra_extension/config_calibration.yaml": "bcc895e6df1cc43022522d914b3d5c4a0647f2f2d34a1ea30069cfa867461210",
+      "pra_extension/config_confirmatory.yaml": "448e79baaddada6430645f52ac5b26a01e3d5db4823e3182732891333bb0a4ee",
+      "pra_extension/config_feasibility.yaml": "a09b156e7deb418c8a348adea036f2b417ef813d03db86b4a259be6944365b86",
+      "pra_extension/outputs/channel_spectrum_full_exploratory_v1_12roots/channel_spectrum.csv": "053bccf6931b5c667c933aa904881efcebc8c8082f44d8abeae6276726302f50",
+      "pra_extension/outputs/observable_memory_continuous_exploratory_v1_12roots/observable_memory_results.csv": "cc539c5b9666f4d1c84edd1b7e596ddca53d4814fe69b609e946445a95b511b6",
+      "pra_extension/outputs/observable_memory_continuous_exploratory_v1_12roots/observable_memory_summary.json": "7fff3dbbf18ccce599a416c6f044e7b89559676315ca600b9aeef592667711d3",
+      "pra_extension/outputs/observable_memory_full_exploratory_v2_12roots/observable_memory_results.csv": "f0f89e26e75fa033d53de66afd68ce7fd09955bc16f351fca4e128e0868029a5",
+      "pra_extension/outputs/observable_memory_full_exploratory_v3_rigorous_12roots/observable_memory_results.csv": "847ced291e38055f5ed1440b82a7a0697629b62a98c17c66f94324352426a43a",
+      "pra_extension/outputs/observable_memory_full_exploratory_v3_rigorous_12roots/observable_memory_summary.json": "ec912220c4cb02f0dd3f42d3073f8f4b5c4ad49250653a9303c11c10e493b4aa",
+      "pra_extension/outputs/student_architecture_full_exploratory_v1_12roots/student_architecture_results.csv": "c7b52b3d144c234c2b4da52bd72265178cf08bebd811346c71cc7b0cfffc9742",
+      "results_canonical_confirmatory_v1/stream_metrics.csv": "a8427c7d2068198760b82bd05545b79476b9f107ed461f82b6cbfbc16dd45376",
+      "results_canonical_confirmatory_v1/suffix_decomposition.csv": "94ec3e840ac1866e675dbb796aa7b72010600c2408ba7064455c686dac9d88b1",
+      "results_canonical_confirmatory_v1/system_diagnostics.csv": "ce996ff07f2848513d60084444e3e3bc0b053d9ac95b0f4dc32b61024b2371c5",
+      "results_dense_phase_n4_v1/stream_metrics.csv": "8a9f6c49a82a69686de61fe953de679837a375c3e6de3ef6889b582279081468",
+      "results_dense_phase_n4_v1/suffix_decomposition.csv": "6dba07c9f0d53ab94b9de32509ac69408a77c8c7add146b2dbfa49e6239705c0",
+      "results_dense_phase_n4_v1/system_diagnostics.csv": "519cb9b131a608f55bc2a7516d72c4165e2550ebc4e06735ba1ddecdcacc708d",
+      "results_dense_phase_secondary_v1/stream_metrics.csv": "a4cc7bcec76ee23f8942e61696a4e09a457969154d7ff82f5fe2b5d06821c9bc",
+      "results_dense_phase_secondary_v1/suffix_decomposition.csv": "54dd6550d36fe43673d771f7ecb3cee1db17522007a0103f8172d35c9254a682",
+      "results_dense_phase_secondary_v1/system_diagnostics.csv": "b27a30cf463364aaed4771ad16237d9c4c94fa64c0d7008ca87d3daf1d5681a5",
+      "results_recurrence_fingerprint_heldout/fingerprint_predictions_unblinded.csv": "51942d1f67eec7c626785ce591c2a13199e7d72214e27944321ee5c163e2710c"
+    },
+    "seed_count": 105,
+    "seed_map_sha256": "4fcfc5361bf3bf391f5d3062b974e0cb366505725c8232d01a93f7630ce1775b"
+  },
+  "smoke_directories": [
+    "/Users/superposition/Documents/Codex/2026-08-26/let/work/qrc_vs_qelm/results_n5_long_context_v1/smoke_a",
+    "/Users/superposition/Documents/Codex/2026-08-26/let/work/qrc_vs_qelm/results_n5_long_context_v1/smoke_b"
+  ],
+  "smoke_execution_ids": [
+    "e1d48e87-2fd2-4f16-b13d-2dc83f02ccdd",
+    "194f95e2-cbaa-4a6a-923b-7fd3db2c03b0"
+  ],
+  "smoke_science_hashes": {
+    "canonical_summary.json": "ac5f9769eee59853d35d4ca95831b2037d43e8a93ef6fa80caf4e52f7d2204d5",
+    "stream_metrics.csv": "d66adceb21e3c23c5956ca9490f7f194340db11a799d0171dbc0301d7779476c",
+    "suffix_decomposition.csv": "a393816238e41f4fd925c728cbbb009b7a00ceb4ccd13f946403d6924d03368d",
+    "system_diagnostics.csv": "60b2ea981df2b64e2632eba29355c9232f32374cce8215840e85bba2a4c5c44b"
+  },
+  "status": "FROZEN_PROSPECTIVE_LONG_N5",
+  "study": "canonical_qrc_long_context_n5",
+  "test_evidence": {
+    "case_count": 108,
+    "case_inventory": [
+      [
+        "pra_extension.tests.test_long_context_n5",
+        "test_freeze_rejects_reusing_one_smoke_execution"
+      ],
+      [
+        "pra_extension.tests.test_long_context_n5",
+        "test_fresh_execution_requires_freeze_and_never_overwrites"
+      ],
+      [
+        "pra_extension.tests.test_long_context_n5",
+        "test_long_context_configuration_keeps_entire_window_and_fresh_roots"
+      ],
+      [
+        "pra_extension.tests.test_long_context_n5",
+        "test_long_context_configuration_rejects_scope_drift[changed_rows]"
+      ],
+      [
+        "pra_extension.tests.test_long_context_n5",
+        "test_long_context_configuration_rejects_scope_drift[dropped_window]"
+      ],
+      [
+        "pra_extension.tests.test_long_context_n5",
+        "test_long_context_configuration_rejects_scope_drift[fewer_roots]"
+      ],
+      [
+        "pra_extension.tests.test_long_context_n5",
+        "test_long_context_configuration_rejects_scope_drift[six_qubits]"
+      ],
+      [
+        "pra_extension.tests.test_long_context_n5",
+        "test_numerical_material_excludes_changing_figures_and_manuscripts"
+      ],
+      [
+        "pra_extension.tests.test_long_context_n5",
+        "test_prespecified_contrasts_resample_twelve_roots_not_rows"
+      ],
+      [
+        "pra_extension.tests.test_long_context_n5",
+        "test_robust_history_summary_is_not_a_median_threshold"
+      ],
+      [
+        "pra_extension.tests.test_long_context_n5",
+        "test_synthetic_full_grid_validates_and_all_controls_are_retained"
+      ],
+      [
+        "pra_extension.tests.test_long_context_n5",
+        "test_table_validation_fails_closed_on_corrupt_or_selected_results[bad_budget]"
+      ],
+      [
+        "pra_extension.tests.test_long_context_n5",
+        "test_table_validation_fails_closed_on_corrupt_or_selected_results[bad_identity]"
+      ],
+      [
+        "pra_extension.tests.test_long_context_n5",
+        "test_table_validation_fails_closed_on_corrupt_or_selected_results[bad_nrmse]"
+      ],
+      [
+        "pra_extension.tests.test_long_context_n5",
+        "test_table_validation_fails_closed_on_corrupt_or_selected_results[bad_prediction]"
+      ],
+      [
+        "pra_extension.tests.test_long_context_n5",
+        "test_table_validation_fails_closed_on_corrupt_or_selected_results[bad_regime]"
+      ],
+      [
+        "pra_extension.tests.test_long_context_n5",
+        "test_table_validation_fails_closed_on_corrupt_or_selected_results[bad_rmse]"
+      ],
+      [
+        "pra_extension.tests.test_long_context_n5",
+        "test_table_validation_fails_closed_on_corrupt_or_selected_results[bad_slack]"
+      ],
+      [
+        "pra_extension.tests.test_long_context_n5",
+        "test_table_validation_fails_closed_on_corrupt_or_selected_results[bad_system_id]"
+      ],
+      [
+        "pra_extension.tests.test_long_context_n5",
+        "test_table_validation_fails_closed_on_corrupt_or_selected_results[bad_target_hash]"
+      ],
+      [
+        "pra_extension.tests.test_long_context_n5",
+        "test_table_validation_fails_closed_on_corrupt_or_selected_results[dead_target]"
+      ],
+      [
+        "pra_extension.tests.test_long_context_n5",
+        "test_table_validation_fails_closed_on_corrupt_or_selected_results[missing_row]"
+      ],
+      [
+        "pra_extension.tests.test_long_context_n5",
+        "test_test_evidence_requires_every_numerical_suite"
+      ],
+      [
+        "pra_extension.tests.test_long_context_qelm_backend",
+        "test_context_restores_factory_on_success_failure_and_nesting"
+      ],
+      [
+        "pra_extension.tests.test_long_context_qelm_backend",
+        "test_endpoint_tolerance_empty_rows_and_rejection_of_other_encodings"
+      ],
+      [
+        "pra_extension.tests.test_long_context_qelm_backend",
+        "test_fast_path_does_not_call_density_or_original_state_encoder"
+      ],
+      [
+        "pra_extension.tests.test_long_context_qelm_backend",
+        "test_input_validation[values0-two-dimensional]"
+      ],
+      [
+        "pra_extension.tests.test_long_context_qelm_backend",
+        "test_input_validation[values1-window length]"
+      ],
+      [
+        "pra_extension.tests.test_long_context_qelm_backend",
+        "test_input_validation[values2-non-empty]"
+      ],
+      [
+        "pra_extension.tests.test_long_context_qelm_backend",
+        "test_input_validation[values3-finite]"
+      ],
+      [
+        "pra_extension.tests.test_long_context_qelm_backend",
+        "test_input_validation[values4-finite]"
+      ],
+      [
+        "pra_extension.tests.test_long_context_qelm_backend",
+        "test_input_validation[values5-\\\\[0, 1\\\\]]"
+      ],
+      [
+        "pra_extension.tests.test_long_context_qelm_backend",
+        "test_input_validation[values6-\\\\[0, 1\\\\]]"
+      ],
+      [
+        "pra_extension.tests.test_long_context_qelm_backend",
+        "test_randomized_equivalence_and_canonical_factory[1]"
+      ],
+      [
+        "pra_extension.tests.test_long_context_qelm_backend",
+        "test_randomized_equivalence_and_canonical_factory[2]"
+      ],
+      [
+        "pra_extension.tests.test_long_context_qelm_backend",
+        "test_randomized_equivalence_and_canonical_factory[3]"
+      ],
+      [
+        "pra_extension.tests.test_long_context_qelm_backend",
+        "test_randomized_equivalence_and_canonical_factory[4]"
+      ],
+      [
+        "pra_extension.tests.test_long_context_qelm_backend",
+        "test_ten_qubit_all_snapshot_endpoint_equal_value_and_determinism_probes[10]"
+      ],
+      [
+        "pra_extension.tests.test_long_context_qelm_backend",
+        "test_ten_qubit_all_snapshot_endpoint_equal_value_and_determinism_probes[2]"
+      ],
+      [
+        "pra_extension.tests.test_long_context_qelm_backend",
+        "test_validates_actual_operator_not_just_its_name_and_rechecks_mutations"
+      ],
+      [
+        "tests.test_canonical_emulation",
+        "test_classify_emulation_regime[kwargs0-DEGENERATE_TARGET]"
+      ],
+      [
+        "tests.test_canonical_emulation",
+        "test_classify_emulation_regime[kwargs1-HISTORY_IMPOSSIBLE]"
+      ],
+      [
+        "tests.test_canonical_emulation",
+        "test_classify_emulation_regime[kwargs2-EMULATED]"
+      ],
+      [
+        "tests.test_canonical_emulation",
+        "test_classify_emulation_regime[kwargs3-REPRESENTATION_LIMITED]"
+      ],
+      [
+        "tests.test_canonical_emulation",
+        "test_classify_emulation_regime[kwargs4-UNRESOLVED]"
+      ],
+      [
+        "tests.test_canonical_emulation",
+        "test_degree_two_delay_features_have_expected_unique_terms"
+      ],
+      [
+        "tests.test_canonical_emulation",
+        "test_exponential_forgetting_fit_recovers_known_scale_and_window"
+      ],
+      [
+        "tests.test_canonical_emulation",
+        "test_nested_snapshot_columns_are_true_nested_measurement_budgets"
+      ],
+      [
+        "tests.test_canonical_emulation",
+        "test_nested_snapshot_columns_reject_nondividing_budget"
+      ],
+      [
+        "tests.test_canonical_emulation",
+        "test_projection_diagnostic_detects_exact_linear_target_span"
+      ],
+      [
+        "tests.test_canonical_emulation",
+        "test_random_tanh_feature_map_is_deterministic_nested_and_train_scaled"
+      ],
+      [
+        "tests.test_canonical_emulation",
+        "test_suffix_risk_decomposition_is_exact_for_grouped_histories"
+      ],
+      [
+        "tests.test_canonical_emulation",
+        "test_suffix_risk_decomposition_rejects_one_prediction_per_branch"
+      ],
+      [
+        "tests.test_canonical_resources",
+        "test_expected_observable_contract_matches_production_order"
+      ],
+      [
+        "tests.test_canonical_resources",
+        "test_resource_report_separates_runtime_from_deterministic_proxies"
+      ],
+      [
+        "tests.test_canonical_study",
+        "test_confirmatory_profile_has_exact_frozen_root_denominator"
+      ],
+      [
+        "tests.test_canonical_study",
+        "test_confirmatory_run_requires_matching_freeze_record"
+      ],
+      [
+        "tests.test_canonical_study",
+        "test_discrete_inputs_are_deterministic_and_on_the_declared_alphabet"
+      ],
+      [
+        "tests.test_canonical_study",
+        "test_profile_rejects_confirmatory_seed_reused_from_smoke"
+      ],
+      [
+        "tests.test_canonical_study",
+        "test_profile_rejects_global_same_role_seed_reuse"
+      ],
+      [
+        "tests.test_canonical_study",
+        "test_profile_rejects_invalid_frozen_gate_threshold"
+      ],
+      [
+        "tests.test_canonical_study",
+        "test_profile_rejects_more_suffix_groups_than_alphabet_symbols"
+      ],
+      [
+        "tests.test_canonical_study",
+        "test_profile_rejects_window_wider_than_parallel_register"
+      ],
+      [
+        "tests.test_canonical_study",
+        "test_resolved_rank_one_pseudocondition_is_one"
+      ],
+      [
+        "tests.test_canonical_study",
+        "test_smoke_profile_is_canonical_and_seed_disjoint"
+      ],
+      [
+        "tests.test_canonical_study",
+        "test_smoke_runner_records_production_suffix_audits"
+      ],
+      [
+        "tests.test_canonical_study",
+        "test_suffix_panels_are_deterministic_nested_tails"
+      ],
+      [
+        "tests.test_canonical_study",
+        "test_suffix_prediction_audit_checks_both_common_suffix_bounds"
+      ],
+      [
+        "tests.test_canonical_study",
+        "test_suffix_prediction_audit_compares_vectorized_base_to_independent_arms"
+      ],
+      [
+        "tests.test_canonical_study",
+        "test_suffix_prediction_audit_rejects_prefix_dependent_predictions"
+      ],
+      [
+        "tests.test_emulation",
+        "test_emulation_validation_rejects_shape_and_split_errors"
+      ],
+      [
+        "tests.test_emulation",
+        "test_multivariate_ridge_recovers_linear_teacher_and_is_deterministic"
+      ],
+      [
+        "tests.test_emulation",
+        "test_multivariate_ridge_standardizer_uses_training_rows_only"
+      ],
+      [
+        "tests.test_emulation",
+        "test_paired_certificate_is_tight_at_pair_midpoint"
+      ],
+      [
+        "tests.test_emulation",
+        "test_paired_certificate_rejects_non_window_predictions"
+      ],
+      [
+        "tests.test_emulation",
+        "test_positive_infinite_ridge_is_exact_intercept_only_candidate"
+      ],
+      [
+        "tests.test_emulation",
+        "test_sample_feature_matrix_exact_copy_and_seeded_shots"
+      ],
+      [
+        "tests.test_emulation",
+        "test_suffix_diameter_and_half_diameter_lower_bound"
+      ],
+      [
+        "tests.test_emulation",
+        "test_tail_suffix_witness_uses_tail_max_and_is_monotone"
+      ],
+      [
+        "tests.test_emulation",
+        "test_zero_ridge_discards_numerically_null_feature_directions"
+      ],
+      [
+        "tests.test_qelm",
+        "test_build_qelm_features_gamma_zero_matches_manual_unitary_channel"
+      ],
+      [
+        "tests.test_qelm",
+        "test_delay_embed_and_first_valid_index"
+      ],
+      [
+        "tests.test_qelm",
+        "test_parallel_encoder_rejects_more_lags_than_qubits"
+      ],
+      [
+        "tests.test_qelm",
+        "test_parallel_encoder_uploads_each_lag_once_and_pads_unused_qubits"
+      ],
+      [
+        "tests.test_qelm",
+        "test_parallel_qelm_matches_manual_one_to_one_channel"
+      ],
+      [
+        "tests.test_qelm",
+        "test_qelm_channel_defensive_copy_properties_do_not_mutate_channel"
+      ],
+      [
+        "tests.test_qelm",
+        "test_qelm_channel_validates_operator_shapes"
+      ],
+      [
+        "tests.test_qelm",
+        "test_qelm_config_accepts_canonical_parallel_encoding"
+      ],
+      [
+        "tests.test_qelm",
+        "test_qelm_config_allows_time_delayed_window_longer_than_qubit_register"
+      ],
+      [
+        "tests.test_qelm",
+        "test_qelm_config_rejects_delay_longer_than_qubit_register"
+      ],
+      [
+        "tests.test_qelm",
+        "test_qelm_config_rejects_unknown_encoding"
+      ],
+      [
+        "tests.test_qelm",
+        "test_qelm_cyclic_encoding_repeats_window_across_qubits"
+      ],
+      [
+        "tests.test_qelm",
+        "test_qelm_default_feature_shape"
+      ],
+      [
+        "tests.test_qelm",
+        "test_qelm_deterministic_for_identical_args"
+      ],
+      [
+        "tests.test_qelm",
+        "test_qelm_gamma_zero_preserves_purity_and_real_bounded_features"
+      ],
+      [
+        "tests.test_qelm",
+        "test_qelm_memoryless_rows_depend_only_on_delay_window"
+      ],
+      [
+        "tests.test_qelm",
+        "test_qelm_snapshot_propagators_match_expm_multiply"
+      ],
+      [
+        "tests.test_qelm",
+        "test_spatial_qelm_ignores_h_in_drive_parameter"
+      ],
+      [
+        "tests.test_qelm",
+        "test_time_delayed_qelm_bundle_matching_preserves_readout_dimension"
+      ],
+      [
+        "tests.test_qelm",
+        "test_time_delayed_qelm_converges_to_qrc_when_window_covers_history[0.4]"
+      ],
+      [
+        "tests.test_qelm",
+        "test_time_delayed_qelm_converges_to_qrc_when_window_covers_history[0.5]"
+      ],
+      [
+        "tests.test_qelm",
+        "test_time_delayed_qelm_d_one_matches_qrc_first_reset_step"
+      ],
+      [
+        "tests.test_qelm",
+        "test_time_delayed_qelm_deterministic_for_identical_args"
+      ],
+      [
+        "tests.test_qelm",
+        "test_time_delayed_qelm_gamma_zero_preserves_purity_and_real_bounded_features"
+      ],
+      [
+        "tests.test_qelm",
+        "test_time_delayed_qelm_matched_bundle_passes_liveness_guard"
+      ],
+      [
+        "tests.test_qelm",
+        "test_time_delayed_qelm_memoryless_rows_with_window_longer_than_qubits"
+      ],
+      [
+        "tests.test_qelm",
+        "test_time_delayed_qelm_zero_evolution_ignores_window_history"
+      ],
+      [
+        "tests.test_qelm",
+        "test_unitary_parallel_channel_matches_density_channel"
+      ]
+    ],
+    "collected_inventory": [
+      "pra_extension/tests/test_long_context_n5.py::test_freeze_rejects_reusing_one_smoke_execution",
+      "pra_extension/tests/test_long_context_n5.py::test_fresh_execution_requires_freeze_and_never_overwrites",
+      "pra_extension/tests/test_long_context_n5.py::test_long_context_configuration_keeps_entire_window_and_fresh_roots",
+      "pra_extension/tests/test_long_context_n5.py::test_long_context_configuration_rejects_scope_drift[changed_rows]",
+      "pra_extension/tests/test_long_context_n5.py::test_long_context_configuration_rejects_scope_drift[dropped_window]",
+      "pra_extension/tests/test_long_context_n5.py::test_long_context_configuration_rejects_scope_drift[fewer_roots]",
+      "pra_extension/tests/test_long_context_n5.py::test_long_context_configuration_rejects_scope_drift[six_qubits]",
+      "pra_extension/tests/test_long_context_n5.py::test_numerical_material_excludes_changing_figures_and_manuscripts",
+      "pra_extension/tests/test_long_context_n5.py::test_prespecified_contrasts_resample_twelve_roots_not_rows",
+      "pra_extension/tests/test_long_context_n5.py::test_robust_history_summary_is_not_a_median_threshold",
+      "pra_extension/tests/test_long_context_n5.py::test_synthetic_full_grid_validates_and_all_controls_are_retained",
+      "pra_extension/tests/test_long_context_n5.py::test_table_validation_fails_closed_on_corrupt_or_selected_results[bad_budget]",
+      "pra_extension/tests/test_long_context_n5.py::test_table_validation_fails_closed_on_corrupt_or_selected_results[bad_identity]",
+      "pra_extension/tests/test_long_context_n5.py::test_table_validation_fails_closed_on_corrupt_or_selected_results[bad_nrmse]",
+      "pra_extension/tests/test_long_context_n5.py::test_table_validation_fails_closed_on_corrupt_or_selected_results[bad_prediction]",
+      "pra_extension/tests/test_long_context_n5.py::test_table_validation_fails_closed_on_corrupt_or_selected_results[bad_regime]",
+      "pra_extension/tests/test_long_context_n5.py::test_table_validation_fails_closed_on_corrupt_or_selected_results[bad_rmse]",
+      "pra_extension/tests/test_long_context_n5.py::test_table_validation_fails_closed_on_corrupt_or_selected_results[bad_slack]",
+      "pra_extension/tests/test_long_context_n5.py::test_table_validation_fails_closed_on_corrupt_or_selected_results[bad_system_id]",
+      "pra_extension/tests/test_long_context_n5.py::test_table_validation_fails_closed_on_corrupt_or_selected_results[bad_target_hash]",
+      "pra_extension/tests/test_long_context_n5.py::test_table_validation_fails_closed_on_corrupt_or_selected_results[dead_target]",
+      "pra_extension/tests/test_long_context_n5.py::test_table_validation_fails_closed_on_corrupt_or_selected_results[missing_row]",
+      "pra_extension/tests/test_long_context_n5.py::test_test_evidence_requires_every_numerical_suite",
+      "pra_extension/tests/test_long_context_qelm_backend.py::test_context_restores_factory_on_success_failure_and_nesting",
+      "pra_extension/tests/test_long_context_qelm_backend.py::test_endpoint_tolerance_empty_rows_and_rejection_of_other_encodings",
+      "pra_extension/tests/test_long_context_qelm_backend.py::test_fast_path_does_not_call_density_or_original_state_encoder",
+      "pra_extension/tests/test_long_context_qelm_backend.py::test_input_validation[values0-two-dimensional]",
+      "pra_extension/tests/test_long_context_qelm_backend.py::test_input_validation[values1-window length]",
+      "pra_extension/tests/test_long_context_qelm_backend.py::test_input_validation[values2-non-empty]",
+      "pra_extension/tests/test_long_context_qelm_backend.py::test_input_validation[values3-finite]",
+      "pra_extension/tests/test_long_context_qelm_backend.py::test_input_validation[values4-finite]",
+      "pra_extension/tests/test_long_context_qelm_backend.py::test_input_validation[values5-\\\\[0, 1\\\\]]",
+      "pra_extension/tests/test_long_context_qelm_backend.py::test_input_validation[values6-\\\\[0, 1\\\\]]",
+      "pra_extension/tests/test_long_context_qelm_backend.py::test_randomized_equivalence_and_canonical_factory[1]",
+      "pra_extension/tests/test_long_context_qelm_backend.py::test_randomized_equivalence_and_canonical_factory[2]",
+      "pra_extension/tests/test_long_context_qelm_backend.py::test_randomized_equivalence_and_canonical_factory[3]",
+      "pra_extension/tests/test_long_context_qelm_backend.py::test_randomized_equivalence_and_canonical_factory[4]",
+      "pra_extension/tests/test_long_context_qelm_backend.py::test_ten_qubit_all_snapshot_endpoint_equal_value_and_determinism_probes[10]",
+      "pra_extension/tests/test_long_context_qelm_backend.py::test_ten_qubit_all_snapshot_endpoint_equal_value_and_determinism_probes[2]",
+      "pra_extension/tests/test_long_context_qelm_backend.py::test_validates_actual_operator_not_just_its_name_and_rechecks_mutations",
+      "tests/test_canonical_emulation.py::test_classify_emulation_regime[kwargs0-DEGENERATE_TARGET]",
+      "tests/test_canonical_emulation.py::test_classify_emulation_regime[kwargs1-HISTORY_IMPOSSIBLE]",
+      "tests/test_canonical_emulation.py::test_classify_emulation_regime[kwargs2-EMULATED]",
+      "tests/test_canonical_emulation.py::test_classify_emulation_regime[kwargs3-REPRESENTATION_LIMITED]",
+      "tests/test_canonical_emulation.py::test_classify_emulation_regime[kwargs4-UNRESOLVED]",
+      "tests/test_canonical_emulation.py::test_degree_two_delay_features_have_expected_unique_terms",
+      "tests/test_canonical_emulation.py::test_exponential_forgetting_fit_recovers_known_scale_and_window",
+      "tests/test_canonical_emulation.py::test_nested_snapshot_columns_are_true_nested_measurement_budgets",
+      "tests/test_canonical_emulation.py::test_nested_snapshot_columns_reject_nondividing_budget",
+      "tests/test_canonical_emulation.py::test_projection_diagnostic_detects_exact_linear_target_span",
+      "tests/test_canonical_emulation.py::test_random_tanh_feature_map_is_deterministic_nested_and_train_scaled",
+      "tests/test_canonical_emulation.py::test_suffix_risk_decomposition_is_exact_for_grouped_histories",
+      "tests/test_canonical_emulation.py::test_suffix_risk_decomposition_rejects_one_prediction_per_branch",
+      "tests/test_canonical_resources.py::test_expected_observable_contract_matches_production_order",
+      "tests/test_canonical_resources.py::test_resource_report_separates_runtime_from_deterministic_proxies",
+      "tests/test_canonical_study.py::test_confirmatory_profile_has_exact_frozen_root_denominator",
+      "tests/test_canonical_study.py::test_confirmatory_run_requires_matching_freeze_record",
+      "tests/test_canonical_study.py::test_discrete_inputs_are_deterministic_and_on_the_declared_alphabet",
+      "tests/test_canonical_study.py::test_profile_rejects_confirmatory_seed_reused_from_smoke",
+      "tests/test_canonical_study.py::test_profile_rejects_global_same_role_seed_reuse",
+      "tests/test_canonical_study.py::test_profile_rejects_invalid_frozen_gate_threshold",
+      "tests/test_canonical_study.py::test_profile_rejects_more_suffix_groups_than_alphabet_symbols",
+      "tests/test_canonical_study.py::test_profile_rejects_window_wider_than_parallel_register",
+      "tests/test_canonical_study.py::test_resolved_rank_one_pseudocondition_is_one",
+      "tests/test_canonical_study.py::test_smoke_profile_is_canonical_and_seed_disjoint",
+      "tests/test_canonical_study.py::test_smoke_runner_records_production_suffix_audits",
+      "tests/test_canonical_study.py::test_suffix_panels_are_deterministic_nested_tails",
+      "tests/test_canonical_study.py::test_suffix_prediction_audit_checks_both_common_suffix_bounds",
+      "tests/test_canonical_study.py::test_suffix_prediction_audit_compares_vectorized_base_to_independent_arms",
+      "tests/test_canonical_study.py::test_suffix_prediction_audit_rejects_prefix_dependent_predictions",
+      "tests/test_emulation.py::test_emulation_validation_rejects_shape_and_split_errors",
+      "tests/test_emulation.py::test_multivariate_ridge_recovers_linear_teacher_and_is_deterministic",
+      "tests/test_emulation.py::test_multivariate_ridge_standardizer_uses_training_rows_only",
+      "tests/test_emulation.py::test_paired_certificate_is_tight_at_pair_midpoint",
+      "tests/test_emulation.py::test_paired_certificate_rejects_non_window_predictions",
+      "tests/test_emulation.py::test_positive_infinite_ridge_is_exact_intercept_only_candidate",
+      "tests/test_emulation.py::test_sample_feature_matrix_exact_copy_and_seeded_shots",
+      "tests/test_emulation.py::test_suffix_diameter_and_half_diameter_lower_bound",
+      "tests/test_emulation.py::test_tail_suffix_witness_uses_tail_max_and_is_monotone",
+      "tests/test_emulation.py::test_zero_ridge_discards_numerically_null_feature_directions",
+      "tests/test_qelm.py::test_build_qelm_features_gamma_zero_matches_manual_unitary_channel",
+      "tests/test_qelm.py::test_delay_embed_and_first_valid_index",
+      "tests/test_qelm.py::test_parallel_encoder_rejects_more_lags_than_qubits",
+      "tests/test_qelm.py::test_parallel_encoder_uploads_each_lag_once_and_pads_unused_qubits",
+      "tests/test_qelm.py::test_parallel_qelm_matches_manual_one_to_one_channel",
+      "tests/test_qelm.py::test_qelm_channel_defensive_copy_properties_do_not_mutate_channel",
+      "tests/test_qelm.py::test_qelm_channel_validates_operator_shapes",
+      "tests/test_qelm.py::test_qelm_config_accepts_canonical_parallel_encoding",
+      "tests/test_qelm.py::test_qelm_config_allows_time_delayed_window_longer_than_qubit_register",
+      "tests/test_qelm.py::test_qelm_config_rejects_delay_longer_than_qubit_register",
+      "tests/test_qelm.py::test_qelm_config_rejects_unknown_encoding",
+      "tests/test_qelm.py::test_qelm_cyclic_encoding_repeats_window_across_qubits",
+      "tests/test_qelm.py::test_qelm_default_feature_shape",
+      "tests/test_qelm.py::test_qelm_deterministic_for_identical_args",
+      "tests/test_qelm.py::test_qelm_gamma_zero_preserves_purity_and_real_bounded_features",
+      "tests/test_qelm.py::test_qelm_memoryless_rows_depend_only_on_delay_window",
+      "tests/test_qelm.py::test_qelm_snapshot_propagators_match_expm_multiply",
+      "tests/test_qelm.py::test_spatial_qelm_ignores_h_in_drive_parameter",
+      "tests/test_qelm.py::test_time_delayed_qelm_bundle_matching_preserves_readout_dimension",
+      "tests/test_qelm.py::test_time_delayed_qelm_converges_to_qrc_when_window_covers_history[0.4]",
+      "tests/test_qelm.py::test_time_delayed_qelm_converges_to_qrc_when_window_covers_history[0.5]",
+      "tests/test_qelm.py::test_time_delayed_qelm_d_one_matches_qrc_first_reset_step",
+      "tests/test_qelm.py::test_time_delayed_qelm_deterministic_for_identical_args",
+      "tests/test_qelm.py::test_time_delayed_qelm_gamma_zero_preserves_purity_and_real_bounded_features",
+      "tests/test_qelm.py::test_time_delayed_qelm_matched_bundle_passes_liveness_guard",
+      "tests/test_qelm.py::test_time_delayed_qelm_memoryless_rows_with_window_longer_than_qubits",
+      "tests/test_qelm.py::test_time_delayed_qelm_zero_evolution_ignores_window_history",
+      "tests/test_qelm.py::test_unitary_parallel_channel_matches_density_channel"
+    ],
+    "executed_command": [
+      "/Users/superposition/Documents/Codex/2026-08-26/let/work/qrc_vs_qelm/.venv/bin/python",
+      "-m",
+      "pytest",
+      "-q",
+      "pra_extension/tests/test_long_context_n5.py",
+      "pra_extension/tests/test_long_context_qelm_backend.py",
+      "tests/test_canonical_study.py",
+      "tests/test_canonical_emulation.py",
+      "tests/test_canonical_resources.py",
+      "tests/test_qelm.py",
+      "tests/test_emulation.py",
+      "--junitxml=/Users/superposition/Documents/Codex/2026-08-26/let/work/qrc_vs_qelm/results_n5_long_context_v1/numerical-tests.xml"
+    ],
+    "junit_path": "/Users/superposition/Documents/Codex/2026-08-26/let/work/qrc_vs_qelm/results_n5_long_context_v1/numerical-tests.xml",
+    "junit_sha256": "b0b5aa5e224f1c11a12ea4ef8c9a8c60f9356804f76899a0bbbc02101d9e5ab1",
+    "material": {
+      "files": {
+        "LONG_CONTEXT_N5_PROTOCOL.md": "b413438a789cb2fba003c965b2a065f8ccaf77451a465901764c5fba8f05517e",
+        "configs/canonical_emulation_long_n5.yaml": "e3f17413f6391a02abacb115b4cc063f19f914dc262c20e3a9d6b4500403d62e",
+        "pra_extension/tests/test_long_context_n5.py": "4de8e5dafff4a7fcb4d66e521dda4f329b7d964cecc1be88fc61359448d9e4b5",
+        "pra_extension/tests/test_long_context_qelm_backend.py": "9a30086dcda86f5573992f572262abb473e750545bb91a5c8367d4295515afa1",
+        "pyproject.toml": "3253b09077b53cb50a8812824451dd89da11b8880a960b67fe9825a862abea71",
+        "scripts/analyze_long_context_n5.py": "c5fc5db7468046c204236576287143f4e5d7fb5422f2dddbff2fba5e7e920e49",
+        "scripts/dense_phase_n4_common.py": "494005216b921708eeaf4a323c4817673d08d36632ed7fab8e729fd600995584",
+        "scripts/long_context_n5_common.py": "2014747e5dea2a994ebfbbf09906d59f9303222eaf8cf948651943ea2ddf1af9",
+        "scripts/long_context_qelm_backend.py": "9ac7e833f94f5ddde11107f5b3ab8e4b20f78375e461431651ab86da38539008",
+        "scripts/run_long_context_n5.py": "415bd8366eb863fab3f3ea4b339f83faf2e272618b3952c551c3dea58541f3c0",
+        "src/qrc_vs_qelm/__init__.py": "91447944015cec709e8aa7655f7e9d64e1e4508e7023a57fe3746911c0fc6fed",
+        "src/qrc_vs_qelm/canonical_emulation.py": "480af731e2fd9045b73c260b27d2c14ab565338b28c96e0990fe53160a3bfa19",
+        "src/qrc_vs_qelm/canonical_gates.py": "da6f8ce014e1d44e14d1bc7c852b35817a5440116e661875978859828e1e8f88",
+        "src/qrc_vs_qelm/canonical_resources.py": "523e27f7a71c83a3c8b0eb5334a65e54ffba213eee51780ad0a6371adb27a03a",
+        "src/qrc_vs_qelm/canonical_study.py": "ffc7e5e807d00fb578eb7db2933390360a91e8dbf89862658397d120c60fb768",
+        "src/qrc_vs_qelm/checkpointing.py": "da5c7b5833b86f5a8094e959197ea138bc6cb7692a10ef032ded145fca26ae35",
+        "src/qrc_vs_qelm/controls.py": "fe8228b3e91ee29a44f1a243494951f9e85223f50ab72a5cc52ecaaa0575b02d",
+        "src/qrc_vs_qelm/core/__init__.py": "35b59aa2929dfa5d89631f0ee429a8ed85287e2d0d63471be22bfa5f86a04db8",
+        "src/qrc_vs_qelm/core/diagnostics.py": "c03901b126ef01068959b7d5c87832e8a95537aa7beddacbf93f4c1d7cb34640",
+        "src/qrc_vs_qelm/core/dissipators.py": "f1e1ee7dcf59b943ac360e9a296e8565c62a450fda12a60f387b497b3acfecf7",
+        "src/qrc_vs_qelm/core/liouvillian.py": "bfb6eda88c5d9c2bbbedda7bd88e5eef8b39ab0970d9f25f9e0b1a600448c26b",
+        "src/qrc_vs_qelm/core/operators.py": "d0bed61609a3a3a10dc64cf2695c1999dc87afad511d3515eecb53b5cfcbd13b",
+        "src/qrc_vs_qelm/core/readout.py": "9235f8f6c2d8d370d84c5a7f89bf3d33e8c6801de792346594442113ad794db9",
+        "src/qrc_vs_qelm/core/reservoirs.py": "e9e722ffeba65b35a89ec7f04e6dbd6b30f9f556c6b05052557a6c29ab40eb4b",
+        "src/qrc_vs_qelm/core/sparse_evolve.py": "af1778f158ffc6ce6fb95d1e0295008516d54f906ab8adce54d62c17222294eb",
+        "src/qrc_vs_qelm/core/tasks.py": "dd9a41e38f43c94426b6da59118c034474a794328e1bb96092b06ca1305fa31d",
+        "src/qrc_vs_qelm/emulation.py": "ce4a726e4986b1870053b8e27af723974ec563a3a7acfec43a4c9598aad90305",
+        "src/qrc_vs_qelm/gates.py": "8bc4b1d96fc158314700f5d4e701e39fda044fe4f8a78e4c0ca8433bb43a3cf9",
+        "src/qrc_vs_qelm/ipc.py": "472947226764c4d67925b6d8121906203fa77018d5743a69251689a5a8d02035",
+        "src/qrc_vs_qelm/manifests.py": "22064b88af9700f6fd709220226113d2d16e0ecd9a24f63037962fbf15c05c30",
+        "src/qrc_vs_qelm/matching.py": "1a8c2d33a40a6cbb218b785c3347cf7507d1813fd42d20a71036eb158e48b2fb",
+        "src/qrc_vs_qelm/models/__init__.py": "091dcc362349acac4b12e5414baf7fe6db4a1f432a8b15bd68c0d565e605ed1b",
+        "src/qrc_vs_qelm/models/api.py": "abd2434f0a5eb361381e0731a70ff3a3ca47f506976698a834cb3f9b6b3be205",
+        "src/qrc_vs_qelm/models/qelm.py": "5cc70670982bdb180c4a1e9846935ab2fb4c38870147f796734f809524e2dd62",
+        "src/qrc_vs_qelm/pipeline.py": "3173dc3c9ecc43d91e9ffd68a993b36c0e4715406fb4504e26b5db3aee42b6f1",
+        "src/qrc_vs_qelm/provenance.py": "b08001893370b035404d1555b88792702b9d8eeeae98984fe4528424b4668006",
+        "src/qrc_vs_qelm/recurrence_fingerprint.py": "aea999754104926b6ffa6407e9b5e75027c7cef0ee3a20e1b754f8fb30e53bee",
+        "src/qrc_vs_qelm/run_report.py": "f7b19604e6f06a0393f792a42846f158c7680eaaf6e9b69c96f661d165bc178b",
+        "src/qrc_vs_qelm/run_stage1.py": "7781fc453023cc2ce1e28668176b1b776b4f5d656ef7939100ee879340871f5f",
+        "src/qrc_vs_qelm/run_stage2.py": "9a12ccbaa01985d98bb0f7ac8e6b05a5a3a95cbe241184f128f900d28171107e",
+        "src/qrc_vs_qelm/run_stage3.py": "57bfbaa643b49fb9ddd723f3ea22bf4a5384177661c9d2c313e8765470b8f288",
+        "src/qrc_vs_qelm/run_stage_ipc.py": "b81f3190adaf91b73d5f1c58fcc6b93f39fc27b918449cc5a54f0c76d42e476b",
+        "src/qrc_vs_qelm/seeds.py": "499dcef01117709f0d8d05684d1cf3ef0c94b69d694227c8e09cde603a6a48c2",
+        "src/qrc_vs_qelm/shots.py": "657a9ce547b0af6e7575d379b19b357811480620060f1ec3f89b9516241efdd9",
+        "src/qrc_vs_qelm/stats.py": "0b2f13cee78c55bc538dd4aa1af297584d8c526999c8a94fd9e0d65ed8dc11fb",
+        "src/qrc_vs_qelm/task_families.py": "7a9518d6d660b92f147b851f1740deb2ebfbbc11bee86354a7a3d70326508f50",
+        "tests/test_canonical_emulation.py": "2e758325949001e359152c849239939346dbfe048f26923b6abf4ed423332530",
+        "tests/test_canonical_resources.py": "a5b314589622a7c96dbde116a2f208885d06ea14ec8b926e2cda76a0d7d18d41",
+        "tests/test_canonical_study.py": "448d55da3857c1ac4a3f927e74a8f0d9cb2d1e931a3b94cf6c89450235972a19",
+        "tests/test_emulation.py": "510e583fe5b43c7ee3a029768248102d791ded544cc6fe819878a3734839fa0e",
+        "tests/test_qelm.py": "a1317f36e20ba8ac4ec06c8a89fc724f1a5223b4d45b53bf59217fc00ea6b74f"
+      },
+      "identity_sha256": "85e95081d106a191449f6c16b90797dc2cb16575b7388d5c3577e638bf5705c1"
+    },
+    "material_unchanged_before_after": true,
+    "passed": true,
+    "schema_version": 1
+  },
+  "test_evidence_sha256": "e45a578c85b5ea48c2c1ad671449f8760f918d771217bcca468c28011dc56672"
+}

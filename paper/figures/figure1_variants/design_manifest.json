@@ -1,0 +1,49 @@
+{
+  "canonical_source": "paper/figures/information_interface/fig01_information_interface.tex",
+  "canonical_source_sha256": "4fbb8d792fcaa37ddf9e3ce961e7f3e5ee965a6d824ab468bb44305edd0eddf5",
+  "design_notes_sha256": "531fb629692ca7ffe87b410eddfbc9e8b14b62507b0a9b7c5433a75eef8c9e64",
+  "input_timeseries_sha256": "bf2e22ef87be4390ad5bd7e084ad8b39ef8337e1707cf1f957d11b285bc7a9f8",
+  "native_width_inches": 7.055,
+  "schema": "figure1_design_candidates_v2",
+  "scope": "schematic layouts only; not additional numerical evidence",
+  "selected_variant": "variant_a_architectures",
+  "status": "variant_a_selected_for_main_paper",
+  "variants": {
+    "variant_a_architectures": {
+      "artifacts": {
+        "variant_a_architectures.pdf": "8171c2353ecc6cd6fb15a0090c428a77dd4df5a67161dc200767d95617851b42",
+        "variant_a_architectures.png": "1500d9ec9a43870aed6c60644c5e3be5d3148143638e5d4a5e362bbb61184ef4",
+        "variant_a_architectures.tex": "4fbb8d792fcaa37ddf9e3ce961e7f3e5ee965a6d824ab468bb44305edd0eddf5"
+      },
+      "canvas_aspect_ratio": 1.3784382259079955,
+      "pdf_size_points": [
+        507.96,
+        368.504
+      ]
+    },
+    "variant_b_same_window": {
+      "artifacts": {
+        "variant_b_same_window.pdf": "a11b4899c7944e5cb1b4b5649c9a21b2ecbf656374667ea187f5e420ab4c3961",
+        "variant_b_same_window.png": "70b95b565fcd2b5740bfb2b54766098faaf3ea00d7f1493eec107ef8d419d88a",
+        "variant_b_same_window.tex": "8751f0db68261a63e9c6b9d04c202089b92f218887aa38d2e829079efb1a42ae"
+      },
+      "canvas_aspect_ratio": 1.0,
+      "pdf_size_points": [
+        507.96,
+        507.96
+      ]
+    },
+    "variant_c_relevant_memory": {
+      "artifacts": {
+        "variant_c_relevant_memory.pdf": "75b859b33df82ffb45f4cea7a1f5d713e700ab5cf8c4eeddc6485e24d8740805",
+        "variant_c_relevant_memory.png": "fc88edf25cfec2aa362120929eec62f90296e77fd1ad9c94963d924f62e4b3cd",
+        "variant_c_relevant_memory.tex": "ca6d9e2c8454653e1cb6b3687a7d198bf2acb831a6c54c1923231ecd515957ea"
+      },
+      "canvas_aspect_ratio": 1.0,
+      "pdf_size_points": [
+        507.96,
+        507.96
+      ]
+    }
+  }
+}

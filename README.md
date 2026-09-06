@@ -5,6 +5,10 @@
 [![Python 3.11+](https://img.shields.io/badge/python-3.11%2B-blue.svg)](pyproject.toml)
 ![tests](https://img.shields.io/badge/tests-442%20passing-brightgreen.svg)
 
+See [REPRODUCIBILITY.md](REPRODUCIBILITY.md) for the claim-to-protocol, seed,
+root-result and command map, empirical error definitions, freeze-chronology
+limits, and the explicit availability gap for local-only N5 evidence.
+
 A study of when a reset-window quantum extreme learning machine can reproduce a
 recurrent quantum reservoir. If `D_d` is the supremal scalar-output gap between
 histories with the same latest `d` inputs, the best unrestricted suffix
@@ -97,7 +101,8 @@ QRC lies beyond every finite reset window on its declared suffix alphabet.
   fitted stream cells. All primary gates G0--G6 pass.
 - Increasing the registered window from 1 to 6 reduces QELM NRMSE by a median
   78.5% on transition cells; after history is feasible, increasing the nested
-  feature budget from 18 to 72 reduces representation NRMSE by 67.3%. Both
+  feature budget from 18 to 72 reduces empirical fitted-emulator residual
+  NRMSE by 67.3% (the frozen field is `representation_nrmse`). Both
   effects are positive in all 12 root blocks and replicate by target-QRC size.
 - The quadratic classical delay model is the strongest registered control in
   all 24 fast-forgetting root--target-family cells and the tested QELM loses to it in
@@ -107,27 +112,68 @@ QRC lies beyond every finite reset window on its declared suffix alphabet.
 The publication artifact is the single manuscript
 `paper/canonical_emulation/main.tex`, compiled as
 `paper/canonical_emulation/main.pdf`.  The paper is titled *When Can
-Reset-Window QELMs Emulate the Input--Output Behavior of Quantum Reservoirs?*.
-It is 11 pages, uses 45
-cited references, contains exactly three main figures, and includes proofs,
+Finite-Context QELMs Replace Quantum Reservoir Memory?*.
+The current journal and conference builds are each 12 pages with three main
+figures. The journal uses 45 cited references and includes proofs,
 calibration, numerical controls, Methods, and the technical appendix in the
 same PDF.  The frozen
 protocol, theory note, and literature audit are
 `CANONICAL_EMULATION_PREREGISTRATION.md`, `CANONICAL_EMULATION_THEORY.md`, and
 `CANONICAL_EMULATION_LITERATURE_POSITIONING.md`. Final evidence is in
-`results_canonical_confirmatory_v1/`.  The three deterministic source-backed
-paper figures are in `paper/figures/information_interface/`; the detailed
+`results_canonical_confirmatory_v1/`. The overview and resource figures are in
+`paper/figures/information_interface/`; the longer-context figure is in
+`paper/figures/long_context_n5/`. Figures appear on pages 2, 5 and 6 in both builds.
+The detailed
 source plots remain in `paper/figures/canonical_emulation/`.
 
-The main figures use native-size vector artwork with 9--11 pt labels, close
-to the manuscript's 10 pt body text. Figure 1 is an editable TikZ diagram;
-Figure 2 separates all 198 measured history-error points from the discrete
-feature-success map; Figure 3 aligns all three resource comparisons side by side.
+The main text has six sections: Introduction; Quantum Reservoirs and
+Reset-Window Models; Limits of Finite-Window Emulation; Dynamical Origins of
+Observable Memory; Numerical Experiments; and Discussion and Conclusions.
+The model definitions precede the information bound, the dynamical mechanism
+is explained before its spectral criterion, and the numerical protocol
+precedes the results. Proofs and full numerical methods remain in two
+appendices within the same paper. The 5 September accessibility revision preserved all
+45 citation keys, 26 labeled equations, and three figure assets and captions;
+it did not add experiments or alter the evidence. The separate 6 September
+five-qubit follow-up below adds new evidence. The current three-figure selection
+retains its plot and reports the dense frontier in the numerical text.
+
+The main figures use native-size vector artwork. Figure 1 is an editable
+17.9197 by 13.0 cm TikZ diagram with 11-pt architecture labels, 12-pt panel
+letters and 10-pt comparison labels. Its two architecture lanes preserve the
+QRC's carried state and the reset emulator's explicit causal input window.
+Both schematic readouts can be trained; the target readout is held fixed for
+emulation (identity in the simulations). Only the current scalar enters each
+QRC update. One centered 4.40-cm-square input plot shows the 201-point
+deterministic Mackey--Glass illustration, with interior step 180 selected.
+A bracket sends exactly the green window 141--180 to the reset encoder;
+there is no duplicate lower plot. The gray future is display context and is
+not supplied to either model. One matching 4.40-cm-square output plot shows a
+separate conditional toy: a stored bit leaves a 40-input window, so its ideal
+balanced conditional-mean predictor loses a contribution retained by the QRC.
+Only one of two bit histories is drawn. Its independent Mackey--Glass baseline
+is a drawing template, not a prediction fitted from the left input, measured
+QELM performance, or a universal failure-time guarantee. Panel b shows the
+scalar history optimum `D_d/2` against an error tolerance; there is no separate
+panel c. Exact values, generator settings and hashes are recorded in the
+render-source JSON and validated by the renderer.
+Figure 2 aligns the three resource comparisons; its capped 10th--90th
+root-percentile whiskers describe root variability, not confidence intervals.
+Figure 3 shows the separate N5 longer-context study. Captions retain each
+cohort's resource and interpretation boundaries.
+`fig01_information_interface_render_source.json` describes the current artwork;
+the earlier `fig01_information_interface_source.json` remains an immutable
+historical snapshot because the N5 prior-seed audit binds its original hash.
+The short caption explains the two panels; trace provenance and readout
+scope are given in the model section.
+The selected design and two retained alternatives are available in
+`paper/figures/figure1_variants/`. Rebuild them with
+`.venv/bin/python pra_extension/code/render_figure1_variants.py`.
 The figure renderer requires `pdflatex` and Poppler's `pdftoppm` for Figure 1,
 in addition to the Python plotting dependencies. It preserves the numerical
 source tables and records the TikZ source hash with the generated artifacts.
 
-Figure 2 additionally uses two independently validated dense cohorts.  The
+The numerical frontier additionally uses two independently validated dense cohorts. The
 earlier two- and three-qubit replication in
 `results_dense_phase_secondary_v1/` contains 132 displayed cells, 1,584
 root-level history cells, and 4,752 root-budget QELM classifications.  After
@@ -137,9 +183,46 @@ new roots; it adds 66 displayed cells, 792 history cells, and 2,376 QELM
 classifications.  All prospective four-qubit checks pass: 12/12 roots satisfy
 the joint decay-fit criterion, the minimum-window frontier decreases
 monotonically with strict steps, and the inherited QELM anchor succeeds in
-12/12 roots.  The cohorts are shown side by side and are not pooled.  This
+12/12 roots. The cohorts are analyzed separately and are not pooled. This
 supports tested target-QRC-size stability, not an asymptotic size law or quantum
 advantage.
+
+### Separate prospective five-qubit, longer-context follow-up
+
+`LONG_CONTEXT_N5_PROTOCOL.md` and the frozen configuration specify 12 fresh
+roots, five-qubit target QRCs with 45 declared outputs, loss rates 1 and 4,
+windows 2, 4, 6, 8 and 10, and a ten-qubit reset-QELM with 30, 60 or 120
+features. Its 24 live systems are separate from every earlier cohort. The
+larger emulator register is an additional resource, not a matched-size advantage.
+The numerical backend passed 108 frozen checks, including agreement with the
+original dense implementation, before the fresh study began. Two development
+runs produced identical scientific artifacts.
+
+Across all twelve roots at each loss, extending the window from 2 to 10
+reduces history NRMSE: the median paired reduction is 93.55% at loss 1 and
+99.63% at loss 4. This does **not** guarantee that the tested emulator succeeds.
+At loss 1, windows 6, 8 and 10 pass the robust history rule, but no tested QELM
+budget passes the total-error rule. At loss 4, the 60-feature model passes
+in all twelve roots at each window from 4 onward. Quadratic delay beats the
+fixed 120-feature QELM in 118 of 120 streaming root-condition comparisons.
+No failed or nonmonotone outcomes are removed. Figure 3 displays all five
+windows, both losses, and the three prespecified common-suffix series.
+
+Raw tables and their verified analysis are locally in the ignored, untracked
+`results_n5_long_context_v1/`; they are not delivered by a Git clone. The local
+`evidence_bundle.zip` there seals 120 source/evidence entries with entry
+hashes. The numerical freeze also binds machine-local development-evidence
+paths; the archive preserves those records but does not implement portable
+path relocation. The anonymous LaTeX source ZIP is a separate clean-extraction
+build, not a claim that the numerical archive runs unmodified on another host.
+
+The release records this cohort under
+`prospective_followups.long_context_n5.artifacts`, with complete file hashes
+and a separate artifact-set identity. The legacy top-level artifact inventory
+feeds an older prior-seed scanner; inserting a study's own results there would
+incorrectly count its seeds as prior use. Future studies must explicitly
+include all completed follow-up cohorts in their prior-seed inventory. The
+N5 frozen code, tests, seed audit and numerical results have not been revised.
 
 ## Post-confirmatory mechanism extensions
 

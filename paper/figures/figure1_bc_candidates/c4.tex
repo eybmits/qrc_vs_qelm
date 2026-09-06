@@ -1,0 +1,32 @@
+\input{style.tex}
+\begin{document}
+\begin{candidate}{c}
+% Geometry is illustrative, not a Bloch-space reconstruction. The vertical
+% direction is stipulated invisible and invariant under every allowed update.
+\node at (1.99,4.97) {input-created states};
+\node[text=purple] at (5.15,4.97) {any allowed input};
+\fill[neutral] (1.12,1.78) rectangle (7.49,4.40);
+\draw[flow,purple] (5.15,4.72)--(4.25,4.15);
+\draw[green,line width=5pt,opacity=.17] (2.18,2.25)--(2.18,4.03);
+\draw[green,line width=5pt,opacity=.17] (6.32,2.25)--(6.32,4.03);
+\draw[<->,green,line width=.8pt] (1.45,2.43)--(1.45,3.94);
+\node[rotate=90,text=green] at (.82,3.18) {invisible direction};
+\node[state,minimum size=.68cm] (r) at (2.18,3.80) {$\rho$};
+\node[state,draw=red,fill=red!7,minimum size=.68cm] (s) at (2.18,2.55) {$\sigma$};
+\node[state,minimum size=.68cm] (rt) at (6.32,3.80) {$\rho'$};
+\node[state,draw=red,fill=red!7,minimum size=.68cm] (st) at (6.32,2.55) {$\sigma'$};
+\draw[flow] (r.east) to[out=5,in=180] (rt.west);
+\draw[flow] (s.east) to[out=-5,in=180] (st.west);
+\node[gate,minimum width=1.65cm,minimum height=.65cm] at (4.25,3.20) {same update};
+\draw[ink,densely dotted] (2.18,2.19)--(2.18,1.46);
+\draw[ink,densely dotted] (6.32,2.19)--(6.32,1.46);
+\fill[palegold] (1.12,.90) rectangle (7.49,1.47);
+\draw[ink,line width=.6pt] (1.12,1.18)--(7.49,1.18);
+\fill[blue] (2.18,1.18) circle (.075);
+\draw[red,line width=1pt] (2.18,1.18) circle (.085);
+\fill[blue] (6.32,1.18) circle (.075);
+\draw[red,line width=1pt] (6.32,1.18) circle (.085);
+\node[fill=palegold,inner sep=2.5pt] at (4.24,1.17) {declared output};
+\node[text=green,align=center] at (4.30,.38) {different states, identical outputs\\for every continuation};
+\end{candidate}
+\end{document}

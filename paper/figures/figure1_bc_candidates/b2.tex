@@ -1,0 +1,42 @@
+\input{style.tex}
+\begin{document}
+\begin{candidate}{b}
+\node[align=center] at (1.22,5.03) {earlier\\inputs};
+\node[text=green,align=center] at (2.92,5.03) {same\\window};
+\node at (4.86,5.03) {QRC};
+\node at (6.85,5.03) {outputs};
+% Two admissible histories agree on the recent suffix.
+\node[gate,draw=blue,fill=blue!9,minimum width=1.30cm,minimum height=.56cm]
+ (ha) at (1.22,4.22) {past A};
+\node[gate,draw=red,fill=red!8,minimum width=1.30cm,minimum height=.56cm]
+ (hb) at (1.22,3.12) {past B};
+\foreach \yy/\name in {4.22/sa,3.12/sb}{
+ \node[gate,draw=green,fill=green!10,minimum width=1.30cm,minimum height=.56cm]
+ (\name) at (2.92,\yy) {$S_d$};
+}
+\draw[softflow] (ha.east)--(sa.west);
+\draw[softflow] (hb.east)--(sb.west);
+\draw[flow] (sa.east)--(4.23,4.22);
+\draw[flow] (sb.east)--(4.23,3.12);
+\draw[gate,fill=neutral] (4.23,2.70) rectangle (5.49,4.63);
+\node[text=blue] at (4.86,4.22) {$\rho_A$};
+\node[text=red] at (4.86,3.12) {$\rho_B$};
+\draw[flow] (5.49,4.22)--(6.13,4.22);
+\draw[flow] (5.49,3.12)--(6.13,3.12);
+\node[observable,minimum width=1.30cm,minimum height=.56cm] at (6.85,4.22) {$Y_A$};
+\node[observable,minimum width=1.30cm,minimum height=.56cm] at (6.85,3.12) {$Y_B$};
+\draw[ink,decorate,decoration={brace,amplitude=3pt}] (7.63,4.46)--(7.63,2.88);
+\node[rotate=90] at (8.06,3.67) {can differ};
+\draw[rule,line width=.5pt] (.55,2.36)--(8.05,2.36);
+% The window-only predictor receives exactly the same argument.
+\node[gate,draw=green,fill=green!10,minimum width=1.30cm,minimum height=.56cm]
+ (sw) at (2.92,1.28) {$S_d$};
+\node[gate,minimum width=1.65cm,minimum height=.85cm,align=center]
+ (wp) at (4.97,1.28) {window\\predictor};
+\draw[flow,purple] (sw.east)--(wp.west);
+\node[observable,minimum width=1.30cm,minimum height=.56cm]
+ (pred) at (7.02,1.28) {$\widehat Y$};
+\draw[flow] (wp.east)--(pred.west);
+\node at (5.35,.48) {one prediction for both histories};
+\end{candidate}
+\end{document}

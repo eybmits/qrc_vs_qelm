@@ -1,0 +1,32 @@
+[
+  {
+    "id": "C1",
+    "title_de": "Zwei Zustände, gleiche Messung",
+    "caption_de": "Schematisch: Zwei unterschiedliche Zustandspaare durchlaufen dieselben späteren Eingaben. Oben kann ein Ausgangsunterschied sichtbar werden. Unten ist gleiche Ausgabe für jede erlaubte Fortsetzung vorausgesetzt; dieser interne Unterschied darf bestehen bleiben.",
+    "scope_en": "Alternative input-created state pairs pass separately through shared updates and declared output measurements. The lower all-continuations equality is stipulated, including the empty continuation; neither fading nor empirical behavior is established."
+  },
+  {
+    "id": "C2",
+    "title_de": "Erreicht der Unterschied den Ausgang?",
+    "caption_de": "Schematisch: Ein interner Unterschied kann zum Ausgang gelangen oder in einem abgeschlossenen unsichtbaren Bereich bleiben. Dessen Abschluss unter allen erlaubten Eingaben ist vorausgesetzt; gezeichnete Verbindungen allein beweisen ihn nicht.",
+    "scope_en": "Nodes and arrows illustrate possible propagation of an input-created state difference, not a physical qubit network. The lower hidden sector is assumed invariant and output-invisible under every allowed update; no finite graph establishes universal invisibility."
+  },
+  {
+    "id": "C3",
+    "title_de": "Heute gleich, später unterscheidbar",
+    "caption_de": "Schematisch: Gleiche Ausgaben jetzt schließen spätere Unterschiede nicht aus. Nur wenn ein anderes Zustandspaar unter jeder erlaubten Fortsetzung gleiche Ausgaben behält, darf sein interner Unterschied dauerhaft unsichtbar bleiben. Diese Bedingung ist vorausgesetzt.",
+    "scope_en": "Two alternative input-created pairs distinguish current output equality from equality under all future continuations. Gold comparisons denote declared outputs, not an invasive measurement sequence. Universal equality in the lower row is stipulated."
+  },
+  {
+    "id": "C4",
+    "title_de": "Ein dauerhaft unsichtbarer Unterschied",
+    "caption_de": "Schematische Zustandsgeometrie: Unterschiedliche Zustände liefern denselben Ausgang. Jede erlaubte Eingabe hält ihren Unterschied in einer unsichtbaren Richtung. Diese Invarianz ist vorausgesetzt; eine einzelne Projektion könnte sie nicht belegen.",
+    "scope_en": "A conceptual state-space projection illustrates a difference in an invariant output-invisible direction. Neither a physical Bloch-space construction nor proof from a projection is claimed; invariance under every allowed update is an explicit condition."
+  },
+  {
+    "id": "C5",
+    "title_de": "Gleiches Verhalten, verschiedene Zustände",
+    "caption_de": "Schematisch: Zustände werden genau dann zusammengefasst, wenn sämtliche erlaubten Fortsetzungen dieselben Ausgaben liefern. Unterschiede innerhalb einer Gruppe dürfen bestehen bleiben. Verschiedene Gruppen unterscheiden sich für mindestens eine Fortsetzung.",
+    "scope_en": "Groups are defined by identical full future-output behavior, including the empty continuation, not inferred from a sampled set of outputs. Distinct groups have at least one distinguishing allowed continuation. No learning or efficiency claim follows."
+  }
+]

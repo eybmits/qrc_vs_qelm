@@ -1,0 +1,72 @@
+\section{LIMITS OF FINITE-WINDOW EMULATION}
+\label{sec:criterion}
+
+Two histories can have different old inputs but the same last $d$ inputs.
+A reset-window model must then make the same prediction, although the
+target QRC's carried state may still distinguish the pasts.  No feature map
+or readout can recover information absent from the window.
+
+Let $S_d(h)$ denote the last $d$ inputs of history $h$.  The largest output
+difference compatible with a known window is
+\begin{equation}
+ D_d=\sup_{S_d(h)=S_d(h')}\|Y(h)-Y(h')\|.
+ \label{eq:diameter}
+\end{equation}
+The supremum runs over admissible histories.  This \emph{common-suffix
+diameter} depends on the target dynamics, the allowed histories, and the
+declared output, but not on the emulator.
+
+For a bounded scalar output, the best possible worst-case error of an
+unrestricted window predictor is exactly
+\begin{equation}
+ \inf_{g_d}\sup_h |Y(h)-g_d(S_d(h))|=\frac{D_d}{2}.
+ \label{eq:window-law}
+\end{equation}
+For each window, predicting the midpoint of its compatible output range
+makes the largest error half that range.  No prediction can be closer to
+both ends.  For finite vector outputs, the optimum is the radius of the
+smallest enclosing ball, between $D_d/2$ and $D_d$.  Randomization retains
+the scalar lower bound on worst-case expected absolute error: identical
+windows still induce identical prediction laws.  The Appendix gives both
+extensions.
+
+If $D_d=0$ at some finite $d$, that window determines the output exactly.
+If $D_d>0$ at every finite length but tends to zero, longer contexts give
+arbitrarily small information error.  Otherwise, a persistent error floor
+remains.  A particular QELM faces a separate question: can its features
+represent a sufficiently accurate function of the window?
+
+For QELM emulation, we make this representation requirement explicit.
+Assume a compact input alphabet,
+finite-dimensional QRC channels that depend continuously on the input, and
+a fixed finite vector of observable expectations $Y=\mathcal C(\rho)$.
+Every finite suffix word must be appendable to every admissible prehistory.
+Finally, assume a growing exact-expectation reset-QELM family that is dense
+in the continuous functions on each finite input window.
+
+\begin{samepage}
+\textit{Reset-window emulation theorem.}  Under these assumptions,
+\begin{equation}
+ \begin{aligned}
+ D_d\longrightarrow0\quad\Longleftrightarrow\quad&
+ \text{for every $\varepsilon>0$ there are}\\
+ &d<\infty\text{ and a reset-QELM $Q_d$}\\
+ &\text{with uniform error below $\varepsilon$.}
+ \end{aligned}
+ \label{eq:qrc-qelm-equivalence}
+\end{equation}
+\end{samepage}
+Necessity follows from the information bound: histories receiving one
+prediction can differ by at most twice the emulator's error.  For
+sufficiency, replay the last $d$ channels from one fixed reachable state.
+This continuous window function has error at most $D_d$.  Choose $d$ to
+make that error small, then approximate the replay function with the
+universal QELM family.  The Appendix gives the proof.
+
+For scalar inputs rescaled to $[0,1]$, a repeated-encoding Bernstein
+construction supplies an explicit growing reset-QELM family
+\cite{goto2021universal,yu2024nonasymptotic}.  Its qubit count and coefficient
+table grow with the window and desired accuracy.  This guarantees existence,
+not efficient learning, and does not make the fixed six-qubit emulator of
+Section~\ref{sec:numerics} universal.  Finite features and shots impose further
+limits.  What properties of the target dynamics make $D_d$ vanish?

@@ -1,36 +1,46 @@
-\section{Summary}
+\section{Discussion and Conclusions}
 \label{sec:summary}
 
-Finite explicit context can approximate recurrent quantum input--output
-behavior arbitrarily well precisely when the effect of earlier inputs vanishes
-as the window grows.  A fixed window reproduces the output exactly only when
-$D_d=0$ at some finite $d$.  For scalar output, $D_d/2$ is the exact best
-window-only worst-case error.  Under compactness, continuity, free
-concatenation, and finite-window universality, a growing reset-QELM family
-achieves arbitrary accuracy if and only if $D_d\to0$.  This concerns the
-declared input--output behavior rather than reconstruction of the QRC's full
-internal state.
+We establish when a quantum reservoir's memory can be replaced by a finite
+window of recent inputs for a chosen input--output task. The key is what
+older inputs still change in the output, not how much information remains
+inside the quantum state. Histories with identical windows must receive
+the same prediction. For a scalar output, the best possible worst-case
+error is exactly half their largest output gap. Under the continuity,
+compactness, and admissible-history assumptions of
+Section~\ref{sec:criterion}, a growing universal exact-expectation
+reset-QELM family achieves arbitrary accuracy if and only if this gap
+vanishes uniformly as the window grows.
 
-{\clubpenalty=10000
-The reachable-observable construction turns the information condition into a
-dynamical one.  It retains only state differences that inputs can create and a
-present or future declared output can reveal.  Their joint spectral radius
-$r_{\rm vis}$ sets the uniform decay rate: values below one give observable
-forgetting; when $0<r_{\rm vis}<1$, the required context grows logarithmically
-in inverse target error.  Uniform full-state contraction is a simple sufficient
-case.  A protected visible mode
-gives the opposite regime, illustrated here by singlet population stored under
-symmetric two-qubit dynamics and read through Pauli correlations.
-\par}
+The dynamical analysis identifies the memory that controls this boundary.
+Only differences that inputs can create and outputs can reveal, now or
+after later inputs, must fade. The full state need not forget its past.
+For exponentially fading output-relevant memory, we determine the
+asymptotic window length needed as the requested accuracy increases.
+The two-qubit construction demonstrates the opposite case: an old input
+writes a symmetry-protected population that remains measurable, imposing
+a nonzero error floor for every finite window.
 
-The held-out simulations translate this boundary into a finite-resource
-workflow.  Supply enough history first, then enough useful features, and then
-enough shots.  Frozen two- and three-qubit cohorts and a prospective
-four-qubit cohort show the same tested loss--window crossover, while nearby
-threshold choices preserve its monotone ordering.  On the registered
-fast-forgetting confirmatory comparison, the strongest classical delay
-control beats the fixed six-qubit QELM, so the evidence does not imply quantum
-advantage.  Instead, it provides a direct way to decide whether a
-failure comes from absent temporal information, limited representation, or
-measurement noise---and whether replacing recurrence by an explicit window is
-possible at all.
+The simulations show how this distinction affects actual emulators.
+In the registered comparisons, longer windows reduce total NRMSE by
+a root median of 78\%, while additional features reduce residual emulator
+NRMSE by 67\% once history is sufficient. Separate follow-ups extend the
+history analysis to four- and five-qubit targets and examine finite-shot
+training. The five-qubit study also shows why a longer window is not
+enough on its own: missing-history error falls even where the fixed
+QELM fails to reach the accuracy target. The finite-shot study identifies
+a further limit: additional features need enough measurements to be useful.
+
+These results distinguish the possibility of emulation from its cost.
+The growing family in the theorem is not the fixed emulator used in the
+experiments, and existence does not guarantee efficient learning. The
+quadratic delay control wins the registered comparison; the experiments
+establish no quantum advantage. All numerical evidence is simulated,
+the cohorts remain separate, and their sampled errors are distinct from
+the worst-case theorem. Hardware noise and measurement backaction remain
+open tests.
+
+The practical conclusion is simple: first supply the history the output
+needs, then represent its dependence on that history, and finally measure
+the representation accurately enough. These are three distinct requirements
+for replacing recurrent memory with finite context.

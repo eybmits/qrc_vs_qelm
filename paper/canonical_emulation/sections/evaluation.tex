@@ -1,49 +1,83 @@
-\section{Numerical results and discussion}
+\section{Numerical Experiments}
 \label{sec:numerics}
 
-The theory suggests a practical order of questions.  Does the window contain
-enough history?  If it does, can the chosen features represent the resulting
-map?  If they can, are there enough measurements to resolve them?  Our
-held-out experiments test this hierarchy.  They illustrate the finite-resource
-consequences of observable forgetting; they do not estimate the worst-case
-$D_d$ or the joint spectral radius $r_{\rm vis}$.
+\subsection{Models and evaluation protocol}
+
+The phase-map trajectories use two-, three-, and four-qubit QRCs,
+using random $XX$ couplings, transverse fields, input-dependent drives,
+and local loss of strength $\gamma_T$.  Inputs come from a uniform
+33-point alphabet on $[0,1]$, and the declared outputs are single-site Pauli
+expectations and same-axis two-site correlations.  One fixed six-qubit
+reset-QELM emulator encodes the last $d\leq6$ inputs into a product state,
+evolves it with independent random $XX$ couplings, and records single-site
+Pauli features at nested measurement times.  We vary the window length $d$,
+the feature budget $B\in\{18,36,72\}$, and, in the finite-shot study, the
+number of circuit shots per input $Q$.  This emulator is not the growing
+universal family in the theorem.  Full dynamics and training parameters are
+given in Appendix~\ref{sec:methods}.
+
+Each independent realization block, called a root, fixes a target QRC,
+input streams, and a QELM feature map.  Training, validation, test, and
+diagnostic streams are separate within each root.  Training data determine
+feature standardization, and validation data select the ridge readout.
+The confirmatory cohort has 12 roots for the two- and three-qubit targets.
+A denser loss--window map uses disjoint seeds, and a separately frozen,
+prospectively specified four-qubit follow-up uses 12 new roots.  Cohorts
+are evaluated separately, not pooled.
+
+To isolate missing history, a held-out common-suffix panel combines different
+old histories with identical recent inputs.  Within each such group, the
+mean squared variation of target outputs around their mean is the old-history term:
+one window prediction cannot distinguish the branches.  The squared distance
+between that prediction and the group mean is the residual emulator error.
+These two terms add exactly to the panel's mean squared error
+[Eq.~\eqref{eq:panel-decomposition}].  This is a distribution-dependent
+diagnostic, not a direct estimate of the worst-case $D_d$ or the joint
+spectral radius $r_{\rm vis}$.
+
+We report normalized root mean squared error (NRMSE); the tolerance $0.10$
+means an RMSE equal to 10\% of the target standard deviation.  A frontier
+cell meets a target when at least 10 of 12 roots meet that tolerance.
+Confidence intervals use paired root-block bootstrap samples: roots, not
+individual rows or repeated measurements, are the statistical units.
 
 \begin{figure*}[t]
- \includegraphics[width=\textwidth]{fig02_information_frontier.pdf}
- \caption{\textbf{Longer context reduces missing history; successful emulation also needs the right features.}
- \textbf{a}--\textbf{c} Median old-history error versus loss rate for all six
- tested windows.  Markers show all 198 simulated loss--window cells; lines
- connect measured points.  Errors are normalized RMSE shown as percentages;
- the dashed line marks $10\%=0.10$.  \textbf{d}--\textbf{f} Feature requirements
- at the six tested transition rates, shown as discrete rows.  Colored shapes
- give the smallest tested budget $B\in\{18,36,72\}$ that meets the total-error
- target in at least 10 of 12 roots, after the history target is met in at least
- 10 roots.  Crosses mark history-sufficient cells with no successful tested
- budget; pale dots mark insufficient history.  All lower rates fail the
- history rule.  A root is an independent realization block, so the robust
- rule is distinct from the median crossing above.  Columns show the frozen
- two- and three-qubit cohort and the separately frozen four-qubit follow-up;
- cohorts are not pooled.}
- \label{fig:information-frontier}
+ \includegraphics[width=\textwidth]{fig04_long_context_n5.pdf}
+ \caption{\textbf{Five-qubit targets and longer context.}
+ Separate prospective cohort: 12 new roots, a fixed ten-qubit reset-QELM,
+ and all tested windows at $\gamma_T=1$ (a) and 4 (b).
+ Common-suffix NRMSE compares the history floor, fixed $B=120$ QELM,
+ and quadratic delay. Lines show root medians; whiskers span the
+ 10th--90th percentiles. The key applies to both panels; the gray dashed line marks 10\%.
+ The larger emulator register is an additional resource, not a matched-size advantage.}
+ \label{fig:long-context}
 \end{figure*}
 
-\subsection{Include enough history}
+\subsection{History, representation, and measurement limits}
 
-Figure~\ref{fig:information-frontier} shows the first transition.  Under weak
-loss, old prefixes still change the target output throughout the tested
+The results follow three questions.  Does the window contain enough history?
+Can the features represent the resulting map?  Are enough shots available to
+resolve those features?
+
+Under weak loss, old prefixes still change the target output throughout the tested
 window range, and no feature budget can repair the missing inputs.  Increasing
 loss makes old inputs fade and shifts the measured frontier toward shorter
 windows.  Across the preregistered transition cells ($B=72$,
 $\gamma_T\in\{2,4\}$), increasing $d=1\to6$ reduces held-out QELM NRMSE by a root median of $78.45\%$ (95\% CI
 $[76.64,80.80]\%$), with the same direction in all 12 roots.
 
-The dense map tests 11 loss rates and every integer window from one to six.
+The dense maps test 11 loss rates and every integer window from one to six:
+198 cells across the two- and three-qubit cohort and the separately frozen
+four-qubit follow-up.
 All rootwise local-loss decay fits have negative slope for both confirmatory
 target QRC sizes.  The independent four-qubit cohort also has negative
 rootwise decay slopes and a non-increasing frontier, and every root reaches
 the inherited anchor $\gamma_T=4,d=6,B=72$.  In all three sizes, no tested
 window is history-sufficient through $\gamma_T=1$, whereas the minimum window
-falls to two by $\gamma_T=4$.  This establishes the loss--window crossover for
+falls to two by $\gamma_T=4$.  The tested minimum history windows coincide
+across sizes, while minimum successful feature budgets and emulation outcomes
+differ.  For each size at $\gamma_T=2,B=72$, $d=5$ meets the total-error
+root rule but $d=6$ does not.  This establishes the loss--window crossover for
 the tested two-, three-, and four-qubit QRCs, not an asymptotic size law.
 
 The primary frontier uses the preregistered NRMSE tolerance $0.10$ and a
@@ -55,50 +89,28 @@ single-threshold artifact.
 
 On the fast-forgetting slice, the resource limits appear in sequence.  At
 $d=1,B=72$, all roots are history limited.  At $d=6,B=18$, the history
-target is met but the fixed QELM is usually representation limited.  At
-$d=6,B=36$, every root in all three target QRC sizes reaches the tolerance.  These
-anchors connect the phase map to the separate resource traces in
-Fig.~\ref{fig:resource-diagnosis}.
-
-\begin{figure*}[t]
- \includegraphics[width=\textwidth]{fig03_resource_diagnosis.pdf}
- \caption{\textbf{Three resources address three different limits.}
- All errors are normalized RMSE shown as percentages ($10\%=0.10$).
- \textbf{a} Old-history NRMSE falls with scaled context
- $\gamma_T\Delta t\,d$; faint curves are roots, heavy curves are size-wise
- medians, and bands span the 10th--90th root percentiles.
- \textbf{b} Once history is sufficient at
- $\gamma_T=4,d=6$, more measured features reduce total QELM NRMSE; faint
- curves are roots and heavy curves are medians.  \textbf{c} More shots reduce
- validation-selected test NRMSE; curves are root medians and the pale band
- spans the selected policy's 10th--90th percentiles.  Dashed horizontal lines
- mark the $0.10$ target.  Panel \textbf{c} is a post-confirmatory finite-shot
- follow-up with 16 complete fit-and-selection replicates per four-qubit root.}
- \label{fig:resource-diagnosis}
-\end{figure*}
-
-\subsection{Add enough features}
+target is met but the fixed QELM is usually representation limited in the
+operational sense defined in Section~\ref{sec:methods}. At
+$d=6,B=36$, every root in all three target QRC sizes reaches the tolerance.
+Figure~\ref{fig:resource-diagnosis}(b) shows the feature dependence for the
+two- and three-qubit targets.
 
 On the history-sufficient slice $\gamma_T=4,d=6$, increasing the QELM budget
-from $B=18$ to 72 reduces common-suffix representation NRMSE by a root median
+from $B=18$ to 72 reduces common-suffix residual emulator NRMSE by a root median
 of $67.26\%$ (95\% CI $[55.33,75.63]\%$), with the same direction in all 12
 roots and both confirmatory sizes.  At $B=72$, all 24 confirmatory
 root-by-size cases are emulated.  Additional features can meet the total-error
-target only after the window is history-sufficient; they do not change the old-history term
-[Fig.~\ref{fig:resource-diagnosis}(b)].
-
-\subsection{Use enough shots}
+target only after the window is history-sufficient; they do not change the old-history term.
 
 The post-confirmatory exploratory finite-shot study repeats training, validation, and testing with
-independently sampled features.  Validation-selected test NRMSE falls from
+independently sampled features; target outputs remain exact expectations.
+Validation-selected test NRMSE falls from
 $0.231$ at 300 shots per input to $0.0800$ at 19,200 shots, a $65.20\%$
 reduction (95\% CI $[64.04,66.47]\%$), positive in all 12 roots.  Validation
 selects $B=36$ most often at low shot counts and $B=72$ at high shot counts.
 In this experiment, the extra features improve selected test error only when
 the measurement budget resolves them [Fig.~\ref{fig:resource-diagnosis}(c)]
 \cite{hu2023sampling,ahmed2025finite}.
-
-\subsection{Classical controls and interpretation}
 
 Linear delay, quadratic delay, and dimension-matched random-tanh controls use
 the same windows and splits as the QELM.  Quadratic delay is the strongest
@@ -107,6 +119,12 @@ the $B=72$ QELM in every root.  The experiments therefore support the informatio
 criterion and its history--representation--measurement diagnosis.  They do not
 support a quantum-advantage interpretation for the tested emulator.
 
-Thus fading memory permits finite-context emulation only after sufficient
-context, features, and shots, whereas persistent visible memory creates an
-architecture-independent error floor.
+With five-qubit targets and a ten-qubit reset-QELM
+(Fig.~\ref{fig:long-context}), increasing $d=2\to10$ reduces history NRMSE
+by root medians of $93.55\%$ at $\gamma_T=1$ and $99.63\%$ at
+$\gamma_T=4$, positive in all 12 roots at each loss.
+At $\gamma_T=1$, windows 6, 8, and 10 meet the history rule but no tested
+QELM budget meets the total-error rule. At $\gamma_T=4$, every window meets
+the history rule; $B=60$ reaches the total-error target in all 12 roots
+only from $d=4$ onward. Quadratic delay beats the fixed $B=120$ QELM in
+118 of 120 streaming root--condition comparisons.

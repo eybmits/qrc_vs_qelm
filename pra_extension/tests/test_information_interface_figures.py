@@ -8,6 +8,8 @@ import subprocess
 import sys
 
 import matplotlib
+from matplotlib.colors import to_rgba
+import numpy as np
 import pandas as pd
 import pytest
 
@@ -17,6 +19,7 @@ CODE_ROOT = REPO_ROOT / "pra_extension" / "code"
 if str(CODE_ROOT) not in sys.path:
     sys.path.insert(0, str(CODE_ROOT))
 
+from figure1_timeseries import output_provenance, provenance as input_provenance  # noqa: E402
 from render_information_interface_figures import (  # noqa: E402
     DEFAULT_DARK_SUMMARY,
     DEFAULT_DENSE_PHASE_SOURCE,
@@ -24,6 +27,9 @@ from render_information_interface_figures import (  # noqa: E402
     DEFAULT_DENSE_N4_PHASE_SOURCE,
     DEFAULT_DENSE_N4_SUFFIX_SOURCE,
     DEFAULT_PHASE_SOURCE,
+    DEFAULT_SCALING_SOURCE,
+    DEFAULT_SHOT_SOURCE,
+    DEFAULT_SUFFIX_SOURCE,
     FIGURE_SIZES,
     PALETTE,
     STYLE,
@@ -33,6 +39,8 @@ from render_information_interface_figures import (  # noqa: E402
     _validated_dense_n4_phase_source,
     _validated_dense_merged_source,
     render_all,
+    render_figure_2,
+    render_figure_3,
     simplified_phase_table,
 )
 
@@ -40,7 +48,7 @@ from render_information_interface_figures import (  # noqa: E402
 EXPECTED_ARTIFACTS = {
     "fig01_information_interface.pdf",
     "fig01_information_interface.png",
-    "fig01_information_interface_source.json",
+    "fig01_information_interface_render_source.json",
     "fig02_information_frontier.pdf",
     "fig02_information_frontier.png",
     "fig02_information_frontier_source.csv",
@@ -56,16 +64,16 @@ EXPECTED_STYLE = {
     "axes_labelsize": 10.0,
     "axes_titlesize": 10.5,
     "tick_labelsize": 9.0,
-    "legend_fontsize": 9.0,
-    "axes_linewidth": 0.65,
-    "primary_linewidth": 1.3,
+    "legend_fontsize": 8.5,
+    "axes_linewidth": 0.55,
+    "primary_linewidth": 1.1,
     "grid_linewidth": 0.45,
 }
 
 EXPECTED_FIGURE_SIZES = {
-    "fig1": (7.055, 4.40),
-    "fig2": (7.055, 6.10),
-    "fig3": (7.055, 3.50),
+    "fig1": (7.055, 13.0 / 2.54),
+    "fig2": (7.055, 2.65),
+    "fig3": (7.055, 2.40),
 }
 
 EXPECTED_PALETTE = {
@@ -82,24 +90,70 @@ EXPECTED_PALETTE = {
     "scrambled_light": "#FEECE9",
     "yellow": "#FFC943",
     "pale_yellow": "#FFDD92",
-    "orange": "#FF8431",
+    "orange": "#FC4D30",
     "purple": "#A93BFF",
     "viridis_18": "#7AD151",
     "viridis_36": "#2A788E",
     "viridis_72": "#482475",
-    "family_2": "#253494",
-    "family_3": "#E8590C",
-    "story_ink": "#20242A",
+    "family_2": "#3B86FF",
+    "family_3": "#FC4D30",
+    "story_ink": "#000000",
     "story_border": "#CBD5E1",
     "story_neutral": "#F8FAFC",
-    "story_blue": "#3572C6",
+    "story_blue": "#3B86FF",
     "story_blue_light": "#EDF3FC",
-    "story_green": "#169B62",
+    "story_green": "#00A14B",
     "story_green_light": "#EBF7F1",
-    "story_orange": "#D97716",
+    "story_orange": "#FC4D30",
     "story_orange_light": "#FFF1DF",
     "white": "#FFFFFF",
 }
+
+
+def test_resource_whiskers_preserve_root_variability_without_faint_traces(tmp_path, monkeypatch):
+    from matplotlib.collections import PolyCollection
+    from matplotlib.container import ErrorbarContainer
+    from matplotlib.figure import Figure
+
+    source = pd.read_csv(
+        REPO_ROOT / "paper/figures/information_interface/fig03_resource_diagnosis_source.csv"
+    )
+    reviewed = []
+
+    def inspect(fig, *args, **kwargs):
+        if reviewed:
+            return
+        for index, (panel, xkey) in enumerate(
+            (("history", "scaling_x"), ("features", "feature_budget"), ("shots", "total_shots"))
+        ):
+            ax = fig.axes[index]
+            assert not any(isinstance(artist, PolyCollection) for artist in ax.collections)
+            assert all(line.get_alpha() in (None, 1) for line in ax.lines)
+            bars = [item for item in ax.containers if isinstance(item, ErrorbarContainer)]
+            assert len(bars) == (1 if panel == "shots" else 2)
+            for j, bar in enumerate(bars):
+                rows = source[source["panel"].eq(panel)]
+                if panel == "shots":
+                    rows = rows[rows["metric"].eq("selected_policy_test_nrmse")]
+                else:
+                    rows = rows[rows["teacher_n_qubits"].eq(j + 2)]
+                grouped = rows.groupby(xkey)["value"]
+                x = np.array(sorted(rows[xkey].unique()))
+                lo = grouped.quantile(0.10).to_numpy()
+                hi = grouped.quantile(0.90).to_numpy()
+                segments = bar.lines[2][0].get_segments()
+                np.testing.assert_allclose(segments, np.array([
+                    [[xx, lower], [xx, upper]] for xx, lower, upper in zip(x, lo, hi)
+                ]))
+                if panel != "shots":
+                    np.testing.assert_allclose(
+                        np.asarray(bar.lines[0].get_ydata(), dtype=float), grouped.median()
+                    )
+        reviewed.append(True)
+
+    monkeypatch.setattr(Figure, "savefig", inspect)
+    render_figure_3(DEFAULT_SCALING_SOURCE, DEFAULT_SUFFIX_SOURCE, DEFAULT_SHOT_SOURCE, tmp_path)
+    assert reviewed == [True]
 
 
 def test_resource_panels_share_one_row():
@@ -116,6 +170,150 @@ def test_resource_panels_share_one_row():
         assert all(0 <= b.x0 < b.x1 <= 1 and 0 <= b.y0 < b.y1 <= 1 for b in boxes)
     finally:
         plt.close(fig)
+
+
+@pytest.mark.parametrize("figure_number", (2, 3))
+def test_quantitative_panels_are_physically_square_and_title_free(
+    figure_number: int,
+    tmp_path: Path,
+    monkeypatch: pytest.MonkeyPatch,
+) -> None:
+    from matplotlib.figure import Figure
+
+    captured = []
+
+    def inspect_figure(fig: Figure, *args, **kwargs) -> None:
+        if captured:
+            return
+        fig.canvas.draw()
+        axes = fig.axes
+        assert len(axes) == 3
+        for index, ax in enumerate(axes):
+            box = ax.get_window_extent()
+            assert box.width / box.height == pytest.approx(1.0, rel=0.01)
+            assert ax.get_box_aspect() == 1
+            assert ax.get_title() == ""
+            assert ax.get_title(loc="left") == ""
+            assert ax.get_title(loc="right") == ""
+            allowed_labels = {"a", "b", "c", "10% target"}
+            if figure_number == 2:
+                allowed_labels |= {f"$d={window}$" for window in range(1, 7)}
+                allowed_labels.add(f"{index + 2}-qubit QRC")
+            assert {text.get_text() for text in ax.texts} <= allowed_labels
+            letter = [text for text in ax.texts if text.get_text() == "abc"[index]]
+            assert len(letter) == 1
+            assert letter[0].get_transform() == ax.transAxes
+            assert all(0 < coordinate < 1 for coordinate in letter[0].get_position())
+            assert all(spine.get_visible() for spine in ax.spines.values())
+            legend = ax.get_legend()
+            assert legend is not None and not legend.get_title().get_text()
+            legend_box = legend.get_window_extent()
+            assert box.contains(legend_box.x0, legend_box.y0)
+            assert box.contains(legend_box.x1, legend_box.y1)
+        assert not fig.legends
+        assert not fig.texts
+        # Both figures occupy one row, with unscaled square plotting boxes.
+        boxes = [ax.get_window_extent() for ax in axes]
+        assert [box.y0 for box in boxes] == pytest.approx([boxes[0].y0] * 3)
+        assert all(left.x1 < right.x0 for left, right in zip(boxes, boxes[1:]))
+        captured.append(fig)
+
+    monkeypatch.setattr(Figure, "savefig", inspect_figure)
+    if figure_number == 2:
+        render_figure_2(
+            DEFAULT_DENSE_PHASE_SOURCE,
+            DEFAULT_DENSE_SUFFIX_SOURCE,
+            DEFAULT_DENSE_N4_PHASE_SOURCE,
+            DEFAULT_DENSE_N4_SUFFIX_SOURCE,
+            tmp_path,
+        )
+    else:
+        render_figure_3(
+            DEFAULT_SCALING_SOURCE,
+            DEFAULT_SUFFIX_SOURCE,
+            DEFAULT_SHOT_SOURCE,
+            tmp_path,
+        )
+    assert len(captured) == 1
+
+
+def test_integrated_frontier_markers_preserve_every_measurement_and_outcome(
+    tmp_path: Path,
+    monkeypatch: pytest.MonkeyPatch,
+) -> None:
+    from matplotlib.figure import Figure
+
+    phase = _validated_dense_merged_source(
+        DEFAULT_DENSE_PHASE_SOURCE,
+        DEFAULT_DENSE_SUFFIX_SOURCE,
+        DEFAULT_DENSE_N4_PHASE_SOURCE,
+        DEFAULT_DENSE_N4_SUFFIX_SOURCE,
+    )
+    outcome_styles = {
+        "HISTORY_NOT_ROBUST": ("o", False),
+        "NO_TESTED_QELM_ROBUST": ("x", True),
+        "QELM_18": ("o", True),
+        "QELM_36": ("s", True),
+        "QELM_72": ("D", True),
+    }
+    drawn = {}
+
+    def inspect_figure(fig: Figure, *args, **kwargs) -> None:
+        if drawn:
+            return
+        assert len(fig.axes) == 3
+        for n_qubits, ax in zip((2, 3, 4), fig.axes):
+            family = phase.loc[phase["teacher_n_qubits"].eq(n_qubits)]
+            curves = [line for line in ax.lines if len(line.get_xdata()) == 11
+                      and line.get_marker() in (None, "None", "")]
+            assert len(curves) == 6
+            for window, curve in zip(range(1, 7), curves):
+                expected = family.loc[family["window"].eq(window)].sort_values("teacher_gamma")
+                assert list(curve.get_xdata()) == pytest.approx(expected["teacher_gamma"])
+                assert list(curve.get_ydata()) == pytest.approx(expected["median_history_nrmse"])
+                color = to_rgba(curve.get_color())
+                markers = [line for line in ax.lines
+                           if line.get_marker() in {"o", "x", "s", "D"}
+                           and to_rgba(line.get_markeredgecolor()) == color]
+                assert sum(len(line.get_xdata()) for line in markers) == 11
+                for marker in markers:
+                    for gamma, error in zip(marker.get_xdata(), marker.get_ydata()):
+                        row = expected.loc[expected["teacher_gamma"].eq(gamma)].iloc[0]
+                        assert float(error) == pytest.approx(row["median_history_nrmse"])
+                        outcome = str(row["display_outcome"])
+                        shape, filled = outcome_styles[outcome]
+                        assert marker.get_marker() == shape
+                        assert to_rgba(marker.get_markerfacecolor()) == (
+                            color if filled else to_rgba("white")
+                        )
+                        key = (n_qubits, float(gamma), window)
+                        assert key not in drawn
+                        drawn[key] = outcome
+
+    monkeypatch.setattr(Figure, "savefig", inspect_figure)
+    render_figure_2(
+        DEFAULT_DENSE_PHASE_SOURCE, DEFAULT_DENSE_SUFFIX_SOURCE,
+        DEFAULT_DENSE_N4_PHASE_SOURCE, DEFAULT_DENSE_N4_SUFFIX_SOURCE, tmp_path,
+    )
+    assert len(drawn) == 198
+    expected_outcomes = phase.set_index(
+        ["teacher_n_qubits", "teacher_gamma", "window"],
+    )["display_outcome"].to_dict()
+    assert drawn == expected_outcomes
+    # A sub-target median is not sufficient for the frozen 10-of-12 rule.
+    below_but_not_robust = phase.loc[
+        phase["median_history_nrmse"].le(0.10) & phase["history_sufficient_n"].lt(10)
+    ]
+    assert len(below_but_not_robust) == 6
+    for row in below_but_not_robust.itertuples():
+        assert drawn[(row.teacher_n_qubits, row.teacher_gamma, row.window)] == "HISTORY_NOT_ROBUST"
+    # The displayed symbols must not turn real d=5 success / d=6 failure into
+    # a monotonic feasible region, even though history error decreases.
+    for n_qubits, successful in ((2, "QELM_72"), (3, "QELM_72"), (4, "QELM_36")):
+        assert drawn[(n_qubits, 2.0, 5)] == successful
+        assert drawn[(n_qubits, 2.0, 6)] == "NO_TESTED_QELM_ROBUST"
+    archived = REPO_ROOT / "paper/figures/information_interface/fig02_information_frontier_source.csv"
+    assert (tmp_path / archived.name).read_bytes() == archived.read_bytes()
 
 
 def _pdf_media_box(path: Path) -> tuple[float, float]:
@@ -151,6 +349,7 @@ def test_reference_figure_style_contract_is_frozen() -> None:
     assert matplotlib.rcParams["ytick.labelsize"] == STYLE["tick_labelsize"]
     assert matplotlib.rcParams["legend.fontsize"] == STYLE["legend_fontsize"]
     assert matplotlib.rcParams["axes.linewidth"] == STYLE["axes_linewidth"]
+    assert matplotlib.rcParams["axes.labelweight"] == "bold"
 
 
 def test_native_tikz_story_preserves_readable_labels_and_emulation_scope() -> None:
@@ -162,25 +361,40 @@ def test_native_tikz_story_preserves_readable_labels_and_emulation_scope() -> No
     assert r"\renewcommand{\familydefault}{\sfdefault}" in tikz_source
     font_sizes = [float(size) for size in re.findall(r"\\fontsize\{([\d.]+)\}", tikz_source)]
     assert font_sizes
-    assert min(font_sizes) >= 9.5
-    assert max(font_sizes) == 10.5
+    assert min(font_sizes) >= 10
+    # The architecture drawing uses native-sized labels and slightly larger
+    # bold panel letters, without shrinking an oversized source into the paper.
+    assert max(font_sizes) <= 12
     assert r"\resizebox" not in tikz_source
-    for required_story_label in (
-        "Can finite context replace recurrent quantum memory?",
-        "Which stored memory matters?",
-        "When is replacement possible?",
-        "carried state",
-        "same reset state for each window",
-        "Past inputs can create it",
-        "Declared outputs can reveal it",
-        "now or after later inputs",
-        "Relevant memory fades uniformly",
-        "universal reset-QELM family",
-        "Visible memory persists",
-        "for every finite window",
-        "schematic",
+    assert r"\scalebox" not in tikz_source
+    for required_component in (
+        "QRC", "QELM", r"\rho", r"\widehat", "reset", "window",
+        "carried state", "E(S_d)", "fixed gates", "observables",
+        "output", "past influence fades", "persistent floor", "within tolerance",
+        "scalar optimum", r"$D_d/2$", r"$\varepsilon$",
     ):
-        assert required_story_label in tikz_source
+        assert required_component in tikz_source
+    assert tikz_source.count("{observables}") == 2
+    assert "measured features" not in tikz_source
+    architecture = re.sub(r"%[^\n]*", "", tikz_source.split("% b:", maxsplit=1)[0])
+    assert not re.search(
+        r"\\node[^;]*\{[^{}]*(?:trained|readout)[^{}]*\};", architecture, re.I,
+    )
+    triangles = re.findall(r"\\draw\[[^\]]*fill=gold[^\]]*\][^;]*--cycle;", architecture)
+    assert len(triangles) == 2
+    assert r"{$Y_t$}" in architecture and r"{$\widehat Y_t$}" in architecture
+    assert "declared output" not in architecture and "emulated output" not in architecture
+    assert r"\mathcal C" not in architecture
+    # Compact graphics can put theorem qualifications into their caption;
+    # the companion metadata below still checks the full emulation scope.
+    figure_context = tikz_source + (
+        REPO_ROOT / "paper/canonical_emulation/sections/introduction.tex"
+    ).read_text(encoding="utf-8")
+    for required_qualification in ("growing", "universal"):
+        assert required_qualification in figure_context
+    assert "schematic" in tikz_source.lower()
+    assert "unrestricted scalar worst-case absolute history error" in tikz_source
+    assert "not the measured test error" in tikz_source
 
 
 def test_plot_labels_use_plain_language_and_separate_resource_questions() -> None:
@@ -195,12 +409,16 @@ def test_plot_labels_use_plain_language_and_separate_resource_questions() -> Non
     for removed_row_title in (
         "How much old history remains?",
         "Which reset-QELM reaches the target?",
+        "Smallest successful feature count",
+        "Include enough",
+        "Add enough",
+        "Resolve features",
+        'f"{n_qubits}-qubit QRC", y=',
     ):
         assert removed_row_title not in renderer_source
     for required_plot_label in (
-        "Smallest successful feature count",
-        "no tested QELM succeeds",
-        "history target unmet",
+        "QELM unmet",
+        "history unmet",
     ):
         assert required_plot_label in renderer_source
 
@@ -250,32 +468,121 @@ def test_information_interface_figures_are_complete_traceable_and_deterministic(
             assert path.stat().st_size > 50_000
 
     story = json.loads(
-        (first_dir / "fig01_information_interface_source.json").read_text(
+        (first_dir / "fig01_information_interface_render_source.json").read_text(
             encoding="utf-8"
         )
     )
     assert story["figure_question"] == (
         "when can explicit finite context reproduce recurrent input-output behavior"
     )
-    assert story["panels"] == {
-        "a": "recurrent quantum state versus reset-window input-output emulation",
-        "b": "input-reachable and future-output-visible memory directions",
-        "c": "uniformly fading relevant memory versus persistent visible memory",
-    }
+    shared_input = story["input_timeseries"]
+    assert shared_input == input_provenance(
+        REPO_ROOT / "paper/figures/information_interface/fig01_information_interface.tex"
+    )
+    assert shared_input["plot_geometry"]["input_axis_count"] == 1
+    assert shared_input["plot_geometry"]["sample_axes_side_cm"] == 4.40
+    assert shared_input["plot_geometry"]["full_input_axes_bounds_cm"] == [0.92, 6.60, 5.32, 11.0]
+    assert "no separate duplicate plot" in shared_input["plot_geometry"]["window_view"]
+    assert shared_input["plot_geometry"]["window_bracket_index_extent"] == [140.5, 180]
+    assert shared_input["window_indices"] == list(range(141, 181))
+    assert shared_input["future_context_indices"] == list(range(181, 201))
+    assert set(shared_input["window_indices"]).isdisjoint(shared_input["future_context_indices"])
+    assert story["selected_design"] == "variant_a_architectures"
+    assert story["selected_theory_panel"] == "B4"
+    assert story["removed_panel"] == "c"
+    assert "restored_panel" not in story
+    historical = story["historical_input_audit"]
+    historical_path = REPO_ROOT / historical["path"]
+    assert historical_path.name == "fig01_information_interface_source.json"
+    assert historical["sha256"] == (
+        "d5a76f449661e3f4fabf909a6271208f838907f076db1c02652b771665d23965"
+    )
+    assert hashlib.sha256(historical_path.read_bytes()).hexdigest() == historical["sha256"]
+    assert "not the source description of the current drawing" in historical["status"]
+    # Rendering a current drawing must never rewrite the N5-bound snapshot.
+    assert not (first_dir / historical_path.name).exists()
+    assert not (second_dir / historical_path.name).exists()
+    assert "fixed target readout" in story["readout_scope"]
+    assert "trained reset-QELM emulator readout" in story["readout_scope"]
+    assert "matching gold observable banks" in story["architecture_motifs"]
+    assert story["canvas_aspect_ratio"] == pytest.approx(17.9197 / 13.0)
+    assert set(story["panels"]) == {"a", "b"}
+    assert "recurrent" in story["panels"]["a"]
+    assert "reset" in story["panels"]["a"]
+    assert "optimal scalar history error" in story["panels"]["b"]
+    assert "tolerance crossing" in story["panels"]["b"]
+    assert "persistent" in story["panels"]["b"]
+    assert "shared illustrative output-comparison" in story["panels"]["a"]
     assert "future declared outputs" in story["memory_relevance"]
     assert "full-state forgetting is not required" in story["memory_relevance"]
+    history_error = story["panel_b_history_error"]
+    assert history_error["design_candidate"] == "B4"
+    assert "not simulated or fitted evidence" in history_error["status"]
+    assert history_error["quantity"] == "D_d/2"
+    assert history_error["loss"] == "worst-case absolute scalar error"
+    assert "largest output ambiguity over all histories" in history_error["comparison"]
+    assert "sharing their last d inputs" in history_error["comparison"]
+    assert "supremal declared-output distance" in story["common_suffix_diameter"]
+    assert "not an empirical test threshold" in history_error["tolerance"]
+    assert "not the first strict integer d_epsilon" in history_error["crossing"]
+    assert "tends to zero" in history_error["fading"]
+    assert "enters the green tolerance band" in history_error["fading"]
+    assert "above the illustrated tolerance" in history_error["persistent"]
+    assert "unrestricted window-only optimum" in history_error["scope"]
+    assert "representation and measurement errors remain separate" in history_error["scope"]
+    assert history_error["axes_size_cm"] == [6.40, 2.40]
+    assert "one analytic exponential" in history_error["blue_curve"]
+    curve = history_error["blue_curve_display"]
+    assert curve == {
+        "coordinate_scope": "local coordinates before the panel translation",
+        "panel_translation_cm": [4.0, 0.0],
+        "baseline_y_cm": 0.85,
+        "amplitude_cm": 2.19,
+        "decay_per_cm": 0.40707656282948684,
+        "origin_x_cm": 1.66,
+        "domain_x_cm": [1.66, 7.52],
+        "crossing_cm": [4.76, 1.47],
+    }
+    crossing_x, crossing_y = curve["crossing_cm"]
+    assert curve["baseline_y_cm"] + curve["amplitude_cm"] * np.exp(
+        -curve["decay_per_cm"] * (crossing_x - curve["origin_x_cm"]),
+    ) == pytest.approx(crossing_y, abs=1e-12)
+    assert "panel_c_output_traces" not in story
+    output_traces = story["panel_a_output_comparisons"]
+    assert output_traces == output_provenance()
+    assert output_traces["axis_count"] == 1
+    assert output_traces["axes_side_cm"] == 4.40
+    assert output_traces["axes_bounds_cm"] == [13.40, 6.60, 17.80, 11.00]
+    assert output_traces["amplitude_limits"] == [0.3, 1.5]
+    assert output_traces["time_limits"] == [-3, 103]
+    assert output_traces["time_ticks"] == [0, 40, 80]
+    assert output_traces["template_stream"]["seed"] == 2
+    assert output_traces["template_stream"]["generated_count"] == 101
+    assert "not simulated, fitted, or measured QRC/QELM performance" in output_traces["status"]
+    assert "separate auxiliary toy timeline" in output_traces["relationship_to_input"]
+    assert output_traces["memory_access"]["first_excluded_step"] == 40
+    assert output_traces["memory_access"]["post_expiry_pair_midpoint_error"] == 0.25
+    assert "not a fitted finite-feature QELM" in output_traces["emulator_scope"]
     tikz_path = (
         REPO_ROOT / "paper" / "figures" / "information_interface"
         / "fig01_information_interface.tex"
     )
     assert story["tikz_source_sha256"] == hashlib.sha256(tikz_path.read_bytes()).hexdigest()
-    assert story["typography"] == "native 9.5-10.5 pt text at 7.055 inch width"
+    assert "native" in story["typography"]
+    assert "7.055" in story["typography"]
     assert story["schematic_curves"] is True
     assert story["regimes"]["finite"]["condition"] == "D_d = 0 for some finite d"
     assert "positive at every finite d" in story["regimes"]["fading"]["condition"]
     assert "r_vis < 1" in story["regimes"]["fading"]["condition"]
     assert "Delta/2" in story["regimes"]["persistent"]["consequence"]
     assert "D_d tends to zero" in story["emulation_statement"]
+    assert "exact-expectation" in story["emulation_statement"]
+    assert "universal on each finite" in story["emulation_statement"]
+    for required_scope in (
+        "finite-dimensional", "input-continuous", "fixed finite",
+        "compact inputs", "freely concatenable suffixes",
+    ):
+        assert required_scope in story["scope"]
     assert re.fullmatch(
         r"[0-9a-f]{64}",
         story["upstream_dark_sector_summary_sha256"],
@@ -447,25 +754,25 @@ def test_merged_dense_source_keeps_cohort_provenance_separate() -> None:
     assert phase.groupby("evidence_cohort")["root_set_sha256"].first().nunique() == 2
 
 
-def test_feature_panel_omits_only_uniformly_history_insufficient_low_loss_cells() -> None:
+def test_integrated_frontier_retains_uniformly_history_insufficient_low_loss_cells() -> None:
     phase = _validated_dense_merged_source(
         DEFAULT_DENSE_PHASE_SOURCE,
         DEFAULT_DENSE_SUFFIX_SOURCE,
         DEFAULT_DENSE_N4_PHASE_SOURCE,
         DEFAULT_DENSE_N4_SUFFIX_SOURCE,
     )
-    omitted = phase.loc[phase["teacher_gamma"].le(1.0)]
-    assert len(omitted) == 90
-    assert set(omitted["teacher_n_qubits"]) == {2, 3, 4}
-    assert set(omitted["window"]) == {1, 2, 3, 4, 5, 6}
-    assert omitted["display_outcome"].eq("HISTORY_NOT_ROBUST").all()
-    assert omitted["history_sufficient_n"].lt(10).all()
-    # Their measurements remain in the full figure source and upper curves.
+    low_loss = phase.loc[phase["teacher_gamma"].le(1.0)]
+    assert len(low_loss) == 90
+    assert set(low_loss["teacher_n_qubits"]) == {2, 3, 4}
+    assert set(low_loss["window"]) == {1, 2, 3, 4, 5, 6}
+    assert low_loss["display_outcome"].eq("HISTORY_NOT_ROBUST").all()
+    assert low_loss["history_sufficient_n"].lt(10).all()
+    # Both measurements and status symbols now remain in the integrated curves.
     archived = pd.read_csv(
         REPO_ROOT / "paper" / "figures" / "information_interface"
         / "fig02_information_frontier_source.csv"
     )
-    assert len(archived.loc[archived["teacher_gamma"].le(1.0)]) == len(omitted)
+    assert len(archived.loc[archived["teacher_gamma"].le(1.0)]) == len(low_loss)
 
 
 def test_feature_frontier_keeps_real_nonmonotonic_window_outcomes() -> None:
