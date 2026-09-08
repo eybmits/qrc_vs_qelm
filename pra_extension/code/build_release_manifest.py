@@ -185,6 +185,20 @@ DENSE_N4_FILES: dict[str, str] = {
 # by the revised paper.  Earlier pilot, smoke, v1, and v2 directories are
 # intentionally excluded.
 AUTHORITATIVE_EXTENSION_FILES: dict[str, str] = {
+    "configs/feature_bridge.json": "exploratory_intermediate_feature_configuration",
+    "configs/feature_bridge_freeze.json": "intermediate_feature_local_source_lock",
+    "pra_extension/FEATURE_BRIDGE_PROTOCOL.md": "exploratory_paired_feature_protocol",
+    "pra_extension/FEATURE_BRIDGE_RESULTS.md": "reviewed_intermediate_feature_results",
+    "results_feature_bridge_v1/metrics.csv": "intermediate_features_and_endpoint_controls",
+    "results_feature_bridge_v1/manifest.json": "intermediate_feature_provenance_and_anchor_checks",
+    "results_feature_bridge_v1/summary.json": "descriptive_intermediate_feature_summary",
+    "configs/feature_density.json": "feature_density_followup_configuration",
+    "configs/feature_density_freeze.json": "feature_density_local_prospective_freeze",
+    "pra_extension/FEATURE_DENSITY_PROTOCOL.md": "feature_density_followup_protocol",
+    "pra_extension/FEATURE_DENSITY_RESULTS.md": "feature_density_reviewed_results",
+    "results_feature_density_v1/metrics.csv": "feature_density_root_level_results",
+    "results_feature_density_v1/manifest.json": "feature_density_run_provenance",
+    "results_feature_density_v1/summary.json": "feature_density_prespecified_contrasts",
     (
         "pra_extension/outputs/finite_k_history_calibration_v1_strict/"
         "finite_k_history_calibration.json"
@@ -333,6 +347,7 @@ DOCUMENTATION_FILES: dict[str, str] = {
     "PROTOCOL.md": "frozen_project_protocol",
     "pra_extension/PROTOCOL.md": "extension_protocol_record",
     "pra_extension/theory_and_literature.md": "theory_and_prior_art_audit",
+    "paper/NOTATION_AUDIT.md": "manuscript_notation_contract_and_literature_conventions",
     (
         "paper/figures/information_interface/CHART_MAP.md"
     ): "main_figure_question_takeaway_map",
@@ -376,7 +391,8 @@ LONG_CONTEXT_N5_FILES = {
     )},
     **{f"paper/figures/long_context_n5/{name}": "long_n5_separate_followup_figure" for name in (
         "fig04_long_context_n5.pdf", "fig04_long_context_n5.png",
-        "fig04_long_context_n5_source.csv", "figure_sha256.json",
+        "fig04_long_context_n5_source.csv", "fig04_long_context_n5_features_source.csv",
+        "figure_sha256.json",
     )},
 }
 
@@ -1312,7 +1328,7 @@ def build_manifest(
     *,
     repo_root: Path,
     figures_dir: str | Path = DEFAULT_FINAL_FIGURES_DIR,
-    paper_pdf: str | Path = "paper/canonical_emulation/main.pdf",
+    paper_pdf: str | Path = "paper/icaart2027/submission.pdf",
 ) -> dict[str, Any]:
     """Validate all release inputs and return deterministic manifest content."""
 
@@ -1437,7 +1453,7 @@ def _parser() -> argparse.ArgumentParser:
     )
     parser.add_argument(
         "--paper-pdf",
-        default="paper/canonical_emulation/main.pdf",
+        default="paper/icaart2027/submission.pdf",
         help="Compiled paper PDF, relative to the repository or absolute.",
     )
     parser.add_argument(

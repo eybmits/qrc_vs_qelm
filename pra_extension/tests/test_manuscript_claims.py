@@ -89,30 +89,42 @@ def test_authoritative_manuscript_claims_match_generated_artifacts() -> None:
     assert f"{dark['expected_balanced_mse_floor']:.10f}" in paper
     assert f"{dark['expected_worst_case_absolute_floor']:.7f}" in paper
     assert "time-homogeneous input alphabet" in compact_paper
-    assert "Two histories differ only in an old flagged input" in compact_paper
+    assert "Two histories differ only in one old flagged input" in compact_paper
     assert r"\label{eq:protected-mode}" in compact_paper
     assert r"\label{eq:visible-memory-theorem}" in compact_paper
     assert (
         "When Can Finite-Context QELMs Replace Quantum Reservoir Memory?"
         in compact_paper
     )
-    assert "one process and one trajectory pair for every window length" in compact_paper
-    assert "Randomization retains the scalar lower bound" in compact_paper
-    assert "identical windows still induce identical prediction laws" in compact_paper
-    assert r"\textit{Reset-window emulation theorem.}" in compact_paper
-    assert r"\inf_{g_d}\sup_h |Y(h)-g_d(S_d(h))|" in compact_paper
+    assert "one fixed reservoir and a pair of trajectories" in compact_paper
+    assert r"D_d\geq\delta\qquad\text{for every finite }d" in compact_paper
+    assert "randomization cannot lower the scalar bound" in compact_paper
+    assert "worst-case expected absolute error" in compact_paper
+    assert "Identical windows therefore produce identical predictions for a fixed model" in compact_paper
+    assert "their probability distributions remain identical" in compact_paper
+    assert "With finitely sampled measurements" in compact_paper
+    assert "Reset-window emulation theorem." in compact_paper
+    # Prose stays normal-weight; only caption panel references remain bold.
+    assert all(label in {"a", "b", "c", "a,b"}
+               for label in re.findall(r"\\textbf\{([^{}]*)\}", paper))
+    assert r"\bfseries" not in paper
+    assert r"\inf_f\sup_h |y(h)-f(S_d(h))|" in compact_paper
     assert r"=\frac{D_d}{2}" in compact_paper
     assert r"(r+1)^d" in compact_paper
-    assert "blockwise Hamming weight" in compact_paper
-    assert r"\operatorname{Binomial}(r,x_i)" in compact_paper
+    assert "each block's Hamming weight" in compact_paper
+    assert r"K_i\sim\operatorname{Binomial}(r,a_i)" in compact_paper
     assert r"\label{eq:qrc-qelm-bound}" in compact_paper
     assert r"D_d\longrightarrow0" in compact_paper
-    assert "reachable-observable joint spectral radius" in compact_paper
-    assert "Chebyshev radius" in compact_paper
-    assert "one fixed six-qubit reset-qelm emulator" in compact_paper.lower()
+    assert "reachable-observable quotient" in compact_paper
+    assert "joint spectral radius" in compact_paper
+    assert "vector error between $D_d/2$ and $D_d$" in compact_paper
+    assert "Any enclosing ball has radius at least half its diameter" in compact_paper
+    assert "The six-qubit reset-QELM encodes" in compact_evaluation
+    assert "These experiments evaluate a fixed feature architecture" in compact_evaluation
     assert re.search(r"\b(?:teacher|student)s?\b", paper, re.IGNORECASE) is None
-    assert "existence, not efficient learning" in compact_paper
-    assert "does not make the fixed six-qubit emulator" in compact_paper
+    assert "representability with increasing resources" in compact_paper
+    assert "does not guarantee efficient training" in compact_paper
+    assert "or make the fixed six-qubit emulator" in compact_paper
     for name, expected in dark["artifact_sha256"].items():
         artifact = (
             REPO_ROOT / "pra_extension" / "outputs" / "dark_sector_validation" / name
@@ -149,11 +161,12 @@ def test_authoritative_manuscript_claims_match_generated_artifacts() -> None:
     assert f"{100 * g4['median_gain']:.2f}\\%" in evaluation
     assert f"{100 * g5['median_gain']:.2f}\\%" in evaluation
     assert g4["positive_roots"] == g5["positive_roots"] == 12
-    assert r"transition cells ($B=72$, $\gamma_T\in\{2,4\}$)" in compact_evaluation
-    assert r"increasing $d=1\to6$" in compact_evaluation
-    assert "all roots are history limited" in compact_evaluation
-    assert "usually representation limited" in compact_evaluation
-    assert "every root in all three target QRC sizes reaches the tolerance" in compact_evaluation
+    assert r"At $B=72$ and $\gamma_T\in\{2,4\}$" in compact_evaluation
+    assert r"increasing $d$ from one to six" in compact_evaluation
+    assert "history limited in every root" in compact_evaluation
+    assert r"the $B=18$ QELM usually fails while replay succeeds" in compact_evaluation
+    assert "operational representation-limit diagnosis" in compact_evaluation
+    assert "every root across the two-, three-, and four-qubit targets reaches the tolerance" in compact_evaluation
     classical = gates["secondary_qelm_vs_best_classical"]
     assert classical["passed"] is False
     assert classical["positive_roots"] == 0
@@ -176,7 +189,7 @@ def test_authoritative_manuscript_claims_match_generated_artifacts() -> None:
     assert f"{surface['Q19200']['median']:.4f}" in evaluation
     assert f"{100 * policy['median']:.2f}\\%" in evaluation
     assert policy["positive_roots"] == policy["n_roots"] == 12
-    assert "post-confirmatory exploratory finite-shot study" in compact_evaluation
+    assert "separate exploratory, post-confirmatory study" in compact_evaluation
 
     # Claim boundaries and journal-format deliverables.
     assert "exact boundary" not in paper
@@ -193,8 +206,12 @@ def test_authoritative_manuscript_claims_match_generated_artifacts() -> None:
     assert "fig01_protected_excited_visible.pdf" not in paper
     assert "fig02_phase_map_compact.pdf" not in paper
     assert "fig03_dissipation_window_scaling_compact.pdf" not in paper
-    page_count = _pdf_page_count(PAPER_ROOT / "main.pdf")
-    assert 0 < page_count <= 12
+    for artifact in (
+        PAPER_ROOT / "main.pdf",
+        REPO_ROOT / "paper" / "icaart2027" / "submission.pdf",
+    ):
+        page_count = _pdf_page_count(artifact)
+        assert 0 < page_count <= 12, f"{artifact.name}: {page_count} pages exceeds 12"
     # Check the delivered bibliography, not an ignored local BibTeX build file.
     destinations = subprocess.run(
         ["pdfinfo", "-dests", str(PAPER_ROOT / "main.pdf")],
@@ -202,8 +219,19 @@ def test_authoritative_manuscript_claims_match_generated_artifacts() -> None:
         capture_output=True,
         text=True,
     ).stdout
-    reference_count = len(set(re.findall(r'"cite\.([^"\n]+)"', destinations)))
-    assert 40 <= reference_count <= 55
+    reference_keys = set(re.findall(r'"cite\.([^"\n]+)"', destinations))
+    cited_keys = {
+        key.strip()
+        for group in re.findall(r"\\cite\{([^}]+)\}", paper)
+        for key in group.split(",")
+    }
+    # Verify the delivered bibliography against the actual cited sources.
+    assert reference_keys == cited_keys
+    assert {
+        "innocenti2023potential", "fujii2017harnessing", "boyd1985fading",
+        "grigoryeva2018sas", "martinezpena2023finite", "mujal2023measurement",
+        "kawanabe2026tdqelm", "goto2021universal", "yu2024nonasymptotic",
+    } <= reference_keys
     assert not (PAPER_ROOT / "supplement_main.pdf").exists()
     for name in (
         "fig01_information_interface.pdf",
@@ -223,31 +251,199 @@ def test_empirical_residual_is_not_claimed_as_pure_feature_approximation() -> No
                          .read_text(encoding="utf-8"))
             for name in ("abstract", "appendix", "methodology", "evaluation", "conclusion")
         }
-        appendix = sections["appendix"]
-        assert "residual emulator error, not pure feature-approximation error" in appendix
+        # The active ICAART revision groups this sampled diagnostic with its
+        # numerical methods in E.1; the archived edition retains it in D.
+        diagnostic = sections[
+            "methodology" if directory.name == "icaart2027" else "appendix"
+        ]
+        assert re.search(
+            r"[Rr]esidual(?: emulator)? error (?:can (?:reflect|include)|includes) "
+            r"feature approximation",
+            diagnostic,
+        )
         for component in ("finite-data estimation", "ridge regularization",
-                          "sampling variability of the suffix mean"):
-            assert component in appendix
-        assert "history correction does not isolate feature approximation" in appendix
-        assert "representation limited is an operational diagnosis" in sections["methodology"]
+                          "suffix-mean sampling variability"):
+            assert component in diagnostic
+        assert re.search(
+            r"(?:without isolating feature approximation in the residual|"
+            r"not an isolated feature[- ]approximation error)", diagnostic,
+        )
+        assert re.search(
+            r"[Rr]epresentation limited (?:is an operational diagnosis|operationally means|means)",
+            sections["methodology"],
+        )
         assert "history passes, the fitted QELM fails, and replay succeeds" in sections["methodology"]
-        assert "best approximation attainable with the QELM features" in sections["methodology"]
+        assert re.search(
+            r"(?:does not (?:isolate|identify)(?: the)?.*?"
+            r"best approximation (?:attainable with the|using|available from the) QELM features|"
+            r"not that the best approximation using QELM features fails)",
+            sections["methodology"],
+        )
         assert "common-suffix residual emulator NRMSE" in sections["evaluation"]
-        assert "residual emulator NRMSE by 67" in sections["conclusion"]
-        assert "examine the effects of context, feature budgets" in sections["abstract"]
+        assert ("the fitted model must still represent the resulting input--output "
+                "relationship accurately") in sections["conclusion"]
+        assert ("the theoretical existence result guarantees neither efficient learning "
+                "nor resource savings") in sections["conclusion"]
+        assert "The experiments therefore establish no quantum advantage." in sections["conclusion"]
+        assert ("examine the practical roles of window length, feature capacity, "
+                "and measurement budgets") in sections["abstract"]
         for name in ("evaluation", "conclusion"):
             assert "representation NRMSE" not in sections[name]
         # The empirical identity, unlike its interpretation, is unchanged.
         equation = re.search(
             r"\\begin\{equation\} ((?:(?!\\end\{equation\}).)*"
-            r"\\label\{eq:panel-decomposition\}.*?)\\end\{equation\}", appendix,
+            r"\\label\{eq:panel-decomposition\}.*?)\\end\{equation\}", diagnostic,
         )
         assert equation is not None
         equations.append(equation.group(1))
-        assert r"\mathbb E_{s,k}\|y_{sk}-p_s\|^2" in equation.group(1)
-        assert r"\mathbb E_{s,k}\|y_{sk}-\bar y_s\|^2" in equation.group(1)
-        assert r"\mathbb E_s\|\bar y_s-p_s\|^2" in equation.group(1)
+        assert r"\frac1m\mathbb E_{s,k}\|y_{sk}-\widehat y_s\|_2^2" in equation.group(1)
+        assert r"\frac1m\mathbb E_{s,k}\|y_{sk}-\bar y_s\|_2^2" in equation.group(1)
+        assert r"\frac1m\mathbb E_s\|\bar y_s-\widehat y_s\|_2^2" in equation.group(1)
     assert equations[0] == equations[1]
+
+
+def test_icaart_appendix_rewrite_covers_full_body_and_relocated_material() -> None:
+    """The supplied A--E rewrite replaces the appendix, not the paper template."""
+
+    directory = REPO_ROOT / "paper" / "icaart2027"
+    appendix = (directory / "sections" / "appendix.tex").read_text(encoding="utf-8")
+    methods = (directory / "sections" / "methodology.tex").read_text(encoding="utf-8")
+    dynamics = (directory / "sections" / "dynamics.tex").read_text(encoding="utf-8")
+    main = (directory / "main.tex").read_text(encoding="utf-8")
+    combined = appendix + "\n" + methods
+
+    titles = re.findall(r"\\subsection\{([^}]+)\}", appendix)
+    expected_titles = (
+        r"Optimal Window Error(?: and (?:QELM )?Emulation)?",
+        r"Observable Memory and (?:Required )?Context",
+        r"Explicit QELM Resource Bounds",
+        r"Protected Memory(?: Beyond Every Finite Window)?",
+    )
+    assert len(titles) == len(expected_titles)
+    assert all(re.fullmatch(pattern, title) for pattern, title in zip(expected_titles, titles))
+    method_titles = re.findall(r"\\subsection\{([^}]+)\}", methods)
+    assert len(method_titles) == 1
+    assert re.fullmatch(r"Numerical Evaluation(?: and Reproducibility)?", method_titles[0])
+    for label in (
+        "app:window-laws", "app:observable-proof", "app:bernstein-resources",
+        "app:protected-calibration", "app:protected-pulse", "app:protected-implementation",
+    ):
+        assert appendix.count(rf"\label{{{label}}}") == 1
+        assert rf"\label{{{label}}}" not in methods
+    for label in ("sec:methods", "app:common-suffix-diagnostic", "eq:panel-decomposition"):
+        assert methods.count(rf"\label{{{label}}}") == 1
+        assert rf"\label{{{label}}}" not in appendix
+
+    # The implementation is D.2 and the sampled diagnostic is E.1.
+    protected = appendix.split(r"\label{app:protected-calibration}", 1)[1]
+    protected_parts = re.split(r"\\subsubsection\{", protected)
+    assert len(protected_parts) == 3
+    assert r"\label{app:protected-pulse}" in protected_parts[1]
+    assert r"\label{app:protected-implementation}" in protected_parts[2]
+    assert re.search(r"H\(u\)\s*&?=", protected_parts[2])
+    method_parts = re.split(r"\\subsubsection\{", methods)
+    assert len(method_parts) == 5
+    assert r"\label{app:common-suffix-diagnostic}" in method_parts[1]
+    assert r"\label{eq:panel-decomposition}" in method_parts[1]
+    assert r"\label{eq:target-qrc-model}" in method_parts[2]
+    # Cohorts and fitting remain explicit inside E.2, with compact run-in
+    # headings instead of extra native subsection whitespace.
+    assert r"\emph{Cohorts and held-out data.}" in method_parts[2]
+    assert r"\emph{Fitting and decision rules.}" in method_parts[2]
+    assert method_parts[3].startswith("Finite-Shot Extension}")
+    assert method_parts[4].startswith("Long-Context Extension}")
+    for topic in (
+        "Why the midpoint is optimal.", "Why QELMs can approach it.",
+        "When longer context suffices.", "Remove invisible differences.",
+        "Measure the remaining memory.", "Relate memory size to output error.",
+        "Stability and context length.", "Assumptions and replay error.",
+        "Repeated encoding approximates replay.", "Three error contributions.",
+        "Approaching the optimal information floor.",
+    ):
+        assert rf"\emph{{{topic}}}" in appendix
+    assert r"\ref{app:protected-pulse}" in dynamics
+    assert r"\ref{app:protected-implementation}" in dynamics
+    assert r"\ref{sec:methods}" not in dynamics
+
+    for preview_only in (
+        "Proposed replacement text", "Appendix revision", r"\documentclass",
+        r"\begin{document}", r"\end{document}", r"\textbf", r"\bfseries",
+    ):
+        assert preview_only not in combined
+    assert main.index(r"\bibliography{references}") < main.index(r"\input{sections/appendix}")
+    assert main.index(r"\input{sections/appendix}") < main.index(r"\input{sections/methodology}")
+
+
+def test_icaart_appendix_rewrite_preserves_equation_sequence_12_to_26() -> None:
+    directory = REPO_ROOT / "paper" / "icaart2027" / "sections"
+    combined = "\n".join(
+        (directory / f"{name}.tex").read_text(encoding="utf-8")
+        for name in ("appendix", "methodology")
+    )
+    equations = re.findall(
+        r"\\begin\{(equation|align)\}(.*?)\\end\{\1\}", combined, re.DOTALL,
+    )
+    labels = (
+        "eq:replay-map", "eq:visible-quotient", "eq:visible-radius-formal",
+        "eq:observable-norm", "eq:norm-equivalence", "eq:diameter-product",
+        "eq:diameter-product-equivalence", "eq:incremental-lipschitz",
+        "eq:weighted-input-bound",
+        "eq:qrc-qelm-bound", "eq:midpoint-resource-bound",
+        "eq:protected-pulse-population",
+        "eq:protected-pair-mse", "eq:panel-decomposition", "eq:target-qrc-model",
+    )
+    assert len(equations) == len(labels) == 15
+    for number, ((environment, body), label) in enumerate(zip(equations, labels), start=12):
+        assert rf"\label{{{label}}}" in body, f"Equation ({number}): {label} moved"
+        if environment == "align":
+            # The target Hamiltonian and evolution share one equation number.
+            assert number == 26
+            assert body.count(r"\nonumber") == 1
+    assert r"\sum_{i=1}^d\eta^{d-i}" in re.sub(r"\s+", "", equations[8][1])
+    assert r"\sin^2(\theta/2)" in equations[11][1]
+    assert not re.search(r"\\(?:setcounter|addtocounter)\{equation\}|\\tag\{", combined)
+
+
+def test_conclusion_keeps_four_matching_normal_weight_paragraphs() -> None:
+    versions = []
+    for directory in (PAPER_ROOT, REPO_ROOT / "paper" / "icaart2027"):
+        source = (directory / "sections" / "conclusion.tex").read_text(encoding="utf-8")
+        body = re.sub(r"%[^\n]*", "", source)
+        body = re.sub(r"\\section\{[^{}]+\}|\\label\{[^{}]+\}", "", body).strip()
+        paragraphs = [re.sub(r"\s+", " ", paragraph).strip()
+                      for paragraph in re.split(r"\n\s*\n", body) if paragraph.strip()]
+        assert len(paragraphs) == 4
+        assert r"\textbf" not in body and r"\bfseries" not in body
+        assert r"\paragraph" not in body and r"\subsection" not in body
+        assert r"Section~\ref{sec:criterion}" in body
+        assert not re.search(r"Section\s*~?\s*\d", body)
+        versions.append(paragraphs)
+    assert versions[0] == versions[1]
+
+
+def test_added_primary_references_are_cited_in_both_versions() -> None:
+    additions = {
+        "chen2020temporal", "sannia2024dissipation", "cindrak2024restriction",
+        "zanardi1997noiseless", "hoeffding1963probability",
+    }
+    citation_sets = []
+    for directory in (PAPER_ROOT, REPO_ROOT / "paper" / "icaart2027"):
+        sections = "\n".join(
+            path.read_text(encoding="utf-8")
+            for path in sorted((directory / "sections").glob("*.tex"))
+        )
+        cited = {
+            key.strip()
+            for group in re.findall(r"\\cite\{([^}]+)\}", sections)
+            for key in group.split(",")
+        }
+        assert additions <= cited
+        citation_sets.append(cited)
+        bibliography = (directory / "references.bib").read_text(encoding="utf-8")
+        assert "Chen, Jiayin and Nurdin" in bibliography
+        assert "Chen, Jinglei" not in bibliography
+        assert "10.1080/01621459.1963.10500830" in bibliography
+    assert citation_sets[0] == citation_sets[1]
 
 
 def test_repository_reference_is_at_end_and_review_version_is_anonymous() -> None:
@@ -260,7 +456,7 @@ def test_repository_reference_is_at_end_and_review_version_is_anonymous() -> Non
     main = (conference / "main.tex").read_text(encoding="utf-8")
     assert main.rfind(r"\input{sections/methodology}") > main.rfind(r"\bibliography{references}")
     conference_methods = (conference / "sections" / "methodology.tex").read_text(encoding="utf-8")
-    assert "identifying link is withheld for double-blind review" in conference_methods
+    assert "link is withheld for double-blind review" in conference_methods
     assert repository_url not in main + conference_methods
 
 
@@ -345,7 +541,7 @@ def test_long_context_claims_preserve_the_separate_cohort_and_negative_controls(
     assert int(comparisons["qelm_relative_gain_vs_poly2"].lt(0).sum()) == 118
     for version in ("canonical_emulation", "icaart2027"):
         text = " ".join((REPO_ROOT / f"paper/{version}/sections/evaluation.tex").read_text().split())
-        assert "five-qubit targets and a ten-qubit reset-QELM" in text
+        assert "five-qubit targets, 12 new roots, and a ten-qubit QELM" in text
         assert "118 of 120 streaming root--condition comparisons" in text
         assert "no tested QELM budget meets the total-error rule" in text
         for gamma in (1, 4):
@@ -403,17 +599,18 @@ def test_accessible_structure_introduces_models_before_limits_and_results() -> N
     for name in ("introduction", "models", "background", "conclusion"):
         assert r"\subsection{" not in sections[name]
     assert re.findall(r"\\subsection\{([^}]+)\}", sections["dynamics"]) == [
-        "Observable forgetting", "Protected memory",
+        "Observable Forgetting", "Required Window Length", "Protected Memory",
     ]
     assert re.findall(r"\\subsection\{([^}]+)\}", sections["evaluation"]) == [
-        "Models and evaluation protocol", "History, representation, and measurement limits",
+        "Models and Evaluation", "History Requirements",
+        "Feature Capacity and Classical Comparisons", "Measurement Budgets",
     ]
     # Declare the full-width overview early so it can float to page two.
     assert "fig01_information_interface.pdf" not in sections["models"]
     introduction = sections["introduction"]
-    assert introduction.index("the information that still matters to the output.") < (
+    assert introduction.index("an appropriate input representation.") < (
         introduction.index("fig01_information_interface.pdf")
-    ) < introduction.index("Reservoir computing uses fixed internal dynamics")
+    ) < introduction.index("Quantum extreme learning machines (QELMs)")
     assert r"Figure~\ref{fig:information-interface}" in sections["models"]
     conference_sections = REPO_ROOT / "paper" / "icaart2027" / "sections"
     conference_introduction = (conference_sections / "introduction.tex").read_text(
@@ -422,14 +619,14 @@ def test_accessible_structure_introduces_models_before_limits_and_results() -> N
     conference_models = (conference_sections / "models.tex").read_text(encoding="utf-8")
     assert "fig01_information_interface.pdf" not in conference_models
     assert conference_introduction.index(
-        "the information that still matters to the output."
+        "an appropriate input representation."
     ) < conference_introduction.index(
         "fig01_information_interface.pdf"
-    ) < conference_introduction.index("Reservoir computing uses fixed internal dynamics")
+    ) < conference_introduction.index("Quantum extreme learning machines (QELMs)")
     assert r"Figure~\ref{fig:information-interface}" in conference_models
     evaluation = sections["evaluation"]
     assert evaluation.index("Each independent realization block") < evaluation.index(
-        "To isolate missing history"
+        "To distinguish missing history"
     )
     # The information-bound section retains its theorem content without the
     # redundant frontier float. Remaining declarations stay distributed.

@@ -1,0 +1,2952 @@
+{
+  "created_utc": "2026-09-08T08:52:32.061089+00:00",
+  "material": {
+    "configs/feature_density.json": "bb19ac35831879cad50b5f95eda47259def976fa830487340ba9b97a32735a21",
+    "pra_extension/FEATURE_DENSITY_PROTOCOL.md": "47228ebf55a1bbc14864d1938615cc8335de38505b6b87fe9c29b804ca232c48",
+    "pra_extension/code/analyze_training_data_control.py": "250cbad49f1e97215ac91cbddfbe0d3117a12a07913b804922fb697d82f3b94d",
+    "pra_extension/code/freeze_training_data_control.py": "e8217cff364b1a9ffe25e462c0e7264f31805ce570b78e5cc17654b56fc4b99e",
+    "pra_extension/code/run_feature_density.py": "40b1f5133e5da20f57dd69a8b53bed3cd2c5c95b157192dd1eaa6e914155024c",
+    "pra_extension/code/run_training_data_control.py": "97835d2cf88e9f5b10dcb841f3ce807ebb217a836bbb6ee23ed9ca6ccbe2c23f",
+    "pra_extension/tests/test_feature_density.py": "c3f4a1a101ea96ab6ae0480aaa16082c71547aef444e1646c990ec9c024c2803",
+    "pyproject.toml": "3253b09077b53cb50a8812824451dd89da11b8880a960b67fe9825a862abea71",
+    "scripts/dense_phase_n4_common.py": "494005216b921708eeaf4a323c4817673d08d36632ed7fab8e729fd600995584",
+    "scripts/long_context_qelm_backend.py": "9ac7e833f94f5ddde11107f5b3ab8e4b20f78375e461431651ab86da38539008",
+    "src/qrc_vs_qelm/__init__.py": "91447944015cec709e8aa7655f7e9d64e1e4508e7023a57fe3746911c0fc6fed",
+    "src/qrc_vs_qelm/canonical_emulation.py": "480af731e2fd9045b73c260b27d2c14ab565338b28c96e0990fe53160a3bfa19",
+    "src/qrc_vs_qelm/canonical_gates.py": "da6f8ce014e1d44e14d1bc7c852b35817a5440116e661875978859828e1e8f88",
+    "src/qrc_vs_qelm/canonical_resources.py": "523e27f7a71c83a3c8b0eb5334a65e54ffba213eee51780ad0a6371adb27a03a",
+    "src/qrc_vs_qelm/canonical_study.py": "ffc7e5e807d00fb578eb7db2933390360a91e8dbf89862658397d120c60fb768",
+    "src/qrc_vs_qelm/checkpointing.py": "da5c7b5833b86f5a8094e959197ea138bc6cb7692a10ef032ded145fca26ae35",
+    "src/qrc_vs_qelm/controls.py": "fe8228b3e91ee29a44f1a243494951f9e85223f50ab72a5cc52ecaaa0575b02d",
+    "src/qrc_vs_qelm/core/__init__.py": "35b59aa2929dfa5d89631f0ee429a8ed85287e2d0d63471be22bfa5f86a04db8",
+    "src/qrc_vs_qelm/core/diagnostics.py": "c03901b126ef01068959b7d5c87832e8a95537aa7beddacbf93f4c1d7cb34640",
+    "src/qrc_vs_qelm/core/dissipators.py": "f1e1ee7dcf59b943ac360e9a296e8565c62a450fda12a60f387b497b3acfecf7",
+    "src/qrc_vs_qelm/core/liouvillian.py": "bfb6eda88c5d9c2bbbedda7bd88e5eef8b39ab0970d9f25f9e0b1a600448c26b",
+    "src/qrc_vs_qelm/core/operators.py": "d0bed61609a3a3a10dc64cf2695c1999dc87afad511d3515eecb53b5cfcbd13b",
+    "src/qrc_vs_qelm/core/readout.py": "9235f8f6c2d8d370d84c5a7f89bf3d33e8c6801de792346594442113ad794db9",
+    "src/qrc_vs_qelm/core/reservoirs.py": "e9e722ffeba65b35a89ec7f04e6dbd6b30f9f556c6b05052557a6c29ab40eb4b",
+    "src/qrc_vs_qelm/core/sparse_evolve.py": "af1778f158ffc6ce6fb95d1e0295008516d54f906ab8adce54d62c17222294eb",
+    "src/qrc_vs_qelm/core/tasks.py": "dd9a41e38f43c94426b6da59118c034474a794328e1bb96092b06ca1305fa31d",
+    "src/qrc_vs_qelm/emulation.py": "ce4a726e4986b1870053b8e27af723974ec563a3a7acfec43a4c9598aad90305",
+    "src/qrc_vs_qelm/gates.py": "8bc4b1d96fc158314700f5d4e701e39fda044fe4f8a78e4c0ca8433bb43a3cf9",
+    "src/qrc_vs_qelm/ipc.py": "472947226764c4d67925b6d8121906203fa77018d5743a69251689a5a8d02035",
+    "src/qrc_vs_qelm/manifests.py": "22064b88af9700f6fd709220226113d2d16e0ecd9a24f63037962fbf15c05c30",
+    "src/qrc_vs_qelm/matching.py": "1a8c2d33a40a6cbb218b785c3347cf7507d1813fd42d20a71036eb158e48b2fb",
+    "src/qrc_vs_qelm/models/__init__.py": "091dcc362349acac4b12e5414baf7fe6db4a1f432a8b15bd68c0d565e605ed1b",
+    "src/qrc_vs_qelm/models/api.py": "abd2434f0a5eb361381e0731a70ff3a3ca47f506976698a834cb3f9b6b3be205",
+    "src/qrc_vs_qelm/models/qelm.py": "5cc70670982bdb180c4a1e9846935ab2fb4c38870147f796734f809524e2dd62",
+    "src/qrc_vs_qelm/pipeline.py": "3173dc3c9ecc43d91e9ffd68a993b36c0e4715406fb4504e26b5db3aee42b6f1",
+    "src/qrc_vs_qelm/provenance.py": "b08001893370b035404d1555b88792702b9d8eeeae98984fe4528424b4668006",
+    "src/qrc_vs_qelm/recurrence_fingerprint.py": "aea999754104926b6ffa6407e9b5e75027c7cef0ee3a20e1b754f8fb30e53bee",
+    "src/qrc_vs_qelm/run_report.py": "f7b19604e6f06a0393f792a42846f158c7680eaaf6e9b69c96f661d165bc178b",
+    "src/qrc_vs_qelm/run_stage1.py": "7781fc453023cc2ce1e28668176b1b776b4f5d656ef7939100ee879340871f5f",
+    "src/qrc_vs_qelm/run_stage2.py": "9a12ccbaa01985d98bb0f7ac8e6b05a5a3a95cbe241184f128f900d28171107e",
+    "src/qrc_vs_qelm/run_stage3.py": "57bfbaa643b49fb9ddd723f3ea22bf4a5384177661c9d2c313e8765470b8f288",
+    "src/qrc_vs_qelm/run_stage_ipc.py": "b81f3190adaf91b73d5f1c58fcc6b93f39fc27b918449cc5a54f0c76d42e476b",
+    "src/qrc_vs_qelm/seeds.py": "499dcef01117709f0d8d05684d1cf3ef0c94b69d694227c8e09cde603a6a48c2",
+    "src/qrc_vs_qelm/shots.py": "657a9ce547b0af6e7575d379b19b357811480620060f1ec3f89b9516241efdd9",
+    "src/qrc_vs_qelm/stats.py": "0b2f13cee78c55bc538dd4aa1af297584d8c526999c8a94fd9e0d65ed8dc11fb",
+    "src/qrc_vs_qelm/task_families.py": "7a9518d6d660b92f147b851f1740deb2ebfbbc11bee86354a7a3d70326508f50"
+  },
+  "prior_seed_count": 1316,
+  "prior_seed_sources": {
+    "checkpoints/ipc_pilot_result.json": "81e68ab1a565bc34da8b1fa4f7d5e61ce5e024826a405f002e737dcbbfba5ab6",
+    "configs/canonical_emulation.yaml": "78e293aed9e14aa9fc38233c0efc29d712445f90648abf2ab8977375c4fc4c38",
+    "configs/canonical_emulation_dense_n4.yaml": "fd3ad10797efdfb0aea69c01303bbfe4f51a7e87df169548dfa336656d80486e",
+    "configs/canonical_emulation_dense_secondary.yaml": "47a7404da97090bfe3290822135d6fa60a40f9bef928b3173d1962299d1099ab",
+    "configs/canonical_emulation_long_n5.yaml": "e3f17413f6391a02abacb115b4cc063f19f914dc262c20e3a9d6b4500403d62e",
+    "configs/canonical_emulation_long_n5_freeze.json": "b14ad95dbbbe70712a2c7ae19fa49b3531fdbe435933465d9cdc2d41efadb37f",
+    "configs/dark_sector_validation.json": "34571af25c78e42ed4d214789db1974552a79cbdd7ae345e05d9bd6377be6546",
+    "configs/emulation_pilot.yaml": "6a79d627c9c66db28c8efcc99a1015e9dd1315d1c99d6881758ca5717587f5fa",
+    "configs/full.yaml": "3dfda650bb7a859a81db19a4b1662ee1b91eb766154c542dc088ac8e15768285",
+    "configs/smoke.yaml": "4afe68a4638ffaff567c3619aa615f8c7f9d1cdb5854e2d0e15be67bbc730c02",
+    "configs/training_data_control.json": "8af2842a72ff03f3c8001c8fa1418cd35869641105b7a13872cd6f3681ece8e4",
+    "configs/training_data_control_freeze.json": "32e73c8d56b6c5507b2b8d24e38fba3823c494eded645565a71b6ca5472c177c",
+    "data/frozen/frozen_v1_config.json": "d5df9a0c1e6cae022fa8fb62ad53d857003818831b152567a5c68b41c8f89823",
+    "data/frozen/recurrence_fingerprint_v1.json": "9098b7d6fdf55381d8179321b2a5fcfd5c3821be1df79163424687beb41cac44",
+    "data/reference/best_vs_best.json": "1925fde60b7be51e5f4965de9adbb048c0569f687d396d8ad11865e25456683c",
+    "data/reference/confirm_stm.json": "6c9a3635a4ab8852bc46697bbf157fa7b318fb3c1117232d3c337f3f4592cdec",
+    "paper/figures/information_interface/fig01_information_interface_render_source.json": "c614ccd74aea93a11fe24728f981c3fddc490f6c5bd45f20f40898ef69de32a3",
+    "paper/figures/information_interface/fig01_information_interface_source.json": "d5a76f449661e3f4fabf909a6271208f838907f076db1c02652b771665d23965",
+    "pra_extension/config_calibration.yaml": "bcc895e6df1cc43022522d914b3d5c4a0647f2f2d34a1ea30069cfa867461210",
+    "pra_extension/config_confirmatory.yaml": "448e79baaddada6430645f52ac5b26a01e3d5db4823e3182732891333bb0a4ee",
+    "pra_extension/config_feasibility.yaml": "a09b156e7deb418c8a348adea036f2b417ef813d03db86b4a259be6944365b86",
+    "pra_extension/outputs/channel_spectrum_full_exploratory_v1_12roots/channel_spectrum.csv": "053bccf6931b5c667c933aa904881efcebc8c8082f44d8abeae6276726302f50",
+    "pra_extension/outputs/observable_memory_continuous_exploratory_v1_12roots/observable_memory_results.csv": "cc539c5b9666f4d1c84edd1b7e596ddca53d4814fe69b609e946445a95b511b6",
+    "pra_extension/outputs/observable_memory_continuous_exploratory_v1_12roots/observable_memory_summary.json": "7fff3dbbf18ccce599a416c6f044e7b89559676315ca600b9aeef592667711d3",
+    "pra_extension/outputs/observable_memory_full_exploratory_v2_12roots/observable_memory_results.csv": "f0f89e26e75fa033d53de66afd68ce7fd09955bc16f351fca4e128e0868029a5",
+    "pra_extension/outputs/observable_memory_full_exploratory_v3_rigorous_12roots/observable_memory_results.csv": "847ced291e38055f5ed1440b82a7a0697629b62a98c17c66f94324352426a43a",
+    "pra_extension/outputs/observable_memory_full_exploratory_v3_rigorous_12roots/observable_memory_summary.json": "ec912220c4cb02f0dd3f42d3073f8f4b5c4ad49250653a9303c11c10e493b4aa",
+    "pra_extension/outputs/student_architecture_full_exploratory_v1_12roots/student_architecture_results.csv": "c7b52b3d144c234c2b4da52bd72265178cf08bebd811346c71cc7b0cfffc9742",
+    "results_canonical_confirmatory_v1/stream_metrics.csv": "a8427c7d2068198760b82bd05545b79476b9f107ed461f82b6cbfbc16dd45376",
+    "results_canonical_confirmatory_v1/suffix_decomposition.csv": "94ec3e840ac1866e675dbb796aa7b72010600c2408ba7064455c686dac9d88b1",
+    "results_canonical_confirmatory_v1/system_diagnostics.csv": "ce996ff07f2848513d60084444e3e3bc0b053d9ac95b0f4dc32b61024b2371c5",
+    "results_dense_phase_n4_v1/stream_metrics.csv": "8a9f6c49a82a69686de61fe953de679837a375c3e6de3ef6889b582279081468",
+    "results_dense_phase_n4_v1/suffix_decomposition.csv": "6dba07c9f0d53ab94b9de32509ac69408a77c8c7add146b2dbfa49e6239705c0",
+    "results_dense_phase_n4_v1/system_diagnostics.csv": "519cb9b131a608f55bc2a7516d72c4165e2550ebc4e06735ba1ddecdcacc708d",
+    "results_dense_phase_secondary_v1/stream_metrics.csv": "a4cc7bcec76ee23f8942e61696a4e09a457969154d7ff82f5fe2b5d06821c9bc",
+    "results_dense_phase_secondary_v1/suffix_decomposition.csv": "54dd6550d36fe43673d771f7ecb3cee1db17522007a0103f8172d35c9254a682",
+    "results_dense_phase_secondary_v1/system_diagnostics.csv": "b27a30cf463364aaed4771ad16237d9c4c94fa64c0d7008ca87d3daf1d5681a5",
+    "results_recurrence_fingerprint_heldout/fingerprint_predictions_unblinded.csv": "51942d1f67eec7c626785ce591c2a13199e7d72214e27944321ee5c163e2710c"
+  },
+  "scope": "local prospective follow-up, not public preregistration",
+  "seed_ledger": [
+    {
+      "entropy": [
+        2012609201,
+        2,
+        0
+      ],
+      "role": "teacher",
+      "root_id": "feature01",
+      "seed": 7789268962033948208,
+      "teacher_n_qubits": 2
+    },
+    {
+      "entropy": [
+        2012609201,
+        2,
+        1
+      ],
+      "role": "student",
+      "root_id": "feature01",
+      "seed": 12854942266530650895,
+      "teacher_n_qubits": 2
+    },
+    {
+      "entropy": [
+        2012609201,
+        2,
+        2
+      ],
+      "role": "train",
+      "root_id": "feature01",
+      "seed": 6374738120711835866,
+      "teacher_n_qubits": 2
+    },
+    {
+      "entropy": [
+        2012609201,
+        2,
+        3
+      ],
+      "role": "val",
+      "root_id": "feature01",
+      "seed": 16927426680480069569,
+      "teacher_n_qubits": 2
+    },
+    {
+      "entropy": [
+        2012609201,
+        2,
+        4
+      ],
+      "role": "test",
+      "root_id": "feature01",
+      "seed": 2104539180670806491,
+      "teacher_n_qubits": 2
+    },
+    {
+      "entropy": [
+        2012609201,
+        2,
+        5
+      ],
+      "role": "prefix",
+      "root_id": "feature01",
+      "seed": 17613541651000634340,
+      "teacher_n_qubits": 2
+    },
+    {
+      "entropy": [
+        2012609201,
+        2,
+        6
+      ],
+      "role": "suffix",
+      "root_id": "feature01",
+      "seed": 10046811818956623416,
+      "teacher_n_qubits": 2
+    },
+    {
+      "entropy": [
+        2012609201,
+        3,
+        0
+      ],
+      "role": "teacher",
+      "root_id": "feature01",
+      "seed": 13922701142759725832,
+      "teacher_n_qubits": 3
+    },
+    {
+      "entropy": [
+        2012609201,
+        3,
+        1
+      ],
+      "role": "student",
+      "root_id": "feature01",
+      "seed": 13900033589850684043,
+      "teacher_n_qubits": 3
+    },
+    {
+      "entropy": [
+        2012609201,
+        3,
+        2
+      ],
+      "role": "train",
+      "root_id": "feature01",
+      "seed": 11853032505328629787,
+      "teacher_n_qubits": 3
+    },
+    {
+      "entropy": [
+        2012609201,
+        3,
+        3
+      ],
+      "role": "val",
+      "root_id": "feature01",
+      "seed": 7732622920860024819,
+      "teacher_n_qubits": 3
+    },
+    {
+      "entropy": [
+        2012609201,
+        3,
+        4
+      ],
+      "role": "test",
+      "root_id": "feature01",
+      "seed": 1359096002889117289,
+      "teacher_n_qubits": 3
+    },
+    {
+      "entropy": [
+        2012609201,
+        3,
+        5
+      ],
+      "role": "prefix",
+      "root_id": "feature01",
+      "seed": 4824066734075700119,
+      "teacher_n_qubits": 3
+    },
+    {
+      "entropy": [
+        2012609201,
+        3,
+        6
+      ],
+      "role": "suffix",
+      "root_id": "feature01",
+      "seed": 6137089882457129738,
+      "teacher_n_qubits": 3
+    },
+    {
+      "entropy": [
+        2012609201,
+        4,
+        0
+      ],
+      "role": "teacher",
+      "root_id": "feature01",
+      "seed": 492325636454242688,
+      "teacher_n_qubits": 4
+    },
+    {
+      "entropy": [
+        2012609201,
+        4,
+        1
+      ],
+      "role": "student",
+      "root_id": "feature01",
+      "seed": 17075882692069408536,
+      "teacher_n_qubits": 4
+    },
+    {
+      "entropy": [
+        2012609201,
+        4,
+        2
+      ],
+      "role": "train",
+      "root_id": "feature01",
+      "seed": 10509841987192387540,
+      "teacher_n_qubits": 4
+    },
+    {
+      "entropy": [
+        2012609201,
+        4,
+        3
+      ],
+      "role": "val",
+      "root_id": "feature01",
+      "seed": 15255218374594508688,
+      "teacher_n_qubits": 4
+    },
+    {
+      "entropy": [
+        2012609201,
+        4,
+        4
+      ],
+      "role": "test",
+      "root_id": "feature01",
+      "seed": 9413193221227971202,
+      "teacher_n_qubits": 4
+    },
+    {
+      "entropy": [
+        2012609201,
+        4,
+        5
+      ],
+      "role": "prefix",
+      "root_id": "feature01",
+      "seed": 18245946115528583252,
+      "teacher_n_qubits": 4
+    },
+    {
+      "entropy": [
+        2012609201,
+        4,
+        6
+      ],
+      "role": "suffix",
+      "root_id": "feature01",
+      "seed": 14072520981572749510,
+      "teacher_n_qubits": 4
+    },
+    {
+      "entropy": [
+        2012609202,
+        2,
+        0
+      ],
+      "role": "teacher",
+      "root_id": "feature02",
+      "seed": 12602272669740415066,
+      "teacher_n_qubits": 2
+    },
+    {
+      "entropy": [
+        2012609202,
+        2,
+        1
+      ],
+      "role": "student",
+      "root_id": "feature02",
+      "seed": 15325107450638735277,
+      "teacher_n_qubits": 2
+    },
+    {
+      "entropy": [
+        2012609202,
+        2,
+        2
+      ],
+      "role": "train",
+      "root_id": "feature02",
+      "seed": 7507963408238837916,
+      "teacher_n_qubits": 2
+    },
+    {
+      "entropy": [
+        2012609202,
+        2,
+        3
+      ],
+      "role": "val",
+      "root_id": "feature02",
+      "seed": 12626954613956133091,
+      "teacher_n_qubits": 2
+    },
+    {
+      "entropy": [
+        2012609202,
+        2,
+        4
+      ],
+      "role": "test",
+      "root_id": "feature02",
+      "seed": 1627497297969156153,
+      "teacher_n_qubits": 2
+    },
+    {
+      "entropy": [
+        2012609202,
+        2,
+        5
+      ],
+      "role": "prefix",
+      "root_id": "feature02",
+      "seed": 6699844121700630263,
+      "teacher_n_qubits": 2
+    },
+    {
+      "entropy": [
+        2012609202,
+        2,
+        6
+      ],
+      "role": "suffix",
+      "root_id": "feature02",
+      "seed": 12707739081712934635,
+      "teacher_n_qubits": 2
+    },
+    {
+      "entropy": [
+        2012609202,
+        3,
+        0
+      ],
+      "role": "teacher",
+      "root_id": "feature02",
+      "seed": 2904552523253939837,
+      "teacher_n_qubits": 3
+    },
+    {
+      "entropy": [
+        2012609202,
+        3,
+        1
+      ],
+      "role": "student",
+      "root_id": "feature02",
+      "seed": 5855196266585864823,
+      "teacher_n_qubits": 3
+    },
+    {
+      "entropy": [
+        2012609202,
+        3,
+        2
+      ],
+      "role": "train",
+      "root_id": "feature02",
+      "seed": 7949890527273979043,
+      "teacher_n_qubits": 3
+    },
+    {
+      "entropy": [
+        2012609202,
+        3,
+        3
+      ],
+      "role": "val",
+      "root_id": "feature02",
+      "seed": 17875953982289206705,
+      "teacher_n_qubits": 3
+    },
+    {
+      "entropy": [
+        2012609202,
+        3,
+        4
+      ],
+      "role": "test",
+      "root_id": "feature02",
+      "seed": 17848779311673671631,
+      "teacher_n_qubits": 3
+    },
+    {
+      "entropy": [
+        2012609202,
+        3,
+        5
+      ],
+      "role": "prefix",
+      "root_id": "feature02",
+      "seed": 13318614573739246123,
+      "teacher_n_qubits": 3
+    },
+    {
+      "entropy": [
+        2012609202,
+        3,
+        6
+      ],
+      "role": "suffix",
+      "root_id": "feature02",
+      "seed": 18199649849445920469,
+      "teacher_n_qubits": 3
+    },
+    {
+      "entropy": [
+        2012609202,
+        4,
+        0
+      ],
+      "role": "teacher",
+      "root_id": "feature02",
+      "seed": 10039462789796725941,
+      "teacher_n_qubits": 4
+    },
+    {
+      "entropy": [
+        2012609202,
+        4,
+        1
+      ],
+      "role": "student",
+      "root_id": "feature02",
+      "seed": 2834174112762079712,
+      "teacher_n_qubits": 4
+    },
+    {
+      "entropy": [
+        2012609202,
+        4,
+        2
+      ],
+      "role": "train",
+      "root_id": "feature02",
+      "seed": 3549499941459243899,
+      "teacher_n_qubits": 4
+    },
+    {
+      "entropy": [
+        2012609202,
+        4,
+        3
+      ],
+      "role": "val",
+      "root_id": "feature02",
+      "seed": 10939535430743080410,
+      "teacher_n_qubits": 4
+    },
+    {
+      "entropy": [
+        2012609202,
+        4,
+        4
+      ],
+      "role": "test",
+      "root_id": "feature02",
+      "seed": 17504779612921856917,
+      "teacher_n_qubits": 4
+    },
+    {
+      "entropy": [
+        2012609202,
+        4,
+        5
+      ],
+      "role": "prefix",
+      "root_id": "feature02",
+      "seed": 17675173183019938570,
+      "teacher_n_qubits": 4
+    },
+    {
+      "entropy": [
+        2012609202,
+        4,
+        6
+      ],
+      "role": "suffix",
+      "root_id": "feature02",
+      "seed": 2600333491672789696,
+      "teacher_n_qubits": 4
+    },
+    {
+      "entropy": [
+        2012609203,
+        2,
+        0
+      ],
+      "role": "teacher",
+      "root_id": "feature03",
+      "seed": 681373851232973692,
+      "teacher_n_qubits": 2
+    },
+    {
+      "entropy": [
+        2012609203,
+        2,
+        1
+      ],
+      "role": "student",
+      "root_id": "feature03",
+      "seed": 12972379888517250660,
+      "teacher_n_qubits": 2
+    },
+    {
+      "entropy": [
+        2012609203,
+        2,
+        2
+      ],
+      "role": "train",
+      "root_id": "feature03",
+      "seed": 13686022356383149200,
+      "teacher_n_qubits": 2
+    },
+    {
+      "entropy": [
+        2012609203,
+        2,
+        3
+      ],
+      "role": "val",
+      "root_id": "feature03",
+      "seed": 16732020174839220456,
+      "teacher_n_qubits": 2
+    },
+    {
+      "entropy": [
+        2012609203,
+        2,
+        4
+      ],
+      "role": "test",
+      "root_id": "feature03",
+      "seed": 8854240773194826106,
+      "teacher_n_qubits": 2
+    },
+    {
+      "entropy": [
+        2012609203,
+        2,
+        5
+      ],
+      "role": "prefix",
+      "root_id": "feature03",
+      "seed": 12737429546617383028,
+      "teacher_n_qubits": 2
+    },
+    {
+      "entropy": [
+        2012609203,
+        2,
+        6
+      ],
+      "role": "suffix",
+      "root_id": "feature03",
+      "seed": 5781661844086502620,
+      "teacher_n_qubits": 2
+    },
+    {
+      "entropy": [
+        2012609203,
+        3,
+        0
+      ],
+      "role": "teacher",
+      "root_id": "feature03",
+      "seed": 16225373959182036951,
+      "teacher_n_qubits": 3
+    },
+    {
+      "entropy": [
+        2012609203,
+        3,
+        1
+      ],
+      "role": "student",
+      "root_id": "feature03",
+      "seed": 9410835474674799992,
+      "teacher_n_qubits": 3
+    },
+    {
+      "entropy": [
+        2012609203,
+        3,
+        2
+      ],
+      "role": "train",
+      "root_id": "feature03",
+      "seed": 3466949462475464272,
+      "teacher_n_qubits": 3
+    },
+    {
+      "entropy": [
+        2012609203,
+        3,
+        3
+      ],
+      "role": "val",
+      "root_id": "feature03",
+      "seed": 16109510908275141540,
+      "teacher_n_qubits": 3
+    },
+    {
+      "entropy": [
+        2012609203,
+        3,
+        4
+      ],
+      "role": "test",
+      "root_id": "feature03",
+      "seed": 1359361651013463523,
+      "teacher_n_qubits": 3
+    },
+    {
+      "entropy": [
+        2012609203,
+        3,
+        5
+      ],
+      "role": "prefix",
+      "root_id": "feature03",
+      "seed": 8560886836256317540,
+      "teacher_n_qubits": 3
+    },
+    {
+      "entropy": [
+        2012609203,
+        3,
+        6
+      ],
+      "role": "suffix",
+      "root_id": "feature03",
+      "seed": 15574183321428174839,
+      "teacher_n_qubits": 3
+    },
+    {
+      "entropy": [
+        2012609203,
+        4,
+        0
+      ],
+      "role": "teacher",
+      "root_id": "feature03",
+      "seed": 12475475487686255775,
+      "teacher_n_qubits": 4
+    },
+    {
+      "entropy": [
+        2012609203,
+        4,
+        1
+      ],
+      "role": "student",
+      "root_id": "feature03",
+      "seed": 6433770792448008138,
+      "teacher_n_qubits": 4
+    },
+    {
+      "entropy": [
+        2012609203,
+        4,
+        2
+      ],
+      "role": "train",
+      "root_id": "feature03",
+      "seed": 4888469990623118875,
+      "teacher_n_qubits": 4
+    },
+    {
+      "entropy": [
+        2012609203,
+        4,
+        3
+      ],
+      "role": "val",
+      "root_id": "feature03",
+      "seed": 6093514827657749428,
+      "teacher_n_qubits": 4
+    },
+    {
+      "entropy": [
+        2012609203,
+        4,
+        4
+      ],
+      "role": "test",
+      "root_id": "feature03",
+      "seed": 11688307738371239916,
+      "teacher_n_qubits": 4
+    },
+    {
+      "entropy": [
+        2012609203,
+        4,
+        5
+      ],
+      "role": "prefix",
+      "root_id": "feature03",
+      "seed": 17798905013159340164,
+      "teacher_n_qubits": 4
+    },
+    {
+      "entropy": [
+        2012609203,
+        4,
+        6
+      ],
+      "role": "suffix",
+      "root_id": "feature03",
+      "seed": 1096319665961261526,
+      "teacher_n_qubits": 4
+    },
+    {
+      "entropy": [
+        2012609204,
+        2,
+        0
+      ],
+      "role": "teacher",
+      "root_id": "feature04",
+      "seed": 5136143582579132779,
+      "teacher_n_qubits": 2
+    },
+    {
+      "entropy": [
+        2012609204,
+        2,
+        1
+      ],
+      "role": "student",
+      "root_id": "feature04",
+      "seed": 9055650959646875771,
+      "teacher_n_qubits": 2
+    },
+    {
+      "entropy": [
+        2012609204,
+        2,
+        2
+      ],
+      "role": "train",
+      "root_id": "feature04",
+      "seed": 825845532771245472,
+      "teacher_n_qubits": 2
+    },
+    {
+      "entropy": [
+        2012609204,
+        2,
+        3
+      ],
+      "role": "val",
+      "root_id": "feature04",
+      "seed": 1759082497685983841,
+      "teacher_n_qubits": 2
+    },
+    {
+      "entropy": [
+        2012609204,
+        2,
+        4
+      ],
+      "role": "test",
+      "root_id": "feature04",
+      "seed": 3502774279577232315,
+      "teacher_n_qubits": 2
+    },
+    {
+      "entropy": [
+        2012609204,
+        2,
+        5
+      ],
+      "role": "prefix",
+      "root_id": "feature04",
+      "seed": 15203641448070107554,
+      "teacher_n_qubits": 2
+    },
+    {
+      "entropy": [
+        2012609204,
+        2,
+        6
+      ],
+      "role": "suffix",
+      "root_id": "feature04",
+      "seed": 7801874912652390214,
+      "teacher_n_qubits": 2
+    },
+    {
+      "entropy": [
+        2012609204,
+        3,
+        0
+      ],
+      "role": "teacher",
+      "root_id": "feature04",
+      "seed": 4450565179669477977,
+      "teacher_n_qubits": 3
+    },
+    {
+      "entropy": [
+        2012609204,
+        3,
+        1
+      ],
+      "role": "student",
+      "root_id": "feature04",
+      "seed": 95914661720219252,
+      "teacher_n_qubits": 3
+    },
+    {
+      "entropy": [
+        2012609204,
+        3,
+        2
+      ],
+      "role": "train",
+      "root_id": "feature04",
+      "seed": 13904042693425903033,
+      "teacher_n_qubits": 3
+    },
+    {
+      "entropy": [
+        2012609204,
+        3,
+        3
+      ],
+      "role": "val",
+      "root_id": "feature04",
+      "seed": 13032545548566335313,
+      "teacher_n_qubits": 3
+    },
+    {
+      "entropy": [
+        2012609204,
+        3,
+        4
+      ],
+      "role": "test",
+      "root_id": "feature04",
+      "seed": 4477908013117496877,
+      "teacher_n_qubits": 3
+    },
+    {
+      "entropy": [
+        2012609204,
+        3,
+        5
+      ],
+      "role": "prefix",
+      "root_id": "feature04",
+      "seed": 18337380147066985435,
+      "teacher_n_qubits": 3
+    },
+    {
+      "entropy": [
+        2012609204,
+        3,
+        6
+      ],
+      "role": "suffix",
+      "root_id": "feature04",
+      "seed": 4448278404706735430,
+      "teacher_n_qubits": 3
+    },
+    {
+      "entropy": [
+        2012609204,
+        4,
+        0
+      ],
+      "role": "teacher",
+      "root_id": "feature04",
+      "seed": 5252832903018048191,
+      "teacher_n_qubits": 4
+    },
+    {
+      "entropy": [
+        2012609204,
+        4,
+        1
+      ],
+      "role": "student",
+      "root_id": "feature04",
+      "seed": 695029435603999089,
+      "teacher_n_qubits": 4
+    },
+    {
+      "entropy": [
+        2012609204,
+        4,
+        2
+      ],
+      "role": "train",
+      "root_id": "feature04",
+      "seed": 488275527666129267,
+      "teacher_n_qubits": 4
+    },
+    {
+      "entropy": [
+        2012609204,
+        4,
+        3
+      ],
+      "role": "val",
+      "root_id": "feature04",
+      "seed": 12414182668657910964,
+      "teacher_n_qubits": 4
+    },
+    {
+      "entropy": [
+        2012609204,
+        4,
+        4
+      ],
+      "role": "test",
+      "root_id": "feature04",
+      "seed": 14944721492033476751,
+      "teacher_n_qubits": 4
+    },
+    {
+      "entropy": [
+        2012609204,
+        4,
+        5
+      ],
+      "role": "prefix",
+      "root_id": "feature04",
+      "seed": 3793725903925447053,
+      "teacher_n_qubits": 4
+    },
+    {
+      "entropy": [
+        2012609204,
+        4,
+        6
+      ],
+      "role": "suffix",
+      "root_id": "feature04",
+      "seed": 18105186413477744302,
+      "teacher_n_qubits": 4
+    },
+    {
+      "entropy": [
+        2012609205,
+        2,
+        0
+      ],
+      "role": "teacher",
+      "root_id": "feature05",
+      "seed": 123946142964818324,
+      "teacher_n_qubits": 2
+    },
+    {
+      "entropy": [
+        2012609205,
+        2,
+        1
+      ],
+      "role": "student",
+      "root_id": "feature05",
+      "seed": 4490364869793923967,
+      "teacher_n_qubits": 2
+    },
+    {
+      "entropy": [
+        2012609205,
+        2,
+        2
+      ],
+      "role": "train",
+      "root_id": "feature05",
+      "seed": 1405723217209867694,
+      "teacher_n_qubits": 2
+    },
+    {
+      "entropy": [
+        2012609205,
+        2,
+        3
+      ],
+      "role": "val",
+      "root_id": "feature05",
+      "seed": 1292502811956899708,
+      "teacher_n_qubits": 2
+    },
+    {
+      "entropy": [
+        2012609205,
+        2,
+        4
+      ],
+      "role": "test",
+      "root_id": "feature05",
+      "seed": 12550369457405749471,
+      "teacher_n_qubits": 2
+    },
+    {
+      "entropy": [
+        2012609205,
+        2,
+        5
+      ],
+      "role": "prefix",
+      "root_id": "feature05",
+      "seed": 2462181541528523964,
+      "teacher_n_qubits": 2
+    },
+    {
+      "entropy": [
+        2012609205,
+        2,
+        6
+      ],
+      "role": "suffix",
+      "root_id": "feature05",
+      "seed": 14420722184534379867,
+      "teacher_n_qubits": 2
+    },
+    {
+      "entropy": [
+        2012609205,
+        3,
+        0
+      ],
+      "role": "teacher",
+      "root_id": "feature05",
+      "seed": 12749908058745966896,
+      "teacher_n_qubits": 3
+    },
+    {
+      "entropy": [
+        2012609205,
+        3,
+        1
+      ],
+      "role": "student",
+      "root_id": "feature05",
+      "seed": 13447189649784545766,
+      "teacher_n_qubits": 3
+    },
+    {
+      "entropy": [
+        2012609205,
+        3,
+        2
+      ],
+      "role": "train",
+      "root_id": "feature05",
+      "seed": 2847761175487019911,
+      "teacher_n_qubits": 3
+    },
+    {
+      "entropy": [
+        2012609205,
+        3,
+        3
+      ],
+      "role": "val",
+      "root_id": "feature05",
+      "seed": 15066158475321763330,
+      "teacher_n_qubits": 3
+    },
+    {
+      "entropy": [
+        2012609205,
+        3,
+        4
+      ],
+      "role": "test",
+      "root_id": "feature05",
+      "seed": 4931492092446712191,
+      "teacher_n_qubits": 3
+    },
+    {
+      "entropy": [
+        2012609205,
+        3,
+        5
+      ],
+      "role": "prefix",
+      "root_id": "feature05",
+      "seed": 12529343401239426687,
+      "teacher_n_qubits": 3
+    },
+    {
+      "entropy": [
+        2012609205,
+        3,
+        6
+      ],
+      "role": "suffix",
+      "root_id": "feature05",
+      "seed": 17660465698733210978,
+      "teacher_n_qubits": 3
+    },
+    {
+      "entropy": [
+        2012609205,
+        4,
+        0
+      ],
+      "role": "teacher",
+      "root_id": "feature05",
+      "seed": 2046272749675092131,
+      "teacher_n_qubits": 4
+    },
+    {
+      "entropy": [
+        2012609205,
+        4,
+        1
+      ],
+      "role": "student",
+      "root_id": "feature05",
+      "seed": 9818954708260610308,
+      "teacher_n_qubits": 4
+    },
+    {
+      "entropy": [
+        2012609205,
+        4,
+        2
+      ],
+      "role": "train",
+      "root_id": "feature05",
+      "seed": 15944640554395090877,
+      "teacher_n_qubits": 4
+    },
+    {
+      "entropy": [
+        2012609205,
+        4,
+        3
+      ],
+      "role": "val",
+      "root_id": "feature05",
+      "seed": 2203418573844168422,
+      "teacher_n_qubits": 4
+    },
+    {
+      "entropy": [
+        2012609205,
+        4,
+        4
+      ],
+      "role": "test",
+      "root_id": "feature05",
+      "seed": 6941082039890179037,
+      "teacher_n_qubits": 4
+    },
+    {
+      "entropy": [
+        2012609205,
+        4,
+        5
+      ],
+      "role": "prefix",
+      "root_id": "feature05",
+      "seed": 12585940952614353267,
+      "teacher_n_qubits": 4
+    },
+    {
+      "entropy": [
+        2012609205,
+        4,
+        6
+      ],
+      "role": "suffix",
+      "root_id": "feature05",
+      "seed": 16888298961855700737,
+      "teacher_n_qubits": 4
+    },
+    {
+      "entropy": [
+        2012609206,
+        2,
+        0
+      ],
+      "role": "teacher",
+      "root_id": "feature06",
+      "seed": 3454860776793692252,
+      "teacher_n_qubits": 2
+    },
+    {
+      "entropy": [
+        2012609206,
+        2,
+        1
+      ],
+      "role": "student",
+      "root_id": "feature06",
+      "seed": 14820648142927873508,
+      "teacher_n_qubits": 2
+    },
+    {
+      "entropy": [
+        2012609206,
+        2,
+        2
+      ],
+      "role": "train",
+      "root_id": "feature06",
+      "seed": 979489778918045497,
+      "teacher_n_qubits": 2
+    },
+    {
+      "entropy": [
+        2012609206,
+        2,
+        3
+      ],
+      "role": "val",
+      "root_id": "feature06",
+      "seed": 1322321596764974743,
+      "teacher_n_qubits": 2
+    },
+    {
+      "entropy": [
+        2012609206,
+        2,
+        4
+      ],
+      "role": "test",
+      "root_id": "feature06",
+      "seed": 12938224708190304904,
+      "teacher_n_qubits": 2
+    },
+    {
+      "entropy": [
+        2012609206,
+        2,
+        5
+      ],
+      "role": "prefix",
+      "root_id": "feature06",
+      "seed": 12357186659133911344,
+      "teacher_n_qubits": 2
+    },
+    {
+      "entropy": [
+        2012609206,
+        2,
+        6
+      ],
+      "role": "suffix",
+      "root_id": "feature06",
+      "seed": 7342449485298386677,
+      "teacher_n_qubits": 2
+    },
+    {
+      "entropy": [
+        2012609206,
+        3,
+        0
+      ],
+      "role": "teacher",
+      "root_id": "feature06",
+      "seed": 13032609860941021637,
+      "teacher_n_qubits": 3
+    },
+    {
+      "entropy": [
+        2012609206,
+        3,
+        1
+      ],
+      "role": "student",
+      "root_id": "feature06",
+      "seed": 5104765396084934053,
+      "teacher_n_qubits": 3
+    },
+    {
+      "entropy": [
+        2012609206,
+        3,
+        2
+      ],
+      "role": "train",
+      "root_id": "feature06",
+      "seed": 17538281539399725089,
+      "teacher_n_qubits": 3
+    },
+    {
+      "entropy": [
+        2012609206,
+        3,
+        3
+      ],
+      "role": "val",
+      "root_id": "feature06",
+      "seed": 10227162572229537129,
+      "teacher_n_qubits": 3
+    },
+    {
+      "entropy": [
+        2012609206,
+        3,
+        4
+      ],
+      "role": "test",
+      "root_id": "feature06",
+      "seed": 139372961875862036,
+      "teacher_n_qubits": 3
+    },
+    {
+      "entropy": [
+        2012609206,
+        3,
+        5
+      ],
+      "role": "prefix",
+      "root_id": "feature06",
+      "seed": 2438954129005334527,
+      "teacher_n_qubits": 3
+    },
+    {
+      "entropy": [
+        2012609206,
+        3,
+        6
+      ],
+      "role": "suffix",
+      "root_id": "feature06",
+      "seed": 7526291868061709906,
+      "teacher_n_qubits": 3
+    },
+    {
+      "entropy": [
+        2012609206,
+        4,
+        0
+      ],
+      "role": "teacher",
+      "root_id": "feature06",
+      "seed": 2398449204689655765,
+      "teacher_n_qubits": 4
+    },
+    {
+      "entropy": [
+        2012609206,
+        4,
+        1
+      ],
+      "role": "student",
+      "root_id": "feature06",
+      "seed": 5881229511541908894,
+      "teacher_n_qubits": 4
+    },
+    {
+      "entropy": [
+        2012609206,
+        4,
+        2
+      ],
+      "role": "train",
+      "root_id": "feature06",
+      "seed": 2024114952963060481,
+      "teacher_n_qubits": 4
+    },
+    {
+      "entropy": [
+        2012609206,
+        4,
+        3
+      ],
+      "role": "val",
+      "root_id": "feature06",
+      "seed": 12445996244890382208,
+      "teacher_n_qubits": 4
+    },
+    {
+      "entropy": [
+        2012609206,
+        4,
+        4
+      ],
+      "role": "test",
+      "root_id": "feature06",
+      "seed": 17064132750050628505,
+      "teacher_n_qubits": 4
+    },
+    {
+      "entropy": [
+        2012609206,
+        4,
+        5
+      ],
+      "role": "prefix",
+      "root_id": "feature06",
+      "seed": 810132331065564104,
+      "teacher_n_qubits": 4
+    },
+    {
+      "entropy": [
+        2012609206,
+        4,
+        6
+      ],
+      "role": "suffix",
+      "root_id": "feature06",
+      "seed": 14262362866284656983,
+      "teacher_n_qubits": 4
+    },
+    {
+      "entropy": [
+        2012609207,
+        2,
+        0
+      ],
+      "role": "teacher",
+      "root_id": "feature07",
+      "seed": 16362507044334960846,
+      "teacher_n_qubits": 2
+    },
+    {
+      "entropy": [
+        2012609207,
+        2,
+        1
+      ],
+      "role": "student",
+      "root_id": "feature07",
+      "seed": 9545132333289637584,
+      "teacher_n_qubits": 2
+    },
+    {
+      "entropy": [
+        2012609207,
+        2,
+        2
+      ],
+      "role": "train",
+      "root_id": "feature07",
+      "seed": 706877291344347821,
+      "teacher_n_qubits": 2
+    },
+    {
+      "entropy": [
+        2012609207,
+        2,
+        3
+      ],
+      "role": "val",
+      "root_id": "feature07",
+      "seed": 11733184140638791953,
+      "teacher_n_qubits": 2
+    },
+    {
+      "entropy": [
+        2012609207,
+        2,
+        4
+      ],
+      "role": "test",
+      "root_id": "feature07",
+      "seed": 8986814084420504093,
+      "teacher_n_qubits": 2
+    },
+    {
+      "entropy": [
+        2012609207,
+        2,
+        5
+      ],
+      "role": "prefix",
+      "root_id": "feature07",
+      "seed": 14236120953612298118,
+      "teacher_n_qubits": 2
+    },
+    {
+      "entropy": [
+        2012609207,
+        2,
+        6
+      ],
+      "role": "suffix",
+      "root_id": "feature07",
+      "seed": 258371227826855048,
+      "teacher_n_qubits": 2
+    },
+    {
+      "entropy": [
+        2012609207,
+        3,
+        0
+      ],
+      "role": "teacher",
+      "root_id": "feature07",
+      "seed": 8060331870659837140,
+      "teacher_n_qubits": 3
+    },
+    {
+      "entropy": [
+        2012609207,
+        3,
+        1
+      ],
+      "role": "student",
+      "root_id": "feature07",
+      "seed": 11947376472786075501,
+      "teacher_n_qubits": 3
+    },
+    {
+      "entropy": [
+        2012609207,
+        3,
+        2
+      ],
+      "role": "train",
+      "root_id": "feature07",
+      "seed": 1691769100567633196,
+      "teacher_n_qubits": 3
+    },
+    {
+      "entropy": [
+        2012609207,
+        3,
+        3
+      ],
+      "role": "val",
+      "root_id": "feature07",
+      "seed": 3845596523951754688,
+      "teacher_n_qubits": 3
+    },
+    {
+      "entropy": [
+        2012609207,
+        3,
+        4
+      ],
+      "role": "test",
+      "root_id": "feature07",
+      "seed": 3846061399534997928,
+      "teacher_n_qubits": 3
+    },
+    {
+      "entropy": [
+        2012609207,
+        3,
+        5
+      ],
+      "role": "prefix",
+      "root_id": "feature07",
+      "seed": 2709275371087139847,
+      "teacher_n_qubits": 3
+    },
+    {
+      "entropy": [
+        2012609207,
+        3,
+        6
+      ],
+      "role": "suffix",
+      "root_id": "feature07",
+      "seed": 8593395977677197468,
+      "teacher_n_qubits": 3
+    },
+    {
+      "entropy": [
+        2012609207,
+        4,
+        0
+      ],
+      "role": "teacher",
+      "root_id": "feature07",
+      "seed": 16610750586252278648,
+      "teacher_n_qubits": 4
+    },
+    {
+      "entropy": [
+        2012609207,
+        4,
+        1
+      ],
+      "role": "student",
+      "root_id": "feature07",
+      "seed": 12687990206864910362,
+      "teacher_n_qubits": 4
+    },
+    {
+      "entropy": [
+        2012609207,
+        4,
+        2
+      ],
+      "role": "train",
+      "root_id": "feature07",
+      "seed": 665431330350054494,
+      "teacher_n_qubits": 4
+    },
+    {
+      "entropy": [
+        2012609207,
+        4,
+        3
+      ],
+      "role": "val",
+      "root_id": "feature07",
+      "seed": 268520561091093419,
+      "teacher_n_qubits": 4
+    },
+    {
+      "entropy": [
+        2012609207,
+        4,
+        4
+      ],
+      "role": "test",
+      "root_id": "feature07",
+      "seed": 15004346854153025918,
+      "teacher_n_qubits": 4
+    },
+    {
+      "entropy": [
+        2012609207,
+        4,
+        5
+      ],
+      "role": "prefix",
+      "root_id": "feature07",
+      "seed": 16663801855749426697,
+      "teacher_n_qubits": 4
+    },
+    {
+      "entropy": [
+        2012609207,
+        4,
+        6
+      ],
+      "role": "suffix",
+      "root_id": "feature07",
+      "seed": 15273505821363144282,
+      "teacher_n_qubits": 4
+    },
+    {
+      "entropy": [
+        2012609208,
+        2,
+        0
+      ],
+      "role": "teacher",
+      "root_id": "feature08",
+      "seed": 14162407208397549035,
+      "teacher_n_qubits": 2
+    },
+    {
+      "entropy": [
+        2012609208,
+        2,
+        1
+      ],
+      "role": "student",
+      "root_id": "feature08",
+      "seed": 2549253390927499716,
+      "teacher_n_qubits": 2
+    },
+    {
+      "entropy": [
+        2012609208,
+        2,
+        2
+      ],
+      "role": "train",
+      "root_id": "feature08",
+      "seed": 15647665011647344402,
+      "teacher_n_qubits": 2
+    },
+    {
+      "entropy": [
+        2012609208,
+        2,
+        3
+      ],
+      "role": "val",
+      "root_id": "feature08",
+      "seed": 10144664195859009193,
+      "teacher_n_qubits": 2
+    },
+    {
+      "entropy": [
+        2012609208,
+        2,
+        4
+      ],
+      "role": "test",
+      "root_id": "feature08",
+      "seed": 9855472325628306671,
+      "teacher_n_qubits": 2
+    },
+    {
+      "entropy": [
+        2012609208,
+        2,
+        5
+      ],
+      "role": "prefix",
+      "root_id": "feature08",
+      "seed": 930201396596285900,
+      "teacher_n_qubits": 2
+    },
+    {
+      "entropy": [
+        2012609208,
+        2,
+        6
+      ],
+      "role": "suffix",
+      "root_id": "feature08",
+      "seed": 7022294929159080133,
+      "teacher_n_qubits": 2
+    },
+    {
+      "entropy": [
+        2012609208,
+        3,
+        0
+      ],
+      "role": "teacher",
+      "root_id": "feature08",
+      "seed": 14514770254556142777,
+      "teacher_n_qubits": 3
+    },
+    {
+      "entropy": [
+        2012609208,
+        3,
+        1
+      ],
+      "role": "student",
+      "root_id": "feature08",
+      "seed": 2492132965991701348,
+      "teacher_n_qubits": 3
+    },
+    {
+      "entropy": [
+        2012609208,
+        3,
+        2
+      ],
+      "role": "train",
+      "root_id": "feature08",
+      "seed": 3581571402199340605,
+      "teacher_n_qubits": 3
+    },
+    {
+      "entropy": [
+        2012609208,
+        3,
+        3
+      ],
+      "role": "val",
+      "root_id": "feature08",
+      "seed": 9246816990806230605,
+      "teacher_n_qubits": 3
+    },
+    {
+      "entropy": [
+        2012609208,
+        3,
+        4
+      ],
+      "role": "test",
+      "root_id": "feature08",
+      "seed": 6497407523871547631,
+      "teacher_n_qubits": 3
+    },
+    {
+      "entropy": [
+        2012609208,
+        3,
+        5
+      ],
+      "role": "prefix",
+      "root_id": "feature08",
+      "seed": 12919743691287758401,
+      "teacher_n_qubits": 3
+    },
+    {
+      "entropy": [
+        2012609208,
+        3,
+        6
+      ],
+      "role": "suffix",
+      "root_id": "feature08",
+      "seed": 3424352823077112850,
+      "teacher_n_qubits": 3
+    },
+    {
+      "entropy": [
+        2012609208,
+        4,
+        0
+      ],
+      "role": "teacher",
+      "root_id": "feature08",
+      "seed": 10207059183764021969,
+      "teacher_n_qubits": 4
+    },
+    {
+      "entropy": [
+        2012609208,
+        4,
+        1
+      ],
+      "role": "student",
+      "root_id": "feature08",
+      "seed": 12858899871738321084,
+      "teacher_n_qubits": 4
+    },
+    {
+      "entropy": [
+        2012609208,
+        4,
+        2
+      ],
+      "role": "train",
+      "root_id": "feature08",
+      "seed": 10281680656527888925,
+      "teacher_n_qubits": 4
+    },
+    {
+      "entropy": [
+        2012609208,
+        4,
+        3
+      ],
+      "role": "val",
+      "root_id": "feature08",
+      "seed": 1042069872961808808,
+      "teacher_n_qubits": 4
+    },
+    {
+      "entropy": [
+        2012609208,
+        4,
+        4
+      ],
+      "role": "test",
+      "root_id": "feature08",
+      "seed": 6964690598115380882,
+      "teacher_n_qubits": 4
+    },
+    {
+      "entropy": [
+        2012609208,
+        4,
+        5
+      ],
+      "role": "prefix",
+      "root_id": "feature08",
+      "seed": 7859724923245487698,
+      "teacher_n_qubits": 4
+    },
+    {
+      "entropy": [
+        2012609208,
+        4,
+        6
+      ],
+      "role": "suffix",
+      "root_id": "feature08",
+      "seed": 6046651728477988099,
+      "teacher_n_qubits": 4
+    },
+    {
+      "entropy": [
+        2012609209,
+        2,
+        0
+      ],
+      "role": "teacher",
+      "root_id": "feature09",
+      "seed": 5008357642144390605,
+      "teacher_n_qubits": 2
+    },
+    {
+      "entropy": [
+        2012609209,
+        2,
+        1
+      ],
+      "role": "student",
+      "root_id": "feature09",
+      "seed": 2417558513789788355,
+      "teacher_n_qubits": 2
+    },
+    {
+      "entropy": [
+        2012609209,
+        2,
+        2
+      ],
+      "role": "train",
+      "root_id": "feature09",
+      "seed": 9520417090075568768,
+      "teacher_n_qubits": 2
+    },
+    {
+      "entropy": [
+        2012609209,
+        2,
+        3
+      ],
+      "role": "val",
+      "root_id": "feature09",
+      "seed": 6830963396865227603,
+      "teacher_n_qubits": 2
+    },
+    {
+      "entropy": [
+        2012609209,
+        2,
+        4
+      ],
+      "role": "test",
+      "root_id": "feature09",
+      "seed": 9300235950536138544,
+      "teacher_n_qubits": 2
+    },
+    {
+      "entropy": [
+        2012609209,
+        2,
+        5
+      ],
+      "role": "prefix",
+      "root_id": "feature09",
+      "seed": 5865767635560977570,
+      "teacher_n_qubits": 2
+    },
+    {
+      "entropy": [
+        2012609209,
+        2,
+        6
+      ],
+      "role": "suffix",
+      "root_id": "feature09",
+      "seed": 14647963629938788974,
+      "teacher_n_qubits": 2
+    },
+    {
+      "entropy": [
+        2012609209,
+        3,
+        0
+      ],
+      "role": "teacher",
+      "root_id": "feature09",
+      "seed": 9365705059284083370,
+      "teacher_n_qubits": 3
+    },
+    {
+      "entropy": [
+        2012609209,
+        3,
+        1
+      ],
+      "role": "student",
+      "root_id": "feature09",
+      "seed": 39903377515564157,
+      "teacher_n_qubits": 3
+    },
+    {
+      "entropy": [
+        2012609209,
+        3,
+        2
+      ],
+      "role": "train",
+      "root_id": "feature09",
+      "seed": 13544975934409228015,
+      "teacher_n_qubits": 3
+    },
+    {
+      "entropy": [
+        2012609209,
+        3,
+        3
+      ],
+      "role": "val",
+      "root_id": "feature09",
+      "seed": 6209407370714513254,
+      "teacher_n_qubits": 3
+    },
+    {
+      "entropy": [
+        2012609209,
+        3,
+        4
+      ],
+      "role": "test",
+      "root_id": "feature09",
+      "seed": 8937204573888957619,
+      "teacher_n_qubits": 3
+    },
+    {
+      "entropy": [
+        2012609209,
+        3,
+        5
+      ],
+      "role": "prefix",
+      "root_id": "feature09",
+      "seed": 2936017004335599198,
+      "teacher_n_qubits": 3
+    },
+    {
+      "entropy": [
+        2012609209,
+        3,
+        6
+      ],
+      "role": "suffix",
+      "root_id": "feature09",
+      "seed": 14269170721178505111,
+      "teacher_n_qubits": 3
+    },
+    {
+      "entropy": [
+        2012609209,
+        4,
+        0
+      ],
+      "role": "teacher",
+      "root_id": "feature09",
+      "seed": 16841117995415224540,
+      "teacher_n_qubits": 4
+    },
+    {
+      "entropy": [
+        2012609209,
+        4,
+        1
+      ],
+      "role": "student",
+      "root_id": "feature09",
+      "seed": 903750450654872762,
+      "teacher_n_qubits": 4
+    },
+    {
+      "entropy": [
+        2012609209,
+        4,
+        2
+      ],
+      "role": "train",
+      "root_id": "feature09",
+      "seed": 14055063192408947565,
+      "teacher_n_qubits": 4
+    },
+    {
+      "entropy": [
+        2012609209,
+        4,
+        3
+      ],
+      "role": "val",
+      "root_id": "feature09",
+      "seed": 17845607753159658244,
+      "teacher_n_qubits": 4
+    },
+    {
+      "entropy": [
+        2012609209,
+        4,
+        4
+      ],
+      "role": "test",
+      "root_id": "feature09",
+      "seed": 8681139249897673330,
+      "teacher_n_qubits": 4
+    },
+    {
+      "entropy": [
+        2012609209,
+        4,
+        5
+      ],
+      "role": "prefix",
+      "root_id": "feature09",
+      "seed": 15729398693292001887,
+      "teacher_n_qubits": 4
+    },
+    {
+      "entropy": [
+        2012609209,
+        4,
+        6
+      ],
+      "role": "suffix",
+      "root_id": "feature09",
+      "seed": 7986664276297050932,
+      "teacher_n_qubits": 4
+    },
+    {
+      "entropy": [
+        2012609210,
+        2,
+        0
+      ],
+      "role": "teacher",
+      "root_id": "feature10",
+      "seed": 10823384456015519273,
+      "teacher_n_qubits": 2
+    },
+    {
+      "entropy": [
+        2012609210,
+        2,
+        1
+      ],
+      "role": "student",
+      "root_id": "feature10",
+      "seed": 16995648214732356140,
+      "teacher_n_qubits": 2
+    },
+    {
+      "entropy": [
+        2012609210,
+        2,
+        2
+      ],
+      "role": "train",
+      "root_id": "feature10",
+      "seed": 5972086947983400837,
+      "teacher_n_qubits": 2
+    },
+    {
+      "entropy": [
+        2012609210,
+        2,
+        3
+      ],
+      "role": "val",
+      "root_id": "feature10",
+      "seed": 13838193574422224596,
+      "teacher_n_qubits": 2
+    },
+    {
+      "entropy": [
+        2012609210,
+        2,
+        4
+      ],
+      "role": "test",
+      "root_id": "feature10",
+      "seed": 10577653693641419609,
+      "teacher_n_qubits": 2
+    },
+    {
+      "entropy": [
+        2012609210,
+        2,
+        5
+      ],
+      "role": "prefix",
+      "root_id": "feature10",
+      "seed": 3842760821907190194,
+      "teacher_n_qubits": 2
+    },
+    {
+      "entropy": [
+        2012609210,
+        2,
+        6
+      ],
+      "role": "suffix",
+      "root_id": "feature10",
+      "seed": 6645605320144241557,
+      "teacher_n_qubits": 2
+    },
+    {
+      "entropy": [
+        2012609210,
+        3,
+        0
+      ],
+      "role": "teacher",
+      "root_id": "feature10",
+      "seed": 9987741897192283411,
+      "teacher_n_qubits": 3
+    },
+    {
+      "entropy": [
+        2012609210,
+        3,
+        1
+      ],
+      "role": "student",
+      "root_id": "feature10",
+      "seed": 533173567381882043,
+      "teacher_n_qubits": 3
+    },
+    {
+      "entropy": [
+        2012609210,
+        3,
+        2
+      ],
+      "role": "train",
+      "root_id": "feature10",
+      "seed": 2581236205873699978,
+      "teacher_n_qubits": 3
+    },
+    {
+      "entropy": [
+        2012609210,
+        3,
+        3
+      ],
+      "role": "val",
+      "root_id": "feature10",
+      "seed": 17849225545762574455,
+      "teacher_n_qubits": 3
+    },
+    {
+      "entropy": [
+        2012609210,
+        3,
+        4
+      ],
+      "role": "test",
+      "root_id": "feature10",
+      "seed": 13255031372892388007,
+      "teacher_n_qubits": 3
+    },
+    {
+      "entropy": [
+        2012609210,
+        3,
+        5
+      ],
+      "role": "prefix",
+      "root_id": "feature10",
+      "seed": 1191046681332776428,
+      "teacher_n_qubits": 3
+    },
+    {
+      "entropy": [
+        2012609210,
+        3,
+        6
+      ],
+      "role": "suffix",
+      "root_id": "feature10",
+      "seed": 15605450033388761696,
+      "teacher_n_qubits": 3
+    },
+    {
+      "entropy": [
+        2012609210,
+        4,
+        0
+      ],
+      "role": "teacher",
+      "root_id": "feature10",
+      "seed": 6549299800234565964,
+      "teacher_n_qubits": 4
+    },
+    {
+      "entropy": [
+        2012609210,
+        4,
+        1
+      ],
+      "role": "student",
+      "root_id": "feature10",
+      "seed": 8255804870960659651,
+      "teacher_n_qubits": 4
+    },
+    {
+      "entropy": [
+        2012609210,
+        4,
+        2
+      ],
+      "role": "train",
+      "root_id": "feature10",
+      "seed": 10102012555645990140,
+      "teacher_n_qubits": 4
+    },
+    {
+      "entropy": [
+        2012609210,
+        4,
+        3
+      ],
+      "role": "val",
+      "root_id": "feature10",
+      "seed": 16665713238596830574,
+      "teacher_n_qubits": 4
+    },
+    {
+      "entropy": [
+        2012609210,
+        4,
+        4
+      ],
+      "role": "test",
+      "root_id": "feature10",
+      "seed": 12385010176156017116,
+      "teacher_n_qubits": 4
+    },
+    {
+      "entropy": [
+        2012609210,
+        4,
+        5
+      ],
+      "role": "prefix",
+      "root_id": "feature10",
+      "seed": 12000210400393145463,
+      "teacher_n_qubits": 4
+    },
+    {
+      "entropy": [
+        2012609210,
+        4,
+        6
+      ],
+      "role": "suffix",
+      "root_id": "feature10",
+      "seed": 5917718144955779617,
+      "teacher_n_qubits": 4
+    },
+    {
+      "entropy": [
+        2012609211,
+        2,
+        0
+      ],
+      "role": "teacher",
+      "root_id": "feature11",
+      "seed": 10409381257998855853,
+      "teacher_n_qubits": 2
+    },
+    {
+      "entropy": [
+        2012609211,
+        2,
+        1
+      ],
+      "role": "student",
+      "root_id": "feature11",
+      "seed": 4396599571808984164,
+      "teacher_n_qubits": 2
+    },
+    {
+      "entropy": [
+        2012609211,
+        2,
+        2
+      ],
+      "role": "train",
+      "root_id": "feature11",
+      "seed": 3693679062903074960,
+      "teacher_n_qubits": 2
+    },
+    {
+      "entropy": [
+        2012609211,
+        2,
+        3
+      ],
+      "role": "val",
+      "root_id": "feature11",
+      "seed": 14532856469344712133,
+      "teacher_n_qubits": 2
+    },
+    {
+      "entropy": [
+        2012609211,
+        2,
+        4
+      ],
+      "role": "test",
+      "root_id": "feature11",
+      "seed": 3767574338976520272,
+      "teacher_n_qubits": 2
+    },
+    {
+      "entropy": [
+        2012609211,
+        2,
+        5
+      ],
+      "role": "prefix",
+      "root_id": "feature11",
+      "seed": 6274475714328602994,
+      "teacher_n_qubits": 2
+    },
+    {
+      "entropy": [
+        2012609211,
+        2,
+        6
+      ],
+      "role": "suffix",
+      "root_id": "feature11",
+      "seed": 14602383031472290268,
+      "teacher_n_qubits": 2
+    },
+    {
+      "entropy": [
+        2012609211,
+        3,
+        0
+      ],
+      "role": "teacher",
+      "root_id": "feature11",
+      "seed": 9372685398285431800,
+      "teacher_n_qubits": 3
+    },
+    {
+      "entropy": [
+        2012609211,
+        3,
+        1
+      ],
+      "role": "student",
+      "root_id": "feature11",
+      "seed": 1356161905606905713,
+      "teacher_n_qubits": 3
+    },
+    {
+      "entropy": [
+        2012609211,
+        3,
+        2
+      ],
+      "role": "train",
+      "root_id": "feature11",
+      "seed": 14127743312875272639,
+      "teacher_n_qubits": 3
+    },
+    {
+      "entropy": [
+        2012609211,
+        3,
+        3
+      ],
+      "role": "val",
+      "root_id": "feature11",
+      "seed": 11536942678642371884,
+      "teacher_n_qubits": 3
+    },
+    {
+      "entropy": [
+        2012609211,
+        3,
+        4
+      ],
+      "role": "test",
+      "root_id": "feature11",
+      "seed": 16394757251142337157,
+      "teacher_n_qubits": 3
+    },
+    {
+      "entropy": [
+        2012609211,
+        3,
+        5
+      ],
+      "role": "prefix",
+      "root_id": "feature11",
+      "seed": 2384850517175910146,
+      "teacher_n_qubits": 3
+    },
+    {
+      "entropy": [
+        2012609211,
+        3,
+        6
+      ],
+      "role": "suffix",
+      "root_id": "feature11",
+      "seed": 3609996851367689266,
+      "teacher_n_qubits": 3
+    },
+    {
+      "entropy": [
+        2012609211,
+        4,
+        0
+      ],
+      "role": "teacher",
+      "root_id": "feature11",
+      "seed": 9533602428270806508,
+      "teacher_n_qubits": 4
+    },
+    {
+      "entropy": [
+        2012609211,
+        4,
+        1
+      ],
+      "role": "student",
+      "root_id": "feature11",
+      "seed": 5793980663398444165,
+      "teacher_n_qubits": 4
+    },
+    {
+      "entropy": [
+        2012609211,
+        4,
+        2
+      ],
+      "role": "train",
+      "root_id": "feature11",
+      "seed": 9503407385560656205,
+      "teacher_n_qubits": 4
+    },
+    {
+      "entropy": [
+        2012609211,
+        4,
+        3
+      ],
+      "role": "val",
+      "root_id": "feature11",
+      "seed": 9819628067834612102,
+      "teacher_n_qubits": 4
+    },
+    {
+      "entropy": [
+        2012609211,
+        4,
+        4
+      ],
+      "role": "test",
+      "root_id": "feature11",
+      "seed": 10434033906765276491,
+      "teacher_n_qubits": 4
+    },
+    {
+      "entropy": [
+        2012609211,
+        4,
+        5
+      ],
+      "role": "prefix",
+      "root_id": "feature11",
+      "seed": 13757251697771773804,
+      "teacher_n_qubits": 4
+    },
+    {
+      "entropy": [
+        2012609211,
+        4,
+        6
+      ],
+      "role": "suffix",
+      "root_id": "feature11",
+      "seed": 17899179763237358673,
+      "teacher_n_qubits": 4
+    },
+    {
+      "entropy": [
+        2012609212,
+        2,
+        0
+      ],
+      "role": "teacher",
+      "root_id": "feature12",
+      "seed": 4816706027055750254,
+      "teacher_n_qubits": 2
+    },
+    {
+      "entropy": [
+        2012609212,
+        2,
+        1
+      ],
+      "role": "student",
+      "root_id": "feature12",
+      "seed": 2190184745141570801,
+      "teacher_n_qubits": 2
+    },
+    {
+      "entropy": [
+        2012609212,
+        2,
+        2
+      ],
+      "role": "train",
+      "root_id": "feature12",
+      "seed": 15815541880602978581,
+      "teacher_n_qubits": 2
+    },
+    {
+      "entropy": [
+        2012609212,
+        2,
+        3
+      ],
+      "role": "val",
+      "root_id": "feature12",
+      "seed": 7040260585663695814,
+      "teacher_n_qubits": 2
+    },
+    {
+      "entropy": [
+        2012609212,
+        2,
+        4
+      ],
+      "role": "test",
+      "root_id": "feature12",
+      "seed": 13844369252623935390,
+      "teacher_n_qubits": 2
+    },
+    {
+      "entropy": [
+        2012609212,
+        2,
+        5
+      ],
+      "role": "prefix",
+      "root_id": "feature12",
+      "seed": 701797997770506214,
+      "teacher_n_qubits": 2
+    },
+    {
+      "entropy": [
+        2012609212,
+        2,
+        6
+      ],
+      "role": "suffix",
+      "root_id": "feature12",
+      "seed": 13240410583149709626,
+      "teacher_n_qubits": 2
+    },
+    {
+      "entropy": [
+        2012609212,
+        3,
+        0
+      ],
+      "role": "teacher",
+      "root_id": "feature12",
+      "seed": 17972956419390038661,
+      "teacher_n_qubits": 3
+    },
+    {
+      "entropy": [
+        2012609212,
+        3,
+        1
+      ],
+      "role": "student",
+      "root_id": "feature12",
+      "seed": 2107366692400820301,
+      "teacher_n_qubits": 3
+    },
+    {
+      "entropy": [
+        2012609212,
+        3,
+        2
+      ],
+      "role": "train",
+      "root_id": "feature12",
+      "seed": 12623628037212020487,
+      "teacher_n_qubits": 3
+    },
+    {
+      "entropy": [
+        2012609212,
+        3,
+        3
+      ],
+      "role": "val",
+      "root_id": "feature12",
+      "seed": 18406534415430260743,
+      "teacher_n_qubits": 3
+    },
+    {
+      "entropy": [
+        2012609212,
+        3,
+        4
+      ],
+      "role": "test",
+      "root_id": "feature12",
+      "seed": 18428932209154593921,
+      "teacher_n_qubits": 3
+    },
+    {
+      "entropy": [
+        2012609212,
+        3,
+        5
+      ],
+      "role": "prefix",
+      "root_id": "feature12",
+      "seed": 2486189964293057069,
+      "teacher_n_qubits": 3
+    },
+    {
+      "entropy": [
+        2012609212,
+        3,
+        6
+      ],
+      "role": "suffix",
+      "root_id": "feature12",
+      "seed": 17785894229000798834,
+      "teacher_n_qubits": 3
+    },
+    {
+      "entropy": [
+        2012609212,
+        4,
+        0
+      ],
+      "role": "teacher",
+      "root_id": "feature12",
+      "seed": 16178694488728335142,
+      "teacher_n_qubits": 4
+    },
+    {
+      "entropy": [
+        2012609212,
+        4,
+        1
+      ],
+      "role": "student",
+      "root_id": "feature12",
+      "seed": 4042305985752326394,
+      "teacher_n_qubits": 4
+    },
+    {
+      "entropy": [
+        2012609212,
+        4,
+        2
+      ],
+      "role": "train",
+      "root_id": "feature12",
+      "seed": 14746967666689051826,
+      "teacher_n_qubits": 4
+    },
+    {
+      "entropy": [
+        2012609212,
+        4,
+        3
+      ],
+      "role": "val",
+      "root_id": "feature12",
+      "seed": 16632432536578296559,
+      "teacher_n_qubits": 4
+    },
+    {
+      "entropy": [
+        2012609212,
+        4,
+        4
+      ],
+      "role": "test",
+      "root_id": "feature12",
+      "seed": 5014919970415995416,
+      "teacher_n_qubits": 4
+    },
+    {
+      "entropy": [
+        2012609212,
+        4,
+        5
+      ],
+      "role": "prefix",
+      "root_id": "feature12",
+      "seed": 12904750314324203660,
+      "teacher_n_qubits": 4
+    },
+    {
+      "entropy": [
+        2012609212,
+        4,
+        6
+      ],
+      "role": "suffix",
+      "root_id": "feature12",
+      "seed": 3654364726598457624,
+      "teacher_n_qubits": 4
+    },
+    {
+      "entropy": [
+        2012609100,
+        2,
+        0
+      ],
+      "role": "teacher",
+      "root_id": "development",
+      "seed": 18364276606813486810,
+      "teacher_n_qubits": 2
+    },
+    {
+      "entropy": [
+        2012609100,
+        2,
+        1
+      ],
+      "role": "student",
+      "root_id": "development",
+      "seed": 1603930682264504131,
+      "teacher_n_qubits": 2
+    },
+    {
+      "entropy": [
+        2012609100,
+        2,
+        2
+      ],
+      "role": "train",
+      "root_id": "development",
+      "seed": 13598061927713911019,
+      "teacher_n_qubits": 2
+    },
+    {
+      "entropy": [
+        2012609100,
+        2,
+        3
+      ],
+      "role": "val",
+      "root_id": "development",
+      "seed": 11500523206313810322,
+      "teacher_n_qubits": 2
+    },
+    {
+      "entropy": [
+        2012609100,
+        2,
+        4
+      ],
+      "role": "test",
+      "root_id": "development",
+      "seed": 3193178460464726615,
+      "teacher_n_qubits": 2
+    },
+    {
+      "entropy": [
+        2012609100,
+        2,
+        5
+      ],
+      "role": "prefix",
+      "root_id": "development",
+      "seed": 1886780792164476735,
+      "teacher_n_qubits": 2
+    },
+    {
+      "entropy": [
+        2012609100,
+        2,
+        6
+      ],
+      "role": "suffix",
+      "root_id": "development",
+      "seed": 5453380715966570004,
+      "teacher_n_qubits": 2
+    }
+  ],
+  "smoke_scientific_sha256": "04cd5fc5a01f06a7f1bb7a0675646120c789b0f893cfe970cfcf15ca4e4907ee",
+  "status": "FROZEN",
+  "tests": {
+    "passed": true,
+    "path": "/private/tmp/qrc-feature-density-tests.xml",
+    "sha256": "82170df467cc1773b994639eefc1876dd3d2e3f4a7151288a79a681bf49c5c58",
+    "tests": 11
+  }
+}

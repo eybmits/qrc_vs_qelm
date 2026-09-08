@@ -67,7 +67,7 @@ def render_all(output_dir: Path = OUTPUT) -> dict:
         if not match or not re.search(r"Pages:\s+1\b", info):
             raise ValueError(f"{name}: expected one measurable PDF page")
         width, height = map(float, match.groups())
-        expected_aspect = 17.9197 / 13.0 if name == SELECTED_VARIANT else 1.0
+        expected_aspect = 17.9197 / 9.6 if name == SELECTED_VARIANT else 1.0
         if abs(width / height - expected_aspect) > 0.001:
             raise ValueError(f"{name}: unexpected canvas {width} x {height}")
         subprocess.run(

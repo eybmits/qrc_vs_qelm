@@ -1,0 +1,23 @@
+{
+  "study": "feature_density_followup",
+  "root_seeds": [2012609201,2012609202,2012609203,2012609204,2012609205,2012609206,2012609207,2012609208,2012609209,2012609210,2012609211,2012609212],
+  "development_seed": 2012609100,
+  "analysis_seed": 2012609900,
+  "teacher_sizes": [2,3,4],
+  "student_qubits": 6,
+  "window": 6,
+  "gamma": 4.0,
+  "train_rows": 480,
+  "val_rows": 160,
+  "test_rows": 320,
+  "prefix_length": 128,
+  "panel_groups": 32,
+  "prefix_branches": 4,
+  "input_levels": 33,
+  "checkpoint_grid": 24,
+  "checkpoint_counts": [1,2,3,4,6,8],
+  "feature_budgets": [18,36,54,72,108,144],
+  "alpha_grid": [0,1e-10,1e-8,1e-6,1e-4,1e-2,1,100,10000,1000000,"+inf"],
+  "primary_contrasts": [[18,144],[72,144]],
+  "bootstrap_replicates": 20000
+}

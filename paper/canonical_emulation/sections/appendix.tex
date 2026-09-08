@@ -3,111 +3,104 @@
 \label{app:proofs}
 
 \subsection{Window laws and emulation theorem}
+\label{app:window-laws}
 
-For a suffix $s$, let
-$K_d(s)=\{Y(h):S_d(h)=s\}$ be its compatible output set.  Any suffix-only
-predictor returns one point for this entire set.  Its Chebyshev radius, and
-hence its optimal vector-valued worst-case error, is
-\begin{equation}
- R_d=\sup_s\inf_a\sup_{y\in K_d(s)}\|y-a\|.
- \label{eq:vector-radius}
-\end{equation}
-Every ball containing $K_d(s)$ has radius at least half its diameter.  A ball
-centered at any member of $K_d(s)$ has radius at most its diameter.  Taking
-the supremum over suffixes gives
-\begin{equation}
- \frac{D_d}{2}\leq R_d\leq D_d.
- \label{eq:vector-window-law}
-\end{equation}
+For each suffix $s$, the set
+$\mathcal Y_d(s)=\{y(h):S_d(h)=s\}$ contains its compatible outputs.
+A window predictor must choose one center for this set. Any enclosing ball
+has radius at least half its diameter; centering at a member gives radius
+at most the diameter. Taking suprema over suffixes bounds the optimal
+vector error between $D_d/2$ and $D_d$.
 For scalar output, the midpoint of the compatible infimum and supremum has
 radius exactly half the range, which proves Eq.~\eqref{eq:window-law}.
 
-The same scalar lower bound holds for the worst-case expected absolute error of
-a randomized prediction $\widehat Y$: compatible outputs $y_0$ and $y_1$ obey
-$|y_1-y_0|\leq\mathbb E|y_0-\widehat Y|+
-\mathbb E|y_1-\widehat Y|$.  Under the balanced distribution on this pair,
-the squared-risk decomposition is
-\begin{equation}
- \frac12\sum_{b=0}^1\mathbb E(y_b-\widehat Y)^2
- =\frac{(y_1-y_0)^2}{4}
- +\mathbb E\!\left[\widehat Y-\frac{y_0+y_1}{2}\right]^2 .
- \label{eq:balanced-pair}
-\end{equation}
+For randomized prediction $\widehat y$, the scalar bound on worst-case
+expected absolute error follows from
+$|y_1-y_0|\leq\mathbb E|y_0-\widehat y|+
+\mathbb E|y_1-\widehat y|$ for compatible outputs $y_0,y_1$,
+with $\mathbb E$ over prediction randomness. For equally likely outputs,
+the deterministic midpoint also minimizes squared risk, giving
+$(y_1-y_0)^2/4$.
 
-We next prove Eq.~\eqref{eq:qrc-qelm-equivalence} for the fixed linear
-observable map $Y(h)=\mathcal C\rho(h)$.  If a reset-QELM has
-uniform error below $\varepsilon$, then two histories with the same suffix
-obey
-\begin{equation}
- \|Y(h)-Y(h')\|
- <2\varepsilon
-\end{equation}
-by the triangle inequality.  Hence $D_d<2\varepsilon$.  If emulators exist
-for every positive tolerance, monotonicity of $D_d$ gives $D_d\to0$.
+For Eq.~\eqref{eq:qrc-qelm-equivalence}, let $\mathcal R$ be the compact
+closure of admissible reachable pre-suffix states. Free concatenation makes
+this the same set for every suffix $s=(a_1,\ldots,a_d)$. Write
+$\Phi_s=\Phi_{a_d}\cdots\Phi_{a_1}$ for its channel composition;
+the empty word has the identity map. For scalar output, define
+\[
+ \begin{aligned}
+ y_-(s)&=\min_{\rho\in\mathcal R}\mathcal C\Phi_s(\rho),\\
+ y_+(s)&=\max_{\rho\in\mathcal R}\mathcal C\Phi_s(\rho),
+ \end{aligned}
+\]
+and their midpoint $m_d(s)=[y_-(s)+y_+(s)]/2$.
+Taking the closure does not change these compatible output extrema.
+Uniform continuity on the compact window--state domain makes both extrema,
+and hence $m_d$, continuous. The midpoint satisfies
+$\sup_h|y(h)-m_d(S_d(h))|=D_d/2$. For any $\varepsilon>0$, uniform density
+provides $f\in\mathcal Q_d$ with $\|f-m_d\|_\infty<\varepsilon$,
+where this norm is the supremum over windows. Its error is at most
+$D_d/2+\varepsilon$. The information lower bound proves the equality
+of infima; no finite-model attainment is required.
 
-Conversely, choose one reachable reference state $\bar\rho$ from which every
-finite suffix is admissible and define the replay map
+For vector outputs, the lower bound and monotonicity of $D_d$ make
+$D_d\to0$ necessary. Conversely, choose a reachable reference state
+$\bar\rho$ and define the replay map
 \begin{equation}
- g_d(u_1,\ldots,u_d)
- =\mathcal C\Phi_{u_d}\cdots\Phi_{u_1}(\bar\rho).
+ g_d(a_1,\ldots,a_d)
+ =\mathcal C\Phi_{a_d}\cdots\Phi_{a_1}(\bar\rho).
  \label{eq:replay-map}
 \end{equation}
-For an actual history, its pre-suffix state and $\bar\rho$ form an admissible
-difference, so
-$\|Y(h)-g_d(S_d(h))\|\leq D_d$.  Channel continuity makes $g_d$ continuous
-on the compact window domain.  Given $\varepsilon>0$, choose $d$ with
-$D_d<\varepsilon/2$ and a member of the universal reset-QELM family with
-$\|g_d-Q_d\|_\infty<\varepsilon/2$.  Their sum is below $\varepsilon$, proving
-the converse.  This exact-expectation existence statement provides no
-efficiency guarantee for fitting the emulator.
+Free concatenation gives $\|y(h)-g_d(S_d(h))\|\leq D_d$, and channel
+continuity makes $g_d$ continuous. Choosing $D_d<\varepsilon/2$ and
+$f\in\mathcal Q_d$ with $\|g_d-f\|_\infty<\varepsilon/2$ proves the converse,
+without a guarantee of efficient fitting.
 
 \subsection{Reachable-observable spectral proof}
+\label{app:observable-proof}
 
-Let $\mathcal D$ be the compact closure of all differences between admissible
-pre-suffix states, and set $V=\operatorname{span}_{\mathbb R}\mathcal D$.
-The set is symmetric.  Free concatenation implies
-$\Phi_u\mathcal D\subseteq\mathcal D$ for every allowed suffix input $u$.
-Let $\mathcal C$ be the linear output map and remove all state differences that
-remain invisible under every possible future input:
+Let $\Delta$ be the compact closure of admissible pre-suffix state
+differences and $V=\operatorname{span}_{\mathbb R}\Delta$.
+The set is symmetric; free concatenation gives
+$\Phi_a\Delta\subseteq\Delta$ for every allowed input $a$.
+For finite future words $w$, including the empty word, write $|w|$ for
+their length. Remove differences invisible to the linear output map
+$\mathcal C$ after every future word:
 \begin{equation}
  \begin{aligned}
- \mathcal N&=\{X\in V:\mathcal C\Phi_wX=0
- \text{ for every finite $w$}\},\\
+ \mathcal N&=\{v\in V:\mathcal C\Phi_w(v)=0
+ \text{ for all }w\},\\
  W&=V/\mathcal N .
  \end{aligned}
  \label{eq:visible-quotient}
 \end{equation}
-The empty word is included.  The subspace $\mathcal N$ is invariant, so each
-channel induces a well-defined linear map
-$A_u\pi(X)=\pi(\Phi_uX)$ on $W$, where $\pi:V\to W$ is the quotient map.
+Invariance of $\mathcal N$ induces $A_a\pi(v)=\pi(\Phi_a(v))$ on $W$,
+where $\pi:V\to W$ is the quotient map. For a word $s=(a_1,\ldots,a_d)$,
+write $|s|=d$ and $A_s=A_{a_d}\cdots A_{a_1}$; empty products are identities.
 
-Define the symmetric reachable body
+The compact symmetric body
+$\mathcal B=\overline{\operatorname{conv}}\,\pi(\Delta)$
+spans $W$ and is invariant under every $A_a$. Its Minkowski functional
+defines a norm and its induced operator norm, both denoted
+$\|\cdot\|_{\mathcal B}$. Set
 \begin{equation}
- \mathcal B_{\rm reach}=\overline{\operatorname{conv}}\,\pi(\mathcal D).
-\end{equation}
-It spans $W$, has nonempty relative interior, and is invariant under every
-$A_u$.  Its Minkowski functional $\|\cdot\|_{\mathcal B}$ is consequently a
-norm.  For words of length $d$, write
-\begin{equation}
- a_d=\sup_{|s|=d}\|A_s\|_{\mathcal B},
- \qquad r_{\rm vis}=\lim_{d\to\infty}a_d^{1/d}.
+ c_d=\sup_{|s|=d}\|A_s\|_{\mathcal B},
+ \qquad r_{\rm vis}=\lim_{d\to\infty}c_d^{1/d}.
  \label{eq:visible-radius-formal}
 \end{equation}
 This agrees with Eq.~\eqref{eq:visible-radius-definition}; joint spectral
 radius is invariant under equivalent finite-dimensional norms.  We set
 $r_{\rm vis}=0$ when $W=\{0\}$.
 
-On $W$, define a second norm by
+For a quotient state difference $x\in W$, define a second norm by
 \begin{equation}
  \|x\|_{\rm obs}
  =\sup_w\|\overline{\mathcal C}A_wx\|,
  \label{eq:observable-norm}
 \end{equation}
-where $\overline{\mathcal C}$ is the induced output map.  The norm is finite
-because $\mathcal B_{\rm reach}$ is invariant and the output is bounded.  It
-is positive definite because the quotient removed every direction invisible
-under all future words.  Finite-dimensional norm equivalence therefore gives
-constants $0<\kappa_-\leq\kappa_+<\infty$ such that
+Here $\overline{\mathcal C}\pi(v)=\mathcal C(v)$ and $\|\cdot\|$ is the output
+norm. Invariance makes $\|\cdot\|_{\rm obs}$ finite; observability makes it
+positive definite. Norm equivalence gives $0<\kappa_-\leq\kappa_+<\infty$ with
 \begin{equation}
  \kappa_-\|x\|_{\mathcal B}
  \leq\|x\|_{\rm obs}
@@ -117,28 +110,25 @@ constants $0<\kappa_-\leq\kappa_+<\infty$ such that
 
 Linearity and convexity give
 \begin{equation}
- D_d=\sup_{|s|=d}\sup_{x\in\mathcal B_{\rm reach}}
+ D_d=\sup_{|s|=d}\sup_{x\in\mathcal B}
  \|\overline{\mathcal C}A_sx\|.
  \label{eq:diameter-product}
 \end{equation}
-The upper norm bound yields $D_d\leq\kappa_+a_d$.  For the reverse bound,
-take $x\in\mathcal B_{\rm reach}$, a length-$d$ suffix $s$, and any future
-word $w$.  Forward invariance and monotonicity of $D_d$ imply
+The upper norm bound yields $D_d\leq\kappa_+c_d$. For $x\in\mathcal B$,
+$|s|=d$, and any future word $w$, forward invariance and monotonicity give
+$\|\overline{\mathcal C}A_wA_sx\|\leq D_{d+|w|}\leq D_d$.
+Taking suprema over $w,x,s$ and applying the lower norm bound proves
 \begin{equation}
- \|\overline{\mathcal C}A_wA_sx\|
- \leq D_{d+|w|}\leq D_d.
-\end{equation}
-Taking the supremum over $w$, applying the lower norm bound, and then taking
-the suprema over $x$ and $s$ proves
-\begin{equation}
- \kappa_-a_d\leq D_d\leq\kappa_+a_d.
+ \kappa_-c_d\leq D_d\leq\kappa_+c_d.
  \label{eq:diameter-product-equivalence}
 \end{equation}
 
-The sequence is submultiplicative: $a_{d+e}\leq a_da_e$.  If
+For nonnegative lengths $d,\ell$, the sequence is submultiplicative:
+$c_{d+\ell}\leq c_dc_\ell$. If
 $r_{\rm vis}<1$, the products decay exponentially.  Conversely, if
-$D_d\to0$, Eq.~\eqref{eq:diameter-product-equivalence} gives $a_d\to0$; some
-$a_{d_0}<1$, and submultiplicativity again forces exponential decay.  Constant
+$D_d\to0$, Eq.~\eqref{eq:diameter-product-equivalence} gives $c_d\to0$;
+$c_{d_0}<1$ for some positive length $d_0$, and submultiplicativity again
+forces exponential decay. Constant
 factor equivalence also gives
 $\lim_{d\to\infty}D_d^{1/d}=r_{\rm vis}$.  For
 $0<r_-<r_{\rm vis}<r_+<1$, root convergence implies
@@ -148,123 +138,139 @@ between slopes $1/(-\log r_-)$ and $1/(-\log r_+)$.  Dividing by
 $\log(1/\varepsilon)$, taking $\varepsilon\downarrow0$, and then sending
 $r_-,r_+\to r_{\rm vis}$ proves Eq.~\eqref{eq:window-complexity}.
 
-This proof uses one freely concatenable suffix alphabet.  A finite-state input
-grammar instead requires node-indexed reachable-observable quotients and the
-corresponding constrained joint spectral radius
-\cite{philippe2016constrained}.  For the full $(u,q)$ alphabet in the singlet
-construction, the freely iterable $q=0$ subalphabet supplies a nondecaying word
-at every length.  Because $D_d$ and the joint spectral radius take suprema over
-suffixes, this gives $D_d\geq\delta$ and $r_{\rm vis}=1$.
+Finite-state input grammars instead require node-indexed quotients and a
+constrained joint spectral radius \cite{philippe2016constrained}.
+Here inputs concatenate freely: the singlet construction's iterable $q=0$
+subalphabet gives $D_d\geq\delta$ at every length and hence $r_{\rm vis}=1$.
 
 \subsection{Contraction and Bernstein resources}
+\label{app:bernstein-resources}
 
-Write $D_{\rm tr}(\rho,\sigma)=\tfrac12\|\rho-\sigma\|_1$.  Under the stronger
-incremental condition
+For this construction, take the full scalar input alphabet $[0,1]$.
+For density operators $\rho,\sigma$, use the trace distance
+$D_{\rm tr}(\rho,\sigma)=\tfrac12\|\rho-\sigma\|_1$, with trace norm
+$\|\cdot\|_1$. Assume $0\leq\eta<1$ and the stronger incremental condition
 \begin{equation}
  \begin{aligned}
- D_{\rm tr}(\Phi_u(\rho),\Phi_v(\sigma))
- &\leq\eta D_{\rm tr}(\rho,\sigma)+L_u|u-v|,\\
- 0&\leq\eta<1,
+ &D_{\rm tr}(\Phi_a(\rho),\Phi_{a'}(\sigma))\\
+ &\quad\leq\eta D_{\rm tr}(\rho,\sigma)+L_{\rm in}|a-a'|,
  \end{aligned}
  \label{eq:incremental-lipschitz}
 \end{equation}
-replaying the last $d$ inputs from a fixed reset state gives
-\begin{equation}
- D_{\rm tr}(\rho_t,\widetilde\rho_t^{(d)})\leq\eta^d,
- \qquad
- |Y_t-\operatorname{Tr}(O\widetilde\rho_t^{(d)})|
- \leq2M\eta^d,
-\end{equation}
-where $M=\|O\|_\infty$.
+for all inputs $a,a'\in[0,1]$, where $L_{\rm in}\geq0$ is the input
+Lipschitz constant and $\eta$ the state-contraction factor.
+Let $\rho_t^{(d)}$ be the state obtained by replaying the last $d$ inputs
+from the fixed reference state $\bar\rho$. Then
+$D_{\rm tr}(\rho_t,\rho_t^{(d)})\leq\eta^d$ and
+$|y_t-\operatorname{Tr}(O\rho_t^{(d)})|\leq2M\eta^d$,
+where $M=\|O\|_\infty$ is the operator norm of the scalar output observable.
 
-For each scalar coordinate $x_i$, prepare $r$ qubits in
-$\sqrt{1-x_i}|0\rangle+\sqrt{x_i}|1\rangle$.  Measuring their blockwise
-Hamming weight gives $H_i\sim\operatorname{Binomial}(r,x_i)$.
-A linear readout whose coefficients
-are the replay values at the grid nodes returns the multivariate Bernstein
-polynomial.  Input Lipschitzness gives
+For a positive integer repetition count $r$, encode each coordinate $a_i$,
+$i=1,\ldots,d$, in $r$ copies of
+$\sqrt{1-a_i}|0\rangle+\sqrt{a_i}|1\rangle$. Measuring each block's Hamming
+weight gives independent counts $K_i\sim\operatorname{Binomial}(r,a_i)$.
+Readout coefficients $g_d(\boldsymbol k/r)$, $\boldsymbol k\in\{0,\ldots,r\}^d$,
+give the Bernstein expectation $f$.
+For windows $\boldsymbol a,\boldsymbol a'\in[0,1]^d$, input Lipschitzness gives
 \begin{equation}
- |g_d(\boldsymbol x)-g_d(\boldsymbol y)|
- \leq2ML_u\sum_{i=1}^d\eta^{d-i}|x_i-y_i|.
+ |g_d(\boldsymbol a)-g_d(\boldsymbol a')|
+ \leq2ML_{\rm in}\sum_{i=1}^d\eta^{d-i}|a_i-a_i'|.
 \end{equation}
-Since $\mathbb E|H_i/r-x_i|\leq1/(2\sqrt r)$, write
-$\widehat Q=\widehat Q_{d,r,Q}$.  The exact-expectation and $Q$-shot errors
-satisfy
+Let $\widehat f$ average $Q$ independent joint readouts
+$g_d(K_1/r,\ldots,K_d/r)$, where the positive integer $Q$ is the shot count.
+For failure probability $0<\zeta<1$,
+$\mathbb E|K_i/r-a_i|\leq1/(2\sqrt r)$ and bounded readouts give \cite{hoeffding1963probability}
 \begin{equation}
+ \begin{gathered}
  \begin{aligned}
- \epsilon_{\rm hist}&=2M\eta^d,\\
- \epsilon_{\rm rep}&=\frac{ML_u(1-\eta^d)}{(1-\eta)\sqrt r},\\
- \epsilon_{\rm shot}&=M\sqrt{\frac{2\log(2/\zeta)}{Q}},\\
- \epsilon_{\rm tot}&=\epsilon_{\rm hist}
- +\epsilon_{\rm rep}+\epsilon_{\rm shot},\\
- \sup_h|Y(h)-Q_{d,r}(h)|
- &\leq\epsilon_{\rm hist}+\epsilon_{\rm rep},\\
- \Pr\!\left[|Y(h)-\widehat Q(h)|\leq\epsilon_{\rm tot}\right]
- &\geq1-\zeta .
- \end{aligned}
+ \varepsilon_{\rm hist}&=2M\eta^d,\\
+ \varepsilon_{\rm rep}&=\frac{ML_{\rm in}(1-\eta^d)}{(1-\eta)\sqrt r},\\
+ \varepsilon_{\rm shot}&=M\sqrt{\frac{2\log(2/\zeta)}{Q}},
+ \end{aligned}\\
+ \sup_h|y(h)-f(S_d(h))|
+ \leq\varepsilon_{\rm hist}+\varepsilon_{\rm rep},\\
+ \Pr\!\left[
+ \begin{gathered}
+ |y(h)-\widehat f(S_d(h))|\\
+ \leq\varepsilon_{\rm hist}+\varepsilon_{\rm rep}+\varepsilon_{\rm shot}
+ \end{gathered}
+ \right]\geq1-\zeta .
+ \end{gathered}
  \label{eq:qrc-qelm-bound}
 \end{equation}
-The construction uses $rd$ qubits and $(r+1)^d$ coefficient entries.  It is
-explicit but not generally efficient.
+Both shot guarantees concern each fixed history $h$, not all histories
+simultaneously. The construction uses $rd$ qubits and $(r+1)^d$ coefficients.
 
 Product-binomial and statevector probabilities differ by at most
 $8.33\times10^{-17}$, and every tested $(d,r)$ pair satisfies
-Eq.~\eqref{eq:qrc-qelm-bound}.
+this replay bound, Eq.~\eqref{eq:qrc-qelm-bound}.
+
+Replacing replay coefficients by $m_d(\boldsymbol k/r)$ defines a separate
+expectation $f^{\rm mid}$ and $Q$-shot average $\widehat f^{\rm mid}$.
+The extrema and midpoint inherit the weighted Lipschitz bound and range
+$[-M,M]$, preserving $\varepsilon_{\rm rep}$ and $\varepsilon_{\rm shot}$:
+\begin{equation}
+ \begin{gathered}
+ \sup_h|y(h)-f^{\rm mid}(S_d(h))|
+ \leq\frac{D_d}{2}+\varepsilon_{\rm rep},\\
+ \Pr\!\left[
+ \begin{gathered}
+ |y(h)-\widehat f^{\rm mid}(S_d(h))|
+ \\
+ \leq\frac{D_d}{2}+\varepsilon_{\rm rep}+\varepsilon_{\rm shot}
+ \end{gathered}
+ \right]\geq1-\zeta .
+ \end{gathered}
+ \label{eq:midpoint-resource-bound}
+\end{equation}
+The $Q$ readouts $m_d(K_1/r,\ldots,K_d/r)$ are independent.
+Here $D_d/2\leq M\eta^d$, versus replay's $2M\eta^d$.
+Computing midpoint coefficients requires reachable-output extrema;
+this existence construction guarantees neither efficient training nor
+validation by the replay experiments.
 
 \subsection{Protected mode and finite-panel calibration}
+\label{app:protected-calibration}
 
-If every channel in a freely iterable suffix subalphabet satisfies
-$\Phi_u^\dagger(P)=P$, every word in that subalphabet preserves the
-expectation of $P$.  The addressable pulse loads the singlet because
+For the protected construction, the addressable rotation
+$R_x^{(1)}(\theta)=\exp(-i\theta X_1/2)$ through angle $\theta$ on the first
+qubit loads singlet population
 \begin{equation}
- \begin{aligned}
- R_x^{(1)}(\theta)|00\rangle
- &=\cos(\theta/2)|00\rangle-i\sin(\theta/2)|10\rangle,\\
- |\langle\psi^-|10\rangle|^2&=\frac12 .
- \end{aligned}
+ |\langle\psi^-|R_x^{(1)}(\theta)|00\rangle|^2
+ =\tfrac12\sin^2(\theta/2)=\delta.
 \end{equation}
-This yields $\delta p_-=\tfrac12\sin^2(\theta/2)$, while
-Eq.~\eqref{eq:protected-singlet} makes the population accessible through the
-declared Pauli correlations.  At the one-radian pulse used here, the output
-gap is $0.1149244235$, forcing a worst-case absolute error of at least
-$0.0574622$ for every finite window.  For the two histories in the main text,
-Eq.~\eqref{eq:balanced-pair} gives the same minimum balanced-pair MSE at
-every finite $d$:
+Equation~\eqref{eq:protected-singlet} expresses this population through the
+declared Pauli correlations. The one-radian pulse gives gap $0.1149244235$
+and worst-case absolute error at least $0.0574622$ at every finite $d$.
+The balanced-pair calculation above gives
 \begin{equation}
  \min\operatorname{MSE}_{\rm pair}
- =\frac{(\delta p_-)^2}{4}=0.0033019058 .
+ =\frac{\delta^2}{4}=0.0033019058 .
  \label{eq:protected-pair-mse}
 \end{equation}
-If protection is imperfect, with
-$\varepsilon_{\rm prot}=\sup_u\|\Phi_u^\dagger(P)-P\|_\infty$, telescoping
-gives the finite-horizon certificate
-\begin{equation}
- |\delta p_d|\geq
- \max\{0,|\delta p_0|-2d\varepsilon_{\rm prot}\}.
-\end{equation}
-
-For the sampled common-suffix panel, let $m$ be the output dimension, let
-$y_{sk}\in\mathbb R^m$ be the output for suffix $s$ and prefix branch $k$,
-let $\bar y_s$ be the branch mean, and let
-$p_s$ be one suffix prediction.  The realized squared error separates exactly:
+For the sampled common-suffix panel, let $m$ be the output dimension,
+$y_{sk}\in\mathbb R^m$ the output for suffix $s$ and prefix branch $k$,
+$\bar y_s$ the branch mean, and $\widehat y_s$ one prediction shared by all
+branches of that suffix. Write $\mathbb E_{s,k}$ and $\mathbb E_s$ for
+equal-weight empirical averages over suffix--branch pairs and suffixes,
+respectively, and $\|\cdot\|_2$ for the Euclidean norm.
+The realized squared error separates exactly:
 \begin{equation}
  \begin{aligned}
- \frac1m\mathbb E_{s,k}\|y_{sk}-p_s\|^2
- &=\frac1m\mathbb E_{s,k}\|y_{sk}-\bar y_s\|^2\\
- &\quad+\frac1m\mathbb E_s\|\bar y_s-p_s\|^2 .
+ &\frac1m\mathbb E_{s,k}\|y_{sk}-\widehat y_s\|_2^2\\
+ &\quad=\frac1m\mathbb E_{s,k}\|y_{sk}-\bar y_s\|_2^2\\
+ &\qquad+\frac1m\mathbb E_s\|\bar y_s-\widehat y_s\|_2^2 .
  \end{aligned}
  \label{eq:panel-decomposition}
 \end{equation}
-The second term is residual emulator error, not pure feature-approximation
-error: it can also reflect finite-data estimation, ridge regularization,
-and sampling variability of the suffix mean.
-The cross term vanishes within every suffix group.  This is a
-distribution-dependent MSE identity, not the worst-case uniform law in
-Eqs.~\eqref{eq:window-law} and \eqref{eq:visible-memory-theorem}.  With
-$n_{\rm pre}$ conditionally independent prefix branches, the empirical
-history numerator has expectation $(n_{\rm pre}-1)/n_{\rm pre}$ times the
-population conditional variance.  The unbiased factor is $4/3$ for the
-registered $n_{\rm pre}=4$.  Applying this correction changes no cell
-originally classified as emulated or representation limited, and leaves the
-reported window and feature effects unchanged.
-This history correction does not isolate feature approximation in the residual.
+The cross term vanishes within each suffix group. The residual emulator error can reflect
+feature approximation, finite-data estimation, ridge regularization, and
+suffix-mean sampling variability. This distribution-dependent MSE identity
+differs from the worst-case laws in
+Eqs.~\eqref{eq:window-law} and \eqref{eq:visible-memory-theorem}.
+For $n_{\rm pre}$ conditionally independent prefix branches, the empirical
+history numerator has expectation $(n_{\rm pre}-1)/n_{\rm pre}$ times
+population conditional variance. The unbiased correction is $4/3$ for
+the registered $n_{\rm pre}=4$. It preserves every emulated or
+representation-limited classification and the reported window and feature
+effects, without isolating feature approximation in the residual.

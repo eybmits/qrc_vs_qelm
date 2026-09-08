@@ -1,22 +1,20 @@
-A quantum reservoir computer (QRC) carries a state between inputs.  A reset
-quantum extreme learning machine (QELM) starts afresh and sees only a finite
-window of recent inputs.  When can the second reproduce the input--output
-behavior of the first?  Two histories with the same window must receive the
-same prediction rule, even when the QRC still distinguishes their older inputs.
-For a scalar output, half the largest compatible output gap is exactly the
-smallest possible worst-case error of any window model.  For continuous
-finite-dimensional QRC dynamics with a fixed finite collection of outputs and
-a compact input alphabet with freely concatenable suffixes, a growing
-exact-expectation reset-QELM family that is
-universal on each finite window achieves arbitrary accuracy if and only if
-this gap vanishes uniformly.  We connect this condition to the decay of state
-differences that inputs can create and declared outputs can reveal now or
-later.  The
-resulting dynamical criterion does not require the full quantum state to
-forget its past.  A two-qubit construction shows the opposite case: an old
-input changes a symmetry-protected population that remains measurable after
-every finite window.  Held-out simulations examine the effects of context,
-feature budgets, and finite measurements.
-A quadratic classical delay model outperforms the tested fixed QELM on the
-registered comparison.  The result determines when explicit context can
-replace recurrent memory, rather than the efficiency of that replacement.
+A quantum extreme learning machine (QELM) transforms inputs into quantum
+features for a trainable readout without carrying memory between predictions.
+Encoding a window of recent inputs allows it to process temporal information.
+Can such a window QELM reproduce a quantum reservoir computer (QRC), which
+carries information between inputs in a quantum state?
+We characterize when this replacement is possible. Two histories with
+identical recent inputs are indistinguishable to a window model, yet may
+produce different reservoir outputs. For scalar outputs, half the largest
+such difference is exactly the smallest achievable worst-case error. Under
+suitable regularity assumptions, a growing universal QELM family evaluated
+through exact expectations can approach this optimum at every window length.
+Arbitrary accuracy is therefore possible precisely when the difference
+vanishes uniformly as the window grows. Only
+memory that can affect the chosen outputs must fade. The full quantum state
+need not forget its past. A two-qubit example demonstrates persistent memory
+that prevents arbitrarily accurate finite-window replacement. Simulations
+examine the practical roles of window length, feature capacity, and
+measurement budgets. Together, these results establish when explicitly
+encoded input history can replace recurrent quantum memory and when
+information beyond any finite window remains essential.

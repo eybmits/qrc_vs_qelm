@@ -26,6 +26,7 @@ import numpy as np
 import pandas as pd
 
 from figure1_timeseries import provenance as timeseries_provenance
+import paper_palette as colors
 from render_compact_phase_map import _validated_source as validated_phase_source
 from render_compact_scaling import _validated_source as validated_scaling_source
 
@@ -84,6 +85,7 @@ DEFAULT_SUFFIX_SOURCE = (
     / "results_canonical_confirmatory_v1"
     / "suffix_decomposition.csv"
 )
+DEFAULT_FEATURE_DENSITY_SOURCE = REPO_ROOT / "results_feature_density_v1/metrics.csv"
 DEFAULT_SHOT_SOURCE = (
     REPO_ROOT
     / "pra_extension"
@@ -102,46 +104,68 @@ STYLE: dict[str, Any] = {
     "legend_fontsize": 8.5,
     "axes_linewidth": 0.55,
     "primary_linewidth": 1.1,
-    "grid_linewidth": 0.45,
+    "grid_linewidth": 0.35,
+}
+
+# Physical publication geometry shared by current manuscript Figures 2 and 3.
+# Legacy artifact numbering is retained below for reproducibility.
+COMPARISON_LAYOUT = {
+    "figure_width": 7.055,
+    "figure_height": 2.40,
+    "panel_side": 1.60,
+    "panel_gap": 0.68,
+    "two_panel_gap": 0.86,
+    "bottom": 0.53,
+    "three_panel_left": 0.70,
+}
+COMPARISON_LEGEND = {
+    "frameon": True,
+    "fancybox": True,
+    "fontsize": STYLE["legend_fontsize"],
+    "handlelength": 1.2,
+    "handletextpad": 0.4,
+    "borderpad": 0.3,
+    "borderaxespad": 0.45,
+    "labelspacing": 0.25,
 }
 
 FIGURE_SIZES = {
-    "fig1": (7.055, 13.0 / 2.54),
+    "fig1": (7.055, 9.60 / 2.54),
     "fig2": (7.055, 2.65),
-    "fig3": (7.055, 2.40),
+    "fig3": (COMPARISON_LAYOUT["figure_width"], COMPARISON_LAYOUT["figure_height"]),
 }
 
 PALETTE = {
-    "ink": "#000000",
-    "annotation": "#7F7F7F",
-    "grid": "#B0B0B0",
-    "neutral": "#F1F2F2",
-    "history_missing": "#A7A9AC",
-    "frozen": "#3B86FF",
-    "frozen_light": "#EBF2FF",
-    "onset": "#00A14B",
-    "onset_light": "#E6F5EC",
-    "scrambled": "#FC4D30",
-    "scrambled_light": "#FEECE9",
-    "yellow": "#FFC943",
-    "pale_yellow": "#FFDD92",
-    "orange": "#FC4D30",
-    "purple": "#A93BFF",
-    "viridis_18": "#7AD151",
-    "viridis_36": "#2A788E",
-    "viridis_72": "#482475",
-    "family_2": "#3B86FF",
-    "family_3": "#FC4D30",
-    "story_ink": "#000000",
-    "story_border": "#CBD5E1",
-    "story_neutral": "#F8FAFC",
-    "story_blue": "#3B86FF",
-    "story_blue_light": "#EDF3FC",
-    "story_green": "#00A14B",
-    "story_green_light": "#EBF7F1",
-    "story_orange": "#FC4D30",
-    "story_orange_light": "#FFF1DF",
-    "white": "#FFFFFF",
+    "ink": colors.INK,
+    "annotation": colors.MUTED,
+    "grid": colors.GRID,
+    "neutral": colors.NEUTRAL,
+    "history_missing": colors.MUTED,
+    "frozen": colors.COBALT,
+    "frozen_light": colors.COBALT_LIGHT,
+    "onset": colors.CORAL,
+    "onset_light": colors.CORAL_LIGHT,
+    "scrambled": colors.VIOLET,
+    "scrambled_light": colors.VIOLET_LIGHT,
+    "yellow": colors.FEATURE_FILL,
+    "pale_yellow": colors.FEATURE_BACKGROUND,
+    "orange": colors.CORAL,
+    "purple": colors.VIOLET,
+    "viridis_18": colors.FEATURE_BUDGETS[18],
+    "viridis_36": colors.FEATURE_BUDGETS[36],
+    "viridis_72": colors.FEATURE_BUDGETS[72],
+    "family_2": colors.QRC_SIZES[2],
+    "family_3": colors.QRC_SIZES[3],
+    "story_ink": colors.INK,
+    "story_border": colors.GRID,
+    "story_neutral": colors.NEUTRAL,
+    "story_blue": colors.COBALT,
+    "story_blue_light": colors.COBALT_LIGHT,
+    "story_green": colors.CORAL,
+    "story_green_light": colors.CORAL_LIGHT,
+    "story_orange": colors.VIOLET,
+    "story_orange_light": colors.VIOLET_LIGHT,
+    "white": colors.WHITE,
 }
 
 INK = PALETTE["ink"]
@@ -239,7 +263,7 @@ def _panel_heading(
         )
 
 
-def _style_quant_axis(ax: plt.Axes, *, log_minor_y: bool = False) -> None:
+def _style_quant_axis(ax: plt.Axes) -> None:
     for name, spine in ax.spines.items():
         spine.set_visible(True)
         spine.set_color(INK)
@@ -252,21 +276,19 @@ def _style_quant_axis(ax: plt.Axes, *, log_minor_y: bool = False) -> None:
         pad=3.0,
         colors=INK,
     )
+    # Major guides in both directions match the native Figure 1 plots.
+    # Keep minor ticks without a dense secondary grid; place guides below data.
+    ax.set_axisbelow(True)
+    ax.grid(False, axis="both", which="minor")
     ax.grid(
-        axis="y",
+        axis="both",
         which="major",
         color=GRID,
         linewidth=STYLE["grid_linewidth"],
-        alpha=0.30,
+        # Matplotlib scales dash lengths by linewidth, so normalize to 2 pt.
+        linestyle=(0, (2 / STYLE["grid_linewidth"],) * 2),
+        alpha=1.0,
     )
-    if log_minor_y:
-        ax.grid(
-            axis="y",
-            which="minor",
-            color=GRID,
-            linewidth=0.30,
-            alpha=0.12,
-        )
 
 
 def _style_legend(legend: Any) -> None:
@@ -401,92 +423,92 @@ def render_figure_1(dark_summary_path: Path, output_dir: Path) -> tuple[Path, ..
         },
         "input_timeseries": input_timeseries,
         "selected_design": "variant_a_architectures",
-        "selected_theory_panel": "B4",
-        "removed_panel": "c",
-        "canvas_aspect_ratio": 17.9197 / 13.0,
-        "common_suffix_diameter": (
-            "supremal declared-output distance between histories sharing the last d inputs"
-        ),
-        "emulation_statement": (
-            "a growing exact-expectation reset-QELM family universal on each finite "
-            "window emulates uniformly to arbitrary accuracy exactly when D_d tends to zero"
-        ),
+        "removed_history_error_panel": input_timeseries["removed_history_error_panel"],
+        "canvas_aspect_ratio": 17.9197 / 9.60,
+        "canvas_bounds_cm": [0.0, 3.60, 17.9197, 13.2],
         "figure_question": (
             "when can explicit finite context reproduce recurrent input-output behavior"
         ),
         "panels": {
-            "a": "recurrent and reset-window architectures with one shared illustrative output-comparison timeline",
-            "b": "optimal scalar history error versus context, tolerance crossing, and a persistent floor",
+            "architecture": "recurrent and reset-window architectures with unchanged illustrative input and causal access",
+            "fading": "upper output frame: fading old-bit influence as time advances at fixed d=40",
+            "persistent": "lower output frame: gradual revelation of a persistent old bit as time advances at the same fixed d=40",
         },
-        "regimes": {
-            "fading": {
-                "condition": "D_d is positive at every finite d and tends to zero; r_vis < 1",
-                "consequence": "arbitrary accuracy as d grows",
+        "panel_letters": [],
+        "theorem_context": {
+            "status": "manuscript interpretation, not a plotted curve or measured property of these toy traces",
+            "common_suffix_diameter": "supremal declared-output distance between histories sharing the last d inputs",
+            "scalar_information_limit": "D_d/2 is the optimal worst-case absolute scalar error due to missing history",
+            "emulation_statement": (
+                "a growing exact-expectation reset-QELM family universal on each finite "
+                "window emulates uniformly to arbitrary accuracy exactly when D_d tends to zero"
+            ),
+            "regimes": {
+                "fading": {
+                    "condition": "D_d tends to zero; r_vis < 1 under the spectral theorem assumptions",
+                    "consequence": "arbitrary accuracy as d grows, without a guarantee of exact emulation at a fixed finite d",
+                },
+                "finite": {
+                    "condition": "D_d = 0 for some finite d",
+                    "consequence": "output exactly determined by finite context",
+                },
+                "persistent": {
+                    "condition": "D_d >= Delta > 0 for every d; r_vis = 1",
+                    "consequence": "scalar worst-case error is at least Delta/2",
+                },
             },
-            "finite": {
-                "condition": "D_d = 0 for some finite d",
-                "consequence": "output exactly determined by finite context",
-            },
-            "persistent": {
-                "condition": "D_d >= Delta > 0 for every d; r_vis = 1",
-                "consequence": "scalar worst-case error is at least Delta/2",
-            },
+            "memory_relevance": (
+                "past inputs must create the state difference and present or future "
+                "declared outputs must reveal it; full-state forgetting is not required"
+            ),
+            "scope": (
+                "finite-dimensional QRC with input-continuous channels and fixed finite "
+                "observable output; the iff statement additionally assumes compact inputs "
+                "with freely concatenable suffixes and per-window reset-QELM density"
+            ),
+            "illustration_boundary": (
+                "The displayed time-dependent two-history gaps are not generic D_d/2 curves. "
+                "Decay with elapsed time at fixed d does not establish uniform convergence as d grows."
+            ),
         },
         "schematic_curves": True,
-        "memory_relevance": (
-            "past inputs must create the state difference and present or future "
-            "declared outputs must reveal it; full-state forgetting is not required"
-        ),
-        "scope": (
-            "finite-dimensional QRC with input-continuous channels and fixed finite "
-            "observable output; the iff statement additionally assumes compact inputs "
-            "with freely concatenable suffixes and per-window reset-QELM density"
-        ),
-        "panel_b_history_error": {
-            "design_candidate": "B4",
-            "status": "conceptual illustration, not simulated or fitted evidence",
-            "quantity": "D_d/2",
-            "loss": "worst-case absolute scalar error",
-            "comparison": "largest output ambiguity over all histories sharing their last d inputs",
-            "tolerance": "epsilon is a desired scalar history-error tolerance, not an empirical test threshold",
-            "crossing": "schematic continuous crossing, not the first strict integer d_epsilon",
-            "fading": "blue error curve tends to zero and enters the green tolerance band",
-            "persistent": "red error floor stays above the illustrated tolerance",
-            "scope": "unrestricted window-only optimum; finite QELM representation and measurement errors remain separate",
-            "axes_size_cm": [6.40, 2.40],
-            "blue_curve": "one analytic exponential; continuous value and slope at the tolerance crossing",
-            "blue_curve_display": {
-                "panel_translation_cm": [4.0, 0.0],
-                "coordinate_scope": "local coordinates before the panel translation",
-                "baseline_y_cm": 0.85,
-                "amplitude_cm": 2.19,
-                "decay_per_cm": 0.40707656282948684,
-                "origin_x_cm": 1.66,
-                "domain_x_cm": [1.66, 7.52],
-                "crossing_cm": [4.76, 1.47],
-            },
-        },
-        "panel_a_output_comparisons": input_timeseries["output_comparisons"],
+        "output_comparisons": input_timeseries["output_comparisons"],
+        "scope": "Two analytic balanced-bit illustrations with known case-specific baselines, ideal window conditional means, "
+                 "fixed d and evolving t; not simulated, fitted or measured QRC/QELM performance.",
         "upstream_dark_sector_summary_sha256": _sha256(dark_summary_path),
         "tikz_source_sha256": _sha256(tikz_source),
-        "typography": "native 11 pt labels and 12 pt panel letters at 7.055 inch width",
+        "typography": "native 11 pt labels and one shared 10 pt legend at 7.055 inch width; no panel letters",
         "history_access": "the interior point at t=180 supplies the current scalar; "
                           "older inputs act through the carried-state loop; the exact causal "
                           "window is 141--180 and grey future samples 181--200 are display-only",
-        "past_input_cue": "blue brace over the older-input interval labeled past in rho_{t-1}; "
+        "past_input_cue": "blue!16 behind the older-input interval, ending where the green!24 window starts; "
+                          "a 0.4-pt solid green!65!ink boundary marks index 140.5, distinct from the dashed current-time guide; "
+                          "blue brace labeled past carried in / QRC state rho_(t-1); "
                           "not a second input wire, history replay, or claim of lossless history storage",
-        "lane_spacing": "one 4.40 cm square input centered between model lanes, replacing both 3.60 cm input plots; "
-                        "a green causal-window brace feeds the reset encoder from below without crossing quantum wires; "
-                        "one 4.40 cm output comparison replaces the two former output plots; centered panel b is unchanged",
+        "lane_spacing": "the 4.15 cm square input and all architecture coordinates retain their positions and native labels; "
+                        "both dynamics groups retain their 0.35 cm rightward offset and observable banks their 0.15 cm offset; "
+                        "the orthogonal scalar connector enters the QRC top center vertically downward; "
+                        "the reset lane is 0.30 cm lower to separate the model rows; "
+                        "a coral causal-window brace feeds the reset encoder from below without crossing quantum wires; "
+                        "two 4.15-by-3.2 cm output frames occupy y=8.58..11.78 and y=4.99..8.19 with matching axes; "
+                        "case labels are omitted; a single shared legend overlaps their facing borders; "
+                        "the removed lower history-error panel permits a 17.9197-by-9.60 cm canvas",
         "architecture_motifs": "three-wire general QRC channel block and explicit reset encoding plus fixed gates; "
-                               "matching gold observable banks and compact unlabeled readout triangles; both outputs feed one comparison timeline",
+                               "matching yellow observable banks with softly rounded cards and connectors; "
+                               "faint downstream lanes denote omitted intermediate observables, not extra quantum wires; "
+                               "compact rounded unlabeled readout triangles; both outputs feed the paired memory-case comparisons",
         "readout_scope": "fixed target readout (identity for the declared observable vector); "
                          "trained reset-QELM emulator readout; operations remain defined by the caption and model section "
-                         "while endpoints are labeled Y_t and its hatted counterpart, with no trained-readout text",
-        "observable_notation": "O_1,...,O_m used independently in both banks as model-specific labels; "
+                         "while endpoints are labeled y_t and its hatted counterpart, with no trained-readout text",
+        "observable_notation": "O_1,...,O_m label target observables and P_1,...,P_B label QELM features; "
                                "no identical-operator or equal-feature-count claim",
         "annotation_scope": "no standalone zoom or schematic tags; one unchanged input amplitude scale; "
-                            "one output axis reserves legend headroom and marks when an old bit leaves its window; "
+                            "no Fading memory or Persistent memory titles and no external expiry/explanation labels; "
+                            "green!24 before d and blue!16 after d inside both output frames encode the old bit's window access; "
+                            "a single one-row reference-style key overlaps the facing borders between both frames "
+                            "and identifies QRC and QELM, with no independent third truth trajectory; "
+                            "time tick labels appear only on the lower frame; input-step and time axis titles are omitted; "
+                            "no panel letters, epsilon or D_d/2 appear in the artwork; "
                             "caption identifies the ideal toy reference, illustrative status and future exclusion",
     }
     source.write_text(
@@ -1130,14 +1152,88 @@ def _validated_shot_effects(path: Path) -> pd.DataFrame:
     return frame.sort_values(["root_id", "total_shots"]).reset_index(drop=True)
 
 
-def _resource_diagnosis_axes(fig):
-    """Keep three physically square resource panels in one publication row."""
-    width = 0.24
-    height = width * fig.get_figwidth() / fig.get_figheight()
-    axes = [fig.add_axes([left, 0.22, width, height]) for left in (0.095, 0.415, 0.735)]
+def _comparison_axes(fig: plt.Figure, count: int) -> list[plt.Axes]:
+    """Match physical frames and gutters for the two main evidence figures."""
+    if count not in (2, 3):
+        raise ValueError("The publication comparison row contains two or three panels")
+    side = COMPARISON_LAYOUT["panel_side"]
+    gap = COMPARISON_LAYOUT["panel_gap" if count == 3 else "two_panel_gap"]
+    stride = side + gap
+    row_center = COMPARISON_LAYOUT["three_panel_left"] + (3 * side + 2 * COMPARISON_LAYOUT["panel_gap"]) / 2
+    left = row_center - (count * side + (count - 1) * gap) / 2
+    axes = [fig.add_axes([
+        (left + index * stride) / fig.get_figwidth(),
+        COMPARISON_LAYOUT["bottom"] / fig.get_figheight(),
+        side / fig.get_figwidth(),
+        side / fig.get_figheight(),
+    ]) for index in range(count)]
     for ax in axes:
         ax.set_box_aspect(1)
     return axes
+
+
+def _resource_diagnosis_axes(fig: plt.Figure) -> list[plt.Axes]:
+    """Keep three matched, physically square resource panels in one row."""
+    return _comparison_axes(fig, 3)
+
+
+def _feature_density_source(path: Path) -> pd.DataFrame:
+    """Only the complete, separately frozen follow-up enters the new panel."""
+    from run_feature_density import coverage, verify
+    frozen = verify()
+    manifest = json.loads(path.with_name("manifest.json").read_text())
+    if (manifest.get("status") != "COMPLETED" or manifest.get("smoke") is not False
+            or manifest.get("freeze") != frozen or manifest.get("material") != frozen["material"]
+            or manifest.get("metrics_sha256") != _sha256(path)):
+        raise ValueError("feature-density source provenance mismatch")
+    frame = pd.read_csv(path, float_precision="round_trip")
+    coverage(frame)
+    if not np.allclose(frame["total_nrmse"], np.sqrt(frame["total_mse"]/frame["target_variance"]), atol=1e-12):
+        raise ValueError("feature-density normalization mismatch")
+    return frame[frame["model"].eq("ptd_parallel")].assign(
+        cohort="feature_density_followup", source_sha256=_sha256(path))
+
+
+def _feature_density_with_bridge(path: Path) -> pd.DataFrame:
+    """Add only new partial banks; replicated 18/36 controls are not duplicates."""
+    from run_feature_bridge import RESULTS, load_completed
+
+    original = _feature_density_source(path)
+    bridge, manifest = load_completed()
+    new = bridge[bridge["feature_budget"].isin((24, 30))].assign(
+        cohort="feature_density_followup", source_sha256=manifest["metrics_sha256"])
+    if len(new) != 72 or _sha256(RESULTS / "metrics.csv") != manifest["metrics_sha256"]:
+        raise ValueError("intermediate feature coverage or identity mismatch")
+    combined = pd.concat([original.assign(experiment_stage="original_six_budget_followup"), new],
+                         ignore_index=True, sort=False)
+    if len(combined) != 288 or combined.duplicated(["root_id", "teacher_n_qubits", "feature_budget"]).any():
+        raise ValueError("duplicate or incomplete combined feature source")
+    return combined
+
+
+def _resource_history_with_n4(scaling: pd.DataFrame) -> pd.DataFrame:
+    _validated_dense_n4_phase_source(DEFAULT_DENSE_N4_PHASE_SOURCE, DEFAULT_DENSE_N4_SUFFIX_SOURCE)
+    fourth = pd.read_csv(DEFAULT_DENSE_N4_SUFFIX_SOURCE)
+    fourth = fourth[fourth["model"].eq("rr_same_identity")
+                    & fourth["teacher_gamma"].isin((.2,.5,1.,2.,4.))
+                    & fourth["window"].isin((1,2,4,6))].copy()
+    if len(fourth) != 240 or fourth.duplicated(["root_id","teacher_gamma","window"]).any():
+        raise ValueError("four-qubit scaling slice is incomplete")
+    fourth["scaling_x"] = fourth["teacher_gamma"]*.5*fourth["window"]
+    fourth["cohort"] = "independent_dense_n4"
+    fourth["source_sha256"] = _sha256(DEFAULT_DENSE_N4_SUFFIX_SOURCE)
+    original = scaling.assign(cohort="canonical_confirmatory", source_sha256=_sha256(DEFAULT_SCALING_SOURCE))
+    columns=["root_id","teacher_n_qubits","teacher_gamma","window","scaling_x","history_nrmse","cohort","source_sha256"]
+    return pd.concat([original[columns],fourth[columns]],ignore_index=True)
+
+
+def _finish_comparison_axis(ax: plt.Axes, letter: str) -> None:
+    """Use the same frame, letter anchor and label spacing in Figures 2/3."""
+    _style_quant_axis(ax)
+    ax.text(0.045, 0.965, letter, transform=ax.transAxes,
+            ha="left", va="top", fontsize=STYLE["axes_titlesize"], fontweight="bold")
+    ax.xaxis.labelpad = 4.0
+    ax.yaxis.labelpad = 3.0
 
 
 def render_figure_3(
@@ -1145,29 +1241,31 @@ def render_figure_3(
     suffix_source_path: Path,
     shot_source_path: Path,
     output_dir: Path,
+    feature_density_source_path: Path = DEFAULT_FEATURE_DENSITY_SOURCE,
 ) -> tuple[Path, ...]:
-    scaling = validated_scaling_source(scaling_source_path)
-    features = _validated_suffix_features(suffix_source_path)
+    scaling = _resource_history_with_n4(validated_scaling_source(scaling_source_path))
+    _validated_suffix_features(suffix_source_path)  # retain the historical-source audit
+    features = _feature_density_with_bridge(feature_density_source_path)
     shots = _validated_shot_effects(shot_source_path)
     _base_style()
     fig = plt.figure(figsize=FIGURE_SIZES["fig3"], facecolor=WHITE)
     axes = _resource_diagnosis_axes(fig)
-    family_colors = {2: PALETTE["family_2"], 3: PALETTE["family_3"]}
-    family_markers = {2: "o", 3: "D"}
+    family_colors = colors.QRC_SIZES
+    family_markers = {2: "o", 3: "D", 4: "s"}
     family_handles = [
         Line2D([], [], color=family_colors[n], marker=family_markers[n],
                markerfacecolor=WHITE if n == 2 else family_colors[n],
                markersize=3.7, markeredgewidth=0.6,
                linewidth=STYLE["primary_linewidth"], label=f"{n}-qubit QRC")
-        for n in (2, 3)
+        for n in (2, 3, 4)
     ]
 
     ax = axes[0]
     root_scaling = (
-        scaling.groupby(["teacher_n_qubits", "root_id", "scaling_x"], as_index=False)["history_nrmse"]
+        scaling.groupby(["teacher_n_qubits", "root_id", "scaling_x", "cohort", "source_sha256"], as_index=False)["history_nrmse"]
         .median()
     )
-    for n_qubits in (2, 3):
+    for n_qubits in (2, 3, 4):
         family = root_scaling[root_scaling["teacher_n_qubits"].eq(n_qubits)]
         summary = family.groupby("scaling_x")["history_nrmse"].agg(
             median="median", q10=lambda values: values.quantile(0.10), q90=lambda values: values.quantile(0.90)
@@ -1199,28 +1297,24 @@ def render_figure_3(
     )
     ax.set_yscale("log")
     ax.set_xlim(-0.30, 12.50)
-    ax.set_ylim(5e-4, 2.5)
+    ax.set_ylim(5e-4, 3.2)  # small headroom keeps the legend above the 10% line
     ax.set_yticks((0.001, 0.01, 0.1, 1), ("0.1%", "1%", "10%", "100%"))
     ax.set_xticks((0, 3, 6, 9, 12))
     ax.set_xlabel("scaled context $\\gamma_T\\,\\Delta t\\,d$")
     ax.set_ylabel("old-history error")
     legend = ax.legend(
         handles=family_handles,
-        loc="lower left",
-        frameon=True,
-        fancybox=True,
-        fontsize=STYLE["legend_fontsize"],
-        handlelength=1.2,
-        handletextpad=0.4,
-        borderpad=0.3,
-        borderaxespad=0.45,
-        labelspacing=0.25,
+        loc="upper right",
+        bbox_to_anchor=(1.0, 1.01),
+        **COMPARISON_LEGEND,
     )
     _style_legend(legend)
 
     ax = axes[1]
-    for n_qubits in (2, 3):
-        family = features[features["teacher_n_qubits"].eq(n_qubits)]
+    for n_qubits in (2, 3, 4):
+        # Keep all eight measured budgets in the source; display the transition.
+        family = features[features["teacher_n_qubits"].eq(n_qubits)
+                          & features["feature_budget"].le(72)]
         summary = family.groupby("feature_budget")["total_nrmse"].agg(
             median="median", q10=lambda values: values.quantile(0.10),
             q90=lambda values: values.quantile(0.90),
@@ -1250,21 +1344,16 @@ def render_figure_3(
         color=MUTED,
     )
     ax.set_ylim(0.035, 0.325)
-    ax.set_xticks((18, 36, 72))
+    ax.set_xlim(14, 76)
+    ax.set_xticks((18, 24, 30, 36, 54, 72))
+    ax.tick_params(axis="x", labelsize=8.0)
     ax.set_yticks((0.05, 0.10, 0.15, 0.20, 0.25), ("5%", "10%", "15%", "20%", "25%"))
     ax.set_xlabel("measured features $B$")
     ax.set_ylabel("QELM emulation error")
     legend = ax.legend(
         handles=family_handles,
         loc="upper right",
-        frameon=True,
-        fancybox=True,
-        fontsize=STYLE["legend_fontsize"],
-        handlelength=1.2,
-        handletextpad=0.4,
-        borderpad=0.3,
-        borderaxespad=0.45,
-        labelspacing=0.25,
+        **COMPARISON_LEGEND,
     )
     _style_legend(legend)
 
@@ -1284,7 +1373,7 @@ def render_figure_3(
             summary["median"],
             color=color,
             marker=marker,
-            markersize=5.5 if marker == "*" else 4.7,
+            markersize=5.5 if marker == "*" else 3.7,
             markeredgewidth=0.6,
             linewidth=STYLE["primary_linewidth"],
             linestyle=linestyle,
@@ -1302,50 +1391,34 @@ def render_figure_3(
             )
     ax.set_xscale("log", base=4)
     ax.set_xticks((300, 1200, 4800, 19200), ("300", "1.2k", "4.8k", "19.2k"))
-    ax.set_ylim(0.065, 0.39)
+    ax.set_ylim(0.055, 0.45)  # clear space for the legend and below-target label
     ax.set_yticks((0.10, 0.20, 0.30), ("10%", "20%", "30%"))
     ax.set_xlabel("shots per input $Q$")
     ax.set_ylabel("QELM test error")
     ax.axhline(0.10, color=MUTED, linestyle=(0, (4, 3)), linewidth=0.85)
     ax.text(
-        340,
-        0.102,
+        300,
+        0.097,
         "10% target",
         ha="left",
-        va="bottom",
+        va="top",
         fontsize=9.0,
         color=MUTED,
     )
     legend = ax.legend(
         loc="upper right",
-        frameon=True,
-        fancybox=True,
-        fontsize=STYLE["legend_fontsize"],
-        handlelength=1.2,
-        handletextpad=0.4,
-        borderpad=0.3,
-        borderaxespad=0.45,
-        labelspacing=0.25,
+        **COMPARISON_LEGEND,
     )
     _style_legend(legend)
 
     for index, ax in enumerate(axes):
-        _style_quant_axis(ax)
-        ax.text(
-            0.045, 0.965, "abc"[index],
-            transform=ax.transAxes,
-            ha="left", va="top",
-            fontsize=STYLE["axes_titlesize"],
-            fontweight="bold",
-        )
-        ax.xaxis.labelpad = 4.0
-        ax.yaxis.labelpad = 3.0
+        _finish_comparison_axis(ax, "abc"[index])
     pdf = output_dir / "fig03_resource_diagnosis.pdf"
     png = output_dir / "fig03_resource_diagnosis.png"
     source = output_dir / "fig03_resource_diagnosis_source.csv"
 
     scaling_export = root_scaling.rename(columns={"history_nrmse": "value"}).assign(panel="history", metric="history_nrmse")
-    feature_export = features[["root_id", "teacher_n_qubits", "feature_budget", "total_nrmse"]].rename(columns={"total_nrmse": "value"}).assign(panel="features", metric="total_nrmse")
+    feature_export = features.rename(columns={"total_nrmse": "value"}).assign(panel="features", metric="total_nrmse")
     shot_long = shots.melt(id_vars=["root_id", "total_shots"], value_vars=list(shot_styles), var_name="metric", value_name="value").assign(panel="shots")
     export = pd.concat([scaling_export, feature_export, shot_long], ignore_index=True, sort=False)
     export.to_csv(source, index=False)
@@ -1365,6 +1438,7 @@ def render_all(
     scaling_source_path: Path = DEFAULT_SCALING_SOURCE,
     suffix_source_path: Path = DEFAULT_SUFFIX_SOURCE,
     shot_source_path: Path = DEFAULT_SHOT_SOURCE,
+    feature_density_source_path: Path = DEFAULT_FEATURE_DENSITY_SOURCE,
     output_dir: Path = DEFAULT_OUTPUT,
 ) -> dict[str, str]:
     output_dir.mkdir(parents=True, exist_ok=True)
@@ -1377,7 +1451,7 @@ def render_all(
             dense_n4_suffix_source_path,
             output_dir,
         ),
-        *render_figure_3(scaling_source_path, suffix_source_path, shot_source_path, output_dir),
+        *render_figure_3(scaling_source_path, suffix_source_path, shot_source_path, output_dir, feature_density_source_path),
     ]
     manifest = {path.name: _sha256(path) for path in artifacts}
     (output_dir / "figure_sha256.json").write_text(
@@ -1412,6 +1486,7 @@ def main() -> int:
     parser.add_argument("--scaling-source", type=Path, default=DEFAULT_SCALING_SOURCE)
     parser.add_argument("--suffix-source", type=Path, default=DEFAULT_SUFFIX_SOURCE)
     parser.add_argument("--shot-source", type=Path, default=DEFAULT_SHOT_SOURCE)
+    parser.add_argument("--feature-density-source", type=Path, default=DEFAULT_FEATURE_DENSITY_SOURCE)
     parser.add_argument("--output-dir", type=Path, default=DEFAULT_OUTPUT)
     args = parser.parse_args()
     manifest = render_all(
@@ -1423,6 +1498,7 @@ def main() -> int:
         scaling_source_path=args.scaling_source.resolve(),
         suffix_source_path=args.suffix_source.resolve(),
         shot_source_path=args.shot_source.resolve(),
+        feature_density_source_path=args.feature_density_source.resolve(),
         output_dir=args.output_dir.resolve(),
     )
     print(json.dumps(manifest, indent=2, sort_keys=True))

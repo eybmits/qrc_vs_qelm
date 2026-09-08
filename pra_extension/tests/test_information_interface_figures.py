@@ -30,6 +30,7 @@ from render_information_interface_figures import (  # noqa: E402
     DEFAULT_SCALING_SOURCE,
     DEFAULT_SHOT_SOURCE,
     DEFAULT_SUFFIX_SOURCE,
+    COMPARISON_LAYOUT,
     FIGURE_SIZES,
     PALETTE,
     STYLE,
@@ -67,45 +68,45 @@ EXPECTED_STYLE = {
     "legend_fontsize": 8.5,
     "axes_linewidth": 0.55,
     "primary_linewidth": 1.1,
-    "grid_linewidth": 0.45,
+    "grid_linewidth": 0.35,
 }
 
 EXPECTED_FIGURE_SIZES = {
-    "fig1": (7.055, 13.0 / 2.54),
+    "fig1": (7.055, 9.6 / 2.54),
     "fig2": (7.055, 2.65),
     "fig3": (7.055, 2.40),
 }
 
 EXPECTED_PALETTE = {
-    "ink": "#000000",
-    "annotation": "#7F7F7F",
-    "grid": "#B0B0B0",
-    "neutral": "#F1F2F2",
-    "history_missing": "#A7A9AC",
-    "frozen": "#3B86FF",
-    "frozen_light": "#EBF2FF",
-    "onset": "#00A14B",
-    "onset_light": "#E6F5EC",
-    "scrambled": "#FC4D30",
-    "scrambled_light": "#FEECE9",
+    "ink": "#20252B",
+    "annotation": "#8B9198",
+    "grid": "#DEE0E3",
+    "neutral": "#F1F2F3",
+    "history_missing": "#8B9198",
+    "frozen": "#3868D9",
+    "frozen_light": "#E7EDFA",
+    "onset": "#D66A56",
+    "onset_light": "#FAECE9",
+    "scrambled": "#7C5A9F",
+    "scrambled_light": "#EAE5F0",
     "yellow": "#FFC943",
     "pale_yellow": "#FFDD92",
-    "orange": "#FC4D30",
-    "purple": "#A93BFF",
-    "viridis_18": "#7AD151",
-    "viridis_36": "#2A788E",
-    "viridis_72": "#482475",
-    "family_2": "#3B86FF",
-    "family_3": "#FC4D30",
-    "story_ink": "#000000",
-    "story_border": "#CBD5E1",
-    "story_neutral": "#F8FAFC",
-    "story_blue": "#3B86FF",
-    "story_blue_light": "#EDF3FC",
-    "story_green": "#00A14B",
-    "story_green_light": "#EBF7F1",
-    "story_orange": "#FC4D30",
-    "story_orange_light": "#FFF1DF",
+    "orange": "#D66A56",
+    "purple": "#7C5A9F",
+    "viridis_18": "#3868D9",
+    "viridis_36": "#D66A56",
+    "viridis_72": "#7C5A9F",
+    "family_2": "#3868D9",
+    "family_3": "#7C5A9F",
+    "story_ink": "#20252B",
+    "story_border": "#DEE0E3",
+    "story_neutral": "#F1F2F3",
+    "story_blue": "#3868D9",
+    "story_blue_light": "#E7EDFA",
+    "story_green": "#D66A56",
+    "story_green_light": "#FAECE9",
+    "story_orange": "#7C5A9F",
+    "story_orange_light": "#EAE5F0",
     "white": "#FFFFFF",
 }
 
@@ -130,13 +131,15 @@ def test_resource_whiskers_preserve_root_variability_without_faint_traces(tmp_pa
             assert not any(isinstance(artist, PolyCollection) for artist in ax.collections)
             assert all(line.get_alpha() in (None, 1) for line in ax.lines)
             bars = [item for item in ax.containers if isinstance(item, ErrorbarContainer)]
-            assert len(bars) == (1 if panel == "shots" else 2)
+            assert len(bars) == (1 if panel == "shots" else 3)
             for j, bar in enumerate(bars):
                 rows = source[source["panel"].eq(panel)]
                 if panel == "shots":
                     rows = rows[rows["metric"].eq("selected_policy_test_nrmse")]
                 else:
                     rows = rows[rows["teacher_n_qubits"].eq(j + 2)]
+                    if panel == "features":
+                        rows = rows[rows["feature_budget"].le(72)]
                 grouped = rows.groupby(xkey)["value"]
                 x = np.array(sorted(rows[xkey].unique()))
                 lo = grouped.quantile(0.10).to_numpy()
@@ -156,6 +159,100 @@ def test_resource_whiskers_preserve_root_variability_without_faint_traces(tmp_pa
     assert reviewed == [True]
 
 
+def test_resource_legends_clear_data_and_feature_crop_preserves_export(tmp_path, monkeypatch):
+    from matplotlib.figure import Figure
+    from matplotlib.path import Path as MplPath
+
+    reviewed = []
+
+    def inspect(fig, *args, **kwargs):
+        if reviewed:
+            return
+        fig.canvas.draw()
+        for ax in fig.axes:
+            # Include a small safety margin for marker/cap stroke widths.
+            legend_box = ax.get_legend().get_window_extent().padded(2.0)
+            for line in ax.lines:
+                if line.get_marker() in {"o", "D", "s", "*", "_"}:
+                    path = line.get_transform().transform_path(line.get_path())
+                    assert not path.intersects_bbox(legend_box, filled=False)
+                    assert not any(legend_box.contains(*point) for point in path.vertices)
+            for collection in ax.collections:
+                for segment in collection.get_segments():
+                    path = collection.get_transform().transform_path(MplPath(segment))
+                    assert not path.intersects_bbox(legend_box, filled=False)
+        history_ax = fig.axes[0]
+        history_legend_box = history_ax.get_legend().get_window_extent()
+        target_y = history_ax.transData.transform((0, 0.10))[1]
+        assert history_legend_box.y0 - target_y >= 0.03 * history_ax.bbox.height
+        assert history_legend_box.y1 < history_ax.bbox.y1
+        feature_ax = fig.axes[1]
+        assert feature_ax.get_xscale() == "linear"
+        np.testing.assert_array_equal(feature_ax.get_xticks(), [18, 24, 30, 36, 54, 72])
+        boxes = [label.get_window_extent() for label in feature_ax.get_xticklabels()]
+        assert all(a.x1 + 1 < b.x0 for a, b in zip(boxes, boxes[1:]))
+        for line in feature_ax.lines:
+            if line.get_marker() in {"o", "D", "s"}:
+                np.testing.assert_array_equal(line.get_xdata(), [18, 24, 30, 36, 54, 72])
+        shot_ax = fig.axes[2]
+        target = next(t for t in shot_ax.texts if t.get_text() == "10% target")
+        assert target.get_position() == (300, 0.097)
+        assert target.get_fontsize() == 9.0 and target.get_va() == "top"
+        label_box = target.get_window_extent().padded(0.5)
+        assert shot_ax.bbox.contains(label_box.x0, label_box.y0)
+        assert label_box.y1 < shot_ax.transData.transform((300, 0.10))[1]
+        for line in shot_ax.lines:
+            if line.get_marker() in {"o", "D", "s", "*", "_"}:
+                path = line.get_transform().transform_path(line.get_path())
+                assert not path.intersects_bbox(label_box, filled=False)
+        for collection in shot_ax.collections:
+            for segment in collection.get_segments():
+                path = collection.get_transform().transform_path(MplPath(segment))
+                assert not path.intersects_bbox(label_box, filled=False)
+        reviewed.append(True)
+
+    monkeypatch.setattr(Figure, "savefig", inspect)
+    render_figure_3(DEFAULT_SCALING_SOURCE, DEFAULT_SUFFIX_SOURCE, DEFAULT_SHOT_SOURCE, tmp_path)
+    assert reviewed == [True]
+    exported = pd.read_csv(tmp_path / "fig03_resource_diagnosis_source.csv")
+    assert len(exported) == 984
+    assert set(exported.loc[exported["panel"].eq("features"), "feature_budget"]) == {
+        18, 24, 30, 36, 54, 72, 108, 144,
+    }
+
+
+def test_all_resource_panels_have_matching_major_grids_below_data(tmp_path, monkeypatch):
+    from matplotlib.figure import Figure
+
+    reviewed = []
+
+    def inspect(fig, *args, **kwargs):
+        if reviewed:
+            return
+        fig.canvas.draw()
+        assert len(fig.axes) == 3
+        for ax in fig.axes:
+            assert ax.get_axisbelow() is True
+            for axis in (ax.xaxis, ax.yaxis):
+                assert axis.get_zorder() < min(line.get_zorder() for line in ax.lines)
+                guides = axis.get_gridlines()
+                assert len(guides) >= 3
+                assert all(guide.get_visible() for guide in guides)
+                for guide in guides:
+                    assert to_rgba(guide.get_color()) == to_rgba("#DEE0E3")
+                    assert guide.get_alpha() == 1
+                    assert guide.get_linewidth() == pytest.approx(.35)
+                    assert guide.is_dashed()
+                    assert guide._dash_pattern[0] == 0
+                    assert guide._dash_pattern[1] == pytest.approx((2, 2))
+                assert not any(tick.gridline.get_visible() for tick in axis.get_minor_ticks())
+        reviewed.append(True)
+
+    monkeypatch.setattr(Figure, "savefig", inspect)
+    render_figure_3(DEFAULT_SCALING_SOURCE, DEFAULT_SUFFIX_SOURCE, DEFAULT_SHOT_SOURCE, tmp_path)
+    assert reviewed == [True]
+
+
 def test_resource_panels_share_one_row():
     from matplotlib import pyplot as plt
 
@@ -166,6 +263,10 @@ def test_resource_panels_share_one_row():
         assert [b.y0 for b in boxes] == pytest.approx([boxes[0].y0] * 3)
         assert [b.height for b in boxes] == pytest.approx([boxes[0].height] * 3)
         assert [b.width for b in boxes] == pytest.approx([boxes[0].width] * 3)
+        assert [b.width * fig.get_figwidth() for b in boxes] == pytest.approx([1.60] * 3)
+        gaps = [(right.x0 - left.x1) * fig.get_figwidth() for left, right in zip(boxes, boxes[1:])]
+        assert gaps == pytest.approx([COMPARISON_LAYOUT["panel_gap"]] * 2)
+        assert all(gap > 0.5644 * 1.20 for gap in gaps)
         assert all(left.x1 < right.x0 for left, right in zip(boxes, boxes[1:]))
         assert all(0 <= b.x0 < b.x1 <= 1 and 0 <= b.y0 < b.y1 <= 1 for b in boxes)
     finally:
@@ -216,6 +317,16 @@ def test_quantitative_panels_are_physically_square_and_title_free(
         boxes = [ax.get_window_extent() for ax in axes]
         assert [box.y0 for box in boxes] == pytest.approx([boxes[0].y0] * 3)
         assert all(left.x1 < right.x0 for left, right in zip(boxes, boxes[1:]))
+        if figure_number == 3:
+            # Check white gutters after the next panel's full y-axis label,
+            # not only the distance between the rectangular frames.
+            for left, right in zip(axes, axes[1:]):
+                gap = right.yaxis.label.get_window_extent().x0 - left.get_window_extent().x1
+                assert gap * 72 / fig.dpi >= 6.0
+            for ax in axes:
+                assert ax.xaxis.label.get_fontsize() == STYLE["axes_labelsize"]
+                assert ax.yaxis.label.get_fontsize() == STYLE["axes_labelsize"]
+                assert ax.xaxis.labelpad == 4.0 and ax.yaxis.labelpad == 3.0
         captured.append(fig)
 
     monkeypatch.setattr(Figure, "savefig", inspect_figure)
@@ -360,42 +471,36 @@ def test_native_tikz_story_preserves_readable_labels_and_emulation_scope() -> No
     assert r"\usepackage{helvet}" in tikz_source
     assert r"\renewcommand{\familydefault}{\sfdefault}" in tikz_source
     font_sizes = [float(size) for size in re.findall(r"\\fontsize\{([\d.]+)\}", tikz_source)]
-    assert font_sizes
-    assert min(font_sizes) >= 10
-    # The architecture drawing uses native-sized labels and slightly larger
-    # bold panel letters, without shrinking an oversized source into the paper.
-    assert max(font_sizes) <= 12
-    assert r"\resizebox" not in tikz_source
-    assert r"\scalebox" not in tikz_source
+    assert font_sizes and min(font_sizes) >= 10 and max(font_sizes) <= 12
+    assert r"\resizebox" not in tikz_source and r"\scalebox" not in tikz_source
     for required_component in (
         "QRC", "QELM", r"\rho", r"\widehat", "reset", "window",
         "carried state", "E(S_d)", "fixed gates", "observables",
-        "output", "past influence fades", "persistent floor", "within tolerance",
-        "scalar optimum", r"$D_d/2$", r"$\varepsilon$",
     ):
         assert required_component in tikz_source
     assert tikz_source.count("{observables}") == 2
+    assert r"{Fading\\memory}" not in tikz_source
+    assert r"{Persistent\\memory}" not in tikz_source
     assert "measured features" not in tikz_source
-    architecture = re.sub(r"%[^\n]*", "", tikz_source.split("% b:", maxsplit=1)[0])
+    artwork = re.sub(r"%[^\n]*", "", tikz_source)
     assert not re.search(
-        r"\\node[^;]*\{[^{}]*(?:trained|readout)[^{}]*\};", architecture, re.I,
+        r"\\node[^;]*\{[^{}]*(?:trained|readout)[^{}]*\};", artwork, re.I,
     )
-    triangles = re.findall(r"\\draw\[[^\]]*fill=gold[^\]]*\][^;]*--cycle;", architecture)
+    triangles = re.findall(r"\\draw\[[^\]]*fill=gold[^\]]*\][^;]*--cycle;", artwork)
     assert len(triangles) == 2
-    assert r"{$Y_t$}" in architecture and r"{$\widehat Y_t$}" in architecture
-    assert "declared output" not in architecture and "emulated output" not in architecture
-    assert r"\mathcal C" not in architecture
-    # Compact graphics can put theorem qualifications into their caption;
-    # the companion metadata below still checks the full emulation scope.
-    figure_context = tikz_source + (
-        REPO_ROOT / "paper/canonical_emulation/sections/introduction.tex"
-    ).read_text(encoding="utf-8")
-    for required_qualification in ("growing", "universal"):
-        assert required_qualification in figure_context
+    assert r"{$y_t$}" in artwork and r"{$\widehat y_t$}" in artwork
+    assert "declared output" not in artwork and "emulated output" not in artwork
+    assert r"\mathcal C" not in artwork
     assert "schematic" in tikz_source.lower()
-    assert "unrestricted scalar worst-case absolute history error" in tikz_source
-    assert "not the measured test error" in tikz_source
-
+    for obsolete in ("best history error", "desired error tolerance", r"D_d/2", r"\varepsilon"):
+        assert obsolete not in artwork
+    # The two traces illustrate access to one old bit at fixed context,
+    # while the render record keeps the separate uniform-theorem scope.
+    output = output_provenance()
+    assert "not simulated, fitted, or measured QRC/QELM performance" in output["status"]
+    assert "not labeled or identified as the generic supremal D_d/2" in output["curve_gap_scope"]
+    assert "not a fitted finite-feature QELM" in output["emulator_scope"]
+    assert "not the uniform D_d limit" in output["cases"]["fading"]["decay_scope"]
 
 def test_plot_labels_use_plain_language_and_separate_resource_questions() -> None:
     renderer_source = (
@@ -480,17 +585,19 @@ def test_information_interface_figures_are_complete_traceable_and_deterministic(
         REPO_ROOT / "paper/figures/information_interface/fig01_information_interface.tex"
     )
     assert shared_input["plot_geometry"]["input_axis_count"] == 1
-    assert shared_input["plot_geometry"]["sample_axes_side_cm"] == 4.40
-    assert shared_input["plot_geometry"]["full_input_axes_bounds_cm"] == [0.92, 6.60, 5.32, 11.0]
+    assert shared_input["plot_geometry"]["sample_axes_side_cm"] == 4.15
+    assert shared_input["plot_geometry"]["full_input_axes_bounds_cm"] == [1.045, 6.725, 5.195, 10.875]
     assert "no separate duplicate plot" in shared_input["plot_geometry"]["window_view"]
     assert shared_input["plot_geometry"]["window_bracket_index_extent"] == [140.5, 180]
     assert shared_input["window_indices"] == list(range(141, 181))
     assert shared_input["future_context_indices"] == list(range(181, 201))
     assert set(shared_input["window_indices"]).isdisjoint(shared_input["future_context_indices"])
     assert story["selected_design"] == "variant_a_architectures"
-    assert story["selected_theory_panel"] == "B4"
-    assert story["removed_panel"] == "c"
-    assert "restored_panel" not in story
+    assert "selected_theory_panel" not in story
+    assert "panel_b_history_error" not in story
+    assert "history_error_curve" not in shared_input
+    assert story["removed_history_error_panel"]["status"] == "removed from the artwork"
+    assert story["panel_letters"] == []
     historical = story["historical_input_audit"]
     historical_path = REPO_ROOT / historical["path"]
     assert historical_path.name == "fig01_information_interface_source.json"
@@ -504,65 +611,61 @@ def test_information_interface_figures_are_complete_traceable_and_deterministic(
     assert not (second_dir / historical_path.name).exists()
     assert "fixed target readout" in story["readout_scope"]
     assert "trained reset-QELM emulator readout" in story["readout_scope"]
-    assert "matching gold observable banks" in story["architecture_motifs"]
-    assert story["canvas_aspect_ratio"] == pytest.approx(17.9197 / 13.0)
-    assert set(story["panels"]) == {"a", "b"}
-    assert "recurrent" in story["panels"]["a"]
-    assert "reset" in story["panels"]["a"]
-    assert "optimal scalar history error" in story["panels"]["b"]
-    assert "tolerance crossing" in story["panels"]["b"]
-    assert "persistent" in story["panels"]["b"]
-    assert "shared illustrative output-comparison" in story["panels"]["a"]
-    assert "future declared outputs" in story["memory_relevance"]
-    assert "full-state forgetting is not required" in story["memory_relevance"]
-    history_error = story["panel_b_history_error"]
-    assert history_error["design_candidate"] == "B4"
-    assert "not simulated or fitted evidence" in history_error["status"]
-    assert history_error["quantity"] == "D_d/2"
-    assert history_error["loss"] == "worst-case absolute scalar error"
-    assert "largest output ambiguity over all histories" in history_error["comparison"]
-    assert "sharing their last d inputs" in history_error["comparison"]
-    assert "supremal declared-output distance" in story["common_suffix_diameter"]
-    assert "not an empirical test threshold" in history_error["tolerance"]
-    assert "not the first strict integer d_epsilon" in history_error["crossing"]
-    assert "tends to zero" in history_error["fading"]
-    assert "enters the green tolerance band" in history_error["fading"]
-    assert "above the illustrated tolerance" in history_error["persistent"]
-    assert "unrestricted window-only optimum" in history_error["scope"]
-    assert "representation and measurement errors remain separate" in history_error["scope"]
-    assert history_error["axes_size_cm"] == [6.40, 2.40]
-    assert "one analytic exponential" in history_error["blue_curve"]
-    curve = history_error["blue_curve_display"]
-    assert curve == {
-        "coordinate_scope": "local coordinates before the panel translation",
-        "panel_translation_cm": [4.0, 0.0],
-        "baseline_y_cm": 0.85,
-        "amplitude_cm": 2.19,
-        "decay_per_cm": 0.40707656282948684,
-        "origin_x_cm": 1.66,
-        "domain_x_cm": [1.66, 7.52],
-        "crossing_cm": [4.76, 1.47],
-    }
-    crossing_x, crossing_y = curve["crossing_cm"]
-    assert curve["baseline_y_cm"] + curve["amplitude_cm"] * np.exp(
-        -curve["decay_per_cm"] * (crossing_x - curve["origin_x_cm"]),
-    ) == pytest.approx(crossing_y, abs=1e-12)
+    assert "matching yellow observable banks" in story["architecture_motifs"]
+    assert story["canvas_aspect_ratio"] == pytest.approx(17.9197 / 9.6)
+    assert story["canvas_bounds_cm"] == [0, 3.6, 17.9197, 13.2]
+    assert set(story["panels"]) == {"architecture", "fading", "persistent"}
+    assert "recurrent" in story["panels"]["architecture"]
+    assert "reset" in story["panels"]["architecture"]
+    assert "upper output frame" in story["panels"]["fading"]
+    assert "lower output frame" in story["panels"]["persistent"]
+    theory = story["theorem_context"]
+    assert "future declared outputs" in theory["memory_relevance"]
+    assert "full-state forgetting is not required" in theory["memory_relevance"]
+    assert "supremal declared-output distance" in theory["common_suffix_diameter"]
+    assert "D_d/2" in theory["scalar_information_limit"]
+    assert "worst-case absolute scalar error" in theory["scalar_information_limit"]
+    assert "not a plotted curve or measured property" in theory["status"]
+    assert "not generic D_d/2 curves" in theory["illustration_boundary"]
+    assert "fixed d does not establish uniform convergence" in theory["illustration_boundary"]
     assert "panel_c_output_traces" not in story
-    output_traces = story["panel_a_output_comparisons"]
+    assert "panel_a_output_comparisons" not in story
+    output_traces = story["output_comparisons"]
     assert output_traces == output_provenance()
-    assert output_traces["axis_count"] == 1
-    assert output_traces["axes_side_cm"] == 4.40
-    assert output_traces["axes_bounds_cm"] == [13.40, 6.60, 17.80, 11.00]
-    assert output_traces["amplitude_limits"] == [0.3, 1.5]
+    assert output_traces["axis_count"] == 2
+    assert output_traces["axes_size_cm"] == [4.15, 3.2]
+    assert output_traces["axes_bounds_cm"] == {
+        "fading": [13.525, 8.58, 17.675, 11.78],
+        "persistent": [13.525, 4.99, 17.675, 8.19],
+    }
+    assert output_traces["amplitude_limits"] == [0.45, 1.35]
+    assert output_traces["amplitude_ticks"] == [0.6, 0.8, 1.0, 1.2]
     assert output_traces["time_limits"] == [-3, 103]
     assert output_traces["time_ticks"] == [0, 40, 80]
+    assert output_traces["time_tick_labels"] == ["0", "d", "2d"]
     assert output_traces["template_stream"]["seed"] == 2
     assert output_traces["template_stream"]["generated_count"] == 101
     assert "not simulated, fitted, or measured QRC/QELM performance" in output_traces["status"]
     assert "separate auxiliary toy timeline" in output_traces["relationship_to_input"]
+    assert "same fixed d=40" in output_traces["timeline_scope"]
     assert output_traces["memory_access"]["first_excluded_step"] == 40
-    assert output_traces["memory_access"]["post_expiry_pair_midpoint_error"] == 0.25
+    assert output_traces["case_order"] == ["fading", "persistent"]
+    cases = output_traces["cases"]
+    assert not cases["fading"]["time_tick_labels_visible"]
+    assert cases["persistent"]["time_tick_labels_visible"]
+    persistent_error = np.asarray(cases["persistent"]["post_expiry_pair_midpoint_error_values"])
+    assert persistent_error[0] == pytest.approx(0.0107421875)
+    assert np.all(np.diff(persistent_error) >= 0)
+    np.testing.assert_array_equal(persistent_error[56:], np.full(5, 0.25))
+    fading_error = np.asarray(cases["fading"]["post_expiry_pair_midpoint_error_values"])
+    assert fading_error[0] == pytest.approx(0.25 * np.exp(-40 / 30))
+    assert 0 < fading_error[-1] < 0.01 and np.all(np.diff(fading_error) < 0)
     assert "not a fitted finite-feature QELM" in output_traces["emulator_scope"]
+    assert "not an independent third forecasting target" in output_traces["target_definition"]
+    assert output_traces["legend_labels"] == ["QRC", "QELM"]
+    assert output_traces["legend_geometry"]["bounds_cm"] == [14.00, 8.11, 17.27, 8.64]
+    assert output_traces["shared_time_label_anchor_cm"] is None
+    assert output_traces["column_order"] == ["target", "prediction"]
     tikz_path = (
         REPO_ROOT / "paper" / "figures" / "information_interface"
         / "fig01_information_interface.tex"
@@ -571,18 +674,19 @@ def test_information_interface_figures_are_complete_traceable_and_deterministic(
     assert "native" in story["typography"]
     assert "7.055" in story["typography"]
     assert story["schematic_curves"] is True
-    assert story["regimes"]["finite"]["condition"] == "D_d = 0 for some finite d"
-    assert "positive at every finite d" in story["regimes"]["fading"]["condition"]
-    assert "r_vis < 1" in story["regimes"]["fading"]["condition"]
-    assert "Delta/2" in story["regimes"]["persistent"]["consequence"]
-    assert "D_d tends to zero" in story["emulation_statement"]
-    assert "exact-expectation" in story["emulation_statement"]
-    assert "universal on each finite" in story["emulation_statement"]
+    assert theory["regimes"]["finite"]["condition"] == "D_d = 0 for some finite d"
+    assert "D_d tends to zero" in theory["regimes"]["fading"]["condition"]
+    assert "r_vis < 1" in theory["regimes"]["fading"]["condition"]
+    assert "without a guarantee of exact emulation" in theory["regimes"]["fading"]["consequence"]
+    assert "Delta/2" in theory["regimes"]["persistent"]["consequence"]
+    assert "D_d tends to zero" in theory["emulation_statement"]
+    assert "exact-expectation" in theory["emulation_statement"]
+    assert "universal on each finite" in theory["emulation_statement"]
     for required_scope in (
         "finite-dimensional", "input-continuous", "fixed finite",
         "compact inputs", "freely concatenable suffixes",
     ):
-        assert required_scope in story["scope"]
+        assert required_scope in theory["scope"]
     assert re.fullmatch(
         r"[0-9a-f]{64}",
         story["upstream_dark_sector_summary_sha256"],
@@ -626,11 +730,11 @@ def test_information_interface_figures_are_complete_traceable_and_deterministic(
     )
 
     resources = pd.read_csv(first_dir / "fig03_resource_diagnosis_source.csv")
-    assert len(resources) == 600
+    assert len(resources) == 984
     assert resources["panel"].value_counts().to_dict() == {
-        "history": 336,
+        "history": 504,
         "shots": 192,
-        "features": 72,
+        "features": 288,
     }
     assert set(resources.loc[resources["panel"].eq("features"), "metric"]) == {
         "total_nrmse"

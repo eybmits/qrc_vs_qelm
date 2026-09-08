@@ -1,67 +1,79 @@
 \section{Introduction}
 \label{sec:introduction}
 
-Temporal models can use the past in two ways.  A recurrent model carries an
-internal state from one input to the next.  A window model instead receives
-recent inputs explicitly and starts each prediction afresh.  These choices
-can describe the same input--output behavior, but only if the window contains
-the information that still matters to the output.
+Learning from a sequence requires access to the past. A model can receive
+recent inputs explicitly, or it can carry an internal state that summarizes
+earlier observations. These approaches place memory in different parts of
+the architecture. Understanding when they can reproduce the same behavior
+helps determine whether a temporal learning problem requires recurrence or
+can instead be handled through an appropriate input representation.
 
 \begin{figure*}[t]
  \includegraphics[width=\textwidth]{fig01_information_interface.pdf}
-\caption{\textbf{When can finite context replace recurrent quantum memory?}
- \textbf{a} The QRC carries state; the reset-QELM receives the bracketed green window.
- Violet marks current input; grey continuation is excluded.
- Both have model-specific observables and trainable readouts; the target readout stays fixed during emulation.
- Right: the QRC retains an input after it leaves the window. The ideal window predictor
- cannot distinguish its two possible values; green shows their output midpoint for
- one history, not measured QELM performance.
- \textbf{b} For scalar outputs, $D_d/2$ is the smallest worst-case absolute error of
- any window predictor; $D_d$ is the largest output gap between histories sharing
- their last $d$ inputs but differing earlier. Longer windows can reach $\varepsilon$
- unless a higher floor persists. The output example and panel b are schematic.}
+\caption{When can finite context replace recurrent quantum memory?
+ Carried QRC state versus the reset-QELM's explicit input window.
+ Right: two schematic memory cases with time advancing at fixed window
+ length. Black shows the target QRC; green shows an ideal window prediction,
+ not measured QELM performance. At the dashed line $t=d=40$, an old input
+ leaves the window: backgrounds change from green to blue. Its influence
+ fades in the upper case, so the curves approach each other; it persists
+ in the lower case, leaving a gap. Both use the same known baseline and
+ balanced old bit, independently of the left input trace.
+ See Section~\ref{sec:models}; the uniform error bound is given in Section~\ref{sec:criterion}.}
  \label{fig:information-interface}
 \end{figure*}
 
-Reservoir computing uses fixed internal dynamics and trains only the readout
-\cite{maass2002realtime,jaeger2004harnessing,dambre2012information}.  In a
-quantum reservoir computer (QRC), a quantum state carries information between
-inputs \cite{fujii2017harnessing,mujal2021opportunities}.  A quantum extreme
-learning machine (QELM) supplies quantum features to a trainable readout
-\cite{huang2006elm,innocenti2023potential}.  Here we consider a reset-window
-QELM: it starts from the same state for every prediction and receives only a
-finite window of inputs \cite{kawanabe2026tdqelm}.
+Quantum extreme learning machines (QELMs) provide a natural starting point
+for this question. A QELM maps an input into quantum features and combines
+them through a trainable readout \cite{innocenti2023potential}. In the reset
+setting considered here, the quantum system starts from the same state for
+every prediction. It therefore has no memory of previous predictions.
+However, its input need not be a single observation. By encoding a window of
+recent observations, a window QELM can use temporal information supplied
+directly through its input. The quantum system still starts afresh, while
+the input representation provides the history.
 
-Imagine two input histories that differ in the distant past but share every
-input in that window.  The reset model receives identical data and must make
-the same prediction for both.  The QRC can still produce different outputs if
-its carried state retains the older difference.  No choice of features,
-qubits, training data, or readout can recover information that was not
-supplied.  The question is therefore when a finite input window can replace
-the part of recurrent memory that affects the desired output.
+A quantum reservoir computer (QRC) uses a different mechanism. It updates a
+quantum state as inputs arrive and carries that state from one step to the
+next \cite{fujii2017harnessing}. Its outputs can therefore depend on
+information accumulated before the current input. This raises the central
+question of this paper. When can a window QELM reproduce the input--output
+behavior of a QRC, and when does the reservoir retain information that a
+finite window cannot supply?
+
+Consider two input histories that differ in the distant past but have
+exactly the same recent inputs. A window QELM receives identical information
+for both histories and must produce the same prediction. The reservoir may
+nevertheless produce different outputs because its internal state still
+reflects the earlier difference. Increasing the number of quantum features
+or collecting more training data cannot recover information absent from the
+input window. Before asking how expressive an emulator should be, we must
+therefore ask whether its window contains enough information.
 
 \input{sections/related-work}
 
-We answer this question in two steps.  First, we characterize the smallest
-possible error caused by a finite window, independently of the approximating
-architecture.  For a scalar output, this error is half the largest output gap
-between compatible histories.  Under the continuity, compactness, and
-universality assumptions stated in Sec.~\ref{sec:criterion}, a growing
-reset-QELM family achieves arbitrary accuracy exactly when that gap vanishes
-uniformly as the window grows.  This is an existence result, not a guarantee
-that one fixed circuit can learn the map efficiently.
+We characterize the optimal accuracy of finite-window QELM emulation of a
+fixed quantum reservoir. For scalar outputs, the smallest possible
+worst-case error is half the largest output difference between histories
+sharing the window. Under suitable regularity assumptions, a growing
+universal reset-QELM family evaluated through exact expectations can
+approach this information-theoretic minimum at every window length.
+Arbitrary accuracy is therefore possible precisely when the difference
+vanishes uniformly as the window grows. We connect this error to established
+observable-stability theory \cite{petreczky2026stability}.
+Only memory that can affect the chosen outputs, now or after further inputs,
+must fade; the full quantum state need not forget its past.
 
-Second, we connect this information limit to the reservoir dynamics.  Only
-state differences that past inputs can create and declared outputs can reveal,
-now or after later inputs, need to fade.  The internal state need not forget
-everything.  We give a dynamical criterion for this relevant forgetting and a
-two-qubit example in which symmetry protects an observable memory of an old
-input.  The example leaves a nonzero error floor for every finite window.
+We also construct a two-qubit reservoir in which an old input leaves a
+persistent observable trace, imposing an error floor that no finite window
+can remove. Simulations examine the separate effects of insufficient
+history, limited feature capacity, and finite measurement budgets. These
+experiments assess practical emulation rather than quantum advantage, and a
+classical delay model \cite{gauthier2021next} outperforms the tested quantum
+emulator.
 
-Held-out simulations then examine what happens with finite windows, features,
-and measurements.  These resources address different errors and are not
-interchangeable.  A quadratic classical delay model
-\cite{gauthier2021next} outperforms the tested fixed QELM on the registered
-fast-forgetting comparison, so the experiments do not demonstrate quantum
-advantage.  We begin by specifying the two architectures and the output they
-are asked to reproduce.
+Together, the results establish when temporal dependence can be moved from a
+carried quantum state into an explicit input window. They distinguish a
+fundamental information requirement from the resources needed to represent
+and measure the resulting prediction function, clarifying both the
+possibilities and the limits of replacing recurrent quantum memory.

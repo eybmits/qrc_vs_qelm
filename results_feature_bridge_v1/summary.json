@@ -1,0 +1,154 @@
+{
+  "medians": [
+    {
+      "feature_budget": 18,
+      "median_percent": 22.349909787491633,
+      "q10_percent": 13.231201570590754,
+      "q90_percent": 26.111087014765022,
+      "teacher_n_qubits": 2
+    },
+    {
+      "feature_budget": 24,
+      "median_percent": 10.947849021300614,
+      "q10_percent": 6.509659184427974,
+      "q90_percent": 17.48592783760702,
+      "teacher_n_qubits": 2
+    },
+    {
+      "feature_budget": 30,
+      "median_percent": 6.754312607542561,
+      "q10_percent": 4.722515725864477,
+      "q90_percent": 10.38864611131101,
+      "teacher_n_qubits": 2
+    },
+    {
+      "feature_budget": 36,
+      "median_percent": 5.071244320004066,
+      "q10_percent": 3.9483190779595057,
+      "q90_percent": 7.188750321395402,
+      "teacher_n_qubits": 2
+    },
+    {
+      "feature_budget": 18,
+      "median_percent": 17.21762986875865,
+      "q10_percent": 12.2765314959941,
+      "q90_percent": 23.940500030946975,
+      "teacher_n_qubits": 3
+    },
+    {
+      "feature_budget": 24,
+      "median_percent": 8.425665701686365,
+      "q10_percent": 6.071821151700154,
+      "q90_percent": 20.84338328043441,
+      "teacher_n_qubits": 3
+    },
+    {
+      "feature_budget": 30,
+      "median_percent": 5.858090506230014,
+      "q10_percent": 5.239588465545599,
+      "q90_percent": 9.055569872614116,
+      "teacher_n_qubits": 3
+    },
+    {
+      "feature_budget": 36,
+      "median_percent": 5.431038604426378,
+      "q10_percent": 4.155713367145868,
+      "q90_percent": 7.7184792392182064,
+      "teacher_n_qubits": 3
+    },
+    {
+      "feature_budget": 18,
+      "median_percent": 16.730936233961252,
+      "q10_percent": 11.00835695904828,
+      "q90_percent": 22.161051076869118,
+      "teacher_n_qubits": 4
+    },
+    {
+      "feature_budget": 24,
+      "median_percent": 9.150392765464058,
+      "q10_percent": 6.826168436436092,
+      "q90_percent": 13.211355232730554,
+      "teacher_n_qubits": 4
+    },
+    {
+      "feature_budget": 30,
+      "median_percent": 6.928606391504289,
+      "q10_percent": 5.613008821389066,
+      "q90_percent": 9.971500880631762,
+      "teacher_n_qubits": 4
+    },
+    {
+      "feature_budget": 36,
+      "median_percent": 5.376918332516518,
+      "q10_percent": 4.777184998682957,
+      "q90_percent": 6.622568103343261,
+      "teacher_n_qubits": 4
+    }
+  ],
+  "paired": [
+    {
+      "high": 24,
+      "low": 18,
+      "median_relative_mse_reduction": 0.7065576192162627,
+      "roots_with_lower_mse": 10,
+      "teacher_n_qubits": 2
+    },
+    {
+      "high": 30,
+      "low": 24,
+      "median_relative_mse_reduction": 0.16739929521516633,
+      "roots_with_lower_mse": 11,
+      "teacher_n_qubits": 2
+    },
+    {
+      "high": 36,
+      "low": 30,
+      "median_relative_mse_reduction": 0.26426976411505937,
+      "roots_with_lower_mse": 11,
+      "teacher_n_qubits": 2
+    },
+    {
+      "high": 24,
+      "low": 18,
+      "median_relative_mse_reduction": 0.6067863808105846,
+      "roots_with_lower_mse": 10,
+      "teacher_n_qubits": 3
+    },
+    {
+      "high": 30,
+      "low": 24,
+      "median_relative_mse_reduction": 0.34037608987019646,
+      "roots_with_lower_mse": 12,
+      "teacher_n_qubits": 3
+    },
+    {
+      "high": 36,
+      "low": 30,
+      "median_relative_mse_reduction": 0.2074912693977205,
+      "roots_with_lower_mse": 12,
+      "teacher_n_qubits": 3
+    },
+    {
+      "high": 24,
+      "low": 18,
+      "median_relative_mse_reduction": 0.708363965317733,
+      "roots_with_lower_mse": 12,
+      "teacher_n_qubits": 4
+    },
+    {
+      "high": 30,
+      "low": 24,
+      "median_relative_mse_reduction": 0.14813608769221237,
+      "roots_with_lower_mse": 10,
+      "teacher_n_qubits": 4
+    },
+    {
+      "high": 36,
+      "low": 30,
+      "median_relative_mse_reduction": 0.2826803987633296,
+      "roots_with_lower_mse": 11,
+      "teacher_n_qubits": 4
+    }
+  ],
+  "scope": "descriptive paired extension on existing roots, no confirmatory inference"
+}

@@ -1,134 +1,131 @@
-\subsection{Numerical Methods and Reproducibility}
+\subsection{Numerical Evaluation}
 \label{sec:methods}
 
-\subsubsection{Protected-Memory Construction}
+\subsubsection{The Common-Suffix Diagnostic}
+\label{app:common-suffix-diagnostic}
 
-The two-qubit protected-memory QRC starts in $|00\rangle$ with Hamiltonian
-$H(u)=JX_1X_2+0.37(Z_1+Z_2)+0.64u(X_1+X_2)$.  Its collective jump is
-$L_c=\sqrt{0.8}(\sigma_1^-+\sigma_2^-)$, and each step lasts
-$\Delta t=0.2$.  An old flag applies $I$ or $R_x^{(1)}(1)$ before the
-symmetric channel, followed by 80 inputs $u\in[0,1]$ without local pulses.
-Twelve independent roots sample $J\in[-1,1]$ and suffixes.  Checks compare
-singlet populations before and after each suffix, verify the analytic pulse
-population, and confirm that symmetric preparation leaves the singlet empty.
+Let $y_{sk}\in\mathbb R^m$ be the output for suffix $s$ and prefix branch
+$k$, $\bar y_s$ its branch mean, and $\widehat y_s$ their shared prediction.
+Here $\mathbb E_{s,k}$ and $\mathbb E_s$ are equal-weight empirical averages
+over suffix--branch pairs and suffixes, and $\|\cdot\|_2$ is the Euclidean norm:
+\begin{equation}
+ \begin{aligned}
+ &\frac1m\mathbb E_{s,k}\|y_{sk}-\widehat y_s\|_2^2\\
+ &\quad=\frac1m\mathbb E_{s,k}\|y_{sk}-\bar y_s\|_2^2\\
+ &\qquad+\frac1m\mathbb E_s\|\bar y_s-\widehat y_s\|_2^2 .
+ \end{aligned}
+ \label{eq:panel-decomposition}
+\end{equation}
+The vanished within-suffix cross term splits total squared error into
+old-history and residual emulator contributions. Residual error includes
+feature approximation, finite-data estimation, ridge regularization, and
+suffix-mean sampling variability. It is not an isolated feature-approximation error.
 
-Replacing the collective jump with matched local amplitude damping reduces
-the median absolute gap after 80 steps to $1.569\times10^{-5}$.  Relative
-collective-jump asymmetries $0.02$, $0.05$, $0.10$, and $0.20$ each produce
-the predicted nonzero initial singlet decay: exact conservation is broken,
-without necessarily causing rapid erasure.
+With $n_{\rm pre}$ conditionally independent prefix branches, the history
+numerator averages $(n_{\rm pre}-1)/n_{\rm pre}$ times population conditional
+variance. The registered $n_{\rm pre}=4$ gives correction $4/3$, preserving
+every emulated or representation-limited classification and all reported
+window and feature effects. Equation~\eqref{eq:panel-decomposition} is exact
+for uncorrected terms. Neither it nor the correction estimates $D_d$ or $r_{\rm vis}$.
 
-\subsubsection{Target QRCs and Reset-QELM Emulator}
+\subsubsection{Models and Evaluation Protocol}
 
-The numerical target QRCs have $N_T\in\{2,3,4\}$ qubits and evolve as
+Targets (subscript $T$) have $N_T\in\{2,3,4\}$ qubits and local-loss rate
+$\gamma_T$. Each fixed input $a$ drives
 \begin{align}
- H_T(u)&=\sum_{i<j}J_{ij}X_iX_j+0.5\sum_i Z_i+u\sum_iX_i,\nonumber\\
- \dot\rho&=-i[H_T(u),\rho]+\gamma_T\sum_i\mathcal D[\sigma_i^-]\rho,
+ H_T(a)&=\sum_{i<j}J_{ij}X_iX_j+0.5\sum_i Z_i+a\sum_iX_i,\nonumber\\
+ \dot\rho&=-i[H_T(a),\rho]+\gamma_T\sum_i\mathcal D[\sigma_i^-]\rho,
  \label{eq:target-qrc-model}
 \end{align}
-where
-$\mathcal D[L]\rho=L\rho L^\dagger-\tfrac12\{L^\dagger L,\rho\}$,
-$J_{ij}\sim\mathcal U[-1,1]$, and $\Delta t=0.5$.  Inputs use a uniform
-33-point alphabet on $[0,1]$.  All single-site Pauli expectations and
-same-axis two-site products give 9, 18, and 30 outputs for $N_T=2,3,4$.
+Here $\dot\rho=d\rho/d\tau$ uses physical time $\tau$, while $t$ indexes
+discrete inputs. The dissipator is
+$\mathcal D[L]\rho=L\rho L^\dagger-\tfrac12\{L^\dagger L,\rho\}$;
+$\dagger$, $[\cdot,\cdot]$, and $\{\cdot,\cdot\}$ denote Hermitian adjoint,
+commutator, and anticommutator. Couplings are uniform on $[-1,1]$,
+$\Delta t=0.5$, and inputs use a uniform 33-point alphabet on $[0,1]$.
+Single-site and same-axis two-site Pauli expectations give
+9, 18, and 30 outputs, respectively.
 
-The fixed six-qubit time-delayed QELM resets each example and encodes the
-newest $d\leq6$ inputs on separate qubits as
-$\sqrt{1-u}|0\rangle+\sqrt{u}|1\rangle$; unused qubits remain in
-$|0\rangle$.  An independent $XX$ Hamiltonian with
-$J_{ij}\sim\mathcal U[-1,1]$ and transverse field $0.5$ evolves the product
-state for $t_{\rm evol}=0.5$ without dissipation.  Single-site $X,Y,Z$
-expectations at one, two, or four nested checkpoints give
-$B\in\{18,36,72\}$.  This emulator differs from the growing Bernstein witness.
+The fixed six-qubit QELM resets and encodes the newest $d\leq6$ inputs as
+$\sqrt{1-a}|0\rangle+\sqrt a|1\rangle$, leaving unused qubits in $|0\rangle$.
+Independent uniform $[-1,1]$ $XX$ couplings and transverse field $0.5$
+evolve the state for $\tau=0.5$ without dissipation.
+Single-site $X,Y,Z$ expectations at one, two, or four
+nested checkpoints give $B\in\{18,36,72\}$ observable--checkpoint features.
 
-Training rows alone determine feature standardization.  Validation selects
-the affine ridge penalty $\lambda$ from
-$\{0,10^{-10},10^{-8},10^{-6},10^{-4},10^{-2},1,10^2,10^4,10^6,\infty\}$
-before refitting on training and validation rows.  Finite penalties use an
-economy singular-value decomposition with relative resolved-subspace cutoff
-$10^{-6}$; $\lambda=\infty$ is the intercept-only model.
-
-\subsubsection{Frozen Cohorts and Common-Suffix Panels}
-
+\emph{Cohorts and held-out data.} A root fixes target parameters, streams, and feature seeds.
 The confirmatory cohort uses $N_T\in\{2,3\}$,
-$\gamma_T\in\{0,0.2,0.5,1,2,4\}$, and $d\in\{1,2,4,6\}$.  The denser map adds
-$d=3,5$ and loss rates $0.75,1.25,1.5,2.5,3$, using 12 roots and 108 disjoint
-seeds.  After inspecting that map, the four-qubit follow-up was frozen
-prospectively with 12 new roots and 96 disjoint seeds.  It retains all 11
-rates, six windows, emulator, budgets, sample sizes, and success rule.
-Registered checks test negative history decay, a non-increasing minimum-window
-frontier, and the inherited $\gamma_T=4,d=6,B=72$ anchor.  Size cohorts are
-validated separately, never pooled.
+$\gamma_T\in\{0,0.2,0.5,1,2,4\}$, and $d\in\{1,2,4,6\}$.
+The dense map adds $d=3,5$ and rates $0.75,1.25,1.5,2.5,3$ with
+12 roots and 108 seeds disjoint from the original experiment.
+The prospectively frozen four-qubit follow-up, designed after map inspection,
+uses 12 new roots, 96 disjoint seeds, and otherwise unchanged settings.
+Registered checks test negative
+history decay, a non-increasing minimum-window frontier, and the
+$\gamma_T=4,d=6,B=72$ anchor. Sizes are never pooled.
 
-Within each root, train, validation, test, and suffix streams are independent.
-Streaming splits start in $|0\cdots0\rangle$ with 128 washout steps, then
-480 training, 160 validation, or 320 test rows.  The separate panel has 32
-length-six suffixes, each following four independently burned-in prefixes;
-shorter windows are nested tails.  Newest suffix symbols are sampled without
-replacement from the 33-symbol alphabet; older coordinates are independent.
-Couplings, streams, and feature seeds are fixed within roots; seed namespaces
-are disjoint across roots and cohorts.
+Training, validation, test, and suffix streams are independent. Streaming
+splits start in $|0\cdots0\rangle$ with 128 washout steps before 480 training,
+160 validation, or 320 test rows. Panels pair 32 length-six suffixes with
+four independently burned-in prefixes each; shorter windows are nested tails.
+Newest symbols are sampled without replacement from the alphabet, older
+coordinates independently. Roots and cohorts have disjoint seed namespaces.
 
-Equation~\eqref{eq:panel-decomposition} separates realized squared error into
-old-history variation and residual emulator error.  This held-out,
-distribution-dependent diagnostic does not directly estimate $D_d$ or $r_{\rm vis}$.
-
-\subsubsection{Decision Rules and Controls}
-
-MSE is divided by target variance before taking its square root.  The
-registered $0.10$ NRMSE tolerance therefore means 10\% of the target standard
-deviation; history sufficiency requires at least 10 of 12 roots below or at
-this tolerance.  For 12 nonzero fair-sign contrasts, at least 10 agreeing
-signs has one-sided probability $0.0193$.  Independent units are root blocks,
-not rows, observables, suffixes, or shot replicates.  Confidence intervals
-use 20,000 paired root-block bootstraps.
-
-The registered decision order excludes target variances below $10^{-8}$,
-then checks history-floor failure, total-QELM success, and replay
-success.  Outcomes are history limited, emulated, representation
-limited, or unresolved; additional features do not remedy missing inputs.
-Here, representation limited is an operational diagnosis: history passes,
-the fitted QELM fails, and replay succeeds. It does not isolate the best
-approximation attainable with the QELM features.
+\emph{Fitting and decision rules.} Training alone standardizes features.
+Validation selects the affine ridge penalty
+\[
+ \begin{aligned}
+ \lambda\in\{&0,10^{-10},10^{-8},10^{-6},10^{-4},10^{-2},\\
+             &1,10^2,10^4,10^6,\infty\},
+ \end{aligned}
+\]
+then training and validation data refit the readout. Finite penalties use economy
+singular-value decomposition with relative resolved-subspace cutoff $10^{-6}$;
+$\lambda=\infty$ gives intercept-only prediction.
 
 Linear delay, quadratic delay, dimension-matched random-tanh, intercept-only,
-and reset--replay controls share windows and data splits.  Replay applies the
-target's final $d$ channels to one fixed state, retaining dynamics and
-observables but removing the old prefix.  Retrained replay refits weights;
-compiled replay retains a trained affine readout.  The best linear delay,
-quadratic delay, or random-tanh control is selected separately per cell.
+and reset--replay share windows and splits. Replay applies the last $d$ target
+channels to a fixed state, refitting (retrained) or retaining (compiled) the
+affine readout. Each cell selects its best nonconstant classical control.
 
-The $0.10$, 10-of-12 frontier was fixed before opening dense cohorts.
-Post hoc sensitivity checks use tolerances $0.08$, $0.10$, and $0.12$ and
-9, 10, or 11 required roots on the same simulations.
+The preregistered NRMSE tolerance $0.10$ is 10\% of the target standard
+deviation. History or emulation passes if its error is at most $0.10$ in
+at least 10 of 12 roots (one-sided probability $0.0193$ under fair nonzero
+signs). Roots are independent units; rows, observables, suffixes, and shot
+replicates are not. Confidence intervals use 20,000 paired root-block bootstraps.
 
-\subsubsection{Finite-Shot Study}
+After excluding variances below $10^{-8}$, diagnosis checks history-floor
+failure, total-QELM success, then replay success. Representation limited
+means history passes, the fitted QELM fails, and replay succeeds, not that
+the best approximation using QELM features fails.
 
-Twelve four-qubit local-loss targets use $\gamma_T=4$, $d=6$, and per-input
-budgets $Q\in\{300,1200,4800,19200\}$.  Each snapshot and global-Pauli setting
-receives an equal integer share; one joint multinomial bit-string draw
-supplies compatible single-site expectations.  All 16 replicates independently
-sample training, validation, and test features and repeat complete fitting
-and selection.  Validation selects $\lambda$ for each $B$, then $B$ itself;
-test targets enter neither decision.  Target outputs remain exact expectations.
+The $0.10$, 10-of-12 frontier predates dense-map inspection. Post hoc
+sensitivity checks reuse simulations at tolerances $0.08$, $0.10$, $0.12$
+and 9, 10, or 11 required roots.
 
-\subsubsection{Larger Targets and Longer Context}
+\subsubsection{Finite-Shot Extension}
 
-The prospective extension uses 12 new roots, five-qubit local-loss targets,
-45 outputs, $\gamma_T\in\{1,4\}$, and $d\in\{2,4,6,8,10\}$.
-A fixed ten-qubit reset-QELM encodes one input per qubit with
-$B\in\{30,60,120\}$. Other settings are inherited, except the 32 diagnostic
-suffixes now have length ten. Dense-equivalence tests and duplicate smokes
-precede freezing. All cells remain; contrasts use 10,000 root bootstrap
-draws and the classical comparison fixes $B=120$. Cross-cohort changes
-include the larger register, not context alone.
+The exploratory post-confirmatory study uses 12 four-qubit local-loss targets,
+$\gamma_T=4$, $d=6$, and $Q\in\{300,1200,4800,19200\}$ shots per input.
+Snapshots and global-Pauli settings receive equal integer shares.
+Joint multinomial bit-string draws give compatible single-site expectations.
+Each of 16 replicates independently resamples training, validation, and test
+features and repeats fitting. Validation selects $\lambda$ for each $B$,
+then $B$, without test targets. Exact targets isolate emulator sampling.
+Section~\ref{sec:numerics}'s intermediate-feature study uses exact expectations.
 
-\subsubsection{Scope and Availability}
+\subsubsection{Long-Context Extension}
 
-The confirmatory, dense-map, long-context, and finite-shot cohorts remain
-separate. The theorems' assumptions do not imply universal tested features
-or sample-efficient training. All evidence is simulated, excluding hardware,
-gate, state-preparation-and-measurement, drift, and backaction errors.
+The prospective cohort uses 12 new roots, $N_T=5$ (45 outputs),
+$\gamma_T\in\{1,4\}$, and $d\in\{2,4,6,8,10\}$.
+A fixed ten-qubit QELM encodes one input per qubit; nested checkpoints
+give $B\in\{30,60,120\}$. Panels use 32 length-ten suffixes with four
+prefixes each; other settings are inherited. Freezing follows two duplicate
+development runs and dense-backend checks. All cells remain. Paired history
+contrasts use 10,000 root-block bootstrap draws; the QELM--quadratic
+comparison fixes $B=120$ before test evaluation. Cross-cohort changes
+include register size, not context alone.
 
-Code, protocols, and reproducibility details are collected in the companion
-repository; its identifying link is withheld for double-blind review.
+All evidence is simulated, excluding hardware, gate,
+state-preparation-and-measurement, drift, and measurement-backaction errors.
+The repository link is withheld for double-blind review.

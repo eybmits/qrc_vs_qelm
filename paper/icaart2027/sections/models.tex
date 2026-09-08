@@ -1,44 +1,66 @@
-\section{QUANTUM RESERVOIRS AND RESET-WINDOW MODELS}
+\section{Quantum Reservoirs and Reset-Window Models}
 \label{sec:models}
 
-A QRC carries a quantum state $\rho_t$ from one input to the next.  Its update
-has the familiar recurrent form
-$\rho_t=\Phi_{a_t}(\rho_{t-1})$.  Here the density matrix $\rho_t$ describes
-the internal state, and the quantum channel $\Phi_{a_t}$ is a physically
-allowed update, including any dissipation.  An observable $O_j$ is a
-measurement quantity; its expectation $\operatorname{Tr}(O_j\rho_t)$ supplies
-one output component.  We fix a finite collection of these quantities and
-write its output as $Y_t=\mathcal C(\rho_t)$
-\cite{fujii2017harnessing,mujal2021opportunities}.
-Any linear QRC readout, once trained and held fixed, can be included in
-$\mathcal C$ by absorbing its weights into the observables. Our simulations
-return the observable expectations directly: the target readout is the identity.
+A QRC carries information from the past in its quantum state.
+A reset-window QELM receives recent history explicitly through its input.
+When does this window suffice to reproduce the QRC's output?
 
-A reset-window QELM carries no state between predictions.  Each prediction
-starts from the same quantum state, encodes the last $d$ inputs, and measures
-observables $P_j$. Their expectations form the features that a trained
-linear readout combines into an output
-\cite{innocenti2023potential,kawanabe2026tdqelm}.  For a history $h$ ending at
-time $t$, denote that input window by
-$S_d(h)=(a_{t-d+1},\ldots,a_t)$.  Two histories with the same $S_d(h)$ therefore
-produce the same exact-expectation prediction, whatever their earlier inputs.
-With sampled measurements, their prediction distributions are identical even
-though individual outcomes can differ.  More qubits or
-features can enrich the function of this window, but cannot supply its
-missing past.
+A QRC processes inputs one at a time. At discrete step $t$, input $a_t$
+updates the previous state, and selected measurements provide the output
+\cite{fujii2017harnessing,mujal2021opportunities}:
+\[
+ \rho_t=\Phi_{a_t}(\rho_{t-1}),
+ \qquad y_t=\mathcal C(\rho_t).
+\]
+Here $\rho_t$ is the carried quantum state; the quantum channel $\Phi_{a_t}$
+describes its physical evolution, including dissipation.
+The fixed output map $\mathcal C$ collects $m$ observable expectations
+$\operatorname{Tr}(O_j\rho_t)$, $j=1,\ldots,m$: average values of chosen
+measurements, with output dimension $m$. Figure~\ref{fig:information-interface}
+uses angle brackets for these expectations.
+A trained linear readout can be included in $\mathcal C$ by absorbing its
+fixed weights into the observables.
 
-Emulation means reproducing the target QRC's fixed, declared input--output
-map.  It does not require reconstruction of the full quantum state, and it
-is not a comparison of general predictive performance on unrelated tasks.
-Figure~\ref{fig:information-interface} illustrates the distinction.  We first
-ask what any window-only predictor can recover, before imposing the feature
-and measurement limits of a particular QELM.
+A reset-window QELM starts from the same quantum state for every prediction
+and encodes the $d$ most recent inputs
+\cite{innocenti2023potential,kawanabe2026tdqelm}.
+For a history $h$ ending at $t$, with target output $y(h)=y_t$, its window is
+\[
+ S_d(h)=(a_{t-d+1},\ldots,a_t).
+\]
+The encoder $E(S_d(h))$ produces quantum features: observable expectations
+of $P_j$, $j=1,\ldots,B$, including measurement checkpoints.
+Thus $B$ counts measured expectations, not qubits.
+A trained linear readout combines them. With exact expectations, the
+complete prediction is
+\[
+ \widehat y_t=f(S_d(h)),
+\]
+where $f$ includes the quantum feature map and readout.
 
-Figure~\ref{fig:information-interface}(a) shows 201 illustrative Mackey--Glass
-samples: at $t=180$, the green window contains inputs 141--180.
-Grey future samples are excluded. The separate output example has two histories
-differing only in one old bit, with identical later inputs. After the bit leaves
-a 40-input window, the ideal window predictor returns their output midpoint;
-the QRC retains its effect. Only one history is drawn; green is not a trained QELM.
-Its baseline is independent of the left trace; neither plot is evaluation data.
-Experiments use independent 33-symbol inputs. Circuit symbols allow dissipative QRC channels.
+Identical windows therefore produce identical predictions for a
+fixed model. Earlier inputs may differ, but the QELM receives the same
+information whenever the last $d$ inputs agree.
+With finitely sampled measurements, predictions can fluctuate, but their
+probability distributions remain identical.
+More qubits or features enrich the window function, but cannot recover
+an earlier input that the window leaves unspecified.
+
+Our emulation target is the QRC's chosen output $y_t$, not an external
+forecasting target or the full quantum state. We hold $\mathcal C$ fixed
+throughout each comparison. Our simulations return observable expectations
+directly, so the target readout is the identity.
+
+Figure~\ref{fig:information-interface} illustrates the question.
+The two right-hand plots advance time at a fixed window length. Once an
+old input leaves the window, the ideal window prediction cannot use it.
+Its effect fades in the upper case; in the lower case, later inputs gradually
+reveal the stored information, leaving a persistent gap. The coral prediction
+is the conditional mean over two equally likely
+old-input values with the same later inputs and known baseline.
+These are independent illustrations, not evaluation data or fitted QELM
+predictions. Decay of one old input with elapsed time does not establish
+uniform accuracy as the window length grows; Section~\ref{sec:criterion}
+gives that criterion and the exact scalar error bound $D_d/2$. In the input
+plot, $k$ indexes displayed steps and $t$ marks the current one.
+The next section quantifies how much this missing information limits emulation.

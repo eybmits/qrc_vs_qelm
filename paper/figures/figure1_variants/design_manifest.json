@@ -1,8 +1,8 @@
 {
   "canonical_source": "paper/figures/information_interface/fig01_information_interface.tex",
-  "canonical_source_sha256": "4fbb8d792fcaa37ddf9e3ce961e7f3e5ee965a6d824ab468bb44305edd0eddf5",
-  "design_notes_sha256": "531fb629692ca7ffe87b410eddfbc9e8b14b62507b0a9b7c5433a75eef8c9e64",
-  "input_timeseries_sha256": "bf2e22ef87be4390ad5bd7e084ad8b39ef8337e1707cf1f957d11b285bc7a9f8",
+  "canonical_source_sha256": "e668dd80417e5d3541ed19d409f28e02b0912aead21672abcb18dcab77f57748",
+  "design_notes_sha256": "f572893e76bdd02b3d90a19eef954cdc62e2e2820a763a56802f037da277bb4a",
+  "input_timeseries_sha256": "4a7feed74ea28313ececc2b922b9d1a385046e3805fd6546960a8766cc80ba8e",
   "native_width_inches": 7.055,
   "schema": "figure1_design_candidates_v2",
   "scope": "schematic layouts only; not additional numerical evidence",
@@ -11,14 +11,14 @@
   "variants": {
     "variant_a_architectures": {
       "artifacts": {
-        "variant_a_architectures.pdf": "8171c2353ecc6cd6fb15a0090c428a77dd4df5a67161dc200767d95617851b42",
-        "variant_a_architectures.png": "1500d9ec9a43870aed6c60644c5e3be5d3148143638e5d4a5e362bbb61184ef4",
-        "variant_a_architectures.tex": "4fbb8d792fcaa37ddf9e3ce961e7f3e5ee965a6d824ab468bb44305edd0eddf5"
+        "variant_a_architectures.pdf": "5c764772fe042a35048fc175a8e79274a1f500af34f0bf021beab1ef6286b715",
+        "variant_a_architectures.png": "30a2868260d437f1119392025ee641c4e2cfdf082a780f6179b04ee3fa5c6e7a",
+        "variant_a_architectures.tex": "e668dd80417e5d3541ed19d409f28e02b0912aead21672abcb18dcab77f57748"
       },
-      "canvas_aspect_ratio": 1.3784382259079955,
+      "canvas_aspect_ratio": 1.8666353086437901,
       "pdf_size_points": [
         507.96,
-        368.504
+        272.126
       ]
     },
     "variant_b_same_window": {

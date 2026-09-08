@@ -440,4 +440,5 @@ def test_checked_in_release_manifest_matches_live_inputs() -> None:
         root / "pra_extension/PRA_EXTENSION_RELEASE.json"
     )
     actual = release.build_manifest(repo_root=root)
+    assert actual["paper_pdf"] == "paper/icaart2027/submission.pdf"
     assert actual == expected

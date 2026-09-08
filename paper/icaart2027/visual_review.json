@@ -1,18 +1,17 @@
 {
-  "pdf_sha256": "61c46a1f57a3b6a8c8d43e9aba8e13ae6044c348b15b1c2e6dc0d76fe78404c0",
+  "pdf_sha256": "1936d34fc57446b7ce89f12464889bcdb3875e841c78586a18ba2fe36857e903",
   "pages_reviewed": 12,
-  "rendering": "All twelve pages of both manuscripts and their preceding reviewed versions were rendered with Poppler at 96 dpi. The main reviewer inspected changed conference pages 2--5; an independent reviewer inspected changed journal pages 2--4. The other eight conference pages and nine journal pages are PNG-byte-identical to their preceding reviewed renditions. This is a PDF-point-to-pixel comparison, not monitor-calibrated physical 100% zoom.",
-  "status": "no visible overlap, clipping, missing glyphs or illegible panels found",
+  "rendering": "All 12 ICAART pages before and after the full appendix readability integration were rendered with Poppler at maximum dimension 1500 pixels. Pixel comparison found changes only on pages 6 and 9--12. The main agent inspected all five changed pages, including the complete appendix and its main-text cross-reference. The remaining seven pages are pixel-identical to the preceding reviewed PDF. This is not independent visual review or physical 100% zoom. The inactive journal PDF was not rebuilt.",
+  "status": "Twelve ICAART pages, including references and appendices. No visible overlap, clipping or missing glyphs.",
   "latex_overfull_boxes": 0,
   "undefined_references_or_citations": 0,
   "observations": [
-    "Figure 1 replaces two stacked arbitrary output comparisons with one 4.40-cm-square timeline, horizontally aligned with the existing 4.40-cm input axis. Current-input, window, state, model and observable elements and panel b are unchanged.",
-    "The new right-hand example is an explicitly declared balanced-bit toy. The displayed target includes a retained old-bit contribution; the ideal window prediction coincides until that bit leaves the window at step d, then uses the output midpoint of the two compatible histories. It is not a trained QELM trajectory or new measured evidence.",
-    "The native vector figure and its rendered PNG were inspected. Open green markers, black target markers, the discrete cutoff, the event annotation, the inset legend and the common comparison arrow are readable and do not collide.",
-    "Both final manuscripts have twelve pages. Figures 1, 2 and 3 remain on pages 2, 5 and 6. The short figure explanation was tightened to preserve the page budget without changing publisher styles, margins, fonts or scientific content.",
-    "Independent journal review is bound to SHA256 b4246deb31d12ccdaf25b2553d9d288e9ab4bd6b64dd85b9a6720dc552bd728f. Reflow after the updated caption and model paragraph was inspected in both manuscripts.",
-    "All 201 input samples, the input window 141--180, the frozen historical audit snapshot and numerical experimental evidence remain unchanged. The other two main-paper figures and archival phase-map assets retain their previous hashes.",
-    "The caption and model text disclose the ideal midpoint reference, the single shown history and its illustrative status in plain language. Prior residual-emulator-error and repository-availability changes are preserved."
+    "Appendix A--E now follows the complete supplied readability rewrite, condensed only for repetition and subsection overhead. Compact italic paragraph leads retain the proof progression without bold body text; native numbered headings retain D.1/D.2 and E.1--E.4.",
+    "The protected-memory pulse and numerical implementation are D.1 and D.2; the common-suffix diagnostic and equation (25) are E.1. Page 6's cross-reference resolves to D.1 and D.2. Equations (12)--(26) retain their numbering and all citations resolve.",
+    "Representation and sampling contributions are defined before equation (21); both finite-shot guarantees remain pointwise in a fixed history. Midpoint coefficients remain a separate existence construction. Numerical methods, controls, cohort separation and extension details are retained.",
+    "The ridge grid uses a two-line unnumbered display with no overfull box. All appendix text and equations fit within the unmodified publisher font sizes and margins; no preview header or placeholder text is included.",
+    "All three figures are unchanged and remain on pages 2, 5 and 7. Main-text content changes only in the protected-example appendix cross-reference. Experimental arrays and figure provenance are untouched.",
+    "The journal PDF remains byte-identical: f129e8ad46c61d3297d05c31c3fed8e5275ab74206dc8628bc516581cfe43187. The anonymous source archive rebuilds to the identical twelve-page conference PDF."
   ],
-  "scope": "Visual and format review of this editorial PDF only. Required-disclosure, reviewer artifact access and human scientific, authorship and policy approval remain separate handoff checks; visual approval is not submission readiness."
+  "scope": "Visual and format review only. Required disclosure, reviewer artifact access and human scientific, authorship and policy approval remain separate handoff checks; visual approval is not submission readiness."
 }

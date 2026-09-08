@@ -1,0 +1,131 @@
+{
+  "contrasts": [
+    {
+      "decrease_ci95": [
+        0.02301134080934623,
+        0.05830985959213296
+      ],
+      "high_budget": 144,
+      "holm_p_six_contrasts": 0.00146484375,
+      "low_budget": 18,
+      "median_decrease": 0.04758455050819766,
+      "median_high": 0.0022262744079015974,
+      "median_low": 0.04995812155401176,
+      "median_relative_decrease": 0.9491296151511106,
+      "one_sided_sign_p": 0.000244140625,
+      "positive_roots": 12,
+      "relative_decrease_ci95": [
+        0.8898689170654914,
+        0.9643381176609758
+      ],
+      "roots": 12,
+      "teacher_n_qubits": 2
+    },
+    {
+      "decrease_ci95": [
+        -4.90446507536177e-05,
+        0.00012314132108396996
+      ],
+      "high_budget": 144,
+      "holm_p_six_contrasts": 0.3876953125,
+      "low_budget": 72,
+      "median_decrease": 5.6464547737759005e-05,
+      "median_high": 0.0022262744079015974,
+      "median_low": 0.0021370861899451966,
+      "median_relative_decrease": 0.02377872055526703,
+      "one_sided_sign_p": 0.19384765625,
+      "positive_roots": 8,
+      "relative_decrease_ci95": [
+        -0.03945649521271849,
+        0.042533592998533196
+      ],
+      "roots": 12,
+      "teacher_n_qubits": 2
+    },
+    {
+      "decrease_ci95": [
+        0.016348486381575614,
+        0.03690188821658121
+      ],
+      "high_budget": 144,
+      "holm_p_six_contrasts": 0.00146484375,
+      "low_budget": 18,
+      "median_decrease": 0.02714833022801166,
+      "median_high": 0.0025352634942588164,
+      "median_low": 0.029671749005569195,
+      "median_relative_decrease": 0.891886615978415,
+      "one_sided_sign_p": 0.000244140625,
+      "positive_roots": 12,
+      "relative_decrease_ci95": [
+        0.8790853818119289,
+        0.9239488816903116
+      ],
+      "roots": 12,
+      "teacher_n_qubits": 3
+    },
+    {
+      "decrease_ci95": [
+        -7.799834156081513e-06,
+        0.00020138406059694823
+      ],
+      "high_budget": 144,
+      "holm_p_six_contrasts": 0.218994140625,
+      "low_budget": 72,
+      "median_decrease": 5.299755700513911e-05,
+      "median_high": 0.0025352634942588164,
+      "median_low": 0.0024952915253084957,
+      "median_relative_decrease": 0.018193302413254647,
+      "one_sided_sign_p": 0.072998046875,
+      "positive_roots": 9,
+      "relative_decrease_ci95": [
+        -0.009552839538024552,
+        0.06205370333736996
+      ],
+      "roots": 12,
+      "teacher_n_qubits": 3
+    },
+    {
+      "decrease_ci95": [
+        0.01280858477983949,
+        0.036211783102884545
+      ],
+      "high_budget": 144,
+      "holm_p_six_contrasts": 0.00146484375,
+      "low_budget": 18,
+      "median_decrease": 0.02415739873210051,
+      "median_high": 0.0029667627180267383,
+      "median_low": 0.0281506873711656,
+      "median_relative_decrease": 0.8812635295099561,
+      "one_sided_sign_p": 0.000244140625,
+      "positive_roots": 12,
+      "relative_decrease_ci95": [
+        0.8066597718285107,
+        0.9312192954417179
+      ],
+      "roots": 12,
+      "teacher_n_qubits": 4
+    },
+    {
+      "decrease_ci95": [
+        -6.624195218037738e-05,
+        0.00010371836617679184
+      ],
+      "high_budget": 144,
+      "holm_p_six_contrasts": 0.3876953125,
+      "low_budget": 72,
+      "median_decrease": 7.184745206778261e-06,
+      "median_high": 0.0029667627180267383,
+      "median_low": 0.002892771137165363,
+      "median_relative_decrease": 0.00437072542700008,
+      "one_sided_sign_p": 0.38720703125,
+      "positive_roots": 7,
+      "relative_decrease_ci95": [
+        -0.024038884294497184,
+        0.03521327376880733
+      ],
+      "roots": 12,
+      "teacher_n_qubits": 4
+    }
+  ],
+  "scope": "fixed-model follow-up, not pure approximation or advantage"
+}

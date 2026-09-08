@@ -1,29 +1,11 @@
-Prior work addresses several parts of this comparison.  QRCs retain temporal
-information in spin systems, noisy processors, and oscillators
-\cite{nakajima2019spatial,chen2020temporal,govia2021oscillator,kalfus2022hilbert}.
-Fading-memory and echo-state results describe when dependence on older states
-becomes negligible \cite{boyd1985fading,grigoryeva2018sas,grigoryeva2018esn,grigoryeva2019differentiable,gonon2021fading,martinezpena2023finite,martinezpena2025input,kobayashi2024esp,kobayashi2026coherence}.
-Dissipation, feedback, monitoring, and interactions with an environment that
-retains memory can change this behavior
-\cite{sannia2024dissipation,kobayashi2024feedback,morguisancho2026monitored,sannia2026nonmarkovian,paparelle2026memory}.
-
-A complementary approach supplies the history explicitly through delay
-coordinates or replays recent inputs from a reset state
-\cite{kawanabe2026tdqelm,assil2026memory,mujal2023measurement,cindrak2024restriction}.  Universal quantum feature families can approximate
-continuous functions of these supplied inputs
-\cite{goto2021universal,yu2024nonasymptotic}, while finite-sampling studies
-describe the measurements needed to resolve their features
-\cite{hu2023sampling,ahmed2025finite}.  These representation and measurement
-questions are distinct from whether the supplied window determines the
-target output in the first place.
-
-The dynamical part of our analysis builds on work identifying which state
-changes inputs can generate and which measurements can detect
-\cite{gross2026ptm,cindrak2025krylov,domingo2026diagnosing,keenan2026storage,wang2026fisher}.  Classical realization theory formalizes this distinction
-through reachability and observability \cite{petreczky2013realization};
-stability theory studies decay under sequences of different updates
-\cite{rota1960joint,jungers2009joint,philippe2016constrained}.
-Protected quantum sectors provide the complementary case of persistent state
-components \cite{zanardi1997noiseless,albert2014symmetries}.
-We connect these perspectives to the finite-window prediction error and to
-the conditions under which a reset-QELM can emulate a recurrent QRC.
+Existing research provides several foundations for this comparison.
+Fading-memory theory studies systems whose dependence on the distant past
+becomes progressively weaker \cite{boyd1985fading,grigoryeva2018sas}.
+Quantum reservoir studies establish conditions for forgetting earlier states
+\cite{martinezpena2023finite,sannia2024dissipation}, while replay and window methods make recent
+history explicitly available to reset models
+\cite{mujal2023measurement,cindrak2024restriction,kawanabe2026tdqelm}. Universal approximation
+results address which functions quantum feature models can represent
+\cite{goto2021universal,yu2024nonasymptotic}. Our analysis connects these
+questions by identifying exactly which missing historical information limits
+finite-window emulation.

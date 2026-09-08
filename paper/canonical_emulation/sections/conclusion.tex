@@ -1,46 +1,41 @@
 \section{Discussion and Conclusions}
 \label{sec:summary}
 
-We establish when a quantum reservoir's memory can be replaced by a finite
-window of recent inputs for a chosen input--output task. The key is what
-older inputs still change in the output, not how much information remains
-inside the quantum state. Histories with identical windows must receive
-the same prediction. For a scalar output, the best possible worst-case
-error is exactly half their largest output gap. Under the continuity,
-compactness, and admissible-history assumptions of
-Section~\ref{sec:criterion}, a growing universal exact-expectation
-reset-QELM family achieves arbitrary accuracy if and only if this gap
-vanishes uniformly as the window grows.
+Finite context can replace recurrent quantum memory precisely when the
+missing past becomes uniformly negligible in the outputs we want to reproduce.
+Our analysis makes this boundary quantitative. Two histories with identical
+recent inputs look the same to a window model, even when their reservoir
+outputs differ. For scalar outputs, half the largest such difference is
+exactly the smallest achievable worst-case error. Under the assumptions of
+Section~\ref{sec:criterion}, a growing universal reset-QELM family evaluated
+through exact expectations can approach this limit. This establishes both
+when replacement is possible to arbitrary accuracy and what error remains
+unavoidable at a given window length.
 
-The dynamical analysis identifies the memory that controls this boundary.
-Only differences that inputs can create and outputs can reveal, now or
-after later inputs, must fade. The full state need not forget its past.
-For exponentially fading output-relevant memory, we determine the
-asymptotic window length needed as the requested accuracy increases.
-The two-qubit construction demonstrates the opposite case: an old input
-writes a symmetry-protected population that remains measurable, imposing
-a nonzero error floor for every finite window.
+The key distinction is between information stored in the quantum state and
+information needed for the output. A reservoir may retain information
+indefinitely without obstructing emulation, provided that no future inputs
+can make it affect the chosen outputs. When relevant memory fades, its decay
+rate determines the required context length. Our two-qubit construction
+demonstrates the opposite case. An old input leaves a measurable trace that
+survives beyond every finite window, creating an error floor for both quantum
+and classical window predictors. More features or more precise measurements
+cannot recover information that the model never receives.
 
-The simulations show how this distinction affects actual emulators.
-In the registered comparisons, longer windows reduce total NRMSE by
-a root median of 78\%, while additional features reduce residual emulator
-NRMSE by 67\% once history is sufficient. Separate follow-ups extend the
-history analysis to four- and five-qubit targets and examine finite-shot
-training. The five-qubit study also shows why a longer window is not
-enough on its own: missing-history error falls even where the fixed
-QELM fails to reach the accuracy target. The finite-shot study identifies
-a further limit: additional features need enough measurements to be useful.
+The simulations show why sufficient history is only the first requirement
+for practical emulation. Longer windows reduce the contribution from missing
+history, but the fitted model must still represent the resulting input--output
+relationship accurately. Finite measurements introduce another limit, so
+useful feature capacity depends on the available measurement budget. These
+requirements are distinct, and improving one does not automatically resolve
+the others. Quadratic delay models outperform the tested QELMs, and the
+theoretical existence result guarantees neither efficient learning nor
+resource savings. The experiments therefore establish no quantum advantage.
 
-These results distinguish the possibility of emulation from its cost.
-The growing family in the theorem is not the fixed emulator used in the
-experiments, and existence does not guarantee efficient learning. The
-quadratic delay control wins the registered comparison; the experiments
-establish no quantum advantage. All numerical evidence is simulated,
-the cohorts remain separate, and their sampled errors are distinct from
-the worst-case theorem. Hardware noise and measurement backaction remain
-open tests.
-
-The practical conclusion is simple: first supply the history the output
-needs, then represent its dependence on that history, and finally measure
-the representation accurately enough. These are three distinct requirements
-for replacing recurrent memory with finite context.
+Together, these insights give a clear order for evaluating replacement models.
+First determine whether the window contains enough information. Then assess
+whether the representation, training, and measurements can use it effectively.
+This separates errors that require access to more history from errors that
+better modeling or measurement can reduce. It provides a principled basis
+for deciding when memory can be supplied explicitly through recent inputs
+and when information beyond the window must remain accessible.

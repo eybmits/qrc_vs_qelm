@@ -1,0 +1,106 @@
+{
+  "schema_version": 1,
+  "study": "finite_prefix_mean_training_data_control",
+  "status": "PROSPECTIVE_FOLLOWUP",
+  "training_rows": [
+    480,
+    960,
+    1920,
+    3840
+  ],
+  "validation_rows": 512,
+  "test_rows": 2048,
+  "reference_rows": 1024,
+  "panel_groups": 32,
+  "prefix_branches": 4,
+  "prefix_length": 128,
+  "reference_prefix_lengths": [128, 256],
+  "input_levels": 33,
+  "max_snapshots": 4,
+  "alpha_grid": [
+    0,
+    1e-10,
+    1e-8,
+    0.000001,
+    0.0001,
+    0.01,
+    1,
+    100,
+    10000,
+    1000000,
+    "+inf"
+  ],
+  "anchors": [
+    {
+      "id": "n4_fast",
+      "code": 1,
+      "teacher_n_qubits": 4,
+      "student_n_qubits": 6,
+      "gamma": 4,
+      "window": 6
+    },
+    {
+      "id": "n5_long",
+      "code": 2,
+      "teacher_n_qubits": 5,
+      "student_n_qubits": 10,
+      "gamma": 1,
+      "window": 10
+    }
+  ],
+  "roots": [
+    {
+      "root_id": "learning01",
+      "seed": 2002609101
+    },
+    {
+      "root_id": "learning02",
+      "seed": 2002609102
+    },
+    {
+      "root_id": "learning03",
+      "seed": 2002609103
+    },
+    {
+      "root_id": "learning04",
+      "seed": 2002609104
+    },
+    {
+      "root_id": "learning05",
+      "seed": 2002609105
+    },
+    {
+      "root_id": "learning06",
+      "seed": 2002609106
+    },
+    {
+      "root_id": "learning07",
+      "seed": 2002609107
+    },
+    {
+      "root_id": "learning08",
+      "seed": 2002609108
+    },
+    {
+      "root_id": "learning09",
+      "seed": 2002609109
+    },
+    {
+      "root_id": "learning10",
+      "seed": 2002609110
+    },
+    {
+      "root_id": "learning11",
+      "seed": 2002609111
+    },
+    {
+      "root_id": "learning12",
+      "seed": 2002609112
+    }
+  ],
+  "development_seed": 2002609000,
+  "analysis_seed": 2002609900,
+  "bootstrap_replicates": 20000,
+  "normalization": "mean of population-denominator observable variances on the fixed independent streaming test targets; unchanged across training sizes and models within root/anchor",
+  "claim_boundary": "post-existing-results, separately frozen follow-up; finite-128-prefix conditional mean is an oracle evaluation reference, not a worst-case midpoint, stationary conditional mean, or optimal feature readout"
+}

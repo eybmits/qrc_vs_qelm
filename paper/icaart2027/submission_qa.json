@@ -1,7 +1,7 @@
 {
   "schema": "icaart2027_submission_qa_v2",
   "pdf": "submission.pdf",
-  "pdf_sha256": "61c46a1f57a3b6a8c8d43e9aba8e13ae6044c348b15b1c2e6dc0d76fe78404c0",
+  "pdf_sha256": "1936d34fc57446b7ce89f12464889bcdb3875e841c78586a18ba2fe36857e903",
   "extraction_backend": "pypdf + Poppler",
   "passed": false,
   "format_passed": true,
@@ -72,7 +72,7 @@
     },
     "character_budget": {
       "passed": true,
-      "characters": 43574,
+      "characters": 44430,
       "minimum": 10000,
       "maximum": 50000,
       "definition": "Unicode, whitespace excluded"
@@ -96,7 +96,7 @@
     },
     "abstract_length": {
       "passed": true,
-      "words": 172,
+      "words": 195,
       "minimum": 70,
       "maximum": 200
     },
@@ -108,7 +108,7 @@
       "passed": true,
       "fonts": [
         {
-          "name": "VKLUJD+NimbusRomNo9L-Medi",
+          "name": "FACSYG+NimbusRomNo9L-Medi",
           "embedded": true,
           "subset": true,
           "unicode": true
@@ -120,43 +120,55 @@
           "unicode": true
         },
         {
-          "name": "GKHHBZ+NimbusRomNo9L-ReguItal",
+          "name": "TQCKUY+NimbusRomNo9L-ReguItal",
           "embedded": true,
           "subset": true,
           "unicode": true
         },
         {
-          "name": "UHIXIU+CMMI10",
+          "name": "MYMPAC+CMR10",
           "embedded": true,
           "subset": true,
           "unicode": true
         },
         {
-          "name": "KXHGEG+StandardSymL",
+          "name": "RRUCEV+StandardSymL",
           "embedded": true,
           "subset": true,
           "unicode": true
         },
         {
-          "name": "QEPAFQ+NimbusSanL-Bold",
+          "name": "BWOQUP+CMSY10",
           "embedded": true,
           "subset": true,
           "unicode": true
         },
         {
-          "name": "TRQZHK+NimbusSanL-Regu",
+          "name": "MHDZCW+CMMI10",
           "embedded": true,
           "subset": true,
           "unicode": true
         },
         {
-          "name": "UHIXIU+CMMI10",
+          "name": "XEKGWN+URWChanceryL-MediItal",
           "embedded": true,
           "subset": true,
           "unicode": true
         },
         {
-          "name": "MUFMYZ+CMMI7",
+          "name": "IZFATW+NimbusSanL-Regu",
+          "embedded": true,
+          "subset": true,
+          "unicode": true
+        },
+        {
+          "name": "MHDZCW+CMMI10",
+          "embedded": true,
+          "subset": true,
+          "unicode": true
+        },
+        {
+          "name": "BCIXEO+CMMI7",
           "embedded": true,
           "subset": true,
           "unicode": true
@@ -186,31 +198,19 @@
           "unicode": true
         },
         {
-          "name": "RFXXVX+CMSY10",
+          "name": "BWOQUP+CMSY10",
           "embedded": true,
           "subset": true,
           "unicode": true
         },
         {
-          "name": "KFAPYO+CMEX10",
+          "name": "QEMTYL+CMEX10",
           "embedded": true,
           "subset": true,
           "unicode": true
         },
         {
-          "name": "MYMPAC+CMR10",
-          "embedded": true,
-          "subset": true,
-          "unicode": true
-        },
-        {
-          "name": "RFXXVX+CMSY10",
-          "embedded": true,
-          "subset": true,
-          "unicode": true
-        },
-        {
-          "name": "LPHAOW+URWChanceryL-MediItal",
+          "name": "QEMTYL+CMEX10",
           "embedded": true,
           "subset": true,
           "unicode": true
@@ -240,13 +240,13 @@
           "unicode": true
         },
         {
-          "name": "GGBSME+HelveticaNeue",
+          "name": "DGGLCI+HelveticaNeue",
           "embedded": true,
           "subset": true,
           "unicode": true
         },
         {
-          "name": "EPACPX+HelveticaNeue-Bold",
+          "name": "DYQBII+HelveticaNeue-Bold",
           "embedded": true,
           "subset": true,
           "unicode": true
@@ -258,25 +258,19 @@
           "unicode": true
         },
         {
-          "name": "BOSEUO+Cmmi10",
+          "name": "BULUIO+Cmmi10",
           "embedded": true,
           "subset": true,
           "unicode": true
         },
         {
-          "name": "CAFOEF+Cmr10",
+          "name": "FHGJKU+Cmr10",
           "embedded": true,
           "subset": true,
           "unicode": true
         },
         {
-          "name": "KFAPYO+CMEX10",
-          "embedded": true,
-          "subset": true,
-          "unicode": true
-        },
-        {
-          "name": "RAZVEJ+MSBM10",
+          "name": "XSBJNE+MSBM10",
           "embedded": true,
           "subset": true,
           "unicode": true
@@ -338,93 +332,57 @@
     "physical_page_clipping": [],
     "template_margin_excursions": [
       {
-        "page": 4,
+        "page": 5,
         "box": [
-          334.104,
-          713.134467,
-          339.838175,
-          725.925408
-        ]
-      },
-      {
-        "page": 4,
-        "box": [
-          352.494645,
-          709.631985,
-          362.096599,
-          726.917096
-        ]
-      },
-      {
-        "page": 4,
-        "box": [
-          368.319,
-          709.631985,
-          381.77648,
-          726.917096
-        ]
-      },
-      {
-        "page": 4,
-        "box": [
-          388.004,
-          709.631985,
-          390.77161,
-          726.917096
-        ]
-      },
-      {
-        "page": 4,
-        "box": [
-          440.592,
-          717.433357,
-          445.5733,
-          726.339922
+          370.111,
+          713.401985,
+          377.85991,
+          730.687096
         ]
       },
       {
         "page": 10,
         "box": [
-          183.156,
+          126.123,
           713.401985,
-          190.90491,
+          131.1043,
           730.687096
         ]
       },
       {
-        "page": 11,
+        "page": 10,
         "box": [
-          308.995,
-          712.627985,
-          316.733948,
-          729.913096
+          170.759279,
+          713.401985,
+          178.50819,
+          730.687096
+        ]
+      },
+      {
+        "page": 10,
+        "box": [
+          209.421,
+          713.401985,
+          217.16991,
+          730.687096
+        ]
+      },
+      {
+        "page": 10,
+        "box": [
+          448.236,
+          699.563873,
+          453.771221,
+          736.744296
         ]
       },
       {
         "page": 11,
         "box": [
-          317.839796,
-          712.627985,
-          320.607407,
-          729.913096
-        ]
-      },
-      {
-        "page": 11,
-        "box": [
-          321.713255,
-          712.627985,
-          324.480865,
-          729.913096
-        ]
-      },
-      {
-        "page": 11,
-        "box": [
-          325.576751,
-          712.627985,
-          328.344362,
-          729.913096
+          171.889,
+          719.349357,
+          176.8703,
+          728.255922
         ]
       }
     ],

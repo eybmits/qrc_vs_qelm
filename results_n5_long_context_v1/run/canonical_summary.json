@@ -1,0 +1,22 @@
+{
+  "confirmatory": false,
+  "counts": {
+    "roots": 12,
+    "stream_rows": 1200,
+    "suffix_rows": 1200,
+    "systems": 24,
+    "target_live_systems": 24
+  },
+  "decision": "CALIBRATION_ONLY",
+  "max_decomposition_identity_error": 1.734723475976807e-18,
+  "profile": "long_n5",
+  "ptd_regime_counts": {
+    "EMULATED": 130,
+    "HISTORY_IMPOSSIBLE": 69,
+    "REPRESENTATION_LIMITED": 61,
+    "UNRESOLVED": 100
+  },
+  "schema_version": 1,
+  "status": "PROSPECTIVE_LONG_CONTEXT_N5",
+  "study": "canonical_qrc_long_context_n5"
+}

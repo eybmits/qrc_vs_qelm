@@ -1,0 +1,13 @@
+{
+  "artifacts": {
+    "long_n5_cells.csv": "90186f738a116b811e521d484559cd77e58bbc79dea1a01ca4dbd3b1d657503d",
+    "long_n5_classical_root_comparisons.csv": "9ed014cf9b0f7abebc463a6e9d8861019b2d0699c8e36cda6c39462ce1ae44a8",
+    "long_n5_history_root_contrasts.csv": "faacfd1607db6212b3e5d299c9292bf759cbadfa1e5c35c731bb669953834c5c",
+    "long_n5_stream_plot_source.csv": "a086c3cbf7d67f300e1d3520a7414930effc2c063df06ca68088940835a9fd0a",
+    "long_n5_summary.json": "f4e85fd4d99f957ef7be49995174aae53a47f3355f6dd0e532b7ad11045970ee"
+  },
+  "material_identity_sha256": "85e95081d106a191449f6c16b90797dc2cb16575b7388d5c3577e638bf5705c1",
+  "run_audit_sha256": "ffccf0a787c19152cb9c21971225b6b195e46e823e14c9a1206c7ffe47694fdf",
+  "schema_version": 1,
+  "upstream_canonical_manifest_sha256": "57cf85a88e58dbfee2f0d57016eef0dffcf26434bd30e2802f234d1254ff26ac"
+}

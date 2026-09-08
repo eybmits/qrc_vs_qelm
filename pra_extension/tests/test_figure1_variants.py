@@ -6,6 +6,7 @@ from pathlib import Path
 import re
 import subprocess
 import sys
+import xml.etree.ElementTree as ET
 
 import numpy as np
 from PIL import Image
@@ -20,11 +21,14 @@ if str(CODE_ROOT) not in sys.path:
 from figure1_timeseries import (  # noqa: E402
     BEGIN,
     END,
+    INPUT_PARAMETERS,
     N_SAMPLES,
     OUTPUT_BEGIN,
     OUTPUT_END,
     OUTPUT_MEMORY_AMPLITUDE,
     OUTPUT_N_SAMPLES,
+    OUTPUT_REVEAL_DURATION,
+    OUTPUT_REVEAL_START,
     OUTPUT_SEED,
     OUTPUT_WINDOW,
     OUTPUT_WRITE_STEP,
@@ -45,10 +49,10 @@ from qrc_vs_qelm.core.tasks import mackey_glass_series  # noqa: E402
 
 DESIGNS = ROOT / "paper/figures/figure1_variants"
 CANONICAL = ROOT / "paper/figures/information_interface/fig01_information_interface.tex"
-COMPACT_ASPECT = 17.9197 / 13.0
-INPUT_SHA256 = "bf2e22ef87be4390ad5bd7e084ad8b39ef8337e1707cf1f957d11b285bc7a9f8"
+COMPACT_ASPECT = 17.9197 / 9.6
+INPUT_SHA256 = "4a7feed74ea28313ececc2b922b9d1a385046e3805fd6546960a8766cc80ba8e"
 LEGACY_INPUT_SHA256 = "279ffd9bff72e717ab0a77396efdd92c4495e57d417f65f2bdddcc05680e25ba"
-OUTPUT_SHA256 = "375f0f9f1116189c9a9b3d7875a23ff7d0b92c04440dcf5dc0932c3021216faf"
+OUTPUT_SHA256 = "fc6853ac40b7445701d938ee595b7c19428cfab410dfba23c6f5544f23de7409"
 NAMES = (
     "variant_a_architectures",
     "variant_b_same_window",
@@ -104,6 +108,62 @@ def test_figure1_design_dimensions_and_source_addresses(name: str) -> None:
     assert "fig01_information_interface.pdf" in introduction
 
 
+def test_past_state_tint_stops_at_the_explicit_window() -> None:
+    source = CANONICAL.read_text()
+    fill = r"\fill[blue!16] (1.045,6.725) rectangle ({1.045+4.15*146.5/212},10.875);"
+    assert source.count(fill) == 1
+    assert source.index(fill) < source.index(r"\fill[green!24]")
+    assert source.index(fill) < source.index(r"\foreach \val in {0.4,0.8,1.2}")
+    assert source.index(fill) < source.index(r"in \MGsamples{")
+    cue = provenance(CANONICAL)["past_state_cue"]
+    assert cue["fill"] == "blue!16" and cue["root_color"] == "#3868D9"
+    assert cue["window_fill"] == "green!24"
+    assert cue["window_start_boundary"]["index"] == WINDOW_START - .5
+    boundary = (
+        r"\draw[green!65!ink,line width=.4pt] "
+        r"({1.045+4.15*146.5/212},6.725)--({1.045+4.15*146.5/212},10.875);"
+    )
+    assert source.count(boundary) == 1
+    assert source.index(fill) < source.index(boundary) < source.index(r"in \MGsamples{")
+    assert r"\node[text=green,fill=green!24,inner sep=.5pt]" in source
+    assert cue["index_extent"] == [-6, WINDOW_START - .5]
+    assert cue["data_indices"] == [0, WINDOW_START - 1]
+    assert cue["label_center_cm"] == [2.55, 11.72]
+    assert "no lossless-storage claim" in cue["scope"]
+    assert r"\node[text=blue,align=center] at (2.55,11.72)" in source
+
+
+def test_every_current_figure1_plot_has_a_quiet_two_direction_grid() -> None:
+    source = CANONICAL.read_text()
+    assert r"plotgrid/.style={draw=rule,line width=.35pt,dash pattern=on 2pt off 2pt}" in source
+    assert r"\definecolor{rule}{HTML}{DEE0E3}" in source
+    input_plot = source.split("% The old-input brace", 1)[0]
+    output_plot = source.split(r"\newcommand{\memoryplot}[3]{%", 1)[1].split(
+        r"\memoryplot{", 1,
+    )[0]
+    for panel in (input_plot, output_plot):
+        assert panel.count(r"\draw[plotgrid]") == 2
+    assert r"\foreach \kk in {0,50,100,150,200}" in input_plot
+    assert r"\draw[plotgrid] (\xx,6.725)--(\xx,10.875);" in input_plot
+    assert r"\draw[plotgrid] (1.045,\yy)--(5.195,\yy);" in input_plot
+    assert input_plot.index(r"\fill[green!24]") < input_plot.index(r"\draw[plotgrid]")
+    assert input_plot.rindex(r"\draw[plotgrid]") < input_plot.index(r"in \MGsamples{")
+    assert r"\foreach \kk in {0,20,40,60,80,100}" in output_plot
+    assert r"\draw[plotgrid] (\xx,0)--(\xx,3.20);" in output_plot
+    assert r"\draw[plotgrid] (0,\yy)--(4.15,\yy);" in output_plot
+    assert output_plot.index(r"\fill[blue!16]") < output_plot.index(r"\draw[plotgrid]")
+    assert output_plot.rindex(r"\draw[plotgrid]") < output_plot.index(r"in #2{")
+    assert len(re.findall(r"\\memoryplot\{[\d.]+\}\{\\OutputSamples(?:Fading|Persistent)\}", source)) == 2
+    grid = provenance(CANONICAL)["plot_grid"]
+    assert grid["directions"] == ["horizontal", "vertical"]
+    assert grid["color"] == "#DEE0E3"
+    assert grid["line_width_pt"] == 0.35
+    assert grid["dash_pattern_pt"] == [2.0, 2.0]
+    assert grid["input_vertical_steps"] == [0, 50, 100, 150, 200]
+    assert grid["output_vertical_steps"] == [0, 20, 40, 60, 80, 100]
+    assert grid["output_horizontal_values"] == [0.6, 0.8, 1.0, 1.2]
+    assert "history_grid_local_y" not in grid
+
 def test_selected_architecture_source_is_the_canonical_overview() -> None:
     manifest = json.loads((DESIGNS / "design_manifest.json").read_text())
     selected = DESIGNS / f"{manifest['selected_variant']}.tex"
@@ -116,19 +176,15 @@ def test_selected_architecture_source_is_the_canonical_overview() -> None:
     ] == digest
 
 
-def test_canonical_overview_uses_letters_not_narrative_panel_titles() -> None:
+def test_canonical_overview_omits_memory_headings_and_panel_letters() -> None:
     source = CANONICAL.read_text()
     panel_nodes = re.findall(
         r"\\node\[([^\]]*)\]\s+at\s+\([^;]*?\)\s+\{([abc])\};",
         source,
     )
-    assert [label for _, label in panel_nodes] == ["a", "b"]
-    bold_styles = set(re.findall(r"([\w-]+)/\.style\s*=\s*\{[^}]*\\bfseries", source))
-    assert all(
-        r"\bfseries" in options
-        or bool({option.strip() for option in options.split(",")} & bold_styles)
-        for options, _ in panel_nodes
-    )
+    assert panel_nodes == []
+    assert r"{Fading\\memory}" not in source
+    assert r"{Persistent\\memory}" not in source
     assert not re.search(r"\\(?:sub)?title\{", source)
 
 
@@ -170,117 +226,89 @@ def test_selected_overview_is_introduced_once_near_the_start(paper: str) -> None
     assert len(before_figure.splitlines()) <= 15
 
 
-def test_compact_canvas_keeps_native_geometry_without_scaling() -> None:
+def test_compact_canvas_keeps_native_typography_and_unscaled_architecture() -> None:
     source = CANONICAL.read_text()
     assert "x=1cm,y=1cm" in source
-    assert r"\useasboundingbox (0,0) rectangle (17.9197,13.0);" in source
-    assert not re.search(r"(?:^|[\[,\s])(?:xscale|yscale|scale)\s*=", source)
-
-
-def test_selected_b4_panel_distinguishes_tolerance_from_persistent_error() -> None:
-    complete_source = CANONICAL.read_text()
-    assert re.search(r"\\begin\{scope\}\[xshift=4cm\]\s*% b:", complete_source)
-    source = complete_source.split("% b:", maxsplit=1)[1]
-    coordinate = r"\(([\d.]+),([\d.]+)\)"
-    axes = re.findall(
-        rf"\\draw\[flow,ink\] {coordinate}--{coordinate};", source,
-    )
-    assert len(axes) == 2
-    horizontal, vertical = (tuple(map(float, axis)) for axis in axes)
-    origin_x, origin_y, right, bottom = horizontal
-    assert bottom == origin_y
-    assert vertical[:3] == pytest.approx((origin_x, origin_y, origin_x))
-    assert right - origin_x == pytest.approx(6.40)
-    assert vertical[3] - origin_y == pytest.approx(2.40)
-
-    band = re.search(
-        rf"\\fill\[green!8\] {coordinate} rectangle {coordinate};", source,
-    )
-    assert band
-    left, lower, band_right, tolerance = map(float, band.groups())
-    assert (left, lower) == pytest.approx((origin_x, origin_y))
-    assert origin_x < band_right < right
-    assert origin_y < tolerance < vertical[3]
-    threshold = re.search(
-        rf"\\draw\[muted,densely dashed,[^\]]+\] {coordinate}--{coordinate};",
+    bounds = re.search(
+        r"\\useasboundingbox \(([\d.-]+),([\d.-]+)\) rectangle \(([\d.-]+),([\d.-]+)\);",
         source,
     )
-    assert threshold
-    assert tuple(map(float, threshold.groups())) == pytest.approx(
-        (origin_x, tolerance, band_right, tolerance),
-    )
+    assert bounds
+    assert tuple(map(float, bounds.groups())) == pytest.approx((0, 3.6, 17.9197, 13.2))
+    assert not re.search(r"(?:^|[\[,\s])(?:xscale|yscale|scale)\s*=", source)
+    assert "transform shape" not in source
+    geometry = provenance(CANONICAL)["plot_geometry"]
+    assert geometry["canvas_cm"] == pytest.approx([17.9197, 9.6])
+    assert geometry["canvas_bounds_cm"] == pytest.approx([0, 3.6, 17.9197, 13.2])
 
-    fading = re.search(r"\\draw\[blue,line width=[^\]]+\](.*?);", source, re.S)
-    assert fading
-    assert ".. controls" not in fading[1]
-    assert fading[1].count("plot") == 1
-    domain = re.search(r"domain=([\d.]+):([\d.]+),samples=(\d+)", fading[1])
-    assert domain
-    start, stop = map(float, domain.groups()[:2])
-    assert (start, stop) == pytest.approx((1.66, 7.52))
-    assert int(domain[3]) == 120
-    number = r"(?:\d+(?:\.\d*)?|\.\d+)"
-    expression = re.search(
-        rf"\(\\x,\{{({number})\+({number})\*exp\(-({number})\*\(\\x-({number})\)\)\}}\)",
-        re.sub(r"\s+", "", fading[1]),
-    )
-    assert expression
-    baseline, amplitude, decay, offset = map(float, expression.groups())
-    assert baseline == origin_y
-    assert amplitude > 0 and decay > 0
-    assert offset == start
-    x = np.linspace(start, stop, int(domain[3]))
-    y = baseline + amplitude * np.exp(-decay * (x - offset))
-    assert np.all(np.diff(y) < 0)
-    # One analytic function has no join kink and tends to the zero-error axis.
-    assert np.all(-decay * (y - baseline) < 0)
-
-    orange = re.search(r"\\draw\[orange,line width=[^\]]+\](.*?);", source, re.S)
-    assert orange
-    persistent = [tuple(map(float, point)) for point in re.findall(coordinate, orange[1])]
-    assert len(persistent) >= 4
-    assert np.all(np.diff([xx for xx, _ in persistent]) > 0)
-    assert np.all(np.diff([yy for _, yy in persistent]) < 0)
-    assert (start, y[0]) == pytest.approx(persistent[0])
-    assert origin_y < y[-1] < tolerance < persistent[-1][1]
-    crossing = re.search(rf"\\fill\[green\] {coordinate} circle", source)
-    assert crossing
-    crossing_point = tuple(map(float, crossing.groups()))
-    assert crossing_point == pytest.approx((4.76, 1.47))
-    assert crossing_point[1] == tolerance
-    assert start < crossing_point[0] < stop
-    expected_decay = np.log(amplitude / (tolerance - baseline)) / (crossing_point[0] - offset)
-    assert decay == pytest.approx(expected_decay, abs=1e-14)
-    assert baseline + amplitude * np.exp(-decay * (crossing_point[0] - offset)) == pytest.approx(
-        tolerance, abs=1e-12,
-    )
-    assert "not the first strict integer d_epsilon" in source
+def test_retired_history_error_panel_is_absent_from_the_current_artwork() -> None:
+    source = CANONICAL.read_text()
     artwork = re.sub(r"%[^\n]*", "", source)
-    assert r"d_\varepsilon" not in artwork
-    assert r"d_{\varepsilon}" not in artwork
-    assert "{crossing}" in artwork
+    for retired_label in (
+        "best history error", "Window QELM", "Two reservoir-memory cases",
+        "desired error tolerance", r"D_d/2", r"\varepsilon", r"\epsilon",
+    ):
+        assert retired_label not in artwork
+    metadata = provenance(CANONICAL)
+    assert "history_error_curve" not in metadata
+    assert "history_error_axes_bounds_cm" not in metadata["plot_geometry"]
+    # The toy gaps belong to chosen trajectories and must not be labelled
+    # as the supremal ambiguity over all admissible histories.
+    assert not re.search(r"\\node[^;]*D_d", artwork)
 
+def test_scalar_midpoint_inset_is_removed() -> None:
+    source = CANONICAL.read_text()
+    assert "Same window, different pasts" not in source
+    assert r"one shared prediction\\at the midpoint" not in source
+    assert "midpoint_inset" not in provenance(CANONICAL)
+
+def test_native_pdf_omits_case_titles_and_has_one_shared_model_legend() -> None:
+    bbox = subprocess.run(
+        ["pdftotext", "-bbox", str(CANONICAL.with_suffix(".pdf")), "-"],
+        capture_output=True, text=True, check=True,
+    ).stdout
+    words = [node for node in ET.fromstring(bbox).iter() if node.tag.endswith("}word")]
+    right_column = [word for word in words if float(word.attrib["xMin"]) > 13.5 * 72 / 2.54]
+    text = [word.text for word in right_column]
+    assert not {"Fading", "Persistent", "memory"} & set(text)
+    assert text.count("QRC") == text.count("QELM") == 1
+    assert not {"a", "b", "epsilon", "tolerance"} & set(text)
 
 def test_output_toy_is_reproducible_and_obeys_the_balanced_bit_information_cut(monkeypatch) -> None:
     assert OUTPUT_N_SAMPLES == 101 and OUTPUT_SEED == 2
     assert OUTPUT_WINDOW == 40 and OUTPUT_WRITE_STEP == 0
     assert OUTPUT_MEMORY_AMPLITUDE == 0.25
+    assert OUTPUT_REVEAL_START == 32 and OUTPUT_REVEAL_DURATION == 64
     k = np.arange(101, dtype=float)
     raw = mackey_glass_series(101, rng=np.random.default_rng(2), **PARAMETERS)
-    baseline = 0.4 + 0.65 * (raw - raw.min()) / (raw.max() - raw.min())
-    target = baseline + 0.25
-    other_history = baseline - 0.25
-    prediction = baseline + 0.25 * (k < 40)
+    template = 0.4 + 0.65 * (raw - raw.min()) / (raw.max() - raw.min())
+    fraction = np.clip((k - 32) / 64, 0, 1)
+    coefficient = 0.25 * fraction * fraction * (3 - 2 * fraction)
+    baseline = template + 0.25 - coefficient
+    target = template + 0.25
+    other_history = baseline - coefficient
+    prediction = np.where(k < 40, target, baseline)
     expected = np.column_stack((target, prediction))
-    np.testing.assert_array_equal(output_baseline(), baseline)
+    np.testing.assert_array_equal(output_baseline(), template)
+    np.testing.assert_array_equal(output_baseline("persistent"), baseline)
     np.testing.assert_array_equal(output_samples(), expected)
+    np.testing.assert_array_equal(output_samples(case="persistent"), expected)
     assert hashlib.sha256(expected.astype("<f8").tobytes()).hexdigest() == OUTPUT_SHA256
-    assert baseline.min() == pytest.approx(0.4)
-    assert baseline.max() == pytest.approx(1.05)
+    # Keep every target coordinate byte-identical to the previous drawing;
+    # only the ideal lower prediction and its declared balanced pair change.
+    assert hashlib.sha256(target.astype("<f8").tobytes()).hexdigest() == (
+        "d1c8824b249900beeba99ac5668a73bf88827b9b381aede88004722b22482d1c"
+    )
+    assert template.min() == pytest.approx(0.4)
+    assert template.max() == pytest.approx(1.05)
     np.testing.assert_array_equal(prediction[:40], target[:40])
     np.testing.assert_allclose(prediction[40:], (target[40:] + other_history[40:]) / 2)
-    np.testing.assert_allclose(target[40:] - prediction[40:], 0.25)
-    np.testing.assert_allclose(prediction[40:] - other_history[40:], 0.25)
+    gap = target[40:] - prediction[40:]
+    np.testing.assert_allclose(gap, coefficient[40:])
+    np.testing.assert_allclose(prediction[40:] - other_history[40:], coefficient[40:])
+    assert gap[0] == pytest.approx(0.0107421875)
+    assert np.all(np.diff(gap) >= -1e-15)
+    np.testing.assert_allclose(gap[96 - 40:], 0.25)
     # These windows include the bit exactly through time39, not at time40.
     for time in range(101):
         available_steps = range(time - OUTPUT_WINDOW + 1, time + 1)
@@ -288,7 +316,7 @@ def test_output_toy_is_reproducible_and_obeys_the_balanced_bit_information_cut(m
     # The balanced scalar pair makes the midpoint both Bayes-optimal and
     # minimax; its lower bound concerns both histories, not one chosen trace.
     pair_mse = 0.5 * ((target[40:] - prediction[40:]) ** 2 + (other_history[40:] - prediction[40:]) ** 2)
-    np.testing.assert_allclose(pair_mse, 0.25 ** 2)
+    np.testing.assert_allclose(pair_mse, coefficient[40:] ** 2)
     assert np.min(expected) > 0.3 and np.max(expected) < 1.5
 
     def forbid_input_dependency():
@@ -305,15 +333,18 @@ def test_output_toy_is_reproducible_and_obeys_the_balanced_bit_information_cut(m
     assert metadata["template_stream"]["indices"] == [0, 100]
     assert "predetermined common baseline" in metadata["template_stream"]["scope"]
     assert "not fitted preprocessing" in metadata["template_stream"]["scope"]
-    np.testing.assert_array_equal(metadata["baseline_values"], baseline)
-    np.testing.assert_array_equal(metadata["other_history_values"], other_history)
+    np.testing.assert_array_equal(metadata["baseline_values"], template)
+    persistent = metadata["cases"]["persistent"]
+    np.testing.assert_array_equal(persistent["baseline_values"], baseline)
+    np.testing.assert_array_equal(persistent["memory_coefficients"], coefficient)
+    np.testing.assert_array_equal(persistent["other_history_values"], other_history)
     access = metadata["memory_access"]
     assert access["bit_values"] == [-1, 1] and access["bit_probabilities"] == [0.5, 0.5]
     assert access["displayed_bit"] == 1
     assert access["write_step"] == 0 and access["first_excluded_step"] == 40
-    assert access["window_length"] == 40 and access["memory_amplitude"] == 0.25
-    assert access["post_expiry_pair_gap"] == 0.5
-    assert access["post_expiry_pair_midpoint_error"] == 0.25
+    assert access["window_length"] == 40 and access["maximum_memory_amplitude"] == 0.25
+    np.testing.assert_array_equal(persistent["post_expiry_pair_gap_values"], 2 * coefficient[40:])
+    np.testing.assert_array_equal(persistent["post_expiry_pair_midpoint_error_values"], coefficient[40:])
     assert "identical later inputs" in access["shared_future"]
     assert "independent of time and later inputs" in access["shared_future"]
     assert "cannot fit both histories exactly" in metadata["optimality_scope"]
@@ -321,31 +352,119 @@ def test_output_toy_is_reproducible_and_obeys_the_balanced_bit_information_cut(m
     assert metadata["units"] == "arbitrary time and output units"
 
 
-def test_tikz_contains_exact_two_column_output_toy_block() -> None:
+def test_persistent_reveal_is_a_fixed_output_schedule_not_window_dependent(monkeypatch) -> None:
+    import figure1_timeseries as toy
+
+    coefficients = np.asarray(output_provenance()["cases"]["persistent"]["memory_coefficients"])
+    target = output_samples("persistent")[:, 0].copy()
+    baseline = output_baseline("persistent").copy()
+    np.testing.assert_array_equal(coefficients[:OUTPUT_REVEAL_START + 1], 0)
+    assert coefficients[OUTPUT_REVEAL_START + 1] > 0
+    np.testing.assert_array_equal(coefficients[96:], 0.25)
+    assert np.all(np.diff(coefficients) >= 0)
+    # Changing what the window can see changes the conditional prediction,
+    # never the carried bit's fixed reveal schedule or the target itself.
+    monkeypatch.setattr(toy, "OUTPUT_WINDOW", 60)
+    changed = output_samples("persistent")
+    np.testing.assert_array_equal(changed[:, 0], target)
+    np.testing.assert_array_equal(output_baseline("persistent"), baseline)
+    np.testing.assert_array_equal(changed[:60, 1], target[:60])
+    np.testing.assert_array_equal(changed[60:, 1], baseline[60:])
+    np.testing.assert_array_equal(
+        output_provenance()["cases"]["persistent"]["memory_coefficients"], coefficients,
+    )
+
+
+def test_fading_output_toy_decays_from_the_write_step_without_changing_the_information_cut(
+    monkeypatch,
+) -> None:
+    k = np.arange(OUTPUT_N_SAMPLES, dtype=float)
+    baseline = output_baseline()
+    coefficient = 0.25 * np.exp(-k / 30)
+    target = baseline + coefficient
+    other_history = baseline - coefficient
+    prediction = np.where(k < OUTPUT_WINDOW, target, baseline)
+    expected = np.column_stack((target, prediction))
+    np.testing.assert_array_equal(output_samples(case="fading"), expected)
+    np.testing.assert_array_equal(expected[:40, 0], expected[:40, 1])
+    np.testing.assert_allclose(expected[40:, 1], (target[40:] + other_history[40:]) / 2)
+    gap = expected[40:, 0] - expected[40:, 1]
+    assert gap[0] == pytest.approx(0.25 * np.exp(-40 / 30))
+    assert 0 < gap[-1] < 0.01
+    assert np.all(np.diff(gap) < 0)
+    # Decay starts when the old bit is written, not when it leaves the window.
+    assert target[0] - baseline[0] == pytest.approx(0.25)
+    assert target[39] - baseline[39] < 0.25
+    np.testing.assert_allclose(target - other_history, 2 * coefficient)
+    np.testing.assert_allclose(
+        0.5 * ((target[40:] - prediction[40:]) ** 2
+               + (other_history[40:] - prediction[40:]) ** 2),
+        coefficient[40:] ** 2,
+    )
+
+    def forbid_input_dependency():
+        raise AssertionError("The auxiliary toy must not use the displayed input trace")
+
+    monkeypatch.setattr("figure1_timeseries.samples", forbid_input_dependency)
+    np.testing.assert_array_equal(output_samples(case="fading"), expected)
+    assert hashlib.sha256(output_samples().astype("<f8").tobytes()).hexdigest() == OUTPUT_SHA256
+    metadata = output_provenance()
+    fading = metadata["cases"]["fading"]
+    assert fading["decay_timescale_steps"] == 30
+    assert fading["formulas"]["memory_coefficient"] == "c[t]=0.25*exp(-t/30)"
+    np.testing.assert_array_equal(fading["memory_coefficients"], coefficient)
+    np.testing.assert_array_equal(fading["baseline_values"], baseline)
+    np.testing.assert_array_equal(fading["other_history_values"], other_history)
+    np.testing.assert_array_equal(fading["post_expiry_pair_midpoint_error_values"], coefficient[40:])
+    np.testing.assert_array_equal(fading["post_expiry_pair_gap_values"], 2 * coefficient[40:])
+    assert "not the uniform D_d limit" in fading["decay_scope"]
+    assert "not labeled or identified as the generic supremal D_d/2" in metadata["curve_gap_scope"]
+
+
+def test_output_toy_rejects_unknown_memory_case() -> None:
+    with pytest.raises(ValueError):
+        output_samples(case="unknown")
+
+
+def test_tikz_contains_exact_two_case_output_toy_block() -> None:
     source = CANONICAL.read_text()
     literal = source[source.index(OUTPUT_BEGIN):source.index(OUTPUT_END) + len(OUTPUT_END)]
     assert literal == tikz_output_sample_block()
-    rows = re.findall(r"^(\d+)/([\d.eE+-]+)/([\d.eE+-]+),?$", literal, re.M)
-    assert [int(row[0]) for row in rows] == list(range(101))
-    recorded = np.array([row[1:] for row in rows], dtype=float)
-    np.testing.assert_array_equal(recorded, output_samples())
+    for case in ("persistent", "fading"):
+        block = re.search(
+            rf"\\def\\OutputSamples{case.capitalize()}\{{%\n(.*?)\n\}}",
+            literal, re.S,
+        )
+        assert block
+        rows = re.findall(r"^(\d+)/([\d.eE+-]+)/([\d.eE+-]+),?$", block[1], re.M)
+        assert [int(row[0]) for row in rows] == list(range(101))
+        recorded = np.array([row[1:] for row in rows], dtype=float)
+        np.testing.assert_array_equal(recorded, output_samples(case=case))
     metadata = provenance(CANONICAL)["output_comparisons"]
     assert metadata == output_provenance()
     assert metadata["column_order"] == ["target", "prediction"]
-    assert metadata["float64_le_sha256"] == OUTPUT_SHA256
+    assert metadata["cases"]["persistent"]["float64_le_sha256"] == OUTPUT_SHA256
     assert metadata["sample_indices"] == list(range(101))
-    np.testing.assert_array_equal(metadata["values"], recorded)
+    for case in ("persistent", "fading"):
+        values = output_samples(case=case)
+        np.testing.assert_array_equal(metadata["cases"][case]["values"], values)
+        assert metadata["cases"][case]["float64_le_sha256"] == hashlib.sha256(
+            values.astype("<f8").tobytes(),
+        ).hexdigest()
 
 
-@pytest.mark.parametrize("change", ("altered", "duplicated", "missing"))
+@pytest.mark.parametrize("change", ("altered_persistent", "altered_fading", "duplicated", "missing"))
 def test_output_provenance_rejects_corrupted_blocks(tmp_path: Path, change: str) -> None:
     source = CANONICAL.read_text()
     block = tikz_output_sample_block()
-    replacement = {
-        "altered": block.replace(f"0/{output_samples()[0, 0]:.17g}", "0/0.1", 1),
-        "duplicated": block + "\n" + block,
-        "missing": "",
-    }[change]
+    if change.startswith("altered_"):
+        case = change.removeprefix("altered_")
+        start = f"\\def\\OutputSamples{case.capitalize()}{{%\n0/"
+        value = f"{output_samples(case=case)[0, 0]:.17g}"
+        replacement = block.replace(start + value, start + "0.1", 1)
+        assert replacement != block
+    else:
+        replacement = {"duplicated": block + "\n" + block, "missing": ""}[change]
     changed = tmp_path / "changed.tex"
     changed.write_text(source.replace(block, replacement, 1))
     with pytest.raises(ValueError, match="output"):
@@ -354,7 +473,7 @@ def test_output_provenance_rejects_corrupted_blocks(tmp_path: Path, change: str)
 
 def test_overview_adds_whitespace_without_shrinking_its_contents() -> None:
     source = CANONICAL.read_text()
-    architecture = source.split("% b:", maxsplit=1)[0]
+    architecture = source.split("% Deterministic illustrative output overlays", maxsplit=1)[0]
     # Architecture coordinates are absolute; only data-coordinate transforms
     # remain scoped. Whole-lane translations would move the specified axes.
     assert not re.search(r"\\begin\{scope\}\[shift=\{\(0,[\d.]+\)\}\]", architecture)
@@ -384,10 +503,10 @@ def test_current_input_and_carried_state_do_not_imply_batch_encoding() -> None:
     assert "0 |- currentinput" in scalar_leader[1]
     assert re.search(r"\\draw\[flow,purple,[^\]]+\] \(inputnode.east\)", qrc_source)
     scalar_node = re.search(r"\(inputnode\) at \(([\d.]+),([\d.]+)\)", qrc_source)
-    assert scalar_node and float(scalar_node[1]) > 5.32 and float(scalar_node[2]) > 11.0
+    assert scalar_node and float(scalar_node[1]) > 5.195 and float(scalar_node[2]) > 10.875
     assert r"\ifnum\kk=180 \coordinate (currentinput)" in qrc_source
-    selected_x = 0.92 + 4.4 * (SELECTED_STEP + 6) / 212
-    assert 0.92 < selected_x < 5.32
+    selected_x = 1.045 + 4.15 * (SELECTED_STEP + 6) / 212
+    assert 1.045 < selected_x < 5.195
     guide = re.search(r"\\draw\[muted,densely dashed,[^\]]+\] ([^;]+);", qrc_source)
     assert guide
     guide_points = re.findall(
@@ -397,7 +516,7 @@ def test_current_input_and_carried_state_do_not_imply_batch_encoding() -> None:
     actual_guide = [(a + b * c / d, y) for a, b, c, d, y in (
         map(float, point) for point in guide_points
     )]
-    np.testing.assert_allclose(actual_guide, [(selected_x, 6.60), (selected_x, 11.0)])
+    np.testing.assert_allclose(actual_guide, [(selected_x, 6.725), (selected_x, 10.875)])
     assert re.search(r"\\node\[draw=ink,fill=purple,circle,[^\]]+\] at \(currentinput\)", qrc_source)
     assert r"{$a_t$}" in qrc_source and r"$\Phi_{a_t}$" in qrc_source
     assert r"carried state $\rho_t$" in qrc_source
@@ -414,10 +533,10 @@ def test_current_input_and_carried_state_do_not_imply_batch_encoding() -> None:
         map(float, point) for point in past_points
     )]
     np.testing.assert_allclose(actual_past, [
-        (0.92 + 4.4 * 6 / 212, 11.14),
-        (0.92 + 4.4 * 146.5 / 212, 11.14),
+        (1.045 + 4.15 * 6 / 212, 11.14),
+        (1.045 + 4.15 * 146.5 / 212, 11.14),
     ])
-    assert r"past in $\rho_{t-1}$" in qrc_source
+    assert r"past carried in\\QRC state $\rho_{t-1}$" in qrc_source
     assert "incomingstate" not in qrc_source
     channel = re.search(
         r"\\draw\[ink,fill=blue!12,[^\]]+\]\s*"
@@ -425,6 +544,24 @@ def test_current_input_and_carried_state_do_not_imply_batch_encoding() -> None:
     )
     assert channel
     channel_left, channel_bottom, channel_right, _ = map(float, channel.groups())
+    control_route = re.search(
+        r"\\draw\[flow,purple,[^\]]+\] \(inputnode.east\)\s*"
+        r"--\(([\d.]+),([\d.]+)\)--\(([\d.]+),([\d.]+)\);",
+        qrc_source,
+    )
+    assert control_route  # horizontal first, then a vertical downward entry
+    bend_x, bend_y, tip_x, tip_y = map(float, control_route.groups())
+    channel_top = float(channel[4])
+    assert float(scalar_node[1]) < bend_x == tip_x
+    assert bend_y == float(scalar_node[2])
+    assert tip_x == pytest.approx((channel_left + channel_right) / 2)
+    assert tip_y == channel_top
+    assert bend_y - tip_y >= 0.30
+    assert "controls" not in control_route[0]
+    assert "rounded corners" not in scalar_leader[0]
+    heading = re.search(r"\\node at \(([\d.]+),([\d.]+)\) \{QRC\};", qrc_source)
+    assert heading and float(heading[1]) == tip_x
+    assert float(heading[2]) - bend_y >= 0.35
     loop = re.search(r"\\draw\[flow,blue\] ([^;]+);", qrc_source)
     assert loop
     points = np.array(re.findall(r"\(([\d.]+),([\d.]+)\)", loop[1]), dtype=float)
@@ -443,14 +580,53 @@ def test_current_input_and_carried_state_do_not_imply_batch_encoding() -> None:
     for paper in ("canonical_emulation", "icaart2027"):
         text = (ROOT / "paper" / paper / "sections/introduction.tex").read_text()
         caption = " ".join(text.split(r"\caption{", 1)[1].split(r"\label{", 1)[0].split())
-        assert "The QRC carries state" in caption
-        assert "bracketed green window" in caption
-        assert "grey continuation" in caption.lower() and "excluded" in caption.lower()
-        assert re.search(r"target readout (?:is |stays )?fixed during emulation", caption.lower())
+        assert "Carried QRC state" in caption
+        # Brace geometry is checked above; the concise caption names its input.
+        assert "reset-QELM's explicit input window" in caption
+        models = " ".join((ROOT / "paper" / paper / "sections/models.tex").read_text().split())
+        # Causal sample membership is guarded numerically above and by the
+        # source record; the rewritten Section 2 explains the model itself.
+        assert not set(provenance(CANONICAL)["future_context_indices"]) & set(
+            provenance(CANONICAL)["window_indices"],
+        )
+        assert "A trained linear readout can" in models
+        assert "fixed weights into the observables" in models
+        assert "target readout is the identity" in models
 
 
-def test_observable_banks_feed_small_readouts_and_one_shared_comparison() -> None:
-    architecture = CANONICAL.read_text().split("% b:", maxsplit=1)[0]
+def test_input_gutter_increases_without_resizing_the_dynamics() -> None:
+    source = CANONICAL.read_text()
+    geometry = provenance(CANONICAL)["architecture_geometry"]
+    assert geometry["dynamics_shift_right_cm"] == 0.35
+    assert geometry["observable_banks_shift_right_cm"] == 0.15
+    for fill, key, old_left, width in (
+        ("blue!12", "qrc_channel_bounds_cm", 6.25, 1.35),
+        ("green!13", "reset_encoding_bounds_cm", 6.12, 1.06),
+    ):
+        bounds = re.search(
+            rf"\\draw\[ink,fill={fill},[^\]]+\]\s*"
+            r"\(([\d.]+),([\d.]+)\) rectangle \(([\d.]+),([\d.]+)\);",
+            source,
+        )
+        assert bounds
+        left, bottom, right, top = map(float, bounds.groups())
+        assert [left, bottom, right, top] == geometry[key]
+        assert left - old_left == pytest.approx(0.35)
+        assert right - left == pytest.approx(width)
+        assert top - bottom == pytest.approx(1.90)
+    ket = re.search(r"\\node\[anchor=east\] at \(([\d.]+),\\yy\) \{\$\|0\\rangle\$\};", source)
+    assert ket
+    assert float(ket[1]) == geometry["reset_state_ket_anchor_x_cm"]
+    assert float(ket[1]) - 6.00 == pytest.approx(0.35)
+    scalar = re.search(r"\(inputnode\) at \(([\d.]+),([\d.]+)\)", source)
+    assert scalar and list(map(float, scalar.groups())) == geometry["current_input_node_cm"]
+    for x, y in geometry["current_input_control_vertices_cm"]:
+        assert f"--({x:.3f},{y:.2f})" in source
+    assert "final vertical arrow down" in geometry["current_input_route"]
+
+
+def test_observable_banks_feed_small_readouts_and_the_shared_comparison_column() -> None:
+    architecture = CANONICAL.read_text().split("% Deterministic illustrative output overlays", maxsplit=1)[0]
     coordinate = r"\(([\d.]+),([\d.]+)\)"
     triangles = re.findall(
         rf"\\draw\[ink,fill=gold,[^\]]+\] {coordinate}--{coordinate}--{coordinate}--cycle;",
@@ -459,7 +635,7 @@ def test_observable_banks_feed_small_readouts_and_one_shared_comparison() -> Non
     assert len(triangles) == 2
     triangles = [tuple(map(float, values)) for values in triangles]
     output_positions = []
-    for names, label in ((("qo1", "qom"), "$Y_t$"), (("qf1", "qfb"), r"$\widehat Y_t$")):
+    for names, label in ((("qo1", "qom"), "$y_t$"), (("qf1", "qfb"), r"$\widehat y_t$")):
         ends = []
         bank_y = []
         for name in names:
@@ -467,7 +643,7 @@ def test_observable_banks_feed_small_readouts_and_one_shared_comparison() -> Non
             assert node
             bank_x, y = map(float, node.groups())
             branch = re.search(
-                rf"\\draw\[ink\] \({name}\.east\)--{coordinate}--{coordinate};",
+                rf"\\draw\[ink,rounded corners=2pt\] \({name}\.east\)--{coordinate}--{coordinate};",
                 architecture,
             )
             assert branch
@@ -502,11 +678,11 @@ def test_observable_banks_feed_small_readouts_and_one_shared_comparison() -> Non
         assert tip_x < output_x < 12.40
         assert output_y == tip_y
         output_positions.append((output_x, output_y))
-    brace = re.search(
-        rf"\\draw\[muted,decorate,[^\n]+\] {coordinate}--{coordinate};", architecture,
-    )
+    brace = re.search(r"\\draw\[muted\] ([^;]+);", architecture)
     assert brace
-    x1, top, x2, bottom = map(float, brace.groups())
+    brace_points = np.asarray(re.findall(coordinate, brace[1]), dtype=float)
+    x1, top = brace_points[0]
+    x2, bottom = brace_points[-1]
     assert x1 == x2 == 12.40
     assert top > output_positions[0][1] > output_positions[1][1] > bottom
     connector = re.findall(
@@ -514,77 +690,189 @@ def test_observable_banks_feed_small_readouts_and_one_shared_comparison() -> Non
     )
     assert len(connector) == 1
     x0, y0, x1, y1 = map(float, connector[0])
-    assert 12.40 < x0 < x1 < 13.40
+    assert 12.40 < x0 < x1 < 13.525
     assert y0 == y1
-    assert 6.60 < y0 < 11.00  # connector enters the single output comparison
+    assert [x0, y0] == pytest.approx([12.61, 8.45])
+    assert any(np.allclose(point, [x0, y0]) for point in brace_points)
+    # Join the grouping brace at the open gap between the two case frames.
+    assert 8.19 < y0 < 8.58
     assert "classical outputs; it is not a dynamical connection or quantum-state mixing" in architecture
 
 
-def test_one_output_timeline_renders_the_discrete_information_cut_at_expiry() -> None:
+def test_rounded_readouts_show_omitted_observables_only_after_measurement() -> None:
     source = CANONICAL.read_text()
-    comparison = source.split("% Deterministic illustrative output overlays", 1)[1].split(
-        "% Panel b", 1,
+    coordinate = r"\(([\d.]+),([\d.]+)\)"
+    lane_style = r"\[muted!70,line width=\.55pt,rounded corners=1pt\]"
+    lanes = re.findall(
+        rf"\\draw{lane_style} {coordinate}--{coordinate}--{coordinate};", source,
+    )
+    assert len(lanes) == 6
+    lanes = [tuple(map(float, lane)) for lane in lanes]
+    for center, endpoint in ((11.10, "qo1"), (6.50, "qf1")):
+        bank_lanes = [lane for lane in lanes if abs(lane[1] - center) < 0.31]
+        assert len(bank_lanes) == 3
+        for lane, offset in zip(bank_lanes, (-0.30, 0, 0.30)):
+            start_x, start_y, bend_x, bend_y, end_x, end_y = lane
+            assert (start_x, bend_x, end_x) == (10.80, 10.93, 11.04)
+            assert start_y == pytest.approx(center + offset)
+            assert bend_y == start_y
+            assert end_y == pytest.approx(center + 0.4 * offset)
+        first_lane = f"(10.80,{center - 0.30:.2f})"
+        black_branch = rf"\draw[ink,rounded corners=2pt] ({endpoint}.east)"
+        assert source.index(first_lane) < source.index(black_branch)
+    assert source.count(
+        r"\draw[ink,fill=gold,line width=.65pt,rounded corners=1.8pt]"
+    ) == 2
+    assert source.count(r"\draw[flow,ink,rounded corners=2pt]") == 4
+    assert "illustrative count specifies neither a feature budget nor quantum wires" in source
+    style = provenance(CANONICAL)["observable_readout_style"]
+    assert style["readout_corner_radius_pt"] == 1.8
+    assert style["readout_vertex_span_cm"] == [0.38, 0.50]
+    assert style["omitted_observable_lanes_per_bank"] == 3
+    assert style["omitted_lane_span_cm"] == [10.80, 11.04]
+
+
+def test_two_output_timelines_share_axes_and_render_the_information_cut_at_expiry() -> None:
+    source = CANONICAL.read_text()
+    comparison = source.split("% Deterministic illustrative output overlays", 1)[1]
+    plot = comparison.split(r"\newcommand{\memoryplot}[3]{%", 1)[1].split(
+        r"\memoryplot{", 1,
     )[0]
-    assert r"\foreach \base/\mode/\case" not in comparison
-    assert r"\begin{scope}[shift={(13.40,6.60)}]" in comparison
-    assert comparison.count(r"(0,0) rectangle (4.4,4.4)") == 1
+    calls = re.findall(r"\\memoryplot\{([\d.]+)\}\{\\OutputSamples(Fading|Persistent)\}\{([01])\}", comparison)
+    assert calls == [("8.58", "Fading", "0"), ("4.99", "Persistent", "1")]
+    assert r"\begin{scope}[shift={(13.525,#1)}]" in plot
+    assert plot.count(r"\draw[ink,line width=.6pt] (0,0) rectangle (4.15,3.20);") == 1
     metadata = output_provenance()
-    assert metadata["axis_count"] == 1
-    np.testing.assert_allclose(metadata["axes_bounds_cm"], [13.40, 6.60, 17.80, 11.00])
-    assert r"\foreach \val in {0.4,0.8,1.2}" in comparison
-    assert r"4.4*(\val-.3)/1.2" in comparison
-    assert r"\foreach \kk/\lab in {0/0,40/d,80/2d}" in comparison
-    assert r"4.4*(\kk+3)/106" in comparison
-    assert r"{$\val$}" not in comparison and r"{$\kk$}" not in comparison
-    assert comparison.count(r"{time $t$}") == 1
-    transform = re.search(r"\\begin\{scope\}\[([^\]]*xshift=[^\]]+)\]", comparison)
+    assert metadata["axis_count"] == 2
+    assert metadata["axes_size_cm"] == [4.15, 3.2]
+    assert metadata["case_order"] == ["fading", "persistent"]
+    assert metadata["axes_bounds_cm"] == {
+        "fading": [13.525, 8.58, 17.675, 11.78],
+        "persistent": [13.525, 4.99, 17.675, 8.19],
+    }
+    for bottom, case_title, ticks in calls:
+        case = case_title.lower()
+        bounds = metadata["cases"][case]["axes_bounds_cm"]
+        np.testing.assert_allclose(bounds, [13.525, float(bottom), 17.675, float(bottom) + 3.2])
+        assert metadata["cases"][case]["time_tick_labels_visible"] == bool(int(ticks))
+    assert r"\foreach \val in {0.6,0.8,1.0,1.2}" in plot
+    assert r"3.20*(\val-.45)/.9" in plot
+    assert metadata["amplitude_limits"] == [0.45, 1.35]
+    assert metadata["amplitude_ticks"] == [0.6, 0.8, 1.0, 1.2]
+    assert metadata["time_limits"] == [-3, 103]
+    assert metadata["time_ticks"] == [0, 40, 80]
+    assert metadata["time_tick_labels"] == ["0", "d", "2d"]
+    assert r"\ifnum#3=1" in plot
+    tick_scope = plot.split(r"\ifnum#3=1", 1)[1].split(r"\fi", 1)[0]
+    assert r"\foreach \kk/\lab in {0/0,40/d,80/2d}" in tick_scope
+    assert r"\node[anchor=north]" in tick_scope
+    assert r"{time $t$}" not in comparison
+    assert r"{input step $k$}" not in source
+    assert metadata["shared_time_label_anchor_cm"] is None
+    transform = re.search(r"\\begin\{scope\}\[([^\]]*xshift=[^\]]+)\]", plot)
     assert transform
     scales = {key: float(value) for key, value in re.findall(
         r"(x|y|xshift|yshift)=(-?[\d.]+)cm", transform[1],
     )}
     assert set(scales) == {"x", "y", "xshift", "yshift"}
     x_shift, x_scale, y_scale, y_shift = (scales[key] for key in ("xshift", "x", "y", "yshift"))
-    assert x_shift + -3 * x_scale == pytest.approx(0)
-    assert x_shift + 103 * x_scale == pytest.approx(4.4)
-    assert 0 < x_shift < x_shift + 100 * x_scale < 4.4
-    assert y_shift + y_scale * 0.3 == pytest.approx(0)
-    assert y_shift + y_scale * 1.5 == pytest.approx(4.4)
-    assert np.all((output_samples() > 0.3) & (output_samples() < 1.5))
-    assert comparison.count(r"in \OutputSamples{") == 1
-    assert r"\foreach \kk/\target/\prediction" in comparison
-    assert r"\ifnum\kk=40" in comparison
-    assert r"(\pk,\pprediction)--(\kk,\target)--(\kk,\prediction);" in comparison
-    assert r"(\pk,\pprediction)--(\kk,\prediction);" in comparison
-    assert r"(\pk,\ptarget)--(\kk,\target);" in comparison
-    assert re.search(r"\\node\[fill=ink,circle,[^\]]+\] at \(\\kk,\\target\)", comparison)
-    assert re.search(r"\\node\[draw=green,fill=white,circle,[^\]]+\] at \(\\kk,\\prediction\)", comparison)
+    assert x_shift - 3 * x_scale == pytest.approx(0)
+    assert x_shift + 103 * x_scale == pytest.approx(4.15)
+    assert 0 < x_shift < x_shift + 100 * x_scale < 4.15
+    assert y_shift + y_scale * 0.45 == pytest.approx(0)
+    assert y_shift + y_scale * 1.35 == pytest.approx(3.2)
+    for case in ("fading", "persistent"):
+        visible_y = y_shift + y_scale * output_samples(case=case)
+        # Native marker radii fit inside the same frame in both cases.
+        assert np.all((visible_y > 0.06) & (visible_y < 3.2 - 0.06))
+    assert r"\foreach \kk/\target/\prediction" in plot and r"in #2{" in plot
+    assert r"\ifnum\kk=40" in plot
+    assert r"(\pk,\pprediction)--(\kk,\target)--(\kk,\prediction);" in plot
+    assert r"(\pk,\pprediction)--(\kk,\prediction);" in plot
+    assert r"(\pk,\ptarget)--(\kk,\target);" in plot
+    assert re.search(r"\\node\[fill=ink,circle,[^\]]+\] at \(\\kk,\\target\)", plot)
+    assert re.search(r"\\node\[draw=green,fill=white,circle,[^\]]+\] at \(\\kk,\\prediction\)", plot)
+    assert r"mod(\kk,2)" in plot
+    assert r"inner sep=1.45pt] at (\kk,\prediction)" in plot
+    assert plot.index(r"at (\kk,\prediction) {};") < plot.index(r"at (\kk,\target) {};")
+    assert metadata["prediction_marker"]["every_nth_sample"] == 2
+    assert metadata["prediction_marker"]["inner_sep_pt"] == 1.45
     artwork = re.sub(r"%[^\n]*", "", comparison)
     assert ".. controls" not in artwork and "smooth" not in artwork
+    assert r"D_d/2" not in artwork
     cutoff = re.search(
         r"\\draw\[muted,densely dashed,[^\]]+\]\s*"
         r"\(\{([\d.]+)\*([\d.]+)/([\d.]+)\},0\)--"
-        r"\(\{([\d.]+)\*([\d.]+)/([\d.]+)\},([\d.]+)\)", comparison,
+        r"\(\{([\d.]+)\*([\d.]+)/([\d.]+)\},([\d.]+)\)", plot,
     )
     assert cutoff
     a, b, c, aa, bb, cc, height = map(float, cutoff.groups())
     assert a * b / c == pytest.approx(x_shift + 40 * x_scale)
     assert aa * bb / cc == pytest.approx(x_shift + 40 * x_scale)
-    assert 0 < height < 4.4
-    assert r"{old input\\leaves window}" in comparison
-    legend = comparison.split("% Compact inset key", 1)[1]
-    assert "{QRC}" in legend and "{QELM}" in legend
+    assert height == 3.2
+    for fill in (
+        r"\fill[green!24] (0,0) rectangle ({4.15*43/106},3.20);",
+        r"\fill[blue!16] ({4.15*43/106},0) rectangle (4.15,3.20);",
+    ):
+        assert plot.count(fill) == 1
+        assert plot.index(fill) < plot.index(r"\draw[plotgrid]") < plot.index(r"in #2{")
+    cue = metadata["background_access_cue"]
+    input_cue = provenance(CANONICAL)["past_state_cue"]
+    assert cue["before_expiry"]["fill"] == input_cue["window_fill"] == "green!24"
+    assert cue["before_expiry"]["time_extent"] == [-3, 40]
+    assert cue["after_expiry"]["fill"] == input_cue["fill"] == "blue!16"
+    assert cue["after_expiry"]["time_extent"] == [40, 103]
+    assert cue["split_time"] == OUTPUT_WINDOW
+    assert cue["split_x_local_cm"] == pytest.approx(x_shift + 40 * x_scale)
+    assert "not the onset of QRC memory" in cue["scope"]
+    assert "dashed guide and tick d" in cue["non_color_cue"]
+    assert r"{old input\\leaves window}" not in comparison
+    assert "{QRC retains its influence}" not in comparison
+    assert r"\draw[flow,muted]" not in comparison
+    assert metadata["legend_labels"] == ["QRC", "QELM"]
+    assert "not an independent third forecasting target" in metadata["target_definition"]
+    assert metadata["column_order"] == ["target", "prediction"]
+
+
+def test_shared_legend_straddles_output_frames_without_internal_case_titles() -> None:
+    source = CANONICAL.read_text()
+    legend = source.split("% One shared reference-style model key", 1)[1]
+    assert legend.count("{QRC}") == legend.count("{QELM}") == 1
+    assert "(ideal)" not in legend
     assert r"\fill[ink]" in legend and r"\draw[green,fill=white" in legend
-    assert r"\draw[green,line width=.65pt]" in legend
-    legend_box = re.search(
+    assert r"circle (.070)" in legend
+    assert r"\fill[ink!15,rounded corners=1.3pt]" in legend
+    shift = re.search(r"\\begin\{scope\}\[shift=\{\(([\d.]+),([\d.]+)\)\}\]", legend)
+    box = re.search(
         r"\\draw\[ink,fill=white,[^\]]+\] \(([\d.]+),([\d.]+)\) rectangle \(([\d.]+),([\d.]+)\)",
         legend,
     )
-    assert legend_box
-    _, legend_bottom, _, _ = map(float, legend_box.groups())
-    assert y_shift + y_scale * np.max(output_samples()) < legend_bottom
-    assert r"font=\fontsize{11}{12.5}\selectfont" in source
-    assert r"font=\bfseries\fontsize{12}{13}\selectfont" in source
-
+    assert shift and box
+    dx, dy = map(float, shift.groups())
+    left, bottom, right, top = map(float, box.groups())
+    absolute_bounds = [left + dx, bottom + dy, right + dx, top + dy]
+    metadata = output_provenance()
+    np.testing.assert_allclose(absolute_bounds, metadata["legend_geometry"]["bounds_cm"])
+    assert absolute_bounds == pytest.approx([14.0, 8.11, 17.27, 8.64])
+    assert 13.525 < absolute_bounds[0] < absolute_bounds[2] < 17.675
+    upper_bottom = metadata["axes_bounds_cm"]["fading"][1]
+    lower_top = metadata["axes_bounds_cm"]["persistent"][3]
+    assert absolute_bounds[1] < lower_top < upper_bottom < absolute_bounds[3]
+    # Deliberate small border overlap signals that the one key serves both
+    # panels; it does not introduce a second legend or cover their interiors.
+    assert lower_top - absolute_bounds[1] == pytest.approx(0.08)
+    assert absolute_bounds[3] - upper_bottom == pytest.approx(0.06)
+    key_rows = [float(value) + dy for value in re.findall(
+        r"at \([\d.]+,([\d.]+)\) \{(?:QRC|QELM)\}", legend,
+    )]
+    assert len(key_rows) == 2
+    assert key_rows[0] == key_rows[1]
+    assert key_rows[0] == pytest.approx(metadata["legend_geometry"]["row_y_cm"])
+    assert all(absolute_bounds[1] < row < absolute_bounds[3] for row in key_rows)
+    for case in ("fading", "persistent"):
+        title = metadata["cases"][case]["title"].replace(" ", r"\\")
+        assert metadata["cases"][case]["title_anchor_cm"] is None
+        assert f"{{{title}}}" not in source
 
 def test_simplified_overview_retains_interface_distinctions() -> None:
     source = CANONICAL.read_text()
@@ -598,78 +886,66 @@ def test_simplified_overview_retains_interface_distinctions() -> None:
     assert r"$\Phi_{a_t}$" in source
     assert r"$E(S_d)$" in source
     labels = re.sub(r"\\textbf\{([^{}]+)\}", r"\1", source).replace(r"\\", " ")
-    assert "carried state" in labels and "fresh state" in labels
-    assert "fixed gates" in labels
+    assert "carried state" in labels and "{fresh state}" not in labels
+    assert r"\node[anchor=east] at (6.35,\yy) {$|0\rangle$};" in source
+    assert "{fixed gates}" not in labels
+    # Removing an annotation must not remove or move either gate block.
+    assert r"\draw[ink,fill=white,rounded corners=2pt,line width=.65pt] (7.77,6.21) rectangle (8.11,7.43);" in source
+    assert r"\draw[ink,fill=white,rounded corners=2pt,line width=.65pt] (8.24,5.57) rectangle (8.58,6.79);" in source
     assert labels.count("{observables}") == 2
     assert "measured features" not in labels
-    architecture = re.sub(r"%[^\n]*", "", source.split("% b:", maxsplit=1)[0])
+    architecture = re.sub(
+        r"%[^\n]*", "", source.split("% Deterministic illustrative output overlays", maxsplit=1)[0],
+    )
     assert not re.search(
         r"\\node[^;]*\{[^{}]*(?:trained|readout)[^{}]*\};", architecture, re.I,
     )
     assert "declared output" not in architecture and "emulated output" not in architecture
-    assert r"{$Y_t$}" in architecture and r"{$\widehat Y_t$}" in architecture
+    assert r"{$y_t$}" in architecture and r"{$\widehat y_t$}" in architecture
     assert r"\mathcal C" not in architecture
-    assert source.count(r"{$\langle O_1\rangle$}") == 2
-    assert source.count(r"{$\langle O_m\rangle$}") == 2
-    assert "O_i are model-specific schematic labels, not equal-budget operator identities" in source
-    # A single causal toy replaces unrelated state-pair or mismatch panels.
+    assert source.count(r"{$\langle O_1\rangle$}") == 1
+    assert source.count(r"{$\langle O_m\rangle$}") == 1
+    assert source.count(r"{$\langle P_1\rangle$}") == 1
+    assert source.count(r"{$\langle P_B\rangle$}") == 1
+    assert "not equal-budget operator identities" in source
+    # Both cases use the same causal bit-access construction.
     assert r"{$\Delta\rho$}" not in source
     assert "state 1" not in labels and "state 2" not in labels
     assert "can differ" not in labels and "identical" not in labels
-    assert r"{old input leaves window}" in labels
-    assert r"{QRC retains its influence}" in labels
+    assert r"{old input leaves window}" not in labels
+    assert r"{QRC retains its influence}" not in labels
+    assert "{output}" not in labels
     assert r"\equaloutputs" not in source and r"\sharedstart" not in source
     assert "% c:" not in source
-    assert "best possible history error" in labels
-    assert "scalar optimum" in labels and r"$D_d/2$" in source
-    assert "persistent floor" in labels and "past influence fades" in labels
-    assert "within tolerance" in labels and r"$\varepsilon$" in source
-    for relative in (
-        "paper/canonical_emulation/sections/introduction.tex",
-        "paper/icaart2027/sections/introduction.tex",
-    ):
-        text = (ROOT / relative).read_text()
-        caption = " ".join(text.split(r"\caption{", 1)[1].split(r"\label{", 1)[0].split())
-        # The compact caption states the mechanism; model details and trace
-        # provenance belong in the accompanying model section, not the artwork.
-        assert len(caption.split()) <= 130
-        assert "model-specific observables" in caption
-        assert "trainable readouts" in caption
-        assert re.search(r"target readout (?:is |stays )?fixed during emulation", caption.lower())
-        assert "$D_d$ is the largest output gap between histories" in caption
-        assert re.search(r"sharing (?:the|their) last \$d\$ inputs but differing earlier", caption)
-        assert "For scalar outputs, $D_d/2$" in caption
-        assert "smallest worst-case absolute error" in caption
-        assert "any window predictor" in caption
-        assert r"$\varepsilon$" in caption and "floor" in caption
-        assert "schematic" in caption
-        assert "ideal window predictor" in caption
-        assert "not measured QELM performance" in caption
-        assert "two possible values" in caption and "output midpoint" in caption
-        assert "one history" in caption and "leaves the window" in caption
-        assert "mismatch or close agreement" not in caption
-        assert "Alternative input-created state pairs" not in caption
-        assert not re.search(r"(?:\\textbf\{c\}|\bc)\s+Alternative", caption)
-        models = " ".join((ROOT / relative).with_name("models.tex").read_text().split())
-        assert "201 illustrative Mackey--Glass samples" in models
-        assert "$t=180$" in models and "inputs 141--180" in models
-        assert "Grey future samples are excluded" in models
-        assert "separate output example" in models and "two histories" in models
-        assert "differing only in one old bit" in models
-        assert "identical later inputs" in models
-        assert "ideal window predictor" in models and "output midpoint" in models
-        assert "Only one history is drawn" in models
-        assert "40-input window" in models
-        assert re.search(r"not a (?:trained|fitted) QELM", models)
-        assert "baseline is independent of the left trace" in models
-        assert "neither plot is evaluation data" in models.lower()
-        assert "independent 33-symbol inputs" in models
-        assert "dissipative QRC channels" in models
-        assert "target readout is the identity" in models
-        assert "once trained and held fixed" in models
-        assert "absorbing its weights into the observables" in models
-        assert "does not require reconstruction of the full quantum state" in models
-
+    assert "Fading memory" not in labels and "Persistent memory" not in labels
+    assert "best history error" not in labels and r"$D_d/2$" not in source
+    assert "scalar optimum" not in labels
+    assert "Window QELM" not in labels
+    assert "desired error tolerance" not in labels
+    assert "Same window, different pasts" not in labels and "at the midpoint" not in labels
+    assert "{persistent floor}" not in labels and "{past influence fades}" not in labels
+    assert "within tolerance" not in labels and r"$\varepsilon$" not in source
+    # Preserve the scientific scope in the machine-readable source record.
+    # Manuscript notation and theorem statements have their own focused tests;
+    # panel-b wording is no longer part of the current drawing's contract.
+    trace = provenance(CANONICAL)
+    assert trace["sample_count"] == 201
+    assert trace["selected_step"] == 180
+    assert trace["window_indices"] == list(range(141, 181))
+    assert trace["future_context_indices"] == list(range(181, 201))
+    assert "not evaluation data" in trace["kind"]
+    assert "target readout is fixed" in trace["architecture_scope"]
+    assert "only the emulator readout is trained" in trace["architecture_scope"]
+    assert "No specific topology or gate count" in trace["architecture_scope"]
+    output = trace["output_comparisons"]
+    assert output["case_order"] == ["fading", "persistent"]
+    assert "same fixed d=40" in output["timeline_scope"]
+    assert "not simulated, fitted, or measured QRC/QELM performance" in output["status"]
+    assert "not an independent third forecasting target" in output["target_definition"]
+    assert "not a fitted finite-feature QELM" in output["emulator_scope"]
+    assert "cannot fit both histories exactly" in output["optimality_scope"]
+    assert "specific balanced pair" in output["curve_gap_scope"]
+    assert "not the uniform D_d limit" in output["cases"]["fading"]["decay_scope"]
 
 def test_illustrative_input_is_reproducible_raw_mackey_glass() -> None:
     assert N_SAMPLES == 201
@@ -680,22 +956,49 @@ def test_illustrative_input_is_reproducible_raw_mackey_glass() -> None:
         "tau": 17, "beta": 0.2, "gamma": 0.1, "n_exp": 10,
         "dt": 1.0, "sample_every": 1, "x0": 1.2, "discard": 1000,
     }
+    assert INPUT_PARAMETERS == {**PARAMETERS, "dt": 0.5, "discard": 2000}
     expected = mackey_glass_series(
-        201, rng=np.random.default_rng(1), **PARAMETERS,
+        201, rng=np.random.default_rng(1), **INPUT_PARAMETERS,
     )
     np.testing.assert_array_equal(samples(), expected)
     np.testing.assert_array_equal(samples(), samples())
     assert hashlib.sha256(expected.astype("<f8").tobytes()).hexdigest() == INPUT_SHA256
-    assert hashlib.sha256(expected[:120].astype("<f8").tobytes()).hexdigest() == LEGACY_INPUT_SHA256
+    legacy = mackey_glass_series(201, rng=np.random.default_rng(1), **PARAMETERS)
+    assert hashlib.sha256(legacy[:120].astype("<f8").tobytes()).hexdigest() == LEGACY_INPUT_SHA256
     # In particular, the displayed values are not min-max normalized to [0, 1].
-    assert expected.min() == pytest.approx(0.38764364216757924)
-    assert expected.max() == pytest.approx(1.2840136891526057)
-    assert expected[180] == pytest.approx(1.0811295768379747)
+    assert expected.min() == pytest.approx(0.44887161450448193)
+    assert expected.max() == pytest.approx(1.2803715455860114)
+    assert expected[180] == pytest.approx(0.8069982550981397)
     window = expected[141:181]
     assert len(window) == 40
-    assert window.min() == pytest.approx(0.43105017534770285)
-    assert window.max() == pytest.approx(1.0811295768379747)
+    assert window.min() == pytest.approx(0.44887161450448193)
+    assert window.max() == pytest.approx(0.8876420562457414)
     assert len(expected[181:]) == 20
+
+
+def test_quieter_input_sampling_leaves_the_separate_output_toys_unchanged(monkeypatch) -> None:
+    legacy = mackey_glass_series(201, rng=np.random.default_rng(1), **PARAMETERS)
+    quieter = samples()
+
+    def peak_count(values):
+        return np.count_nonzero((values[1:-1] > values[:-2]) & (values[1:-1] > values[2:]))
+
+    assert peak_count(quieter) == 4 < peak_count(legacy) == 8
+    assert INPUT_PARAMETERS["dt"] * INPUT_PARAMETERS["discard"] == (
+        PARAMETERS["dt"] * PARAMETERS["discard"]
+    )
+    baseline = output_baseline().copy()
+    outputs = {case: output_samples(case).copy() for case in ("fading", "persistent")}
+    assert hashlib.sha256(outputs["fading"].astype("<f8").tobytes()).hexdigest() == (
+        "f2e09e1660f0617a317a09e47c285b971700e1510c0e406ab384c069cd1dd835"
+    )
+    assert hashlib.sha256(outputs["persistent"].astype("<f8").tobytes()).hexdigest() == OUTPUT_SHA256
+    monkeypatch.setitem(INPUT_PARAMETERS, "dt", 0.25)
+    monkeypatch.setitem(INPUT_PARAMETERS, "discard", 4000)
+    assert not np.array_equal(samples(), quieter)
+    np.testing.assert_array_equal(output_baseline(), baseline)
+    for case, expected in outputs.items():
+        np.testing.assert_array_equal(output_samples(case), expected)
 
 
 def test_tikz_contains_exact_samples_and_only_the_causal_forty_sample_window() -> None:
@@ -729,11 +1032,11 @@ def test_tikz_contains_exact_samples_and_only_the_causal_forty_sample_window() -
     actual_brace = [(a + b * c / d, y) for a, b, c, d, y in (
         map(float, point) for point in brace_points
     )]
-    brace_indices = [(x - 0.92) * 212 / 4.4 - 6 for x, _ in actual_brace]
+    brace_indices = [(x - 1.045) * 212 / 4.15 - 6 for x, _ in actual_brace]
     # A half-step left edge encloses sample141; the right edge stops exactly
     # at the selected step180. Grey future samples never enter this bracket.
     assert brace_indices == pytest.approx([WINDOW_START - 0.5, SELECTED_STEP])
-    assert actual_brace[0][1] == actual_brace[1][1] < 6.60
+    assert actual_brace[0][1] == actual_brace[1][1] < 6.725
     assert r"(windowhook) at ($(windowleft)!.5!(windowright)+(0,-.11)$)" in source
     window_feed = re.search(r"\\draw\[flow,green,[^\]]+\] \(windowhook\)([^;]+);", source)
     assert window_feed
@@ -772,43 +1075,39 @@ def test_tikz_contains_exact_samples_and_only_the_causal_forty_sample_window() -
     assert "supplied to neither model" in metadata["causal_scope"]
     assert "not evaluation data" in metadata["kind"]
     assert "no QRC or QELM predictions" in metadata["scope"]
-    assert metadata["plot_geometry"] == {
-        "canvas_cm": [17.9197, 13.0],
+    geometry = metadata["plot_geometry"]
+    for key, expected in {
+        "canvas_cm": [17.9197, 9.6],
+        "canvas_bounds_cm": [0, 3.6, 17.9197, 13.2],
         "input_axis_count": 1,
-        "sample_axes_side_cm": 4.40,
-        "full_input_axes_bounds_cm": [0.92, 6.60, 5.32, 11.0],
+        "sample_axes_side_cm": 4.15,
+        "full_input_axes_bounds_cm": [1.045, 6.725, 5.195, 10.875],
         "window_view": "highlighted and bracketed within the shared input axis; no separate duplicate plot",
-        "history_error_axes_cm": [6.40, 2.40],
-        "output_axis_count": 1,
-        "output_axes_side_cm": 4.40,
-        "output_axes_bounds_cm": [13.40, 6.60, 17.80, 11.00],
+        "output_axis_count": 2,
         "amplitude_limits": [0.3, 1.3],
         "amplitude_ticks": [0.4, 0.8, 1.2],
         "full_input_indices": [0, 200],
         "window_indices": [141, 180],
         "full_input_index_limits": [-6, 206],
         "window_bracket_index_extent": [140.5, 180],
-    }
+    }.items():
+        assert geometry[key] == expected
+    assert geometry["output_axes_bounds_cm"] == output_provenance()["axes_bounds_cm"]
+    assert "history_error_axes_bounds_cm" not in geometry
     assert "only the current scalar enters each update" in metadata["architecture_scope"]
     assert "No specific topology or gate count" in metadata["architecture_scope"]
     assert "Both models measure observables and apply a readout" in metadata["architecture_scope"]
     assert "target readout is fixed" in metadata["architecture_scope"]
     assert "only the emulator readout is trained" in metadata["architecture_scope"]
     assert "general architectures" in metadata["figure_notation"]
-    assert "model-specific schematic observable labels" in metadata["figure_notation"]
+    assert "O_1,...,O_m label target observables" in metadata["figure_notation"]
+    assert "P_1,...,P_B label measured QELM features, including checkpoints" in metadata["figure_notation"]
+    assert "m and B denote output dimension and measured-feature count" in metadata["figure_notation"]
+    assert "output labels are y_t and widehat y_t" in metadata["figure_notation"]
     assert "not identical operators or an equal-budget claim" in metadata["figure_notation"]
-    assert "small gold readout triangles" in metadata["figure_notation"]
-    curve = metadata["history_error_curve"]
-    assert curve["kind"] == "analytic conceptual exponential; not an input-data fit"
-    assert curve["local_y_expression"] == "0.85+2.19*exp(-0.40707656282948684*(x-1.66))"
-    assert curve["local_domain_cm"] == [1.66, 7.52]
-    assert curve["panel_translation_cm"] == [4.0, 0.0]
-    assert curve["render_samples"] == 120
-    assert curve["zero_error_canvas_y_cm"] == 0.85
-    assert curve["local_tolerance_crossing_cm"] == [4.76, 1.47]
-    assert curve["canvas_tolerance_crossing_cm"] == [8.76, 1.47]
-    assert "straight segments without smoothing" in curve["scope"]
-
+    assert "small yellow readout triangles" in metadata["figure_notation"]
+    assert "history_error_curve" not in metadata
+    assert metadata["output_comparisons"] == output_provenance()
 
 def test_one_larger_input_plot_keeps_raw_values_and_causal_context() -> None:
     source = CANONICAL.read_text().split("% Deterministic illustrative output overlays", 1)[0]
@@ -819,13 +1118,13 @@ def test_one_larger_input_plot_keeps_raw_values_and_causal_context() -> None:
     )
     assert len(boxes) == 1
     assert np.asarray(boxes, dtype=float) == pytest.approx(np.asarray([
-        [0.92, 6.60, 5.32, 11.0],
+        [1.045, 6.725, 5.195, 10.875],
     ]))
     left, bottom, right, top = map(float, boxes[0])
-    assert right - left == pytest.approx(4.40)
-    assert top - bottom == pytest.approx(4.40)
-    input_source = source.split("% b:", maxsplit=1)[0]
-    assert input_source.count("y=4.4cm]") == 1
+    assert right - left == pytest.approx(4.15)
+    assert top - bottom == pytest.approx(4.15)
+    input_source = source
+    assert input_source.count("y=4.15cm]") == 1
     assert input_source.count(r"in \MGsamples{") == 1
     artwork = re.sub(r"%[^\n]*", "", source)
     assert not re.search(r"\{(?:zoom|schematic)\}", artwork)
@@ -833,7 +1132,7 @@ def test_one_larger_input_plot_keeps_raw_values_and_causal_context() -> None:
     assert [[float(value) for value in ticks.split(",")] for ticks in tick_lists] == [
         [0.4, 0.8, 1.2],
     ]
-    assert input_source.count(r"4.4*(\val-.3)") == 1
+    assert input_source.count(r"4.15*(\val-.3)") == 1
     assert r"{$\val$}" not in input_source and r"{$\kk$}" not in input_source
     assert input_source.count(r"{\val};") == 1
     assert r"\foreach \kk in {0,100}" in input_source
@@ -846,7 +1145,7 @@ def test_one_larger_input_plot_keeps_raw_values_and_causal_context() -> None:
         map(float, point) for point in selected_ticks
     )]
     np.testing.assert_allclose(selected_tick_coords, [
-        [0.92 + 4.4 * (180 + 6) / 212, 6.49],
+        [1.045 + 4.15 * (180 + 6) / 212, 6.615],
     ])
     assert re.search(r"\\node\[fill=\\tracecolor,circle,[^\]]+\] at \(\\kk,\\val\)",
                      input_source)
@@ -875,49 +1174,139 @@ def test_one_larger_input_plot_keeps_raw_values_and_causal_context() -> None:
     values = samples()
     assert np.all((values > 0.3) & (values < 1.3))
     np.testing.assert_allclose(
-        origin + scale * values, 6.60 + 4.4 * (values - 0.3),
+        origin + scale * values, 6.725 + 4.15 * (values - 0.3),
     )
     # At native 11pt the ket and its inner padding fit in a conservative 0.60cm
     # envelope. Leave that envelope right of the input frame instead of relying
     # on visual overlap being hidden by a filled gate or a white label.
     reset_source = source.split("% Fresh reset,", maxsplit=1)[1]
     ket = re.search(r"\\node\[anchor=east\] at \(([\d.]+),\\yy\) \{\$\|0\\rangle\$\}", reset_source)
-    assert ket and float(ket[1]) - 0.60 > right
+    assert ket and float(ket[1]) - 0.60 - right >= 0.20
     reset_region = re.search(
         r"\\fill\[neutral,[^\]]+\] \(([\d.]+),([\d.]+)\) rectangle", reset_source,
     )
     assert reset_region and float(reset_region[1]) > right
 
 
+def test_spacing_refinement_preserves_type_and_opens_model_rows() -> None:
+    source = CANONICAL.read_text()
+    rows = re.findall(r"\\foreach \\yy in \{([\d.,]+)\}", source)
+    assert len(rows) == 2
+    qrc, reset = (list(map(float, row.split(","))) for row in rows)
+    assert qrc[1] - reset[1] >= 4.60
+    bounds = provenance(CANONICAL)["plot_geometry"]
+    left, bottom, right, top = bounds["full_input_axes_bounds_cm"]
+    assert (bottom + top) / 2 == pytest.approx((qrc[1] + reset[1]) / 2)
+    assert (left + right) / 2 == pytest.approx(3.12)
+    assert r"font=\fontsize{11}{12.5}\selectfont" in source
+    assert r"rectangle (17.9197,13.2)" in source
+
+
 def test_reference_palette_and_quantum_processing_motifs_are_explicit() -> None:
     source = CANONICAL.read_text()
     colors = dict(re.findall(r"\\definecolor\{(\w+)\}\{HTML\}\{([0-9A-F]{6})\}", source))
     assert {name: colors[name] for name in ("ink", "blue", "green", "orange", "gold", "purple")} == {
-        "ink": "000000", "blue": "3B86FF", "green": "00A14B",
-        "orange": "FC4D30", "gold": "FFC943", "purple": "A93BFF",
+        "ink": "20252B", "blue": "3868D9", "green": "D66A56",
+        "orange": "D66A56", "gold": "FFC943", "purple": "7C5A9F",
     }
     metadata = provenance(CANONICAL)
     assert metadata["diagram_encoding"] == {
-        "earlier_input": "#000000",
-        "carried_state": "#3B86FF",
-        "explicit_window": "#00A14B",
-        "classical_input_injection": "#A93BFF",
+        "earlier_input": "#20252B",
+        "carried_state": "#3868D9",
+        "explicit_window": "#D66A56",
+        "classical_input_injection": "#7C5A9F",
         "measured_quantities_and_readouts": "#FFC943",
-        "persistent_gap": "#FC4D30",
+        "target_output": "#20252B",
+        "ideal_window_output": "#D66A56",
     }
     wire_rows = re.findall(r"\\foreach \\yy in \{([\d.,]+)\}", source)
     assert len(wire_rows) == 2
     assert all(len(row.split(",")) == 3 for row in wire_rows)
     assert source.count(r"\fill[palegold") == 2
-    assert source.count(r"{$\langle O_1\rangle$}") == 2
-    assert source.count(r"{$\langle O_m\rangle$}") == 2
-    assert r"{$Y_t$}" in source
-    assert r"{$\widehat Y_t$}" in source
+    assert source.count(r"{$\langle O_1\rangle$}") == 1
+    assert source.count(r"{$\langle O_m\rangle$}") == 1
+    assert source.count(r"{$\langle P_1\rangle$}") == 1
+    assert source.count(r"{$\langle P_B\rangle$}") == 1
+    assert r"{$y_t$}" in source
+    assert r"{$\widehat y_t$}" in source
 
 
 def test_input_provenance_rejects_a_changed_sample(tmp_path: Path) -> None:
     source = CANONICAL.read_text()
     changed = tmp_path / "changed.tex"
-    changed.write_text(source.replace("0/0.38764364216757924", "0/0.5", 1))
+    first_sample = f"0/{samples()[0]:.17g}"
+    assert first_sample in source
+    changed.write_text(source.replace(first_sample, "0/0.5", 1))
     with pytest.raises(ValueError, match="differ from the declared generator"):
         provenance(changed)
+
+
+def test_shared_legend_leaves_all_output_ink_at_least_two_tenths_mm_clear() -> None:
+    source = CANONICAL.read_text()
+    metadata = output_provenance()
+    assert r"line width=.70pt,inner sep=1.45pt" in source
+    assert r"\node[fill=ink,circle,inner sep=.78pt]" in source
+    assert r"rounded corners=1.3pt,line width=.75pt" in source
+    assert r"\draw[ink,line width=.55pt] (\pk,\ptarget)--(\kk,\target);" in source
+    assert r"\draw[green,line width=.65pt]" in source
+
+    # 1/72 inch is slightly larger than a TeX point (1/72.27 inch), so these
+    # radii conservatively include the empty TikZ circle's diagonal padding
+    # and the open ring's half-stroke. Use the union of the key and its shadow.
+    pt_cm = 2.54 / 72
+    ring_radius = (np.sqrt(2) * 1.45 + 0.70 / 2) * pt_cm
+    dot_radius = np.sqrt(2) * 0.78 * pt_cm
+    key_half_stroke = 0.75 / 2 * pt_cm
+    left, bottom, right, top = metadata["legend_geometry"]["bounds_cm"]
+    shadow_dx, shadow_dy = metadata["legend_geometry"]["shadow_offset_cm"]
+    key_left = min(left - key_half_stroke, left + shadow_dx)
+    key_right = max(right + key_half_stroke, right + shadow_dx)
+    key_bottom = min(bottom - key_half_stroke, bottom + shadow_dy)
+    key_top = max(top + key_half_stroke, top + shadow_dy)
+    x_min, x_max = metadata["time_limits"]
+    y_min, y_max = metadata["amplitude_limits"]
+    width, height = metadata["axes_size_cm"]
+    minimum_clearance_cm = 0.02
+
+    for case in metadata["case_order"]:
+        bounds = metadata["cases"][case]["axes_bounds_cm"]
+        values = output_samples(case)
+        times = np.arange(len(values))
+        x = bounds[0] + width * (times - x_min) / (x_max - x_min)
+        y = bounds[1] + height * (values - y_min) / (y_max - y_min)
+
+        def check_clearance(points, radius, *, connected=False):
+            if connected:
+                # Every straight segment lies between its endpoint extrema.
+                # Include both endpoints of every segment whose ink can enter
+                # the key's horizontal span, including the discrete expiry jump.
+                first, last = points[:-1], points[1:]
+                overlap = (
+                    (np.maximum(first[:, 0], last[:, 0]) + radius >= key_left)
+                    & (np.minimum(first[:, 0], last[:, 0]) - radius <= key_right)
+                )
+                ordinates = np.concatenate((first[overlap, 1], last[overlap, 1]))
+            else:
+                overlap = (
+                    (points[:, 0] + radius >= key_left)
+                    & (points[:, 0] - radius <= key_right)
+                )
+                ordinates = points[overlap, 1]
+            assert ordinates.size
+            clearance = (
+                ordinates.min() - radius - key_top
+                if case == "fading"
+                else key_bottom - ordinates.max() - radius
+            )
+            assert clearance >= minimum_clearance_cm, (case, radius, clearance)
+
+        target_points = np.column_stack((x, y[:, 0]))
+        prediction_points = np.column_stack((x, y[:, 1]))
+        check_clearance(target_points, dot_radius)
+        check_clearance(prediction_points[::2], ring_radius)
+        check_clearance(target_points, 0.55 / 2 * pt_cm, connected=True)
+        expiry = metadata["memory_access"]["first_excluded_step"]
+        prediction_path = np.insert(
+            prediction_points, expiry, [x[expiry], y[expiry, 0]], axis=0,
+        )
+        check_clearance(prediction_path, 0.65 / 2 * pt_cm, connected=True)
