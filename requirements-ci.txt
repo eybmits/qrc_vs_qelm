@@ -1,0 +1,3 @@
+# Additional PDF QA dependency. Keep pyproject.toml unchanged: it is part of
+# the frozen experimental source identity, not a mutable CI requirements file.
+pypdf>=5,<7

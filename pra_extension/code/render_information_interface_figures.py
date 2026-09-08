@@ -1196,7 +1196,7 @@ def _feature_density_source(path: Path) -> pd.DataFrame:
 
 def _feature_density_with_bridge(path: Path) -> pd.DataFrame:
     """Add only new partial banks; replicated 18/36 controls are not duplicates."""
-    from run_feature_bridge import RESULTS, load_completed
+    from feature_bridge_release import RESULTS, load_completed
 
     original = _feature_density_source(path)
     bridge, manifest = load_completed()

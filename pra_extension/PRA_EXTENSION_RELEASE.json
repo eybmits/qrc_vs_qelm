@@ -1,6 +1,6 @@
 {
-  "artifact_count": 277,
-  "artifact_set_sha256": "fa964b6fb75d0f5b13ebd35ddad4dc00a3459934bf45ff75683dca88133ef222",
+  "artifact_count": 280,
+  "artifact_set_sha256": "29265593dd62e83bc679fa1a9f551cb357156323e33b4f4136acf2ccc6860119",
   "artifacts": {
     "CANONICAL_EMULATION_LITERATURE_POSITIONING.md": {
       "role": "post_confirmatory_literature_positioning",
@@ -54,8 +54,8 @@
     },
     "REPRODUCIBILITY.md": {
       "role": "claim_to_artifact_reproduction_and_interpretation_guide",
-      "sha256": "26c3f3e49d253ef665ba8b0c6717c203ee281d19be45c3d6e732134560d060e2",
-      "size_bytes": 15247
+      "sha256": "5fca6207929b410da02d38d49e8170322933b11562bb754f8c2a707e12b8155e",
+      "size_bytes": 16201
     },
     "configs/DARK_SECTOR_VALIDATION_PROTOCOL.md": {
       "role": "frozen_dark_sector_protocol",
@@ -557,6 +557,11 @@
       "sha256": "d3ec455c35c47c2d0fb371f0b3e594a5186330cf1f8c8490b20afe9228c69842",
       "size_bytes": 13744
     },
+    "pra_extension/code/feature_bridge_release.py": {
+      "role": "extension_code",
+      "sha256": "e1874b7b31567b6c7434b5c7864892ebede76f357ca763e1586e84377c9317fa",
+      "size_bytes": 3164
+    },
     "pra_extension/code/figure1_timeseries.py": {
       "role": "extension_code",
       "sha256": "7e3f87d655668a8318828d3e366096097d6f014fd598c64515feec1e74d2d06e",
@@ -614,8 +619,8 @@
     },
     "pra_extension/code/render_information_interface_figures.py": {
       "role": "extension_code",
-      "sha256": "834d98eaaadadde87afcd799a7c5bf04f77d92fc74a968ff0e231d647b6188d7",
-      "size_bytes": 64339
+      "sha256": "af325fc99b1322662a3f40587a39511fbd6e690d431c6d653df37cce959b3a1a",
+      "size_bytes": 64343
     },
     "pra_extension/code/render_long_context_n5.py": {
       "role": "extension_code",
@@ -957,6 +962,11 @@
       "sha256": "c7d126434e53d216fef31e01a878a37d7e899dd8b05feefbd98b3b803c0302a9",
       "size_bytes": 11132
     },
+    "pra_extension/tests/conftest.py": {
+      "role": "extension_test",
+      "sha256": "8b005e60965a7ea60ba0f026ef23696d22b018edbf4e67b2097540427d1a2907",
+      "size_bytes": 1961
+    },
     "pra_extension/tests/test_analysis.py": {
       "role": "extension_test",
       "sha256": "538717128ceb0f029c6e319777d17413fe8e126c6a1835ec08a993689ec2d630",
@@ -1037,6 +1047,11 @@
       "sha256": "a5b832b65139d9b520ce12a0fc0930546ed2de7a0a0ea973705f6da1b7effbcf",
       "size_bytes": 3375
     },
+    "pra_extension/tests/test_feature_bridge_release.py": {
+      "role": "extension_test",
+      "sha256": "3a3de9a2a010669675202c84e3ceb633fe35358b8b420891bfaf4221e86895c6",
+      "size_bytes": 3473
+    },
     "pra_extension/tests/test_feature_density.py": {
       "role": "extension_test",
       "sha256": "c3f4a1a101ea96ab6ae0480aaa16082c71547aef444e1646c990ec9c024c2803",
@@ -1069,8 +1084,8 @@
     },
     "pra_extension/tests/test_holevo_bridge.py": {
       "role": "extension_test",
-      "sha256": "76d8ef39236c63d7f9dd99e9904890d56e7e53e3d05cb2786f1e66a605e1ca0b",
-      "size_bytes": 4758
+      "sha256": "6c1e4bbde2ec1e5e2548f27a5c514d0a3816fabe1ac9f6153aabb126be1b692a",
+      "size_bytes": 4858
     },
     "pra_extension/tests/test_information_interface_figures.py": {
       "role": "extension_test",
@@ -1424,7 +1439,7 @@
     "pra_extension": "EXPLORATORY_POST_CONFIRMATORY"
   },
   "figures_directory": "pra_extension/figures_pra_final_v6",
-  "manifest_identity_sha256": "0991129373a4588ac08bd2709db8fe962de94b0db6871db933cb5c6bcb782617",
+  "manifest_identity_sha256": "4b76e388d13ccc50437f448e8cf5f1fa2402562ae7b2d6e50e0508026903b6d7",
   "paper_pdf": "paper/icaart2027/submission.pdf",
   "prospective_followups": {
     "long_context_n5": {
@@ -1955,5 +1970,5 @@
     }
   ],
   "status": "POST_CONFIRMATORY_REPRODUCIBILITY_SNAPSHOT",
-  "total_artifact_count": 302
+  "total_artifact_count": 305
 }

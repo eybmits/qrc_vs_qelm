@@ -120,5 +120,7 @@ def test_transfer_uses_repository_column_vectorization() -> None:
     expected = HADAMARD @ plus @ HADAMARD.conj().T
     np.testing.assert_allclose(evolved, expected, atol=1e-14)
     np.testing.assert_allclose(
-        liouvillian.vec(evolved), unitary_transfer(HADAMARD) @ liouvillian.vec(plus)
+        liouvillian.vec(evolved), unitary_transfer(HADAMARD) @ liouvillian.vec(plus),
+        # Different BLAS contraction orders can leave roundoff at exact zeros.
+        atol=1e-14,
     )

@@ -144,12 +144,27 @@ do not overwrite frozen results or relax a failed integrity check.
 
 ```bash
 python3 -m venv .venv
-.venv/bin/pip install -e ".[dev]"
+.venv/bin/pip install -e ".[dev]" -r requirements-ci.txt
 .venv/bin/pytest -q
 .venv/bin/pytest -q pra_extension/tests
 # Read-only reconstruction/comparison of the complete scientific manifest:
 .venv/bin/pytest -q pra_extension/tests/test_release_manifest.py::test_checked_in_release_manifest_matches_live_inputs
 ```
+
+CI's PDF dependency is in `requirements-ci.txt`, keeping the experiment-bound
+`pyproject.toml` unchanged. The figure reader verifies completed feature-bridge
+results using `feature_bridge_release.py`. It checks every required frozen
+source and production artifact; only the two explicitly named, unpublished
+parent development outputs may be absent. Its audit reports those absences
+and does not claim a full development-provenance audit. Present development
+files must still match their frozen hashes. The original runner's strict
+`verify()` and its source lock remain unchanged.
+
+The frozen bridge smoke regression receives a newly generated parent smoke
+run through a test-only I/O fixture. Numerical routines and anchor checks are
+unchanged; the test does not require untracked historical files or overwrite
+production results. This checks fresh-run determinism, not byte-identical
+reproduction of historical timing metadata.
 
 The full release check requires **all** declared artifacts, including the
 currently local-only N5 evidence; missing-file failure is an incomplete
