@@ -1,7 +1,7 @@
 {
   "schema": "icaart2027_submission_qa_v2",
   "pdf": "submission.pdf",
-  "pdf_sha256": "1936d34fc57446b7ce89f12464889bcdb3875e841c78586a18ba2fe36857e903",
+  "pdf_sha256": "b61061a25bfdd78d3535f438dec62b7db54700df0c752b1707a06b77367242ff",
   "extraction_backend": "pypdf + Poppler",
   "passed": false,
   "format_passed": true,
@@ -72,7 +72,7 @@
     },
     "character_budget": {
       "passed": true,
-      "characters": 44430,
+      "characters": 42438,
       "minimum": 10000,
       "maximum": 50000,
       "definition": "Unicode, whitespace excluded"
@@ -96,7 +96,7 @@
     },
     "abstract_length": {
       "passed": true,
-      "words": 195,
+      "words": 183,
       "minimum": 70,
       "maximum": 200
     },
@@ -108,7 +108,7 @@
       "passed": true,
       "fonts": [
         {
-          "name": "FACSYG+NimbusRomNo9L-Medi",
+          "name": "PHNXTS+NimbusRomNo9L-Medi",
           "embedded": true,
           "subset": true,
           "unicode": true
@@ -120,13 +120,7 @@
           "unicode": true
         },
         {
-          "name": "TQCKUY+NimbusRomNo9L-ReguItal",
-          "embedded": true,
-          "subset": true,
-          "unicode": true
-        },
-        {
-          "name": "MYMPAC+CMR10",
+          "name": "KWINSU+NimbusRomNo9L-ReguItal",
           "embedded": true,
           "subset": true,
           "unicode": true
@@ -138,7 +132,13 @@
           "unicode": true
         },
         {
-          "name": "BWOQUP+CMSY10",
+          "name": "MYMPAC+CMR10",
+          "embedded": true,
+          "subset": true,
+          "unicode": true
+        },
+        {
+          "name": "STIYJV+CMSY10",
           "embedded": true,
           "subset": true,
           "unicode": true
@@ -156,7 +156,13 @@
           "unicode": true
         },
         {
-          "name": "IZFATW+NimbusSanL-Regu",
+          "name": "VUHUAR+CMEX10",
+          "embedded": true,
+          "subset": true,
+          "unicode": true
+        },
+        {
+          "name": "JOXUCI+NimbusSanL-Regu",
           "embedded": true,
           "subset": true,
           "unicode": true
@@ -198,73 +204,55 @@
           "unicode": true
         },
         {
-          "name": "BWOQUP+CMSY10",
+          "name": "STIYJV+CMSY10",
           "embedded": true,
           "subset": true,
           "unicode": true
         },
         {
-          "name": "QEMTYL+CMEX10",
+          "name": "VUHUAR+CMEX10",
           "embedded": true,
           "subset": true,
           "unicode": true
         },
         {
-          "name": "QEMTYL+CMEX10",
+          "name": "TBDION+HelveticaNeue",
           "embedded": true,
           "subset": true,
           "unicode": true
         },
         {
-          "name": "BDURGT+HelveticaNeue",
+          "name": "ERNTJM+HelveticaNeue",
           "embedded": true,
           "subset": true,
           "unicode": true
         },
         {
-          "name": "BHZUIX+HelveticaNeue-Bold",
+          "name": "FGXPZO+HelveticaNeue-Bold",
           "embedded": true,
           "subset": true,
           "unicode": true
         },
         {
-          "name": "BTIKWL+Cmmi10",
+          "name": "EXFOUD+ArialMT",
           "embedded": true,
           "subset": true,
           "unicode": true
         },
         {
-          "name": "GDVQXM+Cmr10",
+          "name": "EVCTOY+HelveticaNeue",
           "embedded": true,
           "subset": true,
           "unicode": true
         },
         {
-          "name": "DGGLCI+HelveticaNeue",
+          "name": "FTLLSO+HelveticaNeue",
           "embedded": true,
           "subset": true,
           "unicode": true
         },
         {
-          "name": "DYQBII+HelveticaNeue-Bold",
-          "embedded": true,
-          "subset": true,
-          "unicode": true
-        },
-        {
-          "name": "CPXVLE+HelveticaNeue-Bold",
-          "embedded": true,
-          "subset": true,
-          "unicode": true
-        },
-        {
-          "name": "BULUIO+Cmmi10",
-          "embedded": true,
-          "subset": true,
-          "unicode": true
-        },
-        {
-          "name": "FHGJKU+Cmr10",
+          "name": "FGXPZO+HelveticaNeue-Bold",
           "embedded": true,
           "subset": true,
           "unicode": true
@@ -314,8 +302,8 @@
       "passed": false,
       "required_for_this_project": true,
       "components": {
-        "named_tool_in_pdf": false,
-        "disclosure_in_pdf": false,
+        "named_tool_in_pdf": true,
+        "disclosure_in_pdf": true,
         "affected_section_tool_citations": false,
         "conceptual_figure_credit_and_prompt": false
       },
@@ -334,55 +322,73 @@
       {
         "page": 5,
         "box": [
-          370.111,
+          402.146303,
           713.401985,
-          377.85991,
+          408.788368,
+          730.687096
+        ]
+      },
+      {
+        "page": 5,
+        "box": [
+          411.677522,
+          713.401985,
+          429.389032,
           730.687096
         ]
       },
       {
         "page": 10,
         "box": [
-          126.123,
-          713.401985,
-          131.1043,
-          730.687096
+          451.217,
+          89.722985,
+          459.518835,
+          107.008096
         ]
       },
       {
         "page": 10,
         "box": [
-          170.759279,
-          713.401985,
-          178.50819,
-          730.687096
+          190.725,
+          720.094931,
+          202.187452,
+          726.449854
         ]
       },
       {
         "page": 10,
         "box": [
-          209.421,
-          713.401985,
-          217.16991,
-          730.687096
+          470.896,
+          710.681985,
+          478.64491,
+          727.967096
         ]
       },
       {
         "page": 10,
         "box": [
-          448.236,
-          699.563873,
-          453.771221,
-          736.744296
+          409.999,
+          718.572021,
+          414.422394,
+          727.159782
         ]
       },
       {
-        "page": 11,
+        "page": 10,
         "box": [
-          171.889,
-          719.349357,
-          176.8703,
-          728.255922
+          419.99,
+          717.515985,
+          427.73891,
+          734.801096
+        ]
+      },
+      {
+        "page": 10,
+        "box": [
+          429.113749,
+          718.482357,
+          434.095049,
+          727.388922
         ]
       }
     ],

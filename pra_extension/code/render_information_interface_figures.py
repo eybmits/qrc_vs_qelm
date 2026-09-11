@@ -431,7 +431,7 @@ def render_figure_1(dark_summary_path: Path, output_dir: Path) -> tuple[Path, ..
         ),
         "panels": {
             "architecture": "recurrent and reset-window architectures with unchanged illustrative input and causal access",
-            "fading": "upper output frame: fading old-bit influence as time advances at fixed d=40",
+            "fading": "upper output frame: this old bit is fully forgotten by t=40; the ideal prediction remains exact at fixed d=40",
             "persistent": "lower output frame: gradual revelation of a persistent old bit as time advances at the same fixed d=40",
         },
         "panel_letters": [],
@@ -491,7 +491,7 @@ def render_figure_1(dark_summary_path: Path, output_dir: Path) -> tuple[Path, ..
                         "the reset lane is 0.30 cm lower to separate the model rows; "
                         "a coral causal-window brace feeds the reset encoder from below without crossing quantum wires; "
                         "two 4.15-by-3.2 cm output frames occupy y=8.58..11.78 and y=4.99..8.19 with matching axes; "
-                        "case labels are omitted; a single shared legend overlaps their facing borders; "
+                        "external rounded labels explain window sufficiency in each case; a single shared legend overlaps their facing borders; "
                         "the removed lower history-error panel permits a 17.9197-by-9.60 cm canvas",
         "architecture_motifs": "three-wire general QRC channel block and explicit reset encoding plus fixed gates; "
                                "matching yellow observable banks with softly rounded cards and connectors; "
@@ -503,7 +503,7 @@ def render_figure_1(dark_summary_path: Path, output_dir: Path) -> tuple[Path, ..
         "observable_notation": "O_1,...,O_m label target observables and P_1,...,P_B label QELM features; "
                                "no identical-operator or equal-feature-count claim",
         "annotation_scope": "no standalone zoom or schematic tags; one unchanged input amplitude scale; "
-                            "no Fading memory or Persistent memory titles and no external expiry/explanation labels; "
+                            "external Fading memory / Window sufficient and Persistent memory / Window insufficient boxes; "
                             "green!24 before d and blue!16 after d inside both output frames encode the old bit's window access; "
                             "a single one-row reference-style key overlaps the facing borders between both frames "
                             "and identifies QRC and QELM, with no independent third truth trajectory; "
@@ -1300,7 +1300,7 @@ def render_figure_3(
     ax.set_ylim(5e-4, 3.2)  # small headroom keeps the legend above the 10% line
     ax.set_yticks((0.001, 0.01, 0.1, 1), ("0.1%", "1%", "10%", "100%"))
     ax.set_xticks((0, 3, 6, 9, 12))
-    ax.set_xlabel("scaled context $\\gamma_T\\,\\Delta t\\,d$")
+    ax.set_xlabel("window duration × loss rate")
     ax.set_ylabel("old-history error")
     legend = ax.legend(
         handles=family_handles,

@@ -185,6 +185,61 @@ DENSE_N4_FILES: dict[str, str] = {
 # by the revised paper.  Earlier pilot, smoke, v1, and v2 directories are
 # intentionally excluded.
 AUTHORITATIVE_EXTENSION_FILES: dict[str, str] = {
+    "pra_extension/TASK_MEMORY_REPLICATION_PROTOCOL.md": "fresh_root_replication_pre_run_specification",
+    "pra_extension/TASK_MEMORY_REPLICATION_README.md": "fresh_root_replication_verified_results_and_limits",
+    "pra_extension/code/task_memory_replication.py": "frozen_fresh_root_replication_wrapper",
+    "pra_extension/code/verify_task_memory_replication.py": "independent_fresh_root_verifier",
+    "pra_extension/tests/test_task_memory_replication.py": "fresh_root_verifier_regression_tests",
+    "pra_extension/tests/test_render_task_memory.py": "direct_forecasting_figure_regression_tests",
+    "pra_extension/code/render_task_memory.py": "direct_forecasting_memory_figure_renderer",
+    "paper/figures/task_memory/fig04_task_memory.pdf": "archived_additional_direct_forecasting_memory_figure_pdf",
+    "paper/figures/task_memory/fig04_task_memory.png": "archived_additional_direct_forecasting_memory_figure_preview",
+    "paper/figures/task_memory/fig04_task_memory_source.json": "archived_additional_direct_forecasting_figure_rows_and_provenance",
+    "paper/figures/task_memory/fig04_task_memory_rows.csv": "direct_forecasting_all_final_scores",
+    "paper/figures/task_memory/fig04_task_memory_traces.csv": "direct_forecasting_predeclared_test_excerpts",
+    "pra_extension/code/render_narma_additional.py": "optional_narma_additional_figure_renderer_not_active",
+    "pra_extension/tests/test_render_narma_additional.py": "optional_narma_additional_figure_tests",
+    "paper/figures/narma_additional/narma_additional.pdf": "optional_narma_additional_figure_pdf_not_active",
+    "paper/figures/narma_additional/narma_additional.png": "optional_narma_additional_figure_preview_not_active",
+    "paper/figures/narma_additional/source.json": "optional_narma_additional_figure_rows_and_provenance",
+    "pra_extension/code/render_memory_prediction.py": "three_panel_emulation_narma_exact_figure_renderer",
+    "pra_extension/tests/test_render_memory_prediction.py": "three_panel_figure_binding_geometry_export_tests",
+    "paper/figures/memory_prediction/fig04_memory_prediction.pdf": "active_three_panel_memory_prediction_figure_pdf",
+    "paper/figures/memory_prediction/fig04_memory_prediction.png": "active_three_panel_memory_prediction_figure_preview",
+    "paper/figures/memory_prediction/fig04_memory_prediction_source.json": "three_panel_separate_cohort_rows_and_provenance",
+    # Source-bound forecasting follow-up candidates, not active manuscript figures.
+    **{f"paper/figures/laser_forecast_candidate/{name}": "separate_forecasting_candidate_not_integrated"
+       for name in (
+           "laser_forecast_h1.pdf", "laser_forecast_h1.png",
+           "laser_forecast_h4.pdf", "laser_forecast_h4.png",
+           "laser_forecast_h1_frozen_readout.pdf", "laser_forecast_h1_frozen_readout.png",
+           "laser_forecast_h4_frozen_readout.pdf", "laser_forecast_h4_frozen_readout.png",
+           "laser_forecast_all_rows.csv", "laser_forecast_display_seed_gamma4.csv",
+           "laser_forecast_display_seed_gamma0.2.csv", "laser_forecast_source.json",
+           "verification.json",
+       )},
+    "pra_extension/LASER_FORECAST_PROTOCOL.md": "separate_forecasting_pre_run_specification",
+    "pra_extension/LASER_FORECAST_README.md": "separate_forecasting_results_and_limits",
+    "paper/figure2_candidates/render_resource_atlas.py": "resource_atlas_renderer",
+    "paper/figure2_candidates/test_resource_atlas.py": "resource_atlas_binding_and_layout_tests",
+    "paper/figure2_candidates/README.md": "resource_atlas_reproduction_and_scope",
+    "paper/figures/resource_atlas/fig03_resource_diagnosis.pdf": "author_selected_resource_atlas_pdf",
+    "paper/figures/resource_atlas/fig03_resource_diagnosis.png": "author_selected_resource_atlas_preview",
+    "paper/figures/resource_atlas/fig03_resource_diagnosis_source.json": "resource_atlas_source_hashes_and_summaries",
+    "paper/figures/resource_atlas/fig03_resource_diagnosis_history.csv": "all_198_history_cells",
+    "paper/figures/resource_atlas/fig03_resource_diagnosis_features.csv": "all_288_feature_rows",
+    "paper/figures/resource_atlas/fig03_resource_diagnosis_shots.csv": "all_48_shot_root_rows",
+    "paper/figures/resource_atlas/fig03_resource_diagnosis_validation_choices.csv": "all_768_validation_choices",
+    "paper/figures/emulation_evidence/fig04_emulation_evidence.pdf": "retained_two_column_laser_memory_exact_figure_pdf",
+    "paper/figures/emulation_evidence/fig04_emulation_evidence.png": "retained_two_column_laser_memory_exact_figure_preview",
+    "paper/figures/emulation_evidence/fig04_emulation_evidence_source.json": "separate_cohort_figure_rows_all_laser_seeds_and_provenance",
+    "paper/figures/emulation_evidence/fig04_emulation_evidence_caption.txt": "source_backed_figure_caption_draft",
+    "paper/figures/long_context_sharpness/fig04_long_context_sharpness.pdf": "combined_long_context_and_exact_reference_figure_pdf",
+    "paper/figures/long_context_sharpness/fig04_long_context_sharpness.png": "combined_long_context_and_exact_reference_figure_preview",
+    "paper/figures/long_context_sharpness/fig04_long_context_sharpness_source.json": "combined_figure_source_rows_and_hash_ledger",
+    "paper/figures/sharpness/fig05_exact_sharpness.pdf": "post_hoc_exact_construction_figure_pdf",
+    "paper/figures/sharpness/fig05_exact_sharpness.png": "post_hoc_exact_construction_figure_preview",
+    "paper/figures/sharpness/fig05_exact_sharpness_source.json": "post_hoc_exact_construction_source_and_hash_ledger",
     "configs/feature_bridge.json": "exploratory_intermediate_feature_configuration",
     "configs/feature_bridge_freeze.json": "intermediate_feature_local_source_lock",
     "pra_extension/FEATURE_BRIDGE_PROTOCOL.md": "exploratory_paired_feature_protocol",
@@ -347,6 +402,9 @@ DOCUMENTATION_FILES: dict[str, str] = {
     "PROTOCOL.md": "frozen_project_protocol",
     "pra_extension/PROTOCOL.md": "extension_protocol_record",
     "pra_extension/theory_and_literature.md": "theory_and_prior_art_audit",
+    "pra_extension/SHARPNESS_BENCHMARKS.md": "post_hoc_exact_construction_scope_and_reproduction",
+    "pra_extension/LASER_DEMONSTRATION_PROTOCOL.md": "separate_measured_input_demonstration_frozen_protocol",
+    "pra_extension/LASER_DEMONSTRATION_README.md": "separate_measured_input_demonstration_reproduction_and_integration",
     "paper/NOTATION_AUDIT.md": "manuscript_notation_contract_and_literature_conventions",
     (
         "paper/figures/information_interface/CHART_MAP.md"
@@ -631,6 +689,69 @@ EXPLORATORY_ANALYSES = (
 
 # (JSON file, object key containing recorded hashes, recorded key, source file)
 SOURCE_HASH_LINKS = (
+    *tuple(
+        (
+            "paper/figures/memory_prediction/fig04_memory_prediction_source.json",
+            "artifacts",
+            name,
+            f"paper/figures/memory_prediction/{name}",
+        )
+        for name in ("fig04_memory_prediction.pdf", "fig04_memory_prediction.png")
+    ),
+    (
+        "paper/figures/memory_prediction/fig04_memory_prediction_source.json",
+        "sources",
+        "pra_extension/code/render_memory_prediction.py",
+        "pra_extension/code/render_memory_prediction.py",
+    ),
+    *tuple(
+        (
+            "paper/figures/narma_additional/source.json",
+            "artifacts",
+            name,
+            f"paper/figures/narma_additional/{name}",
+        )
+        for name in ("narma_additional.pdf", "narma_additional.png")
+    ),
+    (
+        "paper/figures/narma_additional/source.json",
+        "sources",
+        "pra_extension/code/render_narma_additional.py",
+        "pra_extension/code/render_narma_additional.py",
+    ),
+    *tuple(
+        (
+            "paper/figures/task_memory/fig04_task_memory_source.json",
+            "artifacts",
+            name,
+            f"paper/figures/task_memory/{name}",
+        )
+        for name in ("fig04_task_memory.pdf", "fig04_task_memory.png")
+    ),
+    (
+        "paper/figures/task_memory/fig04_task_memory_source.json",
+        "sources",
+        "pra_extension/code/render_task_memory.py",
+        "pra_extension/code/render_task_memory.py",
+    ),
+    *tuple(
+        (
+            "paper/figures/long_context_sharpness/fig04_long_context_sharpness_source.json",
+            "artifacts",
+            name,
+            f"paper/figures/long_context_sharpness/{name}",
+        )
+        for name in ("fig04_long_context_sharpness.pdf", "fig04_long_context_sharpness.png")
+    ),
+    *tuple(
+        (
+            "paper/figures/sharpness/fig05_exact_sharpness_source.json",
+            "artifacts",
+            name,
+            f"paper/figures/sharpness/{name}",
+        )
+        for name in ("fig05_exact_sharpness.pdf", "fig05_exact_sharpness.png")
+    ),
     (
         "paper/figures/information_interface/fig01_information_interface_render_source.json",
         "",

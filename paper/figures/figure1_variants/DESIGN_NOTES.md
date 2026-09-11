@@ -5,25 +5,37 @@
 This contract supersedes the historical layout notes below. Question: after
 an old input leaves a fixed window, does its effect on the QRC output fade
 or persist? Use two stacked line-and-marker small multiples, titled Fading
-memory and Persistent memory, with one shared black-filled QRC / green-open
+memory and Persistent memory, with one shared charcoal-filled QRC / coral-open
 QELM legend. Native static TikZ/PDF is the final surface. Each case has 101
-deterministic analytic output pairs on the same known baseline and balanced
-old bit; neither is fitted or measured emulator performance. The persistent
-case is unchanged; the fading coefficient is 0.25 exp(-t/30), from t=0.
+deterministic analytic output pairs with a known, case-specific baseline and
+balanced old bit; neither is fitted or measured emulator performance. Both
+charcoal targets and the entire persistent case are unchanged. The upper
+coefficient is now 0.25(1-clip(t/40,0,1))^2, independent of window length.
+Its baseline is the retained target minus that coefficient, so the upper
+ideal prediction stays exact at d and thereafter. This exact forgetting of
+one bit is a special illustrative case, not a general fading-memory claim.
 Both ideal window predictors know the bit until t=40, then use the common
 baseline. A dashed guide at d=40 marks lost input access, not a training split.
 
 The two frames share x=[-3,103], y=[0.45,1.35] and 4.15-by-3.20-cm geometry.
 The bottom frame carries the shared time labels. Existing model colors,
 open/filled markers and quiet horizontal/vertical grids remain. Background
-washes indicate access: green before d, blue after d, in both cases. The
+washes indicate access: coral before d, cobalt after d, in both cases. Two
+quiet white rounded boxes outside the frames say "Fading memory / Window
+sufficient" and "Persistent memory / Window insufficient". They explain
+these paired histories, not a global guarantee. The
 architecture and the 201-point input plot are unchanged. Remove the old
 lower panel b, including its tolerance curve and letters; no general D_d/2
 label is attached to a trajectory gap. The canvas is 17.9197 by 9.60 cm.
 The output area grows from one square to two short aligned frames while
 the figure becomes shorter. The exact worst-case/increasing-window theorem
-stays in Section 3. Review the exported figure and both complete PDFs;
+stays in Section 3. Review the exported figure and active ICAART PDF;
 preserve all experimental figures/data and the twelve-page maximum.
+
+The upper case box has a compact 0.20-cm gap above its frame. Its lower
+edge is y=11.98 cm, reduced from 12.41 cm; its size, font and horizontal
+alignment are unchanged. The lower case box keeps its 0.63-cm clearance
+below the lower frame and remains clear of the shared time ticks.
 
 ## Historical design record (superseded where noted above)
 

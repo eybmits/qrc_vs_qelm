@@ -1,0 +1,25 @@
+{
+  "artifacts": {
+    "all_candidate_rows.csv": "3e0b0a4807e35cd49b9706203b456b75ff090d3c393efaa1f28581ac09495d42",
+    "all_selected_rows.csv": "870311e9cf17ce00d715661569c325b5e495004a0325b28226d646387240f728",
+    "display_pair_trace.csv": "e8dcf8bd72e6b1665147a68b83d11d65cf9353180b7d41bd8734a1bb296786b4",
+    "display_test_trace.csv": "3d273cedc4e6acef47e52b341691d97873f4f4db61c52f7cd3c9ad14ae4e31d9",
+    "narma_memory_all_runs.pdf": "7e76a85369e2c53e6adca6f4c6c5636e43208398413079e230ae98561c2df347",
+    "narma_memory_all_runs.png": "0e79945033fe2454b645b52d48af6467f275d2bee5eb48147a1460b8fb315b5c",
+    "narma_memory_candidate.pdf": "933ce438208c91776836b17732645b620db95bb5ad3b44542cd63ac6a060e998",
+    "narma_memory_candidate.png": "1cf4ac483a8e98aee13bf3bcc81b1d16e4128e6bb6f0e0aeae3ed60916af3eeb"
+  },
+  "caption": "Learning the task itself. a The models predict the actual NARMA10 target from driving inputs only. The same fixed test excerpt is shown; errors describe its full test split. b Restricting and then expanding the same reservoir circuit's accessible history tests whether older inputs help. Lines show medians over 12 independent runs; shading/bars show 10th\u201390th percentiles, not confidence intervals. Gray stars are classical quadratic controls (14/90 features), not matched quantum-advantage baselines. c Different earlier inputs followed by an identical continuation can still require different target values (first 32 shared steps shown). After four common inputs the four-input QELM must give the same prediction. Synthetic benchmark, exact-expectation simulation; settings selected on validation only. Reset/replay uses sequential encoding, and longer windows cost more evolution steps.",
+  "display_excerpt": [
+    0,
+    96
+  ],
+  "display_seed": 920000,
+  "renderer_sha256": "f917c5cfa22de00e69dfaca799f4e98989d6b4bb8118f73153fbe464c41e37f1",
+  "size_inches": [
+    9.0,
+    5.6
+  ],
+  "status": "separate_candidate_not_integrated_into_paper",
+  "summary_sha256": "5cb4f7664ec84f04609644924e0d6eebbd84af3953e2d6edd4f81af754973df3"
+}

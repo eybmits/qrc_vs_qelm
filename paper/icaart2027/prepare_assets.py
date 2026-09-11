@@ -16,7 +16,7 @@ from pypdf import PdfReader, PdfWriter
 PAPER_FIGURES = (
     "fig01_information_interface.pdf",
     "fig03_resource_diagnosis.pdf",
-    "fig04_long_context_n5.pdf",
+    "fig04_memory_prediction.pdf",
 )
 
 
@@ -27,8 +27,11 @@ def main() -> None:
     destination.mkdir(exist_ok=True)
     entries = {}
     for filename in PAPER_FIGURES:
-        original = (source.parent / "long_context_n5" / filename
-                    if filename == "fig04_long_context_n5.pdf" else source / filename)
+        directory = {
+            "fig03_resource_diagnosis.pdf": source.parent / "resource_atlas",
+            "fig04_memory_prediction.pdf": source.parent / "memory_prediction",
+        }.get(filename, source)
+        original = directory / filename
         reader = PdfReader(original)
         writer = PdfWriter(clone_from=reader)
         writer.metadata = None

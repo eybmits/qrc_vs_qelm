@@ -182,6 +182,11 @@ def test_resource_legends_clear_data_and_feature_crop_preserves_export(tmp_path,
                     path = collection.get_transform().transform_path(MplPath(segment))
                     assert not path.intersects_bbox(legend_box, filled=False)
         history_ax = fig.axes[0]
+        assert history_ax.get_xlabel() == "window duration × loss rate"
+        label_box = history_ax.xaxis.label.get_window_extent()
+        assert fig.bbox.contains(label_box.x0, label_box.y0)
+        assert fig.bbox.contains(label_box.x1, label_box.y1)
+        assert not label_box.overlaps(fig.axes[1].yaxis.label.get_window_extent())
         history_legend_box = history_ax.get_legend().get_window_extent()
         target_y = history_ax.transData.transform((0, 0.10))[1]
         assert history_legend_box.y0 - target_y >= 0.03 * history_ax.bbox.height
@@ -470,8 +475,10 @@ def test_native_tikz_story_preserves_readable_labels_and_emulation_scope() -> No
     ).read_text(encoding="utf-8")
     assert r"\usepackage{helvet}" in tikz_source
     assert r"\renewcommand{\familydefault}{\sfdefault}" in tikz_source
-    font_sizes = [float(size) for size in re.findall(r"\\fontsize\{([\d.]+)\}", tikz_source)]
+    core, external_labels = tikz_source.split("% Case labels sit outside the data frames", 1)
+    font_sizes = [float(size) for size in re.findall(r"\\fontsize\{([\d.]+)\}", core)]
     assert font_sizes and min(font_sizes) >= 10 and max(font_sizes) <= 12
+    assert [float(size) for size in re.findall(r"\\fontsize\{([\d.]+)\}", external_labels)] == [9, 9]
     assert r"\resizebox" not in tikz_source and r"\scalebox" not in tikz_source
     for required_component in (
         "QRC", "QELM", r"\rho", r"\widehat", "reset", "window",
@@ -507,6 +514,20 @@ def test_plot_labels_use_plain_language_and_separate_resource_questions() -> Non
         CODE_ROOT / "render_information_interface_figures.py"
     ).read_text(encoding="utf-8")
     assert r"\mathbf" not in renderer_source
+    assert "scaled context" not in renderer_source
+    assert 'ax.set_xlabel("window duration × loss rate")' in renderer_source
+    evaluation = " ".join(
+        (REPO_ROOT / "paper/icaart2027/sections/evaluation.tex").read_text().split()
+    )
+    # The active atlas separates window length from loss instead of
+    # requiring readers to interpret the archived product-coordinate plot.
+    atlas_source = (
+        REPO_ROOT / "paper/figure2_candidates/render_resource_atlas.py"
+    ).read_text(encoding="utf-8")
+    assert 'ax.set_xlabel("Inputs per window"' in atlas_source
+    assert "maps 11 loss rates and windows one to six across three sizes: 198 settings" in evaluation
+    assert "No tested window meets the sampled history criterion" in evaluation
+    assert "two inputs suffice in all sizes" in evaluation
     assert '"?"' not in renderer_source
     assert 'label="root split"' not in renderer_source
     assert 'label="unresolved"' not in renderer_source
@@ -658,8 +679,9 @@ def test_information_interface_figures_are_complete_traceable_and_deterministic(
     assert np.all(np.diff(persistent_error) >= 0)
     np.testing.assert_array_equal(persistent_error[56:], np.full(5, 0.25))
     fading_error = np.asarray(cases["fading"]["post_expiry_pair_midpoint_error_values"])
-    assert fading_error[0] == pytest.approx(0.25 * np.exp(-40 / 30))
-    assert 0 < fading_error[-1] < 0.01 and np.all(np.diff(fading_error) < 0)
+    np.testing.assert_array_equal(fading_error, np.zeros(61))
+    assert cases["fading"]["forgetting_horizon_steps"] == 40
+    assert "special illustrative case, not a generic property of fading memory" in cases["fading"]["decay_scope"]
     assert "not a fitted finite-feature QELM" in output_traces["emulator_scope"]
     assert "not an independent third forecasting target" in output_traces["target_definition"]
     assert output_traces["legend_labels"] == ["QRC", "QELM"]

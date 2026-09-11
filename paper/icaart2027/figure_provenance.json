@@ -1,19 +1,19 @@
 {
   "figures": {
     "fig01_information_interface.pdf": {
-      "anonymous_sha256": "617cf24f7cce2db90254fe25df988940e00803151dbed0f99c87f77d88816633",
+      "anonymous_sha256": "30b94f49b2a26fbfe03b5d06441ed46aeb42244abf1bbe9e5291ea4249b7cb7a",
       "page_content_streams_identical": true,
-      "source_sha256": "5c764772fe042a35048fc175a8e79274a1f500af34f0bf021beab1ef6286b715"
+      "source_sha256": "e1d2e4a8ae170d349ed28d2aad43cd85b46c440569966d2e97975a28539b054f"
     },
     "fig03_resource_diagnosis.pdf": {
-      "anonymous_sha256": "63aef8afa6170c5522626336190d8b2954997739413a5e2688329158c248eda0",
+      "anonymous_sha256": "6556be86ee51c4687212e9beb7b35472a37c79e7b2330f83c8625bae5b463682",
       "page_content_streams_identical": true,
-      "source_sha256": "94848e0eb33f67f4883c50bf953aac48dd926190442b35aec209cfe30fef9829"
+      "source_sha256": "69ceb1342a682cb383c5872d477b34c7d0f8a52e287158c0300f181c8ce3b934"
     },
-    "fig04_long_context_n5.pdf": {
-      "anonymous_sha256": "cc7dd8874cd255f795a0be789ebc6045a94883c2cbec286b57581fbbe9391a47",
+    "fig04_memory_prediction.pdf": {
+      "anonymous_sha256": "073e059ff00d1d8e1a5a792bc7155d46962a50156832b305b9140ee7877a5526",
       "page_content_streams_identical": true,
-      "source_sha256": "9c7559fa2615e1ead63998c78d57b254dc16aa160d5bc17ee44dc4377ce79e4c"
+      "source_sha256": "e71f8efbb347ac8479e459de476074957dc3eb0e9f4ff3a5936abb3881ac2f26"
     }
   }
 }

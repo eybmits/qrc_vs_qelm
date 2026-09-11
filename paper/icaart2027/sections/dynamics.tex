@@ -58,18 +58,16 @@ Its value is independent of the chosen norm.
 
 \begin{figure*}[t]
  \includegraphics[width=\textwidth]{fig03_resource_diagnosis.pdf}
- \caption{Three resources address three limits. NRMSE percentages;
- dashed lines mark $10\%=0.10$.
- a Old-history error versus $\gamma_T\Delta t\,d$ (loss rate, step duration,
- window): original two-/three-qubit and independent four-qubit cohorts,
- 12 roots each.
- b Follow-up: 12 roots per size, $\gamma_T=4,d=6$, fixed six-qubit QELM
- and duration. Intermediate $B=24,30$ are exploratory partial banks on these
- roots; $108,144$ are not shown.
- a,b Size-wise medians and 10th--90th percentile whiskers show root
- variability, not confidence intervals; lines connect tested settings.
- c Four-qubit shot follow-up: medians and selected-policy percentile
- whiskers, with 16 complete fit-and-selection repetitions per root.}
+ \caption{Three resources, three different questions.
+ a Blue windows meet the 10\% old-history criterion in all three target sizes;
+ gray windows do not. Rows are tested loss rates.
+ b More features help, with little improvement beyond 36 here.
+ c Test errors and validation-selected feature counts versus measurement budget;
+ outlines mark medians below 10\% before rounding.
+ Errors are sampled NRMSE percentages, not worst-case bounds.
+ Medians and 10th--90th percentiles (bands in b, rounded ranges in c) describe
+ 12 realizations per cohort, not confidence intervals.
+ Section~\ref{sec:numerics} specifies the criterion and separate studies.}
  \label{fig:resource-diagnosis}
 \end{figure*}
 
@@ -177,7 +175,32 @@ conservation without necessarily causing rapid erasure.
 Appendices~\ref{app:protected-pulse} and~\ref{app:protected-implementation} give the
 pulse calculation, channel parameters, and control results.
 
-The protected example identifies a fundamental information obstruction.
-When observable memory instead fades, practical emulation still requires
-sufficient context, a suitable feature representation, and accurate
-measurements. Section~\ref{sec:numerics} examines these requirements separately.
+\subsection{Finite Resources}
+\label{sec:finite-resources}
+
+Enough history alone does not fix representation or measurement error.
+For inputs in $[0,1]$ and a scalar output, Appendix~\ref{app:bernstein-resources}'s
+midpoint construction assumes uniform state contraction and Lipschitz
+dependence on inputs [Eq.~\eqref{eq:incremental-lipschitz}], stronger than
+observable forgetting. With $r$ encoding copies per input
+and $Q$ independent samples of its bounded readout, its prediction
+$\widehat f^{\rm mid}$ satisfies Eq.~\eqref{eq:midpoint-resource-bound}:
+\[
+ \begin{aligned}
+ &|y(h)-\widehat f^{\rm mid}(S_d(h))|\\
+ &\quad\leq
+ \underbrace{D_d/2}_{\text{missing history}}
+ +\underbrace{\varepsilon_{\rm rep}}_{\text{representation}}
+ +\underbrace{\varepsilon_{\rm shot}}_{\text{measurements}}.
+ \end{aligned}
+\]
+For each fixed history, this holds with probability at least $1-\zeta$
+(failure tolerance $0<\zeta<1$), not simultaneously over all histories.
+The representation and sampling bounds decrease as
+$1/\sqrt r$ and $1/\sqrt Q$, respectively, at fixed window and confidence.
+
+One sufficient construction uses $rd$ qubits and a general table of
+$(r+1)^d$ midpoint coefficients. These require reachable-output extrema;
+their computation is not included in those resource counts. This is a
+constructive upper bound, not an efficient learning method or an exact
+decomposition of fitted-model error.

@@ -76,15 +76,12 @@ fixed-window optimum lies between $D_d/2$ and $D_d$.
 Appendix~\ref{app:window-laws} provides the proofs and shows that randomization
 cannot lower the scalar bound on worst-case expected absolute error.
 
-For the full scalar input alphabet $[0,1]$, Appendix~\ref{app:bernstein-resources} gives an explicit growing QELM family
-using repeated encoding and Bernstein approximation
-\cite{goto2021universal,yu2024nonasymptotic}. Its qubit count and coefficient
-table grow with the window length and requested accuracy. This establishes
-representability with increasing resources. It does not guarantee efficient
-training or make the fixed six-qubit emulator in Section~\ref{sec:numerics}
-universal. Finite feature and measurement budgets introduce additional
-practical limits.
+For the full scalar input alphabet $[0,1]$, repeated encoding and Bernstein approximation give
+an explicit growing QELM family \cite{goto2021universal,yu2024nonasymptotic}.
+Section~\ref{sec:finite-resources} summarizes its resource bounds;
+Appendix~\ref{app:bernstein-resources} gives the construction. This does not
+guarantee efficient training or make the fixed six-qubit emulator in
+Section~\ref{sec:numerics} universal.
 
-The next section examines the dynamical question behind this result.
-Which properties of a QRC make the influence of the missing past vanish,
-and which allow it to persist?
+The next section asks when the missing past becomes negligible and what
+resources emulation requires.

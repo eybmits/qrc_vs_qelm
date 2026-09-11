@@ -177,7 +177,30 @@ def test_midpoint_resource_bound_is_separate_from_preserved_replay_bound(version
     assert r"\frac{D_d}{2}" in midpoint
     assert r"\varepsilon_{\rmrep}" in midpoint
     assert r"\varepsilon_{\rmshot}" in midpoint
-    assert r"1-\zeta" in midpoint
+    if version == "canonical_emulation":
+        # The archived edition retains the probability inside its display.
+        assert r"1-\zeta" in midpoint
+    else:
+        # The compact ICAART displays retain both inequalities; their
+        # probability qualifiers are immediately following prose, not a
+        # claim of simultaneous high-probability control over all histories.
+        assert r"\sup_h|y(h)-f^{\rmmid}(S_d(h))|" in midpoint
+        assert r"|y(h)-\widehatf^{\rmmid}(S_d(h))|" in midpoint
+        for label, expected_scope in (
+            (
+                "eq:qrc-qelm-bound",
+                "The first holds uniformly; the second holds with probability at least "
+                "$1-\\zeta$ for each fixed history $h$, not all histories simultaneously.",
+            ),
+            (
+                "eq:midpoint-resource-bound",
+                "The second bound again holds with probability at least $1-\\zeta$ "
+                "for each fixed history, using independent midpoint readouts.",
+            ),
+        ):
+            after_label = appendix.split(rf"\label{{{label}}}", 1)[1]
+            after_equation = after_label.split(r"\end{equation}", 1)[1].lstrip()
+            assert after_equation.startswith(expected_scope)
     assert "m_d" in appendix
     assert "coefficient" in appendix.lower()
     assert "extrema" in appendix.lower()

@@ -98,7 +98,14 @@ def test_appendix_separates_reachable_geometry_replay_and_sampled_predictors(ver
     ))
     assert r"K_i\sim\operatorname{Binomial}(r,a_i)" in appendix
     assert r"f^{\rm mid}" in appendix and r"\widehat f^{\rm mid}" in appendix
-    assert "positive integer $Q$ is the shot count" in appendix
+    if version == "icaart2027":
+        # The concise appendix defines Q through the number of readout samples;
+        # the promoted main-text bound states the same meaning explicitly.
+        assert r"Let $\widehat f$ average $Q$ independent readouts" in appendix
+        assert r"$Q$-shot average $\widehat f^{\rm mid}$" in appendix
+        assert "$Q$ independent samples of its bounded readout" in _section(version, "dynamics")
+    else:
+        assert "positive integer $Q$ is the shot count" in appendix
 
     # Retire synonyms that previously collided with input symbols, quantum
     # operators, or the separately reported shot budget.

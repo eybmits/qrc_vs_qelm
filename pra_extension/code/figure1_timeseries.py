@@ -22,7 +22,7 @@ PARAMETERS = {
     "dt": 1.0, "sample_every": 1, "x0": 1.2, "discard": 1000,
 }
 # The left schematic spans less physical time, without smoothing its values.
-# Keep the separate output toy's original PARAMETERS and baseline unchanged.
+# Keep the separate output toy's original PARAMETERS and drawing template.
 INPUT_PARAMETERS = {**PARAMETERS, "dt": 0.5, "discard": 2000}
 BEGIN = "% BEGIN REPRODUCIBLE INPUT SAMPLES"
 END = "% END REPRODUCIBLE INPUT SAMPLES"
@@ -33,7 +33,9 @@ OUTPUT_SEED = 2
 OUTPUT_WINDOW = 40
 OUTPUT_WRITE_STEP = 0
 OUTPUT_MEMORY_AMPLITUDE = 0.25
-OUTPUT_FADING_TIMESCALE = 30.0
+OUTPUT_TEMPLATE_TIMESCALE = 30.0
+# A fixed illustrative forgetting horizon, not a function of window access.
+OUTPUT_FORGETTING_HORIZON = 40
 OUTPUT_REVEAL_START = 32
 OUTPUT_REVEAL_DURATION = 64
 OUTPUT_CASES = ("fading", "persistent")
@@ -43,19 +45,29 @@ OUTPUT_AXES_BOUNDS = {
 }
 
 
-def output_baseline(case: str = "fading") -> np.ndarray:
-    """Return the case's known drawing baseline, independent of the stored bit."""
+def _output_template() -> np.ndarray:
+    """Return the unchanged drawing template, unrelated to the left input."""
     raw = mackey_glass_series(
         OUTPUT_N_SAMPLES, rng=np.random.default_rng(OUTPUT_SEED), **PARAMETERS,
     )
-    baseline = 0.4 + 0.65 * (raw - np.min(raw)) / (np.max(raw) - np.min(raw))
+    return 0.4 + 0.65 * (raw - np.min(raw)) / (np.max(raw) - np.min(raw))
+
+
+def output_baseline(case: str = "fading") -> np.ndarray:
+    """Return the case's known drawing baseline, independent of the stored bit."""
+    baseline = _output_template()
     if case == "persistent":
         # A fixed common-input schedule reveals the latent bit. Adjust only
         # its bit-independent baseline to preserve the displayed +1 target.
         return baseline + OUTPUT_MEMORY_AMPLITUDE - _output_memory_coefficients(case)
     if case != "fading":
         raise ValueError(f"Unknown Figure 1 output case: {case!r}")
-    return baseline
+    # Preserve the charcoal drawing while making this old bit fully forgotten
+    # at a fixed horizon. The exponential here belongs only to the known
+    # drawing template; it is no longer the hidden bit's memory coefficient.
+    k = np.arange(OUTPUT_N_SAMPLES, dtype=float)
+    target = baseline + OUTPUT_MEMORY_AMPLITUDE * np.exp(-k / OUTPUT_TEMPLATE_TIMESCALE)
+    return target - _output_memory_coefficients(case)
 
 
 def _output_memory_coefficients(case: str) -> np.ndarray:
@@ -65,7 +77,8 @@ def _output_memory_coefficients(case: str) -> np.ndarray:
         visible = np.clip((k - OUTPUT_REVEAL_START) / OUTPUT_REVEAL_DURATION, 0, 1)
         return OUTPUT_MEMORY_AMPLITUDE * visible**2 * (3 - 2 * visible)
     if case == "fading":
-        return OUTPUT_MEMORY_AMPLITUDE * np.exp(-k / OUTPUT_FADING_TIMESCALE)
+        elapsed = np.clip((k - OUTPUT_WRITE_STEP) / OUTPUT_FORGETTING_HORIZON, 0, 1)
+        return OUTPUT_MEMORY_AMPLITUDE * (1 - elapsed)**2
     raise ValueError(f"Unknown Figure 1 output case: {case!r}")
 
 
@@ -73,18 +86,17 @@ def output_samples(case: str = "persistent") -> np.ndarray:
     """Return the +1-history target and its ideal window conditional mean.
 
     The persistent bit is gradually revealed by a common future-control
-    schedule independent of window length. The fading trace is unchanged.
+    schedule independent of window length. The upper toy forgets this bit
+    completely by a fixed horizon, preserving its displayed charcoal target.
     Both predictors lose access to the bit when it leaves their window.
     """
     k = np.arange(OUTPUT_N_SAMPLES, dtype=float)
-    coefficients = _output_memory_coefficients(case)
     baseline = output_baseline(case)
     if case == "persistent":
-        target = output_baseline() + OUTPUT_MEMORY_AMPLITUDE
-        prediction = np.where(k < OUTPUT_WRITE_STEP + OUTPUT_WINDOW, target, baseline)
+        target = _output_template() + OUTPUT_MEMORY_AMPLITUDE
     else:
-        target = baseline + coefficients
-        prediction = baseline + coefficients * (k < OUTPUT_WRITE_STEP + OUTPUT_WINDOW)
+        target = _output_template() + OUTPUT_MEMORY_AMPLITUDE * np.exp(-k / OUTPUT_TEMPLATE_TIMESCALE)
+    prediction = np.where(k < OUTPUT_WRITE_STEP + OUTPUT_WINDOW, target, baseline)
     return np.column_stack((target, prediction))
 
 
@@ -100,7 +112,7 @@ def tikz_output_sample_block() -> str:
 
 
 def output_provenance() -> dict:
-    baseline = output_baseline()
+    baseline = _output_template()
     expiry = OUTPUT_WRITE_STEP + OUTPUT_WINDOW
     cases = {}
     for case in OUTPUT_CASES:
@@ -110,8 +122,8 @@ def output_provenance() -> dict:
         cases[case] = {
             "title": f"{case.title()} memory",
             "formulas": {
-                "memory_coefficient": "c[t]=0.25*exp(-t/30)" if case == "fading" else "c[t]=0.25*s[t]^2*(3-2*s[t]); s[t]=clip((t-32)/64,0,1)",
-                "baseline": "g[t]=template[t]" if case == "fading" else "g[t]=template[t]+0.25-c[t]",
+                "memory_coefficient": "c[t]=0.25*(1-s[t])^2; s[t]=clip(t/40,0,1)" if case == "fading" else "c[t]=0.25*s[t]^2*(3-2*s[t]); s[t]=clip((t-32)/64,0,1)",
+                "baseline": "g[t]=template[t]+0.25*exp(-t/30)-c[t]" if case == "fading" else "g[t]=template[t]+0.25-c[t]",
                 "target": "g[t]+c[t] for the displayed bit b=+1",
                 "other_history": "g[t]-c[t] for bit b=-1",
                 "prediction": "g[t]+c[t] for t<40; g[t] for t>=40",
@@ -127,9 +139,15 @@ def output_provenance() -> dict:
             "title_anchor_cm": None,
             "time_tick_labels_visible": case == "persistent",
         }
-    cases["fading"]["decay_timescale_steps"] = OUTPUT_FADING_TIMESCALE
+    cases["fading"]["forgetting_horizon_steps"] = OUTPUT_FORGETTING_HORIZON
+    cases["fading"]["preservation_scope"] = (
+        "The 101 charcoal target samples are unchanged; the shared baseline, alternative-bit history "
+        "and ideal prediction now describe exact loss of this bit by a fixed horizon of 40 steps. "
+        "The exponential term preserves the drawing template only, not the bit's memory."
+    )
     cases["fading"]["decay_scope"] = (
-        "The bit coefficient decays from t=0, before and after window expiry. "
+        "The bit coefficient decays from t=0 and is exactly zero from t=40, independently of window length. "
+        "Exact forgetting of this pair is a special illustrative case, not a generic property of fading memory. "
         "This is one old input's influence at fixed d, not the uniform D_d limit as d grows."
     )
     cases["persistent"]["preservation_scope"] = "All 101 charcoal target samples equal the original persistent toy byte-for-byte; its bit-independent baseline and ideal prediction now reflect gradual revelation."
@@ -176,7 +194,7 @@ def output_provenance() -> dict:
             "shared_future": "Within each case both histories have identical later inputs and the same known baseline g[t]; the bit is independent of time and later inputs. Baselines differ between cases.",
             "visible_before_expiry": "The window contains the bit for t<40, so the ideal prediction matches the selected history.",
             "invisible_after_expiry": "For t>=40 the two histories have identical windows; their common conditional mean is g[t].",
-            "expiry_discontinuity": "The ideal predictor loses access to the bit abruptly at t=40; its trace is not smoothed across expiry. The lower case has only a small jump because its stored bit is still weakly visible then.",
+            "expiry_discontinuity": "The ideal predictor loses access to the bit at t=40. The upper curves remain identical because its coefficient is then zero, not because access is blended. The lower case retains its small jump and subsequent gradual divergence.",
         },
         "comparison_scope": "Each case shows the selected +1-history target against the ideal window conditional mean of a balanced two-history toy; the -1 history is recorded but not drawn.",
         "curve_gap_scope": "After expiry each displayed discrepancy equals the midpoint error of that case's specific balanced pair. It is not labeled or identified as the generic supremal D_d/2.",
@@ -194,19 +212,19 @@ def output_provenance() -> dict:
         },
         "prediction_marker": {"inner_sep_pt": 1.45, "every_nth_sample": 2,
                               "target_dot_layer": "drawn after the open ring so agreement stays visible"},
-        "optimality_scope": "After expiry g[t] is both the squared-loss Bayes predictor for the balanced bit and the minimax midpoint of the scalar pair. Other window predictors may fit the shown history but cannot fit both histories exactly.",
+        "optimality_scope": "After expiry g[t] is both the squared-loss Bayes predictor for the balanced bit and the minimax midpoint of the scalar pair. Where the coefficient remains nonzero, other window predictors may fit the shown history but cannot fit both histories exactly. In the upper example the coefficient is zero and both histories are predicted exactly.",
         "emulator_scope": "The ideal conditional mean isolates missing input information. It is not a fitted finite-feature QELM, a claim of its attainability by the tested emulator, or new quantum-advantage evidence.",
         "styles": {"target": "ink thin line with dense filled markers", "ideal_window": "coral thin line with open markers"},
         "background_access_cue": {
             "before_expiry": {"fill": "green!24", "time_extent": [-3, 40],
                               "meaning": "the old input is still in the explicit window"},
             "after_expiry": {"fill": "blue!16", "time_extent": [40, 103],
-                             "meaning": "the old input is outside the window but still affects the QRC"},
+                             "meaning": "the old input is outside the window; it no longer affects the upper output but still affects the lower output"},
             "split_time": expiry,
             "split_x_local_cm": 4.15 * 43 / 106,
             "layer": "behind grid and both pairs of trajectories; full frame height",
             "non_color_cue": "dashed guide and tick d separate the two access regimes",
-            "removed_labels": ["output", "old input leaves window", "QRC retains its influence", "Fading memory", "Persistent memory"],
+            "removed_labels": ["output", "old input leaves window", "QRC retains its influence"],
             "scope": "The same old input leaves each fixed window; expiry is not the onset of QRC memory or of fading. "
                      "Caption explains the two access regimes. Hues and tint strengths match the input plot.",
         },
@@ -216,13 +234,18 @@ def output_provenance() -> dict:
         "amplitude_limits": [0.45, 1.35],
         "amplitude_ticks": [0.6, 0.8, 1.0, 1.2],
         "display_headroom": "Both cases share the same linear y-axis [0.45,1.35]; all target and prediction samples remain inside the frames. "
-                            "The entire fading example and the persistent target are unchanged; only the lower ideal prediction changes.",
+                            "Both charcoal targets and the entire lower example are unchanged; only the upper ideal prediction changes.",
         "time_limits": [-3, 103],
         "time_ticks": [0, 40, 80],
         "time_tick_labels": ["0", "d", "2d"],
         "time_tick_label_scope": "numeric/symbolic time tick labels appear on the lower persistent-memory frame only",
         "shared_time_label_anchor_cm": None,
-        "case_label_style": "no case labels in the artwork; upper and lower cases are explained in the caption",
+        "case_label_style": "two quiet white rounded boxes outside the frames, matching the shared model key; no data obscured",
+        "case_labels": {
+            "fading": {"lines": ["Fading memory", "Window sufficient"], "bounds_cm": [13.70, 11.98, 17.50, 12.66]},
+            "persistent": {"lines": ["Persistent memory", "Window insufficient"], "bounds_cm": [13.70, 3.68, 17.50, 4.36]},
+            "scope": "Sufficiency refers to the two histories in each schematic, not a uniform claim for all histories of a general reservoir.",
+        },
         "horizontal_padding_scope": "Axis-only margins keep endpoint markers off the frame; the 101 toy coordinates remain indexed 0..100.",
     }
 
@@ -387,7 +410,7 @@ def provenance(source: Path) -> dict:
         "annotation_scope": "No standalone zoom or schematic tags in the artwork. "
                             "The initial-state kets and fixed-gate blocks remain, without fresh state or fixed gates text labels. "
                             "One larger shared input plot has an interior selected step and a bracketed causal window; "
-                            "the two output frames have no internal case labels and share one QRC/QELM legend between them. "
+                            "the two output frames have external memory/sufficiency labels and share one QRC/QELM legend between them. "
                             "There are no panel letters, epsilon or D_d/2 artwork labels; the caption identifies the ideal window predictions as schematic.",
         "scope": "Illustrates current-input versus explicit-window access only; "
                  "no QRC or QELM predictions are generated from this trace.",

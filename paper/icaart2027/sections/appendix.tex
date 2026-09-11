@@ -145,9 +145,8 @@ $D_d\geq\delta$. Invariance also gives $c_d\leq1$, so $r_{\rm vis}=1$.
 \subsection{Explicit QELM Resource Bounds}
 \label{app:bernstein-resources}
 
-\emph{Assumptions and replay error.} Take inputs in $[0,1]$ and trace distance
-$D_{\rm tr}(\rho,\sigma)=\tfrac12\|\rho-\sigma\|_1$, with trace norm
-$\|\cdot\|_1$. Assume the stronger incremental bound
+\emph{Assumptions and replay error.} Take inputs in $[0,1]$ and the trace
+distance defined in Section~\ref{sec:dynamics}. Assume the incremental bound
 \begin{equation}
  \begin{aligned}
  &D_{\rm tr}(\Phi_a(\rho),\Phi_{a'}(\sigma))\\
@@ -176,34 +175,31 @@ Eq.~\eqref{eq:incremental-lipschitz} gives
  \leq2ML_{\rm in}\sum_{i=1}^d\eta^{d-i}|a_i-a_i'|.
  \label{eq:weighted-input-bound}
 \end{equation}
-Together with $\mathbb E|K_i/r-a_i|\leq1/(2\sqrt r)$, this controls
-representation error. The construction uses $rd$ qubits and $(r+1)^d$ coefficients.
+Together with $\mathbb E|K_i/r-a_i|\leq1/(2\sqrt r)$, this bounds
+representation error.
 
-\emph{Three error contributions.} Let $\widehat f$ average independent
-readouts $g_d(K_1/r,\ldots,K_d/r)$; the positive integer $Q$ is the shot count.
-The history bound is $\varepsilon_{\rm hist}=2M\eta^d$.
-For failure probability $0<\zeta<1$, representation and sampling contribute
+\emph{Three error contributions.} Let $\widehat f$ average $Q$ independent
+readouts $g_d(K_1/r,\ldots,K_d/r)$, with
+$\varepsilon_{\rm hist}=2M\eta^d$.
+For failure probability $0<\zeta<1$, representation and sampling bounds are
 \[
  \begin{aligned}
  \varepsilon_{\rm rep}&=\frac{ML_{\rm in}(1-\eta^d)}{(1-\eta)\sqrt r},\\
  \varepsilon_{\rm shot}&=M\sqrt{\frac{2\log(2/\zeta)}{Q}}.
  \end{aligned}
 \]
-Hoeffding's inequality~\cite{hoeffding1963probability} gives
+Hoeffding's inequality~\cite{hoeffding1963probability} gives the bounds
 \begin{equation}
  \begin{gathered}
  \sup_h|y(h)-f(S_d(h))|
  \leq\varepsilon_{\rm hist}+\varepsilon_{\rm rep},\\
- \Pr\!\left[
- \begin{gathered}
- |y(h)-\widehat f(S_d(h))|\\
- \leq\varepsilon_{\rm hist}+\varepsilon_{\rm rep}+\varepsilon_{\rm shot}
- \end{gathered}
- \right]\geq1-\zeta .
+ |y(h)-\widehat f(S_d(h))|
+ \leq\varepsilon_{\rm hist}+\varepsilon_{\rm rep}+\varepsilon_{\rm shot}.
  \end{gathered}
  \label{eq:qrc-qelm-bound}
 \end{equation}
-The probability guarantee is for each fixed history $h$, not all histories simultaneously.
+The first holds uniformly; the second holds with probability at least
+$1-\zeta$ for each fixed history $h$, not all histories simultaneously.
 
 Product-binomial and statevector checks differ by at most $8.33\times10^{-17}$;
 every tested $(d,r)$ pair satisfies Eq.~\eqref{eq:qrc-qelm-bound}.
@@ -217,20 +213,38 @@ range $[-M,M]$, preserving $\varepsilon_{\rm rep}$ and $\varepsilon_{\rm shot}$:
  \begin{gathered}
  \sup_h|y(h)-f^{\rm mid}(S_d(h))|
  \leq\frac{D_d}{2}+\varepsilon_{\rm rep},\\
- \Pr\!\left[
- \begin{gathered}
  |y(h)-\widehat f^{\rm mid}(S_d(h))|
- \\
- \leq\frac{D_d}{2}+\varepsilon_{\rm rep}+\varepsilon_{\rm shot}
- \end{gathered}
- \right]\geq1-\zeta .
+ \leq\frac{D_d}{2}+\varepsilon_{\rm rep}+\varepsilon_{\rm shot}.
  \end{gathered}
  \label{eq:midpoint-resource-bound}
 \end{equation}
-Independent midpoint readouts give the same pointwise guarantee in $h$.
+The second bound again holds with probability at least $1-\zeta$ for each
+fixed history, using independent midpoint readouts.
 Here $D_d/2\leq M\eta^d$, versus replay's $2M\eta^d$.
-Coefficients require reachable-output extrema; efficient training is not
-guaranteed. Replay checks do not validate this midpoint construction.
+
+\emph{Exact construction checks.} For Section~\ref{sec:sharpness}'s channel,
+constant inputs reach every population in $[0,1]$ in closure. A suffix
+$s=(a_1,\ldots,a_d)$ leaves a compatible-output interval of width $\eta^d$
+and midpoint
+\[
+ m_d(s)=\frac{\eta^d}{2}+(1-\eta)\sum_{i=1}^d\eta^{d-i}g(a_i).
+\]
+Thus every window predictor has worst-case error
+$\eta^d/2+\|f-m_d\|_\infty$ in this example.
+From the fixed initial state, length-$L$ prefixes give width $\eta^d(1-\eta^L)$.
+For $g(a)=a^2$, replacing each $g(a_i)$ in the midpoint by
+$K_i(K_i-1)/[r(r-1)]$ gives its exact expectation for $r\geq2$.
+For the exponential target, Bernstein coefficients $m_d(\boldsymbol k/r)$
+give scalar bias
+\[
+ b_r(a)=\frac{[1+a(e^{2/r}-1)]^r-e^{2a}}{e^2-1}\geq0.
+\]
+The global error is $\eta^d/2+(1-\eta^d)\max_{a\in[0,1]}b_r(a)$:
+all coordinates can maximize the nonnegative bias together. Its derivative
+has one interior zero, permitting a one-dimensional maximization.
+Kraus, statevector, and binomial checks verify evaluations; the identities
+establish global sharpness. Additivity permits marginal-count evaluation
+of the $rd$-qubit encoding.
 
 \subsection{Protected Memory}
 \label{app:protected-calibration}

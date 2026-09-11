@@ -1,41 +1,26 @@
 \section{DISCUSSION AND CONCLUSIONS}
 \label{sec:summary}
 
-Finite context can replace recurrent quantum memory precisely when the
-missing past becomes uniformly negligible in the outputs we want to reproduce.
-Our analysis makes this boundary quantitative. Two histories with identical
-recent inputs look the same to a window model, even when their reservoir
-outputs differ. For scalar outputs, half the largest such difference is
-exactly the smallest achievable worst-case error. Under the assumptions of
-Section~\ref{sec:criterion}, a growing universal reset-QELM family evaluated
-through exact expectations can approach this limit. This establishes both
-when replacement is possible to arbitrary accuracy and what error remains
-unavoidable at a given window length.
+For time-series emulation, the choice between a reset-window QELM and a QRC
+starts with the history required for the desired output accuracy. Consider
+a QELM when that history fits in an affordable window; retain the QRC when
+relevant information must be carried beyond it. Our analysis makes this
+distinction quantitative. Under our assumptions, growing windows and
+sufficient QELM capacity permit arbitrarily accurate emulation with exact
+expectations precisely when the missing past's influence on the chosen
+outputs vanishes uniformly. Persistent observable memory can instead create
+an error floor that no additional window-model capacity removes.
 
-The key distinction is between information stored in the quantum state and
-information needed for the output. A reservoir may retain information
-indefinitely without obstructing emulation, provided that no future inputs
-can make it affect the chosen outputs. When relevant memory fades, its decay
-rate determines the required context length. Our two-qubit construction
-demonstrates the opposite case. An old input leaves a measurable trace that
-survives beyond every finite window, creating an error floor for both quantum
-and classical window predictors. More features or more precise measurements
-cannot recover information that the model never receives.
+This is an information criterion, not a guarantee that a particular QELM
+will train successfully. Direct forecasting tests show how restricting
+accessible history can worsen prediction, while larger windows and classical
+controls rule out a uniquely quantum interpretation. Fitted accuracy also
+depends on representation and measurement precision. The constructive
+guarantees establish representability, not efficient training or resource
+savings.
 
-The simulations show why sufficient history is only the first requirement
-for practical emulation. Longer windows reduce the contribution from missing
-history, but the fitted model must still represent the resulting input--output
-relationship accurately. Finite measurements introduce another limit, so
-useful feature capacity depends on the available measurement budget. These
-requirements are distinct, and improving one does not automatically resolve
-the others. Quadratic delay models outperform the tested QELMs, and the
-theoretical existence result guarantees neither efficient learning nor
-resource savings. The experiments therefore establish no quantum advantage.
-
-Together, these insights give a clear order for evaluating replacement models.
-First determine whether the window contains enough information. Then assess
-whether the representation, training, and measurements can use it effectively.
-This separates errors that require access to more history from errors that
-better modeling or measurement can reduce. It provides a principled basis
-for deciding when memory can be supplied explicitly through recent inputs
-and when information beyond the window must remain accessible.
+The resulting workflow is to establish how much history is needed, then
+test whether the available model and measurements can use it. This
+separates errors requiring access to older inputs from errors that better
+modeling can reduce, giving a principled basis for retaining or replacing
+the QRC.

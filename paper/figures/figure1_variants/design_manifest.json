@@ -1,7 +1,7 @@
 {
   "canonical_source": "paper/figures/information_interface/fig01_information_interface.tex",
-  "canonical_source_sha256": "e668dd80417e5d3541ed19d409f28e02b0912aead21672abcb18dcab77f57748",
-  "design_notes_sha256": "f572893e76bdd02b3d90a19eef954cdc62e2e2820a763a56802f037da277bb4a",
+  "canonical_source_sha256": "6a8899c05d37e6784cc0cdff2f87129cc92ab457c216c18278745baeddec5166",
+  "design_notes_sha256": "b222a6b7da1555f88cea18071125374a697f86b8d70f8a5529ded28602961f6b",
   "input_timeseries_sha256": "4a7feed74ea28313ececc2b922b9d1a385046e3805fd6546960a8766cc80ba8e",
   "native_width_inches": 7.055,
   "schema": "figure1_design_candidates_v2",
@@ -11,9 +11,9 @@
   "variants": {
     "variant_a_architectures": {
       "artifacts": {
-        "variant_a_architectures.pdf": "5c764772fe042a35048fc175a8e79274a1f500af34f0bf021beab1ef6286b715",
-        "variant_a_architectures.png": "30a2868260d437f1119392025ee641c4e2cfdf082a780f6179b04ee3fa5c6e7a",
-        "variant_a_architectures.tex": "e668dd80417e5d3541ed19d409f28e02b0912aead21672abcb18dcab77f57748"
+        "variant_a_architectures.pdf": "e1d2e4a8ae170d349ed28d2aad43cd85b46c440569966d2e97975a28539b054f",
+        "variant_a_architectures.png": "d36245dccfe762e721fbd056efa528cb89f8072152810b6981445a63b02486fb",
+        "variant_a_architectures.tex": "6a8899c05d37e6784cc0cdff2f87129cc92ab457c216c18278745baeddec5166"
       },
       "canvas_aspect_ratio": 1.8666353086437901,
       "pdf_size_points": [

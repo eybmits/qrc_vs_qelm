@@ -3,10 +3,238 @@
 This directory contains the conference-format version of the current paper.
 Only this ICAART version is now maintained. The journal-format draft in
 `../canonical_emulation/` is retained unchanged as an inactive version.
-Original results are preserved. Figure 2 adds a separately frozen feature-density
-follow-up and the existing independent N4 history cohort. Panel c is unchanged.
+Original results are preserved. Figure 2 uses the existing separate history,
+feature-density and finite-shot studies without pooling their cohorts.
 There is one paper, including its proofs and numerical methods, not a separate
 supplement.
+
+## Current: three-panel Figure 3 with stacked NARMA addition (11 September 2026)
+
+Figure 3 now has three columns in the same 6.221 by 3.65 inch canvas:
+laser-driven QRC emulation (a), vertically stacked NARMA10 target/prediction
+traces and history restrictions (b), and the measured-input memory control
+above the exact red-floor construction (c). The active asset is
+`figures/fig04_memory_prediction.pdf`. No old curves are dropped: the
+128-row laser excerpt, 96-row NARMA excerpt, all history budgets, both
+quadratic controls, both loss rates and all encoding-copy points are retained.
+Only tick density, line placement, labels and layout change.
+
+The caption keeps laser emulation, synthetic task prediction, paired QRC gaps
+and analytical worst-case error distinct. NARMA's 24 fresh roots are not pooled
+with the original 12-root laser cohort. Percentile spread and replay costs
+remain explicit. The earlier two-column Figure 3 and standalone NARMA asset
+are preserved as alternatives. Figures 1/2, fonts, margins and proofs are
+unchanged. Current counts and visual/clean-source checks are in the manifest.
+
+```sh
+MPLCONFIGDIR=/private/tmp/qrc-mpl-cache PYTHONPATH=pra_extension/code:src .venv/bin/python pra_extension/code/render_memory_prediction.py
+.venv/bin/python paper/icaart2027/prepare_assets.py
+.venv/bin/python paper/icaart2027/build_submission.py
+```
+
+## Previous: earlier Figure 3 restored, NARMA retained as an addition (11 September 2026)
+
+At the author's request, the active Figure 3 is again the unchanged
+`figures/fig04_emulation_evidence.pdf`: laser-driven QRC-output emulation (a),
+the paired-prefix memory test (b), and analytical convergence with the bright-red
+"Unavoidable window error" reference (c). The laser trace is a measured input,
+not the forecasting target. The red limit belongs only to the separate
+constructed benchmark, not the laser data. The original 12-root emulation
+cohort is not pooled with the later forecasting studies.
+
+Section 5.1 retains the 24-fresh-root NARMA10 prediction check as a short
+additional result, including the same-QRC history restriction and the
+twelve-input quadratic control. Appendix E.5 documents both demonstrations.
+NARMA10 is a synthetic task, not a measured real-world record. An optional
+standalone figure is available at
+`../figures/narma_additional/narma_additional.pdf`; it is not an extra page
+in the paper. The direct-laser forecasting results and three-column task
+composite are retained as archived alternatives, with all data and provenance.
+No simulations, seed selections, or curve values changed in this restoration.
+
+Repeated methods wording was condensed without changing the publisher fonts,
+margins, or proofs. The paper has twelve pages and a 183-word abstract.
+Current counts and the clean-source and visual checks are
+recorded in `ICAART2027_MANIFEST.json`.
+
+```sh
+MPLCONFIGDIR=/private/tmp/qrc-mpl-cache PYTHONPATH=pra_extension/code:src .venv/bin/python pra_extension/code/render_narma_additional.py
+.venv/bin/python paper/icaart2027/prepare_assets.py
+.venv/bin/python paper/icaart2027/build_submission.py
+```
+
+This is an editorial revision, not policy approval or a portal submission.
+All entries below describe earlier revisions.
+
+## Previous: direct task prediction and fresh-root memory controls (11 September 2026)
+
+Figure 3 now contains actual next-value prediction on measured laser data (a),
+driven synthetic NARMA10 targets (b), and reset/refit history restrictions (c).
+Neither quantum model learns the other's output in this figure. All 24 fresh
+roots per study are retained; the earlier 12-root studies remain separate.
+The first fresh root and first 96 scored test rows were fixed before running.
+Traces are not smoothed or averaged across roots. Slow-loss laser results and
+the strong longer-window classical NARMA control remain visible.
+
+Independent verification recomputed all 1,896 score rows and checked 7,920
+saved-readout predictions against reconstructed channels. All four prospective
+direction checks pass in 24/24 roots. This supports useful history beyond four
+inputs in the selected tasks, not a uniquely quantum requirement or failure of
+every finite window. Laser variation is conditional on one measured record.
+Full results, limitations and reproduction commands are in
+`../../pra_extension/TASK_MEMORY_REPLICATION_README.md`.
+
+The active asset is `figures/fig04_task_memory.pdf`. The former emulation,
+paired-prefix, and sharpness artwork and all source rows are preserved.
+Exact sharpness results remain in Section 5.5 and Appendix C; their standalone
+curve is no longer in the main figure. Abstract, introduction, model scope,
+evaluation, conclusion and numerical methods now distinguish emulation from
+the new direct-task comparison. Repeated prose was condensed to retain twelve
+pages and a 184-word abstract. Figure 1/2 artwork, proof equations, publisher
+fonts and margins are unchanged by this update.
+
+```sh
+MPLCONFIGDIR=/private/tmp/qrc-mpl-cache PYTHONPATH=pra_extension/code:src .venv/bin/python pra_extension/code/render_task_memory.py --source results_task_memory_replication_v1 --output paper/figures/task_memory
+.venv/bin/python paper/icaart2027/prepare_assets.py
+.venv/bin/python paper/icaart2027/build_submission.py
+```
+
+This is a scientific/editorial update, not policy approval or a portal submission.
+All entries below describe earlier revisions.
+
+## Previous: resource atlas and measured-input memory control (11 September 2026)
+
+Figure 2 now shows the actual window/loss-rate history map, aligned feature
+curves, and an error matrix with validation-choice frequencies. Percentile
+ranges remain visible. It is built from all 198 history cells, 288 feature rows,
+48 shot-root rows and 768 validation choices; later plateau budgets remain in
+the source export. Its publication source is `paper/figures/resource_atlas`.
+
+Figure 3 retains the same laser excerpt and analytic reference. Its new panel b
+shows the existing paired-control output gaps, with medians and 10th–90th
+percentiles across all 12 seeds for each rate. The first 48 shared inputs match
+the original control figure. A framed mini-plot, lightly overlapping the
+upper edge without hiding data, displays the actual two assembled input
+histories. This is a controlled splice of measured inputs, not two naturally
+repeated records, a global diameter estimate, or proof of permanent memory.
+The N5 results remain in the text, original figures and complete source ledger.
+
+At the author's request, Figure 3(c)'s fixed floor is now bright red and
+labeled "Unavoidable window error". Its value and all curve data are unchanged;
+the dashed style also distinguishes it in grayscale.
+
+The Figure 3(b) input-history strip now reads "Different earlier inputs" and
+"Same inputs from here on". Its frame is slightly wider to fit the wording;
+the fast/slow-loss legend, data and remaining figure layout are unchanged.
+
+Only Figure 2/3 presentation, their supporting descriptions, and duplicate
+prose changed. The abstract, introduction, conclusion, proof equations,
+publisher fonts/margins, numerical runner and frozen protocols are preserved.
+The PDF remains twelve pages. Earlier entries below describe prior revisions.
+
+```sh
+MPLCONFIGDIR=/private/tmp/qrc-mpl-cache .venv/bin/python paper/figure2_candidates/render_resource_atlas.py --publication --output paper/figures/resource_atlas
+MPLCONFIGDIR=/private/tmp/qrc-mpl-cache PYTHONPATH=pra_extension/code:src .venv/bin/python pra_extension/code/render_figure3_candidate.py --publication --output paper/figures/emulation_evidence
+.venv/bin/python paper/icaart2027/prepare_assets.py
+.venv/bin/python paper/icaart2027/build_submission.py
+```
+
+## Integrated measured-input Figure 3 (10 September 2026)
+
+The author-selected combined plot is now part of the twelve-page ICAART PDF.
+Figure 3(a) shows the fixed Santa Fe laser excerpt with trained four-input QELM
+emulation of fast- and slow-loss QRC outputs; (b) combines both N5 loss rates
+without dropping any of the 360 window-study observations; (c) retains every
+analytic encoding-copy setting. The archived N5 feature-budget panel is no
+longer displayed, but its data, original artwork and main-text result remain.
+Figures 1 and 2 are unchanged. The new asset is
+`figures/fig04_emulation_evidence.pdf`; prior figure-selection descriptions
+below record earlier revisions.
+
+Section 5.1 adds the separate demonstration and its 12-seed median errors.
+Appendix E.5 specifies chronological splits, training-only scaling, 33-level
+inputs, matched four-qubit dynamics and 48 features, ridge selection and the
+same-window control. The observable target is not a forecast of future laser
+intensity; the fitted errors do not establish global worst-case bounds or
+permanent memory. The data source is cited to the Santa Fe competition volume.
+
+Repeated evaluation/methods prose was condensed to keep twelve pages.
+Abstract, introduction, theory, conclusion and Appendix A--D are unchanged;
+equations (12)--(26), publisher fonts and margins are preserved. The original
+numerical runner and its pre-simulation protocol hashes are unchanged.
+Reproduction and figure provenance are in
+`../../pra_extension/LASER_DEMONSTRATION_README.md`.
+
+```sh
+PYTHONPATH=pra_extension/code:. .venv/bin/python pra_extension/code/render_figure3_candidate.py --publication --output paper/figures/emulation_evidence
+.venv/bin/python paper/icaart2027/prepare_assets.py
+.venv/bin/python paper/icaart2027/build_submission.py
+```
+
+## Finite-resource bridge (10 September 2026)
+
+Section 4.4 now brings Appendix C's midpoint resource guarantee into the main
+theoretical narrative, immediately before the experiments. Its unnumbered
+summary names missing history, representation, and measurement contributions,
+with explicit stronger contraction/Lipschitz assumptions, fixed-history
+probability, copy/shot rates, construction costs, and the need for reachable
+output extrema. It is a sufficient construction, not an efficient learning
+algorithm or an exact decomposition of fitted-model error.
+
+Repeated resource prose in Section 3 and Appendix C, the repeated Figure 1
+description in Section 2, and the duplicated threshold-sensitivity paragraph
+in Appendix E are condensed; the latter remains in Section 5.2. Equations
+(21)--(22) retain both bounds and their numbering, with sampling probabilities
+stated directly underneath instead of nested probability brackets. All proofs,
+data, figures, captions, and publisher formatting are preserved. The paper
+remains twelve pages with a 187-word abstract.
+
+## Figure-caption readability (10 September 2026)
+
+The Abstract now uses the author's selected explanation: accurate emulation
+does not require all stored information to disappear, only the influence of
+inputs outside the window on the chosen outputs. All three active captions
+lead with what the reader should see and understand. Detailed settings remain
+in Sections 2 and 5 and the appendix. The captions retain the distinctions
+between schematic illustrations, sampled errors, and exact constructed
+readouts. No plot artwork, data, comparison conditions, fonts, or margins
+changed. The rebuilt paper remains twelve pages, with a 187-word abstract.
+
+## Exact sharpness integration (10 September 2026)
+
+The active ICAART draft adds Section 5.5 and incorporates its Cobalt convergence
+panel into Figure 3(d). Figure 3 now groups the three original long-context
+panels and the analytical construction in a compact 2-by-2 layout; there is
+no separate Figure 4. Figures 1 and 2 are unchanged, and no numerical series
+are dropped. Original standalone figure artifacts remain archived.
+The new post hoc checks demonstrate exact quadratic midpoint attainment and
+convergence of a specified nonpolynomial Bernstein readout, not trained-model
+performance or an optimal error at each finite capacity. The target is a
+classical leaky integrator embedded in a one-qubit channel. Large-copy points
+use factorized exact expectations, not full-register statevectors.
+
+Appendix C gives the analytic identities behind the benchmark; Appendix E.1
+uses a short biased-history example to distinguish sampled variance from
+worst-case error. No extra variance figure or redundant protected-memory rerun
+is included. The author's new Abstract, Introduction, and Conclusion framing
+is integrated. Only repeated explanations are shortened to retain twelve
+pages; the publisher template, existing experimental data, proofs, and
+equation numbers (12)--(26) are preserved. The inactive journal is untouched.
+
+The auditable implementation, checks, resource caveats, and supplied-archive
+provenance are documented in `../../pra_extension/SHARPNESS_BENCHMARKS.md`.
+Regenerate the new plot from the repository root with:
+
+```bash
+PYTHONPATH=pra_extension/code:. .venv/bin/python pra_extension/code/render_long_context_sharpness.py
+.venv/bin/python paper/icaart2027/prepare_assets.py
+.venv/bin/python paper/icaart2027/build_submission.py
+```
+
+The notes below retain earlier revision history; where they describe a standalone
+construction figure, four evaluation subsections, or an earlier conclusion, this update
+supersedes those descriptions. Submission policy and human approval remain
+separate from these scientific and formatting changes.
 
 ## Current appendix revision
 
@@ -74,18 +302,20 @@ comparison with the pre-refresh sources after removing citation commands and
 whitespace. The citations support these existing premises and methods, not
 an attribution of the paper's window-emulation theorem. Both PDFs stayed within the twelve-page limit.
 
-**Submission status: blocked.** The current PDF omits preparation-tool mentions,
-citations and disclosure at the author's editing request. Its presentation can
+**Submission status: blocked.** The author-approved short disclosure now names
+OpenAI Codex and its assistance with ideation, wording, code and figures,
+including debugging, and states author review and responsibility.
+Affected-section citations and conceptual-figure tool/prompt credit remain absent. Its presentation can
 pass format checks, but it does not satisfy the venue's currently published
 disclosure requirements. This is an editorial draft, not a submission-ready
 paper. The required policy decision and known preparation history are retained
 in `SUBMISSION_CHECKLIST.md`, outside the paper and anonymous source ZIP.
 
 The current main-paper selection contains three figures: the architecture/theory
-overview (Figure 1), resource diagnosis (Figure 2, formerly Figure 3), and the
-separate five-qubit longer-context study (Figure 3, formerly Figure 4).
+overview (Figure 1), resource diagnosis (Figure 2), and the combined
+longer-context and exact-construction figure (Figure 3).
 Artifact filenames stay `fig01_information_interface.pdf`,
-`fig03_resource_diagnosis.pdf`, and `fig04_long_context_n5.pdf`.
+`fig03_resource_diagnosis.pdf`, and `fig04_long_context_sharpness.pdf`.
 The former Figure 2 phase map is omitted as a standalone main-paper float,
 not deleted: its `fig02_information_frontier` PDF, PNG, and source CSV remain
 in `../figures/information_interface/`; its renderer and upstream results
@@ -125,17 +355,25 @@ the existing replay implementation and its numerical validation are unchanged.
 
 ## Current Figure 1: fading versus persistent memory
 
-The two stacked right-hand frames now show Fading memory and Persistent
-memory, with one shared charcoal-filled QRC / coral-open QELM key and no
-case labels inside the artwork. Each case uses a known bit-independent
-baseline and a balanced old bit, at fixed d=40 and evolving time t.
-The upper example and lower charcoal target are unchanged. In the lower
+The two stacked right-hand frames have quiet external labels: "Fading memory /
+Window sufficient" above and "Persistent memory / Window insufficient" below.
+One shared charcoal-filled QRC / coral-open QELM key remains between them.
+Each case uses a known bit-independent baseline and a balanced old bit,
+at fixed d=40 and evolving time t. Both charcoal targets and the entire lower
+example are unchanged. The upper bit coefficient is now
+0.25(1-clip(t/40,0,1))^2: it vanishes exactly at a fixed physical toy horizon
+of 40 steps, independent of window length. Its shared baseline is the retained
+target minus this coefficient; the ideal prediction therefore joins exactly
+at d and remains coincident. This revises an illustrative memory mechanism,
+not measured performance. The retained exponential shape is part of the known
+baseline only. Exact finite-time forgetting of this bit is a special case,
+not a general claim about fading memory or a proof of global D_d=0. In the lower
 case, shared future controls gradually reveal the stored bit with coefficient
 0.25 s^2(3-2s), s=clip((t-32)/64,0,1), independently of the window length.
 At t=40 both ideal window predictors lose access to the bit. The lower gap
 starts at 0.0107421875 and grows to a persistent 0.25 from t=96. Its baseline
 and ideal prediction are updated together, never blending missing-bit values
-into predictions after expiry. The fading gap tends to zero. These are
+into predictions after expiry. The upper gap is exactly zero. These are
 analytic illustrations, not fitted or measured QRC/QELM performance.
 
 The old lower panel b and a/b letters are removed. The 17.9197-by-9.60-cm
@@ -234,7 +472,7 @@ are asserted before those builds are checked.
 ## Deliverables
 
 - `submission.pdf`: anonymous editorial draft (legacy filename retained).
-  **Do not upload the present disclosure-free draft to PRIMORIS.**
+  **Do not upload the present incompletely credited draft to PRIMORIS.**
 - `ICAART2027_anonymous_source.zip`: self-contained anonymous draft LaTeX sources.
   No author handoff, repository metadata, earlier drafts, or local paths enter
   this archive. The review guidelines request a PDF; the ZIP is a reproducible
@@ -331,7 +569,7 @@ after acceptance; no copyright, conflict-of-interest or funding declaration
 has been invented. Nothing has been uploaded, submitted, registered or pushed
 publicly by this formatting task.
 
-Deleting disclosure does not change the known preparation history. The live
+The short disclosure does not by itself fulfill every credit requirement. The live
 venue guidance requires disclosure of generated content and citations to the
 system in affected text; conceptual illustrations also have tool/prompt-credit
 requirements. Human authors must resolve that compliance blocker before any

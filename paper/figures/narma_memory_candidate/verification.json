@@ -1,0 +1,11 @@
+{
+  "full_test_scores_recomputed": 228,
+  "independent_recursion_and_rng_checks": true,
+  "max_reconstructed_prediction_difference": 5.3277937617224325e-12,
+  "passed": true,
+  "predictions_reconstructed_from_saved_readouts": 1440,
+  "roots_checked": 12,
+  "same_window_predictions_identical": true,
+  "scope": "All test scores; readout reconstruction sampled at 12 fixed rows per model/root; not hardware validation",
+  "summary_sha256": "5cb4f7664ec84f04609644924e0d6eebbd84af3953e2d6edd4f81af754973df3"
+}

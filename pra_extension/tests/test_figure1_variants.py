@@ -25,11 +25,13 @@ from figure1_timeseries import (  # noqa: E402
     N_SAMPLES,
     OUTPUT_BEGIN,
     OUTPUT_END,
+    OUTPUT_FORGETTING_HORIZON,
     OUTPUT_MEMORY_AMPLITUDE,
     OUTPUT_N_SAMPLES,
     OUTPUT_REVEAL_DURATION,
     OUTPUT_REVEAL_START,
     OUTPUT_SEED,
+    OUTPUT_TEMPLATE_TIMESCALE,
     OUTPUT_WINDOW,
     OUTPUT_WRITE_STEP,
     PARAMETERS,
@@ -53,6 +55,7 @@ COMPACT_ASPECT = 17.9197 / 9.6
 INPUT_SHA256 = "4a7feed74ea28313ececc2b922b9d1a385046e3805fd6546960a8766cc80ba8e"
 LEGACY_INPUT_SHA256 = "279ffd9bff72e717ab0a77396efdd92c4495e57d417f65f2bdddcc05680e25ba"
 OUTPUT_SHA256 = "fc6853ac40b7445701d938ee595b7c19428cfab410dfba23c6f5544f23de7409"
+FADING_TARGET_SHA256 = "1cc930442abbe9a3a69a8e2824ab0ee0ea120116cb8ebbdba6a16376c1dc4e5d"
 NAMES = (
     "variant_a_architectures",
     "variant_b_same_window",
@@ -96,7 +99,8 @@ def test_figure1_design_dimensions_and_source_addresses(name: str) -> None:
     assert r"\resizebox" not in source
     assert r"\scalebox" not in source
     assert r"\title{" not in source
-    font_sizes = [float(size) for size in re.findall(r"\\fontsize\{([\d.]+)\}", source)]
+    core = source.split("% Case labels sit outside the data frames", 1)[0]
+    font_sizes = [float(size) for size in re.findall(r"\\fontsize\{([\d.]+)\}", core)]
     assert font_sizes
     assert min(font_sizes) >= 9.5
     assert max(font_sizes) <= 12
@@ -192,7 +196,8 @@ def test_selected_overview_keeps_larger_native_labels_and_measurement_symbols() 
     source = CANONICAL.read_text()
     assert r"font=\fontsize{11}{12.5}\selectfont" in source
     assert r"font=\bfseries\fontsize{12}{13}\selectfont" in source
-    font_sizes = [float(size) for size in re.findall(r"\\fontsize\{([\d.]+)\}", source)]
+    core = source.split("% Case labels sit outside the data frames", 1)[0]
+    font_sizes = [float(size) for size in re.findall(r"\\fontsize\{([\d.]+)\}", core)]
     assert min(font_sizes) >= 10
     meter = source.split(r"\newcommand{\meter}[3]{%", maxsplit=1)[1].split(
         BEGIN, maxsplit=1,
@@ -262,7 +267,7 @@ def test_scalar_midpoint_inset_is_removed() -> None:
     assert r"one shared prediction\\at the midpoint" not in source
     assert "midpoint_inset" not in provenance(CANONICAL)
 
-def test_native_pdf_omits_case_titles_and_has_one_shared_model_legend() -> None:
+def test_native_pdf_has_outside_case_labels_and_one_shared_model_legend() -> None:
     bbox = subprocess.run(
         ["pdftotext", "-bbox", str(CANONICAL.with_suffix(".pdf")), "-"],
         capture_output=True, text=True, check=True,
@@ -270,7 +275,9 @@ def test_native_pdf_omits_case_titles_and_has_one_shared_model_legend() -> None:
     words = [node for node in ET.fromstring(bbox).iter() if node.tag.endswith("}word")]
     right_column = [word for word in words if float(word.attrib["xMin"]) > 13.5 * 72 / 2.54]
     text = [word.text for word in right_column]
-    assert not {"Fading", "Persistent", "memory"} & set(text)
+    assert text.count("Fading") == text.count("Persistent") == 1
+    assert text.count("memory") == text.count("Window") == 2
+    assert text.count("sufficient") == text.count("insufficient") == 1
     assert text.count("QRC") == text.count("QELM") == 1
     assert not {"a", "b", "epsilon", "tolerance"} & set(text)
 
@@ -289,7 +296,6 @@ def test_output_toy_is_reproducible_and_obeys_the_balanced_bit_information_cut(m
     other_history = baseline - coefficient
     prediction = np.where(k < 40, target, baseline)
     expected = np.column_stack((target, prediction))
-    np.testing.assert_array_equal(output_baseline(), template)
     np.testing.assert_array_equal(output_baseline("persistent"), baseline)
     np.testing.assert_array_equal(output_samples(), expected)
     np.testing.assert_array_equal(output_samples(case="persistent"), expected)
@@ -375,26 +381,37 @@ def test_persistent_reveal_is_a_fixed_output_schedule_not_window_dependent(monke
     )
 
 
-def test_fading_output_toy_decays_from_the_write_step_without_changing_the_information_cut(
+def test_fading_output_toy_forgets_the_pair_exactly_without_changing_the_charcoal_target(
     monkeypatch,
 ) -> None:
+    assert OUTPUT_FORGETTING_HORIZON == 40 and OUTPUT_TEMPLATE_TIMESCALE == 30
     k = np.arange(OUTPUT_N_SAMPLES, dtype=float)
-    baseline = output_baseline()
-    coefficient = 0.25 * np.exp(-k / 30)
-    target = baseline + coefficient
+    raw = mackey_glass_series(101, rng=np.random.default_rng(2), **PARAMETERS)
+    template = 0.4 + 0.65 * (raw - raw.min()) / (raw.max() - raw.min())
+    # The exponential is only the legacy charcoal drawing template. The
+    # old bit itself follows a separate finite-horizon physical coefficient.
+    target = template + 0.25 * np.exp(-k / 30)
+    coefficient = 0.25 * (1 - np.clip(k / 40, 0, 1)) ** 2
+    baseline = target - coefficient
     other_history = baseline - coefficient
     prediction = np.where(k < OUTPUT_WINDOW, target, baseline)
     expected = np.column_stack((target, prediction))
+    np.testing.assert_array_equal(output_baseline("fading"), baseline)
     np.testing.assert_array_equal(output_samples(case="fading"), expected)
+    assert hashlib.sha256(target.astype("<f8").tobytes()).hexdigest() == FADING_TARGET_SHA256
     np.testing.assert_array_equal(expected[:40, 0], expected[:40, 1])
-    np.testing.assert_allclose(expected[40:, 1], (target[40:] + other_history[40:]) / 2)
-    gap = expected[40:, 0] - expected[40:, 1]
-    assert gap[0] == pytest.approx(0.25 * np.exp(-40 / 30))
-    assert 0 < gap[-1] < 0.01
-    assert np.all(np.diff(gap) < 0)
-    # Decay starts when the old bit is written, not when it leaves the window.
+    np.testing.assert_array_equal(coefficient[40:], 0)
+    np.testing.assert_array_equal(expected[40:, 0], expected[40:, 1])
+    np.testing.assert_array_equal(target[40:], other_history[40:])
+    np.testing.assert_array_equal(prediction[40:], other_history[40:])
+    # Both bit histories are predicted exactly, not just the displayed +1
+    # trajectory. Before expiry their differing windows still reveal the bit.
+    other_prediction = np.where(k < OUTPUT_WINDOW, other_history, baseline)
+    np.testing.assert_array_equal(other_prediction, other_history)
+    assert np.all(coefficient[:40] > 0)
+    assert np.all(np.diff(coefficient[:41]) < 0)
     assert target[0] - baseline[0] == pytest.approx(0.25)
-    assert target[39] - baseline[39] < 0.25
+    assert target[39] - baseline[39] == pytest.approx(0.25 / 40**2)
     np.testing.assert_allclose(target - other_history, 2 * coefficient)
     np.testing.assert_allclose(
         0.5 * ((target[40:] - prediction[40:]) ** 2
@@ -410,15 +427,46 @@ def test_fading_output_toy_decays_from_the_write_step_without_changing_the_infor
     assert hashlib.sha256(output_samples().astype("<f8").tobytes()).hexdigest() == OUTPUT_SHA256
     metadata = output_provenance()
     fading = metadata["cases"]["fading"]
-    assert fading["decay_timescale_steps"] == 30
-    assert fading["formulas"]["memory_coefficient"] == "c[t]=0.25*exp(-t/30)"
+    assert fading["forgetting_horizon_steps"] == 40
+    assert fading["formulas"]["memory_coefficient"] == "c[t]=0.25*(1-s[t])^2; s[t]=clip(t/40,0,1)"
     np.testing.assert_array_equal(fading["memory_coefficients"], coefficient)
     np.testing.assert_array_equal(fading["baseline_values"], baseline)
     np.testing.assert_array_equal(fading["other_history_values"], other_history)
     np.testing.assert_array_equal(fading["post_expiry_pair_midpoint_error_values"], coefficient[40:])
     np.testing.assert_array_equal(fading["post_expiry_pair_gap_values"], 2 * coefficient[40:])
     assert "not the uniform D_d limit" in fading["decay_scope"]
+    assert "special illustrative case, not a generic property of fading memory" in fading["decay_scope"]
+    assert "not the bit's memory" in fading["preservation_scope"]
     assert "not labeled or identified as the generic supremal D_d/2" in metadata["curve_gap_scope"]
+
+
+def test_fading_forgetting_horizon_is_physical_and_independent_of_window_access(monkeypatch) -> None:
+    import figure1_timeseries as toy
+
+    original = output_samples("fading").copy()
+    baseline = output_baseline("fading").copy()
+    fading = output_provenance()["cases"]["fading"]
+    coefficients = np.asarray(fading["memory_coefficients"])
+    other_history = np.asarray(fading["other_history_values"])
+    # A shorter window loses the bit before the same physical horizon.
+    # This must expose a real residual gap, not shift or snap the target.
+    monkeypatch.setattr(toy, "OUTPUT_WINDOW", 20)
+    changed = output_samples("fading")
+    np.testing.assert_array_equal(changed[:, 0], original[:, 0])
+    np.testing.assert_array_equal(output_baseline("fading"), baseline)
+    np.testing.assert_array_equal(changed[:20, 1], original[:20, 0])
+    np.testing.assert_array_equal(changed[20:, 1], baseline[20:])
+    assert np.all(changed[20:40, 0] > changed[20:40, 1])
+    assert np.all(changed[20:40, 1] > other_history[20:40])
+    np.testing.assert_allclose(changed[20:40, 0] - changed[20:40, 1], coefficients[20:40])
+    np.testing.assert_allclose(changed[20:40, 1] - other_history[20:40], coefficients[20:40])
+    np.testing.assert_array_equal(changed[40:, 0], changed[40:, 1])
+    np.testing.assert_array_equal(changed[40:, 1], other_history[40:])
+    updated = output_provenance()
+    assert updated["memory_access"]["first_excluded_step"] == 20
+    assert updated["cases"]["fading"]["forgetting_horizon_steps"] == 40
+    np.testing.assert_array_equal(updated["cases"]["fading"]["memory_coefficients"], coefficients)
+    np.testing.assert_array_equal(updated["cases"]["fading"]["other_history_values"], other_history)
 
 
 def test_output_toy_rejects_unknown_memory_case() -> None:
@@ -580,9 +628,15 @@ def test_current_input_and_carried_state_do_not_imply_batch_encoding() -> None:
     for paper in ("canonical_emulation", "icaart2027"):
         text = (ROOT / "paper" / paper / "sections/introduction.tex").read_text()
         caption = " ".join(text.split(r"\caption{", 1)[1].split(r"\label{", 1)[0].split())
-        assert "Carried QRC state" in caption
-        # Brace geometry is checked above; the concise caption names its input.
-        assert "reset-QELM's explicit input window" in caption
+        # Brace geometry is checked above. The active caption now explains the
+        # same state-versus-window distinction in a plain sentence; the archived
+        # edition retains its original wording.
+        if paper == "icaart2027":
+            assert "QRC carries its quantum state forward" in caption
+            assert "reset-QELM receives a window of recent inputs" in caption
+        else:
+            assert "Carried QRC state" in caption
+            assert "reset-QELM's explicit input window" in caption
         models = " ".join((ROOT / "paper" / paper / "sections/models.tex").read_text().split())
         # Causal sample membership is guarded numerically above and by the
         # source record; the rewritten Section 2 explains the model itself.
@@ -591,7 +645,11 @@ def test_current_input_and_carried_state_do_not_imply_batch_encoding() -> None:
         )
         assert "A trained linear readout can" in models
         assert "fixed weights into the observables" in models
-        assert "target readout is the identity" in models
+        if paper == "icaart2027":
+            assert "emulation simulations use observable expectations directly" in models
+            assert "forecasting tests fit both readouts to external task targets" in models
+        else:
+            assert "target readout is the identity" in models
 
 
 def test_input_gutter_increases_without_resizing_the_dynamics() -> None:
@@ -874,6 +932,49 @@ def test_shared_legend_straddles_output_frames_without_internal_case_titles() ->
         assert metadata["cases"][case]["title_anchor_cm"] is None
         assert f"{{{title}}}" not in source
 
+
+def test_case_labels_are_equal_sized_outside_frames_and_do_not_obscure_data() -> None:
+    source = CANONICAL.read_text()
+    label_marker = "% Case labels sit outside the data frames"
+    assert source.index(label_marker) > source.index("% One shared reference-style model key")
+    labels = source.split(label_marker, 1)[1]
+    # Rectangles and text are separate: long wording must not enlarge a box
+    # or place either label over the plotted trajectories.
+    assert r"\foreach \yy/\case/\outcome in" in labels
+    assert r"\begin{scope}[shift={(13.70,\yy)}]" in labels
+    assert r"\draw[ink,fill=white,rounded corners=1.3pt,line width=.65pt] (0,0) rectangle (3.80,.68);" in labels
+    assert r"\node[font=\fontsize{9}{10.5}\selectfont] at (1.90,.46) {\case};" in labels
+    assert r"\node[text=muted,font=\fontsize{9}{10.5}\selectfont] at (1.90,.20) {\outcome};" in labels
+    metadata = output_provenance()
+    cases = metadata["case_labels"]
+    expected = {
+        "fading": (["Fading memory", "Window sufficient"], [13.70, 11.98, 17.50, 12.66]),
+        "persistent": (["Persistent memory", "Window insufficient"], [13.70, 3.68, 17.50, 4.36]),
+    }
+
+    def separated(first, second):
+        return (first[2] < second[0] or second[2] < first[0]
+                or first[3] < second[1] or second[3] < first[1])
+
+    for case, (lines, bounds) in expected.items():
+        assert cases[case] == {"lines": lines, "bounds_cm": bounds}
+        assert f"{bounds[1]:.2f}/{lines[0]}/{lines[1]}" in labels
+        assert bounds[2] - bounds[0] == pytest.approx(3.80)
+        assert bounds[3] - bounds[1] == pytest.approx(0.68)
+        assert 0 < bounds[0] < bounds[2] < 17.9197
+        assert 3.60 < bounds[1] < bounds[3] < 13.2
+        assert all(separated(bounds, frame) for frame in metadata["axes_bounds_cm"].values())
+        assert separated(bounds, metadata["legend_geometry"]["bounds_cm"])
+    assert cases["fading"]["bounds_cm"][1] > metadata["axes_bounds_cm"]["fading"][3]
+    assert cases["persistent"]["bounds_cm"][3] < metadata["axes_bounds_cm"]["persistent"][1]
+    upper_gap = cases["fading"]["bounds_cm"][1] - metadata["axes_bounds_cm"]["fading"][3]
+    lower_gap = metadata["axes_bounds_cm"]["persistent"][1] - cases["persistent"]["bounds_cm"][3]
+    # Compact upper label; leave the lower box clear of the shared time ticks.
+    assert upper_gap == pytest.approx(0.20)
+    assert lower_gap == pytest.approx(0.63)
+    assert "not a uniform claim for all histories" in cases["scope"]
+
+
 def test_simplified_overview_retains_interface_distinctions() -> None:
     source = CANONICAL.read_text()
     # One shared input trace supplies a scalar to the QRC and its highlighted
@@ -917,7 +1018,9 @@ def test_simplified_overview_retains_interface_distinctions() -> None:
     assert "{output}" not in labels
     assert r"\equaloutputs" not in source and r"\sharedstart" not in source
     assert "% c:" not in source
-    assert "Fading memory" not in labels and "Persistent memory" not in labels
+    core_labels = labels.split("% Case labels sit outside the data frames", 1)[0]
+    assert "Fading memory" not in core_labels and "Persistent memory" not in core_labels
+    assert labels.count("Fading memory") == labels.count("Persistent memory") == 1
     assert "best history error" not in labels and r"$D_d/2$" not in source
     assert "scalar optimum" not in labels
     assert "Window QELM" not in labels
@@ -989,9 +1092,7 @@ def test_quieter_input_sampling_leaves_the_separate_output_toys_unchanged(monkey
     )
     baseline = output_baseline().copy()
     outputs = {case: output_samples(case).copy() for case in ("fading", "persistent")}
-    assert hashlib.sha256(outputs["fading"].astype("<f8").tobytes()).hexdigest() == (
-        "f2e09e1660f0617a317a09e47c285b971700e1510c0e406ab384c069cd1dd835"
-    )
+    assert hashlib.sha256(outputs["fading"][:, 0].astype("<f8").tobytes()).hexdigest() == FADING_TARGET_SHA256
     assert hashlib.sha256(outputs["persistent"].astype("<f8").tobytes()).hexdigest() == OUTPUT_SHA256
     monkeypatch.setitem(INPUT_PARAMETERS, "dt", 0.25)
     monkeypatch.setitem(INPUT_PARAMETERS, "discard", 4000)

@@ -152,13 +152,15 @@ def test_necessary_disclosure_presence_does_not_assess_adequacy(tmp_path):
         "AI-use disclosure. OpenAI Codex assisted preparation. Figure prompt: show both models.", tmp_path)["passed"]
 
 
-def test_editorial_paper_sources_omit_tool_mentions():
+def test_editorial_paper_includes_author_approved_disclosure():
     base = Path(__file__).parent
-    files = [base / "main.tex", base / "references.bib", *sorted((base / "sections").glob("*.tex"))]
-    combined = "\n".join(path.read_text().lower() for path in files)
-    for mention in ("aicredit", "openai", "codex", "llm", "ai-use", "ai-assisted"):
-        assert mention not in combined
-    assert not (base / "sections" / "ai-use.tex").exists()
+    source = re.sub(r"\s+", " ", (base / "main.tex").read_text())
+    assert "AI-use disclosure." in source
+    assert source.index(r"\bibliography{references}") < source.index("AI-use disclosure.") < source.index(r"\input{sections/appendix}")
+    assert "OpenAI Codex assisted with ideation, manuscript wording, and code and figure preparation, including debugging." in source
+    assert "The authors reviewed and verified all content and results and take full responsibility for the work." in source
+    # A general statement does not replace affected-section and figure credits.
+    assert not qa.check_required_disclosure(source, base)["passed"]
 
 
 def test_paper_figure_selection_excludes_archived_frontier():
@@ -170,8 +172,25 @@ def test_paper_figure_selection_excludes_archived_frontier():
     included = re.findall(r"\\includegraphics(?:\[[^]]*\])?\{([^}]+)\}", paper)
     assert len(included) == 3
     assert set(included) == set(assets.PAPER_FIGURES)
+    assert "fig04_memory_prediction.pdf" in included
+    assert "fig04_emulation_evidence.pdf" not in included
+    assert "fig04_task_memory.pdf" not in included
+    assert "fig04_long_context_sharpness.pdf" not in included
+    assert "fig04_long_context_n5.pdf" not in included
+    assert "fig05_exact_sharpness.pdf" not in included
+    assert paper.count(r"\begin{figure*}") == 3
+    assert paper.count(r"\begin{figure}") == 0
     assert "fig02_information_frontier.pdf" not in assets.PAPER_FIGURES
     # Removal from the paper must not delete the reproducible source artifact.
     archived = base.parent / "figures" / "information_interface"
     for suffix in (".pdf", ".png", "_source.csv"):
         assert (archived / f"fig02_information_frontier{suffix}").is_file()
+    for directory, stem, suffixes in (
+        ("emulation_evidence", "fig04_emulation_evidence", (".pdf", ".png", "_source.json")),
+        ("task_memory", "fig04_task_memory", (".pdf", ".png", "_source.json", "_rows.csv", "_traces.csv")),
+        ("long_context_n5", "fig04_long_context_n5", (".pdf", ".png", "_source.csv")),
+        ("sharpness", "fig05_exact_sharpness", (".pdf", ".png", "_source.json")),
+        ("long_context_sharpness", "fig04_long_context_sharpness", (".pdf", ".png", "_source.json")),
+    ):
+        for suffix in suffixes:
+            assert (base.parent / "figures" / directory / f"{stem}{suffix}").is_file()

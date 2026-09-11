@@ -1,20 +1,19 @@
-A quantum extreme learning machine (QELM) transforms inputs into quantum
-features for a trainable readout without carrying memory between predictions.
-Encoding a window of recent inputs allows it to process temporal information.
-Can such a window QELM reproduce a quantum reservoir computer (QRC), which
-carries information between inputs in a quantum state?
-We characterize when this replacement is possible. Two histories with
-identical recent inputs are indistinguishable to a window model, yet may
-produce different reservoir outputs. For scalar outputs, half the largest
-such difference is exactly the smallest achievable worst-case error. Under
-suitable regularity assumptions, a growing universal QELM family evaluated
-through exact expectations can approach this optimum at every window length.
-Arbitrary accuracy is therefore possible precisely when the difference
-vanishes uniformly as the window grows. Only
-memory that can affect the chosen outputs must fade. The full quantum state
-need not forget its past. A two-qubit example demonstrates persistent memory
-that prevents arbitrarily accurate finite-window replacement. Simulations
-examine the practical roles of window length, feature capacity, and
-measurement budgets. Together, these results establish when explicitly
-encoded input history can replace recurrent quantum memory and when
-information beyond any finite window remains essential.
+When processing a time series with a quantum reservoir computer (QRC), can
+a reset-window quantum extreme learning machine (QELM) reproduce its outputs
+using only recent inputs? The QRC carries information forward in its state,
+whereas the QELM starts afresh for each prediction. We characterize when
+this replacement is possible and how much history it requires. Different
+pasts can produce identical recent inputs but different QRC outputs,
+creating an unavoidable error for a window model. Under our assumptions,
+sufficiently expressive reset-QELMs evaluated through exact expectations
+permit arbitrarily accurate emulation precisely when the missing past's
+influence on the chosen outputs vanishes uniformly as the window grows.
+Analytically constructed examples verify achievable accuracy limits and
+exhibit a persistent error floor. Simulations examine the practical roles
+of window length, feature capacity, and measurement budgets. The resulting
+decision principle receives an additional check through synthetic NARMA10
+prediction: consider a QELM when an affordable window contains
+enough history for the required accuracy, and retain the QRC when essential
+information must be carried beyond that window. Sufficient history enables
+replacement in principle; representation, training, and measurement
+determine its practical success.

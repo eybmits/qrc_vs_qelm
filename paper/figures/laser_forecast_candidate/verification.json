@@ -1,0 +1,11 @@
+{
+  "all_score_rows_recomputed": 720,
+  "data_sha256": "d515c7275fb6c7c56a0ebf537d8be2f87f06f3ad36f8153d759519425c746b77",
+  "display_seed_predictions_reconstructed_from_channels": 60,
+  "maximum_rmse_recomputation_difference": 1.4551915228366852e-11,
+  "passed": true,
+  "scope": "All 720 scores and every true target checked; channel/readout reconstruction spot-checks 60 displayed-seed predictions across both rates/horizons.",
+  "source_target_rows_per_cell_and_horizon": 1916,
+  "summary_sha256": "fb64c3604f17ae590ffc63189158ced3f0e40b18b8aecfeef941edc7e044d07b",
+  "verifier_sha256": "e689f70df4154d8b339eaea90fac149ad09685405c0cbdd3cf5f2c31aed452f9"
+}

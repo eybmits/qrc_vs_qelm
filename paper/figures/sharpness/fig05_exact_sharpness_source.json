@@ -1,0 +1,121 @@
+{
+  "artifacts": {
+    "fig05_exact_sharpness.pdf": "ca7d1ddcad3795eaac8c32dbcbc326816ec72906d8e5002e2d368beb98e26344",
+    "fig05_exact_sharpness.png": "81bd70832aaeb8c17e22f70df1c387eae7c1134db46f1797f0c070cde7855557"
+  },
+  "description": "Exact-expectation error of a specified Bernstein readout",
+  "figure_size_inches": [
+    3.25,
+    2.35
+  ],
+  "intended_width_cm": 7.5,
+  "metric": "global worst-case absolute scalar error; not NRMSE",
+  "numeric_source": "sharpness_benchmarks.convergence_rows",
+  "palette": {
+    "construction": "#3868D9",
+    "floor": "#20252B",
+    "grid": "#DEE0E3"
+  },
+  "parameters": {
+    "beta": 2.0,
+    "copies": [
+      1,
+      2,
+      4,
+      8,
+      16,
+      32,
+      64,
+      128,
+      256
+    ],
+    "d": 8,
+    "eta": 0.8
+  },
+  "rows": [
+    {
+      "error": 0.2813215853331336,
+      "excess": 0.1974355053331336,
+      "floor": 0.08388608000000004,
+      "maximizing_input": 0.5807196807855979,
+      "qubits": 8,
+      "r": 1
+    },
+    {
+      "error": 0.1896729947771208,
+      "excess": 0.10578691477712074,
+      "floor": 0.08388608000000004,
+      "maximizing_input": 0.6426379820388969,
+      "qubits": 16,
+      "r": 2
+    },
+    {
+      "error": 0.1382308668336056,
+      "excess": 0.054344786833605566,
+      "floor": 0.08388608000000004,
+      "maximizing_input": 0.6748743623714606,
+      "qubits": 32,
+      "r": 4
+    },
+    {
+      "error": 0.11136470825601977,
+      "excess": 0.027478628256019724,
+      "floor": 0.08388608000000004,
+      "maximizing_input": 0.691035855621692,
+      "qubits": 64,
+      "r": 8
+    },
+    {
+      "error": 0.09769388996646894,
+      "excess": 0.013807809966468899,
+      "floor": 0.08388608000000004,
+      "maximizing_input": 0.699088356391188,
+      "qubits": 128,
+      "r": 16
+    },
+    {
+      "error": 0.09080604513972383,
+      "excess": 0.006919965139723791,
+      "floor": 0.08388608000000004,
+      "maximizing_input": 0.7031025438592192,
+      "qubits": 256,
+      "r": 32
+    },
+    {
+      "error": 0.0873499413708221,
+      "excess": 0.003463861370822054,
+      "floor": 0.08388608000000004,
+      "maximizing_input": 0.7051059955863287,
+      "qubits": 512,
+      "r": 64
+    },
+    {
+      "error": 0.08561896316003646,
+      "excess": 0.0017328831600364142,
+      "floor": 0.08388608000000004,
+      "maximizing_input": 0.7061067327982363,
+      "qubits": 1024,
+      "r": 128
+    },
+    {
+      "error": 0.08475275753349665,
+      "excess": 0.0008666775334966075,
+      "floor": 0.08388608000000004,
+      "maximizing_input": 0.7066068444873416,
+      "qubits": 2048,
+      "r": 256
+    }
+  ],
+  "schema_version": 1,
+  "scope": [
+    "Analytically constructed readouts, not learned or hardware results.",
+    "The curve is not a capacity-optimal envelope; other coefficients can improve it.",
+    "Large registers use factorized binomial expectations, not full statevectors.",
+    "Lines join computed copy-count settings; no extra interpolated samples."
+  ],
+  "sources": {
+    "pra_extension/code/paper_palette.py": "b2335cbc68555f04fcc0874f6e25eccb23b88e7ee0ebe39fa9b0966cf7312cf9",
+    "pra_extension/code/render_sharpness_figure.py": "d86e6846a11bb60d0ef118e517d4fc76ebf887ffaa2505dbf441a6e42a549ee2",
+    "pra_extension/code/sharpness_benchmarks.py": "a0c5c093bfc74cf928aa03152548d0d3be9062f6327c44438ac7e238d627e361"
+  }
+}
