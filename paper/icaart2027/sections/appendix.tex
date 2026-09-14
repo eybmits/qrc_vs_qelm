@@ -25,10 +25,7 @@ free concatenation makes it independent of the suffix.
 For $s=(a_1,\ldots,a_d)$, write $\Phi_s=\Phi_{a_d}\cdots\Phi_{a_1}$,
 with the identity for the empty word. For scalar output, define
 \[
- \begin{aligned}
- y_-(s)&=\min_{\rho\in\mathcal R}\mathcal C\Phi_s(\rho),\\
- y_+(s)&=\max_{\rho\in\mathcal R}\mathcal C\Phi_s(\rho),
- \end{aligned}
+ y_-(s)=\min_{\rho\in\mathcal R}\mathcal C\Phi_s(\rho),\quad y_+(s)=\max_{\rho\in\mathcal R}\mathcal C\Phi_s(\rho),
 \]
 and $m_d(s)=[y_-(s)+y_+(s)]/2$. Closure leaves the extrema unchanged.
 Uniform continuity on the compact window--state domain makes both extrema
@@ -64,11 +61,7 @@ $\Phi_a\Delta\subseteq\Delta$ for every input $a$.
 Write $|w|$ for a finite word's length, including the empty word.
 Remove differences invisible to the linear output $\mathcal C$ after every word:
 \begin{equation}
- \begin{aligned}
- \mathcal N&=\{v\in V:\mathcal C\Phi_w(v)=0
- \text{ for all }w\},\\
- W&=V/\mathcal N .
- \end{aligned}
+ \mathcal N=\{v\in V:\mathcal C\Phi_w(v)=0\ \forall w\},\quad W=V/\mathcal N.
  \label{eq:visible-quotient}
 \end{equation}
 Invariance of $\mathcal N$ defines
@@ -148,10 +141,7 @@ $D_d\geq\delta$. Invariance also gives $c_d\leq1$, so $r_{\rm vis}=1$.
 \emph{Assumptions and replay error.} Take inputs in $[0,1]$ and the trace
 distance defined in Section~\ref{sec:dynamics}. Assume the incremental bound
 \begin{equation}
- \begin{aligned}
- &D_{\rm tr}(\Phi_a(\rho),\Phi_{a'}(\sigma))\\
- &\quad\leq\eta D_{\rm tr}(\rho,\sigma)+L_{\rm in}|a-a'|,
- \end{aligned}
+ D_{\rm tr}(\Phi_a(\rho),\Phi_{a'}(\sigma))\leq\eta D_{\rm tr}(\rho,\sigma)+L_{\rm in}|a-a'|,
  \label{eq:incremental-lipschitz}
 \end{equation}
 for all states and inputs, with state-contraction factor $0\leq\eta<1$
@@ -183,10 +173,7 @@ readouts $g_d(K_1/r,\ldots,K_d/r)$, with
 $\varepsilon_{\rm hist}=2M\eta^d$.
 For failure probability $0<\zeta<1$, representation and sampling bounds are
 \[
- \begin{aligned}
- \varepsilon_{\rm rep}&=\frac{ML_{\rm in}(1-\eta^d)}{(1-\eta)\sqrt r},\\
- \varepsilon_{\rm shot}&=M\sqrt{\frac{2\log(2/\zeta)}{Q}}.
- \end{aligned}
+ \varepsilon_{\rm rep}=\frac{ML_{\rm in}(1-\eta^d)}{(1-\eta)\sqrt r},\quad \varepsilon_{\rm shot}=M\sqrt{\frac{2\log(2/\zeta)}{Q}}.
 \]
 Hoeffding's inequality~\cite{hoeffding1963probability} gives the bounds
 \begin{equation}

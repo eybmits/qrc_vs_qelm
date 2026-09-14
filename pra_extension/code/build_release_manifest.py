@@ -203,6 +203,14 @@ AUTHORITATIVE_EXTENSION_FILES: dict[str, str] = {
     "paper/figures/narma_additional/narma_additional.png": "optional_narma_additional_figure_preview_not_active",
     "paper/figures/narma_additional/source.json": "optional_narma_additional_figure_rows_and_provenance",
     "pra_extension/code/render_memory_prediction.py": "three_panel_emulation_narma_exact_figure_renderer",
+    "pra_extension/NARMA_DENSE_REPLAY_EXTENSION_PROTOCOL.md": "descriptive_every_integer_history_extension_specification",
+    "pra_extension/code/narma_dense_replay.py": "dense_history_exact_replay_runner_and_loader",
+    "pra_extension/code/verify_narma_dense_replay.py": "independent_dense_history_verifier",
+    "pra_extension/tests/test_narma_dense_replay.py": "dense_history_replay_correctness_and_source_tests",
+    "pra_extension/tests/test_narma_dense_replay_verification.py": "independent_dense_history_verification_tests",
+    "paper/figures/narma_dense_replay/source.json": "complete_24_root_every_integer_replay_evidence",
+    "paper/figures/narma_dense_replay/rows.csv": "all_1152_dense_replay_root_scores",
+    "paper/figures/narma_dense_replay/aggregates.csv": "all_48_dense_replay_root_percentile_summaries",
     "pra_extension/tests/test_render_memory_prediction.py": "three_panel_figure_binding_geometry_export_tests",
     "paper/figures/memory_prediction/fig04_memory_prediction.pdf": "active_three_panel_memory_prediction_figure_pdf",
     "paper/figures/memory_prediction/fig04_memory_prediction.png": "active_three_panel_memory_prediction_figure_preview",
@@ -689,6 +697,27 @@ EXPLORATORY_ANALYSES = (
 
 # (JSON file, object key containing recorded hashes, recorded key, source file)
 SOURCE_HASH_LINKS = (
+    *tuple(
+        (
+            "paper/figures/narma_dense_replay/source.json",
+            "source_artifacts",
+            name,
+            f"paper/figures/narma_dense_replay/{name}",
+        )
+        for name in ("rows.csv", "aggregates.csv")
+    ),
+    (
+        "paper/figures/narma_dense_replay/source.json",
+        "sources",
+        "pra_extension/code/narma_dense_replay.py",
+        "pra_extension/code/narma_dense_replay.py",
+    ),
+    (
+        "paper/figures/memory_prediction/fig04_memory_prediction_source.json",
+        "sources",
+        "paper/figures/narma_dense_replay/source.json",
+        "paper/figures/narma_dense_replay/source.json",
+    ),
     *tuple(
         (
             "paper/figures/memory_prediction/fig04_memory_prediction_source.json",

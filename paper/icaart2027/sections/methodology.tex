@@ -9,9 +9,9 @@ output, $\bar y_s$ its branch mean, and $\widehat y_s$ the shared prediction.
 Equal-weight empirical averages and the Euclidean norm give
 \begin{equation}
  \begin{aligned}
- &\frac1m\mathbb E_{s,k}\|y_{sk}-\widehat y_s\|_2^2\\
- &\quad=\frac1m\mathbb E_{s,k}\|y_{sk}-\bar y_s\|_2^2\\
- &\qquad+\frac1m\mathbb E_s\|\bar y_s-\widehat y_s\|_2^2 .
+ \frac1m\mathbb E_{s,k}\|y_{sk}-\widehat y_s\|_2^2
+ &=\frac1m\mathbb E_{s,k}\|y_{sk}-\bar y_s\|_2^2\\
+ &\quad+\frac1m\mathbb E_s\|\bar y_s-\widehat y_s\|_2^2 .
  \end{aligned}
  \label{eq:panel-decomposition}
 \end{equation}
@@ -74,12 +74,7 @@ across roots and cohorts.
 
 \emph{Fitting and decision rules.} Training alone standardizes features.
 Validation selects the affine ridge penalty
-\[
- \begin{aligned}
- \lambda\in\{&0,10^{-10},10^{-8},10^{-6},10^{-4},10^{-2},\\
-             &1,10^2,10^4,10^6,\infty\},
- \end{aligned}
-\]
+$\lambda\in\{0,\infty\}\cup\{10^{2k}:k=-5,\ldots,3\}$,
 then train and validation data refit the readout using economy singular-value
 decomposition (relative cutoff $10^{-6}$) for finite penalties;
 $\lambda=\infty$ predicts only the intercept.
@@ -131,7 +126,7 @@ Fitting uses training-only standardization, an
 unpenalized intercept, and validation-selected
 $\lambda\in\{10^{-8},10^{-6},10^{-4},10^{-2},1,100\}$.
 
-\emph{Laser-driven emulation.} Figure~\ref{fig:long-context}(a,c) uses
+\emph{Laser-driven emulation.} Figure~\ref{fig:long-context}(a,b) uses
 12 roots and consecutive 4,096/1,024/2,048-sample
 train/validation/test blocks of the Santa Fe A continuation.
 Training min/max scaling, clipping and 33-level rounding are shared.
@@ -139,7 +134,7 @@ Each split resets, then discards 128 steps. At loss 4 or 0.2, only the
 QELM readout is fitted, targeting the QRC's final $Z_0$ expectation.
 The first root's first 128 scored rows are shown; labels use all 1,920 test
 rows. Two 128-input test prefixes share a 128-input continuation;
-Figure~\ref{fig:long-context}(c) shows its first 48 inputs.
+Figure~\ref{fig:long-context}(b) shows its first 48 inputs.
 After four shared inputs, half the QRC gap bounds the larger pairwise
 absolute error, not global $D_d/2$ or NRMSE.
 
@@ -150,11 +145,14 @@ Independent uniform $u_t\in[0,1]$ streams per root
 and split use the same lengths and washout. The recurrence uses $0.2u_t$
 \cite{fujii2017harnessing}; both readouts learn unquantized $y_{t+1}$
 from rounded inputs through $t$, never past targets. Each model selects
-loss from $\{0.1,0.3,1,4\}$ by validation. Replay fixes the QRC dynamics
-and refits each readout; longer windows cost more evolution steps.
+loss from $\{0.1,0.3,1,4\}$ by validation. Replay resets the selected QRC per
+prediction, processes its last $d$ inputs, and refits its readout for $d=1,\ldots,48$.
+This descriptive extension of six windows retains the same roots;
+the plot shows 1--20, the source all 48. Longer replay costs more evolution.
 Quadratic controls use 14/four-input and 90/twelve-input features.
-
 NRMSE uses training-target standard deviation. NARMA gates require at least
 20/24 positive roots and a positive 95\% mean lower bound from 10,000 paired
-root bootstraps (no simultaneous coverage). Hardware errors and backaction
+root bootstraps (no simultaneous coverage). Figure~\ref{fig:long-context}(c)
+shows the first root's first 48 scored rows; all 96 excerpt rows remain
+in the source. Hardware errors and backaction
 are omitted. Code link withheld for anonymity.

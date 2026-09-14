@@ -8,7 +8,182 @@ feature-density and finite-shot studies without pooling their cohorts.
 There is one paper, including its proofs and numerical methods, not a separate
 supplement.
 
-## Current: three-panel Figure 3 with stacked NARMA addition (11 September 2026)
+## Current abstract (14 September 2026)
+
+The 164-word abstract foregrounds observable memory and the irreducible error
+floor for every fixed-window QELM emulating the constructed reservoir.
+At the author's request, it omits the scalar half-diameter formula, the
+"under stated assumptions" phrase, the construction's qubit count and the
+quantum/classical comparison. Growing windows, sufficient expressivity, exact
+expectations and worst-case scope remain explicit; the full assumptions and
+theorems remain in the body. The paper remains 12 pages, with body text,
+equations, figures, font sizes and margins unchanged by this abstract update.
+
+## Current: full-width Figure 3 with consistent plot heights (14 September 2026)
+
+Figure 3 uses the full text width with a 6.221 by 4.47 inch native canvas.
+All nine plot frames are 1.51 inches wide and 0.78 inches high. The bottom
+three plots match the upper plots, reducing their height from 1.00 inch in
+the preceding full-width draft. Row edges, axis labels and footer legends align.
+Model names, the Target legend and laser test-error labels stay outside the
+curves. The memory legend is horizontal and the window annotation uses one line.
+NARMA Target traces remain black at full opacity (alpha 1).
+The source data, colors, limits and excerpts are unchanged. A shorter caption
+retains all scientific qualifications; equivalent formula layouts and paragraph
+joins recover space without changing the publisher's fonts or margins.
+
+The verified PDF has 12 pages, including references and all appendices.
+
+## Previous: focused NARMA history transition (14 September 2026)
+
+Figure 3(c)'s history plot displays windows 1--20 and test NRMSE from 40% to
+90%, with a guide at ten inputs and the legend below. All 48 computed windows
+remain in the source. The text reports the verified nine-to-ten-input change
+(77.6% to 53.1% median NRMSE; all 24 roots improve), while distinguishing access
+to the delayed input from causal isolation or complete recursive history.
+The upper prediction traces still display 48 test steps at the existing scale.
+
+## Previous: shorter NARMA prediction display (14 September 2026)
+
+Both NARMA10 prediction traces in Figure 3(c) show the first 48 samples of the
+existing 96-sample excerpt, with test-step ticks at 0, 24 and 47. The source
+retains all 96 samples, and the original vertical limits and 50% ground-truth
+opacity remain. This display crop preserves the selected root, predictions,
+full-test statistics and every-window history curve.
+
+## Previous: lighter NARMA ground-truth traces (14 September 2026)
+
+Figure 3(c) draws the black ground-truth line at 50% opacity (alpha 0.5) in both
+NARMA10 prediction traces, making the model predictions easier to distinguish.
+This opacity-only change preserves predictions, source values, numerical
+results and all other panels.
+
+## Previous: distinct memory-control colors (14 September 2026)
+
+Figure 3(b) distinguishes fast loss in orange from slow loss in purple, keeping
+the existing circle/diamond markers and solid/dashed lines. Percentile bands
+use the matching curve colors. Both earlier input prefixes and their label
+are red; the identical shared continuation and its label remain black.
+Only colors change; traces, numerical values, geometry and all other panels
+are preserved.
+
+## Previous: every-integer history curve (14 September 2026)
+
+Figure 3(c) computes restricted-QRC test error for every integer window from 1
+through 48 on the same 24 fresh NARMA roots. Each point refits its readout using
+the original training split and validation-only ridge selection, keeping the
+previously selected QRC dynamics fixed. This is a descriptive grid extension;
+the original replication gates and controls remain unchanged. The separate
+dense-replay ledger retains rootwise scores, percentile summaries and agreement
+checks at the original six windows. No points are inferred by interpolation.
+
+The history axis is linear, with a small marker at every computed window. The
+full-history QRC reference is red and dashed; the restricted QRC stays orange
+and the four-input QELM stays blue. Other figure panels and their data remain.
+
+The independent audit checks all 1,152 replay scores, 24 full-QRC scores,
+144 archived replay anchors, 168 complete readout fits, and direct evolution
+at three fixed test rows for every root/window. The source ledger embeds the
+report and its checkpoint hashes. Ill-conditioned original ridge fits produce
+small cross-runtime differences: the maximum archived NRMSE difference is
+0.000232 percentage points. The separate extension protocol records the
+post-diagnostic absolute 1e-5 metric tolerance; strict same-runtime checks and
+all selected alphas, dynamics and feature counts are preserved.
+
+Reproduction uses `pra_extension/code/narma_dense_replay.py`, then
+`verify_narma_dense_replay.py`, then the runner's `--publish-only` option before
+`render_memory_prediction.py`. Use one BLAS thread. Raw checkpoints are local
+to `results_narma_dense_replay_v2`. On a clean checkout, restore the
+`specification.numerical_reproducibility` object from the portable source ledger
+as `results_narma_dense_replay_v1/numerical_preflight.json` before starting a
+fresh results directory; this preserves the documented numerical diagnosis.
+The portable figure loader does not require the raw checkpoint directories.
+
+## Previous: accessible-history labels and explicit feature choices (14 September 2026)
+
+Figure 3(c) describes the information available to each model: QRC with the last
+d inputs, QRC with full history, and QELM with the last four inputs. The title
+asks how much history is needed; the x-axis counts recent inputs, including the
+current input. Resetting, replay and separate readout fits remain documented in
+the caption/methods. The plotted arrays and empirical reference are unchanged.
+
+Figure 2 has a 7.055 by 3.05 inch canvas with a larger staircase, stronger cell
+boundary without in-cell numbers. Its display starts at loss rate 1 and omits
+the lower-rate annotation; only integer rates are labeled. The four omitted
+rows below 1 fail the sampled criterion at every tested window, as the caption
+states. Exports retain all 198 source cells across eleven tested loss rates
+and windows one through six.
+No compatible longer-window data exist; the separate N5 cohort is not mixed in.
+The lower measurement panel replaces stacked bars with all twelve directly
+labeled choice percentages. These are rounded shares of 192 validation choices
+per shot tier, made before testing; bold/pale blue marks the most frequent count.
+This revision changes presentation only. All source values, cohorts, intervals,
+colors, Figure 1, scientific claims and the selected title are preserved.
+
+## Previous: paired emulation panels and consistent model colors (14 September 2026)
+
+Figure 3 now places laser-driven emulation (a) next to the measured-input memory
+control and separate analytical construction (b). The synthetic NARMA10 task is
+in (c). The lower prediction plot shows the same selected QRC reset for every
+prediction, processing only the last d inputs and using a readout refitted for
+that window. Its six unsmoothed estimates are compared with a dashed continuous
+QRC reference and the single available four-input QELM estimate. The reference
+is empirical, not an error floor; the measured dip at d=12 remains visible.
+Quadratic curves are omitted from this display at the author's request, while
+all quadratic results remain in the source ledger and manuscript text.
+
+All active figures use orange #D97632 for QRC and blue #3868D9 for QELM;
+external targets and raw input traces use charcoal #20252B. QRC outputs that
+serve as emulation targets remain orange, with no independent third trajectory.
+Blue shades distinguish QELM feature counts and errors against different target
+sizes. The red analytical lower bound and yellow observable accents retain
+their distinct roles. An active palette layer preserves the frozen legacy
+palette and historical figure evidence. Samples, intervals, cohorts, fitting,
+title, framing and proofs are unchanged. Figure captions and cross-references
+follow the new panel order. Current PDF and clean-source checks are in the
+manifest.
+
+```sh
+MPLCONFIGDIR=/private/tmp/qrc-mpl-cache .venv/bin/python pra_extension/code/render_active_information_interface.py
+MPLCONFIGDIR=/private/tmp/qrc-mpl-cache .venv/bin/python paper/figure2_candidates/render_resource_atlas.py --publication --output paper/figures/resource_atlas
+MPLCONFIGDIR=/private/tmp/qrc-mpl-cache .venv/bin/python pra_extension/code/render_memory_prediction.py
+.venv/bin/python paper/icaart2027/prepare_assets.py
+.venv/bin/python paper/icaart2027/build_submission.py
+```
+
+## Previous: intuitive measurement-budget panel (14 September 2026)
+
+Figure 2(c) replaces the numerical matrix with test-error curves over the four
+shot tiers. All 16 medians retain their full 10th–90th root-percentile whiskers;
+distinct markers identify fixed feature counts and the validation-selected
+policy. Small within-tier offsets separate nearly coincident points. The 10%
+reference is not a success classification. Enlarged validation-choice bars show
+the existing frequencies and label the majority shares. Panels a/b, all source
+data, model comparisons and the 13 September framing remain unchanged.
+The caption identifies the whiskers and offsets. See the current manifest for
+the rebuilt PDF and source archive; the previous matrix remains in the original
+candidate artifacts and repository history.
+
+## Previous: finite-window emulation framing (13 September 2026)
+
+The author-selected title is now *When Can Finite-Window QELMs Emulate Quantum
+Reservoirs?* The abstract, introduction and conclusion foreground the distinction
+between missing history and model limitations, retaining both observable
+forgetting and protected memory. Section 4.3 explicitly states the delayed-recall
+task already implied by the protected construction: exact QRC expectations
+realize the target, while every stateless fixed-window predictor has a worst-case
+error floor over unbounded delays. This is a consequence of the existing
+construction, not a new experiment or an independent claim of quantum advantage.
+
+All existing display equations, proofs, citations, figures, captions, numerical
+results and comparison conditions are retained. Repeated framing prose was
+condensed to keep twelve pages, with a 162-word abstract. The source ZIP rebuilds
+to an identical PDF. Current validation and visual-review identities are recorded
+in `ICAART2027_MANIFEST.json`. Existing submission-policy and author gates remain
+separate from this editorial revision. The following entries describe earlier
+versions.
+
+## Previous: three-panel Figure 3 with stacked NARMA addition (11 September 2026)
 
 Figure 3 now has three columns in the same 6.221 by 3.65 inch canvas:
 laser-driven QRC emulation (a), vertically stacked NARMA10 target/prediction
@@ -256,7 +431,7 @@ study. The scalar infimum, fixed-history shot guarantees and existence-versus-
 efficient-training distinction remain unchanged. Only the appendix and its
 protected-example cross-reference change; the inactive journal is untouched.
 
-## Current color system: Cobalt
+## Previous color system: Cobalt
 
 The author selected palette B: cobalt #3868D9, coral #D66A56 and violet
 #7C5A9F, with charcoal #20252B and gray #8B9198. All three current figures

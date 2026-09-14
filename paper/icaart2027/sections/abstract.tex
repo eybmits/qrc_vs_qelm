@@ -1,19 +1,17 @@
-When processing a time series with a quantum reservoir computer (QRC), can
-a reset-window quantum extreme learning machine (QELM) reproduce its outputs
-using only recent inputs? The QRC carries information forward in its state,
-whereas the QELM starts afresh for each prediction. We characterize when
-this replacement is possible and how much history it requires. Different
-pasts can produce identical recent inputs but different QRC outputs,
-creating an unavoidable error for a window model. Under our assumptions,
-sufficiently expressive reset-QELMs evaluated through exact expectations
-permit arbitrarily accurate emulation precisely when the missing past's
-influence on the chosen outputs vanishes uniformly as the window grows.
-Analytically constructed examples verify achievable accuracy limits and
-exhibit a persistent error floor. Simulations examine the practical roles
-of window length, feature capacity, and measurement budgets. The resulting
-decision principle receives an additional check through synthetic NARMA10
-prediction: consider a QELM when an affordable window contains
-enough history for the required accuracy, and retain the QRC when essential
-information must be carried beyond that window. Sufficient history enables
-replacement in principle; representation, training, and measurement
-determine its practical success.
+Observable memory determines when a reset-window quantum extreme learning
+machine (QELM) can emulate a quantum reservoir computer (QRC). A QRC carries
+information forward in its state, whereas a reset-QELM sees only recent
+inputs. Histories with identical recent inputs can therefore require different
+outputs, creating an information limit that additional features cannot remove.
+We characterize when sufficiently expressive QELMs with growing input windows,
+evaluated through exact expectations, can approximate QRC outputs arbitrarily
+well, linking emulation to the uniformly fading influence of the missing past.
+Observable forgetting then determines how much context is needed. Conversely,
+we construct a QRC in which an old input remains relevant to later outputs
+over arbitrarily long delays. For this reservoir, every fixed-window QELM
+faces a positive worst-case error floor, regardless of its model capacity.
+Analytical benchmarks and simulations examine three distinct limitations:
+missing history, insufficient features, and finite measurements. Together, the
+results identify when longer windows can replace reservoir memory and when
+persistent observable memory prevents arbitrarily accurate finite-window
+emulation.

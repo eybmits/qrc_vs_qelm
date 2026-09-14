@@ -29,44 +29,45 @@ standard deviation. History or emulation passes at $\leq0.10$ in at least
 10 of 12 roots; confidence intervals use paired root-block bootstraps.
 
 \begin{figure*}[t]
+ \centering
  \includegraphics[width=\textwidth]{fig04_memory_prediction.pdf}
  \caption{Memory in emulation and prediction.
- a The QELM tracks the laser-driven QRC better with fast forgetting;
- labels give full-test NRMSE. This is emulation, not laser forecasting;
- output scales differ.
- b Synthetic NARMA10 targets and predictions use identical output scales.
- Below, restricting QRC history worsens prediction; longer-window quadratic
- controls remain visible.
- c Above, different earlier inputs receive the same continuation.
- Below, constructed QELMs approach the red unavoidable window error:
- an analytical limit, not a laser or NARMA bound.
- Bands/bars show medians and 10th--90th root percentiles
- (12 per loss rate in c, 24 in b), not confidence intervals.
- First-root excerpts show 128 scored rows (a), 96 (b).
- Replay refits readouts and costs extra
- evolution; the analytic readout is not learned.}
+ a Faster forgetting improves QELM emulation of laser-driven QRC
+ (full-test NRMSE labelled; differing output scales), not laser forecasting.
+ b Distinct pasts receive identical continuations (top). Constructed QELMs
+ approach the red analytical window-error floor without readout training
+ (bottom), not a laser/NARMA bound.
+ c Synthetic NARMA10 traces share output scales. Replay resets the same QRC on its
+ last $d$ inputs and refits its readout at every $d=1,\ldots,48$
+ (displayed: 1--20), costing extra evolution. Red dashes: empirical
+ full-history QRC reference, not a floor; blue: QELM(4).
+ Medians and 10th--90th root percentiles (12 roots/loss in b; 24 in c);
+ bands/bars are not confidence intervals.}
  \label{fig:long-context}
 \end{figure*}
 
 \emph{Measured-input demonstration.}
-Figure~\ref{fig:long-context}(a,c) uses Santa Fe laser inputs
+Figure~\ref{fig:long-context}(a,b) uses Santa Fe laser inputs
 \cite{weigend1993timeseries} to test emulation and remaining past influence.
 Across 12 roots, median QELM error is 3.10\% with fast loss and 27.88\%
 with slow loss (protocol: Appendix~\ref{app:laser-demonstration}).
 
 \emph{Additional prediction task.}
-A separate NARMA10 follow-up [Figure~\ref{fig:long-context}(b)] moves from emulation to actual task targets
-\cite{fujii2017harnessing}. Across 24 fresh roots, median test NRMSE is
-59.7\% for the QRC, 77.2\% for the four-input QELM, and 77.3\% for the same QRC
-reset and refitted on four inputs. The QRC beats both restricted models in
-all 24 roots: evidence for useful older inputs, not an exact error decomposition.
-A twelve-input quadratic model reaches 10.3\%. This synthetic task establishes
-neither a uniquely quantum requirement nor failure of every finite window
+Synthetic NARMA10 prediction~\cite{fujii2017harnessing}
+[Figure~\ref{fig:long-context}(c)] gives median test NRMSE 59.7\% (QRC),
+77.2\% (four-input QELM), and 77.3\% (same QRC reset and refitted on four inputs)
+across 24 fresh roots. QRC beats both in all 24 roots, supporting useful older
+inputs without an exact error decomposition. Replay medians fall from
+77.6\% (nine inputs) to 53.1\% (ten);
+all 24 improve. This is consistent with first access to the quantized proxy
+of the lag-nine forcing input; changing features and readouts prevent causal
+isolation, and recursive history may reach further. A twelve-input quadratic model
+reaches 10.3\%; neither quantum necessity nor failure of every finite window follows
 (Appendix~\ref{app:task-forecasting}).
 
 \subsection{History Requirements}
 
-Figure~\ref{fig:resource-diagnosis}(a) maps 11 loss rates and windows one to
+Figure~\ref{fig:resource-diagnosis}(a) draws on 11 loss rates and windows one to
 six across three sizes: 198 settings. No tested window meets the sampled
 history criterion at $\gamma_T\leq1$; at $\gamma_T=4$, two inputs suffice
 in all sizes. All rootwise decay slopes are negative in
@@ -144,10 +145,7 @@ Useful capacity depends on measurement precision
 
 Separate post hoc construction checks use the one-qubit channel
 \[
- \begin{aligned}
- \Phi_a(\rho)&=\eta\rho\\
- &\quad +(1-\eta)\operatorname{diag}(1-g(a),g(a)),
- \end{aligned}
+ \Phi_a(\rho)=\eta\rho+(1-\eta)\operatorname{diag}(1-g(a),g(a)),
 \]
 with $y=\langle1|\rho|1\rangle$, $a\in[0,1]$, $0<\eta<1$ and initial state
 $|0\rangle$: a classical leaky-memory process embedded in a qubit.
@@ -157,7 +155,7 @@ $D_d=\eta^d$ (Appendix~\ref{app:bernstein-resources}).
 For the quadratic case, two encoding copies per input and an analytical
 readout attain $D_d/2$ exactly: $0.08388608$ at $\eta=0.8,d=8$, confirmed
 by a 16-qubit statevector check to rounding precision.
-For the nonpolynomial case [Figure~\ref{fig:long-context}(c)], Bernstein midpoint error approaches the same
+For the nonpolynomial case [Figure~\ref{fig:long-context}(b)], Bernstein midpoint error approaches the same
 floor, from $0.281322$ at one copy to $0.084753$ at 256 copies per input.
 These use factorized exact expectations, not full-register statevectors,
 with no training; this is not the best readout at each copy count.

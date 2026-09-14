@@ -1,7 +1,7 @@
 {
   "schema": "icaart2027_submission_qa_v2",
   "pdf": "submission.pdf",
-  "pdf_sha256": "b61061a25bfdd78d3535f438dec62b7db54700df0c752b1707a06b77367242ff",
+  "pdf_sha256": "24d61b50c146828b1cf20e53e7752990c2ee8feb192c62c388e53ac8e28bd69a",
   "extraction_backend": "pypdf + Poppler",
   "passed": false,
   "format_passed": true,
@@ -72,7 +72,7 @@
     },
     "character_budget": {
       "passed": true,
-      "characters": 42438,
+      "characters": 42512,
       "minimum": 10000,
       "maximum": 50000,
       "definition": "Unicode, whitespace excluded"
@@ -96,7 +96,7 @@
     },
     "abstract_length": {
       "passed": true,
-      "words": 183,
+      "words": 164,
       "minimum": 70,
       "maximum": 200
     },
@@ -138,7 +138,7 @@
           "unicode": true
         },
         {
-          "name": "STIYJV+CMSY10",
+          "name": "OUTHWQ+CMSY10",
           "embedded": true,
           "subset": true,
           "unicode": true
@@ -204,7 +204,7 @@
           "unicode": true
         },
         {
-          "name": "STIYJV+CMSY10",
+          "name": "OUTHWQ+CMSY10",
           "embedded": true,
           "subset": true,
           "unicode": true
@@ -216,31 +216,19 @@
           "unicode": true
         },
         {
-          "name": "TBDION+HelveticaNeue",
+          "name": "GVRTFS+HelveticaNeue",
           "embedded": true,
           "subset": true,
           "unicode": true
         },
         {
-          "name": "ERNTJM+HelveticaNeue",
+          "name": "VJHUVI+HelveticaNeue-Bold",
           "embedded": true,
           "subset": true,
           "unicode": true
         },
         {
-          "name": "FGXPZO+HelveticaNeue-Bold",
-          "embedded": true,
-          "subset": true,
-          "unicode": true
-        },
-        {
-          "name": "EXFOUD+ArialMT",
-          "embedded": true,
-          "subset": true,
-          "unicode": true
-        },
-        {
-          "name": "EVCTOY+HelveticaNeue",
+          "name": "EAGPTO+HelveticaNeue",
           "embedded": true,
           "subset": true,
           "unicode": true
@@ -320,75 +308,102 @@
     "physical_page_clipping": [],
     "template_margin_excursions": [
       {
-        "page": 5,
+        "page": 10,
         "box": [
-          402.146303,
+          149.875101,
           713.401985,
-          408.788368,
-          730.687096
-        ]
-      },
-      {
-        "page": 5,
-        "box": [
-          411.677522,
-          713.401985,
-          429.389032,
+          157.624012,
           730.687096
         ]
       },
       {
         "page": 10,
         "box": [
-          451.217,
-          89.722985,
-          459.518835,
-          107.008096
+          166.527,
+          713.401985,
+          178.140403,
+          730.687096
         ]
       },
       {
         "page": 10,
         "box": [
-          190.725,
-          720.094931,
-          202.187452,
-          726.449854
+          204.476,
+          713.401985,
+          218.622463,
+          730.687096
         ]
       },
       {
         "page": 10,
         "box": [
-          470.896,
-          710.681985,
-          478.64491,
-          727.967096
+          340.688719,
+          713.401985,
+          345.670019,
+          730.687096
         ]
       },
       {
         "page": 10,
         "box": [
-          409.999,
-          718.572021,
-          414.422394,
-          727.159782
+          353.102119,
+          713.401985,
+          360.851029,
+          730.687096
         ]
       },
       {
         "page": 10,
         "box": [
-          419.99,
-          717.515985,
-          427.73891,
-          734.801096
+          374.307,
+          713.401985,
+          379.2883,
+          730.687096
         ]
       },
       {
-        "page": 10,
+        "page": 11,
         "box": [
-          429.113749,
-          718.482357,
-          434.095049,
-          727.388922
+          194.929,
+          713.386873,
+          200.464221,
+          750.567296
+        ]
+      },
+      {
+        "page": 12,
+        "box": [
+          123.9,
+          709.620985,
+          130.542065,
+          726.906096
+        ]
+      },
+      {
+        "page": 12,
+        "box": [
+          132.753763,
+          709.620985,
+          145.483973,
+          726.906096
+        ]
+      },
+      {
+        "page": 12,
+        "box": [
+          186.483015,
+          709.620985,
+          193.12508,
+          726.906096
+        ]
+      },
+      {
+        "page": 12,
+        "box": [
+          195.336778,
+          709.620985,
+          208.066988,
+          726.906096
         ]
       }
     ],

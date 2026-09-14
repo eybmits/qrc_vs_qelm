@@ -60,14 +60,16 @@ Its value is independent of the chosen norm.
  \includegraphics[width=\textwidth]{fig03_resource_diagnosis.pdf}
  \caption{Three resources, three different questions.
  a Blue windows meet the 10\% old-history criterion in all three target sizes;
- gray windows do not. Rows are tested loss rates.
- b More features help, with little improvement beyond 36 here.
- c Test errors and validation-selected feature counts versus measurement budget;
- outlines mark medians below 10\% before rounding.
+ gray windows do not. Rows show tested loss rates $\geq1$; lower rates also fail.
+ b More features help, with little improvement beyond 36.
+ c Test error falls with more shots; diamonds use validation-selected
+ feature counts. Points are offset within shot tiers; the horizontal dashed line marks
+ 10\% error. Lower percentages summarize 192 pre-test validation choices per tier
+ (12 roots, 16 repeats), rounded; bold marks the most frequent count.
  Errors are sampled NRMSE percentages, not worst-case bounds.
- Medians and 10th--90th percentiles (bands in b, rounded ranges in c) describe
+ Medians and 10th--90th percentiles (bands in b, whiskers in c) describe
  12 realizations per cohort, not confidence intervals.
- Section~\ref{sec:numerics} specifies the criterion and separate studies.}
+ Separate studies: Section~\ref{sec:numerics}.}
  \label{fig:resource-diagnosis}
 \end{figure*}
 
@@ -168,6 +170,13 @@ Equation~\eqref{eq:window-law} therefore forces worst-case absolute error
 of at least $\delta/2$ for every stateless window predictor, whether
 quantum or classical. The singlet construction realizes this obstruction
 with one fixed reservoir and a pair of trajectories, yielding $r_{\rm vis}=1$.
+
+\emph{Memory-task implication.} Recall the population $0$ or $\delta$
+set by the old flag after arbitrarily many $q=0$ inputs. Exact QRC
+expectations realize the target; every stateless fixed-window predictor
+incurs worst-case error at least $\delta/2$ at longer delays. This
+separates memory from finite context over unbounded delays, not when
+the window covers the task horizon.
 
 Matched controls distinguish exact protection from slow forgetting.
 Local loss reduces the gap, while asymmetric collective loss breaks exact

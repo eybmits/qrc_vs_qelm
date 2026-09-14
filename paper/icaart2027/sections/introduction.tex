@@ -1,10 +1,9 @@
 \section{INTRODUCTION}
 \label{sec:introduction}
 
-When can a reset-window quantum extreme learning machine (QELM) replace a
-quantum reservoir computer (QRC) in a time-series application? The choice
-depends on whether recent inputs contain enough history for the required
-output accuracy.
+When can a finite window replace a quantum reservoir computer's (QRC's)
+observable memory? We separate missing history from limitations of the
+quantum extreme learning machine (QELM) used to emulate it.
 
 \begin{figure*}[t]
  \centering
@@ -13,38 +12,37 @@ output accuracy.
  forward, while the reset-QELM receives a window of recent inputs.
 Right: an old input leaves the window at the dashed line. Above, its
 influence has vanished by then, so the curves stay identical. Below, its influence
- becomes more visible and a gap remains. Charcoal denotes the QRC; coral
+ becomes more visible and a gap remains. Orange denotes the QRC; blue
  denotes an ideal window prediction. These are schematic examples, not
  trained-model results: time advances while the window length stays fixed
  (Section~\ref{sec:models}).}
  \label{fig:information-interface}
 \end{figure*}
 
-A QELM transforms each window into quantum features for a trainable readout
-\cite{innocenti2023potential}, starting afresh for each prediction. A QRC
-instead carries its state between inputs \cite{fujii2017harnessing}
+A QELM resets for each prediction and transforms its window into quantum
+features for a trainable readout \cite{innocenti2023potential}. A QRC
+carries state between inputs \cite{fujii2017harnessing}
 (Figure~\ref{fig:information-interface}).
-Our theoretical target is the QRC's chosen output. Separate forecasting
-experiments test the practical value of carried history on actual task targets.
+Emulation targets chosen observable outputs; forecasting is evaluated separately.
 
-Consider a brief event in a sensor stream. If its effect on the QRC output
-soon becomes negligible, a recent window may suffice. If the effect
-persists, histories with identical recent inputs can still require different
-outputs. More features or training data cannot recover the event once it
-lies outside the window. The history requirement therefore comes first.
+A brief sensor event may leave a persistent output signal after leaving
+the input window. Identical windows can then require different outputs;
+more features cannot recover the missing event. Reproducing its retained
+signal is itself a memory task that distinguishes carried state from
+finite context.
 
 \input{sections/related-work}
 
-Under the assumptions of Section~\ref{sec:criterion}, we establish when
-growing windows and sufficient QELM capacity permit arbitrarily accurate
-emulation with exact expectations. We quantify the unavoidable error from
-missing history and connect the required window length to how quickly older
-inputs lose their influence \cite{petreczky2026stability}. Exactly solvable
-examples check these limits directly. A protected-memory construction shows
-why every finite window can leave a persistent error floor.
+Under Section~\ref{sec:criterion}'s assumptions, growing windows and
+sufficient QELM capacity permit arbitrarily accurate emulation with exact
+expectations precisely when older inputs lose their output influence
+uniformly. We quantify the missing-history error and relate the required
+window to its decay rate \cite{petreczky2026stability}. Conversely, one
+fixed two-qubit QRC with protected observable memory imposes a positive
+lower bound on emulation error independent of window length. Its recall
+task separates carried memory from every fixed finite window over
+unbounded delays.
 
-For practitioners, we separate whether the window contains enough history
-from whether the fitted QELM can use it. Simulations test window length,
-feature capacity and measurement precision. Direct NARMA10
-prediction test whether restricting the same reservoir's history removes
-a practical benefit.
+Analytical and numerical experiments test these limits. NARMA10 separately
+examines useful older inputs, without establishing quantum advantage or
+the separation for every finite window.

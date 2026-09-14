@@ -7,14 +7,14 @@
 \usetikzlibrary{arrows.meta,calc,decorations.pathreplacing}
 \pdfinfoomitdate=1
 \pdftrailerid{}
-% Author-selected Cobalt palette; legacy token names preserve drawing geometry.
-% green = coral window/QELM; gold = restored yellow observable/readout accent.
+% Active semantic palette; legacy token names preserve drawing geometry.
+% blue = orange QRC; green = blue QELM; purple = black input; gold = yellow features.
 \definecolor{ink}{HTML}{20252B}
-\definecolor{blue}{HTML}{3868D9}
-\definecolor{green}{HTML}{D66A56}
-\definecolor{orange}{HTML}{D66A56}
+\definecolor{blue}{HTML}{D97632}
+\definecolor{green}{HTML}{3868D9}
+\definecolor{orange}{HTML}{D97632}
 \definecolor{gold}{HTML}{FFC943}
-\definecolor{purple}{HTML}{7C5A9F}
+\definecolor{purple}{HTML}{20252B}
 \definecolor{muted}{HTML}{8B9198}
 \definecolor{neutral}{HTML}{F1F2F3}
 \definecolor{palegold}{HTML}{FFDD92}
@@ -453,7 +453,7 @@
 % Input and architectures feed two cases in one prediction-comparison column.
 % One shared square input plot, centered between the two model lanes.
 % Only 0--180 are available at t; grey values 181--200 are display context.
-% Distinct blue/green tints separate carried past from the explicit window.
+% Orange/blue tints separate carried past from the explicit window.
 % A solid window-start boundary complements the dashed current-time guide.
 \fill[blue!16] (1.045,6.725) rectangle ({1.045+4.15*146.5/212},10.875);
 \fill[green!24] ({1.045+4.15*146.5/212},6.725) rectangle ({1.045+4.15*186/212},10.875);
@@ -483,7 +483,7 @@
  \foreach \kk/\val [remember=\kk as \pk (initially 0),
                     remember=\val as \pv (initially 0)] in \MGsamples{
   \def\tracecolor{ink}
-  \ifnum\kk>140 \def\tracecolor{green}\fi
+  \ifnum\kk>140 \def\tracecolor{ink}\fi
   \ifnum\kk>180 \def\tracecolor{muted!60}\fi
   \ifnum\kk>0 \draw[\tracecolor,line width=.55pt] (\pk,\pv)--(\kk,\val);\fi
   \node[fill=\tracecolor,circle,inner sep=.84pt] at (\kk,\val) {};
@@ -516,7 +516,7 @@
 \draw[ink,fill=blue!12,rounded corners=2pt,line width=.65pt]
  (6.60,10.15) rectangle (7.95,12.05);
 \node[text=blue] at (7.275,11.10) {$\Phi_{a_t}$};
-\node at (7.275,12.78) {QRC};
+\node[text=blue] at (7.275,12.78) {QRC};
 \draw[flow,blue] (8.35,10.40)--(8.35,9.63)--(6.35,9.63)--(6.35,10.40);
 \node[text=blue,fill=white,inner sep=1pt] at (7.35,9.25) {carried state $\rho_t$};
 
@@ -537,8 +537,8 @@
 \draw[ink,rounded corners=2pt] (qo1.east)--(10.93,11.75)--(11.04,11.10);
 \draw[ink,rounded corners=2pt] (qom.east)--(10.93,10.45)--(11.04,11.10);
 \draw[ink,fill=gold,line width=.65pt,rounded corners=1.8pt] (11.04,10.85)--(11.04,11.35)--(11.42,11.10)--cycle;
-\draw[flow,ink] (11.42,11.10)--(11.68,11.10);
-\node[anchor=west] at (11.73,11.10) {$y_t$};
+\draw[flow,blue] (11.42,11.10)--(11.68,11.10);
+\node[anchor=west,text=blue] at (11.73,11.10) {$y_t$};
 
 % The whole window, rather than its endpoint, supplies the reset encoding.
 % The brace spans exactly the causal highlighted interval, not the grey future.
@@ -558,7 +558,7 @@
 \node[text=green] at (7.00,6.50) {$E(S_d)$};
 \draw[ink,fill=white,rounded corners=2pt,line width=.65pt] (7.77,6.21) rectangle (8.11,7.43);
 \draw[ink,fill=white,rounded corners=2pt,line width=.65pt] (8.24,5.57) rectangle (8.58,6.79);
-\node at (7.485,7.95) {reset-QELM};
+\node[text=green] at (7.485,7.95) {reset-QELM};
 \draw[flow,green,rounded corners=3pt] (windowhook)--(0,5.20 -| windowhook)
  --(7.00,5.20)--(7.00,5.54);
 \node[text=green,fill=white,inner sep=1pt] at (4.30,5.73) {window $S_d$};
@@ -575,8 +575,8 @@
 \draw[ink,rounded corners=2pt] (qf1.east)--(10.93,7.15)--(11.04,6.50);
 \draw[ink,rounded corners=2pt] (qfb.east)--(10.93,5.85)--(11.04,6.50);
 \draw[ink,fill=gold,line width=.65pt,rounded corners=1.8pt] (11.04,6.25)--(11.04,6.75)--(11.42,6.50)--cycle;
-\draw[flow,ink] (11.42,6.50)--(11.68,6.50);
-\node[anchor=west] at (11.73,6.50) {$\widehat y_t$};
+\draw[flow,green] (11.42,6.50)--(11.68,6.50);
+\node[anchor=west,text=green] at (11.73,6.50) {$\widehat y_t$};
 
 % Both model outputs feed the two illustrative cases. This brace groups
 % classical outputs; it is not a dynamical connection or quantum-state mixing.
@@ -626,7 +626,7 @@
     remember=\target as \ptarget (initially 0),
     remember=\prediction as \pprediction (initially 0)] in #2{
    \ifnum\kk>0
-    \draw[ink,line width=.55pt] (\pk,\ptarget)--(\kk,\target);
+    \draw[blue,line width=.55pt] (\pk,\ptarget)--(\kk,\target);
     \ifnum\kk=40
      % Separate the new baseline value from the missing old-bit contribution.
      \draw[green,line width=.65pt] (\pk,\pprediction)--(\kk,\target)--(\kk,\prediction);
@@ -639,7 +639,7 @@
     \node[draw=green,fill=white,circle,line width=.70pt,inner sep=1.45pt] at (\kk,\prediction) {};
    \fi
    % Keep the target dot visible inside coincident prediction rings.
-   \node[fill=ink,circle,inner sep=.78pt] at (\kk,\target) {};
+   \node[fill=blue,circle,inner sep=.78pt] at (\kk,\target) {};
   }
  \end{scope}
 \end{scope}}
@@ -650,8 +650,8 @@
 \begin{scope}[shift={(13.920,8.11)}]
  \fill[ink!15,rounded corners=1.3pt] (.115,-.035) rectangle (3.385,.495);
  \draw[ink,fill=white,rounded corners=1.3pt,line width=.75pt] (.08,0) rectangle (3.35,.53);
- \draw[ink,line width=.55pt] (.22,.265)--(.48,.265);
- \fill[ink] (.35,.265) circle (.032);
+ \draw[blue,line width=.55pt] (.22,.265)--(.48,.265);
+ \fill[blue] (.35,.265) circle (.032);
  \node[anchor=west,font=\fontsize{10}{11.5}\selectfont] at (.57,.265) {QRC};
  \draw[green,fill=white,line width=.70pt] (1.85,.265) circle (.070);
  \node[anchor=west,font=\fontsize{10}{11.5}\selectfont] at (2.02,.265) {QELM};

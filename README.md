@@ -5,6 +5,19 @@
 [![Python 3.11+](https://img.shields.io/badge/python-3.11%2B-blue.svg)](pyproject.toml)
 ![tests](https://img.shields.io/badge/tests-442%20passing-brightgreen.svg)
 
+The active paper is **When Can Finite-Window QELMs Emulate Quantum Reservoirs?**
+in [`paper/icaart2027/`](paper/icaart2027/README.md), built as
+`paper/icaart2027/submission.pdf`. The 13 September framing revision makes the
+protected construction's delayed-memory task implication explicit while
+preserving the existing theory, experiments and figures. The journal-format
+snapshot described below remains inactive.
+
+The 14 September figure revision groups laser emulation and its memory control
+in Figure 3(a,b), followed by synthetic NARMA10 prediction in (c). Active figures
+use orange QRC, blue QELM and black external targets. Replay explicitly resets
+the same QRC; only its plotted quadratic comparison is omitted, with all
+numerical results retained in the paper and source ledger.
+
 See [REPRODUCIBILITY.md](REPRODUCIBILITY.md) for the claim-to-protocol, seed,
 root-result and command map, empirical error definitions, freeze-chronology
 limits, and the explicit availability gap for local-only N5 evidence.
@@ -109,11 +122,11 @@ QRC lies beyond every finite reset window on its declared suffix alphabet.
   every root.  This is evidence for the information-interface interpretation,
   not quantum advantage.
 
-The publication artifact is the single manuscript
+The earlier journal-format publication artifact is the single manuscript
 `paper/canonical_emulation/main.tex`, compiled as
 `paper/canonical_emulation/main.pdf`.  The paper is titled *When Can
 Finite-Context QELMs Replace Quantum Reservoir Memory?*.
-The current journal and conference builds are each 12 pages with three main
+At that snapshot, the journal and conference builds were each 12 pages with three main
 figures. The journal uses 45 cited references and includes proofs,
 calibration, numerical controls, Methods, and the technical appendix in the
 same PDF.  The frozen

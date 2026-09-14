@@ -210,7 +210,17 @@ def _fake_repository(root: Path) -> tuple[Path, Path]:
             if link[0] not in release.EXPLORATORY_ANALYSES
         }
     )
-    for ledger_relative in external_ledgers:
+    # Some figure ledgers now hash another evidence ledger. Build dependencies
+    # first so fixture hashes describe their final content, not placeholder JSON.
+    pending = set(external_ledgers)
+    ordered_ledgers = []
+    while pending:
+        ready = sorted(ledger for ledger in pending if not any(
+            link[0] == ledger and link[3] in pending for link in release.SOURCE_HASH_LINKS))
+        assert ready, "Cyclic ledger dependencies"
+        ordered_ledgers.extend(ready)
+        pending.difference_update(ready)
+    for ledger_relative in ordered_ledgers:
         ledger_links = [
             link for link in release.SOURCE_HASH_LINKS if link[0] == ledger_relative
         ]

@@ -1,5 +1,16 @@
 # Main-figure chart map
 
+## Current semantic palette: input black, QRC orange, QELM blue
+
+The active ICAART figures use `pra_extension/code/active_paper_palette.py`.
+External targets and causal input samples are charcoal #20252B, QRC outputs
+and carried state are orange #D97632, and QELM predictions and explicit
+windows are blue #3868D9. Figure 1 retains yellow observable/readout accents
+and gray future display-only samples. Output filled dots are QRC orange;
+open rings are QELM blue. All coordinates, labels, samples, and drawing order
+are unchanged. Historical candidate archives and `paper_palette.py` remain
+frozen; color descriptions in the earlier revision entries below are superseded.
+
 ## Current Figure 1: gradually revealed persistent memory
 
 Remove both internal memory-case labels, retaining the shared QRC/QELM key,

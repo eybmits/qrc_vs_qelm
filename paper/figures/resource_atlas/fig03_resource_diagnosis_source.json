@@ -1,9 +1,9 @@
 {
   "status": "author_selected_publication_asset",
-  "caption": "Three resources, three different questions. a Blue cells mark windows that meet the sampled 10% old-history-error criterion in each of the two-, three-, and four-qubit cohorts (at least 10 of 12 realizations per size). Gray cells do not meet it; loss-rate rows are the tested settings, not equally spaced physical values. b More features reduce prediction error, with little improvement beyond 36 here. Lines show medians and bands the 10th\u201390th percentiles across 12 realizations per size. c Median test errors (%) for fixed feature counts and validation-selected counts; small ranges show 10th\u201390th percentiles. Outlines mark medians below 10% before rounding. The lower bars show how often validation selects each count across 12 realizations with 16 repetitions each. All panels use separate studies; these sampled errors are not worst-case bounds.",
+  "caption": "Three resources, three different questions. a Blue cells mark windows that meet the sampled 10% old-history-error criterion in each of the two-, three-, and four-qubit cohorts (at least 10 of 12 realizations per size). Gray cells do not meet it; loss-rate rows are the tested settings, not equally spaced physical values. The display starts at loss rate 1, with only integer rates labeled. The omitted rates 0, 0.2, 0.5 and 0.75 fail this sampled criterion for all tested windows; all source data are retained. b More features reduce prediction error, with little improvement beyond 36 here. Lines show medians and bands the 10th\u201390th percentiles across 12 realizations per size. c Test error falls as the measurement budget grows. Points show medians; whiskers show 10th\u201390th root percentiles. Points are offset within each shot tier for legibility; connecting lines are guides. The dashed horizontal line is the 10% error reference, not a success verdict. The lower percentages show how often each feature count is chosen before testing: 192 validation choices per shot tier (12 realizations with 16 repetitions each), rounded to whole percentages. Bold cells mark the most frequent count. All panels use separate studies; these sampled errors are not worst-case bounds.",
   "size_inches": [
     7.055,
-    2.85
+    3.05
   ],
   "sources_sha256": {
     "results_dense_phase_secondary_v1_analysis/dense_phase_cells.csv": "0740f94e13bc4c364b93ca62fe5783aecaaf31ab58aba138ccfeb0a019ac389c",
@@ -15,10 +15,27 @@
     "pra_extension/outputs/finite_shots_eiv_n4_analysis_v6_final_helpers_strict/eiv_validation_selected_rows.csv": "4a6f236665f87b8a65722617af9f62d775134aeca02cae384f34636d09162408",
     "pra_extension/code/render_information_interface_figures.py": "950b4b1d4ec8ae55b2265e971fa0e0be4e081ad5b7cc97ac41ff0afe7606f1f9",
     "pra_extension/code/paper_palette.py": "b2335cbc68555f04fcc0874f6e25eccb23b88e7ee0ebe39fa9b0966cf7312cf9",
-    "paper/figure2_candidates/render_resource_atlas.py": "44cef4586ca3ae3cf65383ae980af90253ad41d2725c801a2abaae136d6594a9"
+    "pra_extension/code/active_paper_palette.py": "3deaf4156cc9439ac207c0dcd45e5e44ef0ed120fc03f3fd32fc3cea6a54eded",
+    "paper/figure2_candidates/render_resource_atlas.py": "b1b396fc7d24f9fb7ee704baa9e8c548d2533848cad548391ce82cba0537207a"
   },
   "history_criterion": "At least 10/12 roots <= 0.10 in EACH size, without pooling",
-  "history_rate_axis": "ordered categories of measured settings, not continuous",
+  "history_rate_axis": "Ordered categories of measured settings, not continuous. Display starts at rate 1; only integer rates are labeled at their categorical row positions.",
+  "history_display_rates": [
+    1.0,
+    1.25,
+    1.5,
+    2.0,
+    2.5,
+    3.0,
+    4.0
+  ],
+  "history_rates_omitted_from_display_only": [
+    0.0,
+    0.2,
+    0.5,
+    0.75
+  ],
+  "history_boundary_labels": "No in-cell numbers or lower-rate annotation. Exact cell-edge boundary retained for seven displayed rate rows. All 198 source cells remain in exports and history_map; omitted rates below 1 fail the sampled criterion for every tested window. No untested values added.",
   "feature_display": [
     18,
     24,
@@ -237,7 +254,10 @@
       "selected_policy_test_nrmse": 0.0950114642321287
     }
   },
-  "shot_uncertainty": "10th-90th root percentiles drawn below each median; full root values retained",
+  "shot_uncertainty": "10th-90th root percentiles drawn as capped whiskers for all 16 medians; full root values retained",
+  "shot_axis": "Four ordered shot tiers; points offset within each tier by -0.12, -0.04, 0.04 and 0.12 for 18, 36, 72 and validation-selected features. Connecting lines are visual guides, not fits.",
+  "shot_reference": "Horizontal 10% NRMSE reference only; no median-based success classification",
+  "semantic_colors": "Blue shades denote QELM prediction errors and QELM feature counts; marker shapes and panel labels distinguish settings. The history criterion retains its separate blue/gray status encoding.",
   "validation_choice_share": {
     "selected_fraction_B18": {
       "300": 0.09375,
@@ -258,6 +278,7 @@
       "19200": 0.5833333333333334
     }
   },
+  "validation_choice_display": "All 12 shares shown as rounded percentages in directly labeled feature-count rows and shot-tier columns. Pale blue/bold marks the most frequent count at each tier; 192 validation choices per tier (12 roots x16 repetitions), 768 total, chosen before testing.",
   "history_map": [
     {
       "teacher_gamma": 0.0,
@@ -360,8 +381,8 @@
     }
   ],
   "artifacts_sha256": {
-    "fig03_resource_diagnosis.pdf": "69ceb1342a682cb383c5872d477b34c7d0f8a52e287158c0300f181c8ce3b934",
-    "fig03_resource_diagnosis.png": "e7d2caecc1bea959092be204050e9d0741a9d9c7c1f4a15a829d19af3dac8281",
+    "fig03_resource_diagnosis.pdf": "a6b6d115c842f4fd470fd17b91e4baff81ffeb5585aed603780b9cb2181a774e",
+    "fig03_resource_diagnosis.png": "3ac3ab9c928311baf5d020c0ecff6fd0d0cff5dc05fdcf3757a549ae35046fa7",
     "fig03_resource_diagnosis_features.csv": "4685fa4455b2eeb703f295b9c9878e6dfd90ca043a7f51610c16417ea5104385",
     "fig03_resource_diagnosis_history.csv": "fb40ca1f38dc05006190c1b67a1b195b153b5eb9c92f292633471c8cc178896f",
     "fig03_resource_diagnosis_shots.csv": "4a1cd8f1329f99b014240ad6b814946d6b4e3c0e4cc7bb824e4c06de6a5d4f27",

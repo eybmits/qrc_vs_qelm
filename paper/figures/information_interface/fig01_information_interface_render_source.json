@@ -53,13 +53,13 @@
     "architecture_scope": "Three wires through a schematic general QRC channel block; only the current scalar enters each update. Earlier inputs act through carried quantum state. The reset QELM receives the full explicit window through E(S_d), then fixed gates. Both models measure observables and apply a readout. The target readout is fixed (identity for the declared observable vector); only the emulator readout is trained. No specific topology or gate count is asserted.",
     "causal_scope": "Only the selected scalar a_180 enters the QRC update; the reset-QELM receives exactly inputs 141..180. Grey samples 181..200 are future display context only and are supplied to neither model.",
     "diagram_encoding": {
-      "carried_state": "#3868D9",
-      "classical_input_injection": "#7C5A9F",
+      "carried_state": "#D97632",
+      "classical_input_injection": "#20252B",
       "earlier_input": "#20252B",
-      "explicit_window": "#D66A56",
-      "ideal_window_output": "#D66A56",
+      "explicit_window": "#3868D9",
+      "ideal_window_output": "#3868D9",
       "measured_quantities_and_readouts": "#FFC943",
-      "target_output": "#20252B"
+      "target_output": "#D97632"
     },
     "figure_notation": "Both general architectures show small yellow readout triangles with rounded corners after their observable banks, without readout text labels. The output labels are y_t and widehat y_t and feed two analytic memory-access comparisons; readout trainability and the fixed target remain specified in the caption and model text. O_1,...,O_m label target observables; P_1,...,P_B label measured QELM features, including checkpoints. These are not identical operators or an equal-budget claim. The numerical target readout remains the identity; m and B denote output dimension and measured-feature count.",
     "float64_le_sha256": "4a7feed74ea28313ececc2b922b9d1a385046e3805fd6546960a8766cc80ba8e",
@@ -115,15 +115,15 @@
     "legacy_first_120_float64_le_sha256": "279ffd9bff72e717ab0a77396efdd92c4495e57d417f65f2bdddcc05680e25ba",
     "legacy_sample_scope": "Checksum of the earlier dt=1 input retained for provenance only; these are not the current displayed samples.",
     "legacy_tikz_color_tokens": {
-      "blue": "#3868D9",
+      "blue": "#D97632",
       "gold": "#FFC943",
-      "green": "#D66A56",
+      "green": "#3868D9",
       "ink": "#20252B",
       "muted": "#8B9198",
       "neutral": "#F1F2F3",
-      "orange": "#D66A56",
+      "orange": "#D97632",
       "palegold": "#FFDD92",
-      "purple": "#7C5A9F",
+      "purple": "#20252B",
       "rule": "#DEE0E3"
     },
     "observable_readout_style": {
@@ -789,7 +789,7 @@
             0.0,
             0.0
           ],
-          "preservation_scope": "The 101 charcoal target samples are unchanged; the shared baseline, alternative-bit history and ideal prediction now describe exact loss of this bit by a fixed horizon of 40 steps. The exponential term preserves the drawing template only, not the bit's memory.",
+          "preservation_scope": "The 101 orange QRC target samples are unchanged; the shared baseline, alternative-bit history and ideal prediction now describe exact loss of this bit by a fixed horizon of 40 steps. The exponential term preserves the drawing template only, not the bit's memory.",
           "time_tick_labels_visible": false,
           "title": "Fading memory",
           "title_anchor_cm": null,
@@ -1650,7 +1650,7 @@
             0.25,
             0.25
           ],
-          "preservation_scope": "All 101 charcoal target samples equal the original persistent toy byte-for-byte; its bit-independent baseline and ideal prediction now reflect gradual revelation.",
+          "preservation_scope": "All 101 orange QRC target samples equal the original persistent toy byte-for-byte; its bit-independent baseline and ideal prediction now reflect gradual revelation.",
           "reveal_schedule": {
             "duration_steps": 64,
             "fully_visible_step": 96,
@@ -2075,7 +2075,7 @@
       "comparison_scope": "Each case shows the selected +1-history target against the ideal window conditional mean of a balanced two-history toy; the -1 history is recorded but not drawn.",
       "curve_gap_scope": "After expiry each displayed discrepancy equals the midpoint error of that case's specific balanced pair. It is not labeled or identified as the generic supremal D_d/2.",
       "default_case": "persistent",
-      "display_headroom": "Both cases share the same linear y-axis [0.45,1.35]; all target and prediction samples remain inside the frames. Both charcoal targets and the entire lower example are unchanged; only the upper ideal prediction changes.",
+      "display_headroom": "Both cases share the same linear y-axis [0.45,1.35]; all target and prediction samples remain inside the frames. Both orange QRC targets and the entire lower example are unchanged; only the upper ideal prediction changes.",
       "emulator_scope": "The ideal conditional mean isolates missing input information. It is not a fitted finite-feature QELM, a claim of its attainability by the tested emulator, or new quantum-advantage evidence.",
       "generator": "figure1_timeseries.output_samples",
       "horizontal_padding_scope": "Axis-only margins keep endpoint markers off the frame; the 101 toy coordinates remain indexed 0..100.",
@@ -2233,8 +2233,8 @@
       "shared_time_label_anchor_cm": null,
       "status": "schematic information-access example, not simulated, fitted, or measured QRC/QELM performance",
       "styles": {
-        "ideal_window": "coral thin line with open markers",
-        "target": "ink thin line with dense filled markers"
+        "ideal_window": "blue QELM thin line with open markers",
+        "target": "orange QRC thin line with dense filled markers"
       },
       "target_definition": "Truth means the target QRC output to be emulated, not an independent third forecasting target. No third trajectory is introduced.",
       "template_stream": {
@@ -2275,7 +2275,11 @@
       "timeline_scope": "time t advances over 0..100 at the same fixed d=40 in both cases",
       "units": "arbitrary time and output units"
     },
-    "palette_name": "Cobalt",
+    "palette_name": "Semantic input/QRC/QELM",
+    "palette_sources": {
+      "pra_extension/code/active_paper_palette.py": "3deaf4156cc9439ac207c0dcd45e5e44ef0ed120fc03f3fd32fc3cea6a54eded",
+      "pra_extension/code/paper_palette.py": "b2335cbc68555f04fcc0874f6e25eccb23b88e7ee0ebe39fa9b0966cf7312cf9"
+    },
     "parameters": {
       "beta": 0.2,
       "discard": 2000,
@@ -2302,7 +2306,7 @@
         11.72
       ],
       "layer": "behind the grid and charcoal samples",
-      "root_color": "#3868D9",
+      "root_color": "#D97632",
       "scope": "Older inputs act through carried state; no lossless-storage claim. Window membership and grey future indices remain unchanged. Stronger washes and a solid onset boundary improve separation; the output plot uses the same hues and tint strengths.",
       "window_fill": "green!24",
       "window_start_boundary": {
@@ -2927,7 +2931,7 @@
       0.8069982550981397
     ]
   },
-  "lane_spacing": "the 4.15 cm square input and all architecture coordinates retain their positions and native labels; both dynamics groups retain their 0.35 cm rightward offset and observable banks their 0.15 cm offset; the orthogonal scalar connector enters the QRC top center vertically downward; the reset lane is 0.30 cm lower to separate the model rows; a coral causal-window brace feeds the reset encoder from below without crossing quantum wires; two 4.15-by-3.2 cm output frames occupy y=8.58..11.78 and y=4.99..8.19 with matching axes; external rounded labels explain window sufficiency in each case; a single shared legend overlaps their facing borders; the removed lower history-error panel permits a 17.9197-by-9.60 cm canvas",
+  "lane_spacing": "the 4.15 cm square input and all architecture coordinates retain their positions and native labels; both dynamics groups retain their 0.35 cm rightward offset and observable banks their 0.15 cm offset; the orthogonal scalar connector enters the QRC top center vertically downward; the reset lane is 0.30 cm lower to separate the model rows; a blue causal-window brace feeds the reset encoder from below without crossing quantum wires; two 4.15-by-3.2 cm output frames occupy y=8.58..11.78 and y=4.99..8.19 with matching axes; external rounded labels explain window sufficiency in each case; a single shared legend overlaps their facing borders; the removed lower history-error panel permits a 17.9197-by-9.60 cm canvas",
   "observable_notation": "O_1,...,O_m label target observables and P_1,...,P_B label QELM features; no identical-operator or equal-feature-count claim",
   "output_comparisons": {
     "amplitude_limits": [
@@ -3576,7 +3580,7 @@
           0.0,
           0.0
         ],
-        "preservation_scope": "The 101 charcoal target samples are unchanged; the shared baseline, alternative-bit history and ideal prediction now describe exact loss of this bit by a fixed horizon of 40 steps. The exponential term preserves the drawing template only, not the bit's memory.",
+        "preservation_scope": "The 101 orange QRC target samples are unchanged; the shared baseline, alternative-bit history and ideal prediction now describe exact loss of this bit by a fixed horizon of 40 steps. The exponential term preserves the drawing template only, not the bit's memory.",
         "time_tick_labels_visible": false,
         "title": "Fading memory",
         "title_anchor_cm": null,
@@ -4437,7 +4441,7 @@
           0.25,
           0.25
         ],
-        "preservation_scope": "All 101 charcoal target samples equal the original persistent toy byte-for-byte; its bit-independent baseline and ideal prediction now reflect gradual revelation.",
+        "preservation_scope": "All 101 orange QRC target samples equal the original persistent toy byte-for-byte; its bit-independent baseline and ideal prediction now reflect gradual revelation.",
         "reveal_schedule": {
           "duration_steps": 64,
           "fully_visible_step": 96,
@@ -4862,7 +4866,7 @@
     "comparison_scope": "Each case shows the selected +1-history target against the ideal window conditional mean of a balanced two-history toy; the -1 history is recorded but not drawn.",
     "curve_gap_scope": "After expiry each displayed discrepancy equals the midpoint error of that case's specific balanced pair. It is not labeled or identified as the generic supremal D_d/2.",
     "default_case": "persistent",
-    "display_headroom": "Both cases share the same linear y-axis [0.45,1.35]; all target and prediction samples remain inside the frames. Both charcoal targets and the entire lower example are unchanged; only the upper ideal prediction changes.",
+    "display_headroom": "Both cases share the same linear y-axis [0.45,1.35]; all target and prediction samples remain inside the frames. Both orange QRC targets and the entire lower example are unchanged; only the upper ideal prediction changes.",
     "emulator_scope": "The ideal conditional mean isolates missing input information. It is not a fitted finite-feature QELM, a claim of its attainability by the tested emulator, or new quantum-advantage evidence.",
     "generator": "figure1_timeseries.output_samples",
     "horizontal_padding_scope": "Axis-only margins keep endpoint markers off the frame; the 101 toy coordinates remain indexed 0..100.",
@@ -5020,8 +5024,8 @@
     "shared_time_label_anchor_cm": null,
     "status": "schematic information-access example, not simulated, fitted, or measured QRC/QELM performance",
     "styles": {
-      "ideal_window": "coral thin line with open markers",
-      "target": "ink thin line with dense filled markers"
+      "ideal_window": "blue QELM thin line with open markers",
+      "target": "orange QRC thin line with dense filled markers"
     },
     "target_definition": "Truth means the target QRC output to be emulated, not an independent third forecasting target. No third trajectory is introduced.",
     "template_stream": {
@@ -5068,13 +5072,15 @@
     "fading": "upper output frame: this old bit is fully forgotten by t=40; the ideal prediction remains exact at fixed d=40",
     "persistent": "lower output frame: gradual revelation of a persistent old bit as time advances at the same fixed d=40"
   },
-  "past_input_cue": "blue!16 behind the older-input interval, ending where the green!24 window starts; a 0.4-pt solid green!65!ink boundary marks index 140.5, distinct from the dashed current-time guide; blue brace labeled past carried in / QRC state rho_(t-1); not a second input wire, history replay, or claim of lossless history storage",
+  "past_input_cue": "blue!16 behind the older-input interval, ending where the green!24 window starts; a 0.4-pt solid green!65!ink boundary marks index 140.5, distinct from the dashed current-time guide; orange brace labeled past carried in / QRC state rho_(t-1); not a second input wire, history replay, or claim of lossless history storage",
   "readout_scope": "fixed target readout (identity for the declared observable vector); trained reset-QELM emulator readout; operations remain defined by the caption and model section while endpoints are labeled y_t and its hatted counterpart, with no trained-readout text",
   "removed_history_error_panel": {
     "replacement": "two stacked fading/persistent output comparisons at one fixed window length",
     "status": "removed from the artwork",
     "theory_scope": "The manuscript retains D_d/2 as the scalar worst-case missing-history optimum. It is not a label for the gap between generic QRC and QELM curves."
   },
+  "renderer_source": "pra_extension/code/render_active_information_interface.py",
+  "renderer_source_sha256": "b666a9eeb4bfd3f1243e8febd5f8ab595250b7c8dc6d813ce05d11706eb4b1de",
   "schematic_curves": true,
   "scope": "Two analytic balanced-bit illustrations with known case-specific baselines, ideal window conditional means, fixed d and evolving t; not simulated, fitted or measured QRC/QELM performance.",
   "selected_design": "variant_a_architectures",
@@ -5101,7 +5107,7 @@
     "scope": "finite-dimensional QRC with input-continuous channels and fixed finite observable output; the iff statement additionally assumes compact inputs with freely concatenable suffixes and per-window reset-QELM density",
     "status": "manuscript interpretation, not a plotted curve or measured property of these toy traces"
   },
-  "tikz_source_sha256": "6a8899c05d37e6784cc0cdff2f87129cc92ab457c216c18278745baeddec5166",
+  "tikz_source_sha256": "40a9787764b01ca895dd0edcee83868b9bbfcf932a630042130f7c23ac02d4c7",
   "typography": "native 11 pt labels and one shared 10 pt legend at 7.055 inch width; no panel letters",
   "upstream_dark_sector_summary_sha256": "e7035912a1ebabc514b28b96211ce8188010d0be9cb386032ec3f683377c4b83"
 }

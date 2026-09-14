@@ -1,18 +1,19 @@
 {
-  "pdf_sha256": "b61061a25bfdd78d3535f438dec62b7db54700df0c752b1707a06b77367242ff",
+  "pdf_sha256": "24d61b50c146828b1cf20e53e7752990c2ee8feb192c62c388e53ac8e28bd69a",
   "pages_reviewed": 12,
-  "rendering": "All 12 pages rendered with Poppler at maximum dimension 1500 pixels. Pages 1-5 and 8-11 are byte-identical to the immediately preceding individually reviewed renders. Changed pages 6, 7 and 12 were individually inspected by the main agent, together with the standalone Figure 3 preview. This is visual QA, not external scientific review or physical 100% zoom.",
+  "rendering": "All 12 pages rendered individually with Poppler at maximum dimension 1500 pixels. Pages 1\u20133 reviewed by the editing agent and pages 4\u201312 independently reviewed after the abstract revision.",
   "status": "Twelve pages including references and appendices. No visible overlap, clipping or missing glyphs.",
   "latex_overfull_boxes": 0,
   "undefined_references_or_citations": 0,
   "observations": [
-    "Figure 3 on page 7 now groups three columns: laser-driven QRC-output emulation (a), synthetic NARMA10 prediction and history controls stacked vertically (b), and paired-prefix QRC memory above the analytical red-floor benchmark (c). The prior two-column artwork and standalone NARMA plot are retained as alternatives.",
-    "All original laser excerpt values (128 scored rows), NARMA excerpt values (96 scored rows), memory-control rates and encoding-copy settings remain unchanged and unsmoothed. NARMA QRC and QELM traces have identical output axes. Sparse x-axis tick labels reduce collisions without dropping data samples or history settings.",
-    "Panel b retains all 24 fresh NARMA roots and both four-/twelve-input quadratic controls. Panel c retains all 12 original roots per loss rate and the first 48 shared inputs. Bands/bars are medians and empirical 10th-90th percentiles, not confidence intervals. Cohorts are not pooled and additional sequential replay cost remains explicit.",
-    "The input-history labels wrap within their frame. The QRC/QELM and NARMA-control legends occupy separate gutters without overlapping axis labels. The memory annotation clears the fast/slow legend, and the bright-red dashed Unavoidable window error reference remains visible. Font size is at least 7.5 points in the source figure; existing publisher scaling is unchanged.",
-    "The caption, Section 5.1 and Appendix E.5 distinguish emulation, synthetic task prediction, paired QRC gaps and analytical worst-case error. The red analytical floor is not a bound on laser or NARMA errors. Cross-references now identify NARMA as b and the paired/analytical panels as c.",
-    "The paper remains twelve pages with the same 183-word abstract, proof equations, margins and body fonts. Only local figure references, caption and repeated methods wording changed. The final methods paragraph and anonymity statement fit on page 12 without clipping. Figures 1 and 2 artwork are unchanged.",
-    "The anonymous source archive rebuilds to an identical PDF. All references and citations resolve, all PDF fonts are embedded, and the LaTeX log contains no overfull boxes."
+    "The 164-word abstract emphasizes observable forgetting and persistent-memory obstruction. It omits the scalar half-diameter expression, explicit assumption phrase, two-qubit label and quantum/classical comparison. Growing input windows, sufficiently expressive QELMs evaluated through exact expectations, and the constructed-reservoir worst-case floor remain clear. No font, margin, body-text, mathematical or figure-source changes were required.",
+    "Figure 3 spans the full text width. Native canvas: 6.221 by 4.47 inches. Every plot frame is 1.51 by 0.78 inches, with aligned rows and footer legends. The lower row is 22% shorter than in the previous full-width layout draft and now matches both upper rows.",
+    "NARMA model names and the black Target legend remain outside the trace axes. The laser test-error labels sit beside their condition headings. No text or legend crosses a visible curve. Figure fonts remain at least 7.5 points.",
+    "The memory legend is horizontal. Different earlier inputs are red and the shared continuation black. The one-line window annotation remains clear. QRC predictions are orange, QELM predictions blue, the empirical full-history QRC reference red, and the memory slow-loss curve purple.",
+    "All 25 lines and four collections retain their scientific data, colors, axis scales and limits. Laser excerpts contain 128 rows; the displayed NARMA excerpt remains the first 48 of 96 source samples. The history plot still shows computed integer windows 1\u201320 and retains all 48 windows and 24 roots in the source.",
+    "The shorter Figure 3 caption retains the emulation/forecasting distinction, synthetic NARMA descriptor, comparable trace scales, reset/refit protocol, displayed/evaluated windows, empirical-versus-analytical distinction, root counts, percentile-versus-CI distinction, and replay/training qualifications.",
+    "Seven equivalent equation layouts recover space. All mathematical terms and equation numbers remain; the compact ridge grid expands to the original values. The grid is inline and adjacent NARMA method paragraphs are joined without deleting words. The complete methods finish on page 12.",
+    "Publisher template files, font sizes, page margins, all scientific results and Figures 1\u20132 remain unchanged. The source ZIP rebuilds to a byte-identical PDF."
   ],
-  "scope": "Format and visual review only. This record does not establish venue-policy approval, author approval, portal submission or current remote CI status."
+  "scope": "Visual and format review after the requested conceptual abstract rewrite. Only the abstract source changes the typeset manuscript in this update. Mathematical assumptions, theorems, protocols, results and figures remain unchanged."
 }

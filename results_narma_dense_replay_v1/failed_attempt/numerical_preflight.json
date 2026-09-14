@@ -1,0 +1,143 @@
+{
+  "anchors": [
+    {
+      "alpha": 100.0,
+      "archive_metric_differences": {
+        "nrmse": 0.0,
+        "rmse": 0.0,
+        "validation_mse": 0.0
+      },
+      "archived_alpha": 100.0,
+      "ridge_system_condition": 1874.1826457531859,
+      "same_runtime_feature_max_difference": 0.0,
+      "same_runtime_metric_differences": {
+        "nrmse": 0.0,
+        "rmse": 0.0,
+        "validation_mse": 0.0
+      },
+      "window": 1
+    },
+    {
+      "alpha": 100.0,
+      "archive_metric_differences": {
+        "nrmse": 0.0,
+        "rmse": 0.0,
+        "validation_mse": 0.0
+      },
+      "archived_alpha": 100.0,
+      "ridge_system_condition": 972.9762091903873,
+      "same_runtime_feature_max_difference": 0.0,
+      "same_runtime_metric_differences": {
+        "nrmse": 0.0,
+        "rmse": 0.0,
+        "validation_mse": 0.0
+      },
+      "window": 4
+    },
+    {
+      "alpha": 0.0001,
+      "archive_metric_differences": {
+        "nrmse": 1.6320278461989801e-12,
+        "rmse": 2.381775332516156e-14,
+        "validation_mse": 3.6387559632089506e-12
+      },
+      "archived_alpha": 0.0001,
+      "ridge_system_condition": 819407288.3858058,
+      "same_runtime_feature_max_difference": 0.0,
+      "same_runtime_metric_differences": {
+        "nrmse": 0.0,
+        "rmse": 0.0,
+        "validation_mse": 0.0
+      },
+      "window": 8
+    },
+    {
+      "alpha": 1e-08,
+      "archive_metric_differences": {
+        "nrmse": 1.9661464234488335e-08,
+        "rmse": 2.8694723853972537e-10,
+        "validation_mse": 3.450438565977265e-07
+      },
+      "archived_alpha": 1e-08,
+      "ridge_system_condition": 7953483101764.706,
+      "same_runtime_feature_max_difference": 0.0,
+      "same_runtime_metric_differences": {
+        "nrmse": 0.0,
+        "rmse": 0.0,
+        "validation_mse": 0.0
+      },
+      "window": 12
+    },
+    {
+      "alpha": 1e-08,
+      "archive_metric_differences": {
+        "nrmse": 9.50791977372134e-08,
+        "rmse": 1.3876236687471177e-09,
+        "validation_mse": 9.397678613076721e-07
+      },
+      "archived_alpha": 1e-08,
+      "ridge_system_condition": 9343149698500.002,
+      "same_runtime_feature_max_difference": 0.0,
+      "same_runtime_metric_differences": {
+        "nrmse": 0.0,
+        "rmse": 0.0,
+        "validation_mse": 0.0
+      },
+      "window": 24
+    },
+    {
+      "alpha": 1e-08,
+      "archive_metric_differences": {
+        "nrmse": 1.249040397777179e-07,
+        "rmse": 1.8228992898494667e-09,
+        "validation_mse": 2.5575904799568505e-07
+      },
+      "archived_alpha": 1e-08,
+      "ridge_system_condition": 9339320633178.486,
+      "same_runtime_feature_max_difference": 0.0,
+      "same_runtime_metric_differences": {
+        "nrmse": 0.0,
+        "rmse": 0.0,
+        "validation_mse": 0.0
+      },
+      "window": 48
+    }
+  ],
+  "archived_full_qrc": {
+    "alpha": 1e-08,
+    "features": 48,
+    "gamma": 0.3,
+    "model": "qrc",
+    "nrmse": 0.6811735031234439,
+    "rmse": 0.00994131733205036,
+    "validation_mse": 0.48775331452153114,
+    "window": null
+  },
+  "dense_and_legacy_seconds": 5.597905625007115,
+  "diagnostic_code_sha256": "e10e877304930aae687a8bb63a56cafccf1f342b3a0bb8ed57779809e905d92c",
+  "first96_qrc_prediction_max_difference": 2.8669778134315926e-06,
+  "first96_target_max_difference": 0.0,
+  "full_qrc_metric_differences": {
+    "nrmse": 5.364783790540173e-07,
+    "rmse": 7.829579077092697e-09,
+    "validation_mse": 2.995969048180669e-06
+  },
+  "full_qrc_ridge_system_condition": 9338920642243.457,
+  "initial_runner_sha256": "07ad7aea7eb9286da7aa45aef453642fc70565c2d6e55d2b20bcbaa0720ad379",
+  "initial_specification_sha256": "9742f319a49791882024b29c42170ccc713d666a4866150df5dbbec7713575a2",
+  "interpretation": "Frozen and optimized replay agree exactly on this host. Archived differences are concentrated in ill-conditioned alpha=1e-8 normal-equation fits; no targets, selected settings, physics or splits were changed. Initial strict cross-runtime gate failed; no extension result was published.",
+  "numpy": "2.5.3",
+  "parent_sha256": "f668da76258b39c459f6ca1c682edcda4b3b65e506490fbe6adcfa2cd8309964",
+  "recomputed_full_qrc": {
+    "alpha": 1e-08,
+    "features": 48,
+    "gamma": 0.3,
+    "model": "qrc",
+    "nrmse": 0.6811729666450649,
+    "rmse": 0.009941309502471282,
+    "validation_mse": 0.48775031855248296,
+    "window": null
+  },
+  "scipy": "1.18.1",
+  "seed": 921000
+}

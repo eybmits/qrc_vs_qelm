@@ -1,7 +1,7 @@
 # Reproducibility and evidence guide
 
-This is the repository guide for *When Can Finite-Context QELMs Replace
-Quantum Reservoir Memory?* It maps the paper's claims to their original
+This is the repository guide for *When Can Finite-Window QELMs Emulate
+Quantum Reservoirs?* It maps the paper's claims to their original
 protocols, deterministic inputs, root-level results, and validation code.
 It does not amend a frozen protocol or turn a post-confirmatory analysis into
 a prospective result. The [README](README.md) contains the numerical overview

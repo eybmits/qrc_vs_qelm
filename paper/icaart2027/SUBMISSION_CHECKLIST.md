@@ -1,9 +1,101 @@
 # ICAART 2027 submission handoff
 
-Updated on 11 September 2026. This is an anonymous **editorial draft** in the
+Updated on 14 September 2026. This is an anonymous **editorial draft** in the
 Regular Paper format, not a submission-ready package or a final publication.
 
-## Current scientific update
+## Current abstract update (14 September 2026)
+
+The revised abstract contains 164 words (limit: 200). It emphasizes persistent
+observable memory and the fixed-window QELM error floor. The scalar formula,
+explicit assumption phrase, qubit count and quantum/classical contrast are
+omitted from the abstract; the mathematical scope remains in the body.
+The verified PDF remains 12 pages, with body text, equations, figures and
+template settings intact.
+
+## Current layout update (14 September 2026)
+
+Figure 3 spans the full text width on a 6.221 by 4.47 inch native canvas.
+All nine plot frames measure 1.51 by 0.78 inches; the bottom row now matches
+the upper rows. Labels and legends remain separate from the curves.
+Targets stay opaque black, QRC orange and QELM blue. The caption retains
+all scientific qualifications in fewer words. Equivalent formula layouts and
+same-topic paragraph joins save space; publisher fonts and margins are unchanged.
+See the current build manifest and QA report for the verified page count.
+
+The verified PDF has 12 pages, including references and all appendices.
+
+## Previous scientific update
+
+Figure 3(c)'s history plot focuses on windows 1--20 and 40--90% test NRMSE,
+with a ten-input guide and the legend below; all 48 windows remain in the source.
+The text reports the verified 77.6% to 53.1% median error decrease from nine to
+ten inputs, with improvement in all 24 roots and a qualified delayed-input
+interpretation. The upper prediction traces retain their 48-test-step display.
+
+Both NARMA10 prediction traces in Figure 3(c) display the first 48 of the
+existing 96 excerpt samples. All 96 remain in the source; vertical limits,
+ground-truth opacity, full-test statistics and the history curve are preserved.
+This changes the displayed time range only, without choosing a new excerpt.
+
+The black ground-truth lines in both NARMA10 prediction traces of Figure 3(c)
+use 50% opacity (alpha 0.5). This opacity-only update makes the model predictions
+easier to distinguish while preserving all numerical results and other panels.
+
+Figure 3(b) uses orange for fast loss and purple for slow loss, including their
+variability bands. Earlier input prefixes and their label are red; the shared
+continuation is black. This changes color only, preserving all source data.
+
+Figure 3(c) extends the selected-QRC history grid to every integer d=1..48,
+using the same 24 roots, splits, selected dynamics and per-window readout fits.
+Each plotted point is computed; the full-history reference is red and dashed.
+This descriptive grid extension preserves the original six-window evidence
+and replication comparisons in their archived ledger.
+
+Figure 2's staircase starts at loss rate 1, without in-cell numbers or a lower-rate
+annotation. Only integer rates are labeled. Omitted rows below 1 fail the sampled
+criterion; all source data remain in exports. Its feature-choice panel
+now shows all twelve rounded percentages in labeled rows and columns, replacing
+the stacked bars; the denominator is 192 validation choices per shot tier.
+Figure 3(c) labels available history directly (last d inputs, full history,
+last four inputs), while reset/replay and fitting details remain in the caption
+and methods. Data, intervals, protocols and the twelve-page target are unchanged.
+
+## Previous model-color and panel-order update (14 September 2026)
+
+Figure 3 is reordered as laser emulation (a), paired memory plus analytical
+limit (b), and synthetic NARMA10 prediction (c). The replay chart explicitly
+shows resetting the same QRC and processing only the latest d inputs, with a
+refitted readout. Quadratic curves are omitted from the display; their numerical
+results and all source rows remain. The actual nonmonotone replay curve is
+retained, and its continuous-QRC reference is not an error floor.
+
+The active figures now use orange QRC, blue QELM, and black external targets
+and input traces; QELM capacity/budget variants use blue shades. The analytical
+floor remains red. Captions, model color descriptions and panel references
+match the new order. Data, protocols, proofs and the selected title are unchanged.
+
+## Previous graphic update (14 September 2026)
+
+Figure 2(c) now displays test-error curves and percentile whiskers in place of
+the numerical matrix, with larger validation-choice bars below. All source
+values, cohorts, medians and intervals are unchanged. The caption explains the
+within-tier point offsets and the 10% reference. The title, framing, other panels
+and scientific results remain as in the preceding revision. Current PDF, source
+archive and visual checks are identified in `ICAART2027_MANIFEST.json`.
+
+## Previous editorial update (13 September 2026)
+
+The title is now *When Can Finite-Window QELMs Emulate Quantum Reservoirs?*
+The framing explicitly connects the protected-memory construction to a recall
+task over unbounded delays. This follows from the existing bound and retains
+the exact-expectation and stateless-window scope. The positive emulation result,
+all proofs, numerical evidence, figures and captions remain in place. NARMA10
+remains a separate practical check, not a test of impossibility for every window.
+The rebuilt draft has twelve pages and a 162-word abstract; the source ZIP
+reproduces the PDF. See the manifest for current artifact and QA identities.
+This revision does not resolve the disclosure and author gates below.
+
+## Previous scientific update (11 September 2026)
 
 Figure 3 now groups the earlier laser emulation (a), the NARMA addition stacked
 vertically with its history control (b), and paired-input memory plus the
@@ -111,7 +203,7 @@ and the build manifest status is `EDITORIAL_DRAFT_NOT_SUBMISSION_READY`.
 - Submission type: Regular Paper, first stage.
 - Area: Artificial Intelligence.
 - Primary topic: Quantum Artificial Intelligence; secondary: Machine Learning.
-- Title: When Can Finite-Context QELMs Replace Quantum Reservoir Memory?
+- Title: When Can Finite-Window QELMs Emulate Quantum Reservoirs?
 - Abstract: use the plain text from `sections/abstract.tex`.
 - Keywords: Quantum Reservoir Computing; Quantum Extreme Learning Machines;
   Temporal Learning; Fading Memory; Finite Context.

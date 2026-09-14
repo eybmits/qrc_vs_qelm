@@ -1,26 +1,21 @@
 \section{DISCUSSION AND CONCLUSIONS}
 \label{sec:summary}
 
-For time-series emulation, the choice between a reset-window QELM and a QRC
-starts with the history required for the desired output accuracy. Consider
-a QELM when that history fits in an affordable window; retain the QRC when
-relevant information must be carried beyond it. Our analysis makes this
-distinction quantitative. Under our assumptions, growing windows and
-sufficient QELM capacity permit arbitrarily accurate emulation with exact
-expectations precisely when the missing past's influence on the chosen
-outputs vanishes uniformly. Persistent observable memory can instead create
-an error floor that no additional window-model capacity removes.
+Under our assumptions, growing windows and sufficient QELM capacity permit
+arbitrarily accurate emulation with exact expectations precisely when the
+missing past's influence on the chosen outputs vanishes uniformly.
+Conversely, one protected two-qubit QRC imposes a positive lower bound on
+emulation error independent of window length. Its recall task is realized
+by the QRC's exact expectations, while every stateless fixed-window
+predictor incurs an error floor over unbounded delays.
 
-This is an information criterion, not a guarantee that a particular QELM
-will train successfully. Direct forecasting tests show how restricting
-accessible history can worsen prediction, while larger windows and classical
-controls rule out a uniquely quantum interpretation. Fitted accuracy also
-depends on representation and measurement precision. The constructive
-guarantees establish representability, not efficient training or resource
-savings.
+This separates carried memory from finite context, not quantum from
+classical computation. NARMA10 illustrates useful history at tested windows;
+it does not demonstrate the existential task separation. Emulation alone
+does not establish task utility. Classical controls and longer windows
+remain essential comparisons. Our constructive guarantees concern
+representability, not efficient learning or resource savings.
 
-The resulting workflow is to establish how much history is needed, then
-test whether the available model and measurements can use it. This
-separates errors requiring access to older inputs from errors that better
-modeling can reduce, giving a principled basis for retaining or replacing
-the QRC.
+In practice, determine the required history before tuning representation,
+training, and measurements. Missing history requires longer context or
+retained state.

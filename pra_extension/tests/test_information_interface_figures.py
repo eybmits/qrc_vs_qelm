@@ -19,7 +19,11 @@ CODE_ROOT = REPO_ROOT / "pra_extension" / "code"
 if str(CODE_ROOT) not in sys.path:
     sys.path.insert(0, str(CODE_ROOT))
 
-from figure1_timeseries import output_provenance, provenance as input_provenance  # noqa: E402
+from figure1_timeseries import output_provenance  # noqa: E402
+from render_active_information_interface import (  # noqa: E402
+    active_figure1_provenance as input_provenance,
+    render_figure_1 as render_active_figure_1,
+)
 from render_information_interface_figures import (  # noqa: E402
     DEFAULT_DARK_SUMMARY,
     DEFAULT_DENSE_PHASE_SOURCE,
@@ -525,7 +529,7 @@ def test_plot_labels_use_plain_language_and_separate_resource_questions() -> Non
         REPO_ROOT / "paper/figure2_candidates/render_resource_atlas.py"
     ).read_text(encoding="utf-8")
     assert 'ax.set_xlabel("Inputs per window"' in atlas_source
-    assert "maps 11 loss rates and windows one to six across three sizes: 198 settings" in evaluation
+    assert "draws on 11 loss rates and windows one to six across three sizes: 198 settings" in evaluation
     assert "No tested window meets the sampled history criterion" in evaluation
     assert "two inputs suffice in all sizes" in evaluation
     assert '"?"' not in renderer_source
@@ -570,8 +574,9 @@ def test_committed_figure_pdfs_preserve_width_aspect_and_font_contract() -> None
 
 
 def test_information_interface_figures_are_complete_traceable_and_deterministic(
-    tmp_path: Path,
+    tmp_path: Path, monkeypatch,
 ) -> None:
+    monkeypatch.setattr("render_information_interface_figures.render_figure_1", render_active_figure_1)
     first_dir = tmp_path / "first"
     second_dir = tmp_path / "second"
     first = render_all(output_dir=first_dir)
@@ -652,7 +657,7 @@ def test_information_interface_figures_are_complete_traceable_and_deterministic(
     assert "panel_c_output_traces" not in story
     assert "panel_a_output_comparisons" not in story
     output_traces = story["output_comparisons"]
-    assert output_traces == output_provenance()
+    assert output_traces == shared_input["output_comparisons"]
     assert output_traces["axis_count"] == 2
     assert output_traces["axes_size_cm"] == [4.15, 3.2]
     assert output_traces["axes_bounds_cm"] == {

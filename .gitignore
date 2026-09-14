@@ -61,6 +61,19 @@ results_dense_phase_n4_v1_analysis/*
 !results_dense_phase_n4_v1_analysis/dense_n4_root_scaling.csv
 !results_dense_phase_n4_v1_analysis/dense_n4_summary.json
 !results_dense_phase_n4_v1_analysis/dense_n4_analysis_manifest.json
+# Small NARMA replay provenance required by the reproducible rerun; raw v2
+# checkpoints and any further experiment outputs remain local.
+!results_narma_dense_replay_v1/
+results_narma_dense_replay_v1/*
+!results_narma_dense_replay_v1/numerical_preflight.json
+!results_narma_dense_replay_v1/extension_specification.json
+!results_narma_dense_replay_v1/failed_attempt/
+results_narma_dense_replay_v1/failed_attempt/*
+!results_narma_dense_replay_v1/failed_attempt/preflight.py
+!results_narma_dense_replay_v1/failed_attempt/numerical_preflight.json
+!results_narma_dense_replay_v1/failed_attempt/narma_dense_replay.py
+!results_narma_dense_replay_v1/failed_attempt/NARMA_DENSE_REPLAY_EXTENSION_PROTOCOL.md
+!results_narma_dense_replay_v1/failed_attempt/extension_specification.json
 data/*
 !data/frozen/
 !data/frozen/frozen_v1_config.json

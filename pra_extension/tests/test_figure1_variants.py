@@ -40,14 +40,16 @@ from figure1_timeseries import (  # noqa: E402
     WINDOW,
     WINDOW_START,
     output_baseline,
-    output_provenance,
     output_samples,
-    provenance,
     samples,
     tikz_output_sample_block,
     tikz_sample_block,
 )
 from qrc_vs_qelm.core.tasks import mackey_glass_series  # noqa: E402
+from render_active_information_interface import (  # noqa: E402
+    active_figure1_provenance as provenance,
+    active_figure1_output_provenance as output_provenance,
+)
 
 DESIGNS = ROOT / "paper/figures/figure1_variants"
 CANONICAL = ROOT / "paper/figures/information_interface/fig01_information_interface.tex"
@@ -120,7 +122,7 @@ def test_past_state_tint_stops_at_the_explicit_window() -> None:
     assert source.index(fill) < source.index(r"\foreach \val in {0.4,0.8,1.2}")
     assert source.index(fill) < source.index(r"in \MGsamples{")
     cue = provenance(CANONICAL)["past_state_cue"]
-    assert cue["fill"] == "blue!16" and cue["root_color"] == "#3868D9"
+    assert cue["fill"] == "blue!16" and cue["root_color"] == "#D97632"
     assert cue["window_fill"] == "green!24"
     assert cue["window_start_boundary"]["index"] == WINDOW_START - .5
     boundary = (
@@ -171,9 +173,18 @@ def test_every_current_figure1_plot_has_a_quiet_two_direction_grid() -> None:
 def test_selected_architecture_source_is_the_canonical_overview() -> None:
     manifest = json.loads((DESIGNS / "design_manifest.json").read_text())
     selected = DESIGNS / f"{manifest['selected_variant']}.tex"
-    assert CANONICAL.read_bytes() == selected.read_bytes()
+    def without_colors(text):
+        text = re.sub(r"%[^\n]*", "", text)
+        text = re.sub(r"\\definecolor\{\w+\}\{HTML\}\{[0-9A-F]{6}\}", "", text)
+        text = text.replace(r"\def\tracecolor{green}", r"\def\tracecolor{ink}")
+        text = re.sub(
+            r"(?<![\w])(?:draw=|fill=|text=)?(?:ink|blue|green|orange|purple|gold|muted|neutral|palegold|rule|white)(?:![\w.]+)*(?:,|(?=\]))",
+            "", text,
+        )
+        return " ".join(text.replace(",]", "]").replace("[]", "").split())
+    assert without_colors(CANONICAL.read_text()) == without_colors(selected.read_text())
     assert ROOT / manifest["canonical_source"] == CANONICAL
-    digest = hashlib.sha256(CANONICAL.read_bytes()).hexdigest()
+    digest = hashlib.sha256(selected.read_bytes()).hexdigest()
     assert manifest["canonical_source_sha256"] == digest
     assert manifest["variants"]["variant_a_architectures"]["artifacts"][
         "variant_a_architectures.tex"
@@ -607,7 +618,7 @@ def test_current_input_and_carried_state_do_not_imply_batch_encoding() -> None:
     assert bend_y - tip_y >= 0.30
     assert "controls" not in control_route[0]
     assert "rounded corners" not in scalar_leader[0]
-    heading = re.search(r"\\node at \(([\d.]+),([\d.]+)\) \{QRC\};", qrc_source)
+    heading = re.search(r"\\node\[text=blue\] at \(([\d.]+),([\d.]+)\) \{QRC\};", qrc_source)
     assert heading and float(heading[1]) == tip_x
     assert float(heading[2]) - bend_y >= 0.35
     loop = re.search(r"\\draw\[flow,blue\] ([^;]+);", qrc_source)
@@ -720,7 +731,7 @@ def test_observable_banks_feed_small_readouts_and_the_shared_comparison_column()
         assert tip_x - left == pytest.approx(0.38)
         assert upper - lower == pytest.approx(0.50)
         arrows = [tuple(map(float, coords)) for coords in re.findall(
-            rf"\\draw\[flow,ink\] {coordinate}--{coordinate};", architecture,
+            rf"\\draw\[flow,(?:blue|green)\] {coordinate}--{coordinate};", architecture,
         )]
         arrows = [arrow for arrow in arrows if arrow[:2] == (tip_x, tip_y)]
         assert len(arrows) == 1
@@ -728,7 +739,7 @@ def test_observable_banks_feed_small_readouts_and_the_shared_comparison_column()
         assert 0 < tip_x - start_x < 1.0
         assert tip_y == start_y
         output = re.search(
-            rf"\\node\[anchor=west\] at {coordinate} \{{{re.escape(label)}\}};",
+            rf"\\node\[anchor=west,text=(?:blue|green)\] at {coordinate} \{{{re.escape(label)}\}};",
             architecture,
         )
         assert output
@@ -848,7 +859,7 @@ def test_two_output_timelines_share_axes_and_render_the_information_cut_at_expir
     assert r"(\pk,\pprediction)--(\kk,\target)--(\kk,\prediction);" in plot
     assert r"(\pk,\pprediction)--(\kk,\prediction);" in plot
     assert r"(\pk,\ptarget)--(\kk,\target);" in plot
-    assert re.search(r"\\node\[fill=ink,circle,[^\]]+\] at \(\\kk,\\target\)", plot)
+    assert re.search(r"\\node\[fill=blue,circle,[^\]]+\] at \(\\kk,\\target\)", plot)
     assert re.search(r"\\node\[draw=green,fill=white,circle,[^\]]+\] at \(\\kk,\\prediction\)", plot)
     assert r"mod(\kk,2)" in plot
     assert r"inner sep=1.45pt] at (\kk,\prediction)" in plot
@@ -897,7 +908,7 @@ def test_shared_legend_straddles_output_frames_without_internal_case_titles() ->
     legend = source.split("% One shared reference-style model key", 1)[1]
     assert legend.count("{QRC}") == legend.count("{QELM}") == 1
     assert "(ideal)" not in legend
-    assert r"\fill[ink]" in legend and r"\draw[green,fill=white" in legend
+    assert r"\fill[blue]" in legend and r"\draw[green,fill=white" in legend
     assert r"circle (.070)" in legend
     assert r"\fill[ink!15,rounded corners=1.3pt]" in legend
     shift = re.search(r"\\begin\{scope\}\[shift=\{\(([\d.]+),([\d.]+)\)\}\]", legend)
@@ -1111,9 +1122,9 @@ def test_tikz_contains_exact_samples_and_only_the_causal_forty_sample_window() -
     recorded = np.array([float(value) for _, value in pairs])
     np.testing.assert_array_equal(recorded, samples())
     assert r"\def\tracecolor{ink}" in source
-    assert r"\ifnum\kk>140 \def\tracecolor{green}\fi" in source
+    assert r"\ifnum\kk>140 \def\tracecolor{ink}\fi" in source
     assert r"\ifnum\kk>180 \def\tracecolor{muted!60}\fi" in source
-    assert source.index(r"\ifnum\kk>140 \def\tracecolor{green}") < source.index(
+    assert source.index(r"\ifnum\kk>140 \def\tracecolor{ink}") < source.index(
         r"\ifnum\kk>180 \def\tracecolor{muted!60}",
     )
     assert source.count(r"in \MGsamples{") == 1
@@ -1307,18 +1318,18 @@ def test_reference_palette_and_quantum_processing_motifs_are_explicit() -> None:
     source = CANONICAL.read_text()
     colors = dict(re.findall(r"\\definecolor\{(\w+)\}\{HTML\}\{([0-9A-F]{6})\}", source))
     assert {name: colors[name] for name in ("ink", "blue", "green", "orange", "gold", "purple")} == {
-        "ink": "20252B", "blue": "3868D9", "green": "D66A56",
-        "orange": "D66A56", "gold": "FFC943", "purple": "7C5A9F",
+        "ink": "20252B", "blue": "D97632", "green": "3868D9",
+        "orange": "D97632", "gold": "FFC943", "purple": "20252B",
     }
     metadata = provenance(CANONICAL)
     assert metadata["diagram_encoding"] == {
         "earlier_input": "#20252B",
-        "carried_state": "#3868D9",
-        "explicit_window": "#D66A56",
-        "classical_input_injection": "#7C5A9F",
+        "carried_state": "#D97632",
+        "explicit_window": "#3868D9",
+        "classical_input_injection": "#20252B",
         "measured_quantities_and_readouts": "#FFC943",
-        "target_output": "#20252B",
-        "ideal_window_output": "#D66A56",
+        "target_output": "#D97632",
+        "ideal_window_output": "#3868D9",
     }
     wire_rows = re.findall(r"\\foreach \\yy in \{([\d.,]+)\}", source)
     assert len(wire_rows) == 2
@@ -1346,9 +1357,9 @@ def test_shared_legend_leaves_all_output_ink_at_least_two_tenths_mm_clear() -> N
     source = CANONICAL.read_text()
     metadata = output_provenance()
     assert r"line width=.70pt,inner sep=1.45pt" in source
-    assert r"\node[fill=ink,circle,inner sep=.78pt]" in source
+    assert r"\node[fill=blue,circle,inner sep=.78pt]" in source
     assert r"rounded corners=1.3pt,line width=.75pt" in source
-    assert r"\draw[ink,line width=.55pt] (\pk,\ptarget)--(\kk,\target);" in source
+    assert r"\draw[blue,line width=.55pt] (\pk,\ptarget)--(\kk,\target);" in source
     assert r"\draw[green,line width=.65pt]" in source
 
     # 1/72 inch is slightly larger than a TeX point (1/72.27 inch), so these

@@ -71,7 +71,7 @@ def test_paper_size_text_and_axes_fit(data):
             assert bbox.x0 >= -1 and bbox.y0 >= -1, text.get_text()
             assert bbox.x1 <= fig.bbox.x1 + 1 and bbox.y1 <= fig.bbox.y1 + 1, text.get_text()
             assert text.get_fontsize() * 6.221 / atlas.SIZE[0] >= 7, text.get_text()
-        # The figure has a map, three aligned feature axes, a table and selection strip.
+        # A map, three feature axes, an error plot and a direct choice-frequency matrix.
         assert len(fig.axes) == 6
         bounds = [ax.get_position() for ax in fig.axes]
         for i, box in enumerate(bounds):
@@ -95,10 +95,56 @@ def test_published_atlas_keeps_all_sources_and_uncertainty():
     directory = atlas.ROOT / "paper/figures/resource_atlas"
     ledger = json.loads((directory / "fig03_resource_diagnosis_source.json").read_text())
     assert ledger["status"] == "author_selected_publication_asset"
-    assert "percentiles drawn below each median" in ledger["shot_uncertainty"]
+    assert "percentiles drawn as capped whiskers for all 16 medians" in ledger["shot_uncertainty"]
     for name, expected in ledger["artifacts_sha256"].items():
         assert atlas.digest(directory / name) == expected
     for name, expected in ledger["sources_sha256"].items():
         assert atlas.digest(atlas.ROOT / name) == expected
     assert len(ledger["history_map"]) == 11
     assert len(ledger["feature_summary"]) == 18
+
+
+def test_shot_plot_preserves_all_estimates_and_asymmetric_intervals(data):
+    """Every table estimate remains a plotted point with its full source interval."""
+    from matplotlib.container import ErrorbarContainer
+    _, _, med, low, high, _ = atlas.summaries(*data[:3])
+    with plt.rc_context(atlas.style()):
+        fig = atlas.build_figure(*data[:3])
+        plot = fig.axes[4]
+        series = [item for item in plot.containers if isinstance(item, ErrorbarContainer)]
+        assert len(series) == 4
+        for item, key in zip(series, med.index, strict=True):
+            points, _, whiskers = item.lines
+            x = np.asarray(points.get_xdata())
+            np.testing.assert_allclose(points.get_ydata(), med.loc[key] * 100)
+            # Offsets are within tiers; no points are assigned to another budget.
+            np.testing.assert_array_equal(np.rint(x), np.arange(len(atlas.SHOTS)))
+            intervals = np.asarray(whiskers[0].get_segments())
+            np.testing.assert_allclose(intervals[:, 0, 1], low.loc[key] * 100)
+            np.testing.assert_allclose(intervals[:, 1, 1], high.loc[key] * 100)
+        assert plot.get_ylim()[0] == 0
+        assert any(np.array_equal(line.get_ydata(), [10, 10]) for line in plot.lines)
+        plt.close(fig)
+
+
+def test_choice_labels_and_staircase_data_are_source_bound(data):
+    passed, _, _, _, _, share = atlas.summaries(*data[:3])
+    with plt.rc_context(atlas.style()):
+        fig = atlas.build_figure(*data[:3])
+        labels = {text.get_gid(): text for text in fig.axes[5].texts}
+        assert len(labels) == 12
+        for col, shot in enumerate(atlas.SHOTS):
+            modal = int(share.loc[shot].argmax())
+            for row, budget in enumerate((18, 36, 72)):
+                text = labels[f"selection_B{budget}_shots{shot}"]
+                fraction = share.loc[shot, f"selected_fraction_B{budget}"]
+                assert text.get_text() == f"{fraction:.0%}"
+                assert text.get_position() == (col, row)
+                assert (text.get_fontweight() == "bold") == (row == modal)
+        # The crop must preserve all displayed classifications; omitted rows fail.
+        np.testing.assert_array_equal(fig.axes[0].images[0].get_array(),
+                                      passed.loc[list(atlas.DISPLAY_RATES)].to_numpy())
+        assert not passed.loc[passed.index < min(atlas.DISPLAY_RATES)].to_numpy().any()
+        for position, label in zip(fig.axes[0].get_yticks(), fig.axes[0].get_yticklabels()):
+            assert atlas.DISPLAY_RATES[int(position)] == float(label.get_text())
+        plt.close(fig)
