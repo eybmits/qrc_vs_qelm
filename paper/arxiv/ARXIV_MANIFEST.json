@@ -4,14 +4,14 @@
     "sections/methodology.tex": "Anonymity-only code note replaced with a link and accurate restricted-access status"
   },
   "anonymous_source_sha256": "7390dae302969e76bada8f75b1f24d95af7c0b9d6f2e1192aaea1964444441e3",
-  "authors_sha256": "ef5fb68ff4cce869ef08aca2b2f3b4886dcb663916608ae1e54f9eb4a7d63a56",
+  "authors_sha256": "b4b180bf12d4c4e74fcdca4ce97aaad492d7a7dee7ffccb5aa26d69300fcf93d",
   "files": {
-    "arxiv_qa.json": "548e0a8cf7b7c566736181bb1919404d9c30a9b8caea665d6d4053c534cbc47e",
-    "arxiv_source.zip": "1ca7bc9ca8f45a4389027a769e30feba74ca1a90173acb99d26d8d17404b4bce",
-    "authors.json": "ef5fb68ff4cce869ef08aca2b2f3b4886dcb663916608ae1e54f9eb4a7d63a56",
+    "arxiv_qa.json": "bc0132f09f4dbcb8892a5778915b23bbcec38fbf541d2222ce41f6ec51e3f593",
+    "arxiv_source.zip": "737823f32603d4f553d37640c3dba5c1978306665ae3384beff41aa62dd09044",
+    "authors.json": "b4b180bf12d4c4e74fcdca4ce97aaad492d7a7dee7ffccb5aa26d69300fcf93d",
     "build_arxiv.py": "93613af938df4b68f3109b89cf1178c3d82e9b87eae14cac20d49ab0a443e4e6",
-    "main.tex": "7642fda5d55ffa11378fee5aa1ad45e9553f7e435dc4b5160d87a42161807e8d",
-    "preprint.pdf": "a7e5bf1f59734123426106ba1d998485fa196cd10a298c62eaf1e2e039adc489"
+    "main.tex": "663f8fdeea812582a73a9197d53b3af2c29876f57246093219c973973ccf9b4a",
+    "preprint.pdf": "eabeec1654b96c0efc451bb8972552f7088d31724075531a0d4e06c0b328ada7"
   },
   "pages": 12,
   "parent_source_sha256": {
@@ -46,7 +46,7 @@
     "figures/fig03_resource_diagnosis.pdf": "2166c7bd450acaa73bc484ce9cdc80720206a67cbc3248687c5882de3a87cfc2",
     "figures/fig04_memory_prediction.pdf": "dc3b761f11980dca85a0e37136b32ee9d60722ce4e4e615055183d1806ee7ed0",
     "main.bbl": "80eab96b3154e52fcf6cbad9786b7bd94854737437bf378f1efb009b9d1fa4fa",
-    "main.tex": "7642fda5d55ffa11378fee5aa1ad45e9553f7e435dc4b5160d87a42161807e8d",
+    "main.tex": "663f8fdeea812582a73a9197d53b3af2c29876f57246093219c973973ccf9b4a",
     "references.bib": "90bea3e966a66a9ffa712ebd2ed9fa2f0dd738e600e4af18db0e754a8e02c3ff",
     "sections/abstract.tex": "d6d16f76cdadfc7e6577be13ccc1dc41ce18b9e71d0aa0626005379d299b0ef1",
     "sections/appendix.tex": "8157451ecdc07b7148800982a495dcb572b871720c0fe27b33a4d2f8b502a8f6",

@@ -1,6 +1,6 @@
 {
   "schema": "arxiv_visual_review_v1",
-  "pdf_sha256": "a7e5bf1f59734123426106ba1d998485fa196cd10a298c62eaf1e2e039adc489",
+  "pdf_sha256": "eabeec1654b96c0efc451bb8972552f7088d31724075531a0d4e06c0b328ada7",
   "reviewed_pages": [
     1,
     2,
@@ -27,5 +27,5 @@
     "all_three_green_orcid_icons_legible": true,
     "unchanged_pages_pixel_identical": true
   },
-  "review_note": "Page 1 re-inspected after replacing plain iD labels with linked green ORCID icons for all three verified author IDs. Rendered pages 2\u201312 are byte-identical to the previously reviewed renders. All twelve pages retain clear figures, captions and text, with no clipping or overlap."
+  "review_note": "After updating only the QAR-Lab hyperlink destination, all twelve rendered pages are byte-identical to the previously visually reviewed ORCID edition. Layout, text and figures are unchanged. The updated hyperlink is verified in the PDF annotations."
 }
