@@ -1,19 +1,16 @@
 {
-  "pdf_sha256": "24d61b50c146828b1cf20e53e7752990c2ee8feb192c62c388e53ac8e28bd69a",
+  "pdf_sha256": "bcdd602c6d0dfd59fa9888179c1242bd5e57fd6dd5dba634e6a53b975cfde49a",
   "pages_reviewed": 12,
-  "rendering": "All 12 pages rendered individually with Poppler at maximum dimension 1500 pixels. Pages 1\u20133 reviewed by the editing agent and pages 4\u201312 independently reviewed after the abstract revision.",
+  "rendering": "All twelve pages rendered with Poppler at maximum dimension 1400 pixels. Page 7 inspected after the legend revision; the other eleven rendered pages are byte-identical to the previously reviewed edition.",
   "status": "Twelve pages including references and appendices. No visible overlap, clipping or missing glyphs.",
   "latex_overfull_boxes": 0,
   "undefined_references_or_citations": 0,
   "observations": [
-    "The 164-word abstract emphasizes observable forgetting and persistent-memory obstruction. It omits the scalar half-diameter expression, explicit assumption phrase, two-qubit label and quantum/classical comparison. Growing input windows, sufficiently expressive QELMs evaluated through exact expectations, and the constructed-reservoir worst-case floor remain clear. No font, margin, body-text, mathematical or figure-source changes were required.",
-    "Figure 3 spans the full text width. Native canvas: 6.221 by 4.47 inches. Every plot frame is 1.51 by 0.78 inches, with aligned rows and footer legends. The lower row is 22% shorter than in the previous full-width layout draft and now matches both upper rows.",
-    "NARMA model names and the black Target legend remain outside the trace axes. The laser test-error labels sit beside their condition headings. No text or legend crosses a visible curve. Figure fonts remain at least 7.5 points.",
-    "The memory legend is horizontal. Different earlier inputs are red and the shared continuation black. The one-line window annotation remains clear. QRC predictions are orange, QELM predictions blue, the empirical full-history QRC reference red, and the memory slow-loss curve purple.",
-    "All 25 lines and four collections retain their scientific data, colors, axis scales and limits. Laser excerpts contain 128 rows; the displayed NARMA excerpt remains the first 48 of 96 source samples. The history plot still shows computed integer windows 1\u201320 and retains all 48 windows and 24 roots in the source.",
-    "The shorter Figure 3 caption retains the emulation/forecasting distinction, synthetic NARMA descriptor, comparable trace scales, reset/refit protocol, displayed/evaluated windows, empirical-versus-analytical distinction, root counts, percentile-versus-CI distinction, and replay/training qualifications.",
-    "Seven equivalent equation layouts recover space. All mathematical terms and equation numbers remain; the compact ridge grid expands to the original values. The grid is inline and adjacent NARMA method paragraphs are joined without deleting words. The complete methods finish on page 12.",
-    "Publisher template files, font sizes, page margins, all scientific results and Figures 1\u20132 remain unchanged. The source ZIP rebuilds to a byte-identical PDF."
+    "Figure 3 spans the full text width on the unchanged 6.221 by 4.47 inch canvas. All nine plot frames remain 1.51 by 0.78 inches; lower axes and labels remain aligned.",
+    "The lower three legends are compact white framed boxes attached to the top-right axes edges. Their protruding portions use the space above each plot; no detached footer legends remain.",
+    "Legend boxes do not intersect any data-line segments. Marker and band clearance was visually checked. The ten-input annotation sits below the history-curve dip, clear of the legend.",
+    "Fonts remain at least 7.5 points. Data, markers, semantic colors, line styles, displayed samples, axis limits and scientific source arrays are preserved.",
+    "Figure 3 caption, body text, mathematical content, author information, publisher template and all other figures are unchanged. Both source packages rebuild to their corresponding PDF."
   ],
-  "scope": "Visual and format review after the requested conceptual abstract rewrite. Only the abstract source changes the typeset manuscript in this update. Mathematical assumptions, theorems, protocols, results and figures remain unchanged."
+  "scope": "Visual and layout review of attached legends in Figure 3. No changes to scientific data, claims or manuscript text."
 }

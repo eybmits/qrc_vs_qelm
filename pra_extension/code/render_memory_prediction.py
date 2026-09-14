@@ -39,9 +39,8 @@ SIZE = (6.221, 4.47)
 COL_LEFT = {"a": .47, "b": 2.53, "c": 4.59}
 PLOT_WIDTH = 1.51
 UPPER_TOP, UPPER_BOTTOM = 4.09, 2.30
-LOWER_TOP, LOWER_BOTTOM = 1.65, .87
+LOWER_TOP, LOWER_BOTTOM = 1.35, .57
 PANEL_TITLE_Y, SECTION_TITLE_Y = 4.29, 1.75
-FOOTER_LEGEND_TOP = .42
 NARMA_TRACE_HEIGHT = .78
 
 
@@ -89,13 +88,15 @@ def _axis(fig, left, bottom, width, height, name):
     return ax
 
 
-def _footer_legend(fig, ax, handles, labels, column, *, ncol=1):
-    legend = fig.legend if ax is None else ax.legend
-    return legend(handles, labels, loc="upper left",
-        bbox_to_anchor=(COL_LEFT[column] / SIZE[0], FOOTER_LEGEND_TOP / SIZE[1]),
-        bbox_transform=fig.transFigure, frameon=False, fontsize=7.5,
-        handlelength=1.2, handletextpad=.4, labelspacing=0, borderpad=0,
+def _attached_legend(ax, handles, labels, *, ncol=1, anchor_y=1.40):
+    """Attach the legend to the top-right frame, with room above the data."""
+    legend = ax.legend(handles, labels, loc="upper right",
+        bbox_to_anchor=(1., anchor_y), frameon=True, fancybox=True,
+        facecolor="white", edgecolor=roles.TARGET, framealpha=1., fontsize=7.5,
+        handlelength=1.2, handletextpad=.4, labelspacing=.15, borderpad=.35,
         borderaxespad=0, ncol=ncol, columnspacing=.8)
+    legend.get_frame().set_linewidth(.6)
+    return legend
 
 
 def make_figure(emulation, task, dense):
@@ -148,7 +149,8 @@ def make_figure(emulation, task, dense):
         error_label.set_position(((COL_LEFT["a"] + PLOT_WIDTH) / SIZE[0], title_y / SIZE[1]))
         error_label.set_verticalalignment("baseline")
     handles, labels = panels["laser"][1].get_legend_handles_labels()
-    model_legend = _footer_legend(fig, None, handles, labels, "a", ncol=2)
+    model_legend = _attached_legend(panels["laser"][-1], handles, labels,
+                                    ncol=2, anchor_y=1.08)
 
     # b: The memory control follows the measured-input emulation in a.
     _position(panels["memory"], COL_LEFT["b"], UPPER_BOTTOM, PLOT_WIDTH, NARMA_TRACE_HEIGHT)
@@ -186,8 +188,8 @@ def make_figure(emulation, task, dense):
     panels["exact"].set_ylabel("Worst-case\nabsolute error", labelpad=3)
     panels["exact"].get_legend().remove()
     exact_handles, _ = panels["exact"].get_legend_handles_labels()
-    exact_legend = _footer_legend(fig, panels["exact"], exact_handles,
-        ["Constructed QELM", "Unavoidable\nwindow error"], "b")
+    exact_legend = _attached_legend(panels["exact"], exact_handles,
+        ["Constructed QELM", "Unavoidable\nwindow error"])
     section_headings["exact"] = fig.text(COL_LEFT["b"] / SIZE[0], SECTION_TITLE_Y / SIZE[1],
         "Analytical benchmark", fontsize=7.5)
 
@@ -245,7 +247,7 @@ def make_figure(emulation, task, dense):
     history.set_ylim(.40, .90)
     history.set_yticks([.4, .6, .8])
     history.axvline(10, color=colors.MUTED, lw=.6, ls=(0, (2, 3)), zorder=0)
-    history.text(10.7, .85, "10 inputs", fontsize=7.5, color=roles.TARGET, va="center")
+    history.text(10.7, .45, "10 inputs", fontsize=7.5, color=roles.TARGET, va="center")
     history.yaxis.set_major_formatter(FuncFormatter(lambda v, _: f"{100*v:g}%"))
     history.set_xlabel("Recent inputs available, d", labelpad=3)
     history.set_ylabel("Test error", labelpad=3)
@@ -254,8 +256,8 @@ def make_figure(emulation, task, dense):
         Line2D([], [], color=FULL_HISTORY_COLOR, lw=.95, ls=(0, (4, 3)), label="QRC: full history"),
         Line2D([], [], color=roles.QELM, marker="o", mfc="white", ms=3.5, lw=0,
             label="QELM: last 4 inputs")]
-    narma_legend = _footer_legend(fig, history, narma_handles,
-        [handle.get_label() for handle in narma_handles], "c")
+    narma_legend = _attached_legend(history, narma_handles,
+        [handle.get_label() for handle in narma_handles])
     for ax in fig.axes:
         ax.tick_params(length=2.3, width=.6, pad=2)
     panels.update(narma=narma, narma_legend=narma_legend, exact_legend=exact_legend,
@@ -287,8 +289,8 @@ def render(output=OUTPUT):
                    "upper_group_top_bottom_inches": [UPPER_TOP, UPPER_BOTTOM],
                    "lower_row_top_bottom_inches": [LOWER_TOP, LOWER_BOTTOM],
                    "panel_title_y_inches": PANEL_TITLE_Y, "section_title_y_inches": SECTION_TITLE_Y,
-                   "footer_legend_top_inches": FOOTER_LEGEND_TOP,
-                   "label_placement": "NARMA model names and target legend above data axes; laser condition titles outside axes; lower-panel legends in aligned footer regions."},
+                   "legend_placement": "White framed boxes attached to the top-right edge of each lower plot; boxes extend above the axes to keep curves clear.",
+                   "label_placement": "NARMA model names and target legend above data axes; laser condition titles outside axes; ten-input guide label below the history curve."},
         "sources": {str(p.relative_to(ROOT)): digest(p) for p in sources},
         "parents": {"emulation": str(EMULATION.relative_to(ROOT)), "task": str(TASK.relative_to(ROOT)),
                     "dense_replay": str(DENSE_REPLAY.relative_to(ROOT))},

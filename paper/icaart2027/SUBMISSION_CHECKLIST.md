@@ -27,7 +27,9 @@ template settings intact.
 
 Figure 3 spans the full text width on a 6.221 by 4.47 inch native canvas.
 All nine plot frames measure 1.51 by 0.78 inches; the bottom row now matches
-the upper rows. Labels and legends remain separate from the curves.
+the upper rows. Compact white legend boxes attach to the top-right frame of
+each lower plot and extend above it without covering the curves. The ten-input
+guide label is below the history-curve dip; axis labels remain aligned.
 Targets stay opaque black, QRC orange and QELM blue. The caption retains
 all scientific qualifications in fewer words. Equivalent formula layouts and
 same-topic paragraph joins save space; publisher fonts and margins are unchanged.

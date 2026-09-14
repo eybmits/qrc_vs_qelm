@@ -24,7 +24,9 @@ equations, figures, font sizes and margins unchanged by this abstract update.
 Figure 3 uses the full text width with a 6.221 by 4.47 inch native canvas.
 All nine plot frames are 1.51 inches wide and 0.78 inches high. The bottom
 three plots match the upper plots, reducing their height from 1.00 inch in
-the preceding full-width draft. Row edges, axis labels and footer legends align.
+the preceding full-width draft. Row edges and axis labels align. Compact white
+legend boxes overlap the top-right frame of each bottom plot, extending above
+the axes to leave the curves visible. The ten-input label sits below the dip.
 Model names, the Target legend and laser test-error labels stay outside the
 curves. The memory legend is horizontal and the window annotation uses one line.
 NARMA Target traces remain black at full opacity (alpha 1).

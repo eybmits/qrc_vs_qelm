@@ -111,11 +111,18 @@ def test_three_panel_geometry_and_legend_clearance():
             label = ax.xaxis.label.get_window_extent(draw)
             title = p["section_headings"][heading].get_window_extent(draw)
             assert label.y0 - title.y1 >= draw.points_to_pixels(6)
-        footers = [p[key].get_window_extent(draw)
-                   for key in ("model_legend", "exact_legend", "narma_legend")]
-        np.testing.assert_allclose([box.y1 for box in footers], footers[0].y1)
-        for ax, label, footer in zip(lower_row, label_boxes, footers):
-            assert footer.y1 < label.y0 < ax.bbox.y0
+        # Legends cross their own top frame instead of floating below the axes.
+        for ax, key, heading in zip(lower_row,
+                ("model_legend", "exact_legend", "narma_legend"),
+                ("Slow loss", "exact", "history")):
+            legend = p[key]
+            box = legend.get_window_extent(draw)
+            assert legend.axes is ax and legend.get_frame_on()
+            assert legend.get_frame().get_alpha() == 1.
+            assert ax.bbox.y0 < box.y0 < ax.bbox.y1 < box.y1
+            assert abs(box.x1 - ax.bbox.x1) < .01
+            assert box.y1 < p["section_headings"][heading].get_window_extent(draw).y0
+            assert not box.overlaps(ax.xaxis.label.get_window_extent(draw))
         # Test line segments, not only vertices: the old in-axes labels crossed
         # target segments even when no sampled point lay inside their boxes.
         for model in ("qrc", "qelm"):
@@ -128,21 +135,29 @@ def test_three_panel_geometry_and_legend_clearance():
                 for line in ax.lines:
                     path = line.get_path().transformed(line.get_transform())
                     assert not path.intersects_bbox(box, filled=False)
-        for key in ("model_legend",):
-            box = p[key].get_window_extent(draw)
-            assert all(not box.overlaps(ax.get_tightbbox(draw)) for ax in fig.axes)
         annotation = p["memory"].texts[0].get_window_extent(draw)
         assert not annotation.overlaps(p["memory_legend"].get_window_extent(draw))
         labels = [t.get_window_extent(draw) for t in p["history_inset"].texts]
         assert not labels[0].overlaps(labels[1])
-        for ax, legend in ((p["exact"], p["exact_legend"]), (p["memory"], p["memory_legend"]),
+        for ax, legend in ((p["laser"][-1], p["model_legend"]),
+                           (p["exact"], p["exact_legend"]), (p["memory"], p["memory_legend"]),
                            (p["narma"]["history"], p["narma_legend"])):
             box = legend.get_window_extent(draw)
             for line in ax.lines:
                 if not line.get_gid() and ax is p["memory"]:
                     continue
+                # The vertical ten-input guide may continue behind the box.
+                if ax is p["narma"]["history"] and line.get_transform() is ax.get_xaxis_transform():
+                    continue
                 points = np.column_stack((line.get_xdata(), line.get_ydata())).astype(float)
                 assert not any(box.contains(*point) for point in line.get_transform().transform(points))
+                path = line.get_path().transformed(line.get_transform())
+                assert not path.intersects_bbox(box.padded(draw.points_to_pixels(1)), filled=False)
+        history = p["narma"]["history"]
+        guide_label = history.texts[0].get_window_extent(draw)
+        assert not guide_label.overlaps(p["narma_legend"].get_window_extent(draw))
+        for line in history.lines[:2]:
+            assert not line.get_path().transformed(line.get_transform()).intersects_bbox(guide_label, filled=False)
         renderer.plt.close(fig)
 
 

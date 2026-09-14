@@ -1,7 +1,7 @@
 {
   "artifacts": {
-    "fig04_memory_prediction.pdf": "6d4464a670c9ecc35a35005ca88f25448483e063fe5ee507146c6ac5288f220f",
-    "fig04_memory_prediction.png": "107a6eb4814a8af67086e7214d495e039877c5bf0222b8958e9b16e78655fe30"
+    "fig04_memory_prediction.pdf": "fe726b03bd805f537ebc2a9e6ea38c8869bc2e839837c25cb05ce2dd071751c6",
+    "fig04_memory_prediction.png": "2cdec826ca3454d9e5d7a2f63e1d77aa224dd3a7de7695881edbb34549edad80"
   },
   "emulation": {
     "artifacts": {
@@ -29639,11 +29639,11 @@
       "b": 2.53,
       "c": 4.59
     },
-    "footer_legend_top_inches": 0.42,
-    "label_placement": "NARMA model names and target legend above data axes; laser condition titles outside axes; lower-panel legends in aligned footer regions.",
+    "label_placement": "NARMA model names and target legend above data axes; laser condition titles outside axes; ten-input guide label below the history curve.",
+    "legend_placement": "White framed boxes attached to the top-right edge of each lower plot; boxes extend above the axes to keep curves clear.",
     "lower_row_top_bottom_inches": [
-      1.65,
-      0.87
+      1.35,
+      0.57
     ],
     "panel_title_y_inches": 4.29,
     "plot_height_inches": 0.78,
@@ -57219,7 +57219,7 @@
     "pra_extension/code/narma_dense_replay.py": "3325f974aec52f50d4697c957f7803ffaad31728838289452b550b8e856acebf",
     "pra_extension/code/paper_palette.py": "b2335cbc68555f04fcc0874f6e25eccb23b88e7ee0ebe39fa9b0966cf7312cf9",
     "pra_extension/code/render_figure3_candidate.py": "872d840c9c065a763ebe0950bc603e7c9966a97085b04e83d1f4dc257f817920",
-    "pra_extension/code/render_memory_prediction.py": "8873e220381ccc0592878b3e675ebed21669eeb20e4e7d9f9c8f88e22e669f1d",
+    "pra_extension/code/render_memory_prediction.py": "d0b9fcb9949a0a52f72741872ec19da43e04455ede5852380ff96750a67a0104",
     "pra_extension/code/render_narma_additional.py": "7afdf6f36ed31f98edc8c7859e35224a36b16feab980fee4c405147da5e274c6",
     "pra_extension/code/render_task_memory.py": "9b70ef16d79be5425cffc91eb6c705c93e66231139ec826f3b3d3e1df1d7d917",
     "pra_extension/code/verify_narma_dense_replay.py": "be6466f25d35fdb61ea65fb322fc9d8788c2072aaaf6b5a2f2e77eb56f192577"

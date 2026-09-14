@@ -1,6 +1,6 @@
 {
   "schema": "arxiv_visual_review_v1",
-  "pdf_sha256": "eabeec1654b96c0efc451bb8972552f7088d31724075531a0d4e06c0b328ada7",
+  "pdf_sha256": "bac21eb7bcf9b289067ba2fa57b9414e2a9d94c3290e417f78779867a5baa02a",
   "reviewed_pages": [
     1,
     2,
@@ -27,5 +27,5 @@
     "all_three_green_orcid_icons_legible": true,
     "unchanged_pages_pixel_identical": true
   },
-  "review_note": "After updating only the QAR-Lab hyperlink destination, all twelve rendered pages are byte-identical to the previously visually reviewed ORCID edition. Layout, text and figures are unchanged. The updated hyperlink is verified in the PDF annotations."
+  "review_note": "Figure 3 on page 7 visually inspected after attaching framed legends to the lower axes. Curves, markers, bands and annotations remain clear. All other eleven rendered pages are byte-identical to the previously reviewed QAR-link edition; twelve-page layout and author header are preserved."
 }
