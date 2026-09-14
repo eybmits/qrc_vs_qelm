@@ -1,0 +1,50 @@
+{
+  "schema": "paper_author_metadata_v1",
+  "author_order_source": "Author instruction on 2026-09-14",
+  "verified_on": "2026-09-14",
+  "affiliation": {
+    "laboratory": "QAR-Lab",
+    "department": "Department of Computer Science",
+    "institution": "Ludwig-Maximilians-Universität München (LMU Munich)",
+    "city": "Munich",
+    "country": "Germany",
+    "laboratory_url": "https://qarlab.de/en/",
+    "institution_url": "https://www.lmu.de/en/",
+    "source": "https://qarlab.de/en/our-team/"
+  },
+  "authors": [
+    {
+      "given_names": "Markus",
+      "family_names": "Baumann",
+      "name": "Markus Baumann",
+      "email": "markus.baumann@campus.lmu.de",
+      "corresponding": true,
+      "profile_url": "https://qarlab.de/en/our-team/",
+      "orcid": null,
+      "orcid_status": "Awaiting author identifier; same-name records were not assigned",
+      "sources": ["https://qarlab.de/en/our-team/", "https://arxiv.org/html/2607.01187v1"]
+    },
+    {
+      "given_names": "Jonas",
+      "family_names": "Stein",
+      "name": "Jonas Stein",
+      "email": "jonas.stein@ifi.lmu.de",
+      "corresponding": false,
+      "profile_url": "https://www.ifi.lmu.de/mvs/en/team/contact-page/jonas-stein-ef892b38.html",
+      "orcid": "0000-0001-5727-9151",
+      "orcid_status": "Verified from official LMU profile",
+      "sources": ["https://www.ifi.lmu.de/mvs/en/team/contact-page/jonas-stein-ef892b38.html"]
+    },
+    {
+      "given_names": "Claudia",
+      "family_names": "Linnhoff-Popien",
+      "name": "Claudia Linnhoff-Popien",
+      "email": "linnhoff@ifi.lmu.de",
+      "corresponding": false,
+      "profile_url": "https://www.ifi.lmu.de/mvs/en/team/contact-page/claudia-linnhoff-popien-5eb3fc37.html",
+      "orcid": "0000-0001-6284-9286",
+      "orcid_status": "Verified from official LMU publication records",
+      "sources": ["https://www.ifi.lmu.de/mvs/en/team/contact-page/claudia-linnhoff-popien-5eb3fc37.html", "https://epub.ub.uni-muenchen.de/128888/", "https://epub.ub.uni-muenchen.de/121953/"]
+    }
+  ]
+}

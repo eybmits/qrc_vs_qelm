@@ -1,0 +1,67 @@
+\documentclass[a4paper,twoside]{article}
+
+% The four publisher formatting files are used without modification.
+\ifdefined\pdfinfoomitdate\pdfinfoomitdate=1\fi
+\ifdefined\pdftrailerid\pdftrailerid{}\fi
+\ifdefined\pdfsuppressptexinfo\pdfsuppressptexinfo=-1\fi
+\usepackage{epsfig,subcaption,calc,amssymb,amstext,amsmath,amsthm,multicol}
+\usepackage{pslatex,apalike,algorithm2e}
+\usepackage[bottom]{footmisc}
+\usepackage{graphicx,microtype,placeins,xcolor}
+\definecolor{linkblue}{HTML}{3868D9}
+\usepackage[unicode,colorlinks=true,linkcolor=linkblue,citecolor=linkblue,urlcolor=linkblue]{hyperref}
+\let\mathematicalsup\sup
+\usepackage{SCITEPRESS}
+% SCITEPRESS reuses \sup for author-affiliation superscripts. Restore the
+% mathematical operator in this mathematical manuscript.
+\let\authorsup\sup
+\let\sup\mathematicalsup
+\hypersetup{
+ pdftitle={When Can Finite-Window QELMs Emulate Quantum Reservoirs?},
+ pdfauthor={Markus Baumann; Jonas Stein; Claudia Linnhoff-Popien},pdfsubject={Author-identified research preprint},
+ pdfkeywords={Quantum Reservoir Computing, Quantum Extreme Learning Machines, Temporal Learning}
+}
+% Compact preprint title spacing; body font, margins and content are unchanged.
+\usepackage{etoolbox}
+\makeatletter
+\patchcmd{\maketitle}{\vskip 0.51in}{\vskip 0.12in}{}{\errmessage{Unexpected title layout}}
+\renewcommand{\title}[1]{\gdef\@title{#1\\[6pt]}}
+\renewcommand{\email}[1]{{\fontsize{9}{11}\selectfont\textit{#1}}\par}
+\makeatother
+\graphicspath{{figures/}}
+\newcommand{\doi}[1]{\href{https://doi.org/#1}{doi:\nolinkurl{#1}}}
+
+% Keep full-width figures on separate pages without reducing their display size.
+\setcounter{dbltopnumber}{1}
+
+\begin{document}
+\title{When Can Finite-Window QELMs Emulate Quantum Reservoirs?}
+% Author-identified preprint; generated from the anonymous manuscript.
+\author{
+\authorname{\href{https://qarlab.de/en/our-team/}{Markus Baumann}, \href{https://www.ifi.lmu.de/mvs/en/team/contact-page/jonas-stein-ef892b38.html}{Jonas Stein}\textsuperscript{\href{https://orcid.org/0000-0001-5727-9151}{\scriptsize iD}} and \href{https://www.ifi.lmu.de/mvs/en/team/contact-page/claudia-linnhoff-popien-5eb3fc37.html}{Claudia Linnhoff-Popien}\textsuperscript{\href{https://orcid.org/0000-0001-6284-9286}{\scriptsize iD}}}
+\affiliation{\href{https://qarlab.de/en/}{QAR-Lab}, Department of Computer Science\\
+\href{https://www.lmu.de/en/}{Ludwig-Maximilians-Universit\"at M\"unchen (LMU Munich)}, Munich, Germany}
+\email{Correspondence: \href{mailto:markus.baumann@campus.lmu.de}{markus.baumann@campus.lmu.de}}
+}
+\keywords{Quantum Reservoir Computing, Quantum Extreme Learning Machines, Temporal Learning, Fading Memory, Finite Context.}
+\abstract{\looseness=-1\input{sections/abstract}}
+\onecolumn\maketitle\normalsize\setcounter{footnote}{0}\vfill
+
+\input{sections/introduction}
+\input{sections/models}
+\input{sections/background}
+\input{sections/dynamics}
+\input{sections/evaluation}
+\FloatBarrier
+\input{sections/conclusion}
+\bibliographystyle{apalike}
+{\small\microtypesetup{expansion=false}\bibliography{references}}
+\par\noindent\textit{AI-use disclosure.}
+OpenAI Codex assisted with ideation, manuscript wording, and code and figure
+preparation, including debugging. The authors reviewed and verified all
+content and results and take full responsibility for the work.
+% The publisher requires an unnumbered appendix after the references,
+% continuing on the same page, within the one submitted paper.
+\input{sections/appendix}
+\input{sections/methodology}
+\end{document}

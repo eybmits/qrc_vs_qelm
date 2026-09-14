@@ -1,0 +1,62 @@
+{
+  "administrative_changes": {
+    "main.tex": "Author header with compact title spacing, profile/ORCID links, and PDF author/subject metadata",
+    "sections/methodology.tex": "Anonymity-only code note replaced with a link and accurate restricted-access status"
+  },
+  "anonymous_source_sha256": "7390dae302969e76bada8f75b1f24d95af7c0b9d6f2e1192aaea1964444441e3",
+  "authors_sha256": "a7cb6d3cffbe8ec2d4898b241a446b884eabbe0d2072d8160b61d3cba8d312bc",
+  "files": {
+    "arxiv_qa.json": "68930361e336452cd36eb4287c83dfcd336aacb31f89eb271d397ad52f091650",
+    "arxiv_source.zip": "554679ea4829751bacfe5dc0422682e642d02f769c540715faff7344991c80b5",
+    "authors.json": "a7cb6d3cffbe8ec2d4898b241a446b884eabbe0d2072d8160b61d3cba8d312bc",
+    "build_arxiv.py": "d371712e3db2dd38ca3957a90cf057c00ca433de4777a549ca52b5979b8a7282",
+    "main.tex": "09755719b61423c736bb063b9e1a03e09ed53fbcda8f7bde828beca0f638b907",
+    "preprint.pdf": "c9cf7febb842eb54b4b853d843ade135e997559e540bd0f223384d53b0a238f7"
+  },
+  "pages": 12,
+  "parent_source_sha256": {
+    "SCITEPRESS.sty": "d4a8482e5b2772a279b881012bedd813023f3c614287e02d5c648497ade3bf14",
+    "apalike.bst": "6977bea0847e4b850fd5bdc948beeaa50cd4d0c2a275e74a5fd68309a9628191",
+    "apalike.sty": "183bdccc3608e9db948dbd1cdffec3e2a476650dad223c7a3294325371fc0339",
+    "article.cls": "23e48b9a27539b6589503b6b5c5ff1451b58edfb245a0fa4c5847bb94392d32c",
+    "figures/fig01_information_interface.pdf": "4fdc68f33af34d0baa9d7db738cdcf49dd080d63adb3beee5c5f6615661e19bb",
+    "figures/fig03_resource_diagnosis.pdf": "2166c7bd450acaa73bc484ce9cdc80720206a67cbc3248687c5882de3a87cfc2",
+    "figures/fig04_memory_prediction.pdf": "dc3b761f11980dca85a0e37136b32ee9d60722ce4e4e615055183d1806ee7ed0",
+    "main.tex": "2a2cb2282c1fa5faaa62fa139f4f325e1874a2da5c58b21e8e31fd0ef081b265",
+    "references.bib": "90bea3e966a66a9ffa712ebd2ed9fa2f0dd738e600e4af18db0e754a8e02c3ff",
+    "sections/abstract.tex": "d6d16f76cdadfc7e6577be13ccc1dc41ce18b9e71d0aa0626005379d299b0ef1",
+    "sections/appendix.tex": "8157451ecdc07b7148800982a495dcb572b871720c0fe27b33a4d2f8b502a8f6",
+    "sections/background.tex": "74966e7e83724ae8a21da6e963b09c50c3a5c0cce5aa71d6ed8e920952550cee",
+    "sections/conclusion.tex": "ea18d3d2c65422ae88fc4710d9cd8a4b4447073e7e4db45bae37075a28fc9849",
+    "sections/dynamics.tex": "283e73eb565144e19eaef49a978fc67a176a0baa5fed16a30f6315b5c0387dd2",
+    "sections/evaluation.tex": "d5155092eb396f72c484954d2715ffb5a615843b3506154650c7f4025d663ce6",
+    "sections/introduction.tex": "d125cb98afc330583021376531c0b56f96cad658481ebc479c3c2f1194ba5455",
+    "sections/methodology.tex": "b5f381c7a4f7df5d3013ca3f793a310f44dd59b4b60518caf9987e706b2982da",
+    "sections/models.tex": "731fad3683b2c25a26ca620fa7400a1cbd73077b372d0395e73094fe4fd07f65",
+    "sections/related-work.tex": "4f3ee9cc629b34483b6c8215b6b5e1e8091c5163aaae1d683b65eb29b231d27d"
+  },
+  "publication": "Not uploaded or published; no arXiv identifier has been assigned.",
+  "schema": "arxiv_preprint_package_v1",
+  "source_package_files": {
+    "SCITEPRESS.sty": "d4a8482e5b2772a279b881012bedd813023f3c614287e02d5c648497ade3bf14",
+    "apalike.bst": "6977bea0847e4b850fd5bdc948beeaa50cd4d0c2a275e74a5fd68309a9628191",
+    "apalike.sty": "183bdccc3608e9db948dbd1cdffec3e2a476650dad223c7a3294325371fc0339",
+    "article.cls": "23e48b9a27539b6589503b6b5c5ff1451b58edfb245a0fa4c5847bb94392d32c",
+    "figures/fig01_information_interface.pdf": "4fdc68f33af34d0baa9d7db738cdcf49dd080d63adb3beee5c5f6615661e19bb",
+    "figures/fig03_resource_diagnosis.pdf": "2166c7bd450acaa73bc484ce9cdc80720206a67cbc3248687c5882de3a87cfc2",
+    "figures/fig04_memory_prediction.pdf": "dc3b761f11980dca85a0e37136b32ee9d60722ce4e4e615055183d1806ee7ed0",
+    "main.bbl": "80eab96b3154e52fcf6cbad9786b7bd94854737437bf378f1efb009b9d1fa4fa",
+    "main.tex": "09755719b61423c736bb063b9e1a03e09ed53fbcda8f7bde828beca0f638b907",
+    "references.bib": "90bea3e966a66a9ffa712ebd2ed9fa2f0dd738e600e4af18db0e754a8e02c3ff",
+    "sections/abstract.tex": "d6d16f76cdadfc7e6577be13ccc1dc41ce18b9e71d0aa0626005379d299b0ef1",
+    "sections/appendix.tex": "8157451ecdc07b7148800982a495dcb572b871720c0fe27b33a4d2f8b502a8f6",
+    "sections/background.tex": "74966e7e83724ae8a21da6e963b09c50c3a5c0cce5aa71d6ed8e920952550cee",
+    "sections/conclusion.tex": "ea18d3d2c65422ae88fc4710d9cd8a4b4447073e7e4db45bae37075a28fc9849",
+    "sections/dynamics.tex": "283e73eb565144e19eaef49a978fc67a176a0baa5fed16a30f6315b5c0387dd2",
+    "sections/evaluation.tex": "d5155092eb396f72c484954d2715ffb5a615843b3506154650c7f4025d663ce6",
+    "sections/introduction.tex": "d125cb98afc330583021376531c0b56f96cad658481ebc479c3c2f1194ba5455",
+    "sections/methodology.tex": "60a0b8205bc0641228529c03971cf9cbcd6fd9e732637adb58200b45743ebe01",
+    "sections/models.tex": "731fad3683b2c25a26ca620fa7400a1cbd73077b372d0395e73094fe4fd07f65",
+    "sections/related-work.tex": "4f3ee9cc629b34483b6c8215b6b5e1e8091c5163aaae1d683b65eb29b231d27d"
+  }
+}

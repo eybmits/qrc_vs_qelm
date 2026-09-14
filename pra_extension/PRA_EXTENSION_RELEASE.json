@@ -1,6 +1,6 @@
 {
   "artifact_count": 372,
-  "artifact_set_sha256": "f71eb956c9a069b710d5e0bd312cc0a7371d95b7b2468f8003f0ac0d5b219c1c",
+  "artifact_set_sha256": "37cf278d74113d460c325f03c8f8f1cf1a8089b28ea7000eb9fcbf854154af70",
   "artifacts": {
     "CANONICAL_EMULATION_LITERATURE_POSITIONING.md": {
       "role": "post_confirmatory_literature_positioning",
@@ -49,8 +49,8 @@
     },
     "README.md": {
       "role": "repository_reproduction_guide",
-      "sha256": "57801ddbbae116785f98781cdd0ca3c6ad9fa99b6784c5de14f98a4d8f110474",
-      "size_bytes": 34607
+      "sha256": "76d1eafecbf54ab16ff15eb0e7824d1d1647bab40e01691edb32dd5ad05e5a3e",
+      "size_bytes": 35339
     },
     "REPRODUCIBILITY.md": {
       "role": "claim_to_artifact_reproduction_and_interpretation_guide",
@@ -1899,7 +1899,7 @@
     "pra_extension": "EXPLORATORY_POST_CONFIRMATORY"
   },
   "figures_directory": "pra_extension/figures_pra_final_v6",
-  "manifest_identity_sha256": "4dd003bfa188ae191da549126f1b20b8df2bc184e96bb9944bcb316e39416b40",
+  "manifest_identity_sha256": "e225f2ac8a14181a85c38841a748fed8ccf7c6676652f870ead5c69960b0f79e",
   "paper_pdf": "paper/icaart2027/submission.pdf",
   "prospective_followups": {
     "long_context_n5": {

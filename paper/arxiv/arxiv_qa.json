@@ -1,0 +1,25 @@
+{
+  "schema": "arxiv_package_qa_v1",
+  "checks": {
+    "all_authors_on_title_page": true,
+    "author_order_correct": true,
+    "pdf_author_metadata": true,
+    "profile_lmu_and_orcid_links": true,
+    "no_page_clipping": true,
+    "embedded_fonts": true,
+    "no_embedded_attachments": true,
+    "disclosure_preserved": true,
+    "scientific_content_preserved": true,
+    "anonymous_pdf_unchanged": true,
+    "clean_source_rebuild_identical": true
+  },
+  "passed": true,
+  "pages": 12,
+  "pdf_sha256": "c9cf7febb842eb54b4b853d843ade135e997559e540bd0f223384d53b0a238f7",
+  "anonymous_pdf_sha256": "24d61b50c146828b1cf20e53e7752990c2ee8feb192c62c388e53ac8e28bd69a",
+  "source_zip_sha256": "554679ea4829751bacfe5dc0422682e642d02f769c540715faff7344991c80b5",
+  "orcid_not_supplied": [
+    "Markus Baumann"
+  ],
+  "scope": "Local source/build, identity/link, and geometry checks; arXiv processing and publication have not occurred."
+}

@@ -3,6 +3,17 @@
 Updated on 14 September 2026. This is an anonymous **editorial draft** in the
 Regular Paper format, not a submission-ready package or a final publication.
 
+## Author editions (14 September 2026)
+
+The author confirmed the paper author order as **Markus Baumann, Jonas Stein,
+Claudia Linnhoff-Popien**. The separate identified preprint and its verified
+LMU/QAR-Lab links are in `../arxiv/`; the review PDF and anonymous source ZIP
+remain unchanged. Both PDFs have twelve pages. Author metadata and source
+citations are recorded in `../arxiv/authors.json`. Jonas and Claudia's ORCIDs
+are verified; Markus's ORCID is awaiting his identifier and is not guessed.
+This author-list instruction does not declare exclusive submission or perform
+an upload. The author-approved AI disclosure is preserved in both editions.
+
 ## Current abstract update (14 September 2026)
 
 The revised abstract contains 164 words (limit: 200). It emphasizes persistent
@@ -209,7 +220,8 @@ and the build manifest status is `EDITORIAL_DRAFT_NOT_SUBMISSION_READY`.
   Temporal Learning; Fading Memory; Finite Context.
 - Eventual review attachment: the approved, policy-compliant PDF, not the current
   incompletely credited `submission.pdf`, full repository or this handoff.
-- First-stage submission deadline: **15 September 2026, Anywhere on Earth**.
+- First-stage submission deadline: **29 September 2026, Anywhere on Earth (extended)**,
+  rechecked on the official page on 14 September 2026.
 - First-stage notification: 13 November 2026; camera-ready and registration: 27 November 2026.
 - Second-stage regular submission: 22 October 2026; notification 4 December;
   camera-ready and registration 18 December 2026.
@@ -247,8 +259,10 @@ local preflight, not a claimed PRIMORIS character-count result.
   is not venue-policy clearance.
 - [ ] Approve every proof, result, figure, reference, and the factual preparation description.
   This formatting pass is not an independent scientific correctness/novelty review.
-- [ ] Confirm final author list/order, affiliations, corresponding author and email;
-  supply any ORCIDs. The portal stores author details even though the review PDF omits them.
+- [x] Author list/order supplied: Markus Baumann, Jonas Stein, Claudia Linnhoff-Popien.
+  Verified LMU affiliations, contact details and available ORCIDs are in
+  `../arxiv/authors.json`; Markus's ORCID is still awaiting his identifier.
+  Enter those author details in the portal even though the review PDF omits them.
 - [ ] Confirm originality and no simultaneous submission to a journal or another
   proceedings conference. Do not infer permission from earlier publication plans.
 - [ ] Declare existing preprints/public manuscript versions, including any public
@@ -275,13 +289,17 @@ That result applies to the committed baseline, not the subsequent local
 sharpness integration. Its local checks are a separate verification; no push
 or new remote CI result is claimed for this update.
 
-## Author data found in the project, not yet approved as the final list
+## Current author data
 
-The current `CITATION.cff` records **Markus Baumann**,
-**Ludwig-Maximilians-Universität München**. `pyproject.toml` records
-**markus.baumann@campus.lmu.de**. No ORCID or additional author was found in
-these records. This is project metadata, not an assertion that the conference
-author list is complete. These details are not included in the review package.
+Paper authors, confirmed in order: **Markus Baumann**, **Jonas Stein**,
+**Claudia Linnhoff-Popien**. Shared affiliation: QAR-Lab, Department of Computer
+Science, Ludwig-Maximilians-Universität München (LMU Munich), Munich, Germany.
+Correspondence: **markus.baumann@campus.lmu.de**, consistent with Markus's
+existing paper author blocks. Jonas: **jonas.stein@ifi.lmu.de**, ORCID
+**0000-0001-5727-9151**. Claudia: **linnhoff@ifi.lmu.de**, ORCID
+**0000-0001-6284-9286**. Markus's ORCID is not yet supplied or verified.
+Sources and clickable profiles are in `../arxiv/authors.json` and its README.
+These details are excluded from the anonymous source ZIP and review PDF.
 
 The venue permits at most nine authors in its general guidance, and the template
 caps self-citations at 20%. Recheck the latter against the approved author list.

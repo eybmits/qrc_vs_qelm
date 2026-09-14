@@ -1,0 +1,63 @@
+# Author-identified preprint and anonymous review copy
+
+The author-identified edition lists **Markus Baumann, Jonas Stein, and Claudia
+Linnhoff-Popien**, in that order, as instructed on 14 September 2026. All three
+share QAR-Lab, Department of Computer Science, Ludwig-Maximilians-Universität
+München (LMU Munich), Munich, Germany. Markus is the correspondence contact at
+markus.baumann@campus.lmu.de, consistent with the existing manuscript metadata.
+
+| Edition | PDF | Source ZIP |
+| --- | --- | --- |
+| arXiv preprint, with authors | `preprint.pdf` (12 pages) | `arxiv_source.zip` |
+| Anonymous ICAART copy | `../icaart2027/submission.pdf` (12 pages) | `../icaart2027/ICAART2027_anonymous_source.zip` |
+
+Both editions have twelve pages. The authored title block uses more compact
+vertical spacing; body fonts and page margins match the anonymous edition.
+The anonymous layout is unchanged. No research content, figures, equations,
+references, or author-approved AI disclosure is rewritten. In the identified
+edition, the anonymity-only code note becomes a repository link labeled as
+currently access-restricted. The repository is private as verified on 14
+September 2026. No repository visibility change or public upload was made.
+
+## Identity sources
+
+- Markus Baumann: [QAR-Lab team](https://qarlab.de/en/our-team/) and
+  [his existing paper's author block](https://arxiv.org/html/2607.01187v1)
+  establish the affiliation and correspondence email.
+- Jonas Stein: the [official LMU profile](https://www.ifi.lmu.de/mvs/en/team/contact-page/jonas-stein-ef892b38.html)
+  gives jonas.stein@ifi.lmu.de and links to ORCID
+  [0000-0001-5727-9151](https://orcid.org/0000-0001-5727-9151).
+- Claudia Linnhoff-Popien: the [official LMU profile](https://www.ifi.lmu.de/mvs/en/team/contact-page/claudia-linnhoff-popien-5eb3fc37.html)
+  gives linnhoff@ifi.lmu.de; an [official LMU publication record](https://epub.ub.uni-muenchen.de/128888/)
+  identifies ORCID [0000-0001-6284-9286](https://orcid.org/0000-0001-6284-9286).
+
+Markus's ORCID has not yet been supplied or unambiguously verified. It is left
+empty in `authors.json` and omitted from the PDF instead of assigning an
+identifier belonging to a namesake. Verified ORCIDs are clickable `iD` markers
+beside author names; author names themselves link to official profiles.
+
+## Rebuild
+
+From the repository root, with Python/pypdf, a complete TeX Live installation,
+`latexmk`, BibTeX and Poppler available:
+
+```bash
+python paper/arxiv/build_arxiv.py
+```
+
+The builder starts from the current anonymous source ZIP and checks it against
+the anonymous manifest and local sources. It changes only the author header
+and its spacing, PDF metadata, and the administrative code-access sentence. Authorship stays
+outside the anonymous ZIP. The arXiv ZIP includes the common sources and
+figures, required publisher style files, and generated `main.bbl`, with one
+top-level `main.tex`. Extract the ZIP and run `latexmk -pdf main.tex`.
+
+`ARXIV_MANIFEST.json` records the parent source, administrative changes and file
+hashes. `arxiv_qa.json` records author order, hyperlinks, metadata, embedded
+fonts, page geometry, preserved scientific content, unchanged anonymous PDF,
+and a byte-identical clean source rebuild. Visual inspection is recorded
+separately against the final PDF hash in `visual_review.json`.
+
+The package has not been uploaded, so it has no arXiv ID, publication date or
+chosen arXiv license. Source preparation follows the [arXiv TeX guidance](https://info.arxiv.org/help/submit_tex.html).
+The final PDF produced by arXiv must also be checked during an actual upload.

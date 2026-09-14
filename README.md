@@ -12,6 +12,18 @@ protected construction's delayed-memory task implication explicit while
 preserving the existing theory, experiments and figures. The journal-format
 snapshot described below remains inactive.
 
+Two editions are available from the same scientific manuscript:
+
+| Edition | PDF | LaTeX source package |
+| --- | --- | --- |
+| Anonymous ICAART review copy | [12-page PDF](paper/icaart2027/submission.pdf) | [Anonymous ZIP](paper/icaart2027/ICAART2027_anonymous_source.zip) |
+| Author-identified arXiv preprint | [Preprint PDF](paper/arxiv/preprint.pdf) | [arXiv ZIP](paper/arxiv/arxiv_source.zip) |
+
+The preprint lists Markus Baumann, Jonas Stein, and Claudia Linnhoff-Popien,
+with LMU/QAR-Lab affiliation and verified profile/ORCID links. It is prepared
+locally, not uploaded to arXiv. [Author metadata and rebuild instructions](paper/arxiv/README.md)
+explain the separate packages and the remaining unsupplied ORCID for Markus.
+
 The 14 September figure revision groups laser emulation and its memory control
 in Figure 3(a,b), followed by synthetic NARMA10 prediction in (c). Active figures
 use orange QRC, blue QELM and black external targets. Replay explicitly resets
