@@ -9,8 +9,8 @@ The author confirmed the paper author order as **Markus Baumann, Jonas Stein,
 Claudia Linnhoff-Popien**. The separate identified preprint and its verified
 LMU/QAR-Lab links are in `../arxiv/`; the review PDF and anonymous source ZIP
 remain unchanged. Both PDFs have twelve pages. Author metadata and source
-citations are recorded in `../arxiv/authors.json`. Jonas and Claudia's ORCIDs
-are verified; Markus's ORCID is awaiting his identifier and is not guessed.
+citations are recorded in `../arxiv/authors.json`. All three ORCIDs are verified;
+Markus's ID was recovered from his existing manuscript author blocks and CFF.
 This author-list instruction does not declare exclusive submission or perform
 an upload. The author-approved AI disclosure is preserved in both editions.
 
@@ -261,7 +261,7 @@ local preflight, not a claimed PRIMORIS character-count result.
   This formatting pass is not an independent scientific correctness/novelty review.
 - [x] Author list/order supplied: Markus Baumann, Jonas Stein, Claudia Linnhoff-Popien.
   Verified LMU affiliations, contact details and available ORCIDs are in
-  `../arxiv/authors.json`; Markus's ORCID is still awaiting his identifier.
+  `../arxiv/authors.json`, including Markus's verified ORCID 0009-0007-3575-1006.
   Enter those author details in the portal even though the review PDF omits them.
 - [ ] Confirm originality and no simultaneous submission to a journal or another
   proceedings conference. Do not infer permission from earlier publication plans.
@@ -297,7 +297,8 @@ Science, Ludwig-Maximilians-Universität München (LMU Munich), Munich, Germany.
 Correspondence: **markus.baumann@campus.lmu.de**, consistent with Markus's
 existing paper author blocks. Jonas: **jonas.stein@ifi.lmu.de**, ORCID
 **0000-0001-5727-9151**. Claudia: **linnhoff@ifi.lmu.de**, ORCID
-**0000-0001-6284-9286**. Markus's ORCID is not yet supplied or verified.
+**0000-0001-6284-9286**. Markus: ORCID **0009-0007-3575-1006**, verified
+in multiple existing manuscripts and the operating-band `CITATION.cff`.
 Sources and clickable profiles are in `../arxiv/authors.json` and its README.
 These details are excluded from the anonymous source ZIP and review PDF.
 

@@ -22,7 +22,7 @@ Two editions are available from the same scientific manuscript:
 The preprint lists Markus Baumann, Jonas Stein, and Claudia Linnhoff-Popien,
 with LMU/QAR-Lab affiliation and verified profile/ORCID links. It is prepared
 locally, not uploaded to arXiv. [Author metadata and rebuild instructions](paper/arxiv/README.md)
-explain the separate packages and the remaining unsupplied ORCID for Markus.
+explain the separate packages and the verified ORCID identities for all three authors.
 
 The 14 September figure revision groups laser emulation and its memory control
 in Figure 3(a,b), followed by synthetic NARMA10 prediction in (c). Active figures

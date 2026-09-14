@@ -19,11 +19,22 @@ edition, the anonymity-only code note becomes a repository link labeled as
 currently access-restricted. The repository is private as verified on 14
 September 2026. No repository visibility change or public upload was made.
 
+The anonymous edition uses the official ICAART-linked SCITEPRESS template
+files unchanged. The arXiv edition retains its typography and page dimensions
+but intentionally compacts only title-page spacing. Its linked green ORCID
+icons use `orcidlink`, as in the authors' other manuscripts. This is distinct
+from the publisher's `\orcidAuthor` macro, which also adds ORCID footnotes.
+
 ## Identity sources
 
 - Markus Baumann: [QAR-Lab team](https://qarlab.de/en/our-team/) and
   [his existing paper's author block](https://arxiv.org/html/2607.01187v1)
-  establish the affiliation and correspondence email.
+  establish the affiliation and correspondence email. ORCID
+  [0009-0007-3575-1006](https://orcid.org/0009-0007-3575-1006) is verified in
+  his existing operating-band, VQML-symmetry, and IQP-generative-modeling
+  manuscript author blocks and the operating-band `CITATION.cff`.
+  `authors.json` records repository-relative source paths, line numbers,
+  source hashes and the matching author definitions.
 - Jonas Stein: the [official LMU profile](https://www.ifi.lmu.de/mvs/en/team/contact-page/jonas-stein-ef892b38.html)
   gives jonas.stein@ifi.lmu.de and links to ORCID
   [0000-0001-5727-9151](https://orcid.org/0000-0001-5727-9151).
@@ -31,15 +42,13 @@ September 2026. No repository visibility change or public upload was made.
   gives linnhoff@ifi.lmu.de; an [official LMU publication record](https://epub.ub.uni-muenchen.de/128888/)
   identifies ORCID [0000-0001-6284-9286](https://orcid.org/0000-0001-6284-9286).
 
-Markus's ORCID has not yet been supplied or unambiguously verified. It is left
-empty in `authors.json` and omitted from the PDF instead of assigning an
-identifier belonging to a namesake. Verified ORCIDs are clickable `iD` markers
-beside author names; author names themselves link to official profiles.
+All three ORCID check digits are validated. Each author has a clickable green
+ORCID icon beside their name; author names themselves link to official profiles.
 
 ## Rebuild
 
 From the repository root, with Python/pypdf, a complete TeX Live installation,
-`latexmk`, BibTeX and Poppler available:
+`latexmk`, BibTeX, `orcidlink` (with TikZ/hyperref), and Poppler available:
 
 ```bash
 python paper/arxiv/build_arxiv.py

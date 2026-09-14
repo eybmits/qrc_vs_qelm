@@ -52,7 +52,7 @@ def test_author_order_profile_links_affiliation_and_correspondence(source, metad
     for author in metadata["authors"]:
         assert rf'\href{{{author["profile_url"]}}}{{{author["name"]}}}' in block
         if author["orcid"]:
-            assert f'https://orcid.org/{author["orcid"]}' in block
+            assert rf'\orcidlink{{{author["orcid"]}}}' in block
     for key in ("laboratory_url", "institution_url"):
         assert rf'\href{{{metadata["affiliation"][key]}}}' in block
     corresponding = [author for author in metadata["authors"] if author["corresponding"]]
@@ -66,14 +66,23 @@ def test_missing_markus_orcid_is_allowed_without_assigning_one(source, metadata)
     metadata["authors"][0]["orcid"] = None
     authored = builder.authored_main(source, metadata)
     expected = [author["orcid"] for author in metadata["authors"] if author["orcid"]]
-    assert re.findall(r"https://orcid\.org/([^}]+)", authored) == expected
+    assert re.findall(r"\\orcidlink\{([^}]+)\}", authored) == expected
     assert metadata["authors"][0]["orcid"] is None
     assert "orcid.org/None" not in authored
 
 
-@pytest.mark.parametrize("identifier", ["0000-0001-5727-9151", "0000-0001-6284-9286"])
+@pytest.mark.parametrize("identifier", ["0009-0007-3575-1006", "0000-0001-5727-9151", "0000-0001-6284-9286"])
 def test_verified_author_orcids_pass_the_checksum(identifier):
     assert builder.valid_orcid(identifier)
+
+
+def test_all_three_verified_author_ids_use_linked_orcid_icons(source, metadata):
+    expected = ["0009-0007-3575-1006", "0000-0001-5727-9151", "0000-0001-6284-9286"]
+    assert [author["orcid"] for author in metadata["authors"]] == expected
+    authored = builder.authored_main(source, metadata)
+    assert r"\usepackage{etoolbox,orcidlink}" in authored
+    assert re.findall(r"\\orcidlink\{([^}]+)\}", authored) == expected
+    assert r"\scriptsize iD" not in authored
 
 
 @pytest.mark.parametrize("identifier", [

@@ -20,9 +20,42 @@
       "email": "markus.baumann@campus.lmu.de",
       "corresponding": true,
       "profile_url": "https://qarlab.de/en/our-team/",
-      "orcid": null,
-      "orcid_status": "Awaiting author identifier; same-name records were not assigned",
-      "sources": ["https://qarlab.de/en/our-team/", "https://arxiv.org/html/2607.01187v1"]
+      "orcid": "0009-0007-3575-1006",
+      "orcid_status": "Verified in multiple existing author manuscripts and matching CITATION.cff; checksum validated",
+      "sources": [
+        "https://qarlab.de/en/our-team/",
+        "https://arxiv.org/html/2607.01187v1"
+      ],
+      "local_manuscript_evidence": [
+        {
+          "repository": "qrc-operating-band",
+          "path": "paper/qrc_phase_diagram.tex",
+          "line": 81,
+          "sha256": "da84285d77986233f42f875a9d8f44f2f6caa607fd18e0eedcd5681a572979b9",
+          "author_record": "Markus Baumann\\IEEEauthorrefmark{1}\\orcid{0009-0007-3575-1006}\\thanks{Corresponding author: \\QRCemail{markus.baumann@campus.lmu.de}.},"
+        },
+        {
+          "repository": "qrc-operating-band",
+          "path": "CITATION.cff",
+          "line": 8,
+          "sha256": "4f4e3fc9e8fe3c127c4b852786ec1dc89336be0f8573e42277d66381035dcee7",
+          "author_record": "    orcid: \"https://orcid.org/0009-0007-3575-1006\""
+        },
+        {
+          "repository": "vqml-symmetry",
+          "path": "paper/main.tex",
+          "line": 60,
+          "sha256": "1e0955c2d78114ba3f58e8611d14bc49e97f111bb5bcb08fc7309c2d88fe8235",
+          "author_record": "Markus Baumann\\IEEEauthorrefmark{1}\\orcidlink{0009-0007-3575-1006}\\thanks{Corresponding author: \\href{mailto:markus.baumann@campus.lmu.de}{markus.baumann@campus.lmu.de}.},"
+        },
+        {
+          "repository": "iqp-generative-modeling",
+          "path": "paper/main.tex",
+          "line": 144,
+          "sha256": "6e0583955ca646f7990a0de5bba6f7f7496ec84e7a03b9fdb7c415220c0ae3a3",
+          "author_record": "Markus Baumann\\IEEEauthorrefmark{1}\\orcidlink{0009-0007-3575-1006}\\thanks{Corresponding author: \\href{mailto:markus.baumann@campus.lmu.de}{markus.baumann@campus.lmu.de}.}, Daniel Hein\\IEEEauthorrefmark{2}\\orcidlink{0000-0002-8375-1592},"
+        }
+      ]
     },
     {
       "given_names": "Jonas",
@@ -33,7 +66,9 @@
       "profile_url": "https://www.ifi.lmu.de/mvs/en/team/contact-page/jonas-stein-ef892b38.html",
       "orcid": "0000-0001-5727-9151",
       "orcid_status": "Verified from official LMU profile",
-      "sources": ["https://www.ifi.lmu.de/mvs/en/team/contact-page/jonas-stein-ef892b38.html"]
+      "sources": [
+        "https://www.ifi.lmu.de/mvs/en/team/contact-page/jonas-stein-ef892b38.html"
+      ]
     },
     {
       "given_names": "Claudia",
@@ -44,7 +79,11 @@
       "profile_url": "https://www.ifi.lmu.de/mvs/en/team/contact-page/claudia-linnhoff-popien-5eb3fc37.html",
       "orcid": "0000-0001-6284-9286",
       "orcid_status": "Verified from official LMU publication records",
-      "sources": ["https://www.ifi.lmu.de/mvs/en/team/contact-page/claudia-linnhoff-popien-5eb3fc37.html", "https://epub.ub.uni-muenchen.de/128888/", "https://epub.ub.uni-muenchen.de/121953/"]
+      "sources": [
+        "https://www.ifi.lmu.de/mvs/en/team/contact-page/claudia-linnhoff-popien-5eb3fc37.html",
+        "https://epub.ub.uni-muenchen.de/128888/",
+        "https://epub.ub.uni-muenchen.de/121953/"
+      ]
     }
   ]
 }

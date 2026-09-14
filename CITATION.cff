@@ -14,6 +14,7 @@ authors:
   - family-names: Baumann
     given-names: Markus
     affiliation: "Ludwig-Maximilians-Universität München"
+    orcid: "https://orcid.org/0009-0007-3575-1006"
 version: "0.1.0"
 date-released: "2026-07-05"
 license: MIT
@@ -25,6 +26,7 @@ preferred-citation:
     - family-names: Baumann
       given-names: Markus
       affiliation: "QAR-Lab, Department of Computer Science, LMU Munich"
+      orcid: "https://orcid.org/0009-0007-3575-1006"
     - family-names: Stein
       given-names: Jonas
       affiliation: "QAR-Lab, Department of Computer Science, LMU Munich"

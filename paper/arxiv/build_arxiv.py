@@ -54,7 +54,7 @@ def authored_main(source: str, metadata: dict) -> str:
         if author["orcid"]:
             if not valid_orcid(author["orcid"]):
                 raise ValueError(f'Invalid ORCID for {author["name"]}')
-            name += rf'\textsuperscript{{\href{{https://orcid.org/{author["orcid"]}}}{{\scriptsize iD}}}}'
+            name += rf'\,\orcidlink{{{author["orcid"]}}}'
         names.append(name)
     affiliation = metadata["affiliation"]
     corresponding = next(a for a in authors if a["corresponding"])
@@ -78,7 +78,7 @@ def authored_main(source: str, metadata: dict) -> str:
             "% mathematical operator in this mathematical manuscript.",
         r"\graphicspath{{figures/}}": "\n".join([
             "% Compact preprint title spacing; body font, margins and content are unchanged.",
-            r"\usepackage{etoolbox}",
+            r"\usepackage{etoolbox,orcidlink}",
             r"\makeatletter",
             r"\patchcmd{\maketitle}{\vskip 0.51in}{\vskip 0.12in}{}{\errmessage{Unexpected title layout}}",
             r"\renewcommand{\title}[1]{\gdef\@title{#1\\[6pt]}}",
@@ -198,7 +198,7 @@ def main() -> None:
                "authors_sha256": digest(metadata_path.read_bytes()), "pages": qa["pages"],
                "parent_source_sha256": {n: digest(b) for n, b in original.items()},
                "administrative_changes": {
-                   "main.tex": "Author header with compact title spacing, profile/ORCID links, and PDF author/subject metadata",
+                   "main.tex": "Author header with compact title spacing, linked green ORCID icons, profile links, and PDF author/subject metadata",
                    method: "Anonymity-only code note replaced with a link and accurate restricted-access status"},
                "source_package_files": {n: digest(b) for n, b in inputs.items()},
                "files": {n: digest(b) for n, b in delivered.items()} | {

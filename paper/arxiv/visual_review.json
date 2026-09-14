@@ -1,6 +1,6 @@
 {
   "schema": "arxiv_visual_review_v1",
-  "pdf_sha256": "c9cf7febb842eb54b4b853d843ade135e997559e540bd0f223384d53b0a238f7",
+  "pdf_sha256": "a7e5bf1f59734123426106ba1d998485fa196cd10a298c62eaf1e2e039adc489",
   "reviewed_pages": [
     1,
     2,
@@ -23,7 +23,9 @@
     "all_pages_reviewed": true,
     "no_overlapping_text_or_clipped_content": true,
     "figures_and_captions_clear": true,
-    "last_page_no_orphan_overflow": true
+    "last_page_no_orphan_overflow": true,
+    "all_three_green_orcid_icons_legible": true,
+    "unchanged_pages_pixel_identical": true
   },
-  "review_note": "Pages 1\u20136 independently inspected; root reviewed 1 and 7\u201312. Compact preprint title spacing retains both editions at twelve pages."
+  "review_note": "Page 1 re-inspected after replacing plain iD labels with linked green ORCID icons for all three verified author IDs. Rendered pages 2\u201312 are byte-identical to the previously reviewed renders. All twelve pages retain clear figures, captions and text, with no clipping or overlap."
 }
