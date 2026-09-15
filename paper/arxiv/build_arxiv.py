@@ -77,11 +77,12 @@ def authored_main(source: str, metadata: dict) -> str:
         "% mathematical operator in this anonymous mathematical manuscript.":
             "% mathematical operator in this mathematical manuscript.",
         r"\graphicspath{{figures/}}": "\n".join([
-            "% Compact preprint title spacing; body font, margins and content are unchanged.",
+            "% Preprint title spacing; preserve publisher font sizes and allow clear author separation.",
             r"\usepackage{etoolbox,orcidlink}",
             r"\makeatletter",
             r"\patchcmd{\maketitle}{\vskip 0.51in}{\vskip 0.12in}{}{\errmessage{Unexpected title layout}}",
-            r"\renewcommand{\title}[1]{\gdef\@title{#1\\[6pt]}}",
+            r"\patchcmd{\maketitle}{\vskip -0.07in}{\vskip 0pt}{}{\errmessage{Unexpected title-author layout}}",
+            r"\renewcommand{\title}[1]{\gdef\@title{#1\\[12pt]}}",
             r"\renewcommand{\email}[1]{{\fontsize{9}{11}\selectfont\textit{#1}}\par}",
             r"\makeatother",
             r"\graphicspath{{figures/}}",

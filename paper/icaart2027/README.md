@@ -8,6 +8,14 @@ feature-density and finite-shot studies without pooling their cohorts.
 There is one paper, including its proofs and numerical methods, not a separate
 supplement.
 
+## Current introduction and conclusions (14 September 2026)
+
+The author's replacement Introduction and Discussion and Conclusions are
+typeset in full, with the supplied literature references mapped to existing
+BibTeX entries. Figure 1 and its caption are retained after the opening
+paragraph. Both the anonymous and authored editions remain twelve pages;
+no appendix or Time-Series Demonstrations text was removed.
+
 ## Current abstract (14 September 2026)
 
 The 164-word abstract foregrounds observable memory and the irreducible error

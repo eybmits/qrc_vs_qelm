@@ -21,11 +21,12 @@
  pdfauthor={Markus Baumann; Jonas Stein; Claudia Linnhoff-Popien},pdfsubject={Author-identified research preprint},
  pdfkeywords={Quantum Reservoir Computing, Quantum Extreme Learning Machines, Temporal Learning}
 }
-% Compact preprint title spacing; body font, margins and content are unchanged.
+% Preprint title spacing; preserve publisher font sizes and allow clear author separation.
 \usepackage{etoolbox,orcidlink}
 \makeatletter
 \patchcmd{\maketitle}{\vskip 0.51in}{\vskip 0.12in}{}{\errmessage{Unexpected title layout}}
-\renewcommand{\title}[1]{\gdef\@title{#1\\[6pt]}}
+\patchcmd{\maketitle}{\vskip -0.07in}{\vskip 0pt}{}{\errmessage{Unexpected title-author layout}}
+\renewcommand{\title}[1]{\gdef\@title{#1\\[12pt]}}
 \renewcommand{\email}[1]{{\fontsize{9}{11}\selectfont\textit{#1}}\par}
 \makeatother
 \graphicspath{{figures/}}

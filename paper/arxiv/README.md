@@ -11,19 +11,26 @@ markus.baumann@campus.lmu.de, consistent with the existing manuscript metadata.
 | arXiv preprint, with authors | `preprint.pdf` (12 pages) | `arxiv_source.zip` |
 | Anonymous ICAART copy | `../icaart2027/submission.pdf` (12 pages) | `../icaart2027/ICAART2027_anonymous_source.zip` |
 
-Both editions have twelve pages. The authored title block uses more compact
-vertical spacing; body fonts and page margins match the anonymous edition.
-The anonymous layout is unchanged. No research content, figures, equations,
-references, or author-approved AI disclosure is rewritten. In the identified
+Both editions have twelve pages. The authored title block uses explicit
+12 pt spacing after the title and neutralizes the inherited negative
+title-author skip, increasing their baseline separation from 13.89 to 24.91
+PDF points. Publisher font sizes are unchanged: title 14.4 pt, authors 11 pt,
+affiliation/email 9 pt. Body fonts and page margins match the anonymous edition.
+The authored build preserves the anonymous scientific content and the
+author-approved AI disclosure. In the identified
 edition, the anonymity-only code note becomes a repository link labeled as
 currently access-restricted. The repository is private as verified on 14
 September 2026. No repository visibility change or public upload was made.
 
 The anonymous edition uses the official ICAART-linked SCITEPRESS template
 files unchanged. The arXiv edition retains its typography and page dimensions
-but intentionally compacts only title-page spacing. Its linked green ORCID
+but adjusts title-page spacing for the author block. Its linked green ORCID
 icons use `orcidlink`, as in the authors' other manuscripts. This is distinct
 from the publisher's `\orcidAuthor` macro, which also adds ORCID footnotes.
+
+The latest Introduction and Discussion and Conclusions are the author's
+supplied replacement text in both editions. All appendix material, including
+Time-Series Demonstrations, remains intact within the twelve-page budget.
 
 ## Identity sources
 

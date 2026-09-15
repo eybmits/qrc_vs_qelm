@@ -285,7 +285,7 @@ def test_empirical_residual_is_not_claimed_as_pure_feature_approximation() -> No
         if directory.name == "icaart2027":
             # The revised framing retains the practical resource distinctions
             # without prescribing a particular editorial sentence.
-            for resource in ("required history", "representation", "training", "measurements"):
+            for resource in ("history", "representation", "learning", "measurements"):
                 assert resource in sections["conclusion"].lower()
             assert re.search(
                 r"representability, not efficient (?:learning|training) or resource savings",
@@ -434,7 +434,7 @@ def test_conclusion_keeps_a_plain_story_and_scoped_claims() -> None:
         body = re.sub(r"\\section\{[^{}]+\}|\\label\{[^{}]+\}", "", body).strip()
         paragraphs = [re.sub(r"\s+", " ", paragraph).strip()
                       for paragraph in re.split(r"\n\s*\n", body) if paragraph.strip()]
-        assert len(paragraphs) == (4 if directory == PAPER_ROOT else 3)
+        assert len(paragraphs) == 4
         assert r"\textbf" not in body and r"\bfseries" not in body
         assert r"\paragraph" not in body and r"\subsection" not in body
         compact = re.sub(r"\s+", " ", body)
@@ -443,27 +443,30 @@ def test_conclusion_keeps_a_plain_story_and_scoped_claims() -> None:
             assert "neither efficient learning nor resource savings" in compact
             assert "no quantum advantage" in compact
         else:
-            # Active edition: guard the two-sided information criterion and
-            # task scope, rather than the former practitioner-first wording.
-            for qualifier in ("chosen outputs", "Under our assumptions", "precisely when",
-                              "growing windows", "sufficient QELM capacity",
-                              "exact expectations", "vanishes uniformly",
-                              "one protected two-qubit QRC", "independent of window length",
-                              "stateless fixed-window", "error floor", "unbounded delays"):
+            # Guard the information criterion in the revised plain-language
+            # conclusion; numerical task limits remain beside those results.
+            for qualifier in ("QRC outputs", "Under our assumptions", "precisely when",
+                              "as their windows grow", "sufficiently expressive",
+                              "exact expectations", "fades uniformly"):
                 assert qualifier in paragraphs[0]
-            for limit in ("not quantum from classical computation",
-                          "NARMA10", "tested windows",
-                          "does not demonstrate the existential task separation",
-                          "Emulation alone does not establish task utility",
-                          "Classical controls and longer windows",
+            for limit in ("two-qubit construction", "arbitrarily long delays",
+                          "Every fixed-window predictor", "positive worst-case error floor",
+                          "neither additional features nor a longer finite window can remove",
+                          "rather than between quantum and classical computation",
                           "representability, not efficient learning or resource savings"):
                 assert limit in paragraphs[1]
+            evaluation = re.sub(r"\s+", " ", (directory / "sections" / "evaluation.tex")
+                                .read_text(encoding="utf-8"))
+            for limit in ("not laser forecasting", "Synthetic NARMA10 prediction",
+                          "changing features and readouts prevent causal isolation",
+                          "neither quantum necessity nor failure of every finite window follows"):
+                assert limit in evaluation
             assert "Quadratic delay models outperform" not in compact
-            for resource in ("required history", "representation", "training", "measurements",
-                             "Missing history requires longer context or retained state"):
+            for resource in ("missing history", "insufficient features", "finite measurements",
+                             "Missing information requires longer context or retained state"):
                 assert resource in paragraphs[2]
             assert "$" not in body
-            assert len(compact.split()) <= 220
+            assert len(compact.split()) <= 250
         assert "uniformly" in compact
         assert not re.search(r"Section\s*~?\s*\d", body)
 
@@ -642,7 +645,7 @@ def test_icaart_exact_benchmarks_keep_global_derivation_and_construction_scope()
     assert "$0.084753$ at 256 copies" in benchmark
     assert "Analytical benchmarks and simulations examine three distinct limitations" in sections["abstract"]
     assert "positive worst-case error floor, regardless of its model capacity" in sections["abstract"]
-    assert "Analytical and numerical experiments" in sections["introduction"]
+    assert "Analytical benchmarks and simulations" in sections["introduction"]
 
     # The analytical interval and factorial moment establish sharpness;
     # testing a handful of windows alone does not certify a supremum.
@@ -757,14 +760,18 @@ def test_icaart_abstract_and_short_captions_keep_plain_explanations_and_scope() 
                     "under stated assumptions", "classical"):
         assert omitted not in abstract
     introduction = re.sub(r"\s+", " ", (directory / "introduction.tex").read_text(encoding="utf-8"))
-    assert "observable memory?" in introduction
-    assert "Emulation targets chosen observable outputs" in introduction
-    assert "forecasting is evaluated separately" in introduction
-    assert "sensor event" in introduction and "Identical windows" in introduction
-    assert r"Section~\ref{sec:criterion}'s assumptions" in introduction
-    assert "growing windows and sufficient QELM capacity" in introduction
-    assert "emulation with exact expectations" in introduction
-    assert "without establishing quantum advantage" in introduction
+    for condition in ("sensor event", "identical recent inputs", "different outputs",
+                      "Under our stated assumptions", "sufficiently expressive QELMs",
+                      "exact expectations", "growing windows", "vanishes uniformly",
+                      "For scalar outputs", "half the largest output difference"):
+        assert condition in introduction
+    # Scope is explicit in the sections defining outputs and reporting tasks,
+    # without requiring the introduction to repeat those qualifications.
+    models = re.sub(r"\s+", " ", (directory / "models.tex").read_text(encoding="utf-8"))
+    assert "emulation simulations use observable expectations directly" in models
+    assert "forecasting tests fit both readouts to external task targets" in models
+    evaluation = re.sub(r"\s+", " ", (directory / "evaluation.tex").read_text(encoding="utf-8"))
+    assert "practical emulation limits, not quantum advantage" in evaluation
     # The task implication uses exact QRC means and a stateless comparison over
     # unbounded delays; it does not apply when the window covers the horizon.
     dynamics = re.sub(r"\s+", " ", (directory / "dynamics.tex").read_text(encoding="utf-8"))
@@ -987,11 +994,14 @@ def test_accessible_structure_introduces_models_before_limits_and_results() -> N
     )
     conference_models = (conference_sections / "models.tex").read_text(encoding="utf-8")
     assert "fig01_information_interface.pdf" not in conference_models
-    assert conference_introduction.index(
-        r"\label{sec:introduction}"
-    ) < conference_introduction.index(
+    # Declare the overview immediately after the opening model distinction,
+    # before the motivation and related-work paragraphs, to retain its early float.
+    opening, after_overview = conference_introduction.split(r"\end{figure*}", 1)
+    assert opening.count(r"\begin{figure*}") == 1
+    assert opening.index("which reset for each prediction") < opening.index(
         "fig01_information_interface.pdf"
-    ) < conference_introduction.index("A QELM resets for each prediction")
+    )
+    assert after_overview.lstrip().startswith("This distinction matters")
     assert r"Figure~\ref{fig:information-interface}" in conference_models
     evaluation = sections["evaluation"]
     assert evaluation.index("Each independent realization block") < evaluation.index(

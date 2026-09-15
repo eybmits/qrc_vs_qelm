@@ -16,6 +16,12 @@ an upload. The author-approved AI disclosure is preserved in both editions.
 
 ## Current abstract update (14 September 2026)
 
+The author-supplied Introduction and Discussion and Conclusions are now
+included in full, with the original Figure 1 and caption preserved. Both
+editions remain twelve pages without appendix cuts. The arXiv title-author
+gap is enlarged at unchanged publisher font sizes; this spacing change is
+confined to the authored edition.
+
 The revised abstract contains 164 words (limit: 200). It emphasizes persistent
 observable memory and the fixed-window QELM error floor. The scalar formula,
 explicit assumption phrase, qubit count and quantum/classical contrast are

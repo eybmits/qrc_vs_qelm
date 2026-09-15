@@ -1,6 +1,6 @@
 {
   "schema": "arxiv_visual_review_v1",
-  "pdf_sha256": "bb5819ae857930fdff4775cd50490fcdfe1f3240070c67e406312a257aa5c391",
+  "pdf_sha256": "86ecad2926bb71355bf002863763a70418dd8ee6d9c1128b1b84b3d47abbc26c",
   "reviewed_pages": [
     1,
     2,
@@ -25,7 +25,12 @@
     "figures_and_captions_clear": true,
     "last_page_no_orphan_overflow": true,
     "all_three_green_orcid_icons_legible": true,
-    "unchanged_pages_pixel_identical": true
+    "title_author_spacing_clear": true,
+    "shared_body_pages_pixel_identical": true
   },
-  "review_note": "All twelve pages rendered. Updated pages 7\u201311 are pixel-identical to the visually inspected anonymous pages: Figure 3 legends fully inside axes, shorter figure, clean subsequent text reflow. The other seven pages are pixel-identical to the previously reviewed arXiv edition. Twelve-page layout and author header are preserved."
+  "review_note": "Both authored page 1 and final page 12 inspected. Pages 2\u201311 are pixel-identical to the fully reviewed anonymous edition. The title-author baseline gap increases from 13.89 to 24.91 PDF points with unchanged 14.4/11/9 pt publisher title/author/affiliation sizes. The supplied Introduction and Discussion and Conclusions fit with the entire appendix in twelve pages.",
+  "title_author_baseline_separation_pdf_points": {
+    "before": 13.888,
+    "after": 24.906
+  }
 }

@@ -1,9 +1,14 @@
 \section{INTRODUCTION}
 \label{sec:introduction}
 
-When can a finite window replace a quantum reservoir computer's (QRC's)
-observable memory? We separate missing history from limitations of the
-quantum extreme learning machine (QELM) used to emulate it.
+A finite input window can replace a quantum reservoir's memory only when
+the influence of the missing past becomes negligible as the window grows.
+Otherwise, additional model capacity cannot compensate for unavailable
+history. We study this distinction between quantum reservoir computers
+(QRCs), which carry a quantum state between inputs, and reset-window
+quantum extreme learning machines (QELMs), which reset for each prediction
+and transform recent inputs into quantum features
+\cite{fujii2017harnessing,innocenti2023potential}.
 
 \begin{figure*}[t]
  \centering
@@ -19,30 +24,42 @@ influence has vanished by then, so the curves stay identical. Below, its influen
  \label{fig:information-interface}
 \end{figure*}
 
-A QELM resets for each prediction and transforms its window into quantum
-features for a trainable readout \cite{innocenti2023potential}. A QRC
-carries state between inputs \cite{fujii2017harnessing}
-(Figure~\ref{fig:information-interface}).
-Emulation targets chosen observable outputs; forecasting is evaluated separately.
+This distinction matters when deciding whether poor emulation calls for
+more history or a more expressive model. Consider a brief sensor event
+that continues to affect a reservoir's output after leaving the input
+window. Two histories with identical recent inputs can then require
+different outputs, although the reset-window model must treat them
+identically. The limitation lies in the information available to the
+model, not its ability to process it.
 
-A brief sensor event may leave a persistent output signal after leaving
-the input window. Identical windows can then require different outputs;
-more features cannot recover the missing event. Reproducing its retained
-signal is itself a memory task that distinguishes carried state from
-finite context.
+Existing research provides the foundations for this comparison.
+Fading-memory theory and quantum reservoir studies investigate when the
+influence of the past decays \cite{boyd1985fading,martinezpena2023finite}.
+Window-based methods supply recent history explicitly, while quantum
+approximation results address which functions feature models can
+represent \cite{goto2021universal,kawanabe2026tdqelm}. We connect these
+questions by separating the history needed to reproduce a reservoir's
+outputs from the model capacity needed to use it.
 
-\input{sections/related-work}
+We characterize the smallest emulation error permitted by a finite window
+and show that sufficiently expressive QELMs can approach it. For scalar
+outputs, this error is exactly half the largest output difference between
+histories sharing the same window. Under our stated assumptions and with
+exact expectations, growing windows permit arbitrarily accurate emulation
+precisely when the missing past's output influence vanishes uniformly.
+Building on input--output stability theory \cite{petreczky2026stability},
+we relate the rate of this observable forgetting to the required window
+length.
 
-Under Section~\ref{sec:criterion}'s assumptions, growing windows and
-sufficient QELM capacity permit arbitrarily accurate emulation with exact
-expectations precisely when older inputs lose their output influence
-uniformly. We quantify the missing-history error and relate the required
-window to its decay rate \cite{petreczky2026stability}. Conversely, one
-fixed two-qubit QRC with protected observable memory imposes a positive
-lower bound on emulation error independent of window length. Its recall
-task separates carried memory from every fixed finite window over
-unbounded delays.
+Conversely, we construct a two-qubit QRC in which an old input remains
+observable over arbitrarily long delays. Every fixed-window predictor
+then faces a positive worst-case error floor, regardless of its capacity.
+This separates carried memory from finite context, rather than quantum
+from classical computation.
 
-Analytical and numerical experiments test these limits. NARMA10 separately
-examines useful older inputs, without establishing quantum advantage or
-the separation for every finite window.
+Analytical benchmarks and simulations examine three distinct limitations:
+missing history, insufficient features, and finite measurements. The
+practical implication is to establish how much history is needed before
+increasing feature or measurement budgets: better representations can make
+better use of available information, but missing history requires longer
+context or retained state.

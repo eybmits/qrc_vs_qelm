@@ -1,7 +1,7 @@
 {
   "schema": "icaart2027_submission_qa_v2",
   "pdf": "submission.pdf",
-  "pdf_sha256": "cd98efe7f133209f2ec49a8d8573894a35bed7302e3b0c3a93d2fcd41907f5fe",
+  "pdf_sha256": "a74665d6824a4c410ece2681922be701e728045ada79644072f41ff3c59a0eb4",
   "extraction_backend": "pypdf + Poppler",
   "passed": false,
   "format_passed": true,
@@ -72,7 +72,7 @@
     },
     "character_budget": {
       "passed": true,
-      "characters": 42497,
+      "characters": 42643,
       "minimum": 10000,
       "maximum": 50000,
       "definition": "Unicode, whitespace excluded"
@@ -114,7 +114,7 @@
           "unicode": true
         },
         {
-          "name": "VPCBLT+NimbusRomNo9L-Regu",
+          "name": "SOILPB+NimbusRomNo9L-Regu",
           "embedded": true,
           "subset": true,
           "unicode": true
