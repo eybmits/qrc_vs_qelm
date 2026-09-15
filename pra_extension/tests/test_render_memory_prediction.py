@@ -111,7 +111,7 @@ def test_three_panel_geometry_and_legend_clearance():
             label = ax.xaxis.label.get_window_extent(draw)
             title = p["section_headings"][heading].get_window_extent(draw)
             assert label.y0 - title.y1 >= draw.points_to_pixels(6)
-        # Legends cross their own top frame instead of floating below the axes.
+        # Every lower legend stays fully inside its own axes with a small inset.
         for ax, key, heading in zip(lower_row,
                 ("model_legend", "exact_legend", "narma_legend"),
                 ("Slow loss", "exact", "history")):
@@ -119,8 +119,8 @@ def test_three_panel_geometry_and_legend_clearance():
             box = legend.get_window_extent(draw)
             assert legend.axes is ax and legend.get_frame_on()
             assert legend.get_frame().get_alpha() == 1.
-            assert ax.bbox.y0 < box.y0 < ax.bbox.y1 < box.y1
-            assert abs(box.x1 - ax.bbox.x1) < .01
+            assert ax.bbox.y0 < box.y0 < box.y1 < ax.bbox.y1
+            assert ax.bbox.x0 < box.x0 < box.x1 < ax.bbox.x1
             assert box.y1 < p["section_headings"][heading].get_window_extent(draw).y0
             assert not box.overlaps(ax.xaxis.label.get_window_extent(draw))
         # Test line segments, not only vertices: the old in-axes labels crossed
@@ -154,6 +154,13 @@ def test_three_panel_geometry_and_legend_clearance():
                 path = line.get_path().transformed(line.get_transform())
                 assert not path.intersects_bbox(box.padded(draw.points_to_pixels(1)), filled=False)
         history = p["narma"]["history"]
+        assert history.get_ylim() == (.4, 1.05)
+        assert [t.get_text() for t in p["narma_legend"].texts] == [
+            "QRC: last d", "QRC: full", "QELM: last 4"]
+        legend_box = p["narma_legend"].get_window_extent(draw)
+        for band in history.collections:
+            for path in band.get_paths():
+                assert not path.transformed(band.get_transform()).intersects_bbox(legend_box, filled=True)
         guide_label = history.texts[0].get_window_extent(draw)
         assert not guide_label.overlaps(p["narma_legend"].get_window_extent(draw))
         for line in history.lines[:2]:

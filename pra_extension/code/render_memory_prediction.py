@@ -35,12 +35,12 @@ EARLIER_INPUT_COLOR = "#C43B3B"
 MEMORY_COLORS = {4.: roles.QRC, .2: colors.VIOLET}
 NARMA_TARGET_ALPHA = 1.
 NARMA_DISPLAY_STEPS = 48
-SIZE = (6.221, 4.47)
+SIZE = (6.221, 4.17)
 COL_LEFT = {"a": .47, "b": 2.53, "c": 4.59}
 PLOT_WIDTH = 1.51
-UPPER_TOP, UPPER_BOTTOM = 4.09, 2.30
+UPPER_TOP, UPPER_BOTTOM = 3.79, 2.00
 LOWER_TOP, LOWER_BOTTOM = 1.35, .57
-PANEL_TITLE_Y, SECTION_TITLE_Y = 4.29, 1.75
+PANEL_TITLE_Y, SECTION_TITLE_Y = 3.99, 1.45
 NARMA_TRACE_HEIGHT = .78
 
 
@@ -88,13 +88,12 @@ def _axis(fig, left, bottom, width, height, name):
     return ax
 
 
-def _attached_legend(ax, handles, labels, *, ncol=1, anchor_y=1.40):
-    """Attach the legend to the top-right frame, with room above the data."""
-    legend = ax.legend(handles, labels, loc="upper right",
-        bbox_to_anchor=(1., anchor_y), frameon=True, fancybox=True,
+def _inset_legend(ax, handles, labels, *, ncol=1, loc="upper right"):
+    """Keep a compact legend entirely within a clear part of the data axes."""
+    legend = ax.legend(handles, labels, loc=loc, frameon=True, fancybox=True,
         facecolor="white", edgecolor=roles.TARGET, framealpha=1., fontsize=7.5,
-        handlelength=1.2, handletextpad=.4, labelspacing=.15, borderpad=.35,
-        borderaxespad=0, ncol=ncol, columnspacing=.8)
+        handlelength=.7, handletextpad=.3, labelspacing=0, borderpad=.2,
+        borderaxespad=.3, ncol=ncol, columnspacing=.8)
     legend.get_frame().set_linewidth(.6)
     return legend
 
@@ -136,7 +135,7 @@ def make_figure(emulation, task, dense):
     panels["laser"][0].tick_params(axis="x", bottom=False)
     section_headings = {}
     for ax, label, title_y in zip(panels["laser"][1:],
-        ("Fast loss", "Slow loss"), (3.16, SECTION_TITLE_Y), strict=True):
+        ("Fast loss", "Slow loss"), (2.86, SECTION_TITLE_Y), strict=True):
         for line, color in zip(ax.lines, (roles.QRC, roles.QELM), strict=True):
             line.set_color(color)
         old_label, error_label = ax.texts
@@ -149,8 +148,8 @@ def make_figure(emulation, task, dense):
         error_label.set_position(((COL_LEFT["a"] + PLOT_WIDTH) / SIZE[0], title_y / SIZE[1]))
         error_label.set_verticalalignment("baseline")
     handles, labels = panels["laser"][1].get_legend_handles_labels()
-    model_legend = _attached_legend(panels["laser"][-1], handles, labels,
-                                    ncol=2, anchor_y=1.08)
+    model_legend = _inset_legend(panels["laser"][-1], handles, labels,
+                                ncol=2, loc="upper left")
 
     # b: The memory control follows the measured-input emulation in a.
     _position(panels["memory"], COL_LEFT["b"], UPPER_BOTTOM, PLOT_WIDTH, NARMA_TRACE_HEIGHT)
@@ -188,7 +187,7 @@ def make_figure(emulation, task, dense):
     panels["exact"].set_ylabel("Worst-case\nabsolute error", labelpad=3)
     panels["exact"].get_legend().remove()
     exact_handles, _ = panels["exact"].get_legend_handles_labels()
-    exact_legend = _attached_legend(panels["exact"], exact_handles,
+    exact_legend = _inset_legend(panels["exact"], exact_handles,
         ["Constructed QELM", "Unavoidable\nwindow error"])
     section_headings["exact"] = fig.text(COL_LEFT["b"] / SIZE[0], SECTION_TITLE_Y / SIZE[1],
         "Analytical benchmark", fontsize=7.5)
@@ -244,8 +243,8 @@ def make_figure(emulation, task, dense):
     # The independent quadratic comparison remains in prose and all source rows.
     history.set_xlim(.5, 20.5)
     history.set_xticks([1, 5, 10, 15, 20])
-    history.set_ylim(.40, .90)
-    history.set_yticks([.4, .6, .8])
+    history.set_ylim(.40, 1.05)
+    history.set_yticks([.4, .6, .8, 1.])
     history.axvline(10, color=colors.MUTED, lw=.6, ls=(0, (2, 3)), zorder=0)
     history.text(10.7, .45, "10 inputs", fontsize=7.5, color=roles.TARGET, va="center")
     history.yaxis.set_major_formatter(FuncFormatter(lambda v, _: f"{100*v:g}%"))
@@ -256,8 +255,8 @@ def make_figure(emulation, task, dense):
         Line2D([], [], color=FULL_HISTORY_COLOR, lw=.95, ls=(0, (4, 3)), label="QRC: full history"),
         Line2D([], [], color=roles.QELM, marker="o", mfc="white", ms=3.5, lw=0,
             label="QELM: last 4 inputs")]
-    narma_legend = _attached_legend(history, narma_handles,
-        [handle.get_label() for handle in narma_handles])
+    narma_legend = _inset_legend(history, narma_handles,
+        ["QRC: last d", "QRC: full", "QELM: last 4"])
     for ax in fig.axes:
         ax.tick_params(length=2.3, width=.6, pad=2)
     panels.update(narma=narma, narma_legend=narma_legend, exact_legend=exact_legend,
@@ -289,7 +288,7 @@ def render(output=OUTPUT):
                    "upper_group_top_bottom_inches": [UPPER_TOP, UPPER_BOTTOM],
                    "lower_row_top_bottom_inches": [LOWER_TOP, LOWER_BOTTOM],
                    "panel_title_y_inches": PANEL_TITLE_Y, "section_title_y_inches": SECTION_TITLE_Y,
-                   "legend_placement": "White framed boxes attached to the top-right edge of each lower plot; boxes extend above the axes to keep curves clear.",
+                   "legend_placement": "Compact white framed legends entirely inside lower data axes: upper left for laser traces, upper right for analytical and history curves. History labels abbreviate last d inputs, full history and last 4 inputs.",
                    "label_placement": "NARMA model names and target legend above data axes; laser condition titles outside axes; ten-input guide label below the history curve."},
         "sources": {str(p.relative_to(ROOT)): digest(p) for p in sources},
         "parents": {"emulation": str(EMULATION.relative_to(ROOT)), "task": str(TASK.relative_to(ROOT)),
@@ -307,7 +306,7 @@ def render(output=OUTPUT):
                             "shared_input_continuation": roles.INPUT},
         "replay_display": "Labels describe accessible history: QRC last d inputs, QRC full history, QELM last 4 inputs. Recent inputs include the current input. The restricted QRC is reset for every prediction; only the last d inputs are processed anew, with a separately refitted readout for each d. One computed point for every integer d=1..48; the linear display focuses on d=1..20, retaining all 24 original fresh roots at every d. Straight connections, no smoothing or interpolated observations. Full-history QRC median is a red dashed empirical reference, not a floor. QELM only has a four-input estimate here.",
         "narma_history_display": {"first_window": 1, "last_window": 20,
-                                  "y_limits": [.40, .90], "guide_window": 10,
+                                  "y_limits": [.40, 1.05], "guide_window": 10,
                                   "guide_interpretation": "At d=10 the quantized input at t-9 first enters the window for predicting y_(t+1). This exposes the lag used by NARMA10's explicit input interaction; it is not a claim of complete history or an isolated causal effect."},
         "omitted_from_display": "Quadratic curves omitted at author request; all 4/12-input results retained below and in manuscript prose.",
         "emulation": emulation, "narma_trace": task["traces"]["narma"],

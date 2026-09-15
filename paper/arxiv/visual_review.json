@@ -1,6 +1,6 @@
 {
   "schema": "arxiv_visual_review_v1",
-  "pdf_sha256": "bac21eb7bcf9b289067ba2fa57b9414e2a9d94c3290e417f78779867a5baa02a",
+  "pdf_sha256": "bb5819ae857930fdff4775cd50490fcdfe1f3240070c67e406312a257aa5c391",
   "reviewed_pages": [
     1,
     2,
@@ -27,5 +27,5 @@
     "all_three_green_orcid_icons_legible": true,
     "unchanged_pages_pixel_identical": true
   },
-  "review_note": "Figure 3 on page 7 visually inspected after attaching framed legends to the lower axes. Curves, markers, bands and annotations remain clear. All other eleven rendered pages are byte-identical to the previously reviewed QAR-link edition; twelve-page layout and author header are preserved."
+  "review_note": "All twelve pages rendered. Updated pages 7\u201311 are pixel-identical to the visually inspected anonymous pages: Figure 3 legends fully inside axes, shorter figure, clean subsequent text reflow. The other seven pages are pixel-identical to the previously reviewed arXiv edition. Twelve-page layout and author header are preserved."
 }

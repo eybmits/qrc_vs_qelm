@@ -1,7 +1,7 @@
 {
   "artifacts": {
-    "fig04_memory_prediction.pdf": "fe726b03bd805f537ebc2a9e6ea38c8869bc2e839837c25cb05ce2dd071751c6",
-    "fig04_memory_prediction.png": "2cdec826ca3454d9e5d7a2f63e1d77aa224dd3a7de7695881edbb34549edad80"
+    "fig04_memory_prediction.pdf": "ea49c2ee1a4dbb8b38ae06a2f17369b1471f97a3f049ebe09736ebb2fa6f917c",
+    "fig04_memory_prediction.png": "cb08ac82382d03dd9297d14604521a04e4413d12769f3029d08e04082ee4001d"
   },
   "emulation": {
     "artifacts": {
@@ -29551,7 +29551,7 @@
   },
   "figure_size_inches": [
     6.221,
-    4.47
+    4.17
   ],
   "independent_verification": {
     "all_primary_directions_replicated": true,
@@ -29640,18 +29640,18 @@
       "c": 4.59
     },
     "label_placement": "NARMA model names and target legend above data axes; laser condition titles outside axes; ten-input guide label below the history curve.",
-    "legend_placement": "White framed boxes attached to the top-right edge of each lower plot; boxes extend above the axes to keep curves clear.",
+    "legend_placement": "Compact white framed legends entirely inside lower data axes: upper left for laser traces, upper right for analytical and history curves. History labels abbreviate last d inputs, full history and last 4 inputs.",
     "lower_row_top_bottom_inches": [
       1.35,
       0.57
     ],
-    "panel_title_y_inches": 4.29,
+    "panel_title_y_inches": 3.99,
     "plot_height_inches": 0.78,
     "plot_width_inches": 1.51,
-    "section_title_y_inches": 1.75,
+    "section_title_y_inches": 1.45,
     "upper_group_top_bottom_inches": [
-      4.09,
-      2.3
+      3.79,
+      2.0
     ]
   },
   "narma_aggregates": [
@@ -56531,7 +56531,7 @@
     "last_window": 20,
     "y_limits": [
       0.4,
-      0.9
+      1.05
     ]
   },
   "narma_trace": {
@@ -57219,7 +57219,7 @@
     "pra_extension/code/narma_dense_replay.py": "3325f974aec52f50d4697c957f7803ffaad31728838289452b550b8e856acebf",
     "pra_extension/code/paper_palette.py": "b2335cbc68555f04fcc0874f6e25eccb23b88e7ee0ebe39fa9b0966cf7312cf9",
     "pra_extension/code/render_figure3_candidate.py": "872d840c9c065a763ebe0950bc603e7c9966a97085b04e83d1f4dc257f817920",
-    "pra_extension/code/render_memory_prediction.py": "d0b9fcb9949a0a52f72741872ec19da43e04455ede5852380ff96750a67a0104",
+    "pra_extension/code/render_memory_prediction.py": "94db670b0d986130e583570e4aad33be33e3c6958442801e83c8168ed4bd028c",
     "pra_extension/code/render_narma_additional.py": "7afdf6f36ed31f98edc8c7859e35224a36b16feab980fee4c405147da5e274c6",
     "pra_extension/code/render_task_memory.py": "9b70ef16d79be5425cffc91eb6c705c93e66231139ec826f3b3d3e1df1d7d917",
     "pra_extension/code/verify_narma_dense_replay.py": "be6466f25d35fdb61ea65fb322fc9d8788c2072aaaf6b5a2f2e77eb56f192577"

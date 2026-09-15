@@ -21,16 +21,19 @@ equations, figures, font sizes and margins unchanged by this abstract update.
 
 ## Current: full-width Figure 3 with consistent plot heights (14 September 2026)
 
-Figure 3 uses the full text width with a 6.221 by 4.47 inch native canvas.
+Figure 3 uses the full text width with a 6.221 by 4.17 inch native canvas.
 All nine plot frames are 1.51 inches wide and 0.78 inches high. The bottom
 three plots match the upper plots, reducing their height from 1.00 inch in
 the preceding full-width draft. Row edges and axis labels align. Compact white
-legend boxes overlap the top-right frame of each bottom plot, extending above
-the axes to leave the curves visible. The ten-input label sits below the dip.
+legend boxes now sit entirely inside each bottom plot. Removing their former
+external space shortens the canvas by 0.30 inch without shrinking any plot.
+The ten-input label sits below the dip. History labels abbreviate last d inputs,
+full history and last 4 inputs; the y-axis reaches 100% with 5% extra headroom
+to keep the legend clear of the uncertainty band (limits 40--105%).
 Model names, the Target legend and laser test-error labels stay outside the
 curves. The memory legend is horizontal and the window annotation uses one line.
 NARMA Target traces remain black at full opacity (alpha 1).
-The source data, colors, limits and excerpts are unchanged. A shorter caption
+The source data, colors, other limits and excerpts are unchanged. A shorter caption
 retains all scientific qualifications; equivalent formula layouts and paragraph
 joins recover space without changing the publisher's fonts or margins.
 

@@ -1,6 +1,6 @@
 {
   "artifact_count": 372,
-  "artifact_set_sha256": "1c54283c818de8dae8a8ce0c17c8233b5aaec069bb328a94190c6ad03a634d82",
+  "artifact_set_sha256": "ea2df57e5dac5d3a13c903d77d98f6bfa86d4663e77c5e5d5826bf8348fc4362",
   "artifacts": {
     "CANONICAL_EMULATION_LITERATURE_POSITIONING.md": {
       "role": "post_confirmatory_literature_positioning",
@@ -584,18 +584,18 @@
     },
     "paper/figures/memory_prediction/fig04_memory_prediction.pdf": {
       "role": "active_three_panel_memory_prediction_figure_pdf",
-      "sha256": "fe726b03bd805f537ebc2a9e6ea38c8869bc2e839837c25cb05ce2dd071751c6",
-      "size_bytes": 45138
+      "sha256": "ea49c2ee1a4dbb8b38ae06a2f17369b1471f97a3f049ebe09736ebb2fa6f917c",
+      "size_bytes": 45155
     },
     "paper/figures/memory_prediction/fig04_memory_prediction.png": {
       "role": "active_three_panel_memory_prediction_figure_preview",
-      "sha256": "2cdec826ca3454d9e5d7a2f63e1d77aa224dd3a7de7695881edbb34549edad80",
-      "size_bytes": 431180
+      "sha256": "cb08ac82382d03dd9297d14604521a04e4413d12769f3029d08e04082ee4001d",
+      "size_bytes": 426195
     },
     "paper/figures/memory_prediction/fig04_memory_prediction_source.json": {
       "role": "three_panel_separate_cohort_rows_and_provenance",
-      "sha256": "7f1fe5c8ead4a912a198ac0e674f4b0a567af57da1dd431d1bc1bf67ff622e51",
-      "size_bytes": 1629520
+      "sha256": "bbfb76b1948640831b5243114f543de7674bd149fc1be0fce5d19115ad384774",
+      "size_bytes": 1629612
     },
     "paper/figures/narma_additional/narma_additional.pdf": {
       "role": "optional_narma_additional_figure_pdf_not_active",
@@ -704,8 +704,8 @@
     },
     "paper/icaart2027/submission.pdf": {
       "role": "compiled_paper_pdf",
-      "sha256": "bcdd602c6d0dfd59fa9888179c1242bd5e57fd6dd5dba634e6a53b975cfde49a",
-      "size_bytes": 370255
+      "sha256": "cd98efe7f133209f2ec49a8d8573894a35bed7302e3b0c3a93d2fcd41907f5fe",
+      "size_bytes": 370257
     },
     "pra_extension/FEATURE_BRIDGE_PROTOCOL.md": {
       "role": "exploratory_paired_feature_protocol",
@@ -954,8 +954,8 @@
     },
     "pra_extension/code/render_memory_prediction.py": {
       "role": "extension_code",
-      "sha256": "d0b9fcb9949a0a52f72741872ec19da43e04455ede5852380ff96750a67a0104",
-      "size_bytes": 19479
+      "sha256": "94db670b0d986130e583570e4aad33be33e3c6958442801e83c8168ed4bd028c",
+      "size_bytes": 19512
     },
     "pra_extension/code/render_memory_prediction_full_width.py": {
       "role": "extension_code",
@@ -1574,8 +1574,8 @@
     },
     "pra_extension/tests/test_render_memory_prediction.py": {
       "role": "extension_test",
-      "sha256": "b00cc609aaeec51579e48f12348ff987f906187d92ef83e4310e0fb7be4d9fdb",
-      "size_bytes": 10909
+      "sha256": "9d8e750ce02e3282533a359c421d3796ce3012b82f24e081d8ff62f2f1f81819",
+      "size_bytes": 11346
     },
     "pra_extension/tests/test_render_narma_additional.py": {
       "role": "extension_test",
@@ -1899,7 +1899,7 @@
     "pra_extension": "EXPLORATORY_POST_CONFIRMATORY"
   },
   "figures_directory": "pra_extension/figures_pra_final_v6",
-  "manifest_identity_sha256": "826c4fd476904a59725f2bb93f67303950f2d0135fbdf9c7a661dee26a6ae1a7",
+  "manifest_identity_sha256": "acef24d77a43f745428e6b58a56aa17e4e027edf81d51e52ef72a6035c8e812e",
   "paper_pdf": "paper/icaart2027/submission.pdf",
   "prospective_followups": {
     "long_context_n5": {
@@ -2310,12 +2310,12 @@
     },
     {
       "analysis": "paper/figures/memory_prediction/fig04_memory_prediction_source.json",
-      "sha256": "fe726b03bd805f537ebc2a9e6ea38c8869bc2e839837c25cb05ce2dd071751c6",
+      "sha256": "ea49c2ee1a4dbb8b38ae06a2f17369b1471f97a3f049ebe09736ebb2fa6f917c",
       "source": "paper/figures/memory_prediction/fig04_memory_prediction.pdf"
     },
     {
       "analysis": "paper/figures/memory_prediction/fig04_memory_prediction_source.json",
-      "sha256": "2cdec826ca3454d9e5d7a2f63e1d77aa224dd3a7de7695881edbb34549edad80",
+      "sha256": "cb08ac82382d03dd9297d14604521a04e4413d12769f3029d08e04082ee4001d",
       "source": "paper/figures/memory_prediction/fig04_memory_prediction.png"
     },
     {
@@ -2325,7 +2325,7 @@
     },
     {
       "analysis": "paper/figures/memory_prediction/fig04_memory_prediction_source.json",
-      "sha256": "d0b9fcb9949a0a52f72741872ec19da43e04455ede5852380ff96750a67a0104",
+      "sha256": "94db670b0d986130e583570e4aad33be33e3c6958442801e83c8168ed4bd028c",
       "source": "pra_extension/code/render_memory_prediction.py"
     },
     {

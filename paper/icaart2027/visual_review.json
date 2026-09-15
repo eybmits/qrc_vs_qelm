@@ -1,16 +1,16 @@
 {
-  "pdf_sha256": "bcdd602c6d0dfd59fa9888179c1242bd5e57fd6dd5dba634e6a53b975cfde49a",
+  "pdf_sha256": "cd98efe7f133209f2ec49a8d8573894a35bed7302e3b0c3a93d2fcd41907f5fe",
   "pages_reviewed": 12,
-  "rendering": "All twelve pages rendered with Poppler at maximum dimension 1400 pixels. Page 7 inspected after the legend revision; the other eleven rendered pages are byte-identical to the previously reviewed edition.",
+  "rendering": "All twelve pages rendered with Poppler at maximum dimension 1400 pixels. Editing agent inspected page 7; independent reviewer inspected reflowed pages 8\u201311. Pages 1\u20136 and 12 are pixel-identical to the previously reviewed edition.",
   "status": "Twelve pages including references and appendices. No visible overlap, clipping or missing glyphs.",
   "latex_overfull_boxes": 0,
   "undefined_references_or_citations": 0,
   "observations": [
-    "Figure 3 spans the full text width on the unchanged 6.221 by 4.47 inch canvas. All nine plot frames remain 1.51 by 0.78 inches; lower axes and labels remain aligned.",
-    "The lower three legends are compact white framed boxes attached to the top-right axes edges. Their protruding portions use the space above each plot; no detached footer legends remain.",
-    "Legend boxes do not intersect any data-line segments. Marker and band clearance was visually checked. The ten-input annotation sits below the history-curve dip, clear of the legend.",
-    "Fonts remain at least 7.5 points. Data, markers, semantic colors, line styles, displayed samples, axis limits and scientific source arrays are preserved.",
-    "Figure 3 caption, body text, mathematical content, author information, publisher template and all other figures are unchanged. Both source packages rebuild to their corresponding PDF."
+    "Figure 3 remains full width. Canvas reduced from 6.221 by 4.47 to 6.221 by 4.17 inches by removing external legend space. Every plot remains 1.51 by 0.78 inches, with aligned rows and axis labels.",
+    "All three lower legends are entirely inside their own axes: upper-left for slow-loss traces and upper-right for the analytical and history plots. Fonts remain at least 7.5 points; no data-line, marker or band overlap is visible.",
+    "History labels abbreviate last d inputs, full history and last 4 inputs. Its y-limits are 40\u2013105%, with ticks 40/60/80/100%, to provide space above the uncertainty band. The ten-input annotation remains below the dip.",
+    "All scientific data and source arrays, other axis limits, semantic colors, marker styles, excerpts and captions remain unchanged.",
+    "The shorter figure reflows subsequent text through page 11. Headings, equations and references remain legible without clipping or overlap; page 12 is unchanged."
   ],
-  "scope": "Visual and layout review of attached legends in Figure 3. No changes to scientific data, claims or manuscript text."
+  "scope": "Visual and layout review after moving lower Figure 3 legends inside the axes and reducing overall figure height. Scientific manuscript text is unchanged."
 }

@@ -3,15 +3,15 @@
     "main.tex": "Author header with compact title spacing, linked green ORCID icons, profile links, and PDF author/subject metadata",
     "sections/methodology.tex": "Anonymity-only code note replaced with a link and accurate restricted-access status"
   },
-  "anonymous_source_sha256": "33d1dccce2f39b10401f9cff36d7360a10a15e7bb308024ced46d3f1ade23bd2",
+  "anonymous_source_sha256": "d127c3397e8c2fe9600bf2ee75a1066f30c7f9bec0b9d010ee98c2003db7a48f",
   "authors_sha256": "b4b180bf12d4c4e74fcdca4ce97aaad492d7a7dee7ffccb5aa26d69300fcf93d",
   "files": {
-    "arxiv_qa.json": "3a833efae15aafe3b77475a480ef897f2f84412e45937fe956348818f970a753",
-    "arxiv_source.zip": "c9af1964c01519e64e78f37b7c38e107bcf1e3b82f5daab7302786ee45fe4c48",
+    "arxiv_qa.json": "00e334f8d696144bb7aa34ff479a88cbb1d0793a4a12d002df178ac7e87c2baa",
+    "arxiv_source.zip": "15f871c311fb97213c0115afb34acc871d99c3ebf967af6d9231f8536b4fbbf7",
     "authors.json": "b4b180bf12d4c4e74fcdca4ce97aaad492d7a7dee7ffccb5aa26d69300fcf93d",
     "build_arxiv.py": "93613af938df4b68f3109b89cf1178c3d82e9b87eae14cac20d49ab0a443e4e6",
     "main.tex": "663f8fdeea812582a73a9197d53b3af2c29876f57246093219c973973ccf9b4a",
-    "preprint.pdf": "bac21eb7bcf9b289067ba2fa57b9414e2a9d94c3290e417f78779867a5baa02a"
+    "preprint.pdf": "bb5819ae857930fdff4775cd50490fcdfe1f3240070c67e406312a257aa5c391"
   },
   "pages": 12,
   "parent_source_sha256": {
@@ -21,7 +21,7 @@
     "article.cls": "23e48b9a27539b6589503b6b5c5ff1451b58edfb245a0fa4c5847bb94392d32c",
     "figures/fig01_information_interface.pdf": "4fdc68f33af34d0baa9d7db738cdcf49dd080d63adb3beee5c5f6615661e19bb",
     "figures/fig03_resource_diagnosis.pdf": "2166c7bd450acaa73bc484ce9cdc80720206a67cbc3248687c5882de3a87cfc2",
-    "figures/fig04_memory_prediction.pdf": "c94592b0cbf38e7e51e61268fbc808facc4c1974926a748edfabd27531838233",
+    "figures/fig04_memory_prediction.pdf": "b4f4a164ea9b50d2dd1c02faea33244d38b8b18b66031719f1e0b7d7a1345e65",
     "main.tex": "2a2cb2282c1fa5faaa62fa139f4f325e1874a2da5c58b21e8e31fd0ef081b265",
     "references.bib": "90bea3e966a66a9ffa712ebd2ed9fa2f0dd738e600e4af18db0e754a8e02c3ff",
     "sections/abstract.tex": "d6d16f76cdadfc7e6577be13ccc1dc41ce18b9e71d0aa0626005379d299b0ef1",
@@ -44,7 +44,7 @@
     "article.cls": "23e48b9a27539b6589503b6b5c5ff1451b58edfb245a0fa4c5847bb94392d32c",
     "figures/fig01_information_interface.pdf": "4fdc68f33af34d0baa9d7db738cdcf49dd080d63adb3beee5c5f6615661e19bb",
     "figures/fig03_resource_diagnosis.pdf": "2166c7bd450acaa73bc484ce9cdc80720206a67cbc3248687c5882de3a87cfc2",
-    "figures/fig04_memory_prediction.pdf": "c94592b0cbf38e7e51e61268fbc808facc4c1974926a748edfabd27531838233",
+    "figures/fig04_memory_prediction.pdf": "b4f4a164ea9b50d2dd1c02faea33244d38b8b18b66031719f1e0b7d7a1345e65",
     "main.bbl": "80eab96b3154e52fcf6cbad9786b7bd94854737437bf378f1efb009b9d1fa4fa",
     "main.tex": "663f8fdeea812582a73a9197d53b3af2c29876f57246093219c973973ccf9b4a",
     "references.bib": "90bea3e966a66a9ffa712ebd2ed9fa2f0dd738e600e4af18db0e754a8e02c3ff",
