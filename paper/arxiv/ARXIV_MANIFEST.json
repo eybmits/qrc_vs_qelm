@@ -3,15 +3,15 @@
     "main.tex": "Author header with compact title spacing, linked green ORCID icons, profile links, and PDF author/subject metadata",
     "sections/methodology.tex": "Anonymity-only code note replaced with a link and accurate restricted-access status"
   },
-  "anonymous_source_sha256": "c06d01afe11dbf52f69c80b57c04b40ded3f5c64a392d8b8c0e4286516f333f6",
+  "anonymous_source_sha256": "305ac609b783368e12734a1a24189da2219cf649be2e172393db08b31900bfce",
   "authors_sha256": "b4b180bf12d4c4e74fcdca4ce97aaad492d7a7dee7ffccb5aa26d69300fcf93d",
   "files": {
-    "arxiv_qa.json": "997807f4177c3e3f8d1546bbb5cfdc88cc113d6f4b145d2f95b0ec3b5384fa9a",
-    "arxiv_source.zip": "32b12fb1787d0dc6e8e431a4b7cc864acf839747415046e492ef602d96c7693e",
+    "arxiv_qa.json": "a854435df7c1b67bf34fc4b328d4110f7186392c7182769739831a1d2d36726a",
+    "arxiv_source.zip": "4088c5fe26f1d706e767a9c5cdd913f3347e60ee6f4018e7a9dc980e07e85488",
     "authors.json": "b4b180bf12d4c4e74fcdca4ce97aaad492d7a7dee7ffccb5aa26d69300fcf93d",
     "build_arxiv.py": "68cc529d849ad38edb769e2457d81969a5586c7fb015466911e2ff5007120c60",
     "main.tex": "0903e09085d2f2bdc31200c30da6d08c4b28c4c64aff6a7c42edef2dea0da2d8",
-    "preprint.pdf": "86ecad2926bb71355bf002863763a70418dd8ee6d9c1128b1b84b3d47abbc26c"
+    "preprint.pdf": "aa7ad8d81a6b253393a27311546c08f65079171874d265ac418a08f211eaad30"
   },
   "pages": 12,
   "parent_source_sha256": {
@@ -20,8 +20,8 @@
     "apalike.sty": "183bdccc3608e9db948dbd1cdffec3e2a476650dad223c7a3294325371fc0339",
     "article.cls": "23e48b9a27539b6589503b6b5c5ff1451b58edfb245a0fa4c5847bb94392d32c",
     "figures/fig01_information_interface.pdf": "4fdc68f33af34d0baa9d7db738cdcf49dd080d63adb3beee5c5f6615661e19bb",
-    "figures/fig03_resource_diagnosis.pdf": "2166c7bd450acaa73bc484ce9cdc80720206a67cbc3248687c5882de3a87cfc2",
-    "figures/fig04_memory_prediction.pdf": "b4f4a164ea9b50d2dd1c02faea33244d38b8b18b66031719f1e0b7d7a1345e65",
+    "figures/fig03_resource_diagnosis.pdf": "294d4984255e21b11db9239d10b3b003439723efb5017bfc4ec220016d036041",
+    "figures/fig04_memory_prediction.pdf": "79cde96a641c147a3e2875822e0bc66d5fe8765a612cf9bcb55b0a1b14e5ed63",
     "main.tex": "2a2cb2282c1fa5faaa62fa139f4f325e1874a2da5c58b21e8e31fd0ef081b265",
     "references.bib": "90bea3e966a66a9ffa712ebd2ed9fa2f0dd738e600e4af18db0e754a8e02c3ff",
     "sections/abstract.tex": "d6d16f76cdadfc7e6577be13ccc1dc41ce18b9e71d0aa0626005379d299b0ef1",
@@ -31,7 +31,7 @@
     "sections/dynamics.tex": "283e73eb565144e19eaef49a978fc67a176a0baa5fed16a30f6315b5c0387dd2",
     "sections/evaluation.tex": "d5155092eb396f72c484954d2715ffb5a615843b3506154650c7f4025d663ce6",
     "sections/introduction.tex": "9ded9f8ad3d12cb66eab974c4264137758bb7b38165ff35df95dea41982a8a68",
-    "sections/methodology.tex": "b5f381c7a4f7df5d3013ca3f793a310f44dd59b4b60518caf9987e706b2982da",
+    "sections/methodology.tex": "60399652244704afd4819ee035f4eb1651f23d0363b7d8ae0011d7446a5d1ad0",
     "sections/models.tex": "731fad3683b2c25a26ca620fa7400a1cbd73077b372d0395e73094fe4fd07f65",
     "sections/related-work.tex": "4f3ee9cc629b34483b6c8215b6b5e1e8091c5163aaae1d683b65eb29b231d27d"
   },
@@ -43,8 +43,8 @@
     "apalike.sty": "183bdccc3608e9db948dbd1cdffec3e2a476650dad223c7a3294325371fc0339",
     "article.cls": "23e48b9a27539b6589503b6b5c5ff1451b58edfb245a0fa4c5847bb94392d32c",
     "figures/fig01_information_interface.pdf": "4fdc68f33af34d0baa9d7db738cdcf49dd080d63adb3beee5c5f6615661e19bb",
-    "figures/fig03_resource_diagnosis.pdf": "2166c7bd450acaa73bc484ce9cdc80720206a67cbc3248687c5882de3a87cfc2",
-    "figures/fig04_memory_prediction.pdf": "b4f4a164ea9b50d2dd1c02faea33244d38b8b18b66031719f1e0b7d7a1345e65",
+    "figures/fig03_resource_diagnosis.pdf": "294d4984255e21b11db9239d10b3b003439723efb5017bfc4ec220016d036041",
+    "figures/fig04_memory_prediction.pdf": "79cde96a641c147a3e2875822e0bc66d5fe8765a612cf9bcb55b0a1b14e5ed63",
     "main.bbl": "03373f4154d7978294ade50ad449aea9d74927dfb65bd8138ba6971fee85e225",
     "main.tex": "0903e09085d2f2bdc31200c30da6d08c4b28c4c64aff6a7c42edef2dea0da2d8",
     "references.bib": "90bea3e966a66a9ffa712ebd2ed9fa2f0dd738e600e4af18db0e754a8e02c3ff",
@@ -55,7 +55,7 @@
     "sections/dynamics.tex": "283e73eb565144e19eaef49a978fc67a176a0baa5fed16a30f6315b5c0387dd2",
     "sections/evaluation.tex": "d5155092eb396f72c484954d2715ffb5a615843b3506154650c7f4025d663ce6",
     "sections/introduction.tex": "9ded9f8ad3d12cb66eab974c4264137758bb7b38165ff35df95dea41982a8a68",
-    "sections/methodology.tex": "60a0b8205bc0641228529c03971cf9cbcd6fd9e732637adb58200b45743ebe01",
+    "sections/methodology.tex": "fa31f1b3ef5d62708ab88f1e87970f5f490e36cedc055e2fae4ec4f8b289a64d",
     "sections/models.tex": "731fad3683b2c25a26ca620fa7400a1cbd73077b372d0395e73094fe4fd07f65",
     "sections/related-work.tex": "4f3ee9cc629b34483b6c8215b6b5e1e8091c5163aaae1d683b65eb29b231d27d"
   }

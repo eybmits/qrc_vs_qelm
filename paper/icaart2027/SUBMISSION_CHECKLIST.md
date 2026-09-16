@@ -1,6 +1,6 @@
 # ICAART 2027 submission handoff
 
-Updated on 14 September 2026. This is an anonymous **editorial draft** in the
+Updated on 16 September 2026. This is an anonymous **editorial draft** in the
 Regular Paper format, not a submission-ready package or a final publication.
 
 ## Author editions (14 September 2026)
@@ -29,7 +29,17 @@ omitted from the abstract; the mathematical scope remains in the body.
 The verified PDF remains 12 pages, with body text, equations, figures and
 template settings intact.
 
-## Current layout update (14 September 2026)
+## Current layout update (16 September 2026)
+
+Figure 3(b) displays shared inputs 1--32, preserving all 48 source points.
+Laser and NARMA10 predictions use consistent solid 0.9-point lines and
+filled QRC dots / open QELM circles. Figures 2 and 3 have no descriptive
+plot titles; panel letters, legends, axes and explanatory annotations remain.
+The nine Figure 3 frames keep their dimensions and alignment in a shorter
+6.221-by-3.97-inch canvas. The methods describe the new 32-input display;
+captions and scientific results are unchanged.
+
+## Previous layout update (14 September 2026)
 
 Figure 3 spans the full text width on a 6.221 by 4.17 inch native canvas.
 All nine plot frames measure 1.51 by 0.78 inches; the bottom row now matches

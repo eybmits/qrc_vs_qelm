@@ -16,8 +16,9 @@
     "pra_extension/code/render_information_interface_figures.py": "950b4b1d4ec8ae55b2265e971fa0e0be4e081ad5b7cc97ac41ff0afe7606f1f9",
     "pra_extension/code/paper_palette.py": "b2335cbc68555f04fcc0874f6e25eccb23b88e7ee0ebe39fa9b0966cf7312cf9",
     "pra_extension/code/active_paper_palette.py": "3deaf4156cc9439ac207c0dcd45e5e44ef0ed120fc03f3fd32fc3cea6a54eded",
-    "paper/figure2_candidates/render_resource_atlas.py": "b1b396fc7d24f9fb7ee704baa9e8c548d2533848cad548391ce82cba0537207a"
+    "paper/figure2_candidates/render_resource_atlas.py": "bd4729344aa93404d75f2c440a09124c6c78dc9dc4e58af3d0d4d2686a4dd5e0"
   },
+  "title_display": "Panel letters only; descriptive panel and matrix titles omitted. Axis labels, feature legend and QRC size labels retained. Choice-frequency rows use the former matrix-title space.",
   "history_criterion": "At least 10/12 roots <= 0.10 in EACH size, without pooling",
   "history_rate_axis": "Ordered categories of measured settings, not continuous. Display starts at rate 1; only integer rates are labeled at their categorical row positions.",
   "history_display_rates": [
@@ -381,8 +382,8 @@
     }
   ],
   "artifacts_sha256": {
-    "fig03_resource_diagnosis.pdf": "a6b6d115c842f4fd470fd17b91e4baff81ffeb5585aed603780b9cb2181a774e",
-    "fig03_resource_diagnosis.png": "3ac3ab9c928311baf5d020c0ecff6fd0d0cff5dc05fdcf3757a549ae35046fa7",
+    "fig03_resource_diagnosis.pdf": "b80943f407e4555646001ec19f33802beaee7b454dd79ce5f6fefede2f9401cf",
+    "fig03_resource_diagnosis.png": "f8d782537f6c8f71f92dd737bb1e25e16541b61545e190f507abbb7fa0aa86c9",
     "fig03_resource_diagnosis_features.csv": "4685fa4455b2eeb703f295b9c9878e6dfd90ca043a7f51610c16417ea5104385",
     "fig03_resource_diagnosis_history.csv": "fb40ca1f38dc05006190c1b67a1b195b153b5eb9c92f292633471c8cc178896f",
     "fig03_resource_diagnosis_shots.csv": "4a1cd8f1329f99b014240ad6b814946d6b4e3c0e4cc7bb824e4c06de6a5d4f27",

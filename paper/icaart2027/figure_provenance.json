@@ -6,14 +6,14 @@
       "source_sha256": "57c5b8fc0e62d26f4a59840afab02853d2100ecfba49c37fac9eb0f24e47eccf"
     },
     "fig03_resource_diagnosis.pdf": {
-      "anonymous_sha256": "2166c7bd450acaa73bc484ce9cdc80720206a67cbc3248687c5882de3a87cfc2",
+      "anonymous_sha256": "294d4984255e21b11db9239d10b3b003439723efb5017bfc4ec220016d036041",
       "page_content_streams_identical": true,
-      "source_sha256": "a6b6d115c842f4fd470fd17b91e4baff81ffeb5585aed603780b9cb2181a774e"
+      "source_sha256": "b80943f407e4555646001ec19f33802beaee7b454dd79ce5f6fefede2f9401cf"
     },
     "fig04_memory_prediction.pdf": {
-      "anonymous_sha256": "b4f4a164ea9b50d2dd1c02faea33244d38b8b18b66031719f1e0b7d7a1345e65",
+      "anonymous_sha256": "79cde96a641c147a3e2875822e0bc66d5fe8765a612cf9bcb55b0a1b14e5ed63",
       "page_content_streams_identical": true,
-      "source_sha256": "ea49c2ee1a4dbb8b38ae06a2f17369b1471f97a3f049ebe09736ebb2fa6f917c"
+      "source_sha256": "3eb45b8040b81a8301dc158d276ca9493d346b7f8e847a9afaba0068c9ed92c2"
     }
   }
 }

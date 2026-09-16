@@ -12,7 +12,7 @@ WIDTH = 1.51
 LEFT = {"a": .47, "b": 2.53, "c": 4.59}
 TOP_BOTTOM, MIDDLE_BOTTOM, LOWER_BOTTOM = 3.53, 2.52, .87
 UPPER_HEIGHT, LOWER_HEIGHT = .78, 1.00
-TITLE_Y, LOWER_TITLE_Y, FOOTER_Y = 4.51, 1.97, .42
+PANEL_LETTER_Y = 4.51
 OUTPUT = base.ROOT / "paper/figures/memory_prediction_full_width"
 STEM = "fig04_memory_prediction_full_width"
 
@@ -39,29 +39,10 @@ def make_figure(*sources):
         for column, ax in zip(LEFT, axes, strict=True):
             position(ax, column, bottom, height)
 
-    main_texts = fig.texts[:6]
-    for column, letter, title in zip(LEFT, main_texts[::2], main_texts[1::2], strict=True):
-        text_position(letter, LEFT[column], TITLE_Y, fig)
-        text_position(title, LEFT[column] + .15, TITLE_Y, fig)
-    for key, column, y in (("Fast loss", "a", 3.38),
-                            ("Slow loss", "a", LOWER_TITLE_Y),
-                            ("exact", "b", LOWER_TITLE_Y),
-                            ("history", "c", LOWER_TITLE_Y)):
-        text_position(p["section_headings"][key], LEFT[column], y, fig)
-    p["section_headings"]["history"].set_text("How much history is needed?")
-    for ax, y in zip(p["laser"][1:], (3.38, LOWER_TITLE_Y), strict=True):
-        text_position(ax.texts[0], LEFT["a"] + WIDTH, y, fig)
-
-    for model, bottom in (("qrc", TOP_BOTTOM), ("qelm", MIDDLE_BOTTOM)):
-        text_position(p["narma"][model].texts[0], LEFT["c"] + WIDTH,
-                      bottom + UPPER_HEIGHT + .025, fig)
-    p["narma_target_legend"].set_bbox_to_anchor(
-        (LEFT["c"] / SIZE[0], (TOP_BOTTOM + UPPER_HEIGHT + .025) / SIZE[1]),
-        transform=fig.transFigure)
-
-    for key, column in (("model_legend", "a"), ("exact_legend", "b"), ("narma_legend", "c")):
-        p[key].set_bbox_to_anchor((LEFT[column] / SIZE[0], FOOTER_Y / SIZE[1]),
-                                 transform=fig.transFigure)
+    for column, letter in zip(LEFT, fig.texts, strict=True):
+        text_position(letter, LEFT[column], PANEL_LETTER_Y, fig)
+    # Condition/error labels, NARMA trace legends and inset model legends use
+    # axes coordinates in the base figure, so follow the repositioned frames.
     memory = p["memory"]
     memory.get_legend().remove()
     p["memory_legend"] = memory.legend(loc="upper right", ncol=2,
@@ -97,8 +78,9 @@ def render():
         "upper_row_bottom_height_inches": [TOP_BOTTOM, UPPER_HEIGHT],
         "middle_row_bottom_height_inches": [MIDDLE_BOTTOM, UPPER_HEIGHT],
         "lower_row_bottom_height_inches": [LOWER_BOTTOM, LOWER_HEIGHT],
-        "panel_title_y_inches": TITLE_Y, "lower_title_y_inches": LOWER_TITLE_Y,
-        "footer_legend_top_inches": FOOTER_Y,
+        "panel_letter_y_inches": PANEL_LETTER_Y, "plot_titles": False,
+        "label_placement": parent["layout"]["label_placement"],
+        "legend_placement": parent["layout"]["legend_placement"],
         "purpose": "Full text width with physically taller plots in every row; local layout draft."}
     ledger["parents"]["prior_layout"] = str(parent_path.relative_to(base.ROOT))
     ledger["sources"].update({str(path.relative_to(base.ROOT)): base.digest(path)

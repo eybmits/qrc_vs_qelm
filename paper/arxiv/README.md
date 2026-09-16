@@ -31,6 +31,9 @@ from the publisher's `\orcidAuthor` macro, which also adds ORCID footnotes.
 The latest Introduction and Discussion and Conclusions are the author's
 supplied replacement text in both editions. All appendix material, including
 Time-Series Demonstrations, remains intact within the twelve-page budget.
+Both editions also share the 16 September figure refinement: no descriptive
+plot titles, a shared-input viewport of 1--32 in the memory-gap plot, and
+consistent, slightly thicker laser/NARMA trace lines and model markers.
 
 ## Identity sources
 

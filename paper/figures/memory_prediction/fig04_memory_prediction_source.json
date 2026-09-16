@@ -1,7 +1,7 @@
 {
   "artifacts": {
-    "fig04_memory_prediction.pdf": "ea49c2ee1a4dbb8b38ae06a2f17369b1471f97a3f049ebe09736ebb2fa6f917c",
-    "fig04_memory_prediction.png": "cb08ac82382d03dd9297d14604521a04e4413d12769f3029d08e04082ee4001d"
+    "fig04_memory_prediction.pdf": "3eb45b8040b81a8301dc158d276ca9493d346b7f8e847a9afaba0068c9ed92c2",
+    "fig04_memory_prediction.png": "fb4f065204630c067875ae9a731b2c88ec5eed4f1c9de4728408b9a74ab2c398"
   },
   "emulation": {
     "artifacts": {
@@ -29551,7 +29551,7 @@
   },
   "figure_size_inches": [
     6.221,
-    4.17
+    3.97
   ],
   "independent_verification": {
     "all_primary_directions_replicated": true,
@@ -29639,20 +29639,25 @@
       "b": 2.53,
       "c": 4.59
     },
-    "label_placement": "NARMA model names and target legend above data axes; laser condition titles outside axes; ten-input guide label below the history curve.",
+    "label_placement": "Panel letters without descriptive titles. NARMA target/model legends above their axes; laser condition and full-test error annotations inside axes; ten-input guide label below the history curve.",
     "legend_placement": "Compact white framed legends entirely inside lower data axes: upper left for laser traces, upper right for analytical and history curves. History labels abbreviate last d inputs, full history and last 4 inputs.",
     "lower_row_top_bottom_inches": [
       1.35,
       0.57
     ],
-    "panel_title_y_inches": 3.99,
+    "panel_letter_y_inches": 3.79,
     "plot_height_inches": 0.78,
+    "plot_titles": false,
     "plot_width_inches": 1.51,
-    "section_title_y_inches": 1.45,
     "upper_group_top_bottom_inches": [
-      3.79,
-      2.0
+      3.59,
+      1.8
     ]
+  },
+  "memory_gap_display": {
+    "first_input": 1,
+    "last_input": 32,
+    "source_inputs_retained": 48
   },
   "narma_aggregates": [
     {
@@ -57199,7 +57204,7 @@
   },
   "replay_display": "Labels describe accessible history: QRC last d inputs, QRC full history, QELM last 4 inputs. Recent inputs include the current input. The restricted QRC is reset for every prediction; only the last d inputs are processed anew, with a separately refitted readout for each d. One computed point for every integer d=1..48; the linear display focuses on d=1..20, retaining all 24 original fresh roots at every d. Straight connections, no smoothing or interpolated observations. Full-history QRC median is a red dashed empirical reference, not a floor. QELM only has a four-input estimate here.",
   "schema": "three_panel_memory_prediction_v1",
-  "scope": "Full source excerpts retained; NARMA display zooms into the first 48 samples. No smoothing/cohort pooling. Root bands are 10th-90th percentiles, not CI. Replay costs extra evolution. Analytic floor does not bound sampled laser or NARMA errors.",
+  "scope": "Full source excerpts retained; memory-gap display zooms into shared inputs 1--32 and NARMA into the first 48 samples. No smoothing/cohort pooling. Root bands are 10th-90th percentiles, not CI. Replay costs extra evolution. Analytic floor does not bound sampled laser or NARMA errors.",
   "semantic_colors": {
     "different_earlier_inputs": "#C43B3B",
     "external_target_and_input": "#20252B",
@@ -57219,9 +57224,15 @@
     "pra_extension/code/narma_dense_replay.py": "3325f974aec52f50d4697c957f7803ffaad31728838289452b550b8e856acebf",
     "pra_extension/code/paper_palette.py": "b2335cbc68555f04fcc0874f6e25eccb23b88e7ee0ebe39fa9b0966cf7312cf9",
     "pra_extension/code/render_figure3_candidate.py": "872d840c9c065a763ebe0950bc603e7c9966a97085b04e83d1f4dc257f817920",
-    "pra_extension/code/render_memory_prediction.py": "94db670b0d986130e583570e4aad33be33e3c6958442801e83c8168ed4bd028c",
+    "pra_extension/code/render_memory_prediction.py": "fd73847a9559124cb23ed22ba32c3b46511e61ea5ff689e22bd56754534cfd18",
     "pra_extension/code/render_narma_additional.py": "7afdf6f36ed31f98edc8c7859e35224a36b16feab980fee4c405147da5e274c6",
     "pra_extension/code/render_task_memory.py": "9b70ef16d79be5425cffc91eb6c705c93e66231139ec826f3b3d3e1df1d7d917",
     "pra_extension/code/verify_narma_dense_replay.py": "be6466f25d35fdb61ea65fb322fc9d8788c2072aaaf6b5a2f2e77eb56f192577"
+  },
+  "trace_style": {
+    "linewidth_points": 0.9,
+    "qelm": "solid line with 2.4-point open circles every third sample, 0.65-point edges",
+    "qrc": "solid line with filled dots at every sample",
+    "target": "solid opaque black line"
   }
 }

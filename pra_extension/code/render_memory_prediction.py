@@ -35,12 +35,14 @@ EARLIER_INPUT_COLOR = "#C43B3B"
 MEMORY_COLORS = {4.: roles.QRC, .2: colors.VIOLET}
 NARMA_TARGET_ALPHA = 1.
 NARMA_DISPLAY_STEPS = 48
-SIZE = (6.221, 4.17)
+MEMORY_DISPLAY_STEPS = 32
+TRACE_LINEWIDTH = .9
+SIZE = (6.221, 3.97)
 COL_LEFT = {"a": .47, "b": 2.53, "c": 4.59}
 PLOT_WIDTH = 1.51
-UPPER_TOP, UPPER_BOTTOM = 3.79, 2.00
+UPPER_TOP, UPPER_BOTTOM = 3.59, 1.80
 LOWER_TOP, LOWER_BOTTOM = 1.35, .57
-PANEL_TITLE_Y, SECTION_TITLE_Y = 3.99, 1.45
+PANEL_LETTER_Y = 3.79
 NARMA_TRACE_HEIGHT = .78
 
 
@@ -116,12 +118,9 @@ def make_figure(emulation, task, dense):
         text.remove()
     for legend in list(fig.legends):
         legend.remove()
-    for letter, title in (("a", "Laser-driven emulation"),
-                          ("b", "Memory and exact limit"),
-                          ("c", "NARMA10 prediction")):
+    for letter in ("a", "b", "c"):
         x = COL_LEFT[letter]
-        fig.text(x / SIZE[0], PANEL_TITLE_Y / SIZE[1], letter, fontsize=9, weight="bold")
-        fig.text((x + .15) / SIZE[0], PANEL_TITLE_Y / SIZE[1], title, fontsize=8)
+        fig.text(x / SIZE[0], PANEL_LETTER_Y / SIZE[1], letter, fontsize=9, weight="bold")
 
     # a: Keep every one of the original 128 excerpt samples.
     for ax, bottom, height in zip(panels["laser"],
@@ -132,28 +131,32 @@ def make_figure(emulation, task, dense):
         ax.set_ylabel(ax.get_ylabel(), labelpad=3)
     panels["laser"][-1].set_xlabel("Test step (excerpt)", labelpad=3)
     panels["laser"][0].lines[0].set_color(roles.INPUT)
+    panels["laser"][0].lines[0].set_linewidth(TRACE_LINEWIDTH)
     panels["laser"][0].tick_params(axis="x", bottom=False)
-    section_headings = {}
-    for ax, label, title_y in zip(panels["laser"][1:],
-        ("Fast loss", "Slow loss"), (2.86, SECTION_TITLE_Y), strict=True):
+    condition_labels = {}
+    for ax, label in zip(panels["laser"][1:], ("Fast loss", "Slow loss"), strict=True):
         for line, color in zip(ax.lines, (roles.QRC, roles.QELM), strict=True):
             line.set_color(color)
+            line.set_linewidth(TRACE_LINEWIDTH)
+            line.set_markeredgewidth(.65)
         old_label, error_label = ax.texts
         old_label.remove()
-        section_headings[label] = fig.text(COL_LEFT["a"] / SIZE[0], title_y / SIZE[1],
-            label, fontsize=7.5)
+        label_y, label_va = (.96, "top") if label == "Fast loss" else (.045, "bottom")
+        condition_labels[label] = ax.text(.025, label_y, label, fontsize=7.5,
+            va=label_va, transform=ax.transAxes)
         error_label.set_fontsize(7.5)
         error_label.set_text(error_label.get_text().replace("full test:", "test:"))
-        error_label.set_transform(fig.transFigure)
-        error_label.set_position(((COL_LEFT["a"] + PLOT_WIDTH) / SIZE[0], title_y / SIZE[1]))
-        error_label.set_verticalalignment("baseline")
+        error_label.set_transform(ax.transAxes)
+        error_label.set_position((.975, label_y))
+        error_label.set_verticalalignment(label_va)
     handles, labels = panels["laser"][1].get_legend_handles_labels()
     model_legend = _inset_legend(panels["laser"][-1], handles, labels,
                                 ncol=2, loc="upper left")
 
     # b: The memory control follows the measured-input emulation in a.
     _position(panels["memory"], COL_LEFT["b"], UPPER_BOTTOM, PLOT_WIDTH, NARMA_TRACE_HEIGHT)
-    panels["memory"].set_xticks([1, 16, 32, 48])
+    panels["memory"].set_xlim(.4, MEMORY_DISPLAY_STEPS + .6)
+    panels["memory"].set_xticks([1, 8, 16, 24, 32])
     panels["memory"].set_xlabel("Shared inputs received", labelpad=3)
     panels["memory"].set_ylabel("QRC output gap", labelpad=3)
     panels["memory"].texts[0].set_text("Same window from input 4")
@@ -189,40 +192,37 @@ def make_figure(emulation, task, dense):
     exact_handles, _ = panels["exact"].get_legend_handles_labels()
     exact_legend = _inset_legend(panels["exact"], exact_handles,
         ["Constructed QELM", "Unavoidable\nwindow error"])
-    section_headings["exact"] = fig.text(COL_LEFT["b"] / SIZE[0], SECTION_TITLE_Y / SIZE[1],
-        "Analytical benchmark", fontsize=7.5)
 
     # c: Zoom into the fixed excerpt's first 48 samples; retain all 96 source rows.
     trace = task["traces"]["narma"]
     values = np.asarray([trace[k] for k in ("target", "qrc", "qelm")])
     lo, hi = values.min(), values.max()
     narma = {}
+    trace_legends = {}
     for model, bottom in (("qrc", UPPER_TOP - NARMA_TRACE_HEIGHT), ("qelm", UPPER_BOTTOM)):
-        label_y = bottom + NARMA_TRACE_HEIGHT + .025
         ax = _axis(fig, COL_LEFT["c"], bottom, PLOT_WIDTH, NARMA_TRACE_HEIGHT, "narma_" + model)
         narma[model] = ax
         ax.plot(np.arange(96), trace["target"], color=roles.TARGET,
-            alpha=NARMA_TARGET_ALPHA, lw=.75, label="Target")
+            alpha=NARMA_TARGET_ALPHA, lw=TRACE_LINEWIDTH, label="Target")
         ax.plot(np.arange(96), trace[model], color=roles.QRC if model == "qrc" else roles.QELM,
-            lw=.7, ls="--" if model == "qrc" else "-", marker=None if model == "qrc" else "o",
-            ms=2.0, mfc="white", mew=.5, markevery=8, label=model.upper())
+            lw=TRACE_LINEWIDTH, ls="-", marker="." if model == "qrc" else "o",
+            ms=1.7 if model == "qrc" else 2.4,
+            mfc=roles.QRC if model == "qrc" else "white", mew=.65,
+            markevery=1 if model == "qrc" else 3, label=model.upper(),
+            zorder=3 if model == "qrc" else 4)
         ax.set_ylim(lo - .08 * (hi-lo), hi + .30 * (hi-lo))
         ax.set_yticks([.18, .21, .24])
         ax.set_xlim(0, NARMA_DISPLAY_STEPS - 1)
         ax.set_xticks([0, NARMA_DISPLAY_STEPS // 2, NARMA_DISPLAY_STEPS - 1])
         ax.set_ylabel("Output", labelpad=3)
-        ax.text((COL_LEFT["c"] + PLOT_WIDTH) / SIZE[0], label_y / SIZE[1], model.upper(),
-            ha="right", va="bottom", fontsize=7.5, transform=fig.transFigure)
+        trace_legends[model] = ax.legend(loc="lower left", ncol=2,
+            bbox_to_anchor=(0, 1.015, 1, .15), mode="expand",
+            frameon=False, fontsize=7.5, handlelength=1., handletextpad=.3,
+            borderpad=0, borderaxespad=0)
         if model == "qrc":
             ax.tick_params(labelbottom=False, bottom=False)
-            target_legend = ax.legend(handles=[ax.lines[0]], loc="lower left",
-                bbox_to_anchor=(COL_LEFT["c"] / SIZE[0], label_y / SIZE[1]),
-                bbox_transform=fig.transFigure, frameon=False, fontsize=7.5,
-                handlelength=1.0, handletextpad=.3, borderpad=0, borderaxespad=0)
         else:
             ax.set_xlabel("Test step (excerpt)", labelpad=3)
-    section_headings["history"] = fig.text(COL_LEFT["c"] / SIZE[0], SECTION_TITLE_Y / SIZE[1],
-        "How much history is needed?", fontsize=7.5)
     history = _axis(fig, COL_LEFT["c"], LOWER_BOTTOM, PLOT_WIDTH, LOWER_TOP - LOWER_BOTTOM, "narma_history")
     narma["history"] = history
     replay = sorted(dense["aggregates"], key=lambda row: row["window"])
@@ -260,8 +260,8 @@ def make_figure(emulation, task, dense):
     for ax in fig.axes:
         ax.tick_params(length=2.3, width=.6, pad=2)
     panels.update(narma=narma, narma_legend=narma_legend, exact_legend=exact_legend,
-                  model_legend=model_legend, narma_target_legend=target_legend,
-                  section_headings=section_headings)
+                  model_legend=model_legend, narma_trace_legends=trace_legends,
+                  condition_labels=condition_labels)
     return fig, panels
 
 
@@ -287,9 +287,9 @@ def render(output=OUTPUT):
                    "plot_height_inches": NARMA_TRACE_HEIGHT,
                    "upper_group_top_bottom_inches": [UPPER_TOP, UPPER_BOTTOM],
                    "lower_row_top_bottom_inches": [LOWER_TOP, LOWER_BOTTOM],
-                   "panel_title_y_inches": PANEL_TITLE_Y, "section_title_y_inches": SECTION_TITLE_Y,
+                   "panel_letter_y_inches": PANEL_LETTER_Y, "plot_titles": False,
                    "legend_placement": "Compact white framed legends entirely inside lower data axes: upper left for laser traces, upper right for analytical and history curves. History labels abbreviate last d inputs, full history and last 4 inputs.",
-                   "label_placement": "NARMA model names and target legend above data axes; laser condition titles outside axes; ten-input guide label below the history curve."},
+                   "label_placement": "Panel letters without descriptive titles. NARMA target/model legends above their axes; laser condition and full-test error annotations inside axes; ten-input guide label below the history curve."},
         "sources": {str(p.relative_to(ROOT)): digest(p) for p in sources},
         "parents": {"emulation": str(EMULATION.relative_to(ROOT)), "task": str(TASK.relative_to(ROOT)),
                     "dense_replay": str(DENSE_REPLAY.relative_to(ROOT))},
@@ -308,6 +308,12 @@ def render(output=OUTPUT):
         "narma_history_display": {"first_window": 1, "last_window": 20,
                                   "y_limits": [.40, 1.05], "guide_window": 10,
                                   "guide_interpretation": "At d=10 the quantized input at t-9 first enters the window for predicting y_(t+1). This exposes the lag used by NARMA10's explicit input interaction; it is not a claim of complete history or an isolated causal effect."},
+        "memory_gap_display": {"first_input": 1, "last_input": MEMORY_DISPLAY_STEPS,
+                               "source_inputs_retained": 48},
+        "trace_style": {"linewidth_points": TRACE_LINEWIDTH,
+                        "qrc": "solid line with filled dots at every sample",
+                        "qelm": "solid line with 2.4-point open circles every third sample, 0.65-point edges",
+                        "target": "solid opaque black line"},
         "omitted_from_display": "Quadratic curves omitted at author request; all 4/12-input results retained below and in manuscript prose.",
         "emulation": emulation, "narma_trace": task["traces"]["narma"],
         "narma_trace_display": {"start": 0, "stop_exclusive": NARMA_DISPLAY_STEPS,
@@ -318,7 +324,7 @@ def render(output=OUTPUT):
         "narma_candidate_rows": task["candidate_rows"],
         "narma_dense_replay": dense,
         "independent_verification": task["independent_verification"],
-        "scope": "Full source excerpts retained; NARMA display zooms into the first 48 samples. No smoothing/cohort pooling. Root bands are 10th-90th percentiles, not CI. Replay costs extra evolution. Analytic floor does not bound sampled laser or NARMA errors.",
+        "scope": "Full source excerpts retained; memory-gap display zooms into shared inputs 1--32 and NARMA into the first 48 samples. No smoothing/cohort pooling. Root bands are 10th-90th percentiles, not CI. Replay costs extra evolution. Analytic floor does not bound sampled laser or NARMA errors.",
         "artifacts": {f"{STEM}.{ext}": digest(output / f"{STEM}.{ext}") for ext in ("pdf", "png")},
     }
     (output / f"{STEM}_source.json").write_text(json.dumps(ledger, indent=2, sort_keys=True, allow_nan=False) + "\n")

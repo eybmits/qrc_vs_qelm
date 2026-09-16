@@ -126,17 +126,18 @@ def axis(fig, x, y, w, h):
     return ax
 
 
-def heading(fig, x, letter, title):
+def heading(fig, x, letter, title, *, publication=False):
     fig.text(x / SIZE[0], 2.87 / SIZE[1], letter, weight="bold", fontsize=10)
-    fig.text((x + .17) / SIZE[0], 2.87 / SIZE[1], title, fontsize=9.2)
+    if not publication:
+        fig.text((x + .17) / SIZE[0], 2.87 / SIZE[1], title, fontsize=9.2)
 
 
-def build_figure(history, features, shots):
+def build_figure(history, features, shots, *, publication=False):
     passed, f, med, low, high, share = summaries(history, features, shots)
     fig = plt.figure(figsize=SIZE)
-    heading(fig, .42, "a", "History requirement")
-    heading(fig, 2.75, "b", "Feature capacity")
-    heading(fig, 4.82, "c", "Measurement budget")
+    heading(fig, .42, "a", "History requirement", publication=publication)
+    heading(fig, 2.75, "b", "Feature capacity", publication=publication)
+    heading(fig, 4.82, "c", "Measurement budget", publication=publication)
 
     ax = axis(fig, .48, .82, 1.72, 1.84)
     displayed = passed.loc[list(DISPLAY_RATES)]
@@ -225,7 +226,7 @@ def build_figure(history, features, shots):
               handletextpad=.25, columnspacing=.6, borderaxespad=0)
 
     # Direct row/column labels expose all choices without decoding stacked colors.
-    select = axis(fig, 4.90, .47, 2.04, .64)
+    select = axis(fig, 4.90, .47, 2.04, .77 if publication else .64)
     for col, shot in enumerate(SHOTS):
         dominant = int(share.loc[shot].argmax())
         for row, budget in enumerate((18, 36, 72)):
@@ -243,7 +244,8 @@ def build_figure(history, features, shots):
     select.tick_params(length=0)
     select.set_ylabel("Features", labelpad=3)
     select.set_xlabel("Shots per input", labelpad=4)
-    fig.text(4.82 / SIZE[0], 1.19 / SIZE[1], "How often was each count chosen?", fontsize=8)
+    if not publication:
+        fig.text(4.82 / SIZE[0], 1.19 / SIZE[1], "How often was each count chosen?", fontsize=8)
     for spine in select.spines.values():
         spine.set_visible(False)
     return fig
@@ -255,7 +257,7 @@ def render(output=OUT, *, publication=False):
     output.mkdir(parents=True, exist_ok=True)
     stem = "fig03_resource_diagnosis" if publication else STEM
     with plt.rc_context(style()):
-        fig = build_figure(history, features, shots)
+        fig = build_figure(history, features, shots, publication=publication)
         fig.savefig(output / f"{stem}.pdf", metadata={"CreationDate": None, "ModDate": None})
         fig.savefig(output / f"{stem}.png", dpi=240)
         plt.close(fig)
@@ -270,6 +272,7 @@ def render(output=OUT, *, publication=False):
              Path(source.__file__), Path(colors.__file__), Path(roles.__file__), Path(__file__)]
     ledger = {"status": "author_selected_publication_asset" if publication else "preview_only_not_integrated", "caption": CAPTION,
               "size_inches": SIZE, "sources_sha256": {str(p.relative_to(ROOT)): digest(p) for p in paths},
+              "title_display": "Panel letters only; descriptive panel and matrix titles omitted. Axis labels, feature legend and QRC size labels retained. Choice-frequency rows use the former matrix-title space." if publication else "Legacy descriptive panel and matrix titles retained.",
               "history_criterion": "At least 10/12 roots <= 0.10 in EACH size, without pooling",
               "history_rate_axis": "Ordered categories of measured settings, not continuous. Display starts at rate 1; only integer rates are labeled at their categorical row positions.",
               "history_display_rates": list(DISPLAY_RATES),

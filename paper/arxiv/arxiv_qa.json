@@ -15,9 +15,9 @@
   },
   "passed": true,
   "pages": 12,
-  "pdf_sha256": "86ecad2926bb71355bf002863763a70418dd8ee6d9c1128b1b84b3d47abbc26c",
-  "anonymous_pdf_sha256": "a74665d6824a4c410ece2681922be701e728045ada79644072f41ff3c59a0eb4",
-  "source_zip_sha256": "32b12fb1787d0dc6e8e431a4b7cc864acf839747415046e492ef602d96c7693e",
+  "pdf_sha256": "aa7ad8d81a6b253393a27311546c08f65079171874d265ac418a08f211eaad30",
+  "anonymous_pdf_sha256": "680d223c1460ce1c026f6af99db5fdd40897da698336ead769aaca604c8697b4",
+  "source_zip_sha256": "4088c5fe26f1d706e767a9c5cdd913f3347e60ee6f4018e7a9dc980e07e85488",
   "orcid_not_supplied": [],
   "scope": "Local source/build, identity/link, and geometry checks; arXiv processing and publication have not occurred."
 }

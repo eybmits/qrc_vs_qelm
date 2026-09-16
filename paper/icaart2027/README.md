@@ -8,6 +8,20 @@ feature-density and finite-shot studies without pooling their cohorts.
 There is one paper, including its proofs and numerical methods, not a separate
 supplement.
 
+## Current figure refinement (16 September 2026)
+
+Descriptive chart and panel titles are removed from Figures 2 and 3; panel
+letters, axis labels, legends and data-condition annotations remain. Figure 1's
+model and memory-case annotations remain part of its explanatory diagram.
+The paired QRC output gap in Figure 3(b) focuses on shared inputs 1--32; all
+48 source points and percentile bands are retained. The NARMA10 and laser
+traces share solid 0.9-point lines, filled QRC dots and 2.4-point open QELM
+circles every third sample. Black target traces remain fully opaque.
+Figure 3 retains its full width and nine equal 1.51-by-0.78-inch plot frames
+in a shorter 6.221-by-3.97-inch canvas. The methods' display-range description
+is updated to 32 inputs. Source observations, numerical results, captions and
+model colors are unchanged.
+
 ## Current introduction and conclusions (14 September 2026)
 
 The author's replacement Introduction and Discussion and Conclusions are
@@ -27,7 +41,7 @@ expectations and worst-case scope remain explicit; the full assumptions and
 theorems remain in the body. The paper remains 12 pages, with body text,
 equations, figures, font sizes and margins unchanged by this abstract update.
 
-## Current: full-width Figure 3 with consistent plot heights (14 September 2026)
+## Previous: full-width Figure 3 with consistent plot heights (14 September 2026)
 
 Figure 3 uses the full text width with a 6.221 by 4.17 inch native canvas.
 All nine plot frames are 1.51 inches wide and 0.78 inches high. The bottom

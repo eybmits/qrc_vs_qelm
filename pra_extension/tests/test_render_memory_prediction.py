@@ -32,7 +32,9 @@ def test_three_panel_source_binding_and_selected_controls():
     with renderer.plt.rc_context():
         fig, p = renderer.make_figure(original, task, dense)
         assert len(fig.axes) == 9
-        assert [t.get_text() for t in fig.texts if t.get_fontweight() == "bold"] == ["a", "b", "c"]
+        assert [t.get_text() for t in fig.texts] == ["a", "b", "c"]
+        assert all(t.get_fontweight() == "bold" for t in fig.texts)
+        assert all(not ax.get_title() for ax in fig.axes)
         np.testing.assert_array_equal(p["laser"][0].lines[0].get_ydata(), original["laser_input"])
         for ax, rate in zip(p["laser"][1:], (4., .2)):
             for line, model in zip(ax.lines, ("qrc", "qelm")):
@@ -45,6 +47,17 @@ def test_three_panel_source_binding_and_selected_controls():
             np.testing.assert_array_equal(ax.lines[0].get_xdata(), np.arange(96))
             assert ax.lines[0].get_color() == renderer.roles.TARGET
             assert ax.lines[1].get_color() == getattr(renderer.roles, model.upper())
+            # The same model uses the same solid trace and marker treatment in
+            # measured-input emulation and the separate forecasting example.
+            reference = p["laser"][1].lines[0 if model == "qrc" else 1]
+            for attribute in ("linestyle", "linewidth", "marker", "markersize",
+                              "markerfacecolor", "markeredgewidth"):
+                assert getattr(ax.lines[1], "get_" + attribute)() == (
+                    getattr(reference, "get_" + attribute)()
+                )
+            assert ax.lines[1].get_markevery() == (1 if model == "qrc" else 3)
+            assert ax.lines[0].get_linewidth() == ax.lines[1].get_linewidth()
+            assert ax.lines[0].get_alpha() == 1.
         for ax in p["laser"][1:]:
             assert [line.get_color() for line in ax.lines] == [renderer.roles.QRC, renderer.roles.QELM]
         assert p["laser"][0].lines[0].get_color() == renderer.roles.INPUT
@@ -71,6 +84,11 @@ def test_three_panel_source_binding_and_selected_controls():
             line = next(item for item in p["memory"].lines if item.get_gid() == f"memory_gap_gamma{rate:g}")
             np.testing.assert_array_equal(line.get_ydata(), np.median(abs(values[:,:,0]-values[:,:,1]), axis=0)[:48])
             assert line.get_color() == renderer.MEMORY_COLORS[rate]
+            np.testing.assert_array_equal(line.get_xdata(), np.arange(1, 49))
+        # Zoom only the viewport; the complete 48-input trajectory remains bound
+        # to the source data above, including the hidden continuation.
+        assert p["memory"].get_xlim() == (.4, 32.6)
+        np.testing.assert_array_equal(p["memory"].get_xticks(), [1, 8, 16, 24, 32])
         for line in p["history_inset"].lines[:4]:
             earlier = np.max(line.get_xdata()) < 128
             assert line.get_color() == (renderer.EARLIER_INPUT_COLOR if earlier else renderer.roles.INPUT)
@@ -95,7 +113,8 @@ def test_three_panel_geometry_and_legend_clearance():
             assert box.x1 <= fig.bbox.x1 and box.y1 <= fig.bbox.y1
         texts = [t for t in fig.findobj(Text) if t.get_visible() and t.get_text()]
         assert min(t.get_fontsize() for t in texts) >= 7.5
-        # Shared frame edges and separate text rows keep the three columns readable.
+        # Shared frame edges keep the three columns readable after removing
+        # descriptive headings and compacting the space above the upper group.
         np.testing.assert_allclose([ax.bbox.width for ax in fig.axes], fig.axes[0].bbox.width)
         first_row = [p["laser"][0], p["history_inset"], p["narma"]["qrc"]]
         upper_bottom = [p["laser"][1], p["memory"], p["narma"]["qelm"]]
@@ -107,31 +126,47 @@ def test_three_panel_geometry_and_legend_clearance():
                                        getattr(lower_row[0].bbox, edge))
         label_boxes = [ax.xaxis.label.get_window_extent(draw) for ax in lower_row]
         np.testing.assert_allclose([box.y0 for box in label_boxes], label_boxes[0].y0)
-        for ax, heading in ((p["memory"], "exact"), (p["narma"]["qelm"], "history")):
+        for ax, lower in ((p["memory"], p["exact"]),
+                          (p["narma"]["qelm"], p["narma"]["history"])):
             label = ax.xaxis.label.get_window_extent(draw)
-            title = p["section_headings"][heading].get_window_extent(draw)
-            assert label.y0 - title.y1 >= draw.points_to_pixels(6)
+            assert label.y0 - lower.bbox.y1 >= draw.points_to_pixels(6)
         # Every lower legend stays fully inside its own axes with a small inset.
-        for ax, key, heading in zip(lower_row,
-                ("model_legend", "exact_legend", "narma_legend"),
-                ("Slow loss", "exact", "history")):
+        for ax, key in zip(lower_row,
+                ("model_legend", "exact_legend", "narma_legend")):
             legend = p[key]
             box = legend.get_window_extent(draw)
             assert legend.axes is ax and legend.get_frame_on()
             assert legend.get_frame().get_alpha() == 1.
             assert ax.bbox.y0 < box.y0 < box.y1 < ax.bbox.y1
             assert ax.bbox.x0 < box.x0 < box.x1 < ax.bbox.x1
-            assert box.y1 < p["section_headings"][heading].get_window_extent(draw).y0
             assert not box.overlaps(ax.xaxis.label.get_window_extent(draw))
+        # Laser condition/error labels now use clear areas inside their axes.
+        for ax, condition in zip(p["laser"][1:], ("Fast loss", "Slow loss")):
+            assert p["condition_labels"][condition] in ax.texts
+            assert len(ax.texts) == 2
+            boxes = [text.get_window_extent(draw) for text in ax.texts]
+            assert not boxes[0].overlaps(boxes[1])
+            for box in boxes:
+                assert ax.bbox.x0 < box.x0 < box.x1 < ax.bbox.x1
+                assert ax.bbox.y0 < box.y0 < box.y1 < ax.bbox.y1
+                if ax is p["laser"][-1]:
+                    assert not box.overlaps(p["model_legend"].get_window_extent(draw))
+                for line in ax.lines:
+                    path = line.get_path().transformed(line.get_transform())
+                    assert not path.intersects_bbox(box.padded(draw.points_to_pixels(1)), filled=False)
         # Test line segments, not only vertices: the old in-axes labels crossed
         # target segments even when no sampled point lay inside their boxes.
         for model in ("qrc", "qelm"):
             ax = p["narma"][model]
-            boxes = [text.get_window_extent(draw) for text in ax.texts]
-            if model == "qrc":
-                boxes.append(p["narma_target_legend"].get_window_extent(draw))
+            legend = p["narma_trace_legends"][model]
+            assert [text.get_text() for text in legend.texts] == ["Target", model.upper()]
+            assert legend.axes is ax
+            boxes = [legend.get_window_extent(draw)]
             for box in boxes:
                 assert box.y0 > ax.bbox.y1
+                assert box.x0 >= ax.bbox.x0 and box.x1 <= ax.bbox.x1
+                assert box.y1 < (fig.texts[2].get_window_extent(draw).y0
+                                if model == "qrc" else p["narma"]["qrc"].bbox.y0)
                 for line in ax.lines:
                     path = line.get_path().transformed(line.get_transform())
                     assert not path.intersects_bbox(box, filled=False)
@@ -178,6 +213,9 @@ def test_three_panel_reproducible_export_and_source_retention(tmp_path):
     assert len(first["narma_all_rows"]) == 264
     assert len(first["narma_dense_replay"]["rows"]) == 24 * 48
     assert first["narma_dense_replay"]["verification"]["independent"]["passed"]
+    assert first["memory_gap_display"] == {
+        "first_input": 1, "last_input": 32, "source_inputs_retained": 48,
+    }
     assert len(first["narma_candidate_rows"]) == 192
     assert {r["window"] for r in first["narma_all_rows"] if r["model"] == "quadratic"} == {4, 12}
     assert "24-root" in first["panels"]["c"]

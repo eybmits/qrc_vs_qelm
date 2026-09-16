@@ -59,9 +59,10 @@ def test_fail_closed_on_incomplete_or_changed_selection(data):
         atlas.validate_selection(s, changed)
 
 
-def test_paper_size_text_and_axes_fit(data):
+@pytest.mark.parametrize("publication", [False, True])
+def test_paper_size_text_and_axes_fit(data, publication):
     with plt.rc_context(atlas.style()):
-        fig = atlas.build_figure(*data[:3])
+        fig = atlas.build_figure(*data[:3], publication=publication)
         fig.canvas.draw()
         renderer = fig.canvas.get_renderer()
         for text in fig.findobj(Text):
@@ -77,6 +78,11 @@ def test_paper_size_text_and_axes_fit(data):
         for i, box in enumerate(bounds):
             for other in bounds[i + 1:]:
                 assert not box.overlaps(other)
+        visible_text = {text.get_text() for text in fig.findobj(Text) if text.get_visible()}
+        titles = {"History requirement", "Feature capacity", "Measurement budget",
+                  "How often was each count chosen?"}
+        assert titles.isdisjoint(visible_text) if publication else titles <= visible_text
+        assert {"a", "b", "c", "Features:", "2-qubit QRC", "3-qubit QRC", "4-qubit QRC"} <= visible_text
         plt.close(fig)
 
 
@@ -104,12 +110,13 @@ def test_published_atlas_keeps_all_sources_and_uncertainty():
     assert len(ledger["feature_summary"]) == 18
 
 
-def test_shot_plot_preserves_all_estimates_and_asymmetric_intervals(data):
+@pytest.mark.parametrize("publication", [False, True])
+def test_shot_plot_preserves_all_estimates_and_asymmetric_intervals(data, publication):
     """Every table estimate remains a plotted point with its full source interval."""
     from matplotlib.container import ErrorbarContainer
     _, _, med, low, high, _ = atlas.summaries(*data[:3])
     with plt.rc_context(atlas.style()):
-        fig = atlas.build_figure(*data[:3])
+        fig = atlas.build_figure(*data[:3], publication=publication)
         plot = fig.axes[4]
         series = [item for item in plot.containers if isinstance(item, ErrorbarContainer)]
         assert len(series) == 4
@@ -127,10 +134,11 @@ def test_shot_plot_preserves_all_estimates_and_asymmetric_intervals(data):
         plt.close(fig)
 
 
-def test_choice_labels_and_staircase_data_are_source_bound(data):
+@pytest.mark.parametrize("publication", [False, True])
+def test_choice_labels_and_staircase_data_are_source_bound(data, publication):
     passed, _, _, _, _, share = atlas.summaries(*data[:3])
     with plt.rc_context(atlas.style()):
-        fig = atlas.build_figure(*data[:3])
+        fig = atlas.build_figure(*data[:3], publication=publication)
         labels = {text.get_gid(): text for text in fig.axes[5].texts}
         assert len(labels) == 12
         for col, shot in enumerate(atlas.SHOTS):
