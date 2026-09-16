@@ -1,6 +1,6 @@
 {
   "schema": "arxiv_visual_review_v1",
-  "pdf_sha256": "aa7ad8d81a6b253393a27311546c08f65079171874d265ac418a08f211eaad30",
+  "pdf_sha256": "aef9be6a8a7cf44c3d25f1c5e17d2b52e349d7de76adc45c165cd366919c09b9",
   "reviewed_pages": [
     1,
     2,
@@ -28,7 +28,7 @@
     "title_author_spacing_clear": true,
     "shared_body_pages_pixel_identical": true
   },
-  "review_note": "All twelve pages rendered. Updated pages 5 and 7--11 share the reviewed anonymous page layouts; corrected page 12 independently rendered and visually inspected in both editions. Other pages are pixel-identical to the prior reviewed edition, preserving the author header, ORCID icons and title spacing. Title-free charts, 1--32 memory-gap focus, and consistent model lines/markers remain legible; full appendix retained in twelve pages.",
+  "review_note": "All twelve pages rendered. Pages 2--11 are pixel-identical to the anonymous edition, whose changed body pages and revised appendix pages were visually inspected. Revised page 12 independently inspected in both editions: clean ending, with the repository link present only in the authored edition. Page 1 is pixel-identical to the prior reviewed author header, preserving ORCID icons and title spacing. All supplied Appendices A--E fit within twelve pages without additional cuts, font changes or figure changes.",
   "title_author_baseline_separation_pdf_points": {
     "before": 13.888,
     "after": 24.906

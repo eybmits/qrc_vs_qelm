@@ -1,15 +1,15 @@
 {
-  "pdf_sha256": "680d223c1460ce1c026f6af99db5fdd40897da698336ead769aaca604c8697b4",
+  "pdf_sha256": "a50f0280b5480fb795a54313879b7df197fadbc3d2274fb11d747dd3976c5eaf",
   "pages_reviewed": 12,
-  "rendering": "All twelve pages rendered with Poppler at maximum dimension 1400 pixels. Figure pages 5 and 7 reviewed by the editing agent; independent reviewer inspected pages 8--12. Corrected page 12 in both editions re-rendered and reviewed. Pages 1--4 and 6 are pixel-identical to the previous fully reviewed edition.",
-  "status": "Twelve pages including references and appendices. No visible overlap, clipping or missing glyphs.",
+  "rendering": "All twelve pages rendered with Poppler at maximum dimension 1400 pixels. Pages 5, 6 and 8 reviewed by the editing agent; independent reviewers inspected revised appendix pages 9--12 against the supplied PDF. Pages 1--4 and 7 are pixel-identical to the previous fully reviewed edition.",
+  "status": "Twelve pages including references and all revised appendices. No visible overlap, clipping or missing glyphs.",
   "latex_overfull_boxes": 0,
   "undefined_references_or_citations": 0,
   "observations": [
-    "Figure 3 memory-gap axis focuses on shared inputs 1--32. Full source trajectories and percentile bands are retained; the methods display-range description matches 32 inputs.",
-    "NARMA10 and laser QRC/QELM traces share solid 0.9-point lines and the same filled-dot/open-circle markers. Target remains opaque black. No smoothing, new fitting or changed scientific source values.",
-    "Descriptive plot titles removed in Figures 2 and 3. Panel letters, axes, legends and essential explanatory annotations are legible. Figure 1 explanatory diagram unchanged.",
-    "Figure 3 retains full text width and all nine equal plot frames on a shorter 6.221 by 3.97 inch canvas. Lower legends remain fully inside axes, clear of data and bands. Reflowed text, equations, references and full appendix fit cleanly within twelve pages."
+    "Revised Appendices A--E preserve the supplied proof statements, assumptions, mathematical bounds, controls and all five numerical-method subsections. Native manuscript typography and semantic cross-references are used.",
+    "Main-text midpoint-predictor notation agrees with Appendix C. The four numbered appendix equations resolve as (12)--(15); main equations (1)--(11) remain unchanged.",
+    "Long quotient definitions, protected dynamics, probability bounds and numerical-method formulas fit within the columns without overflow. Revised appendix ends cleanly on page 12.",
+    "Figures, data, captions, title, abstract, introduction and conclusion are unchanged. The existing template, fonts, margins and full-width figures are preserved. No additional appendix cuts were needed."
   ],
-  "scope": "Author-requested display crop, consistent trace styling and removal of descriptive plot titles, with one corresponding methods range update."
+  "scope": "Author-supplied revised Appendix A--E integrated into both editions, with matching main-text notation and cross-references."
 }

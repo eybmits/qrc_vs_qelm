@@ -6,232 +6,166 @@
 \subsection{Optimal Window Error}
 \label{app:window-laws}
 
-\emph{Why the midpoint is optimal.} For compatible outputs
-$\mathcal Y_d(s)=\{y(h):S_d(h)=s\}$, the triangle inequality bounds any
-prediction's worst-case error below by half the diameter. Choosing a member
-bounds it above by the diameter. Suprema over suffixes give the vector bounds
-$D_d/2$ and $D_d$. For bounded scalar outputs, the infimum--supremum midpoint
-achieves half the range, proving Eq.~\eqref{eq:window-law}.
-
-Compatible histories induce the same prediction distribution, so
-$|y_1-y_0|\leq\mathbb E|y_0-\widehat y|+\mathbb E|y_1-\widehat y|$,
-where $\mathbb E$ averages prediction randomness. One expected error is
-at least $|y_1-y_0|/2$. For equally likely outputs, the midpoint minimizes
-squared risk at $(y_1-y_0)^2/4$.
-
-\emph{Why QELMs can approach it.} Under Section~\ref{sec:criterion}'s
-assumptions, the reachable pre-suffix closure $\mathcal R$ is compact;
-free concatenation makes it independent of the suffix.
-For $s=(a_1,\ldots,a_d)$, write $\Phi_s=\Phi_{a_d}\cdots\Phi_{a_1}$,
-with the identity for the empty word. For scalar output, define
+\emph{The best prediction for a fixed window.} Let $\mathcal R$ be the
+closure of states reachable before a window $s=(a_1,\ldots,a_d)$, and
+write $\Phi_s=\Phi_{a_d}\cdots\Phi_{a_1}$. Under
+Section~\ref{sec:criterion}'s assumptions, $\mathcal R$ is compact and
+independent of $s$. For scalar output, define
 \[
- y_-(s)=\min_{\rho\in\mathcal R}\mathcal C\Phi_s(\rho),\quad y_+(s)=\max_{\rho\in\mathcal R}\mathcal C\Phi_s(\rho),
+ y_-(s)=\min_{\rho\in\mathcal R}\mathcal C\Phi_s(\rho),\quad
+ y_+(s)=\max_{\rho\in\mathcal R}\mathcal C\Phi_s(\rho).
 \]
-and $m_d(s)=[y_-(s)+y_+(s)]/2$. Closure leaves the extrema unchanged.
-Uniform continuity on the compact window--state domain makes both extrema
-and $m_d$ continuous. For any $\varepsilon>0$, uniform density gives
-$f\in\mathcal Q_d$ with $\|f-m_d\|_\infty<\varepsilon$ (supremum over
-windows), hence error at most $D_d/2+\varepsilon$.
-The lower bound proves Eq.~\eqref{eq:qrc-qelm-equivalence}: an infimum,
-not necessarily exact attainment by one finite QELM.
+Any prediction must be at least half this range away from one endpoint.
+The midpoint $m_d(s)=[y_-(s)+y_+(s)]/2$ achieves this bound. Taking the
+worst case over windows gives the optimal error $D_d/2$. Using the
+reachable closure does not change this supremum.
 
-\emph{When longer context suffices.} The lower bound makes $D_d\to0$
-necessary for arbitrary accuracy, also for
-vector outputs. For sufficiency, replay from a reachable state $\bar\rho$:
-\begin{equation}
- g_d(a_1,\ldots,a_d)
- =\mathcal C\Phi_{a_d}\cdots\Phi_{a_1}(\bar\rho).
- \label{eq:replay-map}
-\end{equation}
-Free concatenation gives $\|y(h)-g_d(S_d(h))\|\leq D_d$, and $g_d$ is
-continuous. Choose $D_d<\varepsilon/2$, then
-$f\in\mathcal Q_d$ with $\|g_d-f\|_\infty<\varepsilon/2$.
-The total error is below $\varepsilon$, without a guarantee of efficient fitting.
+\emph{Why QELMs can approach the optimum.} Continuity of the channels
+on the compact window--state domain makes $y_-$, $y_+$, and $m_d$
+continuous. Uniform QELM density therefore supplies a predictor within
+any $\varepsilon>0$ of $m_d$, with total error at most
+$D_d/2+\varepsilon$. This proves an infimum; a finite model need not
+attain it exactly.
 
-\subsection{Observable Memory and Context}
+For vector outputs, the triangle inequality still gives the lower bound
+$D_d/2$. Replaying the window from any fixed reachable state gives a
+continuous predictor with error at most $D_d$. Approximating this replay
+function proves that arbitrarily accurate emulation is possible exactly
+when $D_d\to0$.
+
+\emph{Randomness cannot recover missing history.} Two histories with
+the same window induce the same prediction distribution. For their
+scalar outputs $y_0,y_1$,
+\[
+ |y_1-y_0|\leq\mathbb E|y_0-\widehat y|+\mathbb E|y_1-\widehat y|.
+\]
+At least one expected absolute error is therefore at least half the gap.
+Randomized predictions cannot lower the worst-case information floor.
+
+\subsection{Observable Memory and Required Context}
 \label{app:observable-proof}
 
-We relate $D_d$ to observable state differences, specializing
+\emph{Keep only differences that can affect an output.} Let $\Delta$
+be the compact set of reachable state differences, including limits,
+and let $V=\operatorname{span}_{\mathbb R}\Delta$. A difference is
+irrelevant if no future input sequence can reveal it. Remove these
+differences by defining
+\[
+ \mathcal N=\{v\in V:\mathcal C\Phi_w(v)=0\text{ for every finite word }w\}.
+\]
+The empty word is included. On $W=V/\mathcal N$, the induced update
+and output maps are $A_a[v]=[\Phi_a(v)]$ and
+$\overline{\mathcal C}[v]=\mathcal C(v)$. This is the
+reachable--observable reduction used in
+Section~\ref{sec:observable-forgetting}, specializing
 \cite[Theorem~III.1]{petreczky2026stability}.
 
-\emph{Remove invisible differences.} Let $\Delta$ be the compact closure
-of admissible pre-suffix differences and $V=\operatorname{span}_{\mathbb R}\Delta$.
-The set is symmetric; free concatenation gives
-$\Phi_a\Delta\subseteq\Delta$ for every input $a$.
-Write $|w|$ for a finite word's length, including the empty word.
-Remove differences invisible to the linear output $\mathcal C$ after every word:
-\begin{equation}
- \mathcal N=\{v\in V:\mathcal C\Phi_w(v)=0\ \forall w\},\quad W=V/\mathcal N.
- \label{eq:visible-quotient}
-\end{equation}
-Invariance of $\mathcal N$ defines
-$A_a\pi(v)=\pi(\Phi_a(v))$ and
-$\overline{\mathcal C}\pi(v)=\mathcal C(v)$, where $\pi:V\to W$ is the
-quotient map. Write $A_s=A_{a_d}\cdots A_{a_1}$ for $s=(a_1,\ldots,a_d)$;
-empty products are identities.
-
-\emph{Measure the remaining memory.} The compact symmetric body
-$\mathcal B=\operatorname{conv}\pi(\Delta)$
-spans $W$ and is invariant under every $A_a$. Its Minkowski norm and
-induced operator norm are both denoted $\|\cdot\|_{\mathcal B}$. Set
-\begin{equation}
- c_d=\sup_{|s|=d}\|A_s\|_{\mathcal B},
- \qquad r_{\rm vis}=\lim_{d\to\infty}c_d^{1/d}.
- \label{eq:visible-radius-formal}
-\end{equation}
-Norm equivalence gives the radius in Eq.~\eqref{eq:visible-radius-definition}.
-If $W=\{0\}$, set $D_d=r_{\rm vis}=0$. Otherwise, define
-
-\begin{equation}
- \|x\|_{\rm obs}
- =\sup_w\|\overline{\mathcal C}A_wx\|,
- \label{eq:observable-norm}
-\end{equation}
-for $x\in W$, using the output norm $\|\cdot\|$.
-This measures visibility under any continuation. Invariance makes it finite;
-removing $\mathcal N$ makes it positive definite. Norm equivalence gives
-$0<\kappa_-\leq\kappa_+<\infty$ with
-\begin{equation}
- \kappa_-\|x\|_{\mathcal B}
- \leq\|x\|_{\rm obs}
- \leq\kappa_+\|x\|_{\mathcal B}.
- \label{eq:norm-equivalence}
-\end{equation}
-
-\emph{Relate memory size to output error.} Linearity and convexity give
-\begin{equation}
- D_d=\sup_{|s|=d}\sup_{x\in\mathcal B}
- \|\overline{\mathcal C}A_sx\|.
- \label{eq:diameter-product}
-\end{equation}
-The upper norm bound gives $D_d\leq\kappa_+c_d$. For $x\in\mathcal B$,
-$|s|=d$, and any continuation $w$, a longer common suffix gives
+\emph{Measure memory by its possible future effect.} On $W$, define
 \[
- \|\overline{\mathcal C}A_wA_sx\|\leq D_{d+|w|}\leq D_d.
+ \|x\|_{\rm obs}=\sup_w\|\overline{\mathcal C}A_wx\|.
 \]
-Taking suprema over $w,x,s$ and using the lower norm bound gives
-\begin{equation}
+The invariant reachable set makes this finite, and removing $\mathcal N$
+makes it a norm. Let $c_d=\sup_{|s|=d}\|A_s\|_{\rm obs}$, using the
+induced operator norm.
+
+Allowing additional common inputs cannot increase $D_d$. Consequently,
+the largest value of $\|A_s[v]\|_{\rm obs}$ over $v\in\Delta$ and
+$|s|=d$ is exactly $D_d$. The convex hull of the reachable differences
+in $W$ contains a norm ball and is bounded. Thus constants
+$\kappa_-,\kappa_+>0$, independent of $d$, satisfy
+\[
  \kappa_-c_d\leq D_d\leq\kappa_+c_d.
- \label{eq:diameter-product-equivalence}
-\end{equation}
-\emph{Stability and context length.} Submultiplicativity,
-$c_{d+\ell}\leq c_dc_\ell$ for lengths $d,\ell\geq0$,
-gives exponential decay when $r_{\rm vis}<1$. Conversely, $D_d\to0$ and
-Eq.~\eqref{eq:diameter-product-equivalence} give $c_d\to0$, hence
-$c_{d_0}<1$ at some positive length. Submultiplicativity again forces
-exponential decay. The same fixed-factor bounds give
-$\lim_{d\to\infty}D_d^{1/d}=r_{\rm vis}$, proving
-Eq.~\eqref{eq:visible-memory-theorem}. For $0<r_{\rm vis}<1$ and
-$0<r_-<r_{\rm vis}<r_+<1$, root convergence yields
-$r_-^d\leq D_d\leq r_+^d$ for all sufficiently large $d$.
-The first crossing of $D_d<2\varepsilon$ lies between the corresponding
-logarithmic crossing times, up to bounded integer terms. Divide by
-$\log(1/\varepsilon)$, take $\varepsilon\downarrow0$, then send
-$r_-,r_+\to r_{\rm vis}$ to obtain Eq.~\eqref{eq:window-complexity}.
+\]
+This comparison connects observable output gaps to the size of products
+of the reduced updates.
 
-Free concatenation is essential. Finite-state input grammars require
-node-indexed quotients and a
-constrained joint spectral radius \cite{philippe2016constrained}.
-In the protected construction, arbitrarily long $q=0$ suffixes give
-$D_d\geq\delta$. Invariance also gives $c_d\leq1$, so $r_{\rm vis}=1$.
+\emph{Decay rate and window length.} The product norms satisfy
+$c_{d+\ell}\leq c_dc_\ell$. Hence $D_d\to0$ implies $c_{d_0}<1$ for
+some $d_0$, which forces exponential decay. Conversely, $r_{\rm vis}<1$
+gives exponential decay of $c_d$ and therefore of $D_d$. Taking $d$th
+roots in the comparison above yields
+\[
+ \lim_{d\to\infty}D_d^{1/d}=r_{\rm vis}.
+\]
+For $0<r_{\rm vis}<1$, bounding $D_d$ between $r_-^d$ and $r_+^d$ for
+sufficiently large $d$, where $0<r_-<r_{\rm vis}<r_+<1$, and solving
+$D_d<2\varepsilon$ gives
+\[
+ \lim_{\varepsilon\downarrow0}\frac{d_\varepsilon}{\log(1/\varepsilon)}
+ =\frac{1}{-\log r_{\rm vis}}.
+\]
+If $W=\{0\}$, set $D_d=r_{\rm vis}=0$. The argument assumes freely
+concatenable inputs; constrained input grammars require a separate
+analysis.
 
-\subsection{Explicit QELM Resource Bounds}
+\subsection{An Explicit QELM Construction}
 \label{app:bernstein-resources}
 
-\emph{Assumptions and replay error.} Take inputs in $[0,1]$ and the trace
-distance defined in Section~\ref{sec:dynamics}. Assume the incremental bound
+\emph{Assumptions.} For a quantitative bound, take inputs in $[0,1]$,
+scalar output $y=\operatorname{Tr}(O\rho)$, and $M=\|O\|_\infty$.
+In addition to the assumptions above, suppose
 \begin{equation}
- D_{\rm tr}(\Phi_a(\rho),\Phi_{a'}(\sigma))\leq\eta D_{\rm tr}(\rho,\sigma)+L_{\rm in}|a-a'|,
+ D_{\rm tr}(\Phi_a(\rho),\Phi_{a'}(\sigma))
+ \leq\eta D_{\rm tr}(\rho,\sigma)+L_{\rm in}|a-a'|,
  \label{eq:incremental-lipschitz}
 \end{equation}
-for all states and inputs, with state-contraction factor $0\leq\eta<1$
-and input Lipschitz constant $L_{\rm in}\geq0$.
-Replaying the last $d$ inputs from fixed $\bar\rho$ gives $\rho_t^{(d)}$.
-Repeated contraction yields
-$D_{\rm tr}(\rho_t,\rho_t^{(d)})\leq\eta^d$ and
-$|y_t-\operatorname{Tr}(O\rho_t^{(d)})|\leq2M\eta^d$,
-where $M=\|O\|_\infty$ is the operator norm of the scalar output observable.
+with $0\leq\eta<1$. This is stronger than observable forgetting: it
+requires uniform state contraction and Lipschitz dependence on the input.
 
-\emph{Repeated encoding approximates replay.} Encode each window
-coordinate $a_i$ in a positive integer $r$ copies of
-$\sqrt{1-a_i}|0\rangle+\sqrt{a_i}|1\rangle$. Measuring each block's Hamming
-weight gives independent counts $K_i\sim\operatorname{Binomial}(r,a_i)$.
-Assigning readout coefficient $g_d(\boldsymbol k/r)$ to outcome
-$\boldsymbol k\in\{0,\ldots,r\}^d$ gives Bernstein expectation $f$.
-For windows $\boldsymbol a,\boldsymbol a'\in[0,1]^d$,
-Eq.~\eqref{eq:incremental-lipschitz} gives
-\begin{equation}
- |g_d(\boldsymbol a)-g_d(\boldsymbol a')|
- \leq2ML_{\rm in}\sum_{i=1}^d\eta^{d-i}|a_i-a_i'|.
- \label{eq:weighted-input-bound}
-\end{equation}
-Together with $\mathbb E|K_i/r-a_i|\leq1/(2\sqrt r)$, this bounds
-representation error.
-
-\emph{Three error contributions.} Let $\widehat f$ average $Q$ independent
-readouts $g_d(K_1/r,\ldots,K_d/r)$, with
-$\varepsilon_{\rm hist}=2M\eta^d$.
-For failure probability $0<\zeta<1$, representation and sampling bounds are
+\emph{Encode, measure, and average.} Encode each input $a_i$ in $r$
+copies of $\sqrt{1-a_i}|0\rangle+\sqrt{a_i}|1\rangle$. Measuring each
+block gives independent counts $K_i\sim\operatorname{Binomial}(r,a_i)$.
+Assign the linear-readout coefficient $m_d(k_1/r,\ldots,k_d/r)$ to
+count outcome $(k_1,\ldots,k_d)$. The expected prediction is the
+Bernstein approximation
 \[
- \varepsilon_{\rm rep}=\frac{ML_{\rm in}(1-\eta^d)}{(1-\eta)\sqrt r},\quad \varepsilon_{\rm shot}=M\sqrt{\frac{2\log(2/\zeta)}{Q}}.
+ f_r(s)=\mathbb E\bigl[m_d(K_1/r,\ldots,K_d/r)\bigr].
 \]
-Hoeffding's inequality~\cite{hoeffding1963probability} gives the bounds
+The midpoint inherits the input sensitivity bound
+\[
+ |m_d(s)-m_d(s')|
+ \leq2ML_{\rm in}\sum_{i=1}^d\eta^{d-i}|a_i-a_i'|.
+\]
+Together with $\mathbb E|K_i/r-a_i|\leq1/(2\sqrt r)$, this bounds
+the representation error. Averaging $Q$ independent readouts gives
+$\widehat f_r$. Since each readout lies in $[-M,M]$, Hoeffding's
+inequality~\cite{hoeffding1963probability} bounds its sampling error.
+For each fixed history and $0<\zeta<1$, with probability at least
+$1-\zeta$,
 \begin{equation}
- \begin{gathered}
- \sup_h|y(h)-f(S_d(h))|
- \leq\varepsilon_{\rm hist}+\varepsilon_{\rm rep},\\
- |y(h)-\widehat f(S_d(h))|
- \leq\varepsilon_{\rm hist}+\varepsilon_{\rm rep}+\varepsilon_{\rm shot}.
- \end{gathered}
- \label{eq:qrc-qelm-bound}
-\end{equation}
-The first holds uniformly; the second holds with probability at least
-$1-\zeta$ for each fixed history $h$, not all histories simultaneously.
-
-Product-binomial and statevector checks differ by at most $8.33\times10^{-17}$;
-every tested $(d,r)$ pair satisfies Eq.~\eqref{eq:qrc-qelm-bound}.
-
-\emph{Approaching the optimal information floor.}
-Midpoint coefficients $m_d(\boldsymbol k/r)$ define a separate expectation
-$f^{\rm mid}$ and $Q$-shot average $\widehat f^{\rm mid}$.
-The extrema and midpoint inherit Eq.~\eqref{eq:weighted-input-bound} and
-range $[-M,M]$, preserving $\varepsilon_{\rm rep}$ and $\varepsilon_{\rm shot}$:
-\begin{equation}
- \begin{gathered}
- \sup_h|y(h)-f^{\rm mid}(S_d(h))|
- \leq\frac{D_d}{2}+\varepsilon_{\rm rep},\\
- |y(h)-\widehat f^{\rm mid}(S_d(h))|
- \leq\frac{D_d}{2}+\varepsilon_{\rm rep}+\varepsilon_{\rm shot}.
- \end{gathered}
+ |y(h)-\widehat f_r(S_d(h))|
+ \leq D_d/2+\varepsilon_{\rm rep}+\varepsilon_{\rm shot},
  \label{eq:midpoint-resource-bound}
 \end{equation}
-The second bound again holds with probability at least $1-\zeta$ for each
-fixed history, using independent midpoint readouts.
-Here $D_d/2\leq M\eta^d$, versus replay's $2M\eta^d$.
+where
+\[
+ \varepsilon_{\rm rep}=\frac{ML_{\rm in}(1-\eta^d)}{(1-\eta)\sqrt r},\quad
+ \varepsilon_{\rm shot}=M\sqrt{\frac{2\log(2/\zeta)}{Q}}.
+\]
+With exact expectations, omit $\varepsilon_{\rm shot}$ and the bound
+holds uniformly over histories. Contraction also gives
+$D_d/2\leq M\eta^d$. The finite-shot guarantee is pointwise, not
+simultaneous over all histories.
 
-\emph{Exact construction checks.} For Section~\ref{sec:sharpness}'s channel,
-constant inputs reach every population in $[0,1]$ in closure. A suffix
-$s=(a_1,\ldots,a_d)$ leaves a compatible-output interval of width $\eta^d$
-and midpoint
+The construction uses $rd$ qubits and up to $(r+1)^d$ midpoint
+coefficients. Computing these coefficients requires reachable-output
+extrema and is not included in the resource count. This establishes
+representability, not an efficient training procedure.
+
+\emph{Analytical checks.} For the one-qubit channel in
+Section~\ref{sec:sharpness}, the compatible populations have width
+$D_d=\eta^d$ and midpoint
 \[
  m_d(s)=\frac{\eta^d}{2}+(1-\eta)\sum_{i=1}^d\eta^{d-i}g(a_i).
 \]
-Thus every window predictor has worst-case error
-$\eta^d/2+\|f-m_d\|_\infty$ in this example.
-From the fixed initial state, length-$L$ prefixes give width $\eta^d(1-\eta^L)$.
-For $g(a)=a^2$, replacing each $g(a_i)$ in the midpoint by
-$K_i(K_i-1)/[r(r-1)]$ gives its exact expectation for $r\geq2$.
-For the exponential target, Bernstein coefficients $m_d(\boldsymbol k/r)$
-give scalar bias
-\[
- b_r(a)=\frac{[1+a(e^{2/r}-1)]^r-e^{2a}}{e^2-1}\geq0.
-\]
-The global error is $\eta^d/2+(1-\eta^d)\max_{a\in[0,1]}b_r(a)$:
-all coordinates can maximize the nonnegative bias together. Its derivative
-has one interior zero, permitting a one-dimensional maximization.
-Kraus, statevector, and binomial checks verify evaluations; the identities
-establish global sharpness. Additivity permits marginal-count evaluation
-of the $rd$-qubit encoding.
+Thus any predictor $f$ has worst-case error
+$\eta^d/2+\|f-m_d\|_\infty$. For $g(a)=a^2$, replacing $g(K_i/r)$ by
+$K_i(K_i-1)/[r(r-1)]$ gives an unbiased readout for every $r\geq2$,
+attaining the information floor exactly. For
+$g(a)=(e^{2a}-1)/(e^2-1)$, the midpoint coefficients give a nonnegative
+Bernstein bias. Additivity reduces the worst-case calculation to a
+one-dimensional maximization of that bias. These checks use analytical
+readouts and binomial expectations, not training.
 
 \subsection{Protected Memory}
 \label{app:protected-calibration}
@@ -239,37 +173,35 @@ of the $rd$-qubit encoding.
 \subsubsection{The Persistent Error Floor}
 \label{app:protected-pulse}
 
-From $|00\rangle$, the first-qubit rotation
-$R_x^{(1)}(\theta)=\exp(-i\theta X_1/2)$ loads singlet population
-\begin{equation}
- |\langle\psi^-|R_x^{(1)}(\theta)|00\rangle|^2
- =\tfrac12\sin^2(\theta/2)=\delta.
- \label{eq:protected-pulse-population}
-\end{equation}
-Equation~\eqref{eq:protected-singlet} recovers it from Pauli correlations.
-Symmetric evolution protects the gap along arbitrarily long $q=0$ suffixes, so
-$D_d\geq\delta$ for every finite $d$; protection on other continuations is
-unnecessary. A one-radian pulse gives gap $0.1149244235$ and worst-case
-absolute error at least $0.0574622$. For the balanced pair,
-\begin{equation}
- \min\operatorname{MSE}_{\rm pair}
- =\frac{\delta^2}{4}=0.0033019058 .
- \label{eq:protected-pair-mse}
-\end{equation}
+Starting from $|00\rangle$, a first-qubit pulse writes singlet population
+\[
+ \delta=|\langle\psi^-|R_x^{(1)}(\theta)|00\rangle|^2
+ =\tfrac12\sin^2(\theta/2).
+\]
+Without the pulse, this population is zero. Symmetric evolution with
+collective loss preserves both populations during any unpulsed
+continuation. The output gap therefore remains $\delta$ after arbitrarily
+many shared inputs, giving $D_d\geq\delta$ and worst-case window error
+at least $\delta/2$ for every finite $d$. A one-radian pulse gives
+$\delta\approx0.1149$ and an error floor of approximately $0.0575$.
+Conservation is needed only along these common continuations, not for
+every possible input sequence.
 
-\subsubsection{Numerical Checks and Controls}
+\subsubsection{Dynamics and Controls}
 \label{app:protected-implementation}
 
-The QRC starts in $|00\rangle$ with
-$H(u)=JX_1X_2+0.37(Z_1+Z_2)+0.64u(X_1+X_2)$ and collective jump
-$L_c=\sqrt{0.8}(\sigma_1^-+\sigma_2^-)$, where
-$\sigma_i^-=|0\rangle\langle1|_i$ is the lowering operator on qubit $i$.
-Steps last $\Delta t=0.2$. The flag applies $I$ or the one-radian pulse
-$R_x^{(1)}(1)$ before 80 unpulsed inputs $u\in[0,1]$.
-Twelve roots independently sample $J\in[-1,1]$ and suffixes.
-Checks verify singlet conservation, the analytic pulse value, and zero
-population from symmetric preparation. With matched local amplitude damping,
-the median absolute 80-step gap is $1.569\times10^{-5}$.
-Relative collective-jump asymmetries $0.02$, $0.05$, $0.10$, and $0.20$
-produce initial singlet decay, not necessarily rapid erasure, distinguishing
-exact protection from slow forgetting.
+The numerical check uses
+\[
+ \begin{gathered}
+ H(u)=JX_1X_2+0.37(Z_1+Z_2)+0.64u(X_1+X_2),\\
+ L_c=\sqrt{0.8}(\sigma_1^-+\sigma_2^-),\qquad\Delta t=0.2.
+ \end{gathered}
+\]
+Here $\sigma_i^-=|0\rangle\langle1|_i$ is the lowering operator.
+Twelve independent realizations sample $J\in[-1,1]$ and 80-input
+continuations with $u\in[0,1]$ after the optional pulse. Checks verify
+the pulse value and singlet conservation. Matched local amplitude
+damping reduces the median 80-step gap to $1.57\times10^{-5}$.
+Relative collective-jump asymmetries of $0.02$, $0.05$, $0.10$, and
+$0.20$ break exact conservation but need not erase the gap rapidly.
+These controls distinguish protected memory from slow forgetting.

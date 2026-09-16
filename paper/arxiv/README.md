@@ -34,6 +34,10 @@ Time-Series Demonstrations, remains intact within the twelve-page budget.
 Both editions also share the 16 September figure refinement: no descriptive
 plot titles, a shared-input viewport of 1--32 in the memory-gap plot, and
 consistent, slightly thicker laser/NARMA trace lines and model markers.
+Appendices A--E now use the author's revised appendix PDF. Semantic references
+and the main-text midpoint notation are aligned with the replacement; equation
+numbers are generated from the revised source. The anonymous and authored
+appendices differ only in the repository-access sentence.
 
 ## Identity sources
 

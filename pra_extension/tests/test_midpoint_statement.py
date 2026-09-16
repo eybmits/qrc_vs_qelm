@@ -94,10 +94,13 @@ def test_fixed_window_statement_retains_scope_and_nonattainment(version: str) ->
     assert re.search(r"(?:need not|not necessarily).{0,100}attain", combined)
     assert "finite vector" in combined
     assert "replay" in appendix.lower()
-    assert re.search(
-        r"(?:without a guarantee of efficient fitting|"
-        r"efficient fitting remains a separate question)", appendix.lower(),
-    )
+    if version == "icaart2027":
+        assert "representability, not an efficient training procedure" in appendix.lower()
+    else:
+        assert re.search(
+            r"(?:without a guarantee of efficient fitting|"
+            r"efficient fitting remains a separate question)", appendix.lower(),
+        )
     assert "every finite input suffix can follow every admissible prehistory" in background
     assert "For each fixed window length $d$" in background
     assert "continuous window functions under the uniform norm" in background
@@ -124,7 +127,11 @@ def test_midpoint_proof_uses_common_compact_reachable_state_domain(version: str)
     assert r"\max" in appendix
     assert "uniform" in appendix.lower()
     assert "continuous" in appendix.lower()
-    assert r"\frac{D_d}{2}" in compact_math
+    if version == "icaart2027":
+        assert r"D_d/2+\varepsilon" in compact_math
+        assert "reachable closure does not change this supremum" in appendix
+    else:
+        assert r"\frac{D_d}{2}" in compact_math
 
 
 @pytest.mark.parametrize("version", PAPER_VERSIONS)
@@ -146,9 +153,38 @@ def test_observable_criterion_explicitly_attributes_existing_stability_result(
 
 
 @pytest.mark.parametrize("version", PAPER_VERSIONS)
-def test_midpoint_resource_bound_is_separate_from_preserved_replay_bound(version: str) -> None:
+def test_midpoint_resource_bound_preserves_construction_and_sampling_scope(version: str) -> None:
     background = _section(version, "background")
     appendix = _section(version, "appendix")
+    if version == "icaart2027":
+        # Revised Appendix C constructs the midpoint directly. The archived
+        # replay route remains checked below for the canonical edition only.
+        construction = appendix.split(r"\label{app:bernstein-resources}", 1)[1].split(
+            r"\subsection{", 1,
+        )[0]
+        compact = construction.replace(" ", "")
+        midpoint = _equation(construction, "eq:midpoint-resource-bound")
+        assert "full scalar input alphabet $[0,1]$" in background
+        assert "take inputs in $[0,1]$" in construction
+        assert r"m_d(k_1/r,\ldots,k_d/r)" in construction
+        assert r"f_r(s)=\mathbbE\bigl[m_d(K_1/r,\ldots,K_d/r)\bigr]" in compact
+        assert r"K_i\sim\operatorname{Binomial}(r,a_i)" in construction
+        assert r"|y(h)-\widehatf_r(S_d(h))|" in midpoint
+        assert r"D_d/2+\varepsilon_{\rmrep}+\varepsilon_{\rmshot}" in midpoint
+        assert (r"\varepsilon_{\rmrep}=\frac{ML_{\rmin}(1-\eta^d)}"
+                r"{(1-\eta)\sqrtr}") in compact
+        assert r"\varepsilon_{\rmshot}=M\sqrt{\frac{2\log(2/\zeta)}{Q}}" in compact
+        assert "For each fixed history" in construction
+        assert "probability at least $1-\\zeta$" in construction
+        assert "finite-shot guarantee is pointwise, not simultaneous over all histories" in construction
+        assert "exact expectations" in construction and "holds uniformly over histories" in construction
+        assert "$Q$ independent readouts" in construction
+        assert "each readout lies in $[-M,M]$" in construction
+        assert "$rd$ qubits" in construction and "$(r+1)^d$ midpoint coefficients" in construction
+        assert "reachable-output extrema" in construction
+        assert "not included in the resource count" in construction
+        assert "not an efficient training procedure" in construction
+        return
     replay = _equation(appendix, "eq:qrc-qelm-bound")
     midpoint = _equation(appendix, "eq:midpoint-resource-bound")
     # Definitions can precede the replay certificate in an unnumbered display.
@@ -177,30 +213,8 @@ def test_midpoint_resource_bound_is_separate_from_preserved_replay_bound(version
     assert r"\frac{D_d}{2}" in midpoint
     assert r"\varepsilon_{\rmrep}" in midpoint
     assert r"\varepsilon_{\rmshot}" in midpoint
-    if version == "canonical_emulation":
-        # The archived edition retains the probability inside its display.
-        assert r"1-\zeta" in midpoint
-    else:
-        # The compact ICAART displays retain both inequalities; their
-        # probability qualifiers are immediately following prose, not a
-        # claim of simultaneous high-probability control over all histories.
-        assert r"\sup_h|y(h)-f^{\rmmid}(S_d(h))|" in midpoint
-        assert r"|y(h)-\widehatf^{\rmmid}(S_d(h))|" in midpoint
-        for label, expected_scope in (
-            (
-                "eq:qrc-qelm-bound",
-                "The first holds uniformly; the second holds with probability at least "
-                "$1-\\zeta$ for each fixed history $h$, not all histories simultaneously.",
-            ),
-            (
-                "eq:midpoint-resource-bound",
-                "The second bound again holds with probability at least $1-\\zeta$ "
-                "for each fixed history, using independent midpoint readouts.",
-            ),
-        ):
-            after_label = appendix.split(rf"\label{{{label}}}", 1)[1]
-            after_equation = after_label.split(r"\end{equation}", 1)[1].lstrip()
-            assert after_equation.startswith(expected_scope)
+    # The archived edition retains the probability inside its display.
+    assert r"1-\zeta" in midpoint
     assert "m_d" in appendix
     assert "coefficient" in appendix.lower()
     assert "extrema" in appendix.lower()

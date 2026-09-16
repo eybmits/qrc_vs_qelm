@@ -257,30 +257,42 @@ def test_empirical_residual_is_not_claimed_as_pure_feature_approximation() -> No
         diagnostic = sections[
             "methodology" if directory.name == "icaart2027" else "appendix"
         ]
-        assert re.search(
-            r"[Rr]esidual(?:(?: emulator)? error)? (?:can (?:reflect|include)|includes|combines) "
-            r"feature approximation",
-            diagnostic,
-        )
-        for component in ("finite-data estimation", "ridge regularization",
-                          "suffix-mean sampling variability"):
-            assert component in diagnostic
-        assert re.search(
-            r"(?:without isolating feature approximation in the residual|"
-            r"not an isolated feature[- ]approximation error|"
-            r"it does not isolate feature approximation)", diagnostic,
-        )
-        assert re.search(
-            r"[Rr]epresentation limited (?:is an operational diagnosis|operationally means|means)",
-            sections["methodology"],
-        )
         assert "history passes, the fitted QELM fails, and replay succeeds" in sections["methodology"]
-        assert re.search(
-            r"(?:does not (?:isolate|identify)(?: the)?.*?"
-            r"best approximation (?:attainable with the|using|available from the) QELM features|"
-            r"not that the best approximation using QELM features fails)",
-            sections["methodology"],
-        )
+        if directory.name == "icaart2027":
+            # The revised E.1 states the mixed origin of the empirical residual
+            # directly; the operational diagnosis is not a feature-family bound.
+            for component in ("feature", "fitting", "regularization", "estimation"):
+                assert component in diagnostic
+            assert "not a pure representation error" in diagnostic
+            assert r"\emph{representation-limited} diagnosis" in diagnostic
+            assert "does not establish a lower bound for all readouts using those features" in diagnostic
+            assert "four conditionally independent prefixes" in diagnostic
+            assert "$4/3$" in diagnostic and "uncorrected terms" in diagnostic
+            assert "Neither quantity estimates $D_d$ or $r_{\\rm vis}$" in diagnostic
+        else:
+            assert re.search(
+                r"[Rr]esidual(?:(?: emulator)? error)? (?:can (?:reflect|include)|includes|combines) "
+                r"feature approximation",
+                diagnostic,
+            )
+            for component in ("finite-data estimation", "ridge regularization",
+                              "suffix-mean sampling variability"):
+                assert component in diagnostic
+            assert re.search(
+                r"(?:without isolating feature approximation in the residual|"
+                r"not an isolated feature[- ]approximation error|"
+                r"it does not isolate feature approximation)", diagnostic,
+            )
+            assert re.search(
+                r"[Rr]epresentation limited (?:is an operational diagnosis|operationally means|means)",
+                sections["methodology"],
+            )
+            assert re.search(
+                r"(?:does not (?:isolate|identify)(?: the)?.*?"
+                r"best approximation (?:attainable with the|using|available from the) QELM features|"
+                r"not that the best approximation using QELM features fails)",
+                sections["methodology"],
+            )
         assert "common-suffix residual emulator NRMSE" in sections["evaluation"]
         if directory.name == "icaart2027":
             # The revised framing retains the practical resource distinctions
@@ -336,7 +348,7 @@ def test_icaart_appendix_rewrite_covers_full_body_and_relocated_material() -> No
     expected_titles = (
         r"Optimal Window Error(?: and (?:QELM )?Emulation)?",
         r"Observable Memory and (?:Required )?Context",
-        r"Explicit QELM Resource Bounds",
+        r"An Explicit QELM Construction",
         r"Protected Memory(?: Beyond Every Finite Window)?",
     )
     assert len(titles) == len(expected_titles)
@@ -366,24 +378,44 @@ def test_icaart_appendix_rewrite_covers_full_body_and_relocated_material() -> No
     assert r"\label{app:common-suffix-diagnostic}" in method_parts[1]
     assert r"\label{eq:panel-decomposition}" in method_parts[1]
     assert r"\label{eq:target-qrc-model}" in method_parts[2]
-    # Cohorts and fitting remain explicit inside E.2, with compact run-in
-    # headings instead of extra native subsection whitespace.
-    assert r"\emph{Cohorts and held-out data.}" in method_parts[2]
-    assert r"\emph{Fitting and decision rules.}" in method_parts[2]
-    assert method_parts[3].startswith("Finite-Shot Extension}")
-    assert method_parts[4].startswith("Long-Context Extension}")
+    # Models, train-only preprocessing, validation selection, and operational
+    # decision rules remain in E.2 after the complete user-supplied rewrite.
+    fitting = re.sub(r"\s+", " ", method_parts[2])
+    for condition in ("QRC targets", "Reset-QELM", "seed sets are disjoint",
+                      "Training data alone standardize features",
+                      "Validation selects", "refitted on training and validation data",
+                      "same windows and splits", "10 of 12 roots"):
+        assert condition in fitting
+    assert method_parts[3].startswith("Finite Measurements}")
+    assert method_parts[4].startswith("Longer Windows}")
     assert method_parts[5].startswith("Time-Series Demonstrations}")
     assert r"\label{app:task-forecasting}" in method_parts[5]
     assert r"\label{app:laser-demonstration}" in method_parts[5]
-    for topic in (
-        "Why the midpoint is optimal.", "Why QELMs can approach it.",
-        "When longer context suffices.", "Remove invisible differences.",
-        "Measure the remaining memory.", "Relate memory size to output error.",
-        "Stability and context length.", "Assumptions and replay error.",
-        "Repeated encoding approximates replay.", "Three error contributions.",
-        "Approaching the optimal information floor.",
-    ):
-        assert rf"\emph{{{topic}}}" in appendix
+    parts = re.split(r"\\subsection\{", appendix)[1:]
+    window, memory, construction, protection = [re.sub(r"\s+", " ", part) for part in parts]
+    for condition in ("scalar output", "reachable closure", "Uniform QELM density",
+                      "$D_d/2+\\varepsilon$", "infimum", "finite model need not attain",
+                      "For vector outputs", "lower bound $D_d/2$", "error at most $D_d$",
+                      "same prediction distribution", "Randomized predictions cannot lower"):
+        assert condition in window
+    memory_math = re.sub(r"\s+", "", memory)
+    for identity in (r"W=V/\mathcalN", r"\|x\|_{\rmobs}=\sup_w\|\overline{\mathcalC}A_wx\|",
+                     r"\kappa_-c_d\leqD_d\leq\kappa_+c_d", r"c_{d+\ell}\leqc_dc_\ell",
+                     r"\lim_{d\to\infty}D_d^{1/d}=r_{\rmvis}",
+                     r"\frac{d_\varepsilon}{\log(1/\varepsilon)}=\frac{1}{-\logr_{\rmvis}}"):
+        assert identity in memory_math
+    for condition in ("empty word", "norm ball", "independent of $d$",
+                      "freely concatenable inputs", "constrained input grammars"):
+        assert condition in memory
+    assert "petreczky2026stability" in memory
+    assert r"\widehat f_r" in construction
+    for condition in (r"\tfrac12\sin^2(\theta/2)", r"$D_d\geq\delta$",
+                      "at least $\\delta/2$ for every finite $d$",
+                      "arbitrarily many shared inputs", "not for every possible input sequence"):
+        assert condition in protection
+    dark = _json("pra_extension/outputs/dark_sector_validation/dark_sector_summary.json")
+    assert f"{dark['expected_prefix_gap']:.4f}" in protection
+    assert f"{dark['expected_worst_case_absolute_floor']:.4f}" in protection
     assert r"\ref{app:protected-pulse}" in dynamics
     assert r"\ref{app:protected-implementation}" in dynamics
     assert r"\ref{sec:methods}" not in dynamics
@@ -397,7 +429,7 @@ def test_icaart_appendix_rewrite_covers_full_body_and_relocated_material() -> No
     assert main.index(r"\input{sections/appendix}") < main.index(r"\input{sections/methodology}")
 
 
-def test_icaart_appendix_rewrite_preserves_equation_sequence_12_to_26() -> None:
+def test_icaart_appendix_rewrite_preserves_referenced_equation_sequence_12_to_15() -> None:
     directory = REPO_ROOT / "paper" / "icaart2027" / "sections"
     combined = "\n".join(
         (directory / f"{name}.tex").read_text(encoding="utf-8")
@@ -407,23 +439,19 @@ def test_icaart_appendix_rewrite_preserves_equation_sequence_12_to_26() -> None:
         r"\\begin\{(equation|align)\}(.*?)\\end\{\1\}", combined, re.DOTALL,
     )
     labels = (
-        "eq:replay-map", "eq:visible-quotient", "eq:visible-radius-formal",
-        "eq:observable-norm", "eq:norm-equivalence", "eq:diameter-product",
-        "eq:diameter-product-equivalence", "eq:incremental-lipschitz",
-        "eq:weighted-input-bound",
-        "eq:qrc-qelm-bound", "eq:midpoint-resource-bound",
-        "eq:protected-pulse-population",
-        "eq:protected-pair-mse", "eq:panel-decomposition", "eq:target-qrc-model",
+        "eq:incremental-lipschitz", "eq:midpoint-resource-bound",
+        "eq:panel-decomposition", "eq:target-qrc-model",
     )
-    assert len(equations) == len(labels) == 15
+    assert len(equations) == len(labels) == 4
     for number, ((environment, body), label) in enumerate(zip(equations, labels), start=12):
         assert rf"\label{{{label}}}" in body, f"Equation ({number}): {label} moved"
         if environment == "align":
             # The target Hamiltonian and evolution share one equation number.
-            assert number == 26
+            assert number == 15
             assert body.count(r"\nonumber") == 1
-    assert r"\sum_{i=1}^d\eta^{d-i}" in re.sub(r"\s+", "", equations[8][1])
-    assert r"\sin^2(\theta/2)" in equations[11][1]
+    assert r"\eta D_{\rm tr}(\rho,\sigma)+L_{\rm in}|a-a'|" in equations[0][1]
+    assert r"\widehat f_r(S_d(h))" in equations[1][1]
+    assert r"D_d/2+\varepsilon_{\rm rep}+\varepsilon_{\rm shot}" in equations[1][1]
     assert not re.search(r"\\(?:setcounter|addtocounter)\{equation\}|\\tag\{", combined)
 
 
@@ -493,8 +521,11 @@ def test_added_primary_references_are_cited_in_both_versions() -> None:
         assert "Chen, Jiayin and Nurdin" in bibliography
         assert "Chen, Jinglei" not in bibliography
         assert "10.1080/01621459.1963.10500830" in bibliography
-    # Only ICAART is active; its new measured-input experiment cites its source.
-    assert citation_sets[1] == citation_sets[0] | {"weigend1993timeseries"}
+    # The active measured-input experiment adds its data source; the revised
+    # Appendix B omits the former constrained-switching digression/citation.
+    assert citation_sets[1] == (
+        citation_sets[0] - {"philippe2016constrained"}
+    ) | {"weigend1993timeseries"}
 
 
 def test_repository_reference_is_at_end_and_review_version_is_anonymous() -> None:
@@ -617,7 +648,7 @@ def test_long_context_claims_preserve_the_separate_cohort_and_negative_controls(
 
 def test_icaart_exact_benchmarks_keep_global_derivation_and_construction_scope() -> None:
     """Check the new controlled examples without conflating them with learned cohorts."""
-    from sharpness_benchmarks import convergence_rows, zero_variance_probability
+    from sharpness_benchmarks import convergence_rows
 
     directory = REPO_ROOT / "paper" / "icaart2027" / "sections"
     sections = {
@@ -647,21 +678,18 @@ def test_icaart_exact_benchmarks_keep_global_derivation_and_construction_scope()
     assert "positive worst-case error floor, regardless of its model capacity" in sections["abstract"]
     assert "Analytical benchmarks and simulations" in sections["introduction"]
 
-    # The analytical interval and factorial moment establish sharpness;
-    # testing a handful of windows alone does not certify a supremum.
-    assert "in closure" in appendix
+    # The revised C keeps the compatible-range and factorial-moment argument,
+    # rather than requiring the removed auxiliary finite-history calibration.
+    assert "reachable closure does not change this supremum" in appendix
+    assert "compatible populations have width $D_d=\\eta^d$" in appendix
     assert r"\eta^d/2+\|f-m_d\|_\infty" in appendix
-    assert r"\eta^d(1-\eta^L)" in appendix
     assert r"K_i(K_i-1)/[r(r-1)]" in appendix and r"r\geq2" in appendix
-    assert r"\max_{a\in[0,1]}b_r(a)" in appendix
-    assert re.search(
-        r"(?:global sharpness follows from the identities|the identities establish global sharpness)",
-        appendix,
-    )
-    assert "Midpoint coefficients" in appendix and "define a separate expectation" in appendix
-    assert r"D_d\sqrt{p(1-p)}" in methods
-    assert "Neither it nor the correction estimates $D_d$ or $r_{\\rm vis}$" in methods
-    assert f"{100 * zero_variance_probability(0.01):.2f}\\%" in methods
+    assert "unbiased readout" in appendix and "attaining the information floor exactly" in appendix
+    assert "midpoint coefficients give a nonnegative Bernstein bias" in appendix
+    assert "one-dimensional maximization of that bias" in appendix
+    assert "analytical readouts and binomial expectations, not training" in appendix
+    assert "Neither quantity estimates $D_d$ or $r_{\\rm vis}$" in methods
+    assert "rare histories can be missed" in methods
 
     ledger = _json("paper/figures/sharpness/fig05_exact_sharpness_source.json")
     expected = convergence_rows(**ledger["parameters"])
@@ -859,13 +887,15 @@ def test_icaart_abstract_and_short_captions_keep_plain_explanations_and_scope() 
     assert "across 24 fresh roots" in evaluation
     assert "3.10\\%" in evaluation and "27.88\\%" in evaluation
     assert "59.7\\%" in evaluation and "77.3\\%" in evaluation
-    assert "NRMSE uses training-target standard deviation" in methods
-    assert "first root's first 128 scored rows" in methods
-    assert "all 1,920 test rows" in methods
-    assert "only the QELM readout is fitted" in methods
+    assert "NRMSE uses the training-target standard deviation" in methods
+    assert "4096/1024/2048-sample training/validation/test blocks" in methods
+    assert "training-only standardization" in methods
+    assert "QELM predicts the QRC's final $Z_0$ expectation, not the next laser value" in methods
     assert "never past targets" in methods
-    assert "not global $D_d/2$ or NRMSE" in methods
-    assert "replicate an earlier 12-root study without pooling" in methods
+    assert "half the output gap bounds one of the two absolute prediction errors, not global NRMSE" in methods
+    assert "Twenty-four fresh roots" in methods
+    assert "at least 20 of 24 positive roots" in methods
+    assert "without simultaneous coverage" in methods
 
 
 def test_icaart_finite_resources_bridge_keeps_stronger_assumptions_and_pointwise_scope() -> None:
@@ -890,7 +920,7 @@ def test_icaart_finite_resources_bridge_keeps_stronger_assumptions_and_pointwise
     assert "$r$ encoding copies per input" in bridge
     assert "$Q$ independent samples of its bounded readout" in bridge
     assert r"\eqref{eq:midpoint-resource-bound}" in bridge
-    assert r"\widehat f^{\rm mid}" in bridge
+    assert r"\widehat f_r" in bridge
     compact_math = re.sub(r"\s+", "", bridge)
     for term in (
         r"\underbrace{D_d/2}_{\text{missinghistory}}",
@@ -911,12 +941,28 @@ def test_icaart_finite_resources_bridge_keeps_stronger_assumptions_and_pointwise
     assert "constructive upper bound" in bridge
     assert "not an efficient learning method or an exact decomposition of fitted-model error" in bridge
 
-    # Keep the numbered full bound in Appendix C; the bridge is deliberately
-    # unnumbered so equations (12)--(26) and all existing references stay fixed.
+    # Keep the numbered bound in Appendix C and its short main-text bridge
+    # unnumbered; the revised appendix retains four referenced equations.
     assert not re.search(r"\\begin\{(?:equation|align|gather)\}", bridge)
     assert not re.search(r"\\(?:setcounter|addtocounter)\{equation\}|\\tag\{", bridge)
     assert sections["appendix"].count(r"\label{eq:midpoint-resource-bound}") == 1
     assert r"\label{eq:midpoint-resource-bound}" not in sections["dynamics"]
+    construction = re.sub(r"\s+", " ", sections["appendix"].split(
+        r"\label{app:bernstein-resources}", 1,
+    )[1].split(r"\subsection{", 1)[0])
+    for condition in ("For each fixed history", "probability at least $1-\\zeta$",
+                      "exact expectations", "holds uniformly over histories",
+                      "finite-shot guarantee is pointwise, not simultaneous over all histories",
+                      "independent readouts", "each readout lies in $[-M,M]$",
+                      "$rd$ qubits", "$(r+1)^d$ midpoint coefficients",
+                      "reachable-output extrema", "not included in the resource count",
+                      "representability, not an efficient training procedure"):
+        assert condition in construction
+    construction_math = re.sub(r"\s+", "", construction)
+    for term in (r"f_r(s)=\mathbbE\bigl[m_d(K_1/r,\ldots,K_d/r)\bigr]",
+                 r"\frac{ML_{\rmin}(1-\eta^d)}{(1-\eta)\sqrtr}",
+                 r"M\sqrt{\frac{2\log(2/\zeta)}{Q}}"):
+        assert term in construction_math
     background = re.sub(r"\s+", " ", sections["background"])
     assert r"Section~\ref{sec:finite-resources} summarizes its resource bounds" in background
     assert r"Appendix~\ref{app:bernstein-resources} gives the construction" in background

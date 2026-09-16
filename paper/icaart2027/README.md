@@ -8,6 +8,20 @@ feature-density and finite-shot studies without pooling their cohorts.
 There is one paper, including its proofs and numerical methods, not a separate
 supplement.
 
+## Current revised appendix (16 September 2026)
+
+Appendices A--E use the author's `qrc_qelm_appendix_revised.pdf` (three pages;
+SHA-256 `7784cff8db65cc0d76c2c1c6b731a2ccd816b93804ae08aec1e2f3e83821196a`).
+The replacement is typeset in the existing manuscript template, preserving
+semantic section links and renumbering the retained displayed equations.
+The main resource paragraph uses the revision's midpoint-predictor notation
+`f_r`; both editions derive from the same appendix source. Figures, data,
+title, abstract, introduction and conclusion are unchanged. Earlier appendix
+descriptions and equation-number inventories below record superseded versions.
+Both rebuilt PDFs have twelve pages, including references and all five revised
+appendices, without further cuts or changes to fonts, margins or figure sizes.
+The four retained numbered appendix equations are now (12)--(15).
+
 ## Current figure refinement (16 September 2026)
 
 Descriptive chart and panel titles are removed from Figures 2 and 3; panel
@@ -18,9 +32,9 @@ The paired QRC output gap in Figure 3(b) focuses on shared inputs 1--32; all
 traces share solid 0.9-point lines, filled QRC dots and 2.4-point open QELM
 circles every third sample. Black target traces remain fully opaque.
 Figure 3 retains its full width and nine equal 1.51-by-0.78-inch plot frames
-in a shorter 6.221-by-3.97-inch canvas. The methods' display-range description
-is updated to 32 inputs. Source observations, numerical results, captions and
-model colors are unchanged.
+in a shorter 6.221-by-3.97-inch canvas. These display choices are preserved in
+the revised-appendix editions. Source observations, numerical results, captions
+and model colors are unchanged.
 
 ## Current introduction and conclusions (14 September 2026)
 

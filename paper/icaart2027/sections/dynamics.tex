@@ -8,6 +8,7 @@ decay requires, and how a reservoir can preserve an observable trace beyond
 every finite window.
 
 \subsection{Observable Forgetting}
+\label{sec:observable-forgetting}
 
 An old input matters when it creates a state difference that the declared
 outputs can reveal. This includes differences that become visible only
@@ -193,10 +194,10 @@ midpoint construction assumes uniform state contraction and Lipschitz
 dependence on inputs [Eq.~\eqref{eq:incremental-lipschitz}], stronger than
 observable forgetting. With $r$ encoding copies per input
 and $Q$ independent samples of its bounded readout, its prediction
-$\widehat f^{\rm mid}$ satisfies Eq.~\eqref{eq:midpoint-resource-bound}:
+$\widehat f_r$ satisfies Eq.~\eqref{eq:midpoint-resource-bound}:
 \[
  \begin{aligned}
- &|y(h)-\widehat f^{\rm mid}(S_d(h))|\\
+ &|y(h)-\widehat f_r(S_d(h))|\\
  &\quad\leq
  \underbrace{D_d/2}_{\text{missing history}}
  +\underbrace{\varepsilon_{\rm rep}}_{\text{representation}}

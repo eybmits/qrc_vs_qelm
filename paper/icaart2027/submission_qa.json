@@ -1,7 +1,7 @@
 {
   "schema": "icaart2027_submission_qa_v2",
   "pdf": "submission.pdf",
-  "pdf_sha256": "680d223c1460ce1c026f6af99db5fdd40897da698336ead769aaca604c8697b4",
+  "pdf_sha256": "a50f0280b5480fb795a54313879b7df197fadbc3d2274fb11d747dd3976c5eaf",
   "extraction_backend": "pypdf + Poppler",
   "passed": false,
   "format_passed": true,
@@ -72,7 +72,7 @@
     },
     "character_budget": {
       "passed": true,
-      "characters": 42474,
+      "characters": 39655,
       "minimum": 10000,
       "maximum": 50000,
       "definition": "Unicode, whitespace excluded"
@@ -114,19 +114,19 @@
           "unicode": true
         },
         {
-          "name": "SOILPB+NimbusRomNo9L-Regu",
+          "name": "EBVNRJ+NimbusRomNo9L-Regu",
           "embedded": true,
           "subset": true,
           "unicode": true
         },
         {
-          "name": "KWINSU+NimbusRomNo9L-ReguItal",
+          "name": "WZOUJM+NimbusRomNo9L-ReguItal",
           "embedded": true,
           "subset": true,
           "unicode": true
         },
         {
-          "name": "RRUCEV+StandardSymL",
+          "name": "GJFPAB+StandardSymL",
           "embedded": true,
           "subset": true,
           "unicode": true
@@ -138,7 +138,7 @@
           "unicode": true
         },
         {
-          "name": "OUTHWQ+CMSY10",
+          "name": "FCUXRG+CMSY10",
           "embedded": true,
           "subset": true,
           "unicode": true
@@ -150,13 +150,13 @@
           "unicode": true
         },
         {
-          "name": "XEKGWN+URWChanceryL-MediItal",
+          "name": "EFIELR+URWChanceryL-MediItal",
           "embedded": true,
           "subset": true,
           "unicode": true
         },
         {
-          "name": "VUHUAR+CMEX10",
+          "name": "VYVTUL+CMEX10",
           "embedded": true,
           "subset": true,
           "unicode": true
@@ -204,13 +204,13 @@
           "unicode": true
         },
         {
-          "name": "OUTHWQ+CMSY10",
+          "name": "FCUXRG+CMSY10",
           "embedded": true,
           "subset": true,
           "unicode": true
         },
         {
-          "name": "VUHUAR+CMEX10",
+          "name": "VYVTUL+CMEX10",
           "embedded": true,
           "subset": true,
           "unicode": true
@@ -310,19 +310,145 @@
       {
         "page": 9,
         "box": [
-          394.027,
-          717.551467,
-          410.396455,
-          730.342408
+          114.97,
+          713.401985,
+          122.151042,
+          730.687096
         ]
       },
       {
         "page": 9,
         "box": [
-          420.111244,
-          717.233299,
-          425.083144,
-          725.668956
+          127.721,
+          713.401985,
+          135.46991,
+          730.687096
+        ]
+      },
+      {
+        "page": 9,
+        "box": [
+          145.453,
+          713.401985,
+          148.22061,
+          730.687096
+        ]
+      },
+      {
+        "page": 9,
+        "box": [
+          150.422345,
+          713.401985,
+          158.171255,
+          730.687096
+        ]
+      },
+      {
+        "page": 9,
+        "box": [
+          179.774,
+          713.401985,
+          187.52291,
+          730.687096
+        ]
+      },
+      {
+        "page": 9,
+        "box": [
+          189.092,
+          713.386873,
+          194.627221,
+          750.567296
+        ]
+      },
+      {
+        "page": 9,
+        "box": [
+          193.321394,
+          713.401985,
+          196.089005,
+          730.687096
+        ]
+      },
+      {
+        "page": 9,
+        "box": [
+          225.982,
+          713.401985,
+          233.73091,
+          730.687096
+        ]
+      },
+      {
+        "page": 9,
+        "box": [
+          235.301,
+          713.386873,
+          240.836221,
+          750.567296
+        ]
+      },
+      {
+        "page": 9,
+        "box": [
+          239.529394,
+          713.401985,
+          245.054652,
+          730.687096
+        ]
+      },
+      {
+        "page": 10,
+        "box": [
+          95.320288,
+          713.401985,
+          103.069199,
+          730.687096
+        ]
+      },
+      {
+        "page": 10,
+        "box": [
+          440.37,
+          711.438985,
+          445.3513,
+          728.724096
+        ]
+      },
+      {
+        "page": 10,
+        "box": [
+          454.524,
+          711.438985,
+          462.27291,
+          728.724096
+        ]
+      },
+      {
+        "page": 10,
+        "box": [
+          463.843,
+          711.423873,
+          469.378221,
+          748.604296
+        ]
+      },
+      {
+        "page": 10,
+        "box": [
+          471.438,
+          711.438985,
+          476.4193,
+          728.724096
+        ]
+      },
+      {
+        "page": 10,
+        "box": [
+          421.974,
+          719.329021,
+          429.166997,
+          727.916782
         ]
       }
     ],

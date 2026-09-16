@@ -3,6 +3,18 @@
 Updated on 16 September 2026. This is an anonymous **editorial draft** in the
 Regular Paper format, not a submission-ready package or a final publication.
 
+## Revised appendix (16 September 2026)
+
+The author's `qrc_qelm_appendix_revised.pdf` replaces Appendices A--E in both
+editions. Shared LaTeX sources preserve the revised proofs, construction,
+controls and all five numerical-method subsections. The main resource bound
+uses the same midpoint-predictor notation; section references and equations
+(12)--(15) resolve automatically. Both PDFs remain twelve pages, with no cuts
+beyond the supplied revision and no changes to figures, fonts or margins.
+The rendered appendix pages were checked in both editions; the anonymous
+code note and authored repository link remain edition-specific. Historical
+appendix details and equation inventories below describe earlier versions.
+
 ## Author editions (14 September 2026)
 
 The author confirmed the paper author order as **Markus Baumann, Jonas Stein,
@@ -36,8 +48,8 @@ Laser and NARMA10 predictions use consistent solid 0.9-point lines and
 filled QRC dots / open QELM circles. Figures 2 and 3 have no descriptive
 plot titles; panel letters, legends, axes and explanatory annotations remain.
 The nine Figure 3 frames keep their dimensions and alignment in a shorter
-6.221-by-3.97-inch canvas. The methods describe the new 32-input display;
-captions and scientific results are unchanged.
+6.221-by-3.97-inch canvas. These display choices remain unchanged in the
+revised-appendix editions; captions and scientific results are unchanged.
 
 ## Previous layout update (14 September 2026)
 

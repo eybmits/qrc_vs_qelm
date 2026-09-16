@@ -70,23 +70,28 @@ def test_general_inputs_and_physical_time_have_distinct_meanings(version: str) -
     assert "$a=(u,q)$" in dynamics
     assert re.search(r"H\(u\)\s*&?=", protected)
     assert r"H_T(a)" in methods
-    assert r"\dot\rho=d\rho/d\tau" in methods
-    assert r"physical time $\tau$" in methods
-    assert re.search(r"\$t\$ indexes discrete (?:input|step)", methods)
     assert r"\sigma_i^-=|0\rangle\langle1|_i" in protected
-    assert "lowering operator on qubit $i$" in protected
+    if version == "icaart2027":
+        # The revised protocol uses conventional dot notation without adding a
+        # second time variable; discrete sample t remains defined in Models.
+        assert r"\dot\rho&=-i[H_T(a),\rho]" in methods
+        assert "each step lasts 0.5" in methods
+        assert r"d\rho/dt" not in methods and r"d\rho/d t" not in methods
+        assert "lowering operator" in protected
+    else:
+        assert r"\dot\rho=d\rho/d\tau" in methods
+        assert r"physical time $\tau$" in methods
+        assert re.search(r"\$t\$ indexes discrete (?:input|step)", methods)
+        assert "lowering operator on qubit $i$" in protected
 
 
 @pytest.mark.parametrize("version", PAPER_VERSIONS)
-def test_appendix_separates_reachable_geometry_replay_and_sampled_predictors(version: str) -> None:
+def test_appendix_separates_reachable_geometry_and_sampled_predictors(version: str) -> None:
     appendix = _section(version, "appendix")
     compact = appendix.replace(" ", "")
 
-    assert r"\mathcalY_d(s)=\{y(h):S_d(h)=s\}" in compact
     assert r"V=\operatorname{span}_{\mathbbR}\Delta" in compact
     assert r"\kappa_-c_d\leqD_d\leq\kappa_+c_d" in compact
-    assert r"g_d(a_1,\ldots,a_d)" in compact
-    assert r"\rho_t^{(d)}" in appendix
     assert "y_-(s)" in appendix and "y_+(s)" in appendix
     midpoint = compact.replace("&", "")
     assert any(expression in midpoint for expression in (
@@ -97,14 +102,19 @@ def test_appendix_separates_reachable_geometry_replay_and_sampled_predictors(ver
         r"m_d(s)=\frac{1}{2}[y_-(s)+y_+(s)]",
     ))
     assert r"K_i\sim\operatorname{Binomial}(r,a_i)" in appendix
-    assert r"f^{\rm mid}" in appendix and r"\widehat f^{\rm mid}" in appendix
     if version == "icaart2027":
-        # The concise appendix defines Q through the number of readout samples;
-        # the promoted main-text bound states the same meaning explicitly.
-        assert r"Let $\widehat f$ average $Q$ independent readouts" in appendix
-        assert r"$Q$-shot average $\widehat f^{\rm mid}$" in appendix
+        # Reachable states define the interval midpoint; f_r is its exact
+        # Bernstein expectation and the hat identifies Q-sample estimates.
+        assert r"y_-(s)=\min_{\rho\in\mathcalR}\mathcalC\Phi_s(\rho)" in compact
+        assert r"y_+(s)=\max_{\rho\in\mathcalR}\mathcalC\Phi_s(\rho)" in compact
+        assert r"f_r(s)=\mathbbE\bigl[m_d(K_1/r,\ldots,K_d/r)\bigr]" in compact
+        assert r"$Q$ independent readouts gives $\widehat f_r$" in appendix
         assert "$Q$ independent samples of its bounded readout" in _section(version, "dynamics")
     else:
+        assert r"\mathcalY_d(s)=\{y(h):S_d(h)=s\}" in compact
+        assert r"g_d(a_1,\ldots,a_d)" in compact
+        assert r"\rho_t^{(d)}" in appendix
+        assert r"f^{\rm mid}" in appendix and r"\widehat f^{\rm mid}" in appendix
         assert "positive integer $Q$ is the shot count" in appendix
 
     # Retire synonyms that previously collided with input symbols, quantum
