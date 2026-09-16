@@ -660,17 +660,20 @@ def test_icaart_exact_benchmarks_keep_global_derivation_and_construction_scope()
     # The author-restored Figure 3 again includes the analytical reference;
     # direct NARMA prediction remains a separate numerical follow-up.
     presentation = benchmark
-    assert r"\subsection{Exact Sharpness Benchmarks}" in evaluation
+    assert r"\subsection{Reaching the Theoretical Error Floor}" in evaluation
     assert "Separate post hoc construction checks" in benchmark
-    assert "classical leaky-memory process embedded in a qubit" in benchmark
+    assert "classical leaky-memory process in one qubit" in benchmark
+    assert r"y_t=\eta y_{t-1}+(1-\eta)g(a_t)" in benchmark
     assert r"g(a)=a^2" in benchmark and r"(e^{2a}-1)/(e^2-1)" in benchmark
     assert r"D_d=\eta^d" in benchmark
-    assert "two encoding copies per input and an analytical readout" in benchmark
-    assert "attain $D_d/2$ exactly" in benchmark
+    assert "supremum over all earlier histories" in benchmark
+    assert "two encoding copies per input suffice to represent this midpoint exactly" in benchmark
+    assert "worst-case absolute error is exactly $D_d/2$" in benchmark
+    assert "confirms the analytical readout on endpoint and mixed windows" in benchmark
     assert "constructed readouts, not learning or resource efficiency" in benchmark
     assert "factorized exact expectations" in presentation
-    assert "not the best readout at each copy count" in presentation
-    assert "no training" in presentation
+    assert "better readouts at a given copy count are not ruled out" in presentation
+    assert "without training or measurement noise" in presentation
     assert r"Figure~\ref{fig:long-context}(b)" in benchmark
     assert "$0.281322$ at one copy" in benchmark
     assert "$0.084753$ at 256 copies" in benchmark
@@ -880,8 +883,8 @@ def test_icaart_abstract_and_short_captions_keep_plain_explanations_and_scope() 
     # Detailed construction, cohort and normalization scope remains in the text.
     evaluation = " ".join((directory / "evaluation.tex").read_text().split())
     methods = " ".join((directory / "methodology.tex").read_text().split())
-    assert "not the best readout at each copy count" in evaluation
-    assert "one-qubit channel" in evaluation
+    assert "better readouts at a given copy count are not ruled out" in evaluation
+    assert "classical leaky-memory process in one qubit" in evaluation
     assert "five-qubit study uses a ten-qubit QELM" in evaluation
     assert "Synthetic NARMA10 prediction" in evaluation
     assert "across 24 fresh roots" in evaluation

@@ -39,6 +39,12 @@ and the main-text midpoint notation are aligned with the replacement; equation
 numbers are generated from the revised source. The anonymous and authored
 appendices differ only in the repository-access sentence.
 
+Section 5.5, "Reaching the Theoretical Error Floor", now explains the
+leaky-memory update and midpoint intuition before distinguishing exact
+attainment from convergence with increasing capacity. Both editions use the
+same expanded explanation, retaining all values and scientific qualifications
+within twelve pages.
+
 ## Identity sources
 
 - Markus Baumann: [QAR-Lab team](https://qarlab.de/en/our-team/) and

@@ -3,15 +3,15 @@
     "main.tex": "Author header with compact title spacing, linked green ORCID icons, profile links, and PDF author/subject metadata",
     "sections/methodology.tex": "Anonymity-only code note replaced with a link and accurate restricted-access status"
   },
-  "anonymous_source_sha256": "9a6e44044f3463b20f6eb268c3310c6d9f05f52a52ca52fdd7738d04e7774a01",
+  "anonymous_source_sha256": "d043dae59fdd3937dc42280c592bfa977f869427b3e9a4163f5dbdcc4ffa0fc8",
   "authors_sha256": "b4b180bf12d4c4e74fcdca4ce97aaad492d7a7dee7ffccb5aa26d69300fcf93d",
   "files": {
-    "arxiv_qa.json": "87e95c587e1d88f749b4ca82b50dd6d9e0f4a3f53daa63d7e9a4f5500bdc0193",
-    "arxiv_source.zip": "06f7a6347ece1dcd8d8a5d9e073678c816b11f8f937f8be6af5d8b1390cc60ca",
+    "arxiv_qa.json": "78d681d3713f4493f19b3e7ea9aa86a33dc9f871f15893dff2c6c7af94198f63",
+    "arxiv_source.zip": "9838c551c615d5e530012d89fc4db3cce88b6b75d86ad9346a9f1c21929569f9",
     "authors.json": "b4b180bf12d4c4e74fcdca4ce97aaad492d7a7dee7ffccb5aa26d69300fcf93d",
     "build_arxiv.py": "68cc529d849ad38edb769e2457d81969a5586c7fb015466911e2ff5007120c60",
     "main.tex": "0903e09085d2f2bdc31200c30da6d08c4b28c4c64aff6a7c42edef2dea0da2d8",
-    "preprint.pdf": "aef9be6a8a7cf44c3d25f1c5e17d2b52e349d7de76adc45c165cd366919c09b9"
+    "preprint.pdf": "4431a6effd2ef38e2f471c634ecacb3cae47fd62a9b26ec09294ff964caf5374"
   },
   "pages": 12,
   "parent_source_sha256": {
@@ -29,7 +29,7 @@
     "sections/background.tex": "74966e7e83724ae8a21da6e963b09c50c3a5c0cce5aa71d6ed8e920952550cee",
     "sections/conclusion.tex": "c229f9a56d3efe0344fd74d196c35a5dfbf533daeac8eabfd043f3e808fc8b92",
     "sections/dynamics.tex": "e9eb17fd233e630c5275ae00665074f9fd3584c97ee08932d3c7fe43607e1767",
-    "sections/evaluation.tex": "d5155092eb396f72c484954d2715ffb5a615843b3506154650c7f4025d663ce6",
+    "sections/evaluation.tex": "fa2a63e66e15727a359e6b1edc43a2e9d39547222c2312c464c24ff9502ce26b",
     "sections/introduction.tex": "9ded9f8ad3d12cb66eab974c4264137758bb7b38165ff35df95dea41982a8a68",
     "sections/methodology.tex": "ec7ed5db3fd793a613214cbf283483445c252692c0e9c1b0b8303bc0d7c23c4a",
     "sections/models.tex": "731fad3683b2c25a26ca620fa7400a1cbd73077b372d0395e73094fe4fd07f65",
@@ -53,7 +53,7 @@
     "sections/background.tex": "74966e7e83724ae8a21da6e963b09c50c3a5c0cce5aa71d6ed8e920952550cee",
     "sections/conclusion.tex": "c229f9a56d3efe0344fd74d196c35a5dfbf533daeac8eabfd043f3e808fc8b92",
     "sections/dynamics.tex": "e9eb17fd233e630c5275ae00665074f9fd3584c97ee08932d3c7fe43607e1767",
-    "sections/evaluation.tex": "d5155092eb396f72c484954d2715ffb5a615843b3506154650c7f4025d663ce6",
+    "sections/evaluation.tex": "fa2a63e66e15727a359e6b1edc43a2e9d39547222c2312c464c24ff9502ce26b",
     "sections/introduction.tex": "9ded9f8ad3d12cb66eab974c4264137758bb7b38165ff35df95dea41982a8a68",
     "sections/methodology.tex": "c3017b76b38c8cdb40418f49bae9ce61961e0f0741611db09d1e36bd0e7508c5",
     "sections/models.tex": "731fad3683b2c25a26ca620fa7400a1cbd73077b372d0395e73094fe4fd07f65",

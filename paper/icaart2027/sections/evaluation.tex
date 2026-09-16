@@ -140,23 +140,52 @@ Validation most often selects $B=36$ at low shot budgets and $B=72$ at high budg
 Useful capacity depends on measurement precision
 \cite{hu2023sampling,ahmed2025finite}.
 
-\subsection{Exact Sharpness Benchmarks}
+\subsection{Reaching the Theoretical Error Floor}
 \label{sec:sharpness}
 
-Separate post hoc construction checks use the one-qubit channel
+These benchmarks test whether a QELM can actually reach the predicted
+minimum error. A bound is \emph{sharp} when a model can reach it or approach
+it arbitrarily closely. Separate post hoc construction checks use analytically specified
+readouts and exact expectations to isolate missing history and limited
+representation, without training or measurement noise.
+
+\emph{A reservoir with simple memory.} At each step, the reservoir keeps
+a fraction $\eta$ of its previous output and mixes in the new input value
+$g(a_t)$:
+\[
+ y_t=\eta y_{t-1}+(1-\eta)g(a_t).
+\]
+We implement this classical leaky-memory process in one qubit, using
 \[
  \Phi_a(\rho)=\eta\rho+(1-\eta)\operatorname{diag}(1-g(a),g(a)),
 \]
 with $y=\langle1|\rho|1\rangle$, $a\in[0,1]$, $0<\eta<1$ and initial state
-$|0\rangle$: a classical leaky-memory process embedded in a qubit.
-For $g(a)=a^2$ or $(e^{2a}-1)/(e^2-1)$, its all-history diameter is exactly
-$D_d=\eta^d$ (Appendix~\ref{app:bernstein-resources}).
+$|0\rangle$. After $d$ shared inputs, the influence of an earlier output
+is multiplied by $\eta^d$. For both input maps below, the output gap
+between histories with the same window can approach $\eta^d$ arbitrarily
+closely. Its supremum over all earlier histories is therefore exactly
+$D_d=\eta^d$ (Appendix~\ref{app:bernstein-resources}). A window-only model
+must give the same prediction for those histories. Predicting halfway
+between the lowest and highest compatible outputs minimizes its worst-case
+error, leaving the unavoidable floor $D_d/2=\eta^d/2$.
 
-For the quadratic case, two encoding copies per input and an analytical
-readout attain $D_d/2$ exactly: $0.08388608$ at $\eta=0.8,d=8$, confirmed
-by a 16-qubit statevector check to rounding precision.
-For the nonpolynomial case [Figure~\ref{fig:long-context}(b)], Bernstein midpoint error approaches the same
-floor, from $0.281322$ at one copy to $0.084753$ at 256 copies per input.
-These use factorized exact expectations, not full-register statevectors,
-with no training; this is not the best readout at each copy count.
-The checks validate constructed readouts, not learning or resource efficiency.
+\emph{Reaching the floor exactly.} For $g(a)=a^2$, two encoding copies
+per input suffice to represent this midpoint exactly with an analytical
+readout. The resulting worst-case absolute error is exactly $D_d/2$:
+$0.08388608$ at $\eta=0.8,d=8$. A 16-qubit statevector check confirms the
+analytical readout on endpoint and mixed windows to rounding precision.
+Here all remaining error comes from the unavailable
+past; a richer model at the same window length cannot reduce it.
+
+\emph{Approaching the floor as capacity grows.} For
+$g(a)=(e^{2a}-1)/(e^2-1)$, the Bernstein construction approximates the
+midpoint increasingly well as more encoding copies are used
+[Figure~\ref{fig:long-context}(b)]. At the same $\eta$ and $d$, its
+worst-case absolute error falls from $0.281322$ at one copy to $0.084753$
+at 256 copies per input, approaching the same $0.08388608$ history floor.
+Thus additional capacity reduces representation error while the missing
+history remains unresolved. The curve follows one prescribed readout
+construction; better readouts at a given copy count are not ruled out.
+These values use factorized exact expectations, without simulating a full
+register. The checks validate constructed readouts, not learning or
+resource efficiency.

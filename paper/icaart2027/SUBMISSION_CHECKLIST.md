@@ -3,6 +3,14 @@
 Updated on 16 September 2026. This is an anonymous **editorial draft** in the
 Regular Paper format, not a submission-ready package or a final publication.
 
+## Clearer benchmark explanation (16 September 2026)
+
+Section 5.5 explains why the theoretical floor can be reached: the leaky-memory
+update leaves an interval of compatible outputs, and its midpoint minimizes
+worst-case error. The exact quadratic example and the increasing-capacity
+example retain all reported values and their construction-only scope. Both
+versions remain twelve pages; the revised appendix and figures are unchanged.
+
 ## Revised appendix (16 September 2026)
 
 The author's `qrc_qelm_appendix_revised.pdf` replaces Appendices A--E in both

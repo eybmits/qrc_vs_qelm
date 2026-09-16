@@ -8,6 +8,16 @@ feature-density and finite-shot studies without pooling their cohorts.
 There is one paper, including its proofs and numerical methods, not a separate
 supplement.
 
+## Clearer error-floor benchmarks (16 September 2026)
+
+Section 5.5 is now titled "Reaching the Theoretical Error Floor". It explains
+the leaky-memory recurrence, why identical windows leave an output interval,
+and why the interval midpoint is the best worst-case prediction. Separate
+examples show exact attainment with two encoding copies and convergence as
+capacity increases. Numerical values, Figure 3, the revised appendix and the
+qualifications about exact expectations, prescribed readouts and resources
+are preserved. Both editions retain twelve pages without further cuts.
+
 ## Current revised appendix (16 September 2026)
 
 Appendices A--E use the author's `qrc_qelm_appendix_revised.pdf` (three pages;
