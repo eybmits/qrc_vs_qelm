@@ -26,7 +26,7 @@
 \makeatletter
 \patchcmd{\maketitle}{\vskip 0.51in}{\vskip 0.12in}{}{\errmessage{Unexpected title layout}}
 \patchcmd{\maketitle}{\vskip -0.07in}{\vskip 0pt}{}{\errmessage{Unexpected title-author layout}}
-\renewcommand{\title}[1]{\gdef\@title{#1\\[12pt]}}
+\renewcommand{\title}[1]{\gdef\@title{#1\\[8pt]}}
 \renewcommand{\email}[1]{{\fontsize{9}{11}\selectfont\textit{#1}}\par}
 \makeatother
 \graphicspath{{figures/}}

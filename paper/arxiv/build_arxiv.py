@@ -82,7 +82,7 @@ def authored_main(source: str, metadata: dict) -> str:
             r"\makeatletter",
             r"\patchcmd{\maketitle}{\vskip 0.51in}{\vskip 0.12in}{}{\errmessage{Unexpected title layout}}",
             r"\patchcmd{\maketitle}{\vskip -0.07in}{\vskip 0pt}{}{\errmessage{Unexpected title-author layout}}",
-            r"\renewcommand{\title}[1]{\gdef\@title{#1\\[12pt]}}",
+            r"\renewcommand{\title}[1]{\gdef\@title{#1\\[8pt]}}",
             r"\renewcommand{\email}[1]{{\fontsize{9}{11}\selectfont\textit{#1}}\par}",
             r"\makeatother",
             r"\graphicspath{{figures/}}",

@@ -12,8 +12,9 @@ markus.baumann@campus.lmu.de, consistent with the existing manuscript metadata.
 | Anonymous ICAART copy | `../icaart2027/submission.pdf` (12 pages) | `../icaart2027/ICAART2027_anonymous_source.zip` |
 
 Both editions have twelve pages. The authored title block uses explicit
-12 pt spacing after the title and neutralizes the inherited negative
-title-author skip, increasing their baseline separation from 13.89 to 24.91
+8 pt spacing after the title and neutralizes the inherited negative
+title-author skip. At the author's request, the explicit spacing was reduced
+from 12 to 8 pt, bringing the baseline separation from 24.91 to 20.92
 PDF points. Publisher font sizes are unchanged: title 14.4 pt, authors 11 pt,
 affiliation/email 9 pt. Body fonts and page margins match the anonymous edition.
 The authored build preserves the anonymous scientific content and the

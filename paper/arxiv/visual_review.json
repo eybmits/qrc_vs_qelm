@@ -1,6 +1,6 @@
 {
   "schema": "arxiv_visual_review_v1",
-  "pdf_sha256": "4431a6effd2ef38e2f471c634ecacb3cae47fd62a9b26ec09294ff964caf5374",
+  "pdf_sha256": "b3ad6750ad2cfaa2e60fd59b1c097176adb02c73f4ae140724a8b67b677eb623",
   "reviewed_pages": [
     1,
     2,
@@ -28,9 +28,9 @@
     "title_author_spacing_clear": true,
     "shared_body_pages_pixel_identical": true
   },
-  "review_note": "All twelve pages rendered. Pages 2--11 are pixel-identical to the anonymous edition, including the visually reviewed expansion of Section 5.5 on pages 7--8 and final reflowed references and appendix pages. Final page 12 independently reviewed in both editions. Pages 1--6 are pixel-identical to the prior fully reviewed edition, preserving the author block, ORCID icons and title spacing. Both editions remain twelve pages with the revised appendix intact and no cuts, figure changes or typography changes.",
+  "review_note": "All twelve pages rendered. The revised title page was visually inspected: slightly reduced title-author spacing remains clear, with unchanged fonts, author links and ORCID icons. Pages 2--12 are pixel-identical to the previous fully reviewed edition. The anonymous PDF is byte-unchanged. The authored edition remains twelve pages; scientific content, figures and appendix are unchanged.",
   "title_author_baseline_separation_pdf_points": {
-    "before": 13.888,
-    "after": 24.906
+    "before": 24.906,
+    "after": 20.921
   }
 }
