@@ -1,15 +1,8 @@
 {
   "pdf_sha256": "3d6269d16237a2d8e05366e279d73fc74ca3e7ece8b4f74e54946a419d6d58b6",
   "pages_reviewed": 12,
-  "rendering": "All twelve pages rendered with Poppler at maximum dimension 1400 pixels. The editing agent reviewed expanded Section 5.5 on pages 7--8, including the final precision edit on page 8. An independent reviewer inspected the final reflowed pages 9--12. Pages 1--6 are pixel-identical to the previous fully reviewed edition.",
-  "status": "Twelve pages including references and all revised appendices. No visible overlap, clipping or missing glyphs.",
   "latex_overfull_boxes": 0,
   "undefined_references_or_citations": 0,
-  "observations": [
-    "Section 5.5 is titled Reaching the Theoretical Error Floor. The scalar memory recurrence, compatible-output interval and midpoint intuition precede separate exact-attainment and increasing-capacity examples.",
-    "Numerical values and scope are unchanged. The all-history gap is explicitly a supremum, and the 16-qubit statevector calculation checks the analytical readout on endpoint and mixed windows.",
-    "The expanded text and both displayed updates fit cleanly. Reflowed references and Appendices A--E remain readable and complete within twelve pages.",
-    "Figures, captions, title, abstract, introduction, conclusion and revised appendix sources are unchanged. No additional cuts, font changes, margin changes or figure resizing."
-  ],
-  "scope": "Author-requested clearer and more extensive explanation of Section 5.5, with scientific scope preserved in both editions."
+  "rendering": "Poppler PNG, maximum page dimension 1400 px",
+  "status": "passed"
 }

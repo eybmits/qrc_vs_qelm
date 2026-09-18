@@ -399,7 +399,6 @@ AUTHORITATIVE_EXTENSION_FILES: dict[str, str] = {
 DOCUMENTATION_FILES: dict[str, str] = {
     "README.md": "repository_reproduction_guide",
     "REPRODUCIBILITY.md": "claim_to_artifact_reproduction_and_interpretation_guide",
-    "PRA_REVISION_REPORT.md": "referee_response_and_claim_boundary",
     "CANONICAL_EMULATION_LITERATURE_POSITIONING.md": (
         "post_confirmatory_literature_positioning"
     ),
@@ -413,7 +412,6 @@ DOCUMENTATION_FILES: dict[str, str] = {
     "pra_extension/SHARPNESS_BENCHMARKS.md": "post_hoc_exact_construction_scope_and_reproduction",
     "pra_extension/LASER_DEMONSTRATION_PROTOCOL.md": "separate_measured_input_demonstration_frozen_protocol",
     "pra_extension/LASER_DEMONSTRATION_README.md": "separate_measured_input_demonstration_reproduction_and_integration",
-    "paper/NOTATION_AUDIT.md": "manuscript_notation_contract_and_literature_conventions",
     (
         "paper/figures/information_interface/CHART_MAP.md"
     ): "main_figure_question_takeaway_map",

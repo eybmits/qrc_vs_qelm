@@ -27,10 +27,5 @@
     "all_three_green_orcid_icons_legible": true,
     "title_author_spacing_clear": true,
     "shared_body_pages_pixel_identical": true
-  },
-  "review_note": "All twelve pages rendered. The revised title page was visually inspected: slightly reduced title-author spacing remains clear, with unchanged fonts, author links and ORCID icons. Pages 2--12 are pixel-identical to the previous fully reviewed edition. The anonymous PDF is byte-unchanged. The authored edition remains twelve pages; scientific content, figures and appendix are unchanged.",
-  "title_author_baseline_separation_pdf_points": {
-    "before": 24.906,
-    "after": 20.921
   }
 }

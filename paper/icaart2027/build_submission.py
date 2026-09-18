@@ -67,7 +67,7 @@ def main() -> None:
                            BASE / "template_manifest.json", BASE / "figure_provenance.json",
                            BASE / "build_submission.py", BASE / "prepare_assets.py",
                            BASE / "validate_submission.py", BASE / "test_validate_submission.py",
-                           BASE / "README.md", BASE / "SUBMISSION_CHECKLIST.md"]
+                           BASE / "README.md"]
     visual = BASE / "visual_review.json"
     visual_matches = False
     if visual.is_file():
