@@ -1,11 +1,13 @@
 \section{INTRODUCTION}
 \label{sec:introduction}
 
-A finite input window can replace a quantum reservoir's memory only when
-the influence of the missing past becomes negligible as the window grows.
-Otherwise, additional model capacity cannot compensate for unavailable
-history. We study this distinction between quantum reservoir computers
-(QRCs), which carry a quantum state between inputs, and reset-window
+Choosing between a quantum reservoir and a reset-window QELM is not only
+a question of model capacity. It is also a question of what information
+the task requires. A past event may continue to matter after leaving the
+input window. A reservoir can retain that information, whereas a
+window-only model cannot recover it by adding features alone.
+We compare quantum reservoir computers (QRCs), which carry a quantum
+state between inputs, with reset-window
 quantum extreme learning machines (QELMs), which reset for each prediction
 and transform recent inputs into quantum features
 \cite{fujii2017harnessing,innocenti2023potential}.
@@ -24,13 +26,11 @@ influence has vanished by then, so the curves stay identical. Below, its influen
  \label{fig:information-interface}
 \end{figure*}
 
-This distinction matters when deciding whether poor emulation calls for
-more history or a more expressive model. Consider a brief sensor event
-that continues to affect a reservoir's output after leaving the input
-window. Two histories with identical recent inputs can then require
-different outputs, although the reset-window model must treat them
-identically. The limitation lies in the information available to the
-model, not its ability to process it.
+This distinction matters whenever identical recent inputs require
+different outputs because an earlier event still matters. The same
+information limit applies to real-world temporal tasks with this property:
+the limitation lies in the history available to the model, not its ability
+to process it.
 
 Existing research provides the foundations for this comparison.
 Fading-memory theory and quantum reservoir studies investigate when the
@@ -51,9 +51,13 @@ Building on input--output stability theory \cite{petreczky2026stability},
 we relate the rate of this observable forgetting to the required window
 length.
 
-Conversely, we construct a two-qubit QRC in which an old input remains
-observable over arbitrarily long delays. Every fixed-window predictor
-then faces a positive worst-case error floor, regardless of its capacity.
+Persistent memory can prevent finite-window replacement. We construct a
+simple quantum reservoir in which an old input can affect outputs
+arbitrarily far into the future. Every fixed-window predictor therefore
+faces an unavoidable worst-case error.
+A QRC can solve the corresponding memory-recall task using exact
+expectations; no reset-window QELM can match it uniformly over unbounded
+delays, regardless of its capacity.
 This separates carried memory from finite context, rather than quantum
 from classical computation.
 

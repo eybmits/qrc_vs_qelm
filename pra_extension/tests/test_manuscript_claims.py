@@ -455,6 +455,68 @@ def test_icaart_appendix_rewrite_preserves_referenced_equation_sequence_12_to_15
     assert not re.search(r"\\(?:setcounter|addtocounter)\{equation\}|\\tag\{", combined)
 
 
+def test_active_title_and_practitioner_framing_are_consistent() -> None:
+    conference = REPO_ROOT / "paper" / "icaart2027"
+    title = "When Can Quantum Extreme Learning Machines Replace Quantum Reservoirs?"
+    main = (conference / "main.tex").read_text(encoding="utf-8")
+    displayed_title = re.search(r"\\title\{([^}]+)\}", main).group(1)
+    assert displayed_title.replace(r"\\", " ") == title
+    assert f"pdftitle={{{title}}}" in main
+    readme = re.sub(r"\s+", " ", (REPO_ROOT / "README.md").read_text())
+    assert title in readme
+    sections = {
+        name: re.sub(r"\s+", " ", (conference / "sections" / f"{name}.tex").read_text())
+        for name in ("abstract", "introduction", "conclusion")
+    }
+    # Applicability to real tasks is conditional on the same information
+    # obstruction, not an empirical claim of unbounded memory in our datasets.
+    assert (
+        "The same information limit applies to real-world temporal tasks whenever "
+        "the required past information cannot be recovered from the available input window."
+    ) in sections["abstract"]
+    assert (
+        "Choosing between a quantum reservoir and a reset-window QELM is not only "
+        "a question of model capacity. It is also a question of what information "
+        "the task requires. A past event may continue to matter after leaving the "
+        "input window. A reservoir can retain that information, whereas a "
+        "window-only model cannot recover it by adding features alone."
+    ) in sections["introduction"]
+    assert (
+        "Our results distinguish problems that better representations can solve "
+        "from problems that require access to more history. When recent inputs "
+        "contain enough information, a sufficiently expressive windowed QELM can "
+        "replace the reservoir. When essential information remains inaccessible, "
+        "additional capacity is not enough: longer context or retained memory is needed."
+    ) in sections["conclusion"]
+
+
+def test_persistent_memory_summary_is_consistent_and_construction_stays_precise() -> None:
+    directory = REPO_ROOT / "paper" / "icaart2027" / "sections"
+    statement = (
+        "Persistent memory can prevent finite-window replacement. "
+        "We construct a simple quantum reservoir in which an old input can affect "
+        "outputs arbitrarily far into the future. Every fixed-window predictor "
+        "therefore faces an unavoidable worst-case error."
+    )
+    for name in ("abstract", "introduction", "conclusion"):
+        text = re.sub(r"\s+", " ", (directory / f"{name}.tex").read_text())
+        assert statement in text
+        assert (
+            "A QRC can solve the corresponding memory-recall task using exact "
+            "expectations; no reset-window QELM can match it uniformly over unbounded "
+            "delays, regardless of its capacity."
+        ) in text
+        assert "two-qubit" not in text
+    dynamics = re.sub(r"\s+", " ", (directory / "dynamics.tex").read_text())
+    assert "simple two-qubit construction" in dynamics
+    assert r"D_d\geq\delta\qquad\text{for every finite }d" in dynamics
+    assert "of at least $\\delta/2$ for every stateless window predictor" in dynamics
+    assert "whether quantum or classical" in dynamics
+    assert "one fixed reservoir and a pair of trajectories" in dynamics
+    assert "Exact QRC expectations realize the target" in dynamics
+    assert "worst-case error at least $\\delta/2$ at longer delays" in dynamics
+
+
 def test_conclusion_keeps_a_plain_story_and_scoped_claims() -> None:
     for directory in (PAPER_ROOT, REPO_ROOT / "paper" / "icaart2027"):
         source = (directory / "sections" / "conclusion.tex").read_text(encoding="utf-8")
@@ -477,9 +539,9 @@ def test_conclusion_keeps_a_plain_story_and_scoped_claims() -> None:
                               "as their windows grow", "sufficiently expressive",
                               "exact expectations", "fades uniformly"):
                 assert qualifier in paragraphs[0]
-            for limit in ("two-qubit construction", "arbitrarily long delays",
-                          "Every fixed-window predictor", "positive worst-case error floor",
-                          "neither additional features nor a longer finite window can remove",
+            for limit in ("Persistent memory can prevent finite-window replacement",
+                          "simple quantum reservoir", "arbitrarily far into the future",
+                          "Every fixed-window predictor", "unavoidable worst-case error",
                           "rather than between quantum and classical computation",
                           "representability, not efficient learning or resource savings"):
                 assert limit in paragraphs[1]
@@ -491,8 +553,9 @@ def test_conclusion_keeps_a_plain_story_and_scoped_claims() -> None:
                 assert limit in evaluation
             assert "Quadratic delay models outperform" not in compact
             for resource in ("missing history", "insufficient features", "finite measurements",
-                             "Missing information requires longer context or retained state"):
+                             "representation and measurement budgets"):
                 assert resource in paragraphs[2]
+            assert "longer context or retained memory is needed" in paragraphs[3]
             assert "$" not in body
             assert len(compact.split()) <= 250
         assert "uniformly" in compact
@@ -678,7 +741,7 @@ def test_icaart_exact_benchmarks_keep_global_derivation_and_construction_scope()
     assert "$0.281322$ at one copy" in benchmark
     assert "$0.084753$ at 256 copies" in benchmark
     assert "Analytical benchmarks and simulations examine three distinct limitations" in sections["abstract"]
-    assert "positive worst-case error floor, regardless of its model capacity" in sections["abstract"]
+    assert "Every fixed-window predictor therefore faces an unavoidable worst-case error" in sections["abstract"]
     assert "Analytical benchmarks and simulations" in sections["introduction"]
 
     # The revised C keeps the compatible-range and factorial-moment argument,
@@ -771,27 +834,30 @@ def test_icaart_abstract_and_short_captions_keep_plain_explanations_and_scope() 
     """Keep the finite-context framing readable without dropping claim boundaries."""
     directory = REPO_ROOT / "paper" / "icaart2027" / "sections"
     abstract = re.sub(r"\s+", " ", (directory / "abstract.tex").read_text(encoding="utf-8"))
-    for condition in ("Observable memory determines when",
-                      "sufficiently expressive QELMs with growing input windows",
-                      "evaluated through exact expectations",
+    for condition in ("We characterize when finite-window quantum extreme learning machines",
+                      "prevents arbitrarily accurate emulation",
+                      "reset-window QELMs, which reset for each prediction",
+                      "quantum reservoir computers (QRCs), which carry a quantum state forward",
+                      "Under our assumptions",
+                      "sufficiently expressive QELMs with growing windows",
+                      "exact expectations",
                       "can approximate QRC outputs arbitrarily well",
-                      "uniformly fading influence of the missing past",
-                      "identical recent inputs", "different outputs",
-                      "information limit that additional features cannot remove",
-                      "Observable forgetting then determines how much context is needed",
-                      "we construct a QRC",
-                      "an old input remains relevant to later outputs over arbitrarily long delays",
-                      "For this reservoir, every fixed-window QELM faces a positive worst-case error floor",
-                      "regardless of its model capacity",
-                      "missing history, insufficient features, and finite measurements",
-                      "when longer windows can replace reservoir memory",
-                      "persistent observable memory prevents arbitrarily accurate finite-window emulation"):
+                      "precisely when the missing past's influence fades uniformly",
+                      "quantify the unavoidable window error",
+                      "relate the required context to observable forgetting",
+                      "Persistent memory can prevent finite-window replacement",
+                      "We construct a simple quantum reservoir",
+                      "an old input can affect outputs arbitrarily far into the future",
+                      "Every fixed-window predictor therefore faces an unavoidable worst-case error",
+                      "missing history, insufficient features, and finite measurements"):
         assert condition in abstract
     for omitted in ("For scalar outputs", "half the largest", "two-qubit",
                     "under stated assumptions", "classical"):
         assert omitted not in abstract
     introduction = re.sub(r"\s+", " ", (directory / "introduction.tex").read_text(encoding="utf-8"))
-    for condition in ("sensor event", "identical recent inputs", "different outputs",
+    for condition in ("A past event", "identical recent inputs", "different outputs",
+                      "cannot recover it by adding features alone",
+                      "real-world temporal tasks with this property",
                       "Under our stated assumptions", "sufficiently expressive QELMs",
                       "exact expectations", "growing windows", "vanishes uniformly",
                       "For scalar outputs", "half the largest output difference"):

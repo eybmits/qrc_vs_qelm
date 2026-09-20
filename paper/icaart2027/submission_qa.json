@@ -1,7 +1,7 @@
 {
   "schema": "icaart2027_submission_qa_v2",
   "pdf": "submission.pdf",
-  "pdf_sha256": "3d6269d16237a2d8e05366e279d73fc74ca3e7ece8b4f74e54946a419d6d58b6",
+  "pdf_sha256": "d8f2879bb8e898d330338901637910615ea1a40e3b864ef05873da4907516936",
   "extraction_backend": "pypdf + Poppler",
   "passed": false,
   "format_passed": true,
@@ -72,7 +72,7 @@
     },
     "character_budget": {
       "passed": true,
-      "characters": 40931,
+      "characters": 41199,
       "minimum": 10000,
       "maximum": 50000,
       "definition": "Unicode, whitespace excluded"
@@ -96,7 +96,7 @@
     },
     "abstract_length": {
       "passed": true,
-      "words": 164,
+      "words": 180,
       "minimum": 70,
       "maximum": 200
     },
@@ -114,7 +114,7 @@
           "unicode": true
         },
         {
-          "name": "EBVNRJ+NimbusRomNo9L-Regu",
+          "name": "VHGGBB+NimbusRomNo9L-Regu",
           "embedded": true,
           "subset": true,
           "unicode": true
@@ -308,39 +308,66 @@
     "physical_page_clipping": [],
     "template_margin_excursions": [
       {
-        "page": 7,
+        "page": 5,
         "box": [
-          398.744817,
-          713.401985,
-          406.493727,
-          730.687096
+          134.816,
+          712.104985,
+          142.56491,
+          729.390096
         ]
       },
       {
-        "page": 7,
+        "page": 5,
         "box": [
-          446.232546,
+          493.401,
+          690.978873,
+          498.936221,
+          728.159296
+        ]
+      },
+      {
+        "page": 10,
+        "box": [
+          136.686,
+          716.26836,
+          138.32984,
+          726.639496
+        ]
+      },
+      {
+        "page": 10,
+        "box": [
+          159.148585,
           713.401985,
-          453.981456,
+          166.897496,
           730.687096
         ]
       },
       {
         "page": 10,
         "box": [
-          155.001,
-          687.965873,
-          159.152415,
-          725.146296
+          232.656,
+          713.401985,
+          240.394948,
+          730.687096
         ]
       },
       {
         "page": 10,
         "box": [
-          236.578,
-          687.965873,
-          240.729415,
-          725.146296
+          241.779749,
+          713.401985,
+          249.528659,
+          730.687096
+        ]
+      },
+      {
+        "page": 10,
+        "box": [
+          258.412,
+          713.401985,
+          263.937258,
+          730.687096
         ]
       }
     ],

@@ -1,7 +1,7 @@
 # qrc_vs_qelm
 
-Code, data, figures, and manuscript sources for **When Can Finite-Window QELMs
-Emulate Quantum Reservoirs?**
+Code, data, figures, and manuscript sources for **When Can Quantum Extreme
+Learning Machines Replace Quantum Reservoirs?**
 
 The paper studies when recent inputs suffice to reproduce a quantum reservoir's
 outputs, separating missing history, model capacity, and measurement error.

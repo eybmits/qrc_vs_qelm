@@ -1,17 +1,20 @@
-Observable memory determines when a reset-window quantum extreme learning
-machine (QELM) can emulate a quantum reservoir computer (QRC). A QRC carries
-information forward in its state, whereas a reset-QELM sees only recent
-inputs. Histories with identical recent inputs can therefore require different
-outputs, creating an information limit that additional features cannot remove.
-We characterize when sufficiently expressive QELMs with growing input windows,
-evaluated through exact expectations, can approximate QRC outputs arbitrarily
-well, linking emulation to the uniformly fading influence of the missing past.
-Observable forgetting then determines how much context is needed. Conversely,
-we construct a QRC in which an old input remains relevant to later outputs
-over arbitrarily long delays. For this reservoir, every fixed-window QELM
-faces a positive worst-case error floor, regardless of its model capacity.
+We characterize when finite-window quantum extreme learning machines (QELMs)
+can replace quantum reservoirs and when relevant information outside the window
+prevents arbitrarily accurate emulation. The same information limit applies to
+real-world temporal tasks whenever the required past information cannot be
+recovered from the available input window.
+We study reset-window QELMs, which reset for each prediction, and quantum
+reservoir computers (QRCs), which carry a quantum state forward.
+Under our assumptions, sufficiently expressive QELMs with growing windows
+and exact expectations can approximate QRC outputs arbitrarily well precisely
+when the missing past's influence fades uniformly. We quantify the unavoidable
+window error and relate the required context to observable forgetting.
+Persistent memory can prevent finite-window replacement. We construct a
+simple quantum reservoir in which an old input can affect outputs
+arbitrarily far into the future. Every fixed-window predictor therefore
+faces an unavoidable worst-case error.
+A QRC can solve the corresponding memory-recall task using exact
+expectations; no reset-window QELM can match it uniformly over unbounded
+delays, regardless of its capacity.
 Analytical benchmarks and simulations examine three distinct limitations:
-missing history, insufficient features, and finite measurements. Together, the
-results identify when longer windows can replace reservoir memory and when
-persistent observable memory prevents arbitrarily accurate finite-window
-emulation.
+missing history, insufficient features, and finite measurements.

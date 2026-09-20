@@ -1,6 +1,6 @@
 {
   "schema": "arxiv_visual_review_v1",
-  "pdf_sha256": "b3ad6750ad2cfaa2e60fd59b1c097176adb02c73f4ae140724a8b67b677eb623",
+  "pdf_sha256": "0e6a6cac4f3df9c9681de657ee87953ae9c61bad9f825c82e02e1d7ca572ea20",
   "reviewed_pages": [
     1,
     2,
@@ -15,7 +15,7 @@
     11,
     12
   ],
-  "rendering": "Poppler PNG, longest page side 1400 px",
+  "rendering": "All 12 pages rendered with Poppler at maximum dimension 1100 px. Pages 2 through 11 are pixel-identical to the reviewed anonymous edition; the main agent additionally inspected the arXiv title page and page 12. The two-line full-name title has clear author and affiliation spacing. The approved practitioner framing is integrated into the shared abstract, introduction and conclusion. No new clipping or overlaps. The full repository URL on page 12 remains without an access qualifier. Both editions retain 12 pages and identical scientific content.",
   "passed": true,
   "checks": {
     "author_header_legible": true,

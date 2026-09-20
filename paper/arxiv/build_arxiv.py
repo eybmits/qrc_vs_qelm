@@ -21,8 +21,7 @@ BASE = Path(__file__).resolve().parent
 ANONYMOUS = BASE.parent / "icaart2027"
 ANONYMOUS_CODE_NOTE = b"Code link withheld for anonymity."
 AUTHORED_CODE_NOTE = (
-    rb"Code repository: \href{https://github.com/eybmits/qrc_vs_qelm}"
-    rb"{qrc\_vs\_qelm} (currently access-restricted).")
+    rb"Code repository: \url{https://github.com/eybmits/qrc_vs_qelm}.")
 sys.path.insert(0, str(ANONYMOUS))
 from validate_submission import log_problems, margin_diagnostics, parse_fonts, read_pdf
 
@@ -200,7 +199,7 @@ def main() -> None:
                "parent_source_sha256": {n: digest(b) for n, b in original.items()},
                "administrative_changes": {
                    "main.tex": "Author header with compact title spacing, linked green ORCID icons, profile links, and PDF author/subject metadata",
-                   method: "Anonymity-only code note replaced with a link and accurate restricted-access status"},
+                   method: "Anonymity-only code note replaced with the full repository URL"},
                "source_package_files": {n: digest(b) for n, b in inputs.items()},
                "files": {n: digest(b) for n, b in delivered.items()} | {
                    n: digest((BASE / n).read_bytes()) for n in ("authors.json", "build_arxiv.py")},

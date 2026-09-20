@@ -125,10 +125,11 @@ Feature, training, and measurement costs remain separate questions.
 
 \subsection{Protected Memory}
 
-A two-qubit reservoir can preserve an old input in a measurable quantity,
-leaving an error floor for every finite window. The construction has three
-steps. A local pulse writes a population difference, symmetric evolution
-protects it, and Pauli correlations reveal it.
+An old input can affect outputs arbitrarily far into the future, leaving
+an unavoidable worst-case error for every fixed-window predictor. Our
+simple two-qubit construction has three steps: a local pulse writes a
+population difference, symmetric evolution protects it, and Pauli
+correlations reveal it.
 
 Every update uses the same time-homogeneous input alphabet $a=(u,q)$.
 The input $u\in[0,1]$ controls a symmetric drive, while the binary flag
