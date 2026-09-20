@@ -1,6 +1,6 @@
 {
   "artifact_count": 367,
-  "artifact_set_sha256": "39575c82c2b7f02a5db328155cdce5abfcd84b47e6661b08cd60536c60b51ff6",
+  "artifact_set_sha256": "a6c76b8af50cf4d53332c28d0724b1bd04baebd076741f752ac6d4aa0e50a495",
   "artifacts": {
     "CANONICAL_EMULATION_LITERATURE_POSITIONING.md": {
       "role": "post_confirmatory_literature_positioning",
@@ -49,8 +49,8 @@
     },
     "REPRODUCIBILITY.md": {
       "role": "claim_to_artifact_reproduction_and_interpretation_guide",
-      "sha256": "44fa76a9c89f2323465b363b08368f442e5eaf3bfe4d5b483ae2b94befa3f5c3",
-      "size_bytes": 10061
+      "sha256": "8b19dd973969d65c6756f0871bb4257d6322436b801fc3fbd6239387041ea0ce",
+      "size_bytes": 10075
     },
     "configs/DARK_SECTOR_VALIDATION_PROTOCOL.md": {
       "role": "frozen_dark_sector_protocol",
@@ -694,8 +694,8 @@
     },
     "paper/icaart2027/submission.pdf": {
       "role": "compiled_paper_pdf",
-      "sha256": "d8f2879bb8e898d330338901637910615ea1a40e3b864ef05873da4907516936",
-      "size_bytes": 362262
+      "sha256": "888f12f1b1751a74dd57dfa7a22358e3ed31a52bf36db63c03999fee1cc90d86",
+      "size_bytes": 362075
     },
     "pra_extension/FEATURE_BRIDGE_PROTOCOL.md": {
       "role": "exploratory_paired_feature_protocol",
@@ -1489,8 +1489,8 @@
     },
     "pra_extension/tests/test_manuscript_claims.py": {
       "role": "extension_test",
-      "sha256": "5e6e591a83036cc93bbd49c95a68bdd2727d2296b104564c805b1c78f756e1fc",
-      "size_bytes": 61762
+      "sha256": "a8914d448862cd94ff1a40b2f452b1f803236ea71868279b43aaf989bc724177",
+      "size_bytes": 62679
     },
     "pra_extension/tests/test_midpoint_statement.py": {
       "role": "extension_test",
@@ -1874,7 +1874,7 @@
     "pra_extension": "EXPLORATORY_POST_CONFIRMATORY"
   },
   "figures_directory": "pra_extension/figures_pra_final_v6",
-  "manifest_identity_sha256": "6c0b0dd47bb491c508c4b12b3fa63422d251ca688870699240cc546df936ca4b",
+  "manifest_identity_sha256": "94c7fa910759034942b20ece3fa87dc4c4a4e5813c464d1c9982786329b0758b",
   "paper_pdf": "paper/icaart2027/submission.pdf",
   "prospective_followups": {
     "long_context_n5": {

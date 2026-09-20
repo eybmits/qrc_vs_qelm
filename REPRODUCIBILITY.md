@@ -1,6 +1,6 @@
 # Reproducing the paper
 
-This guide maps *When Can Finite-Window QELMs Emulate Quantum Reservoirs?*
+This guide maps *When Can Quantum Extreme Learning Machines Replace Quantum Reservoirs?*
 to its numerical inputs, protocols, and reproduction commands. Paths are
 relative to the repository root.
 

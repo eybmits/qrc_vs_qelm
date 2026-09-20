@@ -21,7 +21,7 @@ license: MIT
 repository-code: "https://github.com/eybmits/qrc_vs_qelm"
 preferred-citation:
   type: article
-  title: "When Can Finite-Window QELMs Emulate Quantum Reservoirs?"
+  title: "When Can Quantum Extreme Learning Machines Replace Quantum Reservoirs?"
   authors:
     - family-names: Baumann
       given-names: Markus

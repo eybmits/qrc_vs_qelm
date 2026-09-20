@@ -1,8 +1,8 @@
 {
-  "pdf_sha256": "d8f2879bb8e898d330338901637910615ea1a40e3b864ef05873da4907516936",
+  "pdf_sha256": "888f12f1b1751a74dd57dfa7a22358e3ed31a52bf36db63c03999fee1cc90d86",
   "pages_reviewed": 12,
   "latex_overfull_boxes": 0,
   "undefined_references_or_citations": 0,
-  "rendering": "All 12 pages rendered with Poppler at maximum dimension 1100 px and compared with the preceding reviewed PDF. Changed pages 1, 2 and 8 through 12 were visually inspected by the main agent; pages 3 through 7 are pixel-identical to the preceding review. The new full-name title is balanced over two lines without changing fonts or margins. The approved practitioner framing is integrated into the abstract, introduction and conclusion, retaining the exact-expectation and unbounded-delay qualifications. Technical proofs, equations and figure assets are unchanged. No new clipping or overlaps; 12 pages retained.",
+  "rendering": "All 12 pages rendered with Poppler at maximum dimension 1100 px and visually inspected by the main agent after the stronger opening statements reflowed the document. Abstract, introduction and conclusion lead with the fixed two-qubit recall separation, with exact-expectation and unbounded-delay qualifications and a window-independent positive lower bound. The positive fading-memory theorem and practical limitations remain visible. Title, fonts, margins, technical proofs, equations and figure assets are unchanged. No new clipping or overlaps; 12 pages retained.",
   "status": "passed"
 }

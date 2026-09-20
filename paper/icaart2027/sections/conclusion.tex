@@ -1,29 +1,26 @@
 \section{DISCUSSION AND CONCLUSIONS}
 \label{sec:summary}
 
-Finite-window emulation is limited by the history a model can access, not
-by model capacity alone. Under our assumptions, sufficiently expressive
+Persistent quantum memory can enable temporal processing that no fixed
+finite input window can reproduce uniformly. Our two-qubit construction
+establishes a strict representational advantage over reset-window QELMs
+in the exact-expectation setting: increasing either window length or
+model capacity cannot eliminate the worst-case accuracy gap over unbounded
+delays. This separates retained memory from finite context, rather than
+quantum from classical computation.
+
+Under our assumptions, sufficiently expressive
 reset-window QELMs with exact expectations can approximate QRC outputs
 arbitrarily well as their windows grow precisely when the influence of
 the omitted past fades uniformly. We quantify the unavoidable error
 caused by missing history and relate the context needed for a desired
 accuracy to the rate of observable forgetting.
 
-Persistent memory can prevent finite-window replacement. We construct a
-simple quantum reservoir in which an old input can affect outputs
-arbitrarily far into the future. Every fixed-window predictor therefore
-faces an unavoidable worst-case error.
-A QRC can solve the corresponding memory-recall task using exact
-expectations; no reset-window QELM can match it uniformly over unbounded
-delays, regardless of its capacity. This establishes a separation
-between carried memory and finite context,
-rather than between quantum and classical computation. The guarantees
-concern representability, not efficient learning or resource savings.
-
 Analytical benchmarks and simulations distinguish three limitations:
 missing history, insufficient features, and finite measurements. Even when
 history is sufficient, representation and measurement budgets still limit
-practical accuracy.
+practical accuracy. The guarantees concern representability, not efficient
+learning or resource savings.
 
 Our results distinguish problems that better representations can solve
 from problems that require access to more history. When recent inputs

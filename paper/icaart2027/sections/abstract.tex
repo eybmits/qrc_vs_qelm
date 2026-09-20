@@ -1,20 +1,18 @@
-We characterize when finite-window quantum extreme learning machines (QELMs)
-can replace quantum reservoirs and when relevant information outside the window
-prevents arbitrarily accurate emulation. The same information limit applies to
-real-world temporal tasks whenever the required past information cannot be
-recovered from the available input window.
-We study reset-window QELMs, which reset for each prediction, and quantum
-reservoir computers (QRCs), which carry a quantum state forward.
+We prove that finite-window quantum extreme learning machines (QELMs)
+are not universal substitutes for quantum reservoir computers (QRCs).
+We construct a fixed two-qubit QRC that solves a temporal recall task
+exactly using expectation values, whereas every stateless finite-window
+predictor incurs a strictly positive worst-case absolute error over
+unbounded delays. This positive lower bound is independent of both window
+length and model capacity.
+We study reset-window QELMs, which reset for each prediction and receive
+only recent inputs, while QRCs carry a quantum state forward.
 Under our assumptions, sufficiently expressive QELMs with growing windows
 and exact expectations can approximate QRC outputs arbitrarily well precisely
 when the missing past's influence fades uniformly. We quantify the unavoidable
 window error and relate the required context to observable forgetting.
-Persistent memory can prevent finite-window replacement. We construct a
-simple quantum reservoir in which an old input can affect outputs
-arbitrarily far into the future. Every fixed-window predictor therefore
-faces an unavoidable worst-case error.
-A QRC can solve the corresponding memory-recall task using exact
-expectations; no reset-window QELM can match it uniformly over unbounded
-delays, regardless of its capacity.
+The same information limit applies to real-world temporal tasks whenever
+the required past information cannot be recovered from the available input
+window.
 Analytical benchmarks and simulations examine three distinct limitations:
 missing history, insufficient features, and finite measurements.

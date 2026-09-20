@@ -1,11 +1,15 @@
 \section{INTRODUCTION}
 \label{sec:introduction}
 
-Choosing between a quantum reservoir and a reset-window QELM is not only
-a question of model capacity. It is also a question of what information
-the task requires. A past event may continue to matter after leaving the
-input window. A reservoir can retain that information, whereas a
-window-only model cannot recover it by adding features alone.
+Can a sufficiently large input window always replace recurrent quantum
+memory? We prove that it cannot. A single fixed two-qubit reservoir and a
+single temporal recall task suffice to establish a separation from every
+reset-window QELM. Over unbounded recall delays, the same positive lower
+bound on worst-case absolute error holds for every finite window,
+regardless of the predictor's capacity. The limitation is missing historical
+information---not insufficient expressivity or training.
+The construction uses exact expectation values and separates retained
+memory from finite context, rather than quantum from classical computation.
 We compare quantum reservoir computers (QRCs), which carry a quantum
 state between inputs, with reset-window
 quantum extreme learning machines (QELMs), which reset for each prediction
@@ -50,16 +54,6 @@ precisely when the missing past's output influence vanishes uniformly.
 Building on input--output stability theory \cite{petreczky2026stability},
 we relate the rate of this observable forgetting to the required window
 length.
-
-Persistent memory can prevent finite-window replacement. We construct a
-simple quantum reservoir in which an old input can affect outputs
-arbitrarily far into the future. Every fixed-window predictor therefore
-faces an unavoidable worst-case error.
-A QRC can solve the corresponding memory-recall task using exact
-expectations; no reset-window QELM can match it uniformly over unbounded
-delays, regardless of its capacity.
-This separates carried memory from finite context, rather than quantum
-from classical computation.
 
 Analytical benchmarks and simulations examine three distinct limitations:
 missing history, insufficient features, and finite measurements. The

@@ -462,8 +462,11 @@ def test_active_title_and_practitioner_framing_are_consistent() -> None:
     displayed_title = re.search(r"\\title\{([^}]+)\}", main).group(1)
     assert displayed_title.replace(r"\\", " ") == title
     assert f"pdftitle={{{title}}}" in main
-    readme = re.sub(r"\s+", " ", (REPO_ROOT / "README.md").read_text())
-    assert title in readme
+    for filename in ("README.md", "REPRODUCIBILITY.md"):
+        documentation = re.sub(r"\s+", " ", (REPO_ROOT / filename).read_text())
+        assert title in documentation
+    citation = (REPO_ROOT / "CITATION.cff").read_text().split("preferred-citation:", 1)[1]
+    assert f'title: "{title}"' in citation
     sections = {
         name: re.sub(r"\s+", " ", (conference / "sections" / f"{name}.tex").read_text())
         for name in ("abstract", "introduction", "conclusion")
@@ -475,12 +478,10 @@ def test_active_title_and_practitioner_framing_are_consistent() -> None:
         "the required past information cannot be recovered from the available input window."
     ) in sections["abstract"]
     assert (
-        "Choosing between a quantum reservoir and a reset-window QELM is not only "
-        "a question of model capacity. It is also a question of what information "
-        "the task requires. A past event may continue to matter after leaving the "
-        "input window. A reservoir can retain that information, whereas a "
-        "window-only model cannot recover it by adding features alone."
+        "Can a sufficiently large input window always replace recurrent quantum "
+        "memory? We prove that it cannot."
     ) in sections["introduction"]
+    assert "information---not insufficient expressivity or training" in sections["introduction"]
     assert (
         "Our results distinguish problems that better representations can solve "
         "from problems that require access to more history. When recent inputs "
@@ -492,21 +493,28 @@ def test_active_title_and_practitioner_framing_are_consistent() -> None:
 
 def test_persistent_memory_summary_is_consistent_and_construction_stays_precise() -> None:
     directory = REPO_ROOT / "paper" / "icaart2027" / "sections"
-    statement = (
-        "Persistent memory can prevent finite-window replacement. "
-        "We construct a simple quantum reservoir in which an old input can affect "
-        "outputs arbitrarily far into the future. Every fixed-window predictor "
-        "therefore faces an unavoidable worst-case error."
+    sections = {
+        name: re.sub(r"\s+", " ", (directory / f"{name}.tex").read_text())
+        for name in ("abstract", "introduction", "conclusion")
+    }
+    for text in sections.values():
+        assert "two-qubit" in text
+        assert "unbounded" in text and "delays" in text
+        assert "worst-case" in text and "capacity" in text
+    assert sections["abstract"].startswith(
+        "We prove that finite-window quantum extreme learning machines (QELMs) "
+        "are not universal substitutes for quantum reservoir computers (QRCs)."
     )
-    for name in ("abstract", "introduction", "conclusion"):
-        text = re.sub(r"\s+", " ", (directory / f"{name}.tex").read_text())
-        assert statement in text
-        assert (
-            "A QRC can solve the corresponding memory-recall task using exact "
-            "expectations; no reset-window QELM can match it uniformly over unbounded "
-            "delays, regardless of its capacity."
-        ) in text
-        assert "two-qubit" not in text
+    assert "fixed two-qubit QRC that solves a temporal recall task exactly using expectation values" in sections["abstract"]
+    assert "every stateless finite-window predictor" in sections["abstract"]
+    assert "strictly positive worst-case absolute error" in sections["abstract"]
+    assert "positive lower bound is independent of both window length and model capacity" in sections["abstract"]
+    assert "single fixed two-qubit reservoir and a single temporal recall task" in sections["introduction"]
+    assert "same positive lower bound on worst-case absolute error holds for every finite window" in sections["introduction"]
+    assert "construction uses exact expectation values" in sections["introduction"]
+    assert "strict representational advantage over reset-window QELMs in the exact-expectation setting" in sections["conclusion"]
+    assert "increasing either window length or model capacity cannot eliminate" in sections["conclusion"]
+    assert "rather than quantum from classical computation" in sections["conclusion"]
     dynamics = re.sub(r"\s+", " ", (directory / "dynamics.tex").read_text())
     assert "simple two-qubit construction" in dynamics
     assert r"D_d\geq\delta\qquad\text{for every finite }d" in dynamics
@@ -538,13 +546,14 @@ def test_conclusion_keeps_a_plain_story_and_scoped_claims() -> None:
             for qualifier in ("QRC outputs", "Under our assumptions", "precisely when",
                               "as their windows grow", "sufficiently expressive",
                               "exact expectations", "fades uniformly"):
-                assert qualifier in paragraphs[0]
-            for limit in ("Persistent memory can prevent finite-window replacement",
-                          "simple quantum reservoir", "arbitrarily far into the future",
-                          "Every fixed-window predictor", "unavoidable worst-case error",
-                          "rather than between quantum and classical computation",
-                          "representability, not efficient learning or resource savings"):
-                assert limit in paragraphs[1]
+                assert qualifier in paragraphs[1]
+            for limit in ("Persistent quantum memory", "no fixed finite input window",
+                          "reproduce uniformly", "two-qubit construction",
+                          "strict representational advantage over reset-window QELMs",
+                          "exact-expectation setting", "worst-case accuracy gap over unbounded delays",
+                          "rather than quantum from classical computation"):
+                assert limit in paragraphs[0]
+            assert "representability, not efficient learning or resource savings" in paragraphs[2]
             evaluation = re.sub(r"\s+", " ", (directory / "sections" / "evaluation.tex")
                                 .read_text(encoding="utf-8"))
             for limit in ("not laser forecasting", "Synthetic NARMA10 prediction",
@@ -741,7 +750,7 @@ def test_icaart_exact_benchmarks_keep_global_derivation_and_construction_scope()
     assert "$0.281322$ at one copy" in benchmark
     assert "$0.084753$ at 256 copies" in benchmark
     assert "Analytical benchmarks and simulations examine three distinct limitations" in sections["abstract"]
-    assert "Every fixed-window predictor therefore faces an unavoidable worst-case error" in sections["abstract"]
+    assert "every stateless finite-window predictor incurs a strictly positive worst-case absolute error" in sections["abstract"]
     assert "Analytical benchmarks and simulations" in sections["introduction"]
 
     # The revised C keeps the compatible-range and factorial-moment argument,
@@ -834,10 +843,10 @@ def test_icaart_abstract_and_short_captions_keep_plain_explanations_and_scope() 
     """Keep the finite-context framing readable without dropping claim boundaries."""
     directory = REPO_ROOT / "paper" / "icaart2027" / "sections"
     abstract = re.sub(r"\s+", " ", (directory / "abstract.tex").read_text(encoding="utf-8"))
-    for condition in ("We characterize when finite-window quantum extreme learning machines",
-                      "prevents arbitrarily accurate emulation",
+    for condition in ("We prove that finite-window quantum extreme learning machines",
+                      "are not universal substitutes for quantum reservoir computers",
                       "reset-window QELMs, which reset for each prediction",
-                      "quantum reservoir computers (QRCs), which carry a quantum state forward",
+                      "QRCs carry a quantum state forward",
                       "Under our assumptions",
                       "sufficiently expressive QELMs with growing windows",
                       "exact expectations",
@@ -845,18 +854,18 @@ def test_icaart_abstract_and_short_captions_keep_plain_explanations_and_scope() 
                       "precisely when the missing past's influence fades uniformly",
                       "quantify the unavoidable window error",
                       "relate the required context to observable forgetting",
-                      "Persistent memory can prevent finite-window replacement",
-                      "We construct a simple quantum reservoir",
-                      "an old input can affect outputs arbitrarily far into the future",
-                      "Every fixed-window predictor therefore faces an unavoidable worst-case error",
+                      "We construct a fixed two-qubit QRC",
+                      "every stateless finite-window predictor",
+                      "strictly positive worst-case absolute error over unbounded delays",
+                      "positive lower bound is independent of both window length and model capacity",
                       "missing history, insufficient features, and finite measurements"):
         assert condition in abstract
-    for omitted in ("For scalar outputs", "half the largest", "two-qubit",
+    for omitted in ("For scalar outputs", "half the largest",
                     "under stated assumptions", "classical"):
         assert omitted not in abstract
     introduction = re.sub(r"\s+", " ", (directory / "introduction.tex").read_text(encoding="utf-8"))
-    for condition in ("A past event", "identical recent inputs", "different outputs",
-                      "cannot recover it by adding features alone",
+    for condition in ("single temporal recall task", "identical recent inputs", "different outputs",
+                      "not insufficient expressivity or training",
                       "real-world temporal tasks with this property",
                       "Under our stated assumptions", "sufficiently expressive QELMs",
                       "exact expectations", "growing windows", "vanishes uniformly",
