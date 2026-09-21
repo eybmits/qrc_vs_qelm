@@ -236,10 +236,21 @@ def test_selected_overview_is_introduced_once_near_the_start(paper: str) -> None
     filename = "fig01_information_interface.pdf"
     assert introduction.count(filename) == 1
     assert filename not in models
-    # Queue the full-width overview in the introduction so it can appear on
-    # page 2; the compiled PDF still needs final-size visual placement review.
-    before_figure = introduction.split(r"\begin{figure*}", maxsplit=1)[0]
-    assert len(before_figure.splitlines()) <= 15
+    # Queue the overview as the first figure after the opening paragraph,
+    # independently of source line wrapping. The compiled PDF still needs
+    # final-size visual placement review.
+    first_figure = re.search(
+        r"\\begin\{figure\*?\}.*?\\end\{figure\*?\}", introduction, re.S,
+    )
+    assert first_figure is not None
+    assert first_figure.group().startswith(r"\begin{figure*}")
+    assert filename in first_figure.group()
+    before_figure = introduction[:first_figure.start()]
+    before_figure = re.sub(r"(?m)^[ \t]*%[^\n]*\n?", "", before_figure)
+    before_figure = re.sub(r"\\(?:section|label)\{[^{}]*\}", "", before_figure)
+    assert not re.search(r"\\(?:input|include|subsection)\b", before_figure)
+    paragraphs = re.split(r"\n\s*\n", before_figure.strip())
+    assert len(paragraphs) == 1 and paragraphs[0]
 
 
 def test_compact_canvas_keeps_native_typography_and_unscaled_architecture() -> None:

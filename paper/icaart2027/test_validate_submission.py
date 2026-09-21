@@ -118,9 +118,89 @@ def test_all_validation_gates_are_included(tmp_path, monkeypatch):
     assert not result["submission_ready"]
     assert not result["policy_checks"]["required_ai_disclosure"]["passed"]
     assert "required_ai_disclosure_and_tool_citations_missing_or_incomplete" in result["submission_blockers"]
+    assert "human_scientific_author_approval_pending" in result["submission_blockers"]
     assert len(result["checks"]) == 11
+    (tmp_path / "submission_approval.json").write_text(json.dumps({
+        "schema": "icaart2027_author_approval_v1",
+        "pdf_sha256": hashlib.sha256(pdf.read_bytes()).hexdigest(),
+        "confirmed_on": "2026-09-21",
+        "coauthor_approval": "approved",
+        "ai_disclosure_review": "confirmed_complete",
+    }))
+    approved = qa.validate(pdf)
+    assert approved["submission_ready"]
+    assert not approved["submission_blockers"]
+    assert approved["author_approval"]["coauthors_approved"]
+    disclosure = approved["policy_checks"]["required_ai_disclosure"]
+    assert disclosure["passed"]
+    assert disclosure["assessment_basis"] == "author_confirmed"
+    assert not disclosure["automated_presence_passed"]
+    assert not any(disclosure["components"].values())
+    # Human approval never bypasses a failed format check.
     (tmp_path / "sections" / "abstract.tex").write_text("word " * 201)
     assert not qa.validate(pdf)["format_passed"]
+    assert not qa.validate(pdf)["submission_ready"]
+
+
+@pytest.mark.parametrize("record", [None, "not JSON", "[]", "{}"])
+def test_absent_or_malformed_approval_does_not_grant_readiness(tmp_path, record):
+    pdf = tmp_path / "submission.pdf"
+    pdf.write_bytes(b"paper")
+    if record is not None:
+        (tmp_path / "submission_approval.json").write_text(record)
+    result = qa.check_submission_approval(pdf)
+    assert not result["coauthors_approved"]
+    assert not result["ai_disclosure_confirmed"]
+
+
+def test_author_approval_is_bound_to_exact_reviewed_pdf(tmp_path):
+    pdf = tmp_path / "submission.pdf"
+    pdf.write_bytes(b"reviewed paper")
+    record = {
+        "schema": "icaart2027_author_approval_v1",
+        "pdf_sha256": hashlib.sha256(pdf.read_bytes()).hexdigest(),
+        "coauthor_approval": "approved",
+        "ai_disclosure_review": "confirmed_complete",
+    }
+    path = tmp_path / "submission_approval.json"
+    path.write_text(json.dumps(record))
+    assert qa.check_submission_approval(pdf)["coauthors_approved"]
+    assert qa.check_submission_approval(pdf)["ai_disclosure_confirmed"]
+    pdf.write_bytes(b"revised paper")
+    assert not qa.check_submission_approval(pdf)["coauthors_approved"]
+    assert not qa.check_submission_approval(pdf)["ai_disclosure_confirmed"]
+
+
+def test_current_author_confirmation_matches_submission_pdf():
+    result = qa.check_submission_approval(Path(__file__).with_name("submission.pdf"))
+    assert result["matches_pdf"]
+    assert result["coauthors_approved"]
+    assert result["ai_disclosure_confirmed"]
+
+
+@pytest.mark.parametrize("failure", ["compile", "format"])
+def test_failed_rebuild_invalidates_previous_ready_manifest(tmp_path, monkeypatch, failure):
+    base = Path(__file__).parent
+    monkeypatch.syspath_prepend(str(base))
+    spec = importlib.util.spec_from_file_location("icaart_builder", base / "build_submission.py")
+    builder = importlib.util.module_from_spec(spec)
+    spec.loader.exec_module(builder)
+    monkeypatch.setattr(builder, "BASE", tmp_path)
+    manifest = tmp_path / "ICAART2027_MANIFEST.json"
+    manifest.write_text(json.dumps({"submission_ready": True, "status": "READY_FOR_AUTHOR_SUBMISSION"}))
+
+    def compile_paper(_):
+        if failure == "compile":
+            raise RuntimeError("LaTeX build failed")
+
+    monkeypatch.setattr(builder, "compile_paper", compile_paper)
+    monkeypatch.setattr(builder, "validate", lambda _: {"format_passed": False})
+    with pytest.raises(RuntimeError):
+        builder.main()
+    result = json.loads(manifest.read_text())
+    assert not result["submission_ready"]
+    assert result["status"] == "BUILD_NOT_VERIFIED"
+    assert result["submission_blockers"] == ["build_or_validation_not_completed"]
 
 
 def test_absent_mentions_do_not_imply_no_disclosure_required(tmp_path):
@@ -159,7 +239,7 @@ def test_editorial_paper_includes_author_approved_disclosure():
     assert source.index(r"\bibliography{references}") < source.index("AI-use disclosure.") < source.index(r"\input{sections/appendix}")
     assert "OpenAI Codex assisted with ideation, manuscript wording, and code and figure preparation, including debugging." in source
     assert "The authors reviewed and verified all content and results and take full responsibility for the work." in source
-    # A general statement does not replace affected-section and figure credits.
+    # Preserve raw presence diagnostics separately from human applicability review.
     assert not qa.check_required_disclosure(source, base)["passed"]
 
 

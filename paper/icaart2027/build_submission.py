@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""Build an anonymous editorial draft; report submission-policy blockers."""
+"""Build and verify the anonymous paper, preserving explicit author approvals."""
 from __future__ import annotations
 
 import hashlib
@@ -32,6 +32,15 @@ def compile_paper(directory: Path) -> None:
 
 
 def main() -> None:
+    # A failed rebuild must not leave a previous READY manifest next to new,
+    # unverified bytes. Publish final readiness only after every build gate.
+    manifest_path = BASE / "ICAART2027_MANIFEST.json"
+    manifest_path.write_text(json.dumps({
+        "schema": "icaart2027_submission_release_v3",
+        "status": "BUILD_NOT_VERIFIED",
+        "submission_ready": False,
+        "submission_blockers": ["build_or_validation_not_completed"],
+    }, indent=2, sort_keys=True) + "\n")
     compile_paper(BASE)
     qa = validate(BASE / "submission.pdf")
     (BASE / "submission_qa.json").write_text(json.dumps(qa, indent=2) + "\n")
@@ -72,25 +81,35 @@ def main() -> None:
     visual_matches = False
     if visual.is_file():
         artifacts.append(visual)
-        visual_matches = json.loads(visual.read_text()).get("pdf_sha256") == digest(BASE / "submission.pdf")
+        review = json.loads(visual.read_text())
+        visual_matches = (review.get("pdf_sha256") == digest(BASE / "submission.pdf")
+                          and review.get("status") == "passed")
+    approval = BASE / "submission_approval.json"
+    if approval.is_file():
+        artifacts.append(approval)
+    blockers = list(qa["submission_blockers"])
+    if not visual_matches:
+        blockers.append("current_pdf_visual_review_pending")
+    ready = not blockers
     manifest = {
-        "schema": "icaart2027_editorial_draft_release_v2",
-        "purpose": "Anonymous editorial draft in ICAART format; not authorized for submission",
-        "status": "EDITORIAL_DRAFT_NOT_SUBMISSION_READY",
+        "schema": "icaart2027_submission_release_v3",
+        "purpose": "Anonymous ICAART manuscript; upload remains an author action",
+        "status": "READY_FOR_AUTHOR_SUBMISSION" if ready else "SUBMISSION_CHECKS_PENDING",
         "format_passed": qa["format_passed"],
         "policy_passed": qa["policy_passed"],
-        "submission_ready": False,
-        "submission_blockers": qa["submission_blockers"],
+        "submission_ready": ready,
+        "submission_blockers": blockers,
+        "policy_review_basis": qa["policy_checks"]["required_ai_disclosure"]["assessment_basis"],
         "clean_extraction_pdf_identical": True,
         "visual_review_matches_pdf": visual_matches,
         "pages": qa["checks"]["page_budget"]["pages"],
         "non_whitespace_characters": qa["checks"]["character_budget"]["characters"],
         "abstract_words": qa["checks"]["abstract_length"]["words"],
-        "author_approval": "pending",
+        "author_approval": "approved" if qa["author_approval"]["coauthors_approved"] else "pending",
         "portal_submission": "not performed",
         "files": {str(path.relative_to(BASE)): digest(path) for path in artifacts},
     }
-    (BASE / "ICAART2027_MANIFEST.json").write_text(json.dumps(manifest, indent=2, sort_keys=True) + "\n")
+    manifest_path.write_text(json.dumps(manifest, indent=2, sort_keys=True) + "\n")
     print(json.dumps({key: value for key, value in manifest.items() if key != "files"}, indent=2))
 
 

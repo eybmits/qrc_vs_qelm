@@ -101,9 +101,15 @@ def test_three_panel_source_binding_and_selected_controls():
         renderer.plt.close(fig)
 
 
-def test_three_panel_geometry_and_legend_clearance():
+@pytest.mark.parametrize("font_family", [None, "DejaVu Sans"],
+                         ids=["preferred-font", "bundled-fallback-font"])
+def test_three_panel_geometry_and_legend_clearance(font_family):
     with renderer.plt.rc_context():
         fig, p = renderer.make_figure(*renderer.load_sources())
+        if font_family is not None:
+            # Exercise the bundled Linux fallback even on hosts with Helvetica.
+            for text in fig.findobj(Text):
+                text.set_fontfamily(font_family)
         canvas = FigureCanvasAgg(fig)
         canvas.draw()
         draw = canvas.get_renderer()
@@ -125,7 +131,10 @@ def test_three_panel_geometry_and_legend_clearance():
             np.testing.assert_allclose([getattr(ax.bbox, edge) for ax in lower_row],
                                        getattr(lower_row[0].bbox, edge))
         label_boxes = [ax.xaxis.label.get_window_extent(draw) for ax in lower_row]
-        np.testing.assert_allclose([box.y0 for box in label_boxes], label_boxes[0].y0)
+        # These labels align at the top. Their glyph-dependent heights differ
+        # with DejaVu Sans, so equal bottom edges are not a layout invariant.
+        assert all(ax.xaxis.label.get_verticalalignment() == "top" for ax in lower_row)
+        np.testing.assert_allclose([box.y1 for box in label_boxes], label_boxes[0].y1)
         for ax, lower in ((p["memory"], p["exact"]),
                           (p["narma"]["qelm"], p["narma"]["history"])):
             label = ax.xaxis.label.get_window_extent(draw)

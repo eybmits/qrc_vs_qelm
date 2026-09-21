@@ -36,6 +36,26 @@ POLICY_SOURCES = (
 )
 
 
+def check_submission_approval(pdf: Path) -> dict:
+    """Read explicit author decisions, valid only for the reviewed PDF bytes."""
+    path = pdf.parent / "submission_approval.json"
+    try:
+        record = json.loads(path.read_text())
+        current = (record.get("schema") == "icaart2027_author_approval_v1"
+                   and record.get("pdf_sha256") == hashlib.sha256(pdf.read_bytes()).hexdigest())
+        return {
+            "record": path.name,
+            "matches_pdf": current,
+            "coauthors_approved": current and record.get("coauthor_approval") == "approved",
+            "ai_disclosure_confirmed": current and record.get("ai_disclosure_review") == "confirmed_complete",
+            "confirmed_on": record.get("confirmed_on"),
+            "basis": "Explicit author confirmation; not an automated policy determination.",
+        }
+    except (OSError, ValueError, AttributeError) as exc:
+        return {"record": path.name, "matches_pdf": False, "coauthors_approved": False,
+                "ai_disclosure_confirmed": False, "error": str(exc)}
+
+
 def check_required_disclosure(text: str, base: Path) -> dict:
     """Detect missing required disclosure for this project's known tool use.
 
@@ -250,22 +270,32 @@ def validate(pdf: Path, *, max_pages: int = 12, template_manifest: Path | None =
     else:
         checks["official_template_unchanged"] = {"passed": False, "error": f"Missing {manifest_path.name}"}
     format_passed = all(check["passed"] for check in checks.values())
-    policy_checks = {"required_ai_disclosure": check_required_disclosure(text, base)}
+    approval = check_submission_approval(pdf)
+    disclosure = check_required_disclosure(text, base)
+    # Presence heuristics cannot decide which credits apply. Keep their findings
+    # visible, but recognize an explicit author review of this exact PDF.
+    disclosure["automated_presence_passed"] = disclosure["passed"]
+    disclosure["assessment_basis"] = (
+        "author_confirmed" if approval["ai_disclosure_confirmed"] else "automated_presence_check")
+    disclosure["passed"] = disclosure["passed"] or approval["ai_disclosure_confirmed"]
+    policy_checks = {"required_ai_disclosure": disclosure}
     policy_passed = all(check["passed"] for check in policy_checks.values())
     blockers = [] if format_passed else ["format_or_anonymity_checks_failed"]
     if not policy_passed:
         blockers.append("required_ai_disclosure_and_tool_citations_missing_or_incomplete")
-    blockers.append("human_scientific_author_and_policy_approval_pending")
-    return {"schema": "icaart2027_submission_qa_v2", "pdf": pdf.name,
+    if not approval["coauthors_approved"]:
+        blockers.append("human_scientific_author_approval_pending")
+    return {"schema": "icaart2027_submission_qa_v3", "pdf": pdf.name,
             "pdf_sha256": hashlib.sha256(pdf.read_bytes()).hexdigest(), "extraction_backend": data["backend"],
             "passed": format_passed and policy_passed,
             "format_passed": format_passed, "policy_passed": policy_passed,
-            "submission_ready": False, "submission_blockers": blockers,
+            "submission_ready": not blockers, "submission_blockers": blockers,
+            "author_approval": approval,
             "checks": checks, "policy_checks": policy_checks,
             "geometry_diagnostics": geometry,
-            "scope": "Separate format/anonymity and necessary-disclosure checks. An editorial draft "
-                     "may pass formatting while failing venue policy. Visual review, human approval "
-                     "and portal submission remain separate."}
+            "scope": "Separate format/anonymity checks, disclosure-presence diagnostics, and explicit "
+                     "author review. Author decisions are bound to the PDF hash. Visual review, "
+                     "repository CI and portal submission remain separate."}
 
 
 def main() -> int:

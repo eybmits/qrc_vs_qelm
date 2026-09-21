@@ -1,0 +1,9 @@
+{
+  "schema": "icaart2027_author_approval_v1",
+  "pdf_sha256": "888f12f1b1751a74dd57dfa7a22358e3ed31a52bf36db63c03999fee1cc90d86",
+  "confirmed_on": "2026-09-21",
+  "coauthor_approval": "approved",
+  "ai_disclosure_review": "confirmed_complete",
+  "basis": "The corresponding user confirmed that AI disclosure was already resolved and that coauthors have given approval. This records the author's decision, not an independent automated policy certification.",
+  "portal_submission": "not performed"
+}

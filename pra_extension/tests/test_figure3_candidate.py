@@ -15,6 +15,19 @@ sys.path.insert(0, str(CODE))
 import render_figure3_candidate as candidate  # noqa: E402
 
 
+def assert_convergence_rows_match(recorded, expected):
+    assert len(recorded) == len(expected)
+    for actual, reference in zip(recorded, expected):
+        assert actual.keys() == reference.keys()
+        for key in ("r", "qubits"):
+            assert actual[key] == reference[key]
+        # Recomputing the analytic construction can differ at float64
+        # roundoff across platforms. Keep the same tight tolerances as the
+        # source-table comparison below, with counts and row order exact.
+        for key in ("error", "floor", "excess", "maximizing_input"):
+            assert actual[key] == pytest.approx(reference[key], rel=1e-13, abs=1e-15)
+
+
 @pytest.fixture
 def source():
     return pd.read_csv(CODE.parent.parent /
@@ -168,8 +181,8 @@ def test_selected_paper_asset_retains_cohorts_and_all_seed_statistics(source):
     pd.testing.assert_frame_equal(recorded[source.columns].sort_values(columns).reset_index(drop=True),
                                   source.sort_values(columns).reset_index(drop=True),
                                   check_exact=False, rtol=1e-13, atol=1e-15)
-    assert ledger["convergence_rows"] == candidate.convergence_rows(
-        d=8, eta=.8, beta=2., copies=candidate.COPIES)
+    assert_convergence_rows_match(ledger["convergence_rows"], candidate.convergence_rows(
+        d=8, eta=.8, beta=2., copies=candidate.COPIES))
     assert ledger["paired_seed_order"] == list(candidate.Config().seeds)
     assert ledger["paired_display_steps"] == [1, 48]
     paired = {float(k): np.array(v) for k, v in ledger["paired_outputs"].items()}
@@ -195,6 +208,24 @@ def test_selected_paper_asset_retains_cohorts_and_all_seed_statistics(source):
     specification = ledger["laser_run_specification"]
     assert candidate.digest(CODE / "laser_demonstration.py") == specification["runner_sha256"]
     assert candidate.digest(CODE.parent / "LASER_DEMONSTRATION_PROTOCOL.md") == specification["protocol_sha256"]
+
+
+def test_convergence_comparison_accepts_only_roundoff():
+    expected = candidate.convergence_rows(d=8, eta=.8, beta=2., copies=candidate.COPIES)
+    rounded = [dict(row) for row in expected]
+    for row in rounded:
+        for key in ("error", "floor", "excess", "maximizing_input"):
+            row[key] += 2e-16
+    assert_convergence_rows_match(rounded, expected)
+
+    for key in ("error", "floor", "excess", "maximizing_input", "r", "qubits"):
+        changed = [dict(row) for row in expected]
+        changed[0][key] += 1 if key in ("r", "qubits") else 1e-8
+        with pytest.raises(AssertionError):
+            assert_convergence_rows_match(changed, expected)
+    for changed in (expected[:-1], list(reversed(expected))):
+        with pytest.raises(AssertionError):
+            assert_convergence_rows_match(changed, expected)
 
 
 def test_restored_emulation_figure_preserves_additional_task_evidence():

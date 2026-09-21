@@ -18,6 +18,13 @@ byte-identical rebuild from the source archive. File hashes are recorded in
 `ICAART2027_MANIFEST.json`; checks are recorded in `submission_qa.json` and
 `visual_review.json`.
 
+`submission_approval.json` records author-confirmed coauthor approval and AI
+disclosure review for the exact PDF hash. A changed PDF requires renewed
+confirmation. Automated disclosure-presence diagnostics remain visible in the
+QA report; they do not override the recorded human applicability review.
+The approval record is excluded from the anonymous source archive. Repository
+CI and the actual portal upload are separate from these manuscript checks.
+
 ## Sources and figures
 
 The manuscript is in `main.tex` and `sections/`; references are in

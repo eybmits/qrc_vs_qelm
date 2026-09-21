@@ -1,16 +1,21 @@
 {
-  "schema": "icaart2027_submission_qa_v2",
+  "schema": "icaart2027_submission_qa_v3",
   "pdf": "submission.pdf",
   "pdf_sha256": "888f12f1b1751a74dd57dfa7a22358e3ed31a52bf36db63c03999fee1cc90d86",
   "extraction_backend": "pypdf + Poppler",
-  "passed": false,
+  "passed": true,
   "format_passed": true,
-  "policy_passed": false,
-  "submission_ready": false,
-  "submission_blockers": [
-    "required_ai_disclosure_and_tool_citations_missing_or_incomplete",
-    "human_scientific_author_and_policy_approval_pending"
-  ],
+  "policy_passed": true,
+  "submission_ready": true,
+  "submission_blockers": [],
+  "author_approval": {
+    "record": "submission_approval.json",
+    "matches_pdf": true,
+    "coauthors_approved": true,
+    "ai_disclosure_confirmed": true,
+    "confirmed_on": "2026-09-21",
+    "basis": "Explicit author confirmation; not an automated policy determination."
+  },
   "checks": {
     "page_budget": {
       "passed": true,
@@ -287,7 +292,7 @@
   },
   "policy_checks": {
     "required_ai_disclosure": {
-      "passed": false,
+      "passed": true,
       "required_for_this_project": true,
       "components": {
         "named_tool_in_pdf": true,
@@ -301,7 +306,9 @@
         "https://icaart.scitevents.org/Guidelines.aspx?y=2027",
         "https://icaart.scitevents.org/AiTools.aspx?y=2027"
       ],
-      "note": "Missing disclosure is a submission blocker, not a formatting defect. Human review must check accuracy, scope, placement and figure-credit adequacy."
+      "note": "Missing disclosure is a submission blocker, not a formatting defect. Human review must check accuracy, scope, placement and figure-credit adequacy.",
+      "automated_presence_passed": false,
+      "assessment_basis": "author_confirmed"
     }
   },
   "geometry_diagnostics": {
@@ -337,5 +344,5 @@
     ],
     "note": "Glyph-box diagnostics only; inspect rendered pages for overlap and layout."
   },
-  "scope": "Separate format/anonymity and necessary-disclosure checks. An editorial draft may pass formatting while failing venue policy. Visual review, human approval and portal submission remain separate."
+  "scope": "Separate format/anonymity checks, disclosure-presence diagnostics, and explicit author review. Author decisions are bound to the PDF hash. Visual review, repository CI and portal submission remain separate."
 }
