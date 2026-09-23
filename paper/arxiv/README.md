@@ -20,8 +20,9 @@ BibTeX, Poppler, and `orcidlink` installed:
 ```
 
 The arXiv builder starts from the anonymous source package, adds the author
-block and metadata, and replaces the anonymous code note with the repository
-link. The scientific sections and figures are shared. Title-to-author spacing
+block and metadata, and appends the full repository link. The anonymous
+manuscript contains no repository link or omission note. The scientific
+sections and figures are shared. Title-to-author spacing
 uses an 8 pt addition; manuscript font sizes are preserved.
 
 `ARXIV_MANIFEST.json` records source and file hashes. `arxiv_qa.json` checks

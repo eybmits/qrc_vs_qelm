@@ -1,18 +1,21 @@
 {
   "schema": "icaart2027_submission_qa_v3",
   "pdf": "submission.pdf",
-  "pdf_sha256": "888f12f1b1751a74dd57dfa7a22358e3ed31a52bf36db63c03999fee1cc90d86",
+  "pdf_sha256": "2458675ff3848cffca303fc13e077a671d3bdee6675e687e06f9a521837ef5b7",
   "extraction_backend": "pypdf + Poppler",
-  "passed": true,
+  "passed": false,
   "format_passed": true,
-  "policy_passed": true,
-  "submission_ready": true,
-  "submission_blockers": [],
+  "policy_passed": false,
+  "submission_ready": false,
+  "submission_blockers": [
+    "required_ai_disclosure_and_tool_citations_missing_or_incomplete",
+    "human_scientific_author_approval_pending"
+  ],
   "author_approval": {
     "record": "submission_approval.json",
-    "matches_pdf": true,
-    "coauthors_approved": true,
-    "ai_disclosure_confirmed": true,
+    "matches_pdf": false,
+    "coauthors_approved": false,
+    "ai_disclosure_confirmed": false,
     "confirmed_on": "2026-09-21",
     "basis": "Explicit author confirmation; not an automated policy determination."
   },
@@ -77,7 +80,7 @@
     },
     "character_budget": {
       "passed": true,
-      "characters": 40700,
+      "characters": 40757,
       "minimum": 10000,
       "maximum": 50000,
       "definition": "Unicode, whitespace excluded"
@@ -143,7 +146,7 @@
           "unicode": true
         },
         {
-          "name": "FCUXRG+CMSY10",
+          "name": "LXHHYY+CMSY10",
           "embedded": true,
           "subset": true,
           "unicode": true
@@ -209,7 +212,7 @@
           "unicode": true
         },
         {
-          "name": "FCUXRG+CMSY10",
+          "name": "LXHHYY+CMSY10",
           "embedded": true,
           "subset": true,
           "unicode": true
@@ -292,7 +295,7 @@
   },
   "policy_checks": {
     "required_ai_disclosure": {
-      "passed": true,
+      "passed": false,
       "required_for_this_project": true,
       "components": {
         "named_tool_in_pdf": true,
@@ -308,7 +311,7 @@
       ],
       "note": "Missing disclosure is a submission blocker, not a formatting defect. Human review must check accuracy, scope, placement and figure-credit adequacy.",
       "automated_presence_passed": false,
-      "assessment_basis": "author_confirmed"
+      "assessment_basis": "automated_presence_check"
     }
   },
   "geometry_diagnostics": {
@@ -335,10 +338,19 @@
       {
         "page": 10,
         "box": [
-          134.493,
-          711.020873,
-          140.028221,
-          748.201296
+          155.001,
+          692.338873,
+          159.152415,
+          729.519296
+        ]
+      },
+      {
+        "page": 10,
+        "box": [
+          236.578,
+          692.338873,
+          240.729415,
+          729.519296
         ]
       }
     ],

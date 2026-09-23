@@ -15,8 +15,8 @@ The confirmatory two-/three-qubit cohort and prospective
 four-/five-qubit follow-ups each use 12 roots; cohorts and dense-map seeds
 are disjoint. The five-qubit study uses a ten-qubit QELM.
 Train/validation/test and diagnostic streams are separate;
-Appendix~\ref{sec:methods} details dynamics, train-only standardization,
-and validation-selected ridge fits.
+Appendix~\ref{sec:methods} provides the numerical methods and
+reproducibility details.
 
 A common-suffix panel appends identical inputs to different pasts.
 Output variation around their mean measures old-history error;
@@ -73,13 +73,13 @@ history criterion at $\gamma_T\leq1$; at $\gamma_T=4$, two inputs suffice
 in all sizes. All rootwise decay slopes are negative in
 both confirmatory sizes and the independent four-qubit follow-up.
 
-In the preregistered transition settings, $B=72$, $\gamma_T\in\{2,4\}$,
+At $B=72$ and $\gamma_T\in\{2,4\}$,
 increasing $d$ from one to six
 reduces held-out QELM NRMSE by a root median of $78.45\%$
 (95\% CI $[76.64,80.80]\%$), with improvement in all 12 roots.
 
-The $0.10$, 10-of-12 rule was preregistered. Post hoc tolerances
-$0.08$, $0.10$, $0.12$ and 9--11 required roots change crossings,
+Post hoc sensitivity checks use tolerances
+$0.08$, $0.10$, $0.12$ and require 9--11 roots to pass. Crossings change,
 but all 27 frontiers remain non-increasing with loss. Unmet thresholds
 leave longer context unresolved; no asymptotic size law follows.
 
@@ -103,7 +103,7 @@ of $67.26\%$ (95\% CI $[55.33,75.63]\%$).
 All 12 roots improve in both original confirmatory sizes; all 24 cases meet
 the emulation tolerance at $B=72$. The old-history term is unchanged.
 
-A frozen follow-up extends to $B=144$ on 12 fresh roots per size at
+A separate follow-up extends to $B=144$ on 12 fresh roots per size at
 $\gamma_T=4,d=6$, with fixed duration [Figure~\ref{fig:resource-diagnosis}(b)].
 Exploratory $B=24,30$ reuse these data: 18 final-time observables plus one
 or two per qubit at the midpoint, with outcome-independent Pauli-axis balance.

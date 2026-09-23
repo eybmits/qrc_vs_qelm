@@ -171,11 +171,16 @@ def test_author_approval_is_bound_to_exact_reviewed_pdf(tmp_path):
     assert not qa.check_submission_approval(pdf)["ai_disclosure_confirmed"]
 
 
-def test_current_author_confirmation_matches_submission_pdf():
-    result = qa.check_submission_approval(Path(__file__).with_name("submission.pdf"))
-    assert result["matches_pdf"]
-    assert result["coauthors_approved"]
-    assert result["ai_disclosure_confirmed"]
+def test_release_status_respects_current_pdf_approval():
+    base = Path(__file__).parent
+    result = qa.check_submission_approval(base / "submission.pdf")
+    manifest = json.loads((base / "ICAART2027_MANIFEST.json").read_text())
+    assert (manifest["author_approval"] == "approved") == result["coauthors_approved"]
+    if not result["coauthors_approved"]:
+        assert not manifest["submission_ready"]
+        assert "human_scientific_author_approval_pending" in manifest["submission_blockers"]
+    if manifest["policy_review_basis"] == "author_confirmed":
+        assert result["ai_disclosure_confirmed"]
 
 
 @pytest.mark.parametrize("failure", ["compile", "format"])

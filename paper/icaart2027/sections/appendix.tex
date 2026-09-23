@@ -68,9 +68,19 @@ The invariant reachable set makes this finite, and removing $\mathcal N$
 makes it a norm. Let $c_d=\sup_{|s|=d}\|A_s\|_{\rm obs}$, using the
 induced operator norm.
 
-Allowing additional common inputs cannot increase $D_d$. Consequently,
-the largest value of $\|A_s[v]\|_{\rm obs}$ over $v\in\Delta$ and
-$|s|=d$ is exactly $D_d$. The convex hull of the reachable differences
+Appending common inputs preserves reachability, so
+$\Phi_w(\Delta)\subseteq\Delta$ for every word $w$.
+Absorbing the first $\ell$ inputs of a length-$(d+\ell)$ word into
+its starting difference therefore gives $D_{d+\ell}\leq D_d$.
+For $v\in\Delta$, $|s|=d$, and any future word $w$ of length $\ell$,
+\[
+ \|\overline{\mathcal C}A_wA_s[v]\|\leq D_{d+\ell}\leq D_d.
+\]
+Taking suprema gives the upper bound $D_d$. The empty future word
+recovers $\sup_{v\in\Delta,\,|s|=d}\|\overline{\mathcal C}A_s[v]\|=D_d$,
+establishing equality.
+
+The convex hull of the reachable differences
 in $W$ contains a norm ball and is bounded. Thus constants
 $\kappa_-,\kappa_+>0$, independent of $d$, satisfy
 \[

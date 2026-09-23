@@ -118,6 +118,27 @@ def test_duplicate_author_anchor_fails_closed(source, metadata):
         builder.authored_main(source + "\n" + anchor, metadata)
 
 
+@pytest.mark.parametrize("ending", [b"", b"\n", b"\n\n"])
+def test_authored_methodology_only_appends_full_repository_note(ending):
+    original = b"Hardware errors and measurement backaction are omitted." + ending
+    authored = builder.authored_methodology(original)
+    assert authored[:len(original)] == original
+    assert authored[len(original):] == b"\n" + builder.AUTHORED_CODE_NOTE + b"\n"
+    assert authored.count(builder.AUTHORED_CODE_NOTE) == 1
+    assert rb"\url{https://github.com/eybmits/qrc_vs_qelm}" in builder.AUTHORED_CODE_NOTE
+    assert b"access-restricted" not in authored
+    assert b"anonymity" not in authored
+
+
+@pytest.mark.parametrize("note", [
+    b"Code link withheld for anonymity.",
+    builder.AUTHORED_CODE_NOTE,
+])
+def test_authored_methodology_rejects_existing_repository_notes(note):
+    with pytest.raises(ValueError, match="Anonymous methodology contains a repository note"):
+        builder.authored_methodology(b"Scientific methodology.\n" + note + b"\n")
+
+
 def _read_archive(path):
     if not path.is_file():
         pytest.skip(f"Build artifact is not available: {path.name}")
@@ -153,12 +174,12 @@ def test_built_authored_zip_preserves_all_shared_scientific_sources(metadata):
     assert authored["main.bbl"].strip()
     assert authored["main.tex"] == builder.authored_main(anonymous["main.tex"].decode(), metadata).encode()
     method = "sections/methodology.tex"
-    anonymous_note = b"Code link withheld for anonymity."
-    assert anonymous[method].count(anonymous_note) == 1
+    assert b"Code link withheld for anonymity." not in anonymous[method]
+    assert builder.AUTHORED_CODE_NOTE not in anonymous[method]
     assert authored[method].count(builder.AUTHORED_CODE_NOTE) == 1
     assert rb"\url{https://github.com/eybmits/qrc_vs_qelm}" in builder.AUTHORED_CODE_NOTE
     assert b"access-restricted" not in builder.AUTHORED_CODE_NOTE
-    assert authored[method].replace(builder.AUTHORED_CODE_NOTE, anonymous_note) == anonymous[method]
+    assert authored[method] == anonymous[method] + b"\n" + builder.AUTHORED_CODE_NOTE + b"\n"
     changed = {name for name, content in anonymous.items() if authored[name] != content}
     assert changed == {"main.tex", method}
     manifest = json.loads((BASE / "ARXIV_MANIFEST.json").read_text())

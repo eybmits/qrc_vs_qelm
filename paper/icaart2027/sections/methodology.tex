@@ -1,4 +1,4 @@
-\subsection{Numerical Evaluation}
+\subsection{Numerical Evaluation and Reproducibility}
 \label{sec:methods}
 
 \subsubsection{What the Common-Suffix Diagnostic Measures}
@@ -63,7 +63,7 @@ readout is then refitted on training and validation data. The solver uses
 a relative singular-value cutoff of $10^{-6}$; $\lambda=\infty$ gives
 an intercept-only model.
 
-\emph{Comparisons and decision rules.} Linear-delay, quadratic-delay
+\emph{Comparisons and evaluation criteria.} Linear-delay, quadratic-delay
 \cite{gauthier2021next}, dimension-matched random-tanh, intercept-only,
 and reset--replay controls use the same windows and splits. Replay applies
 the last $d$ target channels to a fixed state, either retaining or refitting
@@ -131,4 +131,3 @@ roots and a positive 95\% mean lower bound from 10,000 paired root
 bootstraps, without simultaneous coverage.
 
 Hardware errors and measurement backaction are omitted.
-Code link withheld for anonymity.

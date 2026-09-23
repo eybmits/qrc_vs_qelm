@@ -1,8 +1,8 @@
 {
-  "pdf_sha256": "888f12f1b1751a74dd57dfa7a22358e3ed31a52bf36db63c03999fee1cc90d86",
+  "pdf_sha256": "2458675ff3848cffca303fc13e077a671d3bdee6675e687e06f9a521837ef5b7",
   "pages_reviewed": 12,
   "latex_overfull_boxes": 0,
   "undefined_references_or_citations": 0,
-  "rendering": "All 12 pages rendered with Poppler at maximum dimension 1100 px and visually inspected by the main agent after the stronger opening statements reflowed the document. Abstract, introduction and conclusion lead with the fixed two-qubit recall separation, with exact-expectation and unbounded-delay qualifications and a window-independent positive lower bound. The positive fading-memory theorem and practical limitations remain visible. Title, fonts, margins, technical proofs, equations and figure assets are unchanged. No new clipping or overlaps; 12 pages retained.",
+  "rendering": "All 12 pages rendered with Poppler at maximum dimension 1200 px and compared against the previously reviewed reproducibility-wording revision. Only pages 10, 11 and 12 change; the main agent visually inspected all three. The other nine pages are pixel-identical. Appendix B now explicitly uses forward invariance, D_(d+ell) <= D_d, and the empty future word to justify equality of the future-observation supremum and D_d. The additional display is unnumbered; equation numbering, scientific conclusions, figures and numerical results remain unchanged. Text reflows within the appendix without clipping or overlaps; both editions retain 12 pages.",
   "status": "passed"
 }

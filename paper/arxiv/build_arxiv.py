@@ -1,8 +1,8 @@
 #!/usr/bin/env python3
 """Derive an identified arXiv package from the unchanged anonymous source ZIP.
 
-Only title-page authors, PDF metadata, and the repository-access sentence
-differ. Scientific content, references, figures, and AI disclosure are preserved.
+Only title-page authors, PDF metadata, and an appended repository-access
+sentence differ. Scientific content, references, figures, and AI disclosure are preserved.
 No upload or publication is performed.
 """
 from __future__ import annotations
@@ -19,11 +19,11 @@ import zipfile
 
 BASE = Path(__file__).resolve().parent
 ANONYMOUS = BASE.parent / "icaart2027"
-ANONYMOUS_CODE_NOTE = b"Code link withheld for anonymity."
 AUTHORED_CODE_NOTE = (
     rb"Code repository: \url{https://github.com/eybmits/qrc_vs_qelm}.")
+AUTHORED_CODE_SUFFIX = b"\n" + AUTHORED_CODE_NOTE + b"\n"
 sys.path.insert(0, str(ANONYMOUS))
-from validate_submission import log_problems, margin_diagnostics, parse_fonts, read_pdf
+from validate_submission import log_problems, margin_diagnostics, parse_fonts, read_pdf  # noqa: E402
 
 
 def digest(data: bytes) -> str:
@@ -94,6 +94,12 @@ def authored_main(source: str, metadata: dict) -> str:
     return source
 
 
+def authored_methodology(source: bytes) -> bytes:
+    if b"Code link withheld for anonymity." in source or AUTHORED_CODE_NOTE in source:
+        raise ValueError("Anonymous methodology contains a repository note")
+    return source + AUTHORED_CODE_SUFFIX
+
+
 def compile_paper(directory: Path) -> None:
     result = subprocess.run(
         ["latexmk", "-pdf", "-interaction=nonstopmode", "-halt-on-error", "main.tex"],
@@ -135,9 +141,7 @@ def main() -> None:
     inputs = dict(original)
     inputs["main.tex"] = authored_main(original["main.tex"].decode(), metadata).encode()
     method = "sections/methodology.tex"
-    if original[method].count(ANONYMOUS_CODE_NOTE) != 1:
-        raise ValueError("Anonymous repository note changed")
-    inputs[method] = original[method].replace(ANONYMOUS_CODE_NOTE, AUTHORED_CODE_NOTE)
+    inputs[method] = authored_methodology(original[method])
     with tempfile.TemporaryDirectory(prefix="qrc-arxiv-build-") as temporary:
         working = Path(temporary)
         write_inputs(working, inputs)
@@ -165,7 +169,7 @@ def main() -> None:
             "no_embedded_attachments": data["attachments"] == 0,
             "disclosure_preserved": "OpenAI Codex" in full_text and "AI-use disclosure" in full_text,
             "scientific_content_preserved": all(
-                (inputs[n].replace(AUTHORED_CODE_NOTE, ANONYMOUS_CODE_NOTE) if n == method else inputs[n]) == b
+                inputs[n] == b + (AUTHORED_CODE_SUFFIX if n == method else b"")
                 for n, b in original.items() if n != "main.tex"),
             "anonymous_pdf_unchanged": digest(anonymous_pdf.read_bytes()) == before,
         }
@@ -199,7 +203,7 @@ def main() -> None:
                "parent_source_sha256": {n: digest(b) for n, b in original.items()},
                "administrative_changes": {
                    "main.tex": "Author header with compact title spacing, linked green ORCID icons, profile links, and PDF author/subject metadata",
-                   method: "Anonymity-only code note replaced with the full repository URL"},
+                   method: "Code repository note with the full URL appended; original methodology preserved byte-for-byte"},
                "source_package_files": {n: digest(b) for n, b in inputs.items()},
                "files": {n: digest(b) for n, b in delivered.items()} | {
                    n: digest((BASE / n).read_bytes()) for n in ("authors.json", "build_arxiv.py")},

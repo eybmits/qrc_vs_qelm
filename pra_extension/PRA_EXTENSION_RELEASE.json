@@ -1,6 +1,6 @@
 {
   "artifact_count": 367,
-  "artifact_set_sha256": "73d203d4d91a08a9536835e141299c5bfbe15ec30daf377233fa007687b9845a",
+  "artifact_set_sha256": "be55cd51725a846e2c41a5ddea70466c7e79bc7e11087fc4cc8387ad901155f1",
   "artifacts": {
     "CANONICAL_EMULATION_LITERATURE_POSITIONING.md": {
       "role": "post_confirmatory_literature_positioning",
@@ -694,8 +694,8 @@
     },
     "paper/icaart2027/submission.pdf": {
       "role": "compiled_paper_pdf",
-      "sha256": "888f12f1b1751a74dd57dfa7a22358e3ed31a52bf36db63c03999fee1cc90d86",
-      "size_bytes": 362075
+      "sha256": "2458675ff3848cffca303fc13e077a671d3bdee6675e687e06f9a521837ef5b7",
+      "size_bytes": 362676
     },
     "pra_extension/FEATURE_BRIDGE_PROTOCOL.md": {
       "role": "exploratory_paired_feature_protocol",
@@ -1489,8 +1489,8 @@
     },
     "pra_extension/tests/test_manuscript_claims.py": {
       "role": "extension_test",
-      "sha256": "a8914d448862cd94ff1a40b2f452b1f803236ea71868279b43aaf989bc724177",
-      "size_bytes": 62679
+      "sha256": "14fd1c7a607094ecbb0c0710315d414f456e720248b8976ff2c6b365b90e116b",
+      "size_bytes": 65089
     },
     "pra_extension/tests/test_midpoint_statement.py": {
       "role": "extension_test",
@@ -1874,7 +1874,7 @@
     "pra_extension": "EXPLORATORY_POST_CONFIRMATORY"
   },
   "figures_directory": "pra_extension/figures_pra_final_v6",
-  "manifest_identity_sha256": "f85e35ec14f00974e8966050a262e5523f824760ef5812bb282380607bb29e3f",
+  "manifest_identity_sha256": "aba1cab59a26a75088c0515ec7a01786fcdeeba0314fb2343f6f93c1dd08de50",
   "paper_pdf": "paper/icaart2027/submission.pdf",
   "prospective_followups": {
     "long_context_n5": {

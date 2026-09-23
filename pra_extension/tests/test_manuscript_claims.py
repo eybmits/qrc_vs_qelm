@@ -429,6 +429,31 @@ def test_icaart_appendix_rewrite_covers_full_body_and_relocated_material() -> No
     assert main.index(r"\input{sections/appendix}") < main.index(r"\input{sections/methodology}")
 
 
+def test_observable_memory_proof_explicitly_justifies_future_supremum() -> None:
+    """Keep both bounds visible in the manuscript's observable-norm argument."""
+
+    appendix = (
+        REPO_ROOT / "paper" / "icaart2027" / "sections" / "appendix.tex"
+    ).read_text(encoding="utf-8")
+    memory = appendix.split(r"\label{app:observable-proof}", 1)[1].split(
+        r"\subsection{", 1,
+    )[0]
+    prose = re.sub(r"\s+", " ", memory)
+    math = re.sub(r"\s+", "", memory)
+    for step in (
+        r"\Phi_w(\Delta)\subseteq\Delta",
+        r"\|\overline{\mathcalC}A_wA_s[v]\|\leqD_{d+\ell}\leqD_d",
+        r"\sup_{v\in\Delta,\,|s|=d}\|\overline{\mathcalC}A_s[v]\|=D_d",
+    ):
+        assert step in math
+    assert "Appending common inputs preserves reachability" in prose
+    assert "Absorbing the first $\\ell$ inputs" in prose
+    assert "Taking suprema gives the upper bound $D_d$" in prose
+    assert "The empty future word recovers" in prose
+    assert "establishing equality" in prose
+    assert "freely concatenable inputs" in prose
+
+
 def test_icaart_appendix_rewrite_preserves_referenced_equation_sequence_12_to_15() -> None:
     directory = REPO_ROOT / "paper" / "icaart2027" / "sections"
     combined = "\n".join(
@@ -483,11 +508,9 @@ def test_active_title_and_practitioner_framing_are_consistent() -> None:
     ) in sections["introduction"]
     assert "information---not insufficient expressivity or training" in sections["introduction"]
     assert (
-        "Our results distinguish problems that better representations can solve "
-        "from problems that require access to more history. When recent inputs "
-        "contain enough information, a sufficiently expressive windowed QELM can "
-        "replace the reservoir. When essential information remains inaccessible, "
-        "additional capacity is not enough: longer context or retained memory is needed."
+        "The decision is therefore to assess memory before adding capacity. When "
+        "recent inputs suffice, a sufficiently expressive QELM can replace the "
+        "reservoir; otherwise, longer context or retained memory is needed."
     ) in sections["conclusion"]
 
 
@@ -546,13 +569,19 @@ def test_conclusion_keeps_a_plain_story_and_scoped_claims() -> None:
             for qualifier in ("QRC outputs", "Under our assumptions", "precisely when",
                               "as their windows grow", "sufficiently expressive",
                               "exact expectations", "fades uniformly"):
-                assert qualifier in paragraphs[1]
+                assert qualifier in paragraphs[0]
+            assert paragraphs[0].startswith("A reset-window QELM can replace a QRC only if")
+            for condition in ("influence of older inputs", "on the chosen outputs",
+                              "within the available window", "desired accuracy",
+                              "Fast forgetting permits short windows",
+                              "slower forgetting may require longer context"):
+                assert condition in paragraphs[0]
             for limit in ("Persistent quantum memory", "no fixed finite input window",
                           "reproduce uniformly", "two-qubit construction",
                           "strict representational advantage over reset-window QELMs",
                           "exact-expectation setting", "worst-case accuracy gap over unbounded delays",
                           "rather than quantum from classical computation"):
-                assert limit in paragraphs[0]
+                assert limit in paragraphs[1]
             assert "representability, not efficient learning or resource savings" in paragraphs[2]
             evaluation = re.sub(r"\s+", " ", (directory / "sections" / "evaluation.tex")
                                 .read_text(encoding="utf-8"))
@@ -609,12 +638,28 @@ def test_repository_reference_is_at_end_and_review_version_is_anonymous() -> Non
     conference = REPO_ROOT / "paper" / "icaart2027"
     main = (conference / "main.tex").read_text(encoding="utf-8")
     assert main.rfind(r"\input{sections/methodology}") > main.rfind(r"\bibliography{references}")
-    conference_methods = (conference / "sections" / "methodology.tex").read_text(encoding="utf-8")
-    assert re.search(
-        r"(?:link is withheld for double-blind review|Code link withheld for anonymity)",
-        conference_methods,
+    conference_source = main + "\n" + "\n".join(
+        path.read_text(encoding="utf-8") for path in (conference / "sections").glob("*.tex")
     )
-    assert repository_url not in main + conference_methods
+    assert repository_url not in conference_source
+    # The review copy is silent about the omitted repository link; no placeholder
+    # is needed to generate the author-identified edition.
+    assert not re.search(r"withheld|access[- ]restricted|code link", conference_source, re.I)
+
+
+def test_anonymous_reproducibility_description_keeps_methods_without_registration_claims() -> None:
+    directory = REPO_ROOT / "paper" / "icaart2027" / "sections"
+    evaluation = re.sub(r"\s+", " ", (directory / "evaluation.tex").read_text())
+    methods = re.sub(r"\s+", " ", (directory / "methodology.tex").read_text())
+    assert "provides the numerical methods and reproducibility details" in evaluation
+    assert "Numerical Evaluation and Reproducibility" in methods
+    assert not re.search(r"preregister|pre-register|frozen", evaluation + methods, re.I)
+    # Keep the actual criterion and exploratory qualifiers, not an implied
+    # replacement of post hoc analyses by confirmatory evidence.
+    assert "at most 0.10 in at least 10 of 12 roots" in methods
+    assert "Post hoc sensitivity checks" in evaluation
+    assert "Exploratory $B=24,30$ reuse these data" in evaluation
+    assert "Comparisons and evaluation criteria" in methods
 
 
 def test_main_figure_selection_preserves_archived_frontier_and_resolves_references() -> None:

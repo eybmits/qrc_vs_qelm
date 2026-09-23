@@ -1,6 +1,6 @@
 {
   "schema": "arxiv_visual_review_v1",
-  "pdf_sha256": "707073198fbaea1b50a655dc1c0fc4c69022e932effb33d520669ed0f1407fce",
+  "pdf_sha256": "bfea974d6f53f1a1021e3bab89290c4d99263c059bb435941ec75edee70b23e0",
   "reviewed_pages": [
     1,
     2,
@@ -15,7 +15,7 @@
     11,
     12
   ],
-  "rendering": "All 12 pages rendered with Poppler at maximum dimension 1100 px. Pages 2 through 11 are pixel-identical to the anonymous edition, whose 12 pages the main agent visually inspected; the main agent additionally inspected the arXiv title page and page 12. The stronger fixed-instance memory-separation openings preserve exact-expectation and unbounded-delay scope. Title and author spacing, figures and captions remain clear. No new clipping or overlaps. The full repository URL on page 12 remains without an access qualifier. Both editions retain 12 pages and identical scientific content.",
+  "rendering": "All 12 pages rendered with Poppler at maximum dimension 1200 px and compared against the previously reviewed reproducibility-wording revision. Only pages 10, 11 and 12 change. Pages 10 and 11 are pixel-identical to the anonymous pages visually inspected by the main agent; the main agent also inspected the preprint's page 12 with its full repository URL. The other nine pages are pixel-identical to the previous preprint. Pages 2 through 11 remain pixel-identical between editions. Appendix B's added explanation makes both bounds on the future-observation supremum explicit; equation numbering, protocol details and scientific results are preserved. No clipping or overlaps. Both editions retain 12 pages.",
   "passed": true,
   "checks": {
     "author_header_legible": true,
