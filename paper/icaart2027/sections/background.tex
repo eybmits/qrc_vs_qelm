@@ -1,87 +1,67 @@
-\section{LIMITS OF FINITE-WINDOW EMULATION}
+\section{What a Finite Window Can Reproduce}
 \label{sec:criterion}
 
-For scalar outputs, the best possible window error is half the largest
-output difference between histories sharing that window.
-Under the assumptions below, a growing reset-QELM family can approach this
-optimum. The key distinction is between having enough historical information
-and having enough model capacity to use it.
+A window can support accurate emulation only when histories with identical
+recent inputs also produce nearly identical reservoir outputs. We quantify
+the uncertainty left by the missing past, then establish when a sufficiently
+expressive QELM can approach the best accuracy available from its window.
 
-We first quantify the information missing from a window. Consider two
-histories with different earlier inputs but the same last $d$ inputs.
-A window model must give both histories the same prediction, even when their
-QRC outputs differ. The largest such output difference is
+Consider histories with the same last $d$ inputs but potentially different
+earlier inputs. Their largest output difference is
 \begin{equation}
  D_d=\sup_{S_d(h)=S_d(h')}\|y(h)-y(h')\|.
  \label{eq:diameter}
 \end{equation}
-The supremum runs over admissible histories; $\|\cdot\|$ is a fixed norm on
-the finite output space, reducing to absolute value for scalar outputs.
-This \emph{common-suffix diameter}
-measures how much the output can vary while the visible window stays fixed.
-It depends on the target QRC, its declared outputs, and the allowed histories.
+The supremum runs over all allowed histories. The norm is fixed and reduces
+to absolute value for a scalar output. Thus $D_d$ measures how much the
+output can vary when everything the window model receives is held fixed.
 
-For a bounded scalar output, $D_d$ determines the best accuracy that any
-window predictor can achieve,
+For a scalar output, each window is compatible with a range of reservoir
+outputs. Predicting its midpoint minimizes the largest possible error:
+any other prediction moves closer to one end but farther from the other.
+If the range is $0.2$ to $0.8$, for example, predicting $0.5$ gives the
+smallest worst-case error, $0.3$. Across all windows,
 \begin{equation}
- \inf_f\sup_h |y(h)-f(S_d(h))|=\frac{D_d}{2}.
+ \inf_f\sup_h |y(h)-f(S_d(h))|=\frac{D_d}{2},
  \label{eq:window-law}
 \end{equation}
-Here, $f$ ranges over all functions of the window. The reason is simple.
-For each window, predict the midpoint of its compatible output range.
-The largest possible error is half the width of that range, and no other
-prediction can do better. Taking the worst case over all windows gives
-Eq.~\eqref{eq:window-law}.
+where $f$ ranges over all functions of the window. This limit applies
+regardless of architecture or capacity. A longer window can reduce it by
+distinguishing histories that a shorter window treats as identical. If
+$D_d\to0$, arbitrarily small errors become possible in principle. If the
+gap does not vanish, additional capacity cannot remove the error floor.
 
-This identifies exactly what a longer window can accomplish. If $D_d=0$,
-the window determines the output uniquely. If $D_d$ remains positive but
-tends to zero, increasing the window makes the optimal error arbitrarily
-small. If the gap does not vanish, a persistent error floor remains
-regardless of the predictor's capacity.
+Approaching this limit with a QELM requires suitable dynamics and model
+capacity. Assume a finite-dimensional reservoir, a compact input alphabet,
+input-continuous quantum channels, and fixed observable outputs. Every
+finite input continuation must be allowed after every admissible earlier
+history. These conditions make the midpoint prediction continuous in
+the window.
 
-Reaching this information limit with a QELM requires sufficient expressive
-power. For this step, assume a compact input alphabet and a finite-dimensional
-QRC whose channels depend continuously on the input. The output
-$y=\mathcal C(\rho)$ is a fixed finite vector of observable expectations.
-We also require that every finite input suffix can follow every admissible
-prehistory.
-
-For each fixed window length $d$, let $\mathcal Q_d$ contain the prediction
-functions $f$ of reset-QELMs available as model capacity grows. Assume this family is dense in the
-continuous window functions under the uniform norm. In concrete terms,
-enough capacity must allow it to approximate any continuous function of
-the window uniformly over all windows. Features are evaluated through
-exact expectations.
-
-\begin{samepage}
-Reset-window emulation theorem. Under these assumptions, for scalar
-output and every fixed $d$,
+For each window length, let $\mathcal Q_d$ be a reset-QELM family that can
+approximate every continuous window function uniformly as capacity grows,
+using exact expectation values. Then, for scalar outputs,
 \begin{equation}
- \boxed{\inf_{f\in\mathcal Q_d}\sup_h
- |y(h)-f(S_d(h))|=\frac{D_d}{2}.}
+ \inf_{f\in\mathcal Q_d}\sup_h
+ |y(h)-f(S_d(h))|=\frac{D_d}{2}.
  \label{eq:qrc-qelm-equivalence}
 \end{equation}
-\end{samepage}
-Thus, sufficiently expressive QELMs can approach the best accuracy available
-from the window, including when that window leaves a nonzero information
-floor. Under the stated assumptions, the compatible-output midpoint is a
-continuous function of the window. Uniform QELM density allows this function
-to be approximated arbitrarily closely. The equality describes an infimum,
-so a single finite QELM need not attain it exactly.
+The family can approach the window's information limit arbitrarily closely.
+This is an infimum: a particular finite model need not attain it exactly.
 
-Consequently, arbitrarily accurate reset-window QELM emulation is
-possible if and only if $D_d\longrightarrow0$ as the window grows.
-The same criterion holds for finite vector outputs, whose unrestricted
-fixed-window optimum lies between $D_d/2$ and $D_d$.
-Appendix~\ref{app:window-laws} provides the proofs and shows that randomization
-cannot lower the scalar bound on worst-case expected absolute error.
+Consequently, under these assumptions, arbitrarily accurate QELM emulation
+is possible precisely when $D_d\to0$ as the window grows. The omitted
+past must become negligible uniformly across all allowed histories, not
+only typical test examples. The same criterion holds for finite vector
+outputs, although their unrestricted fixed-window optimum lies between
+$D_d/2$ and $D_d$. Appendix~\ref{app:window-laws} provides the proofs and
+shows that randomization cannot lower the scalar bound on worst-case
+expected absolute error.
 
-For the full scalar input alphabet $[0,1]$, repeated encoding and Bernstein approximation give
-an explicit growing QELM family \cite{goto2021universal,yu2024nonasymptotic}.
-Section~\ref{sec:finite-resources} summarizes its resource bounds;
-Appendix~\ref{app:bernstein-resources} gives the construction. This does not
-guarantee efficient training or make the fixed six-qubit emulator in
-Section~\ref{sec:numerics} universal.
-
-The next section asks when the missing past becomes negligible and what
-resources emulation requires.
+For inputs in $[0,1]$, repeated encoding and Bernstein approximation give
+an explicit growing QELM construction
+\cite{goto2021universal,yu2024nonasymptotic}. Its resource costs are discussed
+next. This existence result neither guarantees efficient training nor
+makes the fixed architectures in Section~\ref{sec:numerics} universal.
+The replacement question is now one of memory: when do older inputs lose
+their influence, and how much context makes their omission acceptable?

@@ -1,7 +1,7 @@
 {
   "schema": "paper_author_metadata_v1",
-  "author_order_source": "Author instruction on 2026-09-14",
-  "verified_on": "2026-09-14",
+  "author_order_source": "Author instruction on 2026-09-24",
+  "verified_on": "2026-09-24",
   "affiliation": {
     "laboratory": "QAR-Lab",
     "department": "Department of Computer Science",
@@ -55,6 +55,21 @@
           "sha256": "6e0583955ca646f7990a0de5bba6f7f7496ec84e7a03b9fdb7c415220c0ae3a3",
           "author_record": "Markus Baumann\\IEEEauthorrefmark{1}\\orcidlink{0009-0007-3575-1006}\\thanks{Corresponding author: \\href{mailto:markus.baumann@campus.lmu.de}{markus.baumann@campus.lmu.de}.}, Daniel Hein\\IEEEauthorrefmark{2}\\orcidlink{0000-0002-8375-1592},"
         }
+      ]
+    },
+    {
+      "given_names": "Gerhard",
+      "family_names": "Stenzel",
+      "name": "Gerhard Stenzel",
+      "email": "gerhard.stenzel@ifi.lmu.de",
+      "corresponding": false,
+      "profile_url": "https://www.ifi.lmu.de/mvs/de/team/kontaktseite/gerhard-stenzel-911e4c17.html",
+      "orcid": "0009-0009-0280-4911",
+      "orcid_status": "Verified from the Qandle ICAART 2025 author footnote in the official LMU publication PDF; name and affiliation verified against official LMU staff profile",
+      "sources": [
+        "https://www.ifi.lmu.de/mvs/de/team/kontaktseite/gerhard-stenzel-911e4c17.html",
+        "https://epub.ub.uni-muenchen.de/127160/1/133435.pdf",
+        "https://orcid.org/0009-0009-0280-4911"
       ]
     },
     {

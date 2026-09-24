@@ -1,61 +1,66 @@
-\section{DYNAMICAL ORIGINS OF OBSERVABLE MEMORY}
+\section{Memory Decay and the Cost of Replacement}
 \label{sec:dynamics}
 
-Only memory that can affect the chosen outputs must fade. A QRC may retain
-other information indefinitely without preventing finite-window emulation.
-We now identify when the relevant memory disappears, how much context its
-decay requires, and how a reservoir can preserve an observable trace beyond
-every finite window.
+Accurate emulation does not require the reservoir to lose all information
+about its past. Only the influence of inputs outside the window on the
+chosen outputs must become negligible. Its decay determines the required
+context; persistent influence can prevent finite-window replacement.
+Even with sufficient history, representation and measurement remain
+separate requirements.
 
-\subsection{Observable Forgetting}
+\subsection{When Longer Windows Are Enough}
 \label{sec:observable-forgetting}
 
-An old input matters when it creates a state difference that the declared
-outputs can reveal. This includes differences that become visible only
-after later inputs. Information that remains invisible under every possible
-continuation cannot obstruct output emulation.
-
-A simple sufficient condition for forgetting is that every update shrinks
-the distance between quantum states \cite{chen2020temporal}. Using trace distance
-$D_{\rm tr}(\rho,\sigma)=\tfrac12\|\rho-\sigma\|_1$, where $\|\cdot\|_1$
-is the trace norm, suppose
+A simple way for older inputs to become irrelevant is for every update to
+bring different states closer together \cite{chen2020temporal}. Suppose
+each input-dependent channel contracts trace distance by the same factor
+$0\leq\eta<1$:
 \begin{equation}
- D_{\rm tr}\!\left(\Phi_a(\rho),\Phi_a(\sigma)\right)
- \leq\eta D_{\rm tr}(\rho,\sigma),\qquad 0\leq\eta<1.
+ D_{\rm tr}(\Phi_a(\rho),\Phi_a(\sigma))
+ \leq\eta D_{\rm tr}(\rho,\sigma).
  \label{eq:incremental-channel}
 \end{equation}
-After $d$ common inputs, a scalar output $y=\operatorname{Tr}(O\rho)$
-then satisfies
+Here $D_{\rm tr}(\rho,\sigma)=\tfrac12\|\rho-\sigma\|_1$ is the trace
+distance. After $d$ identical inputs, a scalar output
+$y=\operatorname{Tr}(O\rho)$ satisfies
 \begin{equation}
- D_d\leq 2\|O\|_\infty\eta^d.
+ D_d\leq 2\|O\|_\infty\eta^d,
  \label{eq:contraction-bound}
 \end{equation}
-Here $\|O\|_\infty$ is the operator norm of the scalar output observable.
-The information floor $D_d/2$ therefore decreases exponentially.
-A sufficiently long window makes the missing past negligible at any fixed
-error tolerance.
+where $\|O\|_\infty$ is the largest absolute eigenvalue of the output
+observable. The unavoidable window error therefore decreases exponentially,
+so a sufficiently long window meets any fixed positive error tolerance.
 
-Full-state contraction is sufficient, but the exact criterion concerns only
-observable memory. To isolate it, we retain the span of state differences
-that admissible histories can create and identify those that remain
-indistinguishable under every future input sequence. This gives the
-\emph{reachable-observable quotient}
-\cite{grigoryeva2021canonicalization}. Appendix~\ref{app:observable-proof}
-provides its formal construction.
+Full-state contraction is stronger than necessary. Some state differences
+may persist without ever affecting the chosen outputs. Others may be
+invisible now but become visible after later inputs. Only differences
+invisible under every possible continuation can safely be ignored.
 
-Let $A_a$ denote the update induced by input $a$ on this reduced space.
-The slowest asymptotic decay across input sequences is described by its
-joint spectral radius \cite{rota1960joint,jungers2009joint},
+We therefore keep state differences that input histories can create and
+remove those that no future output can distinguish. This
+reachable--observable reduction \cite{grigoryeva2021canonicalization} is
+constructed in Appendix~\ref{app:observable-proof}. Let $A_a$ describe the
+effect of input $a$ on the remaining differences. Their slowest asymptotic
+decay is characterized by the joint spectral radius
+\cite{rota1960joint,jungers2009joint},
 \begin{equation}
- r_{\rm vis}
- =\lim_{d\to\infty}
- \sup_{a_1,\ldots,a_d}
- \|A_{a_d}\cdots A_{a_1}\|^{1/d}.
+ r_{\rm vis}=\lim_{d\to\infty}
+ \sup_{a_1,\ldots,a_d}\|A_{a_d}\cdots A_{a_1}\|^{1/d}.
  \label{eq:visible-radius-definition}
 \end{equation}
-Here $\mathrm{vis}$ means output-visible. This quantity considers complete
-sequences of updates, because the input can change at every step.
-Its value is independent of the chosen norm.
+This considers complete input sequences rather than isolated updates;
+its value does not depend on the norm. Under the reservoir and input
+assumptions of Section~\ref{sec:criterion},
+\begin{equation}
+ D_d\to0\quad\Longleftrightarrow\quad r_{\rm vis}<1,
+ \qquad\lim_{d\to\infty}D_d^{1/d}=r_{\rm vis}.
+ \label{eq:visible-memory-theorem}
+\end{equation}
+Thus, arbitrarily accurate emulation is possible exactly when all reachable
+differences that can affect future outputs decay uniformly. Under
+full-state contraction, $r_{\rm vis}\leq\eta<1$. This criterion specializes
+\cite[Theorem~III.1]{petreczky2026stability};
+Appendix~\ref{app:observable-proof} gives a self-contained derivation.
 
 \begin{figure*}[t]
  \includegraphics[width=\textwidth]{fig03_resource_diagnosis.pdf}
@@ -74,144 +79,116 @@ Its value is independent of the chosen norm.
  \label{fig:resource-diagnosis}
 \end{figure*}
 
-\textit{Observable-memory criterion.} Assume a finite-dimensional QRC,
-a compact input alphabet, input-continuous channels, and a fixed finite
-vector of observable outputs. Every finite suffix must be appendable to
-every admissible prehistory. Then
+The decay rate determines how much history is needed. For scalar absolute
+error tolerance $\varepsilon>0$, define the shortest sufficient window by
 \begin{equation}
- D_d\to0\quad\Longleftrightarrow\quad r_{\rm vis}<1,
- \qquad
- \lim_{d\to\infty}D_d^{1/d}=r_{\rm vis}.
- \label{eq:visible-memory-theorem}
-\end{equation}
-Thus, the missing past becomes uniformly negligible exactly when all
-reachable, output-relevant differences decay uniformly.
-Under full-state contraction, $r_{\rm vis}\leq\eta<1$.
-
-The spectral equivalence specializes the stability result
-in~\cite[Theorem~III.1]{petreczky2026stability} to reachable
-QRC state differences. Appendix~\ref{app:observable-proof} gives a
-self-contained derivation and connects this decay rate to the window
-length required for emulation.
-
-\subsection{Required Window Length}
-
-Slower observable forgetting requires a longer input window. For scalar
-output and absolute error tolerance $\varepsilon>0$, define
-\begin{equation}
- d_\varepsilon=\min\{d:D_d<2\varepsilon\}.
+ d_\varepsilon=\min\{d:D_d<2\varepsilon\},
  \label{eq:context-length}
 \end{equation}
-Set $d_\varepsilon=\infty$ if no finite window suffices.
-This is the shortest window that allows an unrestricted predictor to
-achieve worst-case error below $\varepsilon$. Under the QELM density
-assumptions of Section~\ref{sec:criterion}, it is also the shortest window
-admitting a QELM below that tolerance.
-
-When $0<r_{\rm vis}<1$, the required context obeys
+with $d_\varepsilon=\infty$ if no finite window suffices. This window permits
+worst-case error below $\varepsilon$, both for an unrestricted predictor
+and, under Section~\ref{sec:criterion}'s approximation assumptions, for a
+sufficiently expressive QELM. When $0<r_{\rm vis}<1$,
 \begin{equation}
  \lim_{\varepsilon\downarrow0}
  \frac{d_\varepsilon}{\log(1/\varepsilon)}
  =\frac{1}{-\log r_{\rm vis}}.
  \label{eq:window-complexity}
 \end{equation}
-The required window therefore grows logarithmically with inverse error
-tolerance. As $r_{\rm vis}$ approaches one, the coefficient increases,
-making accurate replacement more demanding in context length.
-This asymptotic law describes the information requirement.
-Feature, training, and measurement costs remain separate questions.
+The window grows logarithmically with inverse error tolerance. Slow
+forgetting does not itself prevent replacement, but requires longer context.
+This describes the information requirement, not learning or implementation
+costs.
 
+\subsection{When Finite Windows Cannot Suffice}
 
+Longer windows cannot resolve every memory requirement. We construct one
+fixed two-qubit reservoir in which an old input leaves an observable trace
+that survives arbitrarily many later inputs. The same reservoir provides
+a counterexample for every finite window length.
 
-\subsection{Protected Memory}
+Each input contains a drive value $u\in[0,1]$ and a binary flag $q$ controlling
+a local pulse on the first qubit. Starting from the same initial state,
+two histories differ only in whether one old input triggers this pulse.
+The pulse changes the antisymmetric singlet population. Subsequent symmetric
+evolution with collective loss preserves the difference
+\cite{zanardi1997noiseless}. Both histories then receive identical inputs
+with $q=0$, so no further pulses occur. The input rule is unchanged over time.
 
-An old input can affect outputs arbitrarily far into the future, leaving
-an unavoidable worst-case error for every fixed-window predictor. Our
-simple two-qubit construction has three steps: a local pulse writes a
-population difference, symmetric evolution protects it, and Pauli
-correlations reveal it.
-
-Every update uses the same time-homogeneous input alphabet $a=(u,q)$.
-The input $u\in[0,1]$ controls a symmetric drive, while the binary flag
-$q\in\{0,1\}$ controls a local pulse on the first qubit.
-Two histories differ only in one old flagged input. This pulse changes
-the population of the antisymmetric singlet state. Both histories then
-receive the same later inputs with $q=0$, so no further local pulses occur.
-The symmetric drives and collective loss preserve the population difference \cite{zanardi1997noiseless}.
-
-The stored information remains accessible through ordinary correlation
-measurements. Write $I$ for the one-qubit identity and $X,Y,Z$ for the
-Pauli operators; $XX=X\otimes X$, and similarly for $YY$ and $ZZ$.
-The singlet state is $|\psi^-\rangle=(|01\rangle-|10\rangle)/\sqrt2$.
-Its projector is
+Ordinary two-qubit correlations reveal the stored information. The singlet
+state $|\psi^-\rangle=(|01\rangle-|10\rangle)/\sqrt2$ has projector
 \begin{equation}
  P_-=|\psi^-\rangle\!\langle\psi^-|
  =\frac{II-XX-YY-ZZ}{4},
  \label{eq:protected-singlet}
 \end{equation}
-so its population $y=\operatorname{Tr}(P_-\rho)$ can be recovered from
-$XX$, $YY$, and $ZZ$ expectations. The old input can therefore leave the
-window while its effect remains visible in the output.
+where $I$ is the identity and $X,Y,Z$ are Pauli operators, with
+$XX=X\otimes X$ and similarly for the other terms. Its population
+$y=\operatorname{Tr}(P_-\rho)$ is recovered from these three correlations.
 
-More generally, suppose two reachable states differ by $\delta>0$ in an
-output $y=\operatorname{Tr}(P\rho)$. Consider a nonempty set of inputs that
-can be repeated freely after both histories. If each associated update
-preserves the observable,
-\[
- \Phi_a^\dagger(P)=P,
-\]
-then every sequence of these inputs preserves the output gap.
-Here $\Phi_a^\dagger$ is the channel's Heisenberg-picture adjoint,
-acting on observables rather than states.
-Such sequences can have any length, giving
+Let the pulse create a population difference $\delta>0$. Arbitrarily long
+shared, unpulsed continuations preserve it, giving
 \begin{equation}
  D_d\geq\delta\qquad\text{for every finite }d.
  \label{eq:protected-mode}
 \end{equation}
-Equation~\eqref{eq:window-law} therefore forces worst-case absolute error
-of at least $\delta/2$ for every stateless window predictor, whether
-quantum or classical. The singlet construction realizes this obstruction
-with one fixed reservoir and a pair of trajectories, yielding $r_{\rm vis}=1$.
+More generally, any reachable output gap preserved by freely repeatable
+common inputs gives this obstruction; conservation need not hold for every
+allowed input. Equation~\eqref{eq:window-law} forces worst-case error at
+least $\delta/2$ for every stateless window-only predictor, quantum or
+classical. Here the preserved gap also gives $r_{\rm vis}=1$.
 
-\emph{Memory-task implication.} Recall the population $0$ or $\delta$
-set by the old flag after arbitrarily many $q=0$ inputs. Exact QRC
-expectations realize the target; every stateless fixed-window predictor
-incurs worst-case error at least $\delta/2$ at longer delays. This
-separates memory from finite context over unbounded delays, not when
-the window covers the task horizon.
+The recall task is to report the population, $0$ or $\delta$, set by the
+old flag after an arbitrarily long delay. Exact QRC expectations realize
+this target. Once the flag leaves the window, a reset-window QELM receives
+identical inputs for the two targets and cannot reproduce both. Neither
+additional capacity nor any fixed enlargement of the window eliminates
+the worst-case gap over unbounded delays.
 
-Matched controls distinguish exact protection from slow forgetting.
-Local loss reduces the gap, while asymmetric collective loss breaks exact
-conservation without necessarily causing rapid erasure.
-Appendices~\ref{app:protected-pulse} and~\ref{app:protected-implementation} give the
-pulse calculation, channel parameters, and control results.
+This separates retained memory from finite context, not quantum from
+classical computation. It does not rule out a window covering a bounded
+task horizon. Appendix~\ref{app:protected-calibration} gives the construction
+and controls: local loss reduces the gap, while asymmetric collective loss
+breaks exact protection without necessarily erasing memory quickly.
 
-\subsection{Finite Resources}
+\subsection{From Sufficient History to Accurate Predictions}
 \label{sec:finite-resources}
 
-Enough history alone does not fix representation or measurement error.
-For inputs in $[0,1]$ and a scalar output, Appendix~\ref{app:bernstein-resources}'s
-midpoint construction assumes uniform state contraction and Lipschitz
-dependence on inputs [Eq.~\eqref{eq:incremental-lipschitz}], stronger than
-observable forgetting. With $r$ encoding copies per input
-and $Q$ independent samples of its bounded readout, its prediction
-$\widehat f_r$ satisfies Eq.~\eqref{eq:midpoint-resource-bound}:
+Enough history does not guarantee an accurate representation or precise
+measurements. An explicit construction separates these requirements.
+For scalar inputs in $[0,1]$ and a scalar output,
+Appendix~\ref{app:bernstein-resources} assumes uniform state contraction and
+Lipschitz input dependence: small input changes have proportionally bounded
+effects on the updated state [Eq.~\eqref{eq:incremental-lipschitz}]. These
+conditions are stronger than observable forgetting alone.
+
+Each input is encoded into $r$ separately prepared copies, and a prescribed
+readout approximates Section~\ref{sec:criterion}'s midpoint prediction.
+More copies provide richer functions of the same window, not older history.
+Averaging $Q$ independent measurements of this bounded readout gives
+Eq.~\eqref{eq:midpoint-resource-bound}:
 \[
  \begin{aligned}
  &|y(h)-\widehat f_r(S_d(h))|\\
- &\quad\leq
- \underbrace{D_d/2}_{\text{missing history}}
+ &\quad\leq\underbrace{D_d/2}_{\text{missing history}}
  +\underbrace{\varepsilon_{\rm rep}}_{\text{representation}}
  +\underbrace{\varepsilon_{\rm shot}}_{\text{measurements}}.
  \end{aligned}
 \]
-For each fixed history, this holds with probability at least $1-\zeta$
-(failure tolerance $0<\zeta<1$), not simultaneously over all histories.
-The representation and sampling bounds decrease as
-$1/\sqrt r$ and $1/\sqrt Q$, respectively, at fixed window and confidence.
+For each fixed history this holds with probability at least $1-\zeta$,
+where $0<\zeta<1$ is the allowed failure probability, not simultaneously
+over all histories. With exact expectations, the sampling term disappears
+and the remaining bound is uniform. At fixed window and confidence, the
+representation and sampling bounds decrease as $1/\sqrt r$ and
+$1/\sqrt Q$, respectively.
 
-One sufficient construction uses $rd$ qubits and a general table of
-$(r+1)^d$ midpoint coefficients. These require reachable-output extrema;
-their computation is not included in those resource counts. This is a
-constructive upper bound, not an efficient learning method or an exact
+One sufficient implementation uses $rd$ qubits and a general table of
+$(r+1)^d$ readout coefficients. These require reachable-output extrema;
+their computation is not included in the resource counts. This is a
+constructive upper bound, not an efficient learning algorithm or an exact
 decomposition of fitted-model error.
+
+The practical questions are therefore distinct: does the window contain
+enough history, can the model use it accurately, and are measurements
+precise enough? Section~\ref{sec:numerics} examines these questions through
+simulations, a forecasting task, and analytically solvable benchmarks.

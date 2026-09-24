@@ -1,6 +1,6 @@
 {
   "schema": "arxiv_visual_review_v1",
-  "pdf_sha256": "bfea974d6f53f1a1021e3bab89290c4d99263c059bb435941ec75edee70b23e0",
+  "pdf_sha256": "9c5c61b8fe3137de4c036c8c32a36c6a4a7fa5085fb3083534e91bbbe181d421",
   "reviewed_pages": [
     1,
     2,
@@ -15,7 +15,7 @@
     11,
     12
   ],
-  "rendering": "All 12 pages rendered with Poppler at maximum dimension 1200 px and compared against the previously reviewed reproducibility-wording revision. Only pages 10, 11 and 12 change. Pages 10 and 11 are pixel-identical to the anonymous pages visually inspected by the main agent; the main agent also inspected the preprint's page 12 with its full repository URL. The other nine pages are pixel-identical to the previous preprint. Pages 2 through 11 remain pixel-identical between editions. Appendix B's added explanation makes both bounds on the future-observation supremum explicit; equation numbering, protocol details and scientific results are preserved. No clipping or overlaps. Both editions retain 12 pages.",
+  "rendering": "All 12 pages rendered with Poppler at maximum dimension 1400 px. Pages 2-11 are byte-identical PNG renders to the reviewed anonymous edition; the main agent separately inspected the identified title page and page 12 with its repository link. Appendices A-E share the plain-language rewrite, simplified notation, preserved proofs, and reproducibility settings. Author order and all four ORCID icons remain clear. Figures, captions, references, and appendix are legible with no clipping or overlaps. Both editions remain 12 pages with unchanged template fonts, margins, and figure sizes.",
   "passed": true,
   "checks": {
     "author_header_legible": true,
@@ -24,8 +24,8 @@
     "no_overlapping_text_or_clipped_content": true,
     "figures_and_captions_clear": true,
     "last_page_no_orphan_overflow": true,
-    "all_three_green_orcid_icons_legible": true,
+    "all_four_green_orcid_icons_legible": true,
     "title_author_spacing_clear": true,
-    "shared_body_pages_pixel_identical": true
+    "shared_pages_2_to_11_pixel_identical": true
   }
 }

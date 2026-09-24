@@ -1,7 +1,7 @@
 {
   "schema": "icaart2027_submission_qa_v3",
   "pdf": "submission.pdf",
-  "pdf_sha256": "2458675ff3848cffca303fc13e077a671d3bdee6675e687e06f9a521837ef5b7",
+  "pdf_sha256": "6ccff2016ea53f56d7eed2def01c8b6896ee3df19cc34ada2717209610e414ab",
   "extraction_backend": "pypdf + Poppler",
   "passed": false,
   "format_passed": true,
@@ -80,7 +80,7 @@
     },
     "character_budget": {
       "passed": true,
-      "characters": 40757,
+      "characters": 42025,
       "minimum": 10000,
       "maximum": 50000,
       "definition": "Unicode, whitespace excluded"
@@ -104,7 +104,7 @@
     },
     "abstract_length": {
       "passed": true,
-      "words": 160,
+      "words": 141,
       "minimum": 70,
       "maximum": 200
     },
@@ -116,7 +116,7 @@
       "passed": true,
       "fonts": [
         {
-          "name": "AESNDF+NimbusRomNo9L-Medi",
+          "name": "QCFRIW+NimbusRomNo9L-Medi",
           "embedded": true,
           "subset": true,
           "unicode": true
@@ -128,13 +128,13 @@
           "unicode": true
         },
         {
-          "name": "WOPGUA+NimbusRomNo9L-ReguItal",
+          "name": "MHRBYK+NimbusRomNo9L-ReguItal",
           "embedded": true,
           "subset": true,
           "unicode": true
         },
         {
-          "name": "GJFPAB+StandardSymL",
+          "name": "LDWSNG+StandardSymL",
           "embedded": true,
           "subset": true,
           "unicode": true
@@ -146,7 +146,7 @@
           "unicode": true
         },
         {
-          "name": "LXHHYY+CMSY10",
+          "name": "JZNPRO+CMSY10",
           "embedded": true,
           "subset": true,
           "unicode": true
@@ -158,13 +158,7 @@
           "unicode": true
         },
         {
-          "name": "EFIELR+URWChanceryL-MediItal",
-          "embedded": true,
-          "subset": true,
-          "unicode": true
-        },
-        {
-          "name": "VYVTUL+CMEX10",
+          "name": "SESETH+URWChanceryL-MediItal",
           "embedded": true,
           "subset": true,
           "unicode": true
@@ -212,7 +206,13 @@
           "unicode": true
         },
         {
-          "name": "LXHHYY+CMSY10",
+          "name": "JZNPRO+CMSY10",
+          "embedded": true,
+          "subset": true,
+          "unicode": true
+        },
+        {
+          "name": "VYVTUL+CMEX10",
           "embedded": true,
           "subset": true,
           "unicode": true
@@ -254,13 +254,7 @@
           "unicode": true
         },
         {
-          "name": "XSBJNE+MSBM10",
-          "embedded": true,
-          "subset": true,
-          "unicode": true
-        },
-        {
-          "name": "PKMWFM+MSBM7",
+          "name": "RAZVEJ+MSBM10",
           "embedded": true,
           "subset": true,
           "unicode": true
@@ -318,39 +312,57 @@
     "physical_page_clipping": [],
     "template_margin_excursions": [
       {
-        "page": 7,
+        "page": 4,
         "box": [
-          398.744817,
+          334.104,
+          715.050467,
+          339.838175,
+          727.841408
+        ]
+      },
+      {
+        "page": 4,
+        "box": [
+          352.494645,
+          711.548985,
+          362.096599,
+          728.834096
+        ]
+      },
+      {
+        "page": 4,
+        "box": [
+          368.319,
+          711.548985,
+          381.77648,
+          728.834096
+        ]
+      },
+      {
+        "page": 4,
+        "box": [
+          388.004,
+          711.548985,
+          390.77161,
+          728.834096
+        ]
+      },
+      {
+        "page": 4,
+        "box": [
+          440.592,
+          719.349357,
+          445.5733,
+          728.255922
+        ]
+      },
+      {
+        "page": 9,
+        "box": [
+          505.470822,
           713.401985,
-          406.493727,
+          522.857837,
           730.687096
-        ]
-      },
-      {
-        "page": 7,
-        "box": [
-          446.232546,
-          713.401985,
-          453.981456,
-          730.687096
-        ]
-      },
-      {
-        "page": 10,
-        "box": [
-          155.001,
-          692.338873,
-          159.152415,
-          729.519296
-        ]
-      },
-      {
-        "page": 10,
-        "box": [
-          236.578,
-          692.338873,
-          240.729415,
-          729.519296
         ]
       }
     ],

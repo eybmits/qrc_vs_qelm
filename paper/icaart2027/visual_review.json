@@ -1,8 +1,8 @@
 {
-  "pdf_sha256": "2458675ff3848cffca303fc13e077a671d3bdee6675e687e06f9a521837ef5b7",
+  "pdf_sha256": "6ccff2016ea53f56d7eed2def01c8b6896ee3df19cc34ada2717209610e414ab",
   "pages_reviewed": 12,
   "latex_overfull_boxes": 0,
   "undefined_references_or_citations": 0,
-  "rendering": "All 12 pages rendered with Poppler at maximum dimension 1200 px and compared against the previously reviewed reproducibility-wording revision. Only pages 10, 11 and 12 change; the main agent visually inspected all three. The other nine pages are pixel-identical. Appendix B now explicitly uses forward invariance, D_(d+ell) <= D_d, and the empty future word to justify equality of the future-observation supremum and D_d. The additional display is unnumbered; equation numbering, scientific conclusions, figures and numerical results remain unchanged. Text reflows within the appendix without clipping or overlaps; both editions retain 12 pages.",
+  "rendering": "All 12 pages rendered with Poppler at maximum dimension 1400 px. Pages 1-8 are byte-identical PNG renders to the previously reviewed main-text rewrite; the main agent visually inspected the revised appendix pages 9-12. Appendices A-E now explain each result before the mathematics, reuse the main-text notation, and retain proof qualifications and experimental protocols. Numbered equations and cross-references are preserved. No clipping or overlaps; both editions retain 12 pages without changing template fonts, margins, or figure sizes.",
   "status": "passed"
 }

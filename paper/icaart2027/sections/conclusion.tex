@@ -1,27 +1,28 @@
 \section{DISCUSSION AND CONCLUSIONS}
 \label{sec:summary}
 
-A reset-window QELM can replace a QRC only if the influence of older inputs
-on the chosen outputs is small enough within the available window for the
-desired accuracy. Under our assumptions, sufficiently expressive QELMs
-with exact expectations can emulate QRC outputs arbitrarily well as their
-windows grow precisely when this influence fades uniformly. Fast forgetting
-permits short windows; slower forgetting may require longer context.
+Reset-window QELMs can replace QRCs when recent inputs provide enough
+information to reproduce the required outputs. Under our stated assumptions
+and with exact expectation values, sufficiently expressive QELMs can achieve
+arbitrarily accurate emulation as their windows grow precisely when the
+influence of the omitted past vanishes uniformly. Fast forgetting permits
+shorter windows; slower forgetting may require more context.
 
-Persistent quantum memory can enable temporal processing that no fixed
-finite input window can reproduce uniformly. Our two-qubit construction
-establishes a strict representational advantage over reset-window QELMs
-in the exact-expectation setting: increasing either window length or
-model capacity cannot eliminate the worst-case accuracy gap over unbounded
-delays. This separates retained memory from finite context, rather than
-quantum from classical computation.
+Replacement can fail when earlier events continue to affect the outputs.
+Our two-qubit recall example makes this limitation explicit: the reservoir
+retains information about an old input over arbitrarily long delays,
+whereas every fixed-window predictor faces an unavoidable worst-case error.
+Increasing model capacity cannot remove this gap, and choosing a larger but
+still fixed window does not eliminate it over unbounded delays.
 
-Analytical benchmarks and simulations distinguish three limitations:
-missing history, insufficient features, and finite measurements. Even when
-history is sufficient, representation and measurement budgets still limit
-practical accuracy. The guarantees concern representability, not efficient
-learning or resource savings.
+Our analytical benchmarks and simulations distinguish this information
+limit from errors caused by limited features and finite measurements.
+Having enough history is therefore only the first requirement for accurate
+emulation. The theoretical guarantees establish what models can represent,
+not whether they can be trained efficiently or implemented with fewer
+resources.
 
-The decision is therefore to assess memory before adding capacity. When
-recent inputs suffice, a sufficiently expressive QELM can replace the
-reservoir; otherwise, longer context or retained memory is needed.
+The practical conclusion is to assess memory before capacity: a sufficiently
+expressive QELM can replace the reservoir when recent context suffices.
+When the required history cannot be supplied through the window, retained
+memory is needed---not simply more features.

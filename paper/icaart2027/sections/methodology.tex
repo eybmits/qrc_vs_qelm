@@ -1,14 +1,15 @@
 \subsection{Numerical Evaluation and Reproducibility}
 \label{sec:methods}
 
-\subsubsection{What the Common-Suffix Diagnostic Measures}
+\subsubsection{Separating History from Prediction Error}
 \label{app:common-suffix-diagnostic}
 
-The diagnostic separates variation due to earlier history from failure to
-predict the shared-window mean. Let $y_{sk}\in\mathbb R^m$ be the output
-for suffix $s$ and earlier-history branch $k$, $\bar y_s$ its branch mean,
-and $\widehat y_s$ the shared window prediction. Equal-weight empirical
-averages satisfy
+This diagnostic asks whether different pasts still matter after the same
+recent inputs. For each shared continuation (suffix) $s$, we compare
+outputs $y_{sk}$ from several earlier histories $k$. Each output has $m$
+components; $\bar y_s$ is their mean across histories and $\widehat y_s$
+is the prediction from the shared window. Equal-weight empirical averages
+give the exact squared-error decomposition
 \begin{equation}
  \begin{aligned}
  \frac1m\mathbb E_{s,k}\|y_{sk}-\widehat y_s\|_2^2
@@ -17,26 +18,30 @@ averages satisfy
  \end{aligned}
  \label{eq:panel-decomposition}
 \end{equation}
-The cross term vanishes. The first term measures sampled variation due to
-earlier history. The second measures failure to predict the suffix mean;
-it combines feature, fitting, regularization, and estimation effects.
-It is not a pure representation error.
+The first term measures variation due to the sampled earlier histories.
+The second measures the prediction error relative to their mean; it
+combines feature, fitting, regularization, and estimation effects, rather
+than pure representation error. The terms add because deviations from
+the branch mean sum to zero, cancelling the cross term.
 
 With four conditionally independent prefixes, multiplying the history
 variance by $4/3$ corrects its finite-sample bias. This correction leaves
 the reported classifications unchanged; the identity above uses
-uncorrected terms. Neither quantity estimates $D_d$ or $r_{\rm vis}$:
+uncorrected terms. Neither quantity estimates the worst-case gap $D_d$
+or the asymptotic forgetting rate:
 rare histories can be missed even when a large worst-case gap exists.
 
 \subsubsection{Main Models and Evaluation Protocol}
 
-\emph{QRC targets.} For $N_T\in\{2,3,4\}$, use
+The target reservoirs have two, three, or four qubits. They evolve under
+an input-dependent Hamiltonian $H_T$ and local loss of strength $\gamma_T$:
 \begin{align}
  H_T(a)&=\sum_{i<j}J_{ij}X_iX_j+0.5\sum_i Z_i+a\sum_iX_i,\nonumber\\
  \dot\rho&=-i[H_T(a),\rho]+\gamma_T\sum_i\mathcal D[\sigma_i^-]\rho,
  \label{eq:target-qrc-model}
 \end{align}
 where $\mathcal D[L]\rho=L\rho L^\dagger-\{L^\dagger L,\rho\}/2$.
+Here $X_i,Z_i$ are Pauli operators and $\sigma_i^-$ lowers qubit $i$.
 Couplings are uniform on $[-1,1]$, each step lasts 0.5, and inputs use
 33 equally spaced values in $[0,1]$. Single-site and same-axis two-site
 Pauli measurements give 9, 18, and 30 outputs. Across the main and
@@ -45,80 +50,91 @@ $\{0,0.2,0.5,0.75,1,1.25,1.5,2,2.5,3,4\}$ and windows range from one
 to six. The main and follow-up cohorts use 12 independent realizations
 (``roots''); seed sets are disjoint across cohorts.
 
-\emph{Reset-QELM.} A six-qubit register encodes one window input per
-qubit, leaving unused qubits in $|0\rangle$. It evolves for 0.5 under
+The reset-window QELM uses six qubits, encoding one window input per
+qubit and leaving unused qubits in $|0\rangle$. It evolves for 0.5 under
 independent random $XX$ couplings and transverse field 0.5, without
 dissipation. Single-site $X,Y,Z$ measurements at one, two, or four nested
-checkpoints give $B\in\{18,36,72\}$ features.
+checkpoints give 18, 36, or 72 features, respectively. We denote the
+feature count by $B$.
 
-\emph{Data and fitting.} Independent training, validation, and test
-streams start in $|0\cdots0\rangle$, discard 128 washout steps, and retain
+The feature follow-up uses 12 fresh roots per target size, loss 4,
+six-input windows, fixed duration, and 18, 36, 54, 72, 108, or 144 features.
+Exploratory 24- and 30-feature subsets reuse these data: 18 final-time
+observables plus one or two per qubit at the midpoint, with
+outcome-independent Pauli-axis balance.
+
+Independent training, validation, and test streams start in
+$|0\cdots0\rangle$, discard 128 washout steps, and retain
 480, 160, and 320 rows. The diagnostic pairs 32 length-six suffixes with
 four independently burned-in prefixes each; shorter windows use nested
 tails. Newest suffix symbols are sampled without replacement; older
 coordinates are sampled independently. Training data alone standardize
-features. Validation selects
-$\lambda\in\{0,\infty\}\cup\{10^{2k}:k=-5,\ldots,3\}$; the affine
-readout is then refitted on training and validation data. The solver uses
-a relative singular-value cutoff of $10^{-6}$; $\lambda=\infty$ gives
-an intercept-only model.
+features. Validation chooses the ridge penalty $\lambda$ from 0,
+$10^{-10},10^{-8},\ldots,10^6$, or $\infty$ (an intercept-only model).
+The affine readout is then refitted on training and validation data.
+The solver uses a relative singular-value cutoff of $10^{-6}$.
 
-\emph{Comparisons and evaluation criteria.} Linear-delay, quadratic-delay
+Linear-delay, quadratic-delay
 \cite{gauthier2021next}, dimension-matched random-tanh, intercept-only,
-and reset--replay controls use the same windows and splits. Replay applies
-the last $d$ target channels to a fixed state, either retaining or refitting
-the readout. After excluding variances below $10^{-8}$, a setting passes
+and reset--replay controls use the same windows and splits. Replay starts
+from a fixed state, processes only the last $d$ inputs through the target
+reservoir, and either retains or refits the readout. After excluding
+variances below $10^{-8}$, a setting passes
 when NRMSE is at most 0.10 in at least 10 of 12 roots. A
 \emph{representation-limited} diagnosis means that history passes, the
 fitted QELM fails, and replay succeeds; it does not establish a lower
 bound for all readouts using those features. Main confidence intervals
 use 20,000 paired root-block bootstrap draws. Rows, outputs, and shot
 repetitions are not independent experimental units.
+Post hoc history sensitivity checks combine tolerances 8\%, 10\%, and
+12\% with 9--11 passing roots across the three target sizes.
 
 \subsubsection{Finite Measurements}
 
-The exploratory shot study uses 12 four-qubit targets at
-$\gamma_T=4$, $d=6$ and $Q\in\{300,1200,4800,19200\}$ shots per input.
+This exploratory study isolates noise from QELM measurements: reservoir
+targets remain exact. It uses 12 four-qubit targets, loss 4, six-input
+windows, and 300, 1200, 4800, or 19200 shots per input.
 Shots are divided equally in integer shares across checkpoints and
 global-Pauli settings; joint multinomial bit-string draws preserve
 within-shot correlations. Each root has 16 repetitions with independently
 resampled training, validation, and test features and refitted readouts.
-Validation selects $\lambda$ for each feature budget and then selects $B$.
-Targets remain exact, isolating emulator measurement noise.
+Validation chooses the ridge penalty for each feature budget and then
+selects the feature count.
 
 \subsubsection{Longer Windows}
 
-Twelve fresh five-qubit targets provide 45 outputs, with
-$\gamma_T\in\{1,4\}$ and $d\in\{2,4,6,8,10\}$. A ten-qubit QELM
-provides $B\in\{30,60,120\}$ features. Diagnostics use 32 length-ten
+This follow-up tests windows of 2, 4, 6, 8, or 10 inputs on twelve fresh
+five-qubit targets, each providing 45 outputs, at losses 1 and 4.
+A ten-qubit QELM provides 30, 60, or 120 features. Diagnostics use 32 length-ten
 suffixes and four prefixes per suffix; other settings follow the main
 protocol. History contrasts use 10,000 root-block bootstrap draws.
-The quadratic-control comparison fixes $B=120$ before testing. This study
-changes register size as well as context length.
+The quadratic-control comparison fixes 120 QELM features before testing.
+This study changes register size as well as context length.
 
 \subsubsection{Time-Series Demonstrations}
 \label{app:laser-demonstration}
 
-Both demonstrations use four-qubit random $XX$ dynamics, field 0.5,
+The laser study tests reservoir emulation; NARMA10 tests prediction of
+an external target. Both use four-qubit random $XX$ dynamics, field 0.5,
 step duration 0.5, local loss, and 48 exact Pauli features at four
 checkpoints. The QELM encodes four inputs without subsequent drive.
 Readouts use training-only standardization, an unpenalized intercept,
 and validation-selected
 $\lambda\in\{10^{-8},10^{-6},10^{-4},10^{-2},1,100\}$.
 
-\emph{Laser-driven emulation.} Twelve roots use consecutive
+For laser-driven emulation, twelve roots use consecutive
 4096/1024/2048-sample training/validation/test blocks of the Santa Fe A
 continuation. Training min/max scaling, clipping, and 33-level rounding
 are shared. Each split resets and discards 128 steps. At loss 4 or 0.2,
 the QELM predicts the QRC's final $Z_0$ expectation, not the next laser
 value. The memory check joins two different 128-input prefixes to the
-same 128-input continuation. Once the four-input windows agree, half
-the output gap bounds one of the two absolute prediction errors, not
-global NRMSE.
+same 128-input continuation. Once the four-input windows agree, a
+window-only predictor must err by at least half the output gap on at
+least one run. This is an absolute-error bound, not a global NRMSE bound.
 
-\emph{NARMA10 prediction.}
 \label{app:task-forecasting}
-Twenty-four fresh roots use independent uniform $u_t\in[0,1]$ streams,
+For NARMA10 prediction, twenty-four fresh roots use independent uniform
+inputs $u_t\in[0,1]$,
 with the same split lengths and washout. The recurrence uses $0.2u_t$
 \cite{fujii2017harnessing}; readouts predict unquantized $y_{t+1}$ from
 rounded inputs through $t$, never past targets. Each model selects loss

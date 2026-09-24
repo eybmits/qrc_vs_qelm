@@ -4,7 +4,7 @@
 `arxiv_source.zip` contains the LaTeX sources, figures, styles, bibliography,
 and generated `main.bbl`.
 
-Authors: **Markus Baumann, Jonas Stein, and Claudia Linnhoff-Popien**,
+Authors: **Markus Baumann, Gerhard Stenzel, Jonas Stein, and Claudia Linnhoff-Popien**,
 QAR-Lab, Department of Computer Science, LMU Munich.
 Affiliations, profile links, ORCIDs, and correspondence details are stored in
 `authors.json`.

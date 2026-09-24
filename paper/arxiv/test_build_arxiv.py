@@ -8,6 +8,7 @@ import re
 import zipfile
 
 import pytest
+import yaml
 
 
 BASE = Path(__file__).resolve().parent
@@ -16,7 +17,18 @@ SPEC = importlib.util.spec_from_file_location("qrc_arxiv_builder", BASE / "build
 builder = importlib.util.module_from_spec(SPEC)
 SPEC.loader.exec_module(builder)
 
-EXPECTED_AUTHORS = ["Markus Baumann", "Jonas Stein", "Claudia Linnhoff-Popien"]
+EXPECTED_AUTHORS = [
+    "Markus Baumann",
+    "Gerhard Stenzel",
+    "Jonas Stein",
+    "Claudia Linnhoff-Popien",
+]
+EXPECTED_ORCIDS = [
+    "0009-0007-3575-1006",
+    "0009-0009-0280-4911",
+    "0000-0001-5727-9151",
+    "0000-0001-6284-9286",
+]
 
 
 @pytest.fixture
@@ -71,18 +83,40 @@ def test_missing_markus_orcid_is_allowed_without_assigning_one(source, metadata)
     assert "orcid.org/None" not in authored
 
 
-@pytest.mark.parametrize("identifier", ["0009-0007-3575-1006", "0000-0001-5727-9151", "0000-0001-6284-9286"])
+@pytest.mark.parametrize("identifier", EXPECTED_ORCIDS)
 def test_verified_author_orcids_pass_the_checksum(identifier):
     assert builder.valid_orcid(identifier)
 
 
-def test_all_three_verified_author_ids_use_linked_orcid_icons(source, metadata):
-    expected = ["0009-0007-3575-1006", "0000-0001-5727-9151", "0000-0001-6284-9286"]
-    assert [author["orcid"] for author in metadata["authors"]] == expected
+def test_all_four_verified_author_ids_use_linked_orcid_icons(source, metadata):
+    assert [author["orcid"] for author in metadata["authors"]] == EXPECTED_ORCIDS
     authored = builder.authored_main(source, metadata)
     assert r"\usepackage{etoolbox,orcidlink}" in authored
-    assert re.findall(r"\\orcidlink\{([^}]+)\}", authored) == expected
+    assert re.findall(r"\\orcidlink\{([^}]+)\}", authored) == EXPECTED_ORCIDS
     assert r"\scriptsize iD" not in authored
+
+
+def test_preferred_citation_matches_paper_authors_without_changing_software_authors(metadata):
+    citation = yaml.safe_load((BASE.parents[1] / "CITATION.cff").read_text())
+    paper_authors = citation["preferred-citation"]["authors"]
+    assert [
+        (author["given-names"], author["family-names"], author["orcid"])
+        for author in paper_authors
+    ] == [
+        (
+            author["given_names"],
+            author["family_names"],
+            f'https://orcid.org/{author["orcid"]}',
+        )
+        for author in metadata["authors"]
+    ]
+    # The repository's software authorship is independent of paper authorship.
+    assert citation["authors"] == [{
+        "family-names": "Baumann",
+        "given-names": "Markus",
+        "affiliation": "Ludwig-Maximilians-Universität München",
+        "orcid": "https://orcid.org/0009-0007-3575-1006",
+    }]
 
 
 @pytest.mark.parametrize("identifier", [
@@ -96,7 +130,8 @@ def test_invalid_orcid_is_rejected(identifier):
 
 
 def test_transform_rejects_real_orcid_checksum_typo(source, metadata):
-    metadata["authors"][1]["orcid"] = "0000-0001-5727-9150"
+    jonas = next(author for author in metadata["authors"] if author["name"] == "Jonas Stein")
+    jonas["orcid"] = "0000-0001-5727-9150"
     with pytest.raises(ValueError, match="Invalid ORCID for Jonas Stein"):
         builder.authored_main(source, metadata)
 
@@ -184,3 +219,10 @@ def test_built_authored_zip_preserves_all_shared_scientific_sources(metadata):
     assert changed == {"main.tex", method}
     manifest = json.loads((BASE / "ARXIV_MANIFEST.json").read_text())
     assert set(manifest["administrative_changes"]) == changed
+
+
+def test_both_delivered_editions_stay_within_twelve_pages():
+    """An author header must not silently push the identified edition to 13 pages."""
+    for pdf in (ANONYMOUS / "submission.pdf", BASE / "preprint.pdf"):
+        data = builder.read_pdf(pdf)
+        assert 1 <= len(data["pages"]) <= 12, f"{pdf.name}: exceeds the 12-page limit"

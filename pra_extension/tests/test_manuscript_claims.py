@@ -263,12 +263,13 @@ def test_empirical_residual_is_not_claimed_as_pure_feature_approximation() -> No
             # directly; the operational diagnosis is not a feature-family bound.
             for component in ("feature", "fitting", "regularization", "estimation"):
                 assert component in diagnostic
-            assert "not a pure representation error" in diagnostic
-            assert r"\emph{representation-limited} diagnosis" in diagnostic
+            assert re.search(r"(?:not a|rather than) pure representation error", diagnostic)
+            assert "representation-limited" in diagnostic and "diagnosis" in diagnostic
             assert "does not establish a lower bound for all readouts using those features" in diagnostic
             assert "four conditionally independent prefixes" in diagnostic
             assert "$4/3$" in diagnostic and "uncorrected terms" in diagnostic
-            assert "Neither quantity estimates $D_d$ or $r_{\\rm vis}$" in diagnostic
+            assert re.search(r"Neither quantity estimates.*?\$D_d\$.*?"
+                             r"(?:\$r_\{\\rm vis\}\$|asymptotic forgetting rate)", diagnostic)
         else:
             assert re.search(
                 r"[Rr]esidual(?:(?: emulator)? error)? (?:can (?:reflect|include)|includes|combines) "
@@ -293,19 +294,25 @@ def test_empirical_residual_is_not_claimed_as_pure_feature_approximation() -> No
                 r"not that the best approximation using QELM features fails)",
                 sections["methodology"],
             )
-        assert "common-suffix residual emulator NRMSE" in sections["evaluation"]
+        if directory.name == "icaart2027":
+            for diagnostic_scope in (
+                "distance from that mean to the QELM prediction is the residual",
+                "representation, fitting, and estimation effects",
+                "neither estimates the theory's worst-case error or asymptotic forgetting rate",
+            ):
+                assert diagnostic_scope in sections["evaluation"]
+        else:
+            assert "common-suffix residual emulator NRMSE" in sections["evaluation"]
         if directory.name == "icaart2027":
             # The revised framing retains the practical resource distinctions
             # without prescribing a particular editorial sentence.
-            for resource in ("history", "representation", "learning", "measurements"):
+            for resource in ("history", "represent", "trained", "measurements"):
                 assert resource in sections["conclusion"].lower()
-            assert re.search(
-                r"representability, not efficient (?:learning|training) or resource savings",
-                sections["conclusion"],
-            )
-            assert re.search(r"(?:without establishing a quantum advantage|not (?:evidence of )?quantum advantage)",
-                             sections["evaluation"])
-            for resource in ("context", "features", "measurements"):
+            assert "theoretical guarantees establish what models can represent" in sections["conclusion"]
+            assert "not whether they can be trained efficiently or implemented with fewer resources" in sections["conclusion"]
+            assert re.search(r"(?:without establishing a quantum advantage|not (?:evidence of )?quantum advantage|"
+                             r"not quantum necessity or failure of every finite window)", sections["evaluation"])
+            for resource in ("history", "features", "measurements"):
                 assert resource in sections["abstract"]
         else:
             assert ("the fitted model must still represent the resulting input--output "
@@ -381,11 +388,14 @@ def test_icaart_appendix_rewrite_covers_full_body_and_relocated_material() -> No
     # Models, train-only preprocessing, validation selection, and operational
     # decision rules remain in E.2 after the complete user-supplied rewrite.
     fitting = re.sub(r"\s+", " ", method_parts[2])
-    for condition in ("QRC targets", "Reset-QELM", "seed sets are disjoint",
+    for condition in ("seed sets are disjoint",
                       "Training data alone standardize features",
-                      "Validation selects", "refitted on training and validation data",
+                      "refitted on training and validation data",
                       "same windows and splits", "10 of 12 roots"):
         assert condition in fitting
+    assert re.search(r"target reservoirs.*?two, three, or four qubits", fitting)
+    assert re.search(r"reset-window QELM.*?six qubits", fitting)
+    assert re.search(r"Validation (?:selects|chooses).*?\\lambda", fitting)
     assert method_parts[3].startswith("Finite Measurements}")
     assert method_parts[4].startswith("Longer Windows}")
     assert method_parts[5].startswith("Time-Series Demonstrations}")
@@ -393,31 +403,43 @@ def test_icaart_appendix_rewrite_covers_full_body_and_relocated_material() -> No
     assert r"\label{app:laser-demonstration}" in method_parts[5]
     parts = re.split(r"\\subsection\{", appendix)[1:]
     window, memory, construction, protection = [re.sub(r"\s+", " ", part) for part in parts]
-    for condition in ("scalar output", "reachable closure", "Uniform QELM density",
-                      "$D_d/2+\\varepsilon$", "infimum", "finite model need not attain",
+    for condition in ("scalar", "compact", "independent of $s$",
+                      "$D_d/2+\\varepsilon$", "infimum",
                       "For vector outputs", "lower bound $D_d/2$", "error at most $D_d$",
-                      "same prediction distribution", "Randomized predictions cannot lower"):
+                      "same prediction distribution"):
         assert condition in window
+    assert re.search(r"(?:Uniform QELM density|Uniform QELM approximation)", window)
+    assert re.search(r"(?:finite model need not attain|not exact attainment by a particular finite model)", window)
+    assert re.search(r"(?:reachable closure|limiting reachable states).*?does not change.*?supremum", window)
+    assert "randomized predictions cannot lower" in window.lower()
     memory_math = re.sub(r"\s+", "", memory)
-    for identity in (r"W=V/\mathcalN", r"\|x\|_{\rmobs}=\sup_w\|\overline{\mathcalC}A_wx\|",
-                     r"\kappa_-c_d\leqD_d\leq\kappa_+c_d", r"c_{d+\ell}\leqc_dc_\ell",
-                     r"\lim_{d\to\infty}D_d^{1/d}=r_{\rmvis}",
-                     r"\frac{d_\varepsilon}{\log(1/\varepsilon)}=\frac{1}{-\logr_{\rmvis}}"):
+    for identity in (r"\|v\|_{\rmobs}=\sup_w\|\mathcalCA_wv\|",
+                     r"c_{d+\ell}\leqc_dc_\ell",
+                     r"\lim_{d\to\infty}D_d^{1/d}=r_{\rmvis}"):
         assert identity in memory_math
-    for condition in ("empty word", "norm ball", "independent of $d$",
-                      "freely concatenable inputs", "constrained input grammars"):
-        assert condition in memory
+    for condition in ("real span", "quotient space $W$", "under every finite future input sequence",
+                      "including the empty sequence", "norm ball", "fixed positive factors",
+                      "independent of $d$", "freely concatenable inputs", "constrained input grammars"):
+        assert condition.lower() in memory.lower()
+    # The derived context limit may be referenced rather than displayed twice.
+    assert r"\eqref{eq:window-complexity}" in memory
+    assert "bases approach $r_{\\rm vis}$ from below and above" in memory
+    assert r"D_d<2\varepsilon" in memory and r"W=\{0\}" in memory
     assert "petreczky2026stability" in memory
     assert r"\widehat f_r" in construction
     for condition in (r"\tfrac12\sin^2(\theta/2)", r"$D_d\geq\delta$",
                       "at least $\\delta/2$ for every finite $d$",
-                      "arbitrarily many shared inputs", "not for every possible input sequence"):
+                      "arbitrarily many shared", "not every possible input sequence"):
         assert condition in protection
+    assert "singlet is an eigenstate" in protection
+    assert "collective lowering operator and its adjoint annihilate it" in protection
+    assert "do not establish protection against arbitrary noise" in protection
     dark = _json("pra_extension/outputs/dark_sector_validation/dark_sector_summary.json")
     assert f"{dark['expected_prefix_gap']:.4f}" in protection
     assert f"{dark['expected_worst_case_absolute_floor']:.4f}" in protection
-    assert r"\ref{app:protected-pulse}" in dynamics
-    assert r"\ref{app:protected-implementation}" in dynamics
+    # The main text may point to the complete appendix rather than each of
+    # its two subsections; both detailed targets remain present above.
+    assert r"\ref{app:protected-calibration}" in dynamics
     assert r"\ref{sec:methods}" not in dynamics
 
     for preview_only in (
@@ -425,6 +447,7 @@ def test_icaart_appendix_rewrite_covers_full_body_and_relocated_material() -> No
         r"\begin{document}", r"\end{document}", r"\textbf", r"\bfseries",
     ):
         assert preview_only not in combined
+    assert not re.search(r"\\(?:emph|textit|textbf)\{[^{}]*\.\}", combined)
     assert main.index(r"\bibliography{references}") < main.index(r"\input{sections/appendix}")
     assert main.index(r"\input{sections/appendix}") < main.index(r"\input{sections/methodology}")
 
@@ -441,17 +464,23 @@ def test_observable_memory_proof_explicitly_justifies_future_supremum() -> None:
     prose = re.sub(r"\s+", " ", memory)
     math = re.sub(r"\s+", "", memory)
     for step in (
-        r"\Phi_w(\Delta)\subseteq\Delta",
-        r"\|\overline{\mathcalC}A_wA_s[v]\|\leqD_{d+\ell}\leqD_d",
-        r"\sup_{v\in\Delta,\,|s|=d}\|\overline{\mathcalC}A_s[v]\|=D_d",
+        r"A_w(\Delta)\subseteq\Delta",
+        r"\|\mathcalCA_wA_sv\|\leqD_{d+\ell}\leqD_d",
+        r"\sup_{|s|=d,\,v\in\Delta}\|A_sv\|_{\rmobs}=D_d",
     ):
         assert step in math
+    # Reusing C and Delta on the quotient is explicit, not an accidental mix
+    # between physical state differences and reduced-space vectors.
+    assert "real span" in prose and "quotient space $W$" in prose
+    assert "under every finite future input sequence" in prose
+    assert "Future invisibility is preserved by every update" in prose
+    assert re.search(r"induced updates \$A_a\$ and output map.*?well defined", prose)
+    assert re.search(r"reuse \$\\mathcal C\$.*?output map.*?\$\\Delta\$.*?image.*?\$W\$", prose)
     assert "Appending common inputs preserves reachability" in prose
     assert "Absorbing the first $\\ell$ inputs" in prose
     assert "Taking suprema gives the upper bound $D_d$" in prose
-    assert "The empty future word recovers" in prose
-    assert "establishing equality" in prose
-    assert "freely concatenable inputs" in prose
+    assert re.search(r"empty future (?:word|sequence).*?recovers.*?supremum", prose)
+    assert "freely concatenable inputs" in prose.lower()
 
 
 def test_icaart_appendix_rewrite_preserves_referenced_equation_sequence_12_to_15() -> None:
@@ -496,21 +525,26 @@ def test_active_title_and_practitioner_framing_are_consistent() -> None:
         name: re.sub(r"\s+", " ", (conference / "sections" / f"{name}.tex").read_text())
         for name in ("abstract", "introduction", "conclusion")
     }
-    # Applicability to real tasks is conditional on the same information
-    # obstruction, not an empirical claim of unbounded memory in our datasets.
+    # The practitioner recommendation starts from the task's available
+    # information, not an empirical claim of unbounded memory in our datasets.
     assert (
-        "The same information limit applies to real-world temporal tasks whenever "
-        "the required past information cannot be recovered from the available input window."
+        "first determine whether the available context contains the information the task requires"
+    ) in sections["introduction"]
+    assert (
+        "The central conclusion is simple: better representations can improve how "
+        "available information is used, but cannot recover a past the model never receives."
     ) in sections["abstract"]
     assert (
-        "Can a sufficiently large input window always replace recurrent quantum "
-        "memory? We prove that it cannot."
+        "depends on more than model capacity: it depends on access to the past"
     ) in sections["introduction"]
-    assert "information---not insufficient expressivity or training" in sections["introduction"]
     assert (
-        "The decision is therefore to assess memory before adding capacity. When "
-        "recent inputs suffice, a sufficiently expressive QELM can replace the "
-        "reservoir; otherwise, longer context or retained memory is needed."
+        "A window-only model cannot distinguish these histories, regardless of its capacity"
+    ) in sections["introduction"]
+    assert (
+        "The practical conclusion is to assess memory before capacity: a sufficiently "
+        "expressive QELM can replace the reservoir when recent context suffices. "
+        "When the required history cannot be supplied through the window, retained "
+        "memory is needed---not simply more features."
     ) in sections["conclusion"]
 
 
@@ -525,27 +559,72 @@ def test_persistent_memory_summary_is_consistent_and_construction_stays_precise(
         assert "unbounded" in text and "delays" in text
         assert "worst-case" in text and "capacity" in text
     assert sections["abstract"].startswith(
-        "We prove that finite-window quantum extreme learning machines (QELMs) "
-        "are not universal substitutes for quantum reservoir computers (QRCs)."
+        "Quantum reservoir computers (QRCs) retain information from earlier inputs, "
+        "whereas reset-window quantum extreme learning machines (QELMs) start afresh"
     )
-    assert "fixed two-qubit QRC that solves a temporal recall task exactly using expectation values" in sections["abstract"]
-    assert "every stateless finite-window predictor" in sections["abstract"]
-    assert "strictly positive worst-case absolute error" in sections["abstract"]
-    assert "positive lower bound is independent of both window length and model capacity" in sections["abstract"]
-    assert "single fixed two-qubit reservoir and a single temporal recall task" in sections["introduction"]
-    assert "same positive lower bound on worst-case absolute error holds for every finite window" in sections["introduction"]
-    assert "construction uses exact expectation values" in sections["introduction"]
-    assert "strict representational advantage over reset-window QELMs in the exact-expectation setting" in sections["conclusion"]
-    assert "increasing either window length or model capacity cannot eliminate" in sections["conclusion"]
-    assert "rather than quantum from classical computation" in sections["conclusion"]
+    assert "simple two-qubit reservoir that performs temporal recall exactly" in sections["abstract"]
+    assert "with exact expectation values" in sections["abstract"]
+    assert "every fixed-window predictor" in sections["abstract"]
+    assert "same positive worst-case error over unbounded delays" in sections["abstract"]
+    assert "regardless of model capacity" in sections["abstract"]
+    assert (
+        "fixed two-qubit reservoir that performs temporal recall exactly using expectation values"
+    ) in sections["introduction"]
+    assert (
+        "Over unbounded recall delays, every fixed-window predictor faces the same positive "
+        "worst-case error, regardless of its capacity"
+    ) in sections["introduction"]
+    assert "rather than quantum from classical computation" in sections["introduction"]
+    assert "with exact expectation values" in sections["conclusion"]
+    assert "every fixed-window predictor faces an unavoidable worst-case error" in sections["conclusion"]
+    assert "Increasing model capacity cannot remove this gap" in sections["conclusion"]
+    assert "larger but still fixed window does not eliminate it over unbounded delays" in sections["conclusion"]
     dynamics = re.sub(r"\s+", " ", (directory / "dynamics.tex").read_text())
-    assert "simple two-qubit construction" in dynamics
+    assert "fixed two-qubit reservoir" in dynamics
     assert r"D_d\geq\delta\qquad\text{for every finite }d" in dynamics
-    assert "of at least $\\delta/2$ for every stateless window predictor" in dynamics
-    assert "whether quantum or classical" in dynamics
-    assert "one fixed reservoir and a pair of trajectories" in dynamics
-    assert "Exact QRC expectations realize the target" in dynamics
-    assert "worst-case error at least $\\delta/2$ at longer delays" in dynamics
+    for scope in ("least $\\delta/2$ for every stateless window-only predictor",
+                  "quantum or classical", "same reservoir provides a counterexample for every finite window length",
+                  "two histories differ only", "Exact QRC expectations realize this target",
+                  "Neither additional capacity nor any fixed enlargement of the window",
+                  "worst-case gap over unbounded delays", "window covering a bounded task horizon"):
+        assert scope in dynamics
+
+
+def test_introduction_explains_architecture_tradeoff_and_literature_bridge() -> None:
+    source = (REPO_ROOT / "paper" / "icaart2027" / "sections" / "introduction.tex").read_text(
+        encoding="utf-8"
+    )
+    body = re.sub(r"\\begin\{figure\*\}.*?\\end\{figure\*\}", "", source, flags=re.S)
+    body = re.sub(r"\\section\{[^{}]+\}|\\label\{[^{}]+\}", "", body).strip()
+    paragraphs = [re.sub(r"\s+", " ", paragraph).strip()
+                  for paragraph in re.split(r"\n\s*\n", body) if paragraph.strip()]
+    assert len(paragraphs) == 7
+    assert paragraphs[0].startswith("Whether a quantum extreme learning machine (QELM)")
+    for requirement in ("access to the past", "how much context is required",
+                        "persistent memory prevents replacement by any fixed input window"):
+        assert requirement in paragraphs[0]
+    for distinction in ("carries its quantum state forward", "start afresh for each prediction",
+                        "explicit window of recent inputs", "state retained between predictions",
+                        "Time-delayed QELMs", "time-series prediction"):
+        assert distinction in paragraphs[1]
+    assert r"\cite{kawanabe2026tdqelm}" in paragraphs[1]
+    for tradeoff in ("retaining history in a recurrent state", "input window",
+                     "without replaying them", "dynamics must retain that information reliably",
+                     "avoids carrying quantum state between predictions",
+                     "additional encoding and processing resources",
+                     "Neither approach is automatically more accurate or more efficient",
+                     "how much history the task requires", "resources available to provide it"):
+        assert tradeoff in paragraphs[2]
+    for bridge in ("Quantum reservoir theory", "quantum feature-model research",
+                   "having the historical information needed for an output",
+                   "having a representation capable of using it"):
+        assert bridge in paragraphs[3]
+    assert r"\cite{boyd1985fading,martinezpena2023finite}" in paragraphs[3]
+    assert r"\cite{goto2021universal}" in paragraphs[3]
+    assert r"\cite{petreczky2026stability}" in paragraphs[4]
+    for scope in ("missing history", "limited features", "finite measurements",
+                  "not whether it can be trained efficiently or implemented with fewer resources"):
+        assert scope in paragraphs[6]
 
 
 def test_conclusion_keeps_a_plain_story_and_scoped_claims() -> None:
@@ -566,34 +645,38 @@ def test_conclusion_keeps_a_plain_story_and_scoped_claims() -> None:
         else:
             # Guard the information criterion in the revised plain-language
             # conclusion; numerical task limits remain beside those results.
-            for qualifier in ("QRC outputs", "Under our assumptions", "precisely when",
+            for qualifier in ("required outputs", "Under our stated assumptions", "precisely when",
                               "as their windows grow", "sufficiently expressive",
-                              "exact expectations", "fades uniformly"):
+                              "exact expectation values", "vanishes uniformly"):
                 assert qualifier in paragraphs[0]
-            assert paragraphs[0].startswith("A reset-window QELM can replace a QRC only if")
-            for condition in ("influence of older inputs", "on the chosen outputs",
-                              "within the available window", "desired accuracy",
-                              "Fast forgetting permits short windows",
-                              "slower forgetting may require longer context"):
+            assert paragraphs[0].startswith("Reset-window QELMs can replace QRCs when")
+            for condition in ("recent inputs provide enough information",
+                              "arbitrarily accurate emulation",
+                              "influence of the omitted past",
+                              "Fast forgetting permits shorter windows",
+                              "slower forgetting may require more context"):
                 assert condition in paragraphs[0]
-            for limit in ("Persistent quantum memory", "no fixed finite input window",
-                          "reproduce uniformly", "two-qubit construction",
-                          "strict representational advantage over reset-window QELMs",
-                          "exact-expectation setting", "worst-case accuracy gap over unbounded delays",
-                          "rather than quantum from classical computation"):
+            for limit in ("earlier events continue to affect the outputs",
+                          "two-qubit recall example", "arbitrarily long delays",
+                          "every fixed-window predictor", "unavoidable worst-case error",
+                          "Increasing model capacity cannot remove this gap",
+                          "larger but still fixed window does not eliminate it over unbounded delays"):
                 assert limit in paragraphs[1]
-            assert "representability, not efficient learning or resource savings" in paragraphs[2]
+            assert "theoretical guarantees establish what models can represent" in paragraphs[2]
+            assert "not whether they can be trained efficiently or implemented with fewer resources" in paragraphs[2]
             evaluation = re.sub(r"\s+", " ", (directory / "sections" / "evaluation.tex")
                                 .read_text(encoding="utf-8"))
-            for limit in ("not laser forecasting", "Synthetic NARMA10 prediction",
-                          "changing features and readouts prevent causal isolation",
-                          "neither quantum necessity nor failure of every finite window follows"):
+            for limit in ("not laser forecasting", "Synthetic NARMA10 tests prediction rather than emulation",
+                          "Changing features and readouts prevent isolation of a single causal delay",
+                          "not quantum necessity or failure of every finite window"):
                 assert limit in evaluation
             assert "Quadratic delay models outperform" not in compact
-            for resource in ("missing history", "insufficient features", "finite measurements",
-                             "representation and measurement budgets"):
+            for resource in ("information limit", "limited features", "finite measurements",
+                             "enough history is therefore only the first requirement"):
                 assert resource in paragraphs[2]
-            assert "longer context or retained memory is needed" in paragraphs[3]
+            assert "when recent context suffices" in paragraphs[3]
+            assert "When the required history cannot be supplied through the window" in paragraphs[3]
+            assert "retained memory is needed---not simply more features" in paragraphs[3]
             assert "$" not in body
             assert len(compact.split()) <= 250
         assert "uniformly" in compact
@@ -651,15 +734,18 @@ def test_anonymous_reproducibility_description_keeps_methods_without_registratio
     directory = REPO_ROOT / "paper" / "icaart2027" / "sections"
     evaluation = re.sub(r"\s+", " ", (directory / "evaluation.tex").read_text())
     methods = re.sub(r"\s+", " ", (directory / "methodology.tex").read_text())
-    assert "provides the numerical methods and reproducibility details" in evaluation
+    assert r"Appendix~\ref{sec:methods} gives the models, protocols, and statistical procedures" in evaluation
     assert "Numerical Evaluation and Reproducibility" in methods
     assert not re.search(r"preregister|pre-register|frozen", evaluation + methods, re.I)
     # Keep the actual criterion and exploratory qualifiers, not an implied
     # replacement of post hoc analyses by confirmatory evidence.
     assert "at most 0.10 in at least 10 of 12 roots" in methods
-    assert "Post hoc sensitivity checks" in evaluation
-    assert "Exploratory $B=24,30$ reuse these data" in evaluation
-    assert "Comparisons and evaluation criteria" in methods
+    assert "Post hoc history sensitivity checks" in methods
+    assert "Exploratory 24- and 30-feature subsets reuse these data" in methods
+    assert "outcome-independent Pauli-axis balance" in methods
+    for control in ("Linear-delay", "quadratic-delay", "dimension-matched random-tanh",
+                    "intercept-only", "reset--replay", "same windows and splits"):
+        assert control in methods
 
 
 def test_main_figure_selection_preserves_archived_frontier_and_resolves_references() -> None:
@@ -752,15 +838,26 @@ def test_long_context_claims_preserve_the_separate_cohort_and_negative_controls(
         if version == "canonical_emulation":
             assert "five-qubit targets, 12 new roots, and a ten-qubit QELM" in text
         else:
-            assert "prospective four-/five-qubit follow-ups each use 12 roots" in text
-            assert "five-qubit study uses a ten-qubit QELM" in text
-            assert "cohorts and dense-map seeds are disjoint" in text
-        assert "118 of 120 streaming root--condition comparisons" in text
-        assert "no tested QELM budget meets the total-error rule" in text
+            methods = " ".join((REPO_ROOT / f"paper/{version}/sections/methodology.tex").read_text().split())
+            assert re.search(r"twelve fresh five-qubit targets", methods, re.I)
+            for protocol in ("ten-qubit QELM", "seed sets are disjoint across cohorts"):
+                assert protocol in methods
+            assert re.search(r"quadratic-control comparison fixes (?:\$B=120\$|120 QELM features) before testing", methods)
+            for finding in ("separate five-qubit study", "extending the window from two to ten inputs",
+                            "reduces history error in every root",
+                            "both tested losses", "sufficient history does not always yield accurate fitted QELMs"):
+                assert finding in text
+        if version == "canonical_emulation":
+            assert "118 of 120 streaming root--condition comparisons" in text
+            assert "no tested QELM budget meets the total-error rule" in text
         for gamma in (1, 4):
             effect = summary["analysis"]["paired_history"][f"history_gamma{gamma}_d2_to_d10"]
             assert effect["positive_roots"] == effect["n_roots"] == 12
-            assert f"{100 * effect['median']:.2f}\\%" in text
+            # The accessible edition retains the finding and protocol while
+            # omitting secondary effect-size strings; the source stays audited.
+            assert 0 < effect["median"] < 1
+            if version == "canonical_emulation":
+                assert f"{100 * effect['median']:.2f}\\%" in text
 
 
 def test_icaart_exact_benchmarks_keep_global_derivation_and_construction_scope() -> None:
@@ -777,38 +874,48 @@ def test_icaart_exact_benchmarks_keep_global_derivation_and_construction_scope()
     # The author-restored Figure 3 again includes the analytical reference;
     # direct NARMA prediction remains a separate numerical follow-up.
     presentation = benchmark
-    assert r"\subsection{Reaching the Theoretical Error Floor}" in evaluation
-    assert "Separate post hoc construction checks" in benchmark
-    assert "classical leaky-memory process in one qubit" in benchmark
-    assert r"y_t=\eta y_{t-1}+(1-\eta)g(a_t)" in benchmark
-    assert r"g(a)=a^2" in benchmark and r"(e^{2a}-1)/(e^2-1)" in benchmark
-    assert r"D_d=\eta^d" in benchmark
-    assert "supremum over all earlier histories" in benchmark
-    assert "two encoding copies per input suffice to represent this midpoint exactly" in benchmark
-    assert "worst-case absolute error is exactly $D_d/2$" in benchmark
-    assert "confirms the analytical readout on endpoint and mixed windows" in benchmark
-    assert "constructed readouts, not learning or resource efficiency" in benchmark
+    assert r"\subsection{Reaching the Theoretical Limit}" in evaluation
+    for interpretation in (
+        "Separate analytical benchmarks test attainability", "one-qubit reservoir",
+        "retains 80\\% of its previous output", "eight-input window",
+        "two encoding copies per input represent the midpoint prediction exactly",
+        "analytically specified readout", "16-qubit statevector calculation",
+        "confirms this readout on tested windows to rounding precision",
+        "constructed readouts, not trained models", "neither efficient learning nor resource savings",
+    ):
+        assert interpretation in benchmark
+    # Technical formulas move to C, not out of the scientific record.
+    for expression in (r"y_t=\eta y_{t-1}+(1-\eta)g(a_t)", r"g(a)=a^2",
+                       r"(e^{2a}-1)/(e^2-1)", r"D_d=\eta^d"):
+        assert expression in appendix
     assert "factorized exact expectations" in presentation
-    assert "better readouts at a given copy count are not ruled out" in presentation
-    assert "without training or measurement noise" in presentation
-    assert r"Figure~\ref{fig:long-context}(b)" in benchmark
-    assert "$0.281322$ at one copy" in benchmark
-    assert "$0.084753$ at 256 copies" in benchmark
-    assert "Analytical benchmarks and simulations examine three distinct limitations" in sections["abstract"]
-    assert "every stateless finite-window predictor incurs a strictly positive worst-case absolute error" in sections["abstract"]
+    assert "not full-register simulations" in presentation
+    assert "better readouts at fixed capacity are not excluded" in presentation
+    assert r"Figure~\ref{fig:long-context}(b, bottom)" in benchmark
+    assert "Increasing from one to 256 copies" in benchmark
+    assert "$0.281322$ to $0.084753$" in benchmark
+    assert (
+        "Analytical benchmarks and simulations distinguish missing history from "
+        "limited features and finite measurements"
+    ) in sections["abstract"]
+    assert (
+        "every fixed-window predictor faces the same positive worst-case error over unbounded delays"
+    ) in sections["abstract"]
     assert "Analytical benchmarks and simulations" in sections["introduction"]
 
     # The revised C keeps the compatible-range and factorial-moment argument,
     # rather than requiring the removed auxiliary finite-history calibration.
-    assert "reachable closure does not change this supremum" in appendix
-    assert "compatible populations have width $D_d=\\eta^d$" in appendix
+    assert re.search(r"(?:reachable closure|limiting reachable states).*?does not change.*?supremum", appendix)
+    assert re.search(r"compatible (?:populations have|range has) width \$D_d=\\eta\^d\$", appendix)
     assert r"\eta^d/2+\|f-m_d\|_\infty" in appendix
     assert r"K_i(K_i-1)/[r(r-1)]" in appendix and r"r\geq2" in appendix
-    assert "unbiased readout" in appendix and "attaining the information floor exactly" in appendix
+    assert re.search(r"(?:unbiased readout|readout .*?has expectation \$a_i\^2\$)", appendix)
+    assert re.search(r"(?:attaining the information floor exactly|attains the floor exactly)", appendix)
     assert "midpoint coefficients give a nonnegative Bernstein bias" in appendix
-    assert "one-dimensional maximization of that bias" in appendix
-    assert "analytical readouts and binomial expectations, not training" in appendix
-    assert "Neither quantity estimates $D_d$ or $r_{\\rm vis}$" in methods
+    assert re.search(r"(?:one-dimensional maximization of that bias|maximizing this bias in one variable)", appendix)
+    assert re.search(r"analytical readouts and binomial expectations, not (?:training|trained models)", appendix)
+    assert re.search(r"Neither quantity estimates.*?\$D_d\$.*?"
+                     r"(?:\$r_\{\\rm vis\}\$|asymptotic forgetting rate)", methods)
     assert "rare histories can be missed" in methods
 
     ledger = _json("paper/figures/sharpness/fig05_exact_sharpness_source.json")
@@ -888,55 +995,62 @@ def test_icaart_abstract_and_short_captions_keep_plain_explanations_and_scope() 
     """Keep the finite-context framing readable without dropping claim boundaries."""
     directory = REPO_ROOT / "paper" / "icaart2027" / "sections"
     abstract = re.sub(r"\s+", " ", (directory / "abstract.tex").read_text(encoding="utf-8"))
-    for condition in ("We prove that finite-window quantum extreme learning machines",
-                      "are not universal substitutes for quantum reservoir computers",
-                      "reset-window QELMs, which reset for each prediction",
-                      "QRCs carry a quantum state forward",
-                      "Under our assumptions",
-                      "sufficiently expressive QELMs with growing windows",
-                      "exact expectations",
-                      "can approximate QRC outputs arbitrarily well",
-                      "precisely when the missing past's influence fades uniformly",
-                      "quantify the unavoidable window error",
-                      "relate the required context to observable forgetting",
-                      "We construct a fixed two-qubit QRC",
-                      "every stateless finite-window predictor",
-                      "strictly positive worst-case absolute error over unbounded delays",
-                      "positive lower bound is independent of both window length and model capacity",
-                      "missing history, insufficient features, and finite measurements"):
-        assert condition in abstract
+    # Preserve the author-approved replacement verbatim, apart from line wrapping.
+    expected_abstract = (
+        "Quantum reservoir computers (QRCs) retain information from earlier inputs, "
+        "whereas reset-window quantum extreme learning machines (QELMs) start afresh "
+        "and receive only a recent input window. We establish when this window can "
+        "replace the reservoir's memory. Under our stated assumptions and with exact "
+        "expectation values, sufficiently expressive QELMs can reproduce reservoir "
+        "outputs arbitrarily accurately as their windows grow precisely when the "
+        "influence of the omitted past becomes uniformly negligible. However, longer "
+        "windows do not always solve the problem. We construct a simple two-qubit "
+        "reservoir that performs temporal recall exactly, while every fixed-window "
+        "predictor faces the same positive worst-case error over unbounded delays, "
+        "regardless of model capacity. Analytical benchmarks and simulations "
+        "distinguish missing history from limited features and finite measurements. "
+        "The central conclusion is simple: better representations can improve how "
+        "available information is used, but cannot recover a past the model never receives."
+    )
+    assert abstract.strip() == expected_abstract
     for omitted in ("For scalar outputs", "half the largest",
                     "under stated assumptions", "classical"):
         assert omitted not in abstract
     introduction = re.sub(r"\s+", " ", (directory / "introduction.tex").read_text(encoding="utf-8"))
-    for condition in ("single temporal recall task", "identical recent inputs", "different outputs",
-                      "not insufficient expressivity or training",
-                      "real-world temporal tasks with this property",
+    for condition in ("temporal recall exactly", "identical recent inputs", "different reservoir outputs",
+                      "cannot distinguish these histories, regardless of its capacity",
                       "Under our stated assumptions", "sufficiently expressive QELMs",
-                      "exact expectations", "growing windows", "vanishes uniformly",
-                      "For scalar outputs", "half the largest output difference"):
+                      "exact expectation values", "arbitrarily accurate emulation",
+                      "as their windows grow precisely when",
+                      "uniformly negligible across the allowed histories",
+                      "rate of forgetting to the required context",
+                      "only past information that can still affect the chosen outputs matters"):
         assert condition in introduction
     # Scope is explicit in the sections defining outputs and reporting tasks,
     # without requiring the introduction to repeat those qualifications.
     models = re.sub(r"\s+", " ", (directory / "models.tex").read_text(encoding="utf-8"))
-    assert "emulation simulations use observable expectations directly" in models
-    assert "forecasting tests fit both readouts to external task targets" in models
+    assert "observable expectations: the average outcomes" in models
+    assert "Emulation targets the reservoir's output after the same current input" in models
+    assert "not the next value of an external time series" in models
     evaluation = re.sub(r"\s+", " ", (directory / "evaluation.tex").read_text(encoding="utf-8"))
-    assert "practical emulation limits, not quantum advantage" in evaluation
+    assert "not quantum necessity or failure of every finite window" in evaluation
     # The task implication uses exact QRC means and a stateless comparison over
     # unbounded delays; it does not apply when the window covers the horizon.
     dynamics = re.sub(r"\s+", " ", (directory / "dynamics.tex").read_text(encoding="utf-8"))
-    memory_task = dynamics.split(r"\emph{Memory-task implication.}", 1)[1].split(
-        "Matched controls", 1,
+    memory_task = dynamics.split(r"\subsection{When Finite Windows Cannot Suffice}", 1)[1].split(
+        r"\subsection{", 1,
     )[0]
-    for condition in ("Exact QRC expectations", "stateless fixed-window predictor",
+    for condition in ("Exact QRC expectations", "stateless window-only predictor",
                       r"worst-case error at least $\delta/2$", "unbounded delays",
-                      "not when the window covers the task horizon"):
+                      "does not rule out a window covering a bounded task horizon"):
         assert condition in memory_task
     # The practitioner-facing sections do not claim that quantum memory is
     # necessary among all model classes, or give a scalar equality for vectors.
     for name in ("abstract", "introduction", "conclusion"):
         prose = (directory / f"{name}.tex").read_text(encoding="utf-8")
+        # Symbols drawn in the schematic are explained in its caption, without
+        # introducing mathematical notation into the introductory narrative.
+        prose = re.sub(r"\\begin\{figure\*\}.*?\\end\{figure\*\}", "", prose, flags=re.S)
         assert r"\textbf" not in prose and r"\bfseries" not in prose
         assert "$" not in prose
         assert not re.search(r"(?:only a QRC|quantum memory is necessary)", prose, re.I)
@@ -967,8 +1081,9 @@ def test_icaart_abstract_and_short_captions_keep_plain_explanations_and_scope() 
     assert "schematic examples, not trained-model results" in interface
     assert "time advances while the window length stays fixed" in interface
     models = re.sub(r"\s+", " ", (directory / "models.tex").read_text(encoding="utf-8"))
-    assert "fully forgotten by window expiry, a special case of fading memory" in models
-    assert "Sufficiency here concerns these example histories, not uniform accuracy" in models
+    assert "ideal averages over two equally likely example histories" in models
+    assert "not trained QELM predictions" in models
+    assert "examples do not establish accuracy over all possible histories" in models
 
     assert "Three resources, three different questions" in resources
     assert "Blue windows meet the 10\\% old-history criterion in all three target sizes" in resources
@@ -1003,20 +1118,22 @@ def test_icaart_abstract_and_short_captions_keep_plain_explanations_and_scope() 
     # Detailed construction, cohort and normalization scope remains in the text.
     evaluation = " ".join((directory / "evaluation.tex").read_text().split())
     methods = " ".join((directory / "methodology.tex").read_text().split())
-    assert "better readouts at a given copy count are not ruled out" in evaluation
-    assert "classical leaky-memory process in one qubit" in evaluation
-    assert "five-qubit study uses a ten-qubit QELM" in evaluation
-    assert "Synthetic NARMA10 prediction" in evaluation
-    assert "across 24 fresh roots" in evaluation
-    assert "3.10\\%" in evaluation and "27.88\\%" in evaluation
+    assert "better readouts at fixed capacity are not excluded" in evaluation
+    assert "one-qubit reservoir retains 80\\%" in evaluation
+    assert "ten-qubit QELM" in methods
+    assert "Synthetic NARMA10 tests prediction rather than emulation" in evaluation
+    assert "Across 24 independent roots" in evaluation
+    assert "3.1\\%" in evaluation and "27.9\\%" in evaluation
     assert "59.7\\%" in evaluation and "77.3\\%" in evaluation
     assert "NRMSE uses the training-target standard deviation" in methods
     assert "4096/1024/2048-sample training/validation/test blocks" in methods
     assert "training-only standardization" in methods
     assert "QELM predicts the QRC's final $Z_0$ expectation, not the next laser value" in methods
     assert "never past targets" in methods
-    assert "half the output gap bounds one of the two absolute prediction errors, not global NRMSE" in methods
-    assert "Twenty-four fresh roots" in methods
+    assert re.search(r"(?:half the output gap bounds one of the two absolute prediction errors, not global NRMSE|"
+                     r"must err by at least half the output gap on at least one run.*?"
+                     r"absolute-error bound, not a global NRMSE bound)", methods)
+    assert "twenty-four fresh roots" in methods.lower()
     assert "at least 20 of 24 positive roots" in methods
     assert "without simultaneous coverage" in methods
 
@@ -1031,17 +1148,18 @@ def test_icaart_finite_resources_bridge_keeps_stronger_assumptions_and_pointwise
     }
     assert main.index(r"\input{sections/dynamics}") < main.index(r"\input{sections/evaluation}")
     assert re.findall(r"\\subsection\{([^}]+)\}", sections["dynamics"]) == [
-        "Observable Forgetting", "Required Window Length", "Protected Memory", "Finite Resources",
+        "When Longer Windows Are Enough", "When Finite Windows Cannot Suffice",
+        "From Sufficient History to Accurate Predictions",
     ]
     assert sections["dynamics"].count(r"\label{sec:finite-resources}") == 1
     bridge = re.sub(r"\s+", " ", sections["dynamics"].split(r"\label{sec:finite-resources}", 1)[1])
-    assert "For inputs in $[0,1]$ and a scalar output" in bridge
-    assert "midpoint construction assumes" in bridge
+    assert "For scalar inputs in $[0,1]$ and a scalar output" in bridge
+    assert "midpoint prediction" in bridge
     assert "stronger than observable forgetting" in bridge
-    assert "uniform state contraction and Lipschitz dependence on inputs" in bridge
+    assert "uniform state contraction and Lipschitz input dependence" in bridge
     assert r"\eqref{eq:incremental-lipschitz}" in bridge
-    assert "$r$ encoding copies per input" in bridge
-    assert "$Q$ independent samples of its bounded readout" in bridge
+    assert "Each input is encoded into $r$ separately prepared copies" in bridge
+    assert "$Q$ independent measurements of this bounded readout" in bridge
     assert r"\eqref{eq:midpoint-resource-bound}" in bridge
     assert r"\widehat f_r" in bridge
     compact_math = re.sub(r"\s+", "", bridge)
@@ -1054,15 +1172,16 @@ def test_icaart_finite_resources_bridge_keeps_stronger_assumptions_and_pointwise
     assert r"\leq" in bridge
     assert "For each fixed history" in bridge
     assert "probability at least $1-\\zeta$" in bridge
-    assert "failure tolerance $0<\\zeta<1$" in bridge
+    assert "$0<\\zeta<1$ is the allowed failure probability" in bridge
     assert "not simultaneously over all histories" in bridge
     assert "$1/\\sqrt r$ and $1/\\sqrt Q$, respectively" in bridge
-    assert "at fixed window and confidence" in bridge
+    assert "At fixed window and confidence" in bridge
+    assert "With exact expectations, the sampling term disappears and the remaining bound is uniform" in bridge
     assert "$rd$ qubits" in bridge and "$(r+1)^d$" in bridge
     assert "reachable-output extrema" in bridge
-    assert "computation is not included in those resource counts" in bridge
+    assert "computation is not included in the resource counts" in bridge
     assert "constructive upper bound" in bridge
-    assert "not an efficient learning method or an exact decomposition of fitted-model error" in bridge
+    assert "not an efficient learning algorithm or an exact decomposition of fitted-model error" in bridge
 
     # Keep the numbered bound in Appendix C and its short main-text bridge
     # unnumbered; the revised appendix retains four referenced equations.
@@ -1074,25 +1193,24 @@ def test_icaart_finite_resources_bridge_keeps_stronger_assumptions_and_pointwise
         r"\label{app:bernstein-resources}", 1,
     )[1].split(r"\subsection{", 1)[0])
     for condition in ("For each fixed history", "probability at least $1-\\zeta$",
-                      "exact expectations", "holds uniformly over histories",
+                      "exact expectations",
                       "finite-shot guarantee is pointwise, not simultaneous over all histories",
                       "independent readouts", "each readout lies in $[-M,M]$",
                       "$rd$ qubits", "$(r+1)^d$ midpoint coefficients",
-                      "reachable-output extrema", "not included in the resource count",
-                      "representability, not an efficient training procedure"):
-        assert condition in construction
+                      "reachable-output extrema", "not included in the resource count"):
+        assert condition.lower() in construction.lower()
+    assert re.search(r"With exact expectations.*?bound holds uniformly", construction)
+    assert re.search(r"(?:not an|does not supply an) efficient training procedure", construction)
     construction_math = re.sub(r"\s+", "", construction)
     for term in (r"f_r(s)=\mathbbE\bigl[m_d(K_1/r,\ldots,K_d/r)\bigr]",
                  r"\frac{ML_{\rmin}(1-\eta^d)}{(1-\eta)\sqrtr}",
                  r"M\sqrt{\frac{2\log(2/\zeta)}{Q}}"):
         assert term in construction_math
     background = re.sub(r"\s+", " ", sections["background"])
-    assert r"Section~\ref{sec:finite-resources} summarizes its resource bounds" in background
-    assert r"Appendix~\ref{app:bernstein-resources} gives the construction" in background
-    assert re.search(
-        r"does not (?:guarantee efficient training or )?make the fixed six-qubit emulator .*? universal",
-        background,
-    )
+    assert "Its resource costs are discussed next" in background
+    assert r"Appendix~\ref{app:bernstein-resources}" in bridge
+    assert "neither guarantees efficient training nor makes the fixed architectures" in background
+    assert "universal" in background
 
 
 def test_main_manuscript_uses_direct_scientific_voice() -> None:
@@ -1116,6 +1234,35 @@ def test_main_manuscript_uses_direct_scientific_voice() -> None:
     )
     for phrase in forbidden:
         assert phrase not in text
+
+
+def test_active_sections_keep_accessible_models_limits_resources_experiments_progression() -> None:
+    """The rewrite reduces notation and run-in labels, not the scientific chain."""
+    directory = REPO_ROOT / "paper" / "icaart2027" / "sections"
+    sections = {
+        name: (directory / f"{name}.tex").read_text(encoding="utf-8")
+        for name in ("models", "background", "dynamics", "evaluation")
+    }
+    assert re.findall(r"\\subsection\{([^}]+)\}", sections["models"]) == [
+        "Quantum Reservoirs", "Reset-Window QELMs", "The Replacement Question",
+    ]
+    assert r"\subsection{" not in sections["background"]
+    assert len(re.findall(r"\\subsection\{", sections["dynamics"])) == 3
+    assert len(re.findall(r"\\subsection\{", sections["evaluation"])) == 4
+    for name, text in sections.items():
+        assert r"\paragraph{" not in text, name
+        assert r"\subsubsection{" not in text, name
+        assert not re.search(r"\\(?:emph|textit|textbf)\{[^{}]*\.\}", text), name
+    assert r"\label{sec:models}" in sections["models"]
+    assert r"\label{sec:criterion}" in sections["background"]
+    assert r"\label{sec:finite-resources}" in sections["dynamics"]
+    assert r"\label{sec:numerics}" in sections["evaluation"]
+    assert r"\label{sec:sharpness}" in sections["evaluation"]
+    # Detailed benchmark formulas stay in C; numerical interpretation does not
+    # introduce another layer of symbols or displayed equations.
+    assert not re.search(r"\\begin\{(?:equation|align|gather)\}|\\\[", sections["evaluation"])
+    assert "The replacement question is now one of memory" in " ".join(sections["background"].split())
+    assert r"Section~\ref{sec:numerics} examines these questions" in " ".join(sections["dynamics"].split())
 
 
 def test_accessible_structure_introduces_models_before_limits_and_results() -> None:
@@ -1163,14 +1310,14 @@ def test_accessible_structure_introduces_models_before_limits_and_results() -> N
     )
     conference_models = (conference_sections / "models.tex").read_text(encoding="utf-8")
     assert "fig01_information_interface.pdf" not in conference_models
-    # Declare the overview immediately after the opening model distinction,
-    # before the motivation and related-work paragraphs, to retain its early float.
+    # Declare the overview after defining both architectures, before their
+    # trade-off and related-work paragraphs, to retain its early float.
     opening, after_overview = conference_introduction.split(r"\end{figure*}", 1)
     assert opening.count(r"\begin{figure*}") == 1
-    assert opening.index("which reset for each prediction") < opening.index(
+    assert opening.index("start afresh for each prediction") < opening.index(
         "fig01_information_interface.pdf"
     )
-    assert after_overview.lstrip().startswith("This distinction matters")
+    assert after_overview.lstrip().startswith("The trade-off is between")
     assert r"Figure~\ref{fig:information-interface}" in conference_models
     evaluation = sections["evaluation"]
     assert evaluation.index("Each independent realization block") < evaluation.index(

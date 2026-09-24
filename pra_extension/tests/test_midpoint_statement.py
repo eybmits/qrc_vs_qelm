@@ -38,14 +38,14 @@ def test_scalar_qelm_theorem_states_fixed_window_information_optimum(version: st
     background = _section(version, "background")
     equation = _equation(background, "eq:qrc-qelm-equivalence")
 
-    assert r"\boxed" in equation
+    # A box is presentation, not part of the fixed-window theorem.
     assert r"\inf_{f\in\mathcal Q_d}".replace(" ", "") in equation
     assert r"\sup_h" in equation
     assert "y(h)-f(S_d(h))" in equation
     assert r"\frac{D_d}{2}" in equation
     assert r"D_d\longrightarrow0" not in equation
     assert r"\label{eq:window-law}" in background
-    assert r"D_d\longrightarrow0" in background
+    assert re.search(r"D_d\\(?:longrightarrow|to)0", background)
 
 
 @pytest.mark.parametrize("version", PAPER_VERSIONS)
@@ -72,7 +72,8 @@ def test_section_three_preserves_equations_citations_and_automatic_appendix_refe
     # Journal references include the containing letter and subsection number;
     # conference appendix subsections carry their own letters. Do not hardcode
     # either artifact's generated appendix identifiers into Section 3.
-    assert r"Appendix~\ref{app:bernstein-resources}" in background
+    construction_pointer = background + " " + _section(version, "dynamics")
+    assert r"Appendix~\ref{app:bernstein-resources}" in construction_pointer
     if version == "canonical_emulation":
         assert r"Appendix~\ref{app:proofs}" in background
     else:
@@ -86,7 +87,7 @@ def test_fixed_window_statement_retains_scope_and_nonattainment(version: str) ->
     appendix = _section(version, "appendix")
     combined = (background + " " + appendix).lower()
 
-    for requirement in ("scalar", "compact", "continuous", "dense", "exact"):
+    for requirement in ("scalar", "compact", "continuous", "exact"):
         assert requirement in background.lower()
     assert "growing" in background.lower()
     assert "concaten" in combined or "appendable" in combined
@@ -95,19 +96,30 @@ def test_fixed_window_statement_retains_scope_and_nonattainment(version: str) ->
     assert "finite vector" in combined
     assert "replay" in appendix.lower()
     if version == "icaart2027":
-        assert "representability, not an efficient training procedure" in appendix.lower()
+        assert re.search(r"(?:not an|does not supply an) efficient training procedure", appendix.lower())
     else:
         assert re.search(
             r"(?:without a guarantee of efficient fitting|"
             r"efficient fitting remains a separate question)", appendix.lower(),
         )
-    assert "every finite input suffix can follow every admissible prehistory" in background
-    assert "For each fixed window length $d$" in background
-    assert "continuous window functions under the uniform norm" in background
-    assert "Features are evaluated through exact expectations" in background
-    assert "single finite QELM need not attain it exactly" in background
-    assert "does not guarantee efficient training" in background
-    assert "fixed six-qubit emulator" in background
+    if version == "icaart2027":
+        for requirement in (
+            "Every finite input continuation must be allowed after every admissible earlier history",
+            "For each window length", "approximate every continuous window function uniformly",
+            "as capacity grows", "using exact expectation values",
+            "particular finite model need not attain it exactly",
+            "neither guarantees efficient training", "fixed architectures",
+            "uniformly across all allowed histories, not only typical test examples",
+        ):
+            assert requirement in background
+    else:
+        for requirement in (
+            "dense", "every finite input suffix can follow every admissible prehistory",
+            "For each fixed window length $d$", "continuous window functions under the uniform norm",
+            "Features are evaluated through exact expectations", "single finite QELM need not attain it exactly",
+            "does not guarantee efficient training", "fixed six-qubit emulator",
+        ):
+            assert requirement in background
     assert "fixed-window optimum lies between $D_d/2$ and $D_d$" in background
     assert "randomization cannot lower the scalar bound on worst-case expected absolute error" in background
 
@@ -121,15 +133,22 @@ def test_midpoint_proof_uses_common_compact_reachable_state_domain(version: str)
     assert "compact" in appendix.lower()
     assert r"\mathcalR" in compact_math
     assert "m_d" in appendix
-    assert "y_-(s)" in appendix
-    assert "y_+(s)" in appendix
+    if version != "icaart2027":
+        assert "y_-(s)" in appendix and "y_+(s)" in appendix
     assert r"\min" in appendix
     assert r"\max" in appendix
     assert "uniform" in appendix.lower()
     assert "continuous" in appendix.lower()
     if version == "icaart2027":
         assert r"D_d/2+\varepsilon" in compact_math
-        assert "reachable closure does not change this supremum" in appendix
+        # The accessible proof places extrema directly in the midpoint formula,
+        # avoiding endpoint aliases without changing their common domain.
+        midpoint = re.sub(r"\s|&|\\\\", "", appendix)
+        assert (r"m_d(s)=\tfrac12\big[\min_{\rho\in\mathcalR}\mathcalC\Phi_s(\rho)"
+                r"+\max_{\rho\in\mathcalR}\mathcalC\Phi_s(\rho)\big]") in midpoint
+        assert re.search(r"(?:reachable closure|limiting reachable states).*?does not change.*?supremum", appendix)
+        assert "independent of $s$" in appendix
+        assert "every continuation is allowed after every admissible past" in appendix
     else:
         assert r"\frac{D_d}{2}" in compact_math
 
@@ -144,7 +163,11 @@ def test_observable_criterion_explicitly_attributes_existing_stability_result(
     attribution = dynamics.split(r"\subsection{Required Window Length}")[0]
     assert r"\label{eq:visible-memory-theorem}" in attribution
 
-    assert "Observable-memory criterion." in attribution
+    if version == "icaart2027":
+        assert "This criterion specializes" in attribution
+        assert attribution.index(r"\label{eq:visible-memory-theorem}") < attribution.index("petreczky")
+    else:
+        assert "Observable-memory criterion." in attribution
     assert "Observable-memory theorem." not in dynamics
     assert "petreczky" in attribution.lower()
     assert "III.1" in attribution
@@ -164,9 +187,9 @@ def test_midpoint_resource_bound_preserves_construction_and_sampling_scope(versi
         )[0]
         compact = construction.replace(" ", "")
         midpoint = _equation(construction, "eq:midpoint-resource-bound")
-        assert "full scalar input alphabet $[0,1]$" in background
-        assert "take inputs in $[0,1]$" in construction
-        assert r"m_d(k_1/r,\ldots,k_d/r)" in construction
+        assert "For inputs in $[0,1]$" in background
+        assert "take inputs in $[0,1]$" in construction.lower()
+        assert re.search(r"(?:linear-readout coefficient|Assign to each count outcome).*?midpoint", construction)
         assert r"f_r(s)=\mathbbE\bigl[m_d(K_1/r,\ldots,K_d/r)\bigr]" in compact
         assert r"K_i\sim\operatorname{Binomial}(r,a_i)" in construction
         assert r"|y(h)-\widehatf_r(S_d(h))|" in midpoint
@@ -177,13 +200,13 @@ def test_midpoint_resource_bound_preserves_construction_and_sampling_scope(versi
         assert "For each fixed history" in construction
         assert "probability at least $1-\\zeta$" in construction
         assert "finite-shot guarantee is pointwise, not simultaneous over all histories" in construction
-        assert "exact expectations" in construction and "holds uniformly over histories" in construction
+        assert re.search(r"With exact expectations.*?bound holds uniformly", construction)
         assert "$Q$ independent readouts" in construction
-        assert "each readout lies in $[-M,M]$" in construction
+        assert "each readout lies in $[-m,m]$" in construction.lower()
         assert "$rd$ qubits" in construction and "$(r+1)^d$ midpoint coefficients" in construction
         assert "reachable-output extrema" in construction
         assert "not included in the resource count" in construction
-        assert "not an efficient training procedure" in construction
+        assert re.search(r"(?:not an|does not supply an) efficient training procedure", construction)
         return
     replay = _equation(appendix, "eq:qrc-qelm-bound")
     midpoint = _equation(appendix, "eq:midpoint-resource-bound")
