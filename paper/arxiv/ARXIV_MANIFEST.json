@@ -6,13 +6,16 @@
   "anonymous_source_sha256": "e546c5ef9b8b69898cb3304d171541930e90d0e6338c613a93ca32729623a202",
   "authors_sha256": "2ee82ef5a5b70fb410fa6b2b2c0c2066c7fe1dfd39f9131a533227f45e6dd477",
   "files": {
-    "arxiv_qa.json": "aacd27e2e1331db2a124ae7ed526a2269115c6e44b5e0090b3191a8aac1c44b2",
-    "arxiv_source.zip": "50159507093e80c0fcc1b243859e095eb74bf650cf8cb052140150ce81720858",
+    "arxiv_qa.json": "9761c0317d0d797173dc067348f57d9e0888b89267f7df95e0da581ead465f59",
+    "arxiv_source.zip": "200dde0e203222652cb361c7ad722f0b633252285d43988dca85c6ee7cff5c67",
     "authors.json": "2ee82ef5a5b70fb410fa6b2b2c0c2066c7fe1dfd39f9131a533227f45e6dd477",
-    "build_arxiv.py": "a59de235dd0395117b231e41d0ab234e6a34070e898a6ce9b56c2440c324f70d",
+    "build_arxiv.py": "3df39eceea3d9afd2d2a7a230b4187c854fef18ae70a92c550e4e79f822ddbf0",
     "main.tex": "f747df2b0f1ef577b2cdad6b1870694c2bea0a750383cd0267b910220c932f8c",
     "preprint.pdf": "9c5c61b8fe3137de4c036c8c32a36c6a4a7fa5085fb3083534e91bbbe181d421"
   },
+  "omitted_unused_sources": [
+    "sections/related-work.tex"
+  ],
   "pages": 12,
   "parent_source_sha256": {
     "SCITEPRESS.sty": "d4a8482e5b2772a279b881012bedd813023f3c614287e02d5c648497ade3bf14",
@@ -35,7 +38,7 @@
     "sections/models.tex": "c2ca861265ce52f500b610ca56a9b0cf54bd4222be4f859f724910c5aabb398a",
     "sections/related-work.tex": "4f3ee9cc629b34483b6c8215b6b5e1e8091c5163aaae1d683b65eb29b231d27d"
   },
-  "publication": "Not uploaded or published; no arXiv identifier has been assigned.",
+  "publication": "Upload, submission, and publication status are managed separately and are not tracked by this builder.",
   "schema": "arxiv_preprint_package_v1",
   "source_package_files": {
     "SCITEPRESS.sty": "d4a8482e5b2772a279b881012bedd813023f3c614287e02d5c648497ade3bf14",
@@ -56,7 +59,6 @@
     "sections/evaluation.tex": "311c486828746fc28ce817e1bd6e410db2970ef8584f639cde137ac7ac3e01ff",
     "sections/introduction.tex": "9c7105c9d94b09f98d3868f11afa07e82b475fb4136eb5d8673c981a8768a48a",
     "sections/methodology.tex": "cb17c05b0db0e74083b956de688c7b10b8efb067a3fce714e91245b2dca0164e",
-    "sections/models.tex": "c2ca861265ce52f500b610ca56a9b0cf54bd4222be4f859f724910c5aabb398a",
-    "sections/related-work.tex": "4f3ee9cc629b34483b6c8215b6b5e1e8091c5163aaae1d683b65eb29b231d27d"
+    "sections/models.tex": "c2ca861265ce52f500b610ca56a9b0cf54bd4222be4f859f724910c5aabb398a"
   }
 }

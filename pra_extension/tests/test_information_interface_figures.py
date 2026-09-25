@@ -529,9 +529,17 @@ def test_plot_labels_use_plain_language_and_separate_resource_questions() -> Non
         REPO_ROOT / "paper/figure2_candidates/render_resource_atlas.py"
     ).read_text(encoding="utf-8")
     assert 'ax.set_xlabel("Inputs per window"' in atlas_source
-    assert "draws on 11 loss rates and windows one to six across three sizes: 198 settings" in evaluation
-    assert "No tested window meets the sampled history criterion" in evaluation
-    assert "two inputs suffice in all sizes" in evaluation
+    # The readability rewrite moves the full design into the methods appendix,
+    # while retaining the tested-range qualifications in the main text.
+    methods = " ".join(
+        (REPO_ROOT / "paper/icaart2027/sections/methodology.tex").read_text().split()
+    )
+    assert "target reservoirs have two, three, or four qubits" in methods
+    assert r"\{0,0.2,0.5,0.75,1,1.25,1.5,2,2.5,3,4\}" in methods
+    assert "windows range from one to six" in methods
+    assert "two inputs meet the history criterion across all three sizes" in evaluation
+    assert "At weak loss, no tested window of up to six inputs does" in evaluation
+    assert "longer windows remain unresolved" in evaluation
     assert '"?"' not in renderer_source
     assert 'label="root split"' not in renderer_source
     assert 'label="unresolved"' not in renderer_source

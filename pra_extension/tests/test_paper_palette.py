@@ -45,13 +45,14 @@ def test_qelm_color_repeats_across_model_and_feature_panels():
 def test_icaart_color_words_and_link_ink_match():
     base = ROOT / "paper/icaart2027"
     intro = " ".join((base / "sections/introduction.tex").read_text().split())
-    models = (base / "sections/models.tex").read_text()
+    models = " ".join((base / "sections/models.tex").read_text().split())
     assert "Orange denotes the QRC; blue denotes an ideal window prediction" in intro
     # Background styling remains in the artwork, not in the shorter caption.
     figure = (ROOT / "paper/figures/information_interface/fig01_information_interface.tex").read_text()
     assert r"\fill[green!24] (0,0) rectangle ({4.15*43/106},3.20);" in figure
     assert r"\fill[blue!16] ({4.15*43/106},0) rectangle (4.15,3.20);" in figure
-    assert "The blue prediction" in models
+    assert "blue curves are ideal averages over two equally likely example histories" in models
+    assert "not trained QELM predictions" in models
     assert r"\definecolor{linkblue}{HTML}{3868D9}" in (base / "main.tex").read_text()
 
 

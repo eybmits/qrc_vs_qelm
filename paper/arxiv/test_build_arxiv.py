@@ -182,6 +182,25 @@ def _read_archive(path):
         return {name: archive.read(name) for name in archive.namelist()}
 
 
+def test_upload_inputs_omit_only_the_unused_alternative_paragraph():
+    source = {"main.tex": b"\\input{sections/introduction}",
+              "sections/introduction.tex": b"Included science.",
+              "sections/related-work.tex": b"Unused alternative."}
+    assert builder.upload_inputs(source) == {
+        name: content for name, content in source.items()
+        if name != "sections/related-work.tex"}
+    assert "sections/related-work.tex" in source
+
+
+@pytest.mark.parametrize("inclusion", [
+    b"\\input{sections/related-work}",
+    b"\\include{sections/related-work.tex}",
+])
+def test_upload_inputs_refuse_to_omit_a_referenced_section(inclusion):
+    with pytest.raises(ValueError, match="now included"):
+        builder.upload_inputs({"main.tex": inclusion})
+
+
 def test_existing_anonymous_source_zip_has_no_authored_front_matter(metadata):
     archive = ANONYMOUS / "ICAART2027_anonymous_source.zip"
     original = _read_archive(archive)
@@ -205,7 +224,7 @@ def test_built_authored_zip_preserves_all_shared_scientific_sources(metadata):
         pytest.skip("Authored package has not been built yet")
     anonymous = _read_archive(ANONYMOUS / "ICAART2027_anonymous_source.zip")
     authored = _read_archive(BASE / "arxiv_source.zip")
-    assert set(authored) == set(anonymous) | {"main.bbl"}
+    assert set(authored) == (set(anonymous) - builder.UNUSED_SOURCE_FILES) | {"main.bbl"}
     assert authored["main.bbl"].strip()
     assert authored["main.tex"] == builder.authored_main(anonymous["main.tex"].decode(), metadata).encode()
     method = "sections/methodology.tex"
@@ -215,10 +234,12 @@ def test_built_authored_zip_preserves_all_shared_scientific_sources(metadata):
     assert rb"\url{https://github.com/eybmits/qrc_vs_qelm}" in builder.AUTHORED_CODE_NOTE
     assert b"access-restricted" not in builder.AUTHORED_CODE_NOTE
     assert authored[method] == anonymous[method] + b"\n" + builder.AUTHORED_CODE_NOTE + b"\n"
-    changed = {name for name, content in anonymous.items() if authored[name] != content}
+    changed = {name for name, content in anonymous.items()
+               if name in authored and authored[name] != content}
     assert changed == {"main.tex", method}
     manifest = json.loads((BASE / "ARXIV_MANIFEST.json").read_text())
     assert set(manifest["administrative_changes"]) == changed
+    assert manifest["omitted_unused_sources"] == ["sections/related-work.tex"]
 
 
 def test_both_delivered_editions_stay_within_twelve_pages():

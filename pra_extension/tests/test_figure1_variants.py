@@ -236,9 +236,10 @@ def test_selected_overview_is_introduced_once_near_the_start(paper: str) -> None
     filename = "fig01_information_interface.pdf"
     assert introduction.count(filename) == 1
     assert filename not in models
-    # Queue the overview as the first figure after the opening paragraph,
-    # independently of source line wrapping. The compiled PDF still needs
-    # final-size visual placement review.
+    # Queue the overview as the first figure within the short opening setup,
+    # independently of source line wrapping. The active edition first states
+    # the question and then explains state versus window; the archived edition
+    # uses one opening paragraph. Final-size placement still needs visual review.
     first_figure = re.search(
         r"\\begin\{figure\*?\}.*?\\end\{figure\*?\}", introduction, re.S,
     )
@@ -250,7 +251,17 @@ def test_selected_overview_is_introduced_once_near_the_start(paper: str) -> None
     before_figure = re.sub(r"\\(?:section|label)\{[^{}]*\}", "", before_figure)
     assert not re.search(r"\\(?:input|include|subsection)\b", before_figure)
     paragraphs = re.split(r"\n\s*\n", before_figure.strip())
-    assert len(paragraphs) == 1 and paragraphs[0]
+    assert all(paragraph.strip() for paragraph in paragraphs)
+    if paper == "icaart2027":
+        assert 1 <= len(paragraphs) <= 2
+        assert len(before_figure.split()) <= 200
+        opening = " ".join(before_figure.split())
+        assert re.search(r"replace.*?depends on.*?access to the past", opening)
+        assert "A QRC carries its quantum state forward as new inputs arrive" in opening
+        assert re.search(r"reset-window QELMs.*?start afresh for each prediction.*?"
+                         r"explicit window of recent inputs", opening)
+    else:
+        assert len(paragraphs) == 1
 
 
 def test_compact_canvas_keeps_native_typography_and_unscaled_architecture() -> None:
@@ -666,11 +677,26 @@ def test_current_input_and_carried_state_do_not_imply_batch_encoding() -> None:
             provenance(CANONICAL)["window_indices"],
         )
         assert "A trained linear readout can" in models
-        assert "fixed weights into the observables" in models
         if paper == "icaart2027":
-            assert "emulation simulations use observable expectations directly" in models
-            assert "forecasting tests fit both readouts to external task targets" in models
+            assert re.search(r"fixed map.*?\\mathcal C.*?finite vector of observable expectations", models)
+            assert re.search(r"A trained linear readout can.*?weights fixed during emulation", models)
+            assert r"\rho_t=\Phi_{a_t}(\rho_{t-1})" in models
+            assert "Emulation targets the reservoir's output after the same current input" in models
+            assert "not the next value of an external time series" in models
+            # Empirical readout details now live with the protocols/results,
+            # not in the architecture definition. Keep the same distinction:
+            # measured QRC observables for emulation, externally fitted task
+            # targets for both models in forecasting.
+            methods = " ".join((ROOT / "paper" / paper / "sections/methodology.tex").read_text().split())
+            evaluation = " ".join((ROOT / "paper" / paper / "sections/evaluation.tex").read_text().split())
+            assert re.search(r"Pauli measurements give 9, 18, and 30 outputs", methods)
+            assert "QELM predicts the QRC's final $Z_0$ expectation, not the next laser value" in methods
+            assert re.search(r"NARMA10 tests prediction rather than emulation: both models learn "
+                             r"the next target value from the input sequence", evaluation)
+            assert "readouts predict unquantized $y_{t+1}$" in methods
+            assert "never past targets" in methods
         else:
+            assert "fixed weights into the observables" in models
             assert "target readout is the identity" in models
 
 

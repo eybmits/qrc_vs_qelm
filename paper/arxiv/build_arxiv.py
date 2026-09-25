@@ -22,6 +22,7 @@ ANONYMOUS = BASE.parent / "icaart2027"
 AUTHORED_CODE_NOTE = (
     rb"Code repository: \url{https://github.com/eybmits/qrc_vs_qelm}.")
 AUTHORED_CODE_SUFFIX = b"\n" + AUTHORED_CODE_NOTE + b"\n"
+UNUSED_SOURCE_FILES = frozenset({"sections/related-work.tex"})
 sys.path.insert(0, str(ANONYMOUS))
 from validate_submission import log_problems, margin_diagnostics, parse_fonts, read_pdf  # noqa: E402
 
@@ -100,6 +101,19 @@ def authored_methodology(source: bytes) -> bytes:
     return source + AUTHORED_CODE_SUFFIX
 
 
+def upload_inputs(original: dict[str, bytes]) -> dict[str, bytes]:
+    """Omit the unused alternative paragraph, failing if it becomes included."""
+    for name in UNUSED_SOURCE_FILES:
+        stem = name.removesuffix(".tex")
+        inclusion = re.compile(r"\\(?:input|include)\s*\{\s*"
+                               + re.escape(stem) + r"(?:\.tex)?\s*\}")
+        if any(inclusion.search(content.decode()) for path, content in original.items()
+               if path.endswith(".tex")):
+            raise ValueError(f"Previously unused source is now included: {name}")
+    return {name: content for name, content in original.items()
+            if name not in UNUSED_SOURCE_FILES}
+
+
 def compile_paper(directory: Path) -> None:
     result = subprocess.run(
         ["latexmk", "-pdf", "-interaction=nonstopmode", "-halt-on-error", "main.tex"],
@@ -138,7 +152,7 @@ def main() -> None:
     for name, content in original.items():
         if (ANONYMOUS / name).read_bytes() != content:
             raise ValueError(f"Anonymous source archive is stale: {name}")
-    inputs = dict(original)
+    inputs = upload_inputs(original)
     inputs["main.tex"] = authored_main(original["main.tex"].decode(), metadata).encode()
     method = "sections/methodology.tex"
     inputs[method] = authored_methodology(original[method])
@@ -170,7 +184,7 @@ def main() -> None:
             "disclosure_preserved": "OpenAI Codex" in full_text and "AI-use disclosure" in full_text,
             "scientific_content_preserved": all(
                 inputs[n] == b + (AUTHORED_CODE_SUFFIX if n == method else b"")
-                for n, b in original.items() if n != "main.tex"),
+                for n, b in original.items() if n != "main.tex" and n not in UNUSED_SOURCE_FILES),
             "anonymous_pdf_unchanged": digest(anonymous_pdf.read_bytes()) == before,
         }
         inputs["main.bbl"] = (working / "main.bbl").read_bytes()
@@ -192,7 +206,7 @@ def main() -> None:
           "pages": len(data["pages"]), "pdf_sha256": digest(pdf_bytes),
           "anonymous_pdf_sha256": before, "source_zip_sha256": digest(archive_buffer.getvalue()),
           "orcid_not_supplied": [a["name"] for a in metadata["authors"] if not a["orcid"]],
-          "scope": "Local source/build, identity/link, and geometry checks; arXiv processing and publication have not occurred."}
+          "scope": "Local source/build, identity/link, and geometry checks only; arXiv processing and publication status are not tracked by this builder."}
     if not qa["passed"]:
         raise RuntimeError("arXiv package QA failed: " + json.dumps(qa))
     delivered = {"main.tex": inputs["main.tex"], "preprint.pdf": pdf_bytes,
@@ -201,13 +215,14 @@ def main() -> None:
     release = {"schema": "arxiv_preprint_package_v1", "anonymous_source_sha256": digest(archive_path.read_bytes()),
                "authors_sha256": digest(metadata_path.read_bytes()), "pages": qa["pages"],
                "parent_source_sha256": {n: digest(b) for n, b in original.items()},
+               "omitted_unused_sources": sorted(UNUSED_SOURCE_FILES.intersection(original)),
                "administrative_changes": {
                    "main.tex": "Author header with compact title spacing, linked green ORCID icons, profile links, and PDF author/subject metadata",
                    method: "Code repository note with the full URL appended; original methodology preserved byte-for-byte"},
                "source_package_files": {n: digest(b) for n, b in inputs.items()},
                "files": {n: digest(b) for n, b in delivered.items()} | {
                    n: digest((BASE / n).read_bytes()) for n in ("authors.json", "build_arxiv.py")},
-               "publication": "Not uploaded or published; no arXiv identifier has been assigned."}
+               "publication": "Upload, submission, and publication status are managed separately and are not tracked by this builder."}
     delivered["ARXIV_MANIFEST.json"] = (json.dumps(release, indent=2, sort_keys=True) + "\n").encode()
     # Build/rebuild failures above leave the previous deliverables intact.
     with tempfile.TemporaryDirectory(prefix=".publish-", dir=BASE) as temporary:

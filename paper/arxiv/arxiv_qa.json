@@ -17,7 +17,7 @@
   "pages": 12,
   "pdf_sha256": "9c5c61b8fe3137de4c036c8c32a36c6a4a7fa5085fb3083534e91bbbe181d421",
   "anonymous_pdf_sha256": "6ccff2016ea53f56d7eed2def01c8b6896ee3df19cc34ada2717209610e414ab",
-  "source_zip_sha256": "50159507093e80c0fcc1b243859e095eb74bf650cf8cb052140150ce81720858",
+  "source_zip_sha256": "200dde0e203222652cb361c7ad722f0b633252285d43988dca85c6ee7cff5c67",
   "orcid_not_supplied": [],
-  "scope": "Local source/build, identity/link, and geometry checks; arXiv processing and publication have not occurred."
+  "scope": "Local source/build, identity/link, and geometry checks only; arXiv processing and publication status are not tracked by this builder."
 }
