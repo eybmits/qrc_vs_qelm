@@ -1,15 +1,10 @@
 cff-version: 1.2.0
 message: "If you use this software or its results, please cite it as below."
-title: >-
-  qrc_vs_qelm: A pre-registered, resource-matched comparison of Quantum
-  Reservoir Computing and Quantum Extreme Learning Machines
+title: "When Can Quantum Extreme Learning Machines Replace Quantum Reservoirs?"
 abstract: >-
-  A pre-registered, resource-matched study comparing Quantum Reservoir
-  Computing (a recurrent dissipative Lindblad spin reservoir with intrinsic
-  quantum memory) against Quantum Extreme Learning Machines (a static,
-  memoryless quantum channel applied to a classical delay-embedding). It
-  characterises the memory x nonlinearity phase diagram, the effect of finite
-  shot budgets, and the role of engineered dissipation.
+  Code, data, figures, and manuscript sources studying when recent inputs
+  suffice to reproduce a quantum reservoir's outputs, separating missing
+  history, model capacity, and measurement error.
 authors:
   - family-names: Baumann
     given-names: Markus
@@ -40,7 +35,7 @@ preferred-citation:
       affiliation: "QAR-Lab, Department of Computer Science, LMU Munich"
       orcid: "https://orcid.org/0000-0001-6284-9286"
   year: 2026
-  notes: "Author-identified preprint prepared locally; no arXiv identifier assigned."
+  notes: "Submitted to ICAART 2027. Author-identified preprint prepared for arXiv; public arXiv identifier not yet recorded in this repository."
 keywords:
   - quantum reservoir computing
   - quantum extreme learning machine
