@@ -8,10 +8,8 @@ outputs, separating missing history, model capacity, and measurement error.
 
 ## Paper
 
-**Status:** Submitted to [ICAART 2027](https://icaart.scitevents.org/).
-The repository remains private. The author-identified preprint and source
-package prepared for arXiv are linked below; a public arXiv identifier has not
-yet been recorded here.
+Accepted at [ICAART 2027](https://icaart.scitevents.org/).
+Read the [preprint on arXiv](https://arxiv.org/abs/2609.31027).
 
 | Version | PDF | LaTeX source |
 | --- | --- | --- |
